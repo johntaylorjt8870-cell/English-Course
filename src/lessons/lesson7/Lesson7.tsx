@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
   VERBS7,
@@ -17,6 +17,7 @@ import {
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
 import FinalQuiz from "../../shared/FinalQuiz";
+import { LatinRuns } from "../../shared/bidi";
 
 // ============================================================
 // النمط F — أحمر وردي: المساعد بنفسجي، النفي أحمر
@@ -47,19 +48,7 @@ function Rich({ text, className = "" }: { text: string; className?: string }) {
             </span>
           );
         }
-        return (
-          <Fragment key={i}>
-            {x.split(/(\s+)/).map((t, j) =>
-              /[A-Za-z]/.test(t) ? (
-                <span key={j} className="font-en">
-                  {t}
-                </span>
-              ) : (
-                t
-              )
-            )}
-          </Fragment>
-        );
+        return <LatinRuns key={i} text={x} />;
       })}
     </span>
   );
@@ -710,7 +699,9 @@ function Cover() {
         <div className="pop pop-1 mt-4 inline-block rounded-full bg-rose-600 px-5 py-2 text-base font-bold text-white">الدرس السابع</div>
         <h1 className="pop pop-2 font-head mt-4 text-4xl font-bold leading-tight text-slate-900 md:text-5xl">النفي والسؤال والإجابات القصيرة</h1>
         <p className="pop pop-3 mt-2 text-2xl text-slate-500">
-          <En>Do / Does</En> ← <En>Present Simple</En>
+          <span dir="ltr">
+            <En>Do / Does</En> ← <En>Present Simple</En>
+          </span>
         </p>
         <div className="pop pop-4 mt-9 flex justify-center">
           <div className="rounded-3xl border-2 border-slate-100 bg-slate-50 p-5">

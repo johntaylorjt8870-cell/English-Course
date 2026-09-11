@@ -85,13 +85,14 @@ export const NOW_SCENES: { subj: string; base: string; o?: string; ar: string; e
 ];
 
 // -------------------- بلوكات --------------------
-export type Role9 = "s" | "be" | "v" | "o";
+export type Role9 = "s" | "be" | "v" | "o" | "nt";
 
 export interface Part9 { text: string; role: Role9 }
 
 export const ROLE9_AR: Record<Role9, string> = {
   s: "الفاعل",
   be: "فعل الكينونة",
+  nt: "النفي",
   v: "الفعل + ing",
   o: "المفعول به",
 };
@@ -117,7 +118,7 @@ export type Exercise9 =
   | { type: "ing"; items: { verb: string; opts: string[]; answer: number }[] }
   | { type: "signal"; items: { stem: string; ar: string; opts: string[]; answer: number }[] }
   | { type: "fix"; items: { wrong: string; correct: string; why: string }[] }
-  | { type: "order"; items: { words: string[]; correct: string[]; ar: string }[] }
+  | { type: "order"; items: { words: string[]; correct: string[]; ar: string; q?: boolean }[] }
   | { type: "usage"; items: { en: string; ar: string; answer: "now" | "habit" }[] };
 
 export const USAGE_AR: Record<"now" | "habit", string> = {
@@ -274,8 +275,8 @@ export const SLIDES: Slide9[] = [
     title: "النفي: Subject + am/is/are + not + verb-ing",
     lead: "نضيف not مباشرة بعد فعل الكينونة:",
     blocks: [
-      { type: "sentence", parts: [P("I", "s"), P("am", "be"), P("not", "o"), P("sleeping", "v")], ar: "أنا لا أنام الآن." },
-      { type: "sentence", parts: [P("She", "s"), P("is", "be"), P("not", "o"), P("studying", "v")], ar: "هي لا تدرس الآن." },
+      { type: "sentence", parts: [P("I", "s"), P("am", "be"), P("not", "nt"), P("sleeping", "v")], ar: "أنا لا أنام الآن." },
+      { type: "sentence", parts: [P("She", "s"), P("is", "be"), P("not", "nt"), P("studying", "v")], ar: "هي لا تدرس الآن." },
       { type: "note", emoji: "✂️", text: "اختصار: [[is not = isn't]] · [[are not = aren't]] (لا يوجد اختصار شائع لـ am not)" },
     ],
   },
@@ -406,7 +407,7 @@ export const SLIDES: Slide9[] = [
         { words: ["playing", "is", "He", "football"], correct: ["He", "is", "playing", "football"], ar: "هو يلعب كرة القدم الآن." },
         { words: ["studying", "are", "English", "They"], correct: ["They", "are", "studying", "English"], ar: "هم يدرسون الإنجليزية الآن." },
         { words: ["am", "I", "not", "sleeping"], correct: ["I", "am", "not", "sleeping"], ar: "أنا لا أنام الآن." },
-        { words: ["she", "Is", "cooking"], correct: ["Is", "she", "cooking"], ar: "هل هي تطبخ الآن؟" },
+        { words: ["she", "Is", "cooking"], correct: ["Is", "she", "cooking"], ar: "هل هي تطبخ الآن؟", q: true },
         { words: ["running", "dog", "The", "is"], correct: ["The", "dog", "is", "running"], ar: "الكلب يركض الآن." },
       ],
     },

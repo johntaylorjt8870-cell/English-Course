@@ -8,6 +8,7 @@ import {
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
 import FinalQuiz from "../../shared/FinalQuiz";
+import { LatinRuns } from "../../shared/bidi";
 
 // لوحة ألوان مرحة تتناوب بين الشرائح
 const THEMES = [
@@ -30,21 +31,9 @@ function En({ children }: { children: React.ReactNode }) {
   return <span className="ltr font-en inline-block">{children}</span>;
 }
 
-/** يعزل الكلمات الإنجليزية داخل النص العربي تلقائيًا — يمنع انعكاس الترتيب نهائيًا */
+/** يعزل المقاطع الإنجليزية داخل النص العربي تلقائيًا — يمنع انعكاس الترتيب نهائيًا */
 function Mixed({ text }: { text: string }) {
-  return (
-    <>
-      {text.split(/(\s+)/).map((tok, i) =>
-        /[A-Za-z]/.test(tok) ? (
-          <span key={i} className="font-en">
-            {tok}
-          </span>
-        ) : (
-          <span key={i}>{tok}</span>
-        )
-      )}
-    </>
-  );
+  return <LatinRuns text={text} />;
 }
 
 // لصاقات مرحة تطفو في خلفية الشريحة
@@ -168,7 +157,9 @@ function Cover() {
         الضمائر و <span className="ltr font-en text-indigo-600">Verb to be</span>
       </h1>
       <p className="pop pop-3 mt-3 text-2xl text-slate-500">
-        <En>Pronouns</En> + <En>am / is / are</En>
+        <span dir="ltr">
+          <En>Pronouns</En> + <En>am / is / are</En>
+        </span>
       </p>
       <div className="pop pop-4 mt-8 flex flex-wrap justify-center gap-3">
         {PRONOUNS.map((p) => (

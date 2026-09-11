@@ -20,6 +20,7 @@ import {
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
 import FinalQuiz from "../../shared/FinalQuiz";
+import { LatinRuns } from "../../shared/bidi";
 
 // ============================================================
 // النمط D — الصفة دائمًا بنفسجية، الاسم أخضر
@@ -51,19 +52,7 @@ function Rich({ text, className = "" }: { text: string; className?: string }) {
           );
         }
         // عزل تلقائي لأي مقطع لاتيني خارج الأقواس
-        return (
-          <Fragment key={i}>
-            {x.split(/(\s+)/).map((t, j) =>
-              /[A-Za-z]/.test(t) ? (
-                <span key={j} className="font-en">
-                  {t}
-                </span>
-              ) : (
-                t
-              )
-            )}
-          </Fragment>
-        );
+        return <LatinRuns key={i} text={x} />;
       })}
     </span>
   );
@@ -897,7 +886,9 @@ function Cover() {
         <div className="pop pop-1 mt-4 inline-block rounded-full bg-violet-600 px-5 py-2 text-base font-bold text-white">الدرس الخامس</div>
         <h1 className="pop pop-2 font-head mt-4 text-4xl font-bold leading-tight text-slate-900 md:text-5xl">الصفات وتكوين الجملة الوصفية</h1>
         <p className="pop pop-3 mt-2 text-2xl text-slate-500">
-          <En>Adjectives</En> + <En>Verb to be</En>
+          <span dir="ltr">
+            <En>Adjectives</En> + <En>Verb to be</En>
+          </span>
         </p>
         <div className="pop pop-4 mt-9 flex justify-center">
           <div className="rounded-3xl border-2 border-slate-100 bg-slate-50 p-5">

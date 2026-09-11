@@ -15,6 +15,7 @@ import {
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
 import FinalQuiz from "../../shared/FinalQuiz";
+import { LatinRuns } from "../../shared/bidi";
 
 // ============================================================
 // ألوان الأدوار الثلاثة
@@ -59,19 +60,8 @@ function Rich({ text, className = "" }: { text: string; className?: string }) {
             </span>
           );
         }
-        return (
-          <Fragment key={i}>
-            {p.split(/(\s+)/).map((t, j) =>
-              /[A-Za-z]/.test(t) ? (
-                <span key={j} className="font-en">
-                  {t}
-                </span>
-              ) : (
-                t
-              )
-            )}
-          </Fragment>
-        );
+        // عزل تلقائي للمقاطع اللاتينية خارج الأقواس — على مستوى المقطع لا الكلمة
+        return <LatinRuns key={i} text={p} />;
       })}
     </span>
   );
@@ -343,8 +333,10 @@ function PronounFlipRow({ p, affWord, negWord, mode, delay }: { p: Pronoun; affW
             <div className="flex flex-col gap-1">
               <En className="text-lg text-slate-500">{aff.s} {aff.b} {aff.rest}.</En>
               <div className="flex items-center gap-2">
-                <SwapChip a={aff.b} b={low(aff.s)} />
-                <En className="text-2xl font-extrabold text-slate-900">{aff.rest}?</En>
+                <span dir="ltr" className="flex items-center gap-2">
+                  <SwapChip a={aff.b} b={low(aff.s)} />
+                  <En className="text-2xl font-extrabold text-slate-900">{aff.rest}?</En>
+                </span>
                 <span className="font-bold text-indigo-700">({HAL[p.en]} {aff.rest}؟)</span>
               </div>
             </div>

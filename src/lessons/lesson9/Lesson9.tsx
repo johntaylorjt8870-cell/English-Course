@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
   SUBJ9,
@@ -17,6 +17,7 @@ import {
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
 import FinalQuiz from "../../shared/FinalQuiz";
+import { LatinRuns } from "../../shared/bidi";
 
 // ============================================================
 // النمط E — سماوي/بنفسجي: الفاعل سماوي، فعل الكينونة بنفسجي، الفعل+ing سيان، المفعول كهرماني
@@ -24,6 +25,7 @@ import FinalQuiz from "../../shared/FinalQuiz";
 const RS: Record<Role9, { chip: string; solid: string; text: string }> = {
   s: { chip: "bg-sky-100 border-sky-300 text-sky-900", solid: "bg-sky-500", text: "text-sky-700" },
   be: { chip: "bg-violet-100 border-violet-300 text-violet-900", solid: "bg-violet-600", text: "text-violet-700" },
+  nt: { chip: "bg-rose-100 border-rose-300 text-rose-900", solid: "bg-rose-500", text: "text-rose-700" },
   v: { chip: "bg-cyan-100 border-cyan-300 text-cyan-900", solid: "bg-cyan-600", text: "text-cyan-700" },
   o: { chip: "bg-amber-100 border-amber-300 text-amber-900", solid: "bg-amber-500", text: "text-amber-700" },
 };
@@ -45,19 +47,7 @@ function Rich({ text, className = "" }: { text: string; className?: string }) {
             </span>
           );
         }
-        return (
-          <Fragment key={i}>
-            {x.split(/(\s+)/).map((t, j) =>
-              /[A-Za-z]/.test(t) ? (
-                <span key={j} className="font-en">
-                  {t}
-                </span>
-              ) : (
-                t
-              )
-            )}
-          </Fragment>
-        );
+        return <LatinRuns key={i} text={x} />;
       })}
     </span>
   );
@@ -79,26 +69,7 @@ function PartsLine({ parts, q, size = "md", label = true }: { parts: Part9[]; q?
 }
 
 function Mixed({ text }: { text: string }) {
-  if (!/[\u0600-\u06FF]/.test(text)) {
-    return (
-      <span dir="ltr" className="font-en">
-        {text}
-      </span>
-    );
-  }
-  return (
-    <>
-      {text.split(/(\s+)/).map((t, i) =>
-        /[A-Za-z]/.test(t) ? (
-          <span key={i} dir="ltr" className="font-en">
-            {t}
-          </span>
-        ) : (
-          <span key={i}>{t}</span>
-        )
-      )}
-    </>
-  );
+  return <LatinRuns text={text} />;
 }
 
 function SentenceCard({ parts, ar, note, q }: { parts: Part9[]; ar: string; note?: string; q?: boolean }) {
@@ -503,7 +474,7 @@ function OrderEx({ ex }: { ex: Extract<Exercise9, { type: "order" }> }) {
   );
 }
 
-function OrderRow({ n, item }: { n: number; item: { words: string[]; correct: string[]; ar: string } }) {
+function OrderRow({ n, item }: { n: number; item: { words: string[]; correct: string[]; ar: string; q?: boolean } }) {
   const [placed, setPlaced] = useState<number[]>([]);
   const [reveal, setReveal] = useState(false);
   const done = placed.length === item.words.length;
@@ -561,7 +532,7 @@ function OrderRow({ n, item }: { n: number; item: { words: string[]; correct: st
             {w}
           </button>
         ))}
-        {shown.length > 0 && <span className="font-en text-xl font-bold text-slate-300">.</span>}
+        {shown.length > 0 && <span className="font-en text-xl font-bold text-slate-300">{item.q ? "?" : "."}</span>}
       </div>
       {finished && <div className="tada mt-2 font-bold text-emerald-700">🎉 {item.ar}</div>}
       {bad && <div className="mt-2 text-sm font-bold text-rose-600">✕ ليس بعد — راجع ترتيب الفاعل وفعل الكينونة</div>}
@@ -633,7 +604,7 @@ function IQ() {
 function Builder() {
   const [si, setSi] = useState(0);
   const [vi, setVi] = useState(4);
-  const [oi, setOi] = useState(1);
+  const [oi, setOi] = useState(2); // dinner → "I am cooking dinner."
   const objs = [
     { en: "a book", ar: "كتابًا" },
     { en: "football", ar: "كرة القدم" },

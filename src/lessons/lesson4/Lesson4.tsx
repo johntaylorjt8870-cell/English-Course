@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
   NOUNS,
@@ -18,6 +18,7 @@ import {
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
 import FinalQuiz from "../../shared/FinalQuiz";
+import { LatinRuns } from "../../shared/bidi";
 
 // ============================================================
 // النمط C — قطع ملوّنة كبيرة (chips)
@@ -48,20 +49,8 @@ function Rich({ text, className = "" }: { text: string; className?: string }) {
             </span>
           );
         }
-        // عزل تلقائي لأي مقطع لاتيني خارج الأقواس
-        return (
-          <Fragment key={i}>
-            {p.split(/(\s+)/).map((t, j) =>
-              /[A-Za-z]/.test(t) ? (
-                <span key={j} className="font-en">
-                  {t}
-                </span>
-              ) : (
-                t
-              )
-            )}
-          </Fragment>
-        );
+        // عزل تلقائي لأي مقطع لاتيني خارج الأقواس — على مستوى المقطع لا الكلمة
+        return <LatinRuns key={i} text={p} />;
       })}
     </span>
   );
@@ -161,7 +150,9 @@ function Cover() {
         <div className="pop pop-1 mt-4 inline-block rounded-full bg-slate-900 px-5 py-2 text-base font-bold text-white">الدرس الرابع</div>
         <h1 className="pop pop-2 font-head mt-4 text-4xl font-bold leading-tight text-slate-900 md:text-6xl">الأسماء وأدوات التعريف</h1>
         <p className="pop pop-3 mt-2 text-2xl text-slate-500">
-          <En>Nouns</En> + <En>a / an / the</En>
+          <span dir="ltr">
+            <En>Nouns</En> + <En>a / an / the</En>
+          </span>
         </p>
 
         <div className="pop pop-4 mt-10 grid gap-3 sm:grid-cols-3">
@@ -425,39 +416,51 @@ function AThenThe({ noun, ar, adj, adjAr }: { noun: string; ar: string; adj: str
 
 type MMode = "aff" | "neg" | "q";
 
+/** صيغة النصب للجمع بعد «ليسوا»: معلمون ← معلمين · بنات ← بناتٍ · طلاب ← طلابًا */
+function accPl(pluralAr: string): string {
+  if (pluralAr.endsWith("ون")) return pluralAr.slice(0, -2) + "ين";
+  if (pluralAr.endsWith("ات")) return pluralAr + "ٍ";
+  return pluralAr + "ًا";
+}
+
 function Machine() {
   const [si, setSi] = useState(0);
-  const [ni, setNi] = useState(13); // book
+  const [ni, setNi] = useState(1); // student → "I am a student."
   const [mode, setMode] = useState<MMode>("aff");
 
   const s = PRONOUN_BE[si];
   const n = NOUNS[ni];
+  // مع الفاعل الجمع (We / They) نستخدم الاسم الجمع بدون a / an — مثل تمرين البناء
+  const plural = s.plural;
   const art = pickAn(n.en);
-
+  const nounEn = plural ? n.plural : n.en;
+  const nounAr = plural ? n.pluralAr : n.ar;
 
   const pieces: Part[] =
     mode === "q"
       ? [
           { text: cap(s.be), role: "be" },
           { text: s.en === "I" ? "I" : s.en.toLowerCase(), role: "s" },
-          { text: art, role: "art" },
-          { text: n.en, role: "noun" },
+          ...(plural ? [] : [{ text: art, role: "art" } as Part]),
+          { text: nounEn, role: "noun" },
         ]
       : [
           { text: s.en, role: "s" },
           { text: s.be, role: "be" },
           ...(mode === "neg" ? [{ text: "not", role: "be" } as Part] : []),
-          { text: art, role: "art" },
-          { text: n.en, role: "noun" },
+          ...(plural ? [] : [{ text: art, role: "art" } as Part]),
+          { text: nounEn, role: "noun" },
         ];
 
   const ending = mode === "q" ? "?" : ".";
-  const arBase = `${s.ar} ${n.ar}`;
+  const arBase = `${s.ar} ${nounAr}`;
   const arText =
     mode === "neg"
-      ? `${s.ar} ليس ${n.ar}ًا.`
+      ? plural
+        ? `${s.ar} ليسوا ${accPl(nounAr)}.`
+        : `${s.ar} ليس ${nounAr}ًا.`
       : mode === "q"
-        ? `هل ${s.ar} ${n.ar}؟`
+        ? `هل ${s.ar} ${nounAr}؟`
         : `${arBase}.`;
 
   return (
@@ -525,7 +528,11 @@ function Machine() {
         <div className="mt-3 text-center text-xl font-bold text-slate-700">{arText}</div>
         <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
           <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-500">
-            {n.en} تبدأ بصوت {n.vowel ? "علة" : "ساكن"} ← {art}
+            {plural ? (
+              <>{n.plural} ← جمع {n.en} — بدون a / an</>
+            ) : (
+              <>{n.en} تبدأ بصوت {n.vowel ? "علة" : "ساكن"} ← {art}</>
+            )}
           </span>
           {mode === "q" && <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-bold text-indigo-700">قلبنا الترتيب كما في الدرس 3</span>}
           {mode === "neg" && <span className="rounded-full bg-rose-100 px-3 py-1 text-xs font-bold text-rose-700">أضفنا not بعد {s.be}</span>}
@@ -577,7 +584,7 @@ function ArtBlock({ a, examples }: { a: Art; examples?: string[] }) {
       {examples && (
         <div className="mt-4 grid gap-2 sm:grid-cols-3">
           {examples.map((e) => (
-            <div key={e} className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm">
+            <div key={e} dir="ltr" className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm">
               <En className={`text-lg font-extrabold ${info.text}`}>{a}</En>
               <En className="text-lg font-bold text-slate-800">{e}</En>
             </div>
@@ -871,6 +878,7 @@ function AAnEx({ ex }: { ex: Extract<Exercise, { type: "aAn" }> }) {
           <div key={it.word} className={`rounded-3xl border-2 p-3.5 text-center transition ${c ? (right ? "border-emerald-300 bg-emerald-50/60" : "border-rose-300 bg-rose-50/60") : "border-slate-200 bg-white"}`}>
             <div className="flex items-center justify-center gap-2">
               <Nub n={i + 1} />
+              <span dir="ltr" className="flex items-center gap-2">
               <span
                 className={`inline-grid h-11 min-w-14 place-items-center rounded-xl border-2 border-dashed px-3 font-en text-xl font-extrabold ${
                   c ? (right ? "border-emerald-400 bg-emerald-100 text-emerald-800" : "border-rose-400 bg-rose-100 text-rose-800") : "border-slate-300 text-slate-300"
@@ -879,6 +887,7 @@ function AAnEx({ ex }: { ex: Extract<Exercise, { type: "aAn" }> }) {
                 {c ?? "___"}
               </span>
               <En className="text-xl font-bold text-slate-800">{it.word}</En>
+              </span>
             </div>
             <div className="mt-1.5 text-xs text-slate-400">{it.ar}</div>
             <div className="mt-2 flex justify-center gap-1.5">

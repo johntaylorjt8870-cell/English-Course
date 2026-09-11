@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
   VERBS6,
@@ -20,6 +20,7 @@ import {
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
 import FinalQuiz from "../../shared/FinalQuiz";
+import { LatinRuns } from "../../shared/bidi";
 
 // ============================================================
 // النمط E — تركواز: الفاعل سماوي، الفعل تركوازي، التكرار فوشيا، المفعول كهرماني
@@ -48,19 +49,7 @@ function Rich({ text, className = "" }: { text: string; className?: string }) {
             </span>
           );
         }
-        return (
-          <Fragment key={i}>
-            {x.split(/(\s+)/).map((t, j) =>
-              /[A-Za-z]/.test(t) ? (
-                <span key={j} className="font-en">
-                  {t}
-                </span>
-              ) : (
-                t
-              )
-            )}
-          </Fragment>
-        );
+        return <LatinRuns key={i} text={x} />;
       })}
     </span>
   );
@@ -83,26 +72,7 @@ function PartsLine({ parts, q, size = "md", label = true }: { parts: Part6[]; q?
 
 /** نص مختلط عربي/إنجليزي: يعزل المقاطع الإنجليزية تلقائيًا */
 function Mixed({ text }: { text: string }) {
-  if (!/[\u0600-\u06FF]/.test(text)) {
-    return (
-      <span dir="ltr" className="font-en">
-        {text}
-      </span>
-    );
-  }
-  return (
-    <>
-      {text.split(/(\s+)/).map((t, i) =>
-        /[A-Za-z]/.test(t) ? (
-          <span key={i} dir="ltr" className="font-en">
-            {t}
-          </span>
-        ) : (
-          <span key={i}>{t}</span>
-        )
-      )}
-    </>
-  );
+  return <LatinRuns text={text} />;
 }
 
 function SentenceCard({ parts, ar, note, q }: { parts: Part6[]; ar: string; note?: string; q?: boolean }) {
@@ -256,7 +226,7 @@ function Groups() {
           <div key={v} className="rounded-2xl bg-white p-3">
             <div className="grid gap-1.5">
               {subs.map((s) => (
-                <div key={s.en} className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-1.5">
+                <div key={s.en} dir="ltr" className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-1.5">
                   <En className="font-bold text-slate-700">{s.en}</En>
                   <En className={`font-extrabold ${g === 1 ? "text-teal-700" : "text-sky-700"}`}>{verbFor(v, s.third)}</En>
                 </div>
@@ -318,7 +288,7 @@ function RuleTabs() {
   const [t, setT] = useState<"s" | "es" | "ies">("s");
   const data = {
     s: {
-      title: "معظم الأفعال ← nضيف s",
+      title: "معظم الأفعال ← نضيف s",
       rows: [
         ["play", "plays"],
         ["read", "reads"],

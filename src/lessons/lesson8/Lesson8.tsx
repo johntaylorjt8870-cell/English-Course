@@ -228,7 +228,7 @@ function ConjTabs() {
         <div className="mb-3 text-center font-bold text-slate-700">{d.title}</div>
         <div className="grid gap-2 sm:grid-cols-2">
           {d.rows.map(([a, b]) => (
-            <div key={a} className="flex items-center justify-center gap-3 rounded-2xl bg-white px-3 py-2">
+            <div key={a} dir="ltr" className="flex items-center justify-center gap-3 rounded-2xl bg-white px-3 py-2">
               <En className="text-lg font-bold text-slate-600">{a}</En>
               <span className="text-indigo-500">→</span>
               <En className="text-lg font-extrabold text-indigo-700">{b}</En>
@@ -251,7 +251,7 @@ function VowelY() {
       <div className="mb-3 text-center font-bold text-slate-700">⚠️ قبل y حرف متحرك (a · e · i · o · u) ← نضيف s فقط</div>
       <div className="grid gap-2 sm:grid-cols-3">
         {VOWEL_Y.map(([a, b]) => (
-          <div key={a} className="flex items-center justify-center gap-2 rounded-2xl bg-white px-3 py-2">
+          <div key={a} dir="ltr" className="flex items-center justify-center gap-2 rounded-2xl bg-white px-3 py-2">
             <En className="font-bold text-slate-600">{a}</En>
             <span className="text-rose-500">→</span>
             <En className="font-extrabold text-rose-700">{b}</En>

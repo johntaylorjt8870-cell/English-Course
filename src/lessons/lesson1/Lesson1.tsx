@@ -13,6 +13,7 @@ import {
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
 import FinalQuiz from "../../shared/FinalQuiz";
+import { LatinRuns } from "../../shared/bidi";
 
 // ============================================================
 // ألوان الأدوار — ثابتة في كل الدرس (أزرق = فاعل، برتقالي = فعل، أخضر = مفعول به)
@@ -35,20 +36,29 @@ function Rich({ text, className = "" }: { text: string; className?: string }) {
     <span className={className}>
       {parts.map((p, i) => {
         const m = p.match(/^\[\[(.+)\]\]$/);
-        return m ? (
-          <span key={i} className="ltr font-en mx-1 rounded-md bg-slate-100 px-1.5 py-0.5 font-semibold text-slate-800">
-            {m[1]}
-          </span>
-        ) : (
-          <span key={i}>{p}</span>
-        );
+        if (m) {
+          return (
+            <span key={i} dir="ltr" className="font-en mx-1 rounded-md bg-slate-100 px-1.5 py-0.5 font-semibold text-slate-800">
+              {m[1]}
+            </span>
+          );
+        }
+        return <LatinRuns key={i} text={p} />;
       })}
     </span>
   );
 }
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <span className={`ltr font-en ${className}`}>{children}</span>;
+  return (
+    <span dir="ltr" className={`font-en inline-block ${className}`}>
+      {children}
+    </span>
+  );
+}
+
+function Mixed({ text }: { text: string }) {
+  return <LatinRuns text={text} />;
 }
 
 /** قطعة بناء واحدة: كلمة إنجليزية + (اختياريًا) دورها */
@@ -69,11 +79,17 @@ function WordBlock({
   const st = colored ? ROLE_STYLE[role] : null;
   const sz = size === "lg" ? "px-5 py-3 text-3xl" : size === "sm" ? "px-3 py-1.5 text-lg" : "px-4 py-2 text-2xl";
   return (
-    <span className={`inline-flex flex-col items-center rounded-2xl border-2 ${st ? st.chip : NEUTRAL} ${sz} font-en font-bold leading-tight shadow-sm transition-all`}>
-      <span>{text}</span>
+    <span className={`inline-flex flex-col items-center rounded-2xl border-2 ${st ? st.chip : NEUTRAL} ${sz} font-bold leading-tight shadow-sm transition-all`}>
+      <span dir="ltr" className="font-en">
+        {text}
+      </span>
       {colored && label && (
         <span className={`mt-1 text-[11px] font-semibold ${st!.text}`}>
-          {ROLE_INFO[role].en} · {ROLE_INFO[role].ar}
+          <span dir="ltr" className="font-en">
+            {ROLE_INFO[role].en}
+          </span>
+          {" · "}
+          {ROLE_INFO[role].ar}
         </span>
       )}
     </span>
@@ -84,7 +100,7 @@ function WordBlock({
 function SentenceBlocks({ s, reveal = true, size = "md", label = true }: { s: Sentence; reveal?: boolean; size?: "sm" | "md" | "lg"; label?: boolean }) {
   return (
     <div>
-      <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row flex flex-wrap items-start gap-2">
+      <div dir="ltr" style={{ direction: "ltr" }} data-en-seq="svo-tokens" className="ltr-row flex flex-wrap items-start gap-2">
         {s.tokens.map((t, i) => (
           <WordBlock key={i} text={t.text} role={t.role} reveal={reveal} size={size} label={label} />
         ))}
@@ -117,12 +133,14 @@ function SentenceCard({ s, hide }: { s: Sentence; hide?: boolean }) {
 function Formula({ roles, example, big }: { roles: Role[]; example?: string[]; big?: boolean }) {
   return (
     <div className="rounded-3xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-5">
-      <div dir="ltr" className="flex flex-wrap items-center justify-center gap-3">
+      <div dir="ltr" data-en-seq="svo-roles" className="flex flex-wrap items-center justify-center gap-3">
         {roles.map((r, i) => (
           <Fragment key={r}>
             {i > 0 && <span className="text-3xl font-bold text-slate-300">+</span>}
             <div className={`flex flex-col items-center rounded-2xl ${ROLE_STYLE[r].solid} ${big ? "px-8 py-4" : "px-6 py-3"} shadow-md`}>
-              <span className={`font-en font-extrabold ${big ? "text-3xl md:text-4xl" : "text-2xl"}`}>{ROLE_INFO[r].en}</span>
+              <span dir="ltr" className={`font-en font-extrabold ${big ? "text-3xl md:text-4xl" : "text-2xl"}`}>
+                {ROLE_INFO[r].en}
+              </span>
               <span className={`font-semibold opacity-90 ${big ? "text-base" : "text-sm"}`}>{ROLE_INFO[r].ar}</span>
             </div>
           </Fragment>
@@ -145,9 +163,9 @@ function Formula({ roles, example, big }: { roles: Role[]; example?: string[]; b
 
 function RolesRow({ roles, withQ }: { roles: Role[]; withQ?: boolean }) {
   return (
-    <div className={`grid gap-3 ${roles.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
+    <div dir="ltr" data-en-seq="svo-cards" className={`grid gap-3 ${roles.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
       {roles.map((r) => (
-        <div key={r} className={`rounded-3xl border-2 ${ROLE_STYLE[r].border} ${ROLE_STYLE[r].soft} p-4`}>
+        <div key={r} dir="rtl" className={`rounded-3xl border-2 ${ROLE_STYLE[r].border} ${ROLE_STYLE[r].soft} p-4`}>
           <div className="flex items-center justify-between">
             <En className={`text-2xl font-extrabold ${ROLE_STYLE[r].text}`}>{ROLE_INFO[r].en}</En>
             <span className="text-2xl">{ROLE_INFO[r].emoji}</span>
@@ -194,7 +212,9 @@ function QA({ sentence, q, a, role }: { sentence: string; q: string; a: string; 
             <En className={`text-xl font-extrabold ${st.text}`}>{a}</En>
             <span className="text-slate-400">=</span>
             <En className={`text-sm font-bold ${st.text}`}>{ROLE_INFO[role].en}</En>
-            <span className="text-sm text-slate-500">({ROLE_INFO[role].ar})</span>
+            <span dir="rtl" className="text-sm text-slate-500">
+              ({ROLE_INFO[role].ar})
+            </span>
           </span>
         ) : (
           <button onClick={() => setOpen(true)} className="mr-auto rounded-xl bg-slate-900 px-4 py-1.5 text-sm font-bold text-white transition hover:bg-slate-700">
@@ -261,9 +281,9 @@ function Steps() {
     { n: "③", t: "اختر المفعول به", r: "O", ex: "apples" },
   ];
   return (
-    <div className="grid gap-3 sm:grid-cols-3">
+    <div dir="ltr" className="grid gap-3 sm:grid-cols-3">
       {steps.map((s) => (
-        <div key={s.r} className={`rounded-3xl border-2 ${ROLE_STYLE[s.r].border} ${ROLE_STYLE[s.r].soft} p-4 text-center`}>
+        <div key={s.r} dir="rtl" className={`rounded-3xl border-2 ${ROLE_STYLE[s.r].border} ${ROLE_STYLE[s.r].soft} p-4 text-center`}>
           <div className={`mx-auto grid h-12 w-12 place-items-center rounded-2xl ${ROLE_STYLE[s.r].solid} text-2xl font-bold shadow`}>{s.n}</div>
           <div className="mt-2 text-lg font-bold text-slate-800">{s.t}</div>
           <div className="mt-2">
@@ -363,13 +383,17 @@ function SlideFrame({
         )}
         {badge && <span className="rounded-full bg-violet-100 px-4 py-1.5 text-sm font-bold text-violet-700">{badge}</span>}
       </div>
-      <h2 className="font-head mt-4 max-w-[85%] text-3xl font-bold leading-snug text-slate-900 md:text-4xl">{title}</h2>
-      {lead && <p className="mt-2 max-w-[85%] text-xl text-slate-500">{lead}</p>}
+      <h2 className="font-head mt-4 max-w-[85%] text-3xl font-bold leading-snug text-slate-900 md:text-4xl">
+        {typeof title === "string" ? <Mixed text={title} /> : title}
+      </h2>
+      {lead && <p className="mt-2 max-w-[85%] text-xl text-slate-500">{typeof lead === "string" ? <Mixed text={lead} /> : lead}</p>}
       <div className="mt-7 space-y-4">{children}</div>
       {tip && (
         <div className="mt-6 flex items-center gap-3 rounded-2xl bg-slate-900 p-4 text-white">
           <span className="text-3xl">🦉</span>
-          <span className="text-lg font-semibold">{tip}</span>
+          <span className="text-lg font-semibold">
+            <Mixed text={tip} />
+          </span>
         </div>
       )}
     </section>
@@ -390,7 +414,9 @@ function Cover({ mascot }: { mascot: string }) {
         <div className="pop pop-1 mt-4 inline-block rounded-full bg-slate-900 px-5 py-2 text-base font-bold text-white">الدرس الأول</div>
         <h1 className="pop pop-2 font-head mt-4 text-4xl font-bold leading-tight text-slate-900 md:text-6xl">تكوين الجملة الإنجليزية</h1>
         <p className="pop pop-3 mt-2 text-2xl text-slate-500">
-          <En>Sentence Structure</En>
+          <span dir="ltr">
+            <En>Sentence Structure</En>
+          </span>
         </p>
         <div className="pop pop-4 mt-8 flex justify-center">
           <Formula roles={["S", "V", "O"]} />
@@ -463,17 +489,20 @@ function BuilderSlide({ mascot, title }: { mascot: string; title: string }) {
 
   const col = (role: Role, head: string, children: React.ReactNode) => (
     <div className={`rounded-3xl border-2 ${ROLE_STYLE[role].border} ${ROLE_STYLE[role].soft} p-4`}>
-      <div className="mb-3 flex items-center justify-between">
+      <div dir="rtl" className="mb-3 flex items-center justify-between">
         <En className={`text-xl font-extrabold ${ROLE_STYLE[role].text}`}>{ROLE_INFO[role].en}</En>
         <span className="text-sm font-bold text-slate-500">{head}</span>
       </div>
-      <div className="flex flex-wrap gap-2">{children}</div>
+      <div dir="ltr" className="flex flex-wrap gap-2">
+        {children}
+      </div>
     </div>
   );
 
   const chip = (active: boolean, role: Role, onClick: () => void, text: string, key: string | number) => (
     <button
       key={key}
+      dir="ltr"
       onClick={onClick}
       className={`rounded-xl border-2 px-3 py-1.5 font-en text-lg font-bold transition active:scale-95 ${
         active ? `${ROLE_STYLE[role].solid} border-transparent shadow` : "border-slate-200 bg-white text-slate-700 hover:border-slate-400"
@@ -577,7 +606,9 @@ function Closing({ mascot, title, onExit }: { mascot: string; title: string; onE
             <Fragment key={r}>
               {i > 0 && <span className="text-3xl text-slate-500">→</span>}
               <div className={`rounded-2xl ${ROLE_STYLE[r].solid} px-6 py-3 shadow-lg`}>
-                <div className="font-en text-2xl font-extrabold md:text-3xl">{ROLE_INFO[r].en}</div>
+                <div dir="ltr" className="font-en text-2xl font-extrabold md:text-3xl">
+                  {ROLE_INFO[r].en}
+                </div>
                 <div className="text-sm opacity-90">{ROLE_INFO[r].ar}</div>
               </div>
             </Fragment>
@@ -647,13 +678,25 @@ function TagItem({ n, s, roles }: { n: number; s: Sentence; roles: Role[] }) {
               <button
                 key={i}
                 onClick={() => cycle(i)}
-                className={`relative flex flex-col items-center rounded-2xl border-2 px-4 py-2 font-en text-2xl font-bold shadow-sm transition active:scale-95 ${st ? st.chip : "border-dashed border-slate-300 bg-white text-slate-800"} ${
+                className={`relative flex flex-col items-center rounded-2xl border-2 px-4 py-2 text-2xl font-bold shadow-sm transition active:scale-95 ${st ? st.chip : "border-dashed border-slate-300 bg-white text-slate-800"} ${
                   wrong ? "ring-2 ring-rose-400" : right ? "ring-2 ring-emerald-400" : ""
                 }`}
               >
-                <span>{t.text}</span>
+                <span dir="ltr" className="font-en">
+                  {t.text}
+                </span>
                 <span className={`mt-1 text-[11px] font-semibold ${st ? st.text : "text-slate-400"}`}>
-                  {r ? `${ROLE_INFO[r].en} · ${ROLE_INFO[r].ar}` : "اضغط لتحديد الدور"}
+                  {r ? (
+                    <>
+                      <span dir="ltr" className="font-en">
+                        {ROLE_INFO[r].en}
+                      </span>
+                      {" · "}
+                      {ROLE_INFO[r].ar}
+                    </>
+                  ) : (
+                    "اضغط لتحديد الدور"
+                  )}
                 </span>
                 {checked && (
                   <span className={`absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full text-xs text-white ${right ? "bg-emerald-500" : "bg-rose-500"}`}>
@@ -742,7 +785,11 @@ function OrderItem({ n, item }: { n: number; item: { scrambled: string[]; correc
         style={{ direction: "ltr" }}
         className={`ltr-row mt-3 flex min-h-16 flex-wrap items-center gap-2 rounded-2xl border-2 border-dashed p-3 ${done ? "border-emerald-300 bg-white" : wrong ? "shake border-rose-300 bg-white" : "border-slate-300 bg-slate-50"}`}
       >
-        {shown.length === 0 && <span className="w-full text-center text-slate-400">اضغط على الكلمات بالترتيب الصحيح</span>}
+        {shown.length === 0 && (
+          <span dir="rtl" className="w-full text-center text-slate-400">
+            اضغط على الكلمات بالترتيب الصحيح
+          </span>
+        )}
         {shown.map((w, i) => (
           <button
             key={i}
@@ -783,6 +830,7 @@ function ComposeItem({ n, item }: { n: number; item: Extract<Exercise, { type: "
           <WordBlock text={item.v} role="V" label={false} />
           <span className="text-xl font-bold text-slate-300">+</span>
           <span
+            dir="ltr"
             className={`inline-flex min-w-28 items-center justify-center rounded-2xl border-2 px-4 py-2 font-en text-2xl font-bold transition ${
               active ? ROLE_STYLE.O.chip : "border-dashed border-emerald-300 text-emerald-300"
             }`}
@@ -796,6 +844,7 @@ function ComposeItem({ n, item }: { n: number; item: Extract<Exercise, { type: "
         {item.objects.map((o) => (
           <button
             key={o.en}
+            dir="ltr"
             onClick={() => {
               setPicked(o);
               setCustom("");
@@ -960,7 +1009,9 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
                   className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-right text-sm transition ${active ? "bg-slate-900 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}
                 >
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/20" : "bg-slate-100"}`}>{idx + 1}</span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[idx])}</span>
+                  <span className="truncate font-semibold">
+                    <Mixed text={slideTitle(SLIDES[idx])} />
+                  </span>
                   <span className="mr-auto text-base">{SLIDES[idx].mascot}</span>
                 </button>
               );
@@ -1039,7 +1090,10 @@ export default function Lesson1({ onExit }: { onExit: () => void }) {
           </button>
           <div className="min-w-0 flex-1">
             <div className="truncate text-sm font-bold text-slate-500">
-              {slide.section} · <span className="text-slate-800">{slideTitle(slide)}</span>
+              {slide.section} ·{" "}
+              <span className="text-slate-800">
+                <Mixed text={slideTitle(slide)} />
+              </span>
             </div>
             <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
               <div className="h-full rounded-full bg-gradient-to-l from-sky-500 via-orange-400 to-emerald-500 transition-all duration-500" style={{ width: `${progress}%` }} />

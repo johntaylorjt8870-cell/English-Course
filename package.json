@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "check:english-direction": "node scripts/check-english-direction.mjs"
+    "check:english-direction": "node scripts/check-english-direction.mjs",
+    "audit:english-direction": "node scripts/audit-render-direction.mjs"
   },
   "dependencies": {
     "clsx": "2.1.1",

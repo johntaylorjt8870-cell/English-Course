@@ -40,7 +40,7 @@ function tsxName(l) {
 }
 
 // ---------- 2) الدروس التي فيها نص مختلط يجب أن تستخدم LatinRuns ----------
-for (const l of ["lesson2", "lesson3", "lesson4", "lesson5", "lesson6", "lesson7", "lesson9"]) {
+for (const l of ["lesson1", "lesson2", "lesson3", "lesson4", "lesson5", "lesson6", "lesson7", "lesson9"]) {
   const tsx = src(l, tsxName(l));
   ok(tsx.includes("../../shared/bidi"), `${l}: must import LatinRuns from shared/bidi`);
 }
@@ -92,6 +92,13 @@ for (const l of lessons) {
 
 // ---------- 5) تجميعات LTR الهيكلية (كل وحدة إنجليزية داخل عازل LTR) ----------
 const LTR_SPOTS = [
+  ["lesson1", "Cover"],
+  ["lesson1", "RolesRow"],
+  ["lesson1", "Formula"],
+  ["lesson1", "SentenceBlocks"],
+  ["lesson1", "BuilderSlide"],
+  ["lesson1", "Steps"],
+  ["lesson1", "Patterns"],
   ["lesson2", "Cover"],
   ["lesson3", "PronounFlipRow"],
   ["lesson4", "Cover"],
@@ -110,7 +117,18 @@ for (const [l, fn] of LTR_SPOTS) {
   ok(body !== null && body.includes('dir="ltr"'), `${l}/${fn}: English unit must be wrapped with dir="ltr"`);
 }
 
-// ---------- 6) حراس المعنى: الافتراضيات المعقولة + جمع آلة الدرس 4 ----------
+// ---------- 6) محتوى الدرس 1: SVO + العبارات المختلطة تبقى كما هي ----------
+{
+  const d1 = src("lesson1", "data.ts");
+  const t1 = src("lesson1", tsxName("lesson1"));
+  ok(d1.includes('en: "Subject"'), "lesson1: ROLE_INFO must keep Subject");
+  ok(d1.includes('en: "Verb"'), "lesson1: ROLE_INFO must keep Verb");
+  ok(d1.includes('en: "Object"'), "lesson1: ROLE_INFO must keep Object");
+  ok(d1.includes("Subject · Verb · Object"), "lesson1: exercise subtitle must keep Subject · Verb · Object");
+  ok(t1.includes("function En") && t1.includes('dir="ltr"'), 'lesson1: En must isolate English with dir="ltr"');
+}
+
+// ---------- 7) حراس المعنى: الافتراضيات المعقولة + جمع آلة الدرس 4 ----------
 {
   const m4 = fnBody(src("lesson4", tsxName("lesson4")), "Machine");
   ok(m4.includes("setNi] = useState(1)"), "lesson4/Machine: default noun must be student (I am a student.)");

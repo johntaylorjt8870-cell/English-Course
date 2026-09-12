@@ -138,12 +138,12 @@ const CARDS: Card[] = [
   },
   {
     n: 10,
-    title: "الماضي البسيط",
-    en: "Past Simple · was/were & did",
-    emoji: "🕰️",
-    stats: `${L10_SLIDES.length} شريحة · 7 تمارين · الماضي المنتظم والشاذ وآلة الذكريات`,
+    title: "المضارع المستمر المتقدم",
+    en: "Present Continuous · Advanced Uses",
+    emoji: "📘",
+    stats: `${L10_SLIDES.length} شريحة · 9 مستويات · IQ200 وGrammar Detective`,
     href: "#/lesson/10",
-    grad: "from-amber-500 to-indigo-500",
+    grad: "from-cyan-500 to-indigo-500",
   },
 ];
 

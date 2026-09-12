@@ -147,18 +147,18 @@ export const QUIZZES: Record<number, QuizQ[]> = {
 
   // ---------------- الدرس 10 ----------------
   10: [
-    { ar: "أكمل: I ___ tired yesterday.", en: "I ___ tired yesterday.", opts: ["was", "were", "am", "is"], answer: 0, why: "مع I في الماضي نستخدم was." },
-    { ar: "أكمل: They ___ at home last night.", en: "They ___ at home last night.", opts: ["were", "was", "are", "is"], answer: 0, why: "They جمع ← were." },
-    { ar: "أكمل: She ___ football yesterday.", en: "She ___ football yesterday.", opts: ["played", "play", "playing", "plays"], answer: 0, why: "أمس ← ماضي: played." },
-    { ar: "أكمل: He ___ pizza last night.", en: "He ___ pizza last night.", opts: ["ate", "eated", "eat", "eating"], answer: 0, why: "eat شاذ: ate." },
-    { ar: "اختر صيغة الماضي للفعل study:", opts: ["studied", "studyed", "studys"], answer: 0, why: "ساكن + y ← ied: studied." },
-    { ar: "اختر صيغة الماضي للفعل stop:", opts: ["stopped", "stoped", "stoppped"], answer: 0, why: "مقطع واحد + ساكن بعد علة ← نضاعف p: stopped." },
-    { ar: "ما نفي الجملة: He played football.", en: "He played football.", opts: ["He didn't play football.", "He didn't played football.", "He wasn't play football.", "He don't play football."], answer: 0, why: "بعد didn't الفعل يعود أساسي: play." },
-    { ar: "ما سؤال الجملة: She visited Paris.", en: "She visited Paris.", opts: ["Did she visit Paris?", "Did she visited Paris?", "Was she visit Paris?", "Does she visit Paris?"], answer: 0, why: "Did تحمل الماضي — الفعل أساسي: visit." },
-    { ar: "أجب بـ Yes عن: Did you see him?", en: "Did you see him?", opts: ["Yes, I did.", "Yes, I was.", "Yes, I do.", "Yes, I am."], answer: 0, why: "السؤال بـ Did ← الجواب بـ did." },
-    { ar: "اختر الكلمة الدالة على الماضي:", opts: ["yesterday", "every day", "usually", "always"], answer: 0, why: "yesterday تعني أمس — انتهى." },
-    { ar: "أي جملة صحيحة؟", opts: ["I went to school yesterday.", "I goed to school yesterday.", "I go to school yesterday.", "I going to school yesterday."], answer: 0, why: "go شاذ: went." },
-    { ar: "صحح الخطأ: He didn't went to school.", en: "He didn't went to school.", opts: ["He didn't go to school.", "He didn't goed to school.", "He wasn't go to school.", "He didn't goes to school."], answer: 0, why: "بعد didn't الفعل أساسي: go." },
+    { ar: "أكمل: Sara _______ Japanese this year. (حدث خلال هذه الفترة)", en: "Sara _______ Japanese this year.", opts: ["is learning", "learns", "learning", "is learn"], answer: 0, why: "this year = فترة حالية → Present Continuous: is learning." },
+    { ar: "أكمل: Nabil usually lives in Cairo, but he _______ in Alexandria this week. (مؤقت)", en: "he _______ in Alexandria this week.", opts: ["is staying", "stays", "stay", "is stay"], answer: 0, why: "this week مؤقت → is staying، بينما usually lives = عادة Simple." },
+    { ar: "أي جملة تعبر عن الآن وليس العادة؟", opts: ["My brother is playing the piano.", "My brother plays the piano.", "My brother play the piano.", "My brother playing piano."], answer: 0, why: "is playing = يحدث الآن، plays = معلومة عامة/عادة." },
+    { ar: "اختر الجملة الصحيحة مع today (سياق مؤقت):", opts: ["I am studying English today.", "Today is Monday.", "I study English today."], answer: 0, why: "I am studying today = نشاط خلال اليوم الحالي (Continuous). Today is Monday ليست Continuous أصلًا." },
+    { ar: "أكمل: We _______ for the competition this week.", en: "We _______ for the competition this week.", opts: ["are preparing", "prepare", "is preparing", "prepares"], answer: 0, why: "this week كمؤقت → are preparing." },
+    { ar: "أين الخطأ؟ She is writeing a message.", en: "She is writeing a message.", opts: ["She is writing a message.", "She is write a message.", "She is writting a message."], answer: 0, why: "write → writing (احذف e)." },
+    { ar: "أين الخطأ؟ They are runing in the street.", en: "They are runing in the street.", opts: ["They are running in the street.", "They are run in street.", "They is running."], answer: 0, why: "run → running (مضاعفة n)." },
+    { ar: "أكمل النفي: She is watching television. → She _______ watching television.", en: "She _______ watching television.", opts: ["isn't", "doesn't", "don't", "not is"], answer: 0, why: "نفي Continuous: isn't + verb-ing، وليس doesn't." },
+    { ar: "ما السؤال الصحيح؟ She is reading.", en: "She is reading.", opts: ["Is she reading?", "Does she reading?", "Is she read?", "Does she read?"], answer: 0, why: "نقلب is: Is she reading? لا نستخدم Does مع ing." },
+    { ar: "اختر سؤال Wh الصحيح:", opts: ["What is she studying?", "What she is studying?", "What does she studying?", "What is she study?"], answer: 0, why: "Wh + am/is/are + subject + verb-ing: What is she studying?" },
+    { ar: "أي جملة صحيحة مع الأفعال الحالة؟", opts: ["I know the answer.", "I am knowing the answer.", "I am know the answer.", "I knows the answer."], answer: 0, why: "know فعل حالة لا يُستخدم مع Continuous — الصحيح I know." },
+    { ar: "قارن: I think you are right. vs I am thinking about the problem. ما الفرق؟", opts: ["think = رأي (Simple) / thinking = عملية الآن (Continuous)", "كلاهما نفس المعنى", "الأولى خطأ", "الثانية خطأ"], answer: 0, why: "think كرأي = Simple، thinking كعملية ذهنية الآن = Continuous — حسب المعنى." },
   ],
 
   // ---------------- الدرس 9 ----------------

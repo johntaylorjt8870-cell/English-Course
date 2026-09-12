@@ -1,115 +1,118 @@
 // ============================================================
-// الدرس 10 — الماضي البسيط Past Simple
+// الدرس 10 — Present Continuous — الاستخدامات المتقدمة والتحكم الكامل
+// المصدر الكامل محفوظ حرفيًا — لا تلخيص ولا إعادة صياغة
 // ============================================================
 
-export type WasForm = "was" | "were";
+export type BeForm = "am" | "is" | "are";
 
 export interface Subj10 {
   en: string;
   ar: string;
-  was: WasForm;
+  be: BeForm;
 }
 
 export const SUBJ10: Subj10[] = [
-  { en: "I", ar: "أنا", was: "was" },
-  { en: "You", ar: "أنت", was: "were" },
-  { en: "We", ar: "نحن", was: "were" },
-  { en: "They", ar: "هم", was: "were" },
-  { en: "He", ar: "هو", was: "was" },
-  { en: "She", ar: "هي", was: "was" },
-  { en: "It", ar: "هو / هي لغير العاقل", was: "was" },
-  { en: "Khalil", ar: "خليل", was: "was" },
-  { en: "Sara", ar: "سارة", was: "was" },
-  { en: "Omar", ar: "عمر", was: "was" },
+  { en: "I", ar: "أنا", be: "am" },
+  { en: "You", ar: "أنت", be: "are" },
+  { en: "We", ar: "نحن", be: "are" },
+  { en: "They", ar: "هم", be: "are" },
+  { en: "He", ar: "هو", be: "is" },
+  { en: "She", ar: "هي", be: "is" },
+  { en: "It", ar: "هو / هي لغير العاقل", be: "is" },
+  { en: "Mila", ar: "ميلا", be: "is" },
+  { en: "Sara", ar: "سارة", be: "is" },
+  { en: "Omar", ar: "عمر", be: "is" },
 ];
 
-export type PastRule = "add-ed" | "add-d" | "y-ied" | "double";
-export type VerbKind = "regular" | "irregular";
+export type IngRule = "add" | "drop-e" | "double";
 
 export interface Verb10 {
   base: string;
-  past: string;
-  kind: VerbKind;
-  rule?: PastRule;
+  ing: string;
+  rule: IngRule;
   ar: string;
 }
 
 export const VERBS10: Verb10[] = [
-  // منتظمة — أضف ed
-  { base: "play", past: "played", kind: "regular", rule: "add-ed", ar: "لعب" },
-  { base: "watch", past: "watched", kind: "regular", rule: "add-ed", ar: "شاهد" },
-  { base: "cook", past: "cooked", kind: "regular", rule: "add-ed", ar: "طبخ" },
-  { base: "visit", past: "visited", kind: "regular", rule: "add-ed", ar: "زار" },
-  { base: "work", past: "worked", kind: "regular", rule: "add-ed", ar: "عمل" },
-  { base: "help", past: "helped", kind: "regular", rule: "add-ed", ar: "ساعد" },
-  { base: "open", past: "opened", kind: "regular", rule: "add-ed", ar: "فتح" },
-  { base: "want", past: "wanted", kind: "regular", rule: "add-ed", ar: "أراد" },
-  // منتظمة — ينتهي بـ e → نضيف d فقط
-  { base: "live", past: "lived", kind: "regular", rule: "add-d", ar: "عاش / سكن" },
-  { base: "like", past: "liked", kind: "regular", rule: "add-d", ar: "أحب" },
-  { base: "close", past: "closed", kind: "regular", rule: "add-d", ar: "أغلق" },
-  { base: "smile", past: "smiled", kind: "regular", rule: "add-d", ar: "ابتسم" },
-  { base: "dance", past: "danced", kind: "regular", rule: "add-d", ar: "رقص" },
-  // منتظمة — ساكن + y → ied
-  { base: "study", past: "studied", kind: "regular", rule: "y-ied", ar: "درس" },
-  { base: "carry", past: "carried", kind: "regular", rule: "y-ied", ar: "حمل" },
-  { base: "try", past: "tried", kind: "regular", rule: "y-ied", ar: "حاول" },
-  { base: "cry", past: "cried", kind: "regular", rule: "y-ied", ar: "بكى" },
-  // منتظمة — مضاعفة الحرف الأخير
-  { base: "stop", past: "stopped", kind: "regular", rule: "double", ar: "توقف" },
-  { base: "plan", past: "planned", kind: "regular", rule: "double", ar: "خطط" },
-  { base: "drop", past: "dropped", kind: "regular", rule: "double", ar: "أسقط" },
-  // شاذة — الأكثر شيوعًا
-  { base: "go", past: "went", kind: "irregular", ar: "ذهب" },
-  { base: "eat", past: "ate", kind: "irregular", ar: "أكل" },
-  { base: "see", past: "saw", kind: "irregular", ar: "رأى" },
-  { base: "have", past: "had", kind: "irregular", ar: "امتلك / تناول" },
-  { base: "do", past: "did", kind: "irregular", ar: "فعل" },
-  { base: "make", past: "made", kind: "irregular", ar: "صنع" },
-  { base: "take", past: "took", kind: "irregular", ar: "أخذ" },
-  { base: "come", past: "came", kind: "irregular", ar: "جاء" },
-  { base: "write", past: "wrote", kind: "irregular", ar: "كتب" },
-  { base: "buy", past: "bought", kind: "irregular", ar: "اشترى" },
-  { base: "read", past: "read", kind: "irregular", ar: "قرأ" },
-  { base: "speak", past: "spoke", kind: "irregular", ar: "تحدث" },
-  { base: "drink", past: "drank", kind: "irregular", ar: "شرب" },
-  { base: "sleep", past: "slept", kind: "irregular", ar: "نام" },
-  { base: "feel", past: "felt", kind: "irregular", ar: "شعر" },
-  { base: "find", past: "found", kind: "irregular", ar: "وجد" },
+  // أضف ing فقط
+  { base: "play", ing: "playing", rule: "add", ar: "يلعب" },
+  { base: "watch", ing: "watching", rule: "add", ar: "يشاهد" },
+  { base: "read", ing: "reading", rule: "add", ar: "يقرأ" },
+  { base: "talk", ing: "talking", rule: "add", ar: "يتحدث" },
+  { base: "clean", ing: "cleaning", rule: "add", ar: "ينظف" },
+  { base: "jump", ing: "jumping", rule: "add", ar: "يقفز" },
+  { base: "visit", ing: "visiting", rule: "add", ar: "يزور" },
+  { base: "draw", ing: "drawing", rule: "add", ar: "يرسم" },
+  { base: "open", ing: "opening", rule: "add", ar: "يفتح" },
+  { base: "stay", ing: "staying", rule: "add", ar: "يقيم" },
+  { base: "work", ing: "working", rule: "add", ar: "يعمل" },
+  { base: "live", ing: "living", rule: "add", ar: "يعيش" },
+  { base: "prepare", ing: "preparing", rule: "drop-e", ar: "يُعد" },
+  { base: "learn", ing: "learning", rule: "add", ar: "يتعلم" },
+  // احذف e ثم أضف ing
+  { base: "write", ing: "writing", rule: "drop-e", ar: "يكتب" },
+  { base: "make", ing: "making", rule: "drop-e", ar: "يصنع" },
+  { base: "dance", ing: "dancing", rule: "drop-e", ar: "يرقص" },
+  { base: "drive", ing: "driving", rule: "drop-e", ar: "يقود" },
+  { base: "close", ing: "closing", rule: "drop-e", ar: "يغلق" },
+  { base: "take", ing: "taking", rule: "drop-e", ar: "يأخذ" },
+  // ضاعف الحرف الأخير
+  { base: "run", ing: "running", rule: "double", ar: "يركض" },
+  { base: "sit", ing: "sitting", rule: "double", ar: "يجلس" },
+  { base: "swim", ing: "swimming", rule: "double", ar: "يسبح" },
+  { base: "stop", ing: "stopping", rule: "double", ar: "يتوقف" },
+  { base: "get", ing: "getting", rule: "double", ar: "يحصل" },
+  { base: "knock", ing: "knocking", rule: "add", ar: "يطرق" },
+  // حالات خاصة
+  { base: "see", ing: "seeing", rule: "add", ar: "يرى" },
+  { base: "agree", ing: "agreeing", rule: "add", ar: "يوافق" },
+  { base: "hear", ing: "hearing", rule: "add", ar: "يسمع" },
+  { base: "spend", ing: "spending", rule: "add", ar: "يقضي" },
+  { base: "study", ing: "studying", rule: "add", ar: "يدرس" },
 ];
 
-export function pastOf(base: string): string {
-  return VERBS10.find((v) => v.base === base)?.past ?? base + "ed";
+export function ingOf(base: string): string {
+  return VERBS10.find((v) => v.base === base)?.ing ?? base + "ing";
 }
 
-// -------------------- كلمات الماضي --------------------
-export const PAST_WORDS: { en: string; ar: string }[] = [
-  { en: "yesterday", ar: "أمس" },
-  { en: "last night", ar: "الليلة الماضية" },
-  { en: "last week", ar: "الأسبوع الماضي" },
-  { en: "last month", ar: "الشهر الماضي" },
-  { en: "last year", ar: "السنة الماضية" },
-  { en: "two days ago", ar: "قبل يومين" },
-  { en: "a week ago", ar: "قبل أسبوع" },
-  { en: "in 2019", ar: "في عام 2019" },
-  { en: "when I was a child", ar: "عندما كنت طفلًا" },
-  { en: "then", ar: "حينها / بعد ذلك" },
+// -------------------- كلمات Present Continuous المتقدمة --------------------
+export const ADV_SIGNALS: { en: string; ar: string }[] = [
+  { en: "now", ar: "الآن" },
+  { en: "right now", ar: "الآن تمامًا" },
+  { en: "at the moment", ar: "في هذه اللحظة" },
+  { en: "currently", ar: "حاليًا" },
+  { en: "today", ar: "اليوم" },
+  { en: "this week", ar: "هذا الأسبوع" },
+  { en: "this month", ar: "هذا الشهر" },
+  { en: "this year", ar: "هذه السنة" },
+  { en: "these days", ar: "هذه الأيام" },
+  { en: "Look!", ar: "انظر!" },
+  { en: "Listen!", ar: "اسمع!" },
 ];
 
-// -------------------- مَشاهد «حدث وانتهى» --------------------
-export const PAST_SCENES: { subj: string; base: string; o?: string; ar: string; emoji: string }[] = [
-  { subj: "I", base: "visit", o: "my grandmother yesterday", ar: "زرت جدتي أمس.", emoji: "👵" },
-  { subj: "She", base: "cook", o: "dinner last night", ar: "هي طبخت العشاء الليلة الماضية.", emoji: "🍲" },
-  { subj: "They", base: "play", o: "football last week", ar: "هم لعبوا كرة القدم الأسبوع الماضي.", emoji: "⚽" },
-  { subj: "He", base: "watch", o: "a movie two days ago", ar: "هو شاهد فيلمًا قبل يومين.", emoji: "🎬" },
-  { subj: "We", base: "study", o: "English last year", ar: "نحن درسنا الإنجليزية السنة الماضية.", emoji: "📖" },
-  { subj: "You", base: "buy", o: "a new phone yesterday", ar: "أنت اشتريت هاتفًا جديدًا أمس.", emoji: "📱" },
-  { subj: "Sara", base: "go", o: "to Paris last month", ar: "سارة ذهبت إلى باريس الشهر الماضي.", emoji: "🗼" },
-  { subj: "He", base: "eat", o: "pizza last night", ar: "هو أكل بيتزا الليلة الماضية.", emoji: "🍕" },
+// -------------------- الأفعال الحالة (Stative) --------------------
+export const STATIVE_VERBS: { en: string; ar: string }[] = [
+  { en: "know", ar: "يعرف" },
+  { en: "like", ar: "يحب" },
+  { en: "love", ar: "يحب" },
+  { en: "hate", ar: "يكره" },
+  { en: "understand", ar: "يفهم" },
+  { en: "want", ar: "يريد" },
+  { en: "need", ar: "يحتاج" },
+  { en: "believe", ar: "يعتقد" },
+  { en: "remember", ar: "يتذكر" },
+];
+
+// -------------------- مشاهد متقدمة --------------------
+export const ADV_SCENES: { subj: string; base: string; o?: string; ar: string; emoji: string }[] = [
+  { subj: "Mila", base: "open", o: "the window", ar: "ميلا تفتح النافذة الآن.", emoji: "🪟" },
+  { subj: "I", base: "read", o: "a book this week", ar: "أنا أقرأ كتابًا ممتعًا جدًا هذا الأسبوع.", emoji: "📖" },
+  { subj: "Sara", base: "learn", o: "Japanese this year", ar: "سارة تتعلم اليابانية هذا العام.", emoji: "🇯🇵" },
+  { subj: "He", base: "stay", o: "in Alexandria this week", ar: "هو يقيم في الإسكندرية هذا الأسبوع.", emoji: "🏖️" },
 ];
 
 // -------------------- بلوكات --------------------
-export type Role10 = "s" | "be" | "v" | "aux" | "nt" | "o" | "adv";
+export type Role10 = "s" | "be" | "v" | "o" | "adv" | "nt" | "aux";
 
 export interface Part10 {
   text: string;
@@ -118,12 +121,12 @@ export interface Part10 {
 
 export const ROLE10_AR: Record<Role10, string> = {
   s: "الفاعل",
-  be: "was / were",
-  v: "الفعل ماضي",
-  aux: "الفعل المساعد",
-  nt: "النفي",
+  be: "am / is / are",
+  v: "الفعل + ing",
   o: "المفعول به",
-  adv: "ظرف زمان",
+  adv: "الظرف",
+  nt: "النفي",
+  aux: "المساعد",
 };
 
 export type Block10 =
@@ -133,55 +136,64 @@ export type Block10 =
   | { type: "ok"; en: string; ar?: string }
   | { type: "bad"; en: string; why?: string }
   | { type: "note"; emoji: string; text: string }
-  | { type: "wasTabs" }
-  | { type: "wasMnemonic" }
-  | { type: "pastTabs" }
-  | { type: "irregularGrid" }
-  | { type: "pastScenes" }
+  | { type: "beTabs" }
+  | { type: "beMnemonic" }
+  | { type: "ingTabs" }
+  | { type: "ingTrap" }
   | { type: "signalWords" }
-  | { type: "vsPresent" }
-  | { type: "didTransform" }
-  | { type: "shortAnswers" };
+  | { type: "placeWords" }
+  | { type: "temporaryCompare" }
+  | { type: "vsSimpleAdvanced" }
+  | { type: "stativeGrid" }
+  | { type: "thinkCompare" }
+  | { type: "whQuestions" }
+  | { type: "shortAnswers" }
+  | { type: "periodNowCompare" };
 
 export type Exercise10 =
-  | { type: "choose"; items: { s: string; v: string; o?: string; ar: string; opts: string[]; answer: number }[] }
-  | { type: "wasChoose"; items: { s: string; ar: string; opts: string[]; answer: number }[] }
-  | { type: "past"; items: { verb: string; opts: string[]; answer: number }[] }
-  | { type: "signal"; items: { stem: string; ar: string; opts: string[]; answer: number }[] }
+  | { type: "chooseTense"; items: { stem: string; ar: string; opts: string[]; answer: number }[] }
+  | { type: "amIsAreFill"; items: { stem: string; ar: string; verb: string; opts: string[]; answer: number }[] }
+  | { type: "negTransform"; items: { aff: string; neg: string }[] }
+  | { type: "qTransform"; items: { aff: string; q: string }[] }
+  | { type: "whChoose"; items: { q: string; a: string; opts: string[]; answer: number }[] }
   | { type: "fix"; items: { wrong: string; correct: string; why: string }[] }
-  | { type: "order"; items: { words: string[]; correct: string[]; ar: string; q?: boolean }[] }
-  | { type: "usage"; items: { en: string; ar: string; answer: "past" | "present" }[] };
+  | { type: "tenseChooseExplain"; items: { en: string; ar: string; opts: string[]; answer: number }[] }
+  | { type: "iq"; items: IQ10Item[] }
+  | { type: "detective" }
+  | { type: "order"; items: { words: string[]; correct: string[]; ar: string; q?: boolean }[] };
 
-export const USAGE10_AR: Record<"past" | "present", string> = {
-  past: "ماضٍ انتهى",
-  present: "عادة / حاضر",
-};
+export type IQ10Item =
+  | { kind: "mcq"; q: string; opts: string[]; answer: number; why: string }
+  | { kind: "text"; q: string; a: string }
+  | { kind: "order"; words: string[]; correct: string[]; ar: string };
 
 export type Slide10 = { section: string; mascot: string } & (
   | { kind: "cover" }
   | { kind: "objectives" }
   | { kind: "lesson"; step?: string; title: string; lead?: string; blocks: Block10[]; tip?: string }
   | { kind: "ex"; badge: string; title: string; subtitle: string; ex: Exercise10 }
-  | { kind: "iq"; title: string }
-  | { kind: "builder"; title: string }
+  | { kind: "challenge"; title: string }
+  | { kind: "detective"; title: string }
   | { kind: "summary"; title: string }
   | { kind: "quiz"; title: string }
   | { kind: "closing"; title: string }
 );
 
 const A = "البداية";
-const B = "الفكرة";
-const C = "التكوين";
-const D = "القواعد";
-const E = "الماضي";
-const F = "النفي والسؤال";
-const G = "التمارين";
-const H = "الخاتمة";
+const B = "الاستخدامات";
+const C = "الفروق الدقيقة";
+const D = "الكلمات الدالة";
+const E = "النفي والسؤال";
+const F = "القواعد";
+const G = "الحالات الخاصة";
+const H = "التمارين";
+const I = "التحديات";
+const J = "الخاتمة";
 
 const P = (text: string, role: Role10): Part10 => ({ text, role });
 
 export const SLIDES: Slide10[] = [
-  { kind: "cover", section: A, mascot: "🕰️" },
+  { kind: "cover", section: A, mascot: "📘" },
   { kind: "objectives", section: A, mascot: "🎯" },
 
   {
@@ -189,365 +201,534 @@ export const SLIDES: Slide10[] = [
     section: B,
     mascot: "💡",
     step: "1",
-    title: "ما هو Past Simple؟",
-    lead: "نستخدمه عندما نتحدث عن شيء حدث وانتهى في الماضي — ليس الآن وليس كعادة مستمرة.",
+    title: "الاستخدام الأول: شيء يحدث الآن",
+    lead: "هذا هو الاستخدام الأساسي الذي تعلمناه — حدث تراه أمامك يحدث في هذه اللحظة.",
     blocks: [
-      { type: "sentence", parts: [P("I", "s"), P("played", "v"), P("football", "o"), P("yesterday", "adv")], ar: "أنا لعبت كرة القدم أمس." },
-      { type: "note", emoji: "⏳", text: "الفعل حدث في وقت محدد وانتهى — نعرف متى حدث." },
-      { type: "list", items: ["حدث واحد انتهى في الماضي.", "عادة قديمة لم تعد تحدث.", "سلسلة أحداث حدثت بالتتابع.", "حقيقة تاريخية أو قصة قصيرة."] },
-      { type: "text", text: "الماضي البسيط هو أكثر زمن نستخدمه لسرد ما حدث: ماذا فعلنا أمس، وأين ذهبنا الأسبوع الماضي، وماذا أكلنا الليلة الماضية." },
+      { type: "sentence", parts: [P("Mila", "s"), P("is", "be"), P("opening", "v"), P("the window", "o")], ar: "ميلا تفتح النافذة الآن." },
+      { type: "sentence", parts: [P("The children", "s"), P("are", "be"), P("drawing", "v"), P("dinosaurs", "o")], ar: "الأطفال يرسمون الديناصورات الآن." },
+      { type: "sentence", parts: [P("I", "s"), P("am", "be"), P("talking", "v"), P("to my teacher", "o")], ar: "أنا أتحدث مع معلمي الآن." },
+      { type: "note", emoji: "🧠", text: "اسأل: [[هل أستطيع أن أتخيل الحدث يحدث أمامي الآن؟]] إذا نعم، فـ [[Present Continuous]] احتمال قوي جدًا." },
     ],
   },
   {
     kind: "lesson",
     section: B,
-    mascot: "🧩",
+    mascot: "📅",
     step: "2",
-    title: "متى نستخدمه؟ أربع حالات أساسية",
-    lead: "كل استخدام له طعم الماضي — وليس طعم العادة الحالية.",
+    title: "الاستخدام الثاني: شيء يحدث هذه الفترة",
+    lead: "وهنا تبدأ الصعوبة الحقيقية — Present Continuous لا يعني دائمًا \"في هذه الثانية\".",
     blocks: [
-      { type: "sentence", parts: [P("I", "s"), P("visited", "v"), P("my uncle", "o"), P("last week", "adv")], ar: "زرت عمّي الأسبوع الماضي.", note: "حدث واحد انتهى" },
-      { type: "sentence", parts: [P("She", "s"), P("lived", "v"), P("in Aleppo", "o"), P("when she was a child", "adv")], ar: "هي عاشت في حلب عندما كانت طفلة.", note: "عادة قديمة" },
-      { type: "sentence", parts: [P("We", "s"), P("woke up", "v"), P("then ate breakfast", "o")], ar: "استيقظنا ثم تناولنا الفطور.", note: "سلسلة أحداث" },
-      { type: "sentence", parts: [P("The phone", "s"), P("rang", "v"), P("suddenly", "adv")], ar: "رنّ الهاتف فجأة.", note: "حدث قصير قطع حدثًا آخر" },
-      { type: "note", emoji: "📐", text: "التركيب الأساسي: [[Subject + Verb (past) + ...]] — مثال: [[I played · She went · They visited]]" },
+      { type: "text", text: "يمكن أن نستخدمه لشيء يحدث خلال هذه الفترة، حتى لو لم يكن يحدث في اللحظة التي نتكلم فيها." },
+      { type: "sentence", parts: [P("I", "s"), P("am", "be"), P("reading", "v"), P("a very interesting book", "o"), P("this week", "adv")], ar: "أنا أقرأ كتابًا ممتعًا جدًا هذا الأسبوع." },
+      { type: "note", emoji: "📌", text: "ليس من الضروري أن تكون ممسكًا بالكتاب في هذه اللحظة. المعنى: [[هذه الأيام أنا مشغول بقراءة هذا الكتاب.]]" },
+      { type: "sentence", parts: [P("Sara", "s"), P("is", "be"), P("learning", "v"), P("Japanese", "o"), P("this year", "adv")], ar: "سارة تتعلم اليابانية هذا العام." },
+      { type: "note", emoji: "📌", text: "هي ليست بالضرورة تدرس اليابانية في هذه اللحظة. لكنها تمر حاليًا بفترة تعلم اللغة اليابانية." },
+      { type: "note", emoji: "⭐", text: "إذن: [[Present Continuous]] يمكن أن يعني: [[\"يحدث الآن\"]] أو: [[\"يحدث خلال هذه الفترة الحالية\"]]" },
     ],
   },
   {
     kind: "lesson",
-    section: B,
-    mascot: "🪞",
+    section: C,
+    mascot: "⚖️",
     step: "3",
-    title: "الماضي مع Verb to be: was / were",
-    lead: "عندما لا يوجد فعل حركة — نستخدم was أو were كفعل الكينونة في الماضي.",
+    title: "الفرق بين الآن وهذه الفترة",
     blocks: [
-      { type: "sentence", parts: [P("I", "s"), P("was", "be"), P("tired", "o"), P("yesterday", "adv")], ar: "كنت متعبًا أمس." },
-      { type: "sentence", parts: [P("They", "s"), P("were", "be"), P("happy", "o"), P("last night", "adv")], ar: "كانوا سعداء الليلة الماضية." },
-      { type: "sentence", parts: [P("She", "s"), P("was", "be"), P("at home", "o"), P("in the morning", "adv")], ar: "كانت في المنزل صباحًا." },
-      { type: "note", emoji: "📖", text: "[[was]] للمفرد [[I / He / She / It]] — و [[were]] للجمع والمخاطب [[You / We / They]]" },
-      { type: "wasTabs" },
+      { type: "sentence", parts: [P("I", "s"), P("am", "be"), P("eating", "v"), P("lunch", "o"), P("now", "adv")], ar: "أنا أتناول الغداء الآن.", note: "يحدث في هذه اللحظة" },
+      { type: "sentence", parts: [P("I", "s"), P("am", "be"), P("taking", "v"), P("a photography course", "o"), P("this month", "adv")], ar: "أنا آخذ دورة تصوير هذا الشهر.", note: "خلال هذه الفترة" },
+      { type: "note", emoji: "🧠", text: "هذه نقطة IQ مهمة: [[Present Continuous]] لا يعني دائمًا: [[\"في هذه الثانية\"]] بل يمكن أن يعني: [[\"هذه الأيام / هذه الفترة / حاليًا\"]]." },
+      { type: "periodNowCompare" },
     ],
   },
   {
     kind: "lesson",
-    section: B,
-    mascot: "🧠",
+    section: C,
+    mascot: "⏳",
     step: "4",
-    title: "احفظ was / were بهذه الطريقة",
-    blocks: [{ type: "wasMnemonic" }],
+    title: "استخدام مهم: شيء مؤقت",
+    lead: "Present Continuous يستخدم أيضًا للأشياء المؤقتة — قارن مع العادة المستقرة:",
+    blocks: [
+      { type: "sentence", parts: [P("Nabil", "s"), P("usually lives", "v"), P("in Cairo", "o")], ar: "نبيل يعيش عادةً في القاهرة،" },
+      { type: "sentence", parts: [P("he", "s"), P("is", "be"), P("staying", "v"), P("in Alexandria", "o"), P("this week", "adv")], ar: "لكنه يقيم في الإسكندرية هذا الأسبوع." },
+      {
+        type: "note",
+        emoji: "🔍",
+        text: "[[usually lives]] → عادة · [[is staying]] → وضع مؤقت حاليًا — وهذا مثال ممتاز على الفرق بين الزمنين.",
+      },
+      { type: "sentence", parts: [P("My aunt", "s"), P("works", "v"), P("in a hospital", "o")], ar: "عمتي تعمل في مستشفى،" },
+      { type: "sentence", parts: [P("she", "s"), P("is", "be"), P("working", "v"), P("from home", "o"), P("this week", "adv")], ar: "لكنها تعمل من المنزل هذا الأسبوع." },
+      { type: "note", emoji: "🔍", text: "[[work]] → حقيقة / وضع عام · [[is working]] → وضع مؤقت هذه الفترة" },
+      { type: "temporaryCompare" },
+    ],
+  },
+  {
+    kind: "lesson",
+    section: C,
+    mascot: "🆚",
+    step: "5",
+    title: "Present Simple vs Present Continuous",
+    lead: "هذه أهم مقارنة في الدرس — احفظها كقاعدة ذهبية:",
+    blocks: [
+      { type: "vsSimpleAdvanced" },
+      { type: "sentence", parts: [P("Omar", "s"), P("rides", "v"), P("his bicycle", "o"), P("to school", "adv"), P("every day", "adv")], ar: "عمر يركب دراجته إلى المدرسة كل يوم.", note: "روتين" },
+      { type: "sentence", parts: [P("Omar", "s"), P("is", "be"), P("riding", "v"), P("the bus", "o"), P("this week", "adv")], ar: "عمر يركب الحافلة هذا الأسبوع.", note: "وضع مؤقت" },
+      { type: "note", emoji: "💡", text: "[[Present Simple]]: عادة / روتين / حقيقة / شيء متكرر / شيء مستقر · [[Present Continuous]]: شيء يحدث الآن / شيء يحدث هذه الفترة / شيء مؤقت" },
+    ],
+  },
+  {
+    kind: "lesson",
+    section: C,
+    mascot: "🧠",
+    step: "6",
+    title: "مثال ذكي جدًا 🧠",
+    blocks: [
+      { type: "sentence", parts: [P("My brother", "s"), P("plays", "v"), P("the piano", "o")], ar: "أخي يعزف البيانو.", note: "معلومة عامة" },
+      { type: "text", text: "يعني: أخي يعزف البيانو. هذه معلومة عامة عن أخيك." },
+      { type: "sentence", parts: [P("My brother", "s"), P("is", "be"), P("playing", "v"), P("the piano", "o")], ar: "أخي يعزف البيانو الآن.", note: "يحدث الآن" },
+      { type: "note", emoji: "🔥", text: "لاحظ أن تغييرًا صغيرًا جدًا غيّر معنى الجملة. [[plays]] → عادة / قدرة / نشاط عام · [[is playing]] → يحدث الآن" },
+    ],
+  },
+  {
+    kind: "lesson",
+    section: C,
+    mascot: "🚨",
+    step: "7",
+    title: "لا تعتمد على كلمة واحدة فقط!",
+    lead: "هذه مهارة مهمة جدًا — الكلمة الدالة تساعدك، لكنها ليست دائمًا كافية. اقرأ المعنى كاملًا.",
+    blocks: [
+      { type: "sentence", parts: [P("Today", "adv"), P("is", "be"), P("Monday", "o")], ar: "اليوم يوم الاثنين." },
+      { type: "note", emoji: "⚠️", text: "هذه ليست [[Present Continuous]] أصلًا — رغم وجود [[today]]." },
+      { type: "sentence", parts: [P("I", "s"), P("study", "v"), P("English", "o"), P("every day", "adv")], ar: "أنا أدرس الإنجليزية كل يوم.", note: "Present Simple" },
+      { type: "sentence", parts: [P("I", "s"), P("am", "be"), P("studying", "v"), P("English", "o"), P("today", "adv")], ar: "أنا أدرس الإنجليزية اليوم.", note: "Present Continuous — نشاط خلال اليوم الحالي" },
+      { type: "note", emoji: "⭐", text: "القاعدة: [[الكلمة الدالة تساعدك، لكنها ليست دائمًا كافية. اقرأ المعنى كاملًا.]]" },
+    ],
   },
 
   {
     kind: "lesson",
-    section: C,
-    mascot: "✏️",
-    step: "5",
-    title: "الأفعال المنتظمة: كيف نكوّن الماضي؟",
-    lead: "معظم الأفعال منتظمة — نضيف ed بصيغ مختلفة حسب نهاية الفعل.",
+    section: D,
+    mascot: "🔑",
+    step: "8",
+    title: "كلمات مهمة مع Present Continuous",
     blocks: [
-      { type: "sentence", parts: [P("I", "s"), P("played", "v"), P("chess", "o"), P("yesterday", "adv")], ar: "لعبت الشطرنج أمس." },
-      { type: "sentence", parts: [P("He", "s"), P("watched", "v"), P("TV", "o"), P("last night", "adv")], ar: "شاهد التلفاز الليلة الماضية." },
-      { type: "note", emoji: "📌", text: "القاعدة العامة: [[play → played]] · [[watch → watched]] · [[visit → visited]]" },
-      { type: "pastTabs" },
-    ],
-  },
-  {
-    kind: "lesson",
-    section: C,
-    mascot: "🅰️",
-    step: "6",
-    title: "تفصيل القواعد الأربع",
-    lead: "كل قاعدة لها منطق صوتي وكتابي — احفظها مرة واحدة وتطبقها دائمًا:",
-    blocks: [
-      { type: "list", items: ["ينتهي بحرف عادي ← نضيف ed: play → played · watch → watched."] },
-      { type: "sentence", parts: [P("They", "s"), P("played", "v"), P("football", "o")], ar: "لعبوا كرة القدم." },
-      { type: "list", items: ["ينتهي بـ e ← نضيف d فقط: live → lived · like → liked · close → closed."] },
-      { type: "sentence", parts: [P("She", "s"), P("lived", "v"), P("in Damascus", "o")], ar: "سكنت في دمشق." },
-      { type: "list", items: ["حرف ساكن + y ← نحذف y ونضع ied: study → studied · cry → cried · carry → carried."] },
-      { type: "sentence", parts: [P("He", "s"), P("studied", "v"), P("English", "o"), P("last year", "adv")], ar: "درس الإنجليزية السنة الماضية." },
-      { type: "note", emoji: "⚠️", text: "لكن: [[play → played]] (قبل y حرف علة a) — لا نحذف y. وكذلك [[enjoy → enjoyed]]." },
-      { type: "list", items: ["مقطع واحد + ساكن بعد علة ← نضاعف الحرف الأخير: stop → stopped · plan → planned · drop → dropped."] },
-      { type: "sentence", parts: [P("He", "s"), P("stopped", "v"), P("the car", "o")], ar: "أوقف السيارة." },
-      { type: "bad", en: "He stoped the car.", why: "ننسى مضاعفة الحرف p — الصحيح: stopped" },
+      { type: "signalWords" },
+      { type: "sentence", parts: [P("We", "s"), P("are", "be"), P("preparing", "v"), P("for the competition", "o"), P("this week", "adv")], ar: "نحن نستعد للمسابقة هذا الأسبوع." },
+      { type: "sentence", parts: [P("My cousin", "s"), P("is", "be"), P("staying", "v"), P("with us", "o"), P("these days", "adv")], ar: "ابن عمي يقيم معنا هذه الأيام." },
     ],
   },
   {
     kind: "lesson",
     section: D,
-    mascot: "⚡",
-    step: "7",
-    title: "الأفعال الشاذة: لا قاعدة — حفظ",
-    lead: "حوالي ثلث الأفعال الأكثر استخدامًا شاذة — شكلها يتغير تمامًا في الماضي. لا تضيف ed.",
+    mascot: "📍",
+    step: "9",
+    title: "مكان الكلمات داخل الجملة",
     blocks: [
-      { type: "sentence", parts: [P("I", "s"), P("went", "v"), P("to school", "o"), P("yesterday", "adv")], ar: "ذهبت إلى المدرسة أمس." },
-      { type: "sentence", parts: [P("She", "s"), P("ate", "v"), P("pizza", "o"), P("last night", "adv")], ar: "أكلت بيتزا الليلة الماضية." },
-      { type: "sentence", parts: [P("They", "s"), P("saw", "v"), P("a movie", "o"), P("two days ago", "adv")], ar: "شاهدوا فيلمًا قبل يومين." },
-      { type: "note", emoji: "🧠", text: "[[go → went]] · [[eat → ate]] · [[see → saw]] · [[have → had]] · [[do → did]] · [[make → made]] · [[take → took]] · [[come → came]]" },
-      { type: "irregularGrid" },
-      { type: "note", emoji: "📌", text: "انتبه: [[read]] تُكتب نفسها في الماضي لكن تُلفظ [[red]] — المعنى يتغير بالسياق والزمن المذكور." },
-    ],
-  },
-  { kind: "lesson", section: D, mascot: "🗂️", step: "8", title: "جرّب القواعد بنفسك", blocks: [{ type: "pastTabs" }] },
-  { kind: "lesson", section: D, mascot: "📚", step: "9", title: "بطاقات الحفظ السريع", blocks: [{ type: "irregularGrid" }] },
-
-  {
-    kind: "lesson",
-    section: E,
-    mascot: "👀",
-    step: "10",
-    title: "كلمات دالة على الماضي",
-    lead: "هذه الكلمات تخبرنا أن الفعل حدث وانتهى — وليس الآن:",
-    blocks: [{ type: "signalWords" }],
-  },
-  {
-    kind: "lesson",
-    section: E,
-    mascot: "📸",
-    step: "11",
-    title: "ماذا حدث أمس؟ اضغط لترى المشهد",
-    lead: "تخيّل أنك تتصفح ألبوم صور الأسبوع الماضي:",
-    blocks: [{ type: "pastScenes" }],
-  },
-  {
-    kind: "lesson",
-    section: E,
-    mascot: "⚖️",
-    step: "12",
-    title: "Past Simple أم Present Simple؟",
-    lead: "لا تخلط بينهما — الآن vs انتهى:",
-    blocks: [
-      { type: "vsPresent" },
-      { type: "note", emoji: "💬", text: "[[every day / usually / always]] ← عادة ← [[Present Simple]] · [[yesterday / last week / two days ago]] ← انتهى ← [[Past Simple]]" },
+      { type: "placeWords" },
+      { type: "sentence", parts: [P("I", "s"), P("am", "be"), P("doing", "v"), P("my homework", "o"), P("now", "adv")], ar: "أنا أحل واجبي الآن.", note: "غالبًا في النهاية" },
+      { type: "sentence", parts: [P("Now", "adv"), P("I", "s"), P("am", "be"), P("doing", "v"), P("my homework", "o")], ar: "الآن أنا أحل واجبي.", note: "يمكن في البداية — كلاهما ممكن" },
+      { type: "sentence", parts: [P("She", "s"), P("is", "be"), P("currently", "adv"), P("working", "v"), P("on a project", "o")], ar: "هي تعمل حاليًا على مشروع." },
+      { type: "sentence", parts: [P("They", "s"), P("are", "be"), P("practicing", "v"), P("for the show", "o"), P("this week", "adv")], ar: "هم يتدربون للعرض هذا الأسبوع." },
+      { type: "sentence", parts: [P("He", "s"), P("is", "be"), P("spending", "v"), P("more time", "o"), P("with his family", "o"), P("these days", "adv")], ar: "هو يقضي وقتًا أطول مع عائلته هذه الأيام." },
     ],
   },
 
   {
     kind: "lesson",
-    section: F,
+    section: E,
     mascot: "🚫",
-    step: "13",
-    title: "النفي في الماضي: Subject + didn't + Verb (base)",
-    lead: "نستخدم didn't مع كل الفاعلين — والفعل يعود لشكله الأساسي بدون أي تغيير.",
+    step: "10",
+    title: "النفي بالتفصيل",
+    lead: "القاعدة: Subject + am/is/are + not + verb-ing",
     blocks: [
-      { type: "sentence", parts: [P("I", "s"), P("didn't", "aux"), P("play", "v"), P("football", "o"), P("yesterday", "adv")], ar: "لم ألعب كرة القدم أمس." },
-      { type: "sentence", parts: [P("She", "s"), P("didn't", "aux"), P("eat", "v"), P("pizza", "o"), P("last night", "adv")], ar: "هي لم تأكل بيتزا الليلة الماضية.", note: "eat وليس ate!" },
-      { type: "sentence", parts: [P("They", "s"), P("didn't", "aux"), P("watch", "v"), P("TV", "o")], ar: "هم لم يشاهدوا التلفاز." },
-      { type: "note", emoji: "📐", text: "التركيب: [[Subject + didn't + Verb (base)]] — مثال: [[I didn't go · She didn't play · They didn't visit]]" },
-      { type: "bad", en: "He didn't went to school.", why: "بعد didn't الفعل يعود أساسي: go" },
-      { type: "ok", en: "He didn't go to school.", ar: "لم يذهب إلى المدرسة." },
-      { type: "didTransform" },
+      { type: "sentence", parts: [P("I", "s"), P("am", "be"), P("not", "nt"), P("sleeping", "v")], ar: "أنا لا أنام." },
+      { type: "sentence", parts: [P("He", "s"), P("is", "be"), P("not", "nt"), P("studying", "v")], ar: "هو لا يدرس." },
+      { type: "sentence", parts: [P("She", "s"), P("is", "be"), P("not", "nt"), P("driving", "v")], ar: "هي لا تقود." },
+      { type: "sentence", parts: [P("We", "s"), P("are", "be"), P("not", "nt"), P("joking", "v")], ar: "نحن لا نمزح." },
+      { type: "sentence", parts: [P("They", "s"), P("are", "be"), P("not", "nt"), P("waiting", "v")], ar: "هم لا ينتظرون." },
+      { type: "note", emoji: "✂️", text: "الاختصارات: [[is not → isn't]] · [[are not → aren't]] · [[I am not → I'm not]]" },
+      { type: "sentence", parts: [P("She", "s"), P("isn't", "be"), P("watching", "v"), P("television", "o")], ar: "هي لا تشاهد التلفاز." },
+      { type: "sentence", parts: [P("They", "s"), P("aren't", "be"), P("playing", "v"), P("outside", "o")], ar: "هم لا يلعبون في الخارج." },
+      { type: "sentence", parts: [P("I'm", "s"), P("not", "nt"), P("using", "v"), P("my phone", "o")], ar: "أنا لا أستخدم هاتفي." },
+      { type: "note", emoji: "⭐", text: "لاحظ: لا نستخدم [[don't / doesn't]] هنا. نقول: [[He isn't running. ✅]] وليس: [[He doesn't running. ❌]]" },
     ],
   },
   {
     kind: "lesson",
-    section: F,
+    section: E,
     mascot: "❓",
-    step: "14",
-    title: "السؤال في الماضي: Did + Subject + Verb (base)؟",
-    lead: "نضع Did في البداية — ونعيد الفعل لشكله الأساسي:",
+    step: "11",
+    title: "السؤال بالتفصيل",
+    lead: "نأخذ am / is / are ونضعها في البداية — نقلب:",
     blocks: [
-      { type: "sentence", parts: [P("Did", "aux"), P("you", "s"), P("play", "v"), P("football", "o"), P("yesterday", "adv")], ar: "هل لعبت كرة القدم أمس؟", q: true },
-      { type: "sentence", parts: [P("Did", "aux"), P("she", "s"), P("eat", "v"), P("pizza", "o")], ar: "هل أكلت بيتزا؟", q: true },
-      { type: "note", emoji: "🚨", text: "القاعدة الذهبية: [[Did]] تحمل الماضي — لذلك الفعل بعده دائمًا أساسي: [[Did you go? · Did she see? · Did they play?]]" },
-      { type: "bad", en: "Did she played football?", why: "بعد Did لا نضع ed أبدًا" },
-      { type: "ok", en: "Did she play football?", ar: "هل لعبت كرة القدم؟" },
+      { type: "sentence", parts: [P("She", "s"), P("is", "be"), P("reading", "v")], ar: "هي تقرأ." },
+      { type: "sentence", parts: [P("Is", "be"), P("she", "s"), P("reading", "v")], ar: "هل هي تقرأ؟", q: true },
+      { type: "sentence", parts: [P("They", "s"), P("are", "be"), P("working", "v")], ar: "هم يعملون." },
+      { type: "sentence", parts: [P("Are", "be"), P("they", "s"), P("working", "v")], ar: "هل هم يعملون؟", q: true },
+      { type: "sentence", parts: [P("You", "s"), P("are", "be"), P("listening", "v")], ar: "أنت تستمع." },
+      { type: "sentence", parts: [P("Are", "be"), P("you", "s"), P("listening", "v")], ar: "هل تستمع؟", q: true },
+      { type: "sentence", parts: [P("I", "s"), P("am", "be"), P("disturbing", "v"), P("you", "o")], ar: "أنا أزعجك." },
+      { type: "sentence", parts: [P("Am", "be"), P("I", "s"), P("disturbing", "v"), P("you", "o")], ar: "هل أزعجك؟", q: true },
+      { type: "note", emoji: "⭐", text: "لا نستخدم [[Do]] أو [[Does]] مع [[Present Continuous]]. نقول: [[Is he sleeping? ✅]] وليس: [[Does he sleeping? ❌]]" },
     ],
   },
   {
     kind: "lesson",
-    section: F,
-    mascot: "🔀",
-    step: "15",
-    title: "النفي والسؤال مع was / were",
-    lead: "مع فعل الكينونة لا نستخدم didn't / Did — بل not وقلب was/were:",
+    section: E,
+    mascot: "🔍",
+    step: "12",
+    title: "سؤال Yes / No وسؤال Wh-",
     blocks: [
-      { type: "sentence", parts: [P("I", "s"), P("was", "be"), P("not", "nt"), P("tired", "o")], ar: "لم أكن متعبًا." },
-      { type: "sentence", parts: [P("They", "s"), P("were", "be"), P("not", "nt"), P("at home", "o")], ar: "لم يكونوا في المنزل." },
-      { type: "note", emoji: "✂️", text: "اختصار: [[was not = wasn't]] · [[were not = weren't]]" },
-      { type: "sentence", parts: [P("Was", "be"), P("he", "s"), P("tired", "o")], ar: "هل كان متعبًا؟", q: true },
-      { type: "sentence", parts: [P("Were", "be"), P("they", "s"), P("happy", "o")], ar: "هل كانوا سعداء؟", q: true },
-      { type: "sentence", parts: [P("Was", "be"), P("she", "s"), P("at school", "o"), P("yesterday", "adv")], ar: "هل كانت في المدرسة أمس؟", q: true },
-      { type: "bad", en: "Did he was tired?", why: "مع was/were لا نستخدم Did أبدًا" },
-      { type: "ok", en: "Was he tired?", ar: "هل كان متعبًا؟" },
+      { type: "whQuestions" },
+      { type: "sentence", parts: [P("What", "aux"), P("is", "be"), P("she", "s"), P("studying", "v")], ar: "ماذا تدرس؟" },
+      { type: "sentence", parts: [P("Where", "aux"), P("is", "be"), P("he", "s"), P("going", "v")], ar: "إلى أين يذهب؟" },
+      { type: "sentence", parts: [P("Why", "aux"), P("are", "be"), P("they", "s"), P("laughing", "v")], ar: "لماذا يضحكون؟" },
+      { type: "sentence", parts: [P("Who", "aux"), P("is", "be"), P("calling", "v"), P("you", "o")], ar: "من يتصل بك؟" },
+      { type: "sentence", parts: [P("What", "aux"), P("are", "be"), P("you", "s"), P("doing", "v")], ar: "ماذا تفعل؟" },
+      { type: "note", emoji: "⭐", text: "القاعدة: [[Wh-word + am/is/are + subject + verb-ing?]]" },
+      { type: "sentence", parts: [P("What", "aux"), P("are", "be"), P("you", "s"), P("reading", "v")], ar: "ماذا تقرأ؟", q: true },
+      { type: "sentence", parts: [P("Where", "aux"), P("is", "be"), P("Ali", "s"), P("going", "v")], ar: "إلى أين يذهب علي؟", q: true },
+      { type: "sentence", parts: [P("Why", "aux"), P("is", "be"), P("the baby", "s"), P("crying", "v")], ar: "لماذا يبكي الطفل؟", q: true },
+      { type: "sentence", parts: [P("Who", "aux"), P("is", "be"), P("knocking", "v")], ar: "من يطرق الباب؟", q: true },
     ],
   },
   {
     kind: "lesson",
-    section: F,
-    mascot: "✅",
-    step: "16",
-    title: "الإجابات القصيرة",
-    blocks: [{ type: "shortAnswers" }],
-  },
-  {
-    kind: "lesson",
-    section: F,
-    mascot: "🚨",
-    step: "17",
-    title: "أخطاء شائعة جدًا",
+    section: E,
+    mascot: "💬",
+    step: "13",
+    title: "كيف نجيب؟",
     blocks: [
-      { type: "bad", en: "I play football yesterday.", why: "نحتاج ماضي: played" },
-      { type: "ok", en: "I played football yesterday.", ar: "لعبت كرة القدم أمس." },
-      { type: "bad", en: "She didn't played football.", why: "بعد didn't الفعل أساسي: play" },
-      { type: "ok", en: "She didn't play football.", ar: "هي لم تلعب كرة القدم." },
-      { type: "bad", en: "Did you went to school?", why: "بعد Did الفعل أساسي: go" },
-      { type: "ok", en: "Did you go to school?", ar: "هل ذهبت إلى المدرسة؟" },
-      { type: "bad", en: "They was happy.", why: "مع They نستخدم were وليس was" },
-      { type: "ok", en: "They were happy.", ar: "كانوا سعداء." },
-      { type: "bad", en: "He did not ate pizza.", why: "بعد did الفعل أساسي: eat" },
-      { type: "ok", en: "He didn't eat pizza.", ar: "لم يأكل بيتزا." },
-      { type: "bad", en: "Where you went yesterday?", why: "سؤال في الماضي يحتاج Did: Where did you go?" },
-      { type: "ok", en: "Where did you go yesterday?", ar: "أين ذهبت أمس؟" },
+      { type: "sentence", parts: [P("What", "aux"), P("are", "be"), P("you", "s"), P("doing", "v")], ar: "ماذا تفعل؟", q: true },
+      { type: "sentence", parts: [P("I", "s"), P("am", "be"), P("drawing", "v"), P("a map", "o")], ar: "أنا أرسم خريطة." },
+      { type: "sentence", parts: [P("Where", "aux"), P("is", "be"), P("she", "s"), P("going", "v")], ar: "إلى أين تذهب؟", q: true },
+      { type: "sentence", parts: [P("She", "s"), P("is", "be"), P("going", "v"), P("to the market", "o")], ar: "هي ذاهبة إلى السوق." },
+      { type: "sentence", parts: [P("Why", "aux"), P("are", "be"), P("they", "s"), P("running", "v")], ar: "لماذا يركضون؟", q: true },
+      { type: "sentence", parts: [P("They", "s"), P("are", "be"), P("running", "v"), P("because", "adv"), P("they are late", "o")], ar: "هم يركضون لأنهم متأخرون." },
+      { type: "sentence", parts: [P("What", "aux"), P("is", "be"), P("he", "s"), P("making", "v")], ar: "ماذا يصنع؟", q: true },
+      { type: "sentence", parts: [P("He", "s"), P("is", "be"), P("making", "v"), P("a model airplane", "o")], ar: "هو يصنع نموذج طائرة." },
+      { type: "note", emoji: "💡", text: "لاحظ أن السؤال لا يحتاج دائمًا إلى [[Yes]] أو [[No]]." },
     ],
   },
 
-  // ---------------- التمارين ----------------
+  {
+    kind: "lesson",
+    section: F,
+    mascot: "✍️",
+    step: "14",
+    title: "قواعد -ing بالتفصيل 🔍",
+    lead: "الآن سنرتب قواعد الكتابة — ثلاث قواعد أساسية:",
+    blocks: [
+      { type: "note", emoji: "1️⃣", text: "[[القاعدة 1: معظم الأفعال]] — نضيف [[ing]]:" },
+      { type: "sentence", parts: [P("read", "v"), P("→", "o"), P("reading", "v")], ar: "read → reading" },
+      { type: "list", items: ["read → reading", "jump → jumping", "clean → cleaning", "visit → visiting", "talk → talking"] },
+      { type: "note", emoji: "2️⃣", text: "[[القاعدة 2: الفعل المنتهي بـ e]] — غالبًا نحذف [[e]]:" },
+      { type: "list", items: ["make → making", "write → writing", "drive → driving", "dance → dancing", "close → closing"] },
+      { type: "bad", en: "makeing", why: "نحذف e: making ✅" },
+      { type: "bad", en: "writeing", why: "نحذف e: writing ✅" },
+      { type: "bad", en: "driveing", why: "نحذف e: driving ✅" },
+      { type: "note", emoji: "3️⃣", text: "[[القاعدة 3: بعض الأفعال القصيرة]] — نضاعف الحرف الأخير:" },
+      { type: "list", items: ["run → running", "sit → sitting", "swim → swimming", "get → getting", "stop → stopping"] },
+      { type: "sentence", parts: [P("The bus", "s"), P("is", "be"), P("stopping", "v")], ar: "الحافلة تتوقف." },
+      { type: "ingTabs" },
+    ],
+  },
+  {
+    kind: "lesson",
+    section: F,
+    mascot: "⚠️",
+    step: "15",
+    title: "فخ مهم جدًا: ليس كل فعل ينتهي بـ e",
+    blocks: [
+      { type: "text", text: "هناك أفعال لا نحذف منها [[e]] بالطريقة البسيطة التي تعلمناها." },
+      { type: "sentence", parts: [P("see", "v"), P("→", "o"), P("seeing", "v")], ar: "see → seeing" },
+      { type: "sentence", parts: [P("agree", "v"), P("→", "o"), P("agreeing", "v")], ar: "agree → agreeing" },
+      { type: "bad", en: "seing", why: "الصحيح: seeing ✅" },
+      { type: "note", emoji: "📌", text: "هنا لا نقول: [[seing ❌]] بل: [[seeing ✅]] — سنعود لهذه التفاصيل أكثر عندما ندرس [[spelling]] بشكل مستقل." },
+      { type: "ingTrap" },
+    ],
+  },
+  {
+    kind: "lesson",
+    section: G,
+    mascot: "🚫",
+    step: "16",
+    title: "الأفعال التي لا نستخدمها عادةً مع Continuous",
+    lead: "هذه نقطة متقدمة جدًا — هناك أفعال تعبّر عن المعرفة، المشاعر، الرأي، الامتلاك، الفهم — وغالبًا لا نستخدمها مع Present Continuous في الإنجليزية الأساسية.",
+    blocks: [
+      { type: "stativeGrid" },
+      { type: "sentence", parts: [P("I", "s"), P("know", "v"), P("the answer", "o")], ar: "أنا أعرف الإجابة." },
+      { type: "ok", en: "I know the answer.", ar: "صحيح ✅" },
+      { type: "bad", en: "I am knowing the answer.", why: "لا نستخدم know مع Continuous" },
+      { type: "sentence", parts: [P("She", "s"), P("likes", "v"), P("chocolate", "o")], ar: "هي تحب الشوكولا." },
+      { type: "ok", en: "She likes chocolate.", ar: "صحيح ✅" },
+      { type: "bad", en: "She is liking chocolate.", why: "like من أفعال المشاعر" },
+      { type: "sentence", parts: [P("We", "s"), P("understand", "v"), P("the lesson", "o")], ar: "نحن نفهم الدرس." },
+      { type: "ok", en: "We understand the lesson.", ar: "صحيح ✅" },
+      { type: "bad", en: "We are understanding the lesson.", why: "understand من أفعال الفهم" },
+      { type: "note", emoji: "🧠", text: "هذه قاعدة متقدمة، فلا تقلق إذا كانت جديدة. سنوسعها لاحقًا." },
+    ],
+  },
+  {
+    kind: "lesson",
+    section: G,
+    mascot: "❤️",
+    step: "17",
+    title: "انتبه إلى كلمة \"love\"",
+    blocks: [
+      { type: "text", text: "في الإنجليزية اليومية الحديثة قد تسمع أحيانًا استخدامات مختلفة حسب السياق." },
+      { type: "sentence", parts: [P("I", "s"), P("love", "v"), P("music", "o")], ar: "أنا أحب الموسيقى." },
+      { type: "ok", en: "I love music.", ar: "أفضل — شعور عام ✅" },
+      { type: "bad", en: "I am loving music.", why: "عندما نتحدث عن شعور عام نستخدم Simple وليس Continuous" },
+      { type: "note", emoji: "📌", text: "لكن في منهجنا الأساسي: [[I love music.]] أفضل من [[I am loving music.]] عندما نتحدث عن شعور عام." },
+    ],
+  },
+  {
+    kind: "lesson",
+    section: G,
+    mascot: "🧩",
+    step: "18",
+    title: "مقارنة عبقرية 🧠🔥",
+    blocks: [
+      { type: "sentence", parts: [P("I", "s"), P("think", "v"), P("you are right", "o")], ar: "أنا أعتقد أنك على حق." },
+      { type: "note", emoji: "💡", text: "هنا [[think]] = رأي." },
+      { type: "sentence", parts: [P("I", "s"), P("am", "be"), P("thinking", "v"), P("about the problem", "o")], ar: "أنا أفكر في المشكلة." },
+      { type: "note", emoji: "💡", text: "هنا [[thinking]] = عملية تحدث الآن." },
+      { type: "thinkCompare" },
+      { type: "note", emoji: "🧠", text: "إذن نفس الفعل يمكن أن يتغير استخدامه حسب المعنى. هذه نقطة متقدمة جدًا." },
+    ],
+  },
+
+  // ---------------- تمارين المستويات 1-9 ----------------
   {
     kind: "ex",
-    section: G,
+    section: H,
     mascot: "✏️",
-    badge: "التمرين 1",
-    title: "اختر was أو were",
-    subtitle: "تذكّر: المفرد was والجمع were",
+    badge: "المستوى 1",
+    title: "اختر الزمن الصحيح",
+    subtitle: "Present Simple أم Present Continuous؟",
     ex: {
-      type: "wasChoose",
+      type: "chooseTense",
       items: [
-        { s: "I", ar: "أنا كنت متعبًا أمس.", opts: ["was", "were"], answer: 0 },
-        { s: "They", ar: "هم كانوا في المنزل أمس.", opts: ["was", "were"], answer: 1 },
-        { s: "She", ar: "هي كانت سعيدة الليلة الماضية.", opts: ["was", "were"], answer: 0 },
-        { s: "We", ar: "نحن كنا مشغولين أمس.", opts: ["was", "were"], answer: 1 },
-        { s: "He", ar: "هو كان في المدرسة أمس.", opts: ["was", "were"], answer: 0 },
-        { s: "You", ar: "أنت كنت متأخرًا أمس.", opts: ["was", "were"], answer: 1 },
+        { stem: "Every morning, Hana _______ her plants.", ar: "عادة كل صباح", opts: ["waters", "is watering"], answer: 0 },
+        { stem: "Look! Hana _______ the flowers.", ar: "انظر! الآن", opts: ["waters", "is watering"], answer: 1 },
+        { stem: "My family _______ in a small apartment.", ar: "حقيقة / وضع مستقر", opts: ["lives", "is living"], answer: 0 },
+        { stem: "We _______ in a hotel this week because our house is being repaired.", ar: "وضع مؤقت هذا الأسبوع", opts: ["stay", "are staying"], answer: 1 },
+        { stem: "Karim usually _______ the train.", ar: "عادةً", opts: ["takes", "is taking"], answer: 0 },
+        { stem: "Today, Karim _______ the bus.", ar: "اليوم — مؤقت", opts: ["takes", "is taking"], answer: 1 },
       ],
     },
   },
   {
     kind: "ex",
-    section: G,
-    mascot: "🧮",
-    badge: "التمرين 2",
-    title: "اختر صيغة الماضي الصحيحة",
-    subtitle: "انتبه للقاعدة: منتظم أم شاذ؟",
+    section: H,
+    mascot: "📝",
+    badge: "المستوى 2",
+    title: "أكمل — استخدم am / is / are + الفعل المناسب",
+    subtitle: "اختر الشكل الصحيح",
     ex: {
-      type: "past",
+      type: "amIsAreFill",
       items: [
-        { verb: "play", opts: ["played", "plaied", "playd"], answer: 0 },
-        { verb: "study", opts: ["studied", "studyed", "studys"], answer: 0 },
-        { verb: "go", opts: ["goed", "went", "goes"], answer: 1 },
-        { verb: "live", opts: ["lived", "livied", "liveed"], answer: 0 },
-        { verb: "stop", opts: ["stoped", "stopped", "stoppped"], answer: 1 },
-        { verb: "eat", opts: ["eated", "ate", "eaten"], answer: 1 },
-        { verb: "have", opts: ["haved", "had", "has"], answer: 1 },
-        { verb: "try", opts: ["tryed", "tried", "trys"], answer: 1 },
+        { stem: "The students _______ _______ for the exam this week.", ar: "يستعدون للامتحان هذا الأسبوع", verb: "prepare", opts: ["are preparing", "is preparing", "am preparing"], answer: 0 },
+        { stem: "My uncle _______ _______ a new language these days.", ar: "يتعلم لغة جديدة هذه الأيام", verb: "learn", opts: ["is learning", "are learning", "am learning"], answer: 0 },
+        { stem: "I _______ _______ a strange noise.", ar: "أسمع ضوضاء غريبة (الآن)", verb: "hear", opts: ["am hearing", "is hearing", "hear"], answer: 2 },
+        { stem: "Look! The horse _______ _______ toward the gate.", ar: "انظر! الحصان يركض", verb: "run", opts: ["is running", "are running", "runs"], answer: 0 },
+        { stem: "We _______ _______ a science project this month.", ar: "نقوم بمشروع علمي هذا الشهر", verb: "make", opts: ["are making", "is making", "makes"], answer: 0 },
       ],
     },
   },
   {
     kind: "ex",
-    section: G,
-    mascot: "👀",
-    badge: "التمرين 3",
-    title: "اختر كلمة الماضي المناسبة",
-    subtitle: "فكّر في السياق",
+    section: H,
+    mascot: "🚫",
+    badge: "المستوى 3",
+    title: "النفي — حوّل إلى النفي",
+    subtitle: "استخدم am/is/are + not",
     ex: {
-      type: "signal",
+      type: "negTransform",
       items: [
-        { stem: "I visited my friend ___.", ar: "أمس", opts: ["yesterday", "tomorrow"], answer: 0 },
-        { stem: "She was happy ___.", ar: "الليلة الماضية", opts: ["last night", "next night"], answer: 0 },
-        { stem: "They played football ___ ago.", ar: "قبل يومين", opts: ["two days", "every day"], answer: 0 },
-        { stem: "He lived in Paris ___ 2019.", ar: "في عام 2019", opts: ["in", "on"], answer: 0 },
+        { aff: "Maya is using the tablet.", neg: "Maya isn't using the tablet. / Maya is not using the tablet." },
+        { aff: "The boys are shouting.", neg: "The boys aren't shouting." },
+        { aff: "I am waiting for the answer.", neg: "I'm not waiting for the answer." },
+        { aff: "Dad is cooking dinner.", neg: "Dad isn't cooking dinner." },
+        { aff: "We are staying here this week.", neg: "We aren't staying here this week." },
       ],
     },
   },
   {
     kind: "ex",
-    section: G,
+    section: H,
+    mascot: "❓",
+    badge: "المستوى 4",
+    title: "الأسئلة — حوّل إلى سؤال",
+    subtitle: "اقلـب am/is/are",
+    ex: {
+      type: "qTransform",
+      items: [
+        { aff: "She is preparing lunch.", q: "Is she preparing lunch?" },
+        { aff: "They are building a treehouse.", q: "Are they building a treehouse?" },
+        { aff: "He is fixing the bicycle.", q: "Is he fixing the bicycle?" },
+        { aff: "You are watching the news.", q: "Are you watching the news?" },
+        { aff: "The children are playing in the garden.", q: "Are the children playing in the garden?" },
+      ],
+    },
+  },
+  {
+    kind: "ex",
+    section: H,
+    mascot: "🔍",
+    badge: "المستوى 5",
+    title: "Wh Questions — اختر الكلمة المناسبة",
+    subtitle: "What / Where / Why / Who",
+    ex: {
+      type: "whChoose",
+      items: [
+        { q: "_______ are you carrying? — I am carrying a box.", a: "What", opts: ["What", "Where", "Why", "Who"], answer: 0 },
+        { q: "_______ is your brother going? — He is going to the library.", a: "Where", opts: ["What", "Where", "Why", "Who"], answer: 1 },
+        { q: "_______ are they laughing? — Because the movie is funny.", a: "Why", opts: ["What", "Where", "Why", "Who"], answer: 2 },
+        { q: "_______ is calling me? — Your sister is calling you.", a: "Who", opts: ["What", "Where", "Why", "Who"], answer: 3 },
+      ],
+    },
+  },
+  {
+    kind: "ex",
+    section: H,
     mascot: "🩹",
-    badge: "التمرين 4",
-    title: "صحّح الخطأ",
-    subtitle: "كل جملة فيها خطأ واحد",
+    badge: "المستوى 6",
+    title: "صحح الخطأ",
+    subtitle: "كل جملة فيها خطأ — اكتشفه",
     ex: {
       type: "fix",
       items: [
-        { wrong: "I play football yesterday.", correct: "I played football yesterday.", why: "يجب استخدام الماضي: played" },
-        { wrong: "She didn't went to school.", correct: "She didn't go to school.", why: "بعد didn't الفعل أساسي: go" },
-        { wrong: "They was happy last night.", correct: "They were happy last night.", why: "مع They ← were" },
-        { wrong: "He eated pizza last night.", correct: "He ate pizza last night.", why: "eat شاذ: ate" },
-        { wrong: "Did you played football?", correct: "Did you play football?", why: "بعد Did الفعل أساسي" },
-        { wrong: "Where you went yesterday?", correct: "Where did you go yesterday?", why: "سؤال ماضي يحتاج Did" },
+        { wrong: "She is writeing a message.", correct: "She is writing a message.", why: "احذف e: write → writing" },
+        { wrong: "They are runing in the street.", correct: "They are running in the street.", why: "ضاعف n: run → running" },
+        { wrong: "Does he working today?", correct: "Is he working today?", why: "مع Continuous نستخدم Is وليس Does" },
+        { wrong: "He doesn't sleeping now.", correct: "He isn't sleeping now.", why: "النفي: isn't sleeping وليس doesn't sleeping" },
+        { wrong: "I am know the answer.", correct: "I know the answer.", why: "know من الأفعال الحالة — لا نستخدمه مع Continuous" },
+        { wrong: "We are usually eat dinner at seven.", correct: "We usually eat dinner at seven.", why: "usually مع Present Simple وليس are ... eat" },
+        { wrong: "She is liveing with her aunt this month.", correct: "She is living with her aunt this month.", why: "live → living (احذف e)" },
+        { wrong: "What you are doing?", correct: "What are you doing?", why: "ترتيب سؤال Wh: What are you ...?" },
       ],
     },
   },
   {
     kind: "ex",
-    section: G,
-    mascot: "🔀",
-    badge: "التمرين 5",
-    title: "رتّب الجملة",
-    subtitle: "انتبه لترتيب الفاعل والفعل والظرف",
+    section: H,
+    mascot: "🧠",
+    badge: "المستوى 7",
+    title: "Present Simple أم Continuous؟ — اختر ثم اشرح السبب",
+    subtitle: "المعنى هو الحكم",
     ex: {
-      type: "order",
+      type: "tenseChooseExplain",
       items: [
-        { words: ["played", "I", "football", "yesterday"], correct: ["I", "played", "football", "yesterday"], ar: "لعبت كرة القدم أمس." },
-        { words: ["was", "She", "tired", "yesterday"], correct: ["She", "was", "tired", "yesterday"], ar: "كانت متعبة أمس." },
-        { words: ["didn't", "He", "go", "to school"], correct: ["He", "didn't", "go", "to school"], ar: "لم يذهب إلى المدرسة." },
-        { words: ["Did", "you", "see", "him"], correct: ["Did", "you", "see", "him"], ar: "هل رأيته؟", q: true },
-        { words: ["happy", "They", "were", "last night"], correct: ["They", "were", "happy", "last night"], ar: "كانوا سعداء الليلة الماضية." },
+        { en: "My brother _______ basketball every Wednesday. ① plays ② is playing", ar: "عادة كل أربعاء", opts: ["plays", "is playing"], answer: 0 },
+        { en: "My brother _______ basketball right now. ① plays ② is playing", ar: "الآن", opts: ["plays", "is playing"], answer: 1 },
+        { en: "We _______ English this year. ① study ② are studying", ar: "هذه السنة — فترة حالية", opts: ["study", "are studying"], answer: 1 },
+        { en: "She _______ three languages. ① speaks ② is speaking", ar: "حقيقة / قدرة عامة", opts: ["speaks", "is speaking"], answer: 0 },
+        { en: "Listen! Someone _______ at the door. ① knocks ② is knocking", ar: "اسمع! الآن", opts: ["knocks", "is knocking"], answer: 1 },
+        { en: "My parents _______ to the mountains every summer. ① travel ② are traveling", ar: "عادة كل صيف", opts: ["travel", "are traveling"], answer: 0 },
+        { en: "This month, my parents _______ around Europe. ① travel ② are traveling", ar: "هذا الشهر — مؤقت", opts: ["travel", "are traveling"], answer: 1 },
       ],
     },
   },
   {
     kind: "ex",
-    section: G,
-    mascot: "🕵️",
-    badge: "التمرين 6",
-    title: "ماضٍ أم حاضر؟",
-    subtitle: "حدّد نوع الجملة",
+    section: I,
+    mascot: "🔥",
+    badge: "المستوى 8",
+    title: "IQ200",
+    subtitle: "8 تحديات متقدمة — فكّر قبل أن تجيب",
     ex: {
-      type: "usage",
+      type: "iq",
       items: [
-        { en: "I played football yesterday.", ar: "لعبت كرة القدم أمس.", answer: "past" },
-        { en: "She usually drinks coffee.", ar: "هي عادةً تشرب القهوة.", answer: "present" },
-        { en: "They visited Paris last year.", ar: "زاروا باريس السنة الماضية.", answer: "past" },
-        { en: "He plays football every Friday.", ar: "هو يلعب كرة القدم كل جمعة.", answer: "present" },
-        { en: "We were tired last night.", ar: "كنا متعبين الليلة الماضية.", answer: "past" },
+        {
+          kind: "mcq",
+          q: "أي جملة صحيحة؟ ① I am knowing the answer. ② I know the answer. ولماذا؟",
+          opts: ["② I know the answer. — know فعل حالة لا يُستخدم مع Continuous", "① I am knowing the answer."],
+          answer: 0,
+          why: "know من أفعال المعرفة/الحالة — نستخدم Simple.",
+        },
+        {
+          kind: "mcq",
+          q: "My sister usually _______ glasses, but today she _______ contact lenses. ① wears / is wearing ② is wearing / wears ③ wears / wears",
+          opts: ["① wears / is wearing — عادة vs اليوم مؤقت", "② is wearing / wears", "③ wears / wears"],
+          answer: 0,
+          why: "usually → Simple، today → Continuous (مؤقت).",
+        },
+        {
+          kind: "text",
+          q: "أين الخطأ؟ They are usually playing football after school. إذا كنا نتحدث عن عادة متكررة، ما الجملة الأفضل؟",
+          a: "الصحيح: They usually play football after school. — usually مع Simple وليس are ...ing",
+        },
+        {
+          kind: "text",
+          q: "قارن: I live with my parents. / I am living with my parents this month. هل المعنى متطابق؟ اشرح الفرق.",
+          a: "لا — الأولى: وضع مستقر/دائم (Simple). الثانية: وضع مؤقت هذا الشهر (Continuous).",
+        },
+        { kind: "order", words: ["currently", "is", "a", "book", "reading", "Sara"], correct: ["Sara", "is", "currently", "reading", "a", "book"], ar: "سارة تقرأ كتابًا حاليًا." },
+        { kind: "order", words: ["not", "are", "why", "you", "listening"], correct: ["Why", "are", "you", "not", "listening"], ar: "لماذا لا تستمع؟" },
+        {
+          kind: "mcq",
+          q: "صحح: What does he doing now? هل نحتاج Does أم Is؟",
+          opts: ["What is he doing now? — نحتاج Is مع ing", "What does he doing now؟ صحيح", "What does he do now؟ للماضي"],
+          answer: 0,
+          why: "مع Continuous: Is + subject + verb-ing، لا Does + verb-ing.",
+        },
+        {
+          kind: "mcq",
+          q: "اختر الصحيح: ① She doesn't watching TV. ② She isn't watching TV. ③ She don't watching TV. ④ She not is watching TV.",
+          opts: ["② She isn't watching TV. — النفي: isn't + verb-ing", "① She doesn't watching TV.", "③ She don't watching TV.", "④ She not is watching TV."],
+          answer: 0,
+          why: "النفي في Continuous: am/is/are + not + ing، وليس doesn't.",
+        },
       ],
     },
   },
-  {
-    kind: "ex",
-    section: G,
-    mascot: "📝",
-    badge: "التمرين 7",
-    title: "اختر الفعل الصحيح في الماضي",
-    subtitle: "منتظم أو شاذ",
-    ex: {
-      type: "choose",
-      items: [
-        { s: "I", v: "___", o: "a movie yesterday", ar: "شاهدت فيلمًا أمس.", opts: ["watched", "watch", "watched"], answer: 0 },
-        { s: "She", v: "___", o: "pizza last night", ar: "أكلت بيتزا الليلة الماضية.", opts: ["ate", "eated", "eats"], answer: 0 },
-        { s: "They", v: "___", o: "in London in 2020", ar: "عاشوا في لندن عام 2020.", opts: ["lived", "live", "living"], answer: 0 },
-        { s: "He", v: "___", o: "to Paris last week", ar: "ذهب إلى باريس الأسبوع الماضي.", opts: ["went", "goed", "go"], answer: 0 },
-        { s: "We", v: "___", o: "very happy yesterday", ar: "كنا سعداء جدًا أمس.", opts: ["were", "was", "are"], answer: 0 },
-        { s: "You", v: "___", o: "English last year", ar: "درست الإنجليزية السنة الماضية.", opts: ["studied", "studyed", "studies"], answer: 0 },
-      ],
-    },
-  },
+  { kind: "detective", section: I, mascot: "🕵️", title: "المستوى 9 — Grammar Detective" },
+  { kind: "challenge", section: I, mascot: "🏆", title: "التحدي النهائي — IQ200+" },
 
-  { kind: "iq", section: G, mascot: "🏆", title: "تحدي IQ200" },
-  { kind: "builder", section: G, mascot: "🎨", title: "تحدي إضافي: احكِ ماذا فعلت أمس" },
-
-  { kind: "summary", section: H, mascot: "🧠", title: "ملخص الدرس 10" },
-  { kind: "quiz", section: H, mascot: "📝", title: "الاختبار النهائي" },
-  { kind: "closing", section: H, mascot: "⏭️", title: "الدرس القادم" },
+  { kind: "summary", section: J, mascot: "🧠", title: "ملخص الدرس" },
+  { kind: "quiz", section: J, mascot: "📝", title: "الاختبار النهائي" },
+  { kind: "closing", section: J, mascot: "🎓", title: "الخاتمة" },
 ];
 
-export const IQ10: { wrong: string; correct: string; why: string }[] = [
-  { wrong: "I was play football yesterday.", correct: "I played football yesterday.", why: "مع الفعل العادي نستخدم الماضي played وليس was + play" },
-  { wrong: "She didn't ate pizza.", correct: "She didn't eat pizza.", why: "بعد didn't الفعل يعود أساسي: eat" },
-  { wrong: "They was at home last night.", correct: "They were at home last night.", why: "مع They ← were" },
-  { wrong: "Did he went to school yesterday?", correct: "Did he go to school yesterday?", why: "بعد Did الفعل أساسي: go" },
-  { wrong: "He eated pasta.", correct: "He ate pasta.", why: "eat شاذ: ate وليس eated" },
-  { wrong: "We didn't was tired.", correct: "We weren't tired. / We didn't feel tired.", why: "مع was/were نستخدم wasn't/weren't وليس didn't was" },
+export const GRAMMAR_DETECTIVE_PASSAGE =
+  "David normally works in an office, but this month he is working from home. He usually drives to work, but today he is taking the train. His daughter is studying for her exams this week, so she isn't watching much television.";
+
+export const GRAMMAR_DETECTIVE_Q: { q: string; a: string }[] = [
+  { q: "استخرج كل أفعال Present Simple.", a: "works · drives" },
+  { q: "استخرج كل أفعال Present Continuous.", a: "is working · is taking · is studying · isn't watching (is not watching)" },
+  { q: "لماذا works؟", a: "لأنه عادة/روتين مع normally (He → works + s)." },
+  { q: "لماذا is working؟", a: "لأنه وضع مؤقت هذا الشهر (this month → Continuous)." },
+  { q: "لماذا drives؟", a: "عادة مع usually (He → drives)." },
+  { q: "لماذا is taking؟", a: "اليوم مؤقت (today → is taking)." },
+  { q: "ما العبارة التي تدل على فترة مؤقتة؟", a: "this month · this week (و today كمؤقت)" },
+  { q: "ما العبارة التي تدل على اليوم الحالي؟", a: "today" },
+  { q: "لماذا isn't watching وليس doesn't watching؟", a: "لأن النفي في Continuous: isn't + verb-ing وليس doesn't + verb-ing." },
 ];
 
+export const FINAL_CHALLENGE = {
+  intro: "اكتب قصة قصيرة من 8 جمل عن يوم غير عادي لشخصية اسمها Alex.",
+  conditions: [
+    "استخدم 3 جمل Present Simple.",
+    "استخدم 4 جمل Present Continuous.",
+    "استخدم جملة واحدة منفية.",
+    "استخدم سؤالًا واحدًا.",
+    "استخدم: usually · now · this week",
+    "استخدم فعلًا ينتهي بـ e وتحوّله إلى ing.",
+    "استخدم فعلًا يتضاعف فيه الحرف الأخير.",
+    "لا تستخدم أي مثال من هذا الدرس.",
+  ],
+  bonus: "اكتب جملتين عن نفس الشخص: الجملة الأولى تصف حياته المعتادة. الجملة الثانية تصف شيئًا مؤقتًا يحدث هذه الفترة. يجب أن يكون الفرق بين الزمنين واضحًا جدًا.",
+};
+
+export const IQ_SUMMARY = [
+  "Present Continuous لا يعني فقط \"الآن\".",
+  "له استخدامات مهمة: ① شيء يحدث الآن. ② شيء يحدث هذه الفترة. ③ شيء مؤقت.",
+  "التركيب: Subject + am/is/are + verb-ing — I → am · He / She / It → is · You / We / They → are",
+  "النفي: am/is/are + not + verb-ing — is not → isn't · are not → aren't · I am not → I'm not",
+  "السؤال: Am/Is/Are + subject + verb-ing? — Is she reading? · Are they working?",
+  "أسئلة Wh: What / Where / Why / Who + am/is/are + subject + verb-ing?",
+  "Present Simple: عادة / روتين / حقيقة / شيء مستقر.",
+  "Present Continuous: الآن / هذه الفترة / شيء مؤقت.",
+];
+
+export const FINAL_IQ_RULE = "لا تسأل نفسك فقط: \"هل توجد كلمة now؟\" بل اسأل: \"هل أتحدث عن شيء معتاد ومستقر، أم عن شيء يحدث الآن أو مؤقتًا؟\" إذا كان مستقرًا ومتكررًا: → Present Simple — إذا كان مؤقتًا أو يحدث حاليًا: → Present Continuous — وهنا تبدأ فعليًا بالانتقال من حفظ قواعد الإنجليزية إلى فهم طريقة عملها.";

@@ -145,6 +145,22 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "أكمل: I ___ understand this.", en: "I ___ understand this.", opts: ["don't", "doesn't", "amn't", "not"], answer: 0, why: "مع I نستخدم don't." },
   ],
 
+  // ---------------- الدرس 10 ----------------
+  10: [
+    { ar: "أكمل: I ___ tired yesterday.", en: "I ___ tired yesterday.", opts: ["was", "were", "am", "is"], answer: 0, why: "مع I في الماضي نستخدم was." },
+    { ar: "أكمل: They ___ at home last night.", en: "They ___ at home last night.", opts: ["were", "was", "are", "is"], answer: 0, why: "They جمع ← were." },
+    { ar: "أكمل: She ___ football yesterday.", en: "She ___ football yesterday.", opts: ["played", "play", "playing", "plays"], answer: 0, why: "أمس ← ماضي: played." },
+    { ar: "أكمل: He ___ pizza last night.", en: "He ___ pizza last night.", opts: ["ate", "eated", "eat", "eating"], answer: 0, why: "eat شاذ: ate." },
+    { ar: "اختر صيغة الماضي للفعل study:", opts: ["studied", "studyed", "studys"], answer: 0, why: "ساكن + y ← ied: studied." },
+    { ar: "اختر صيغة الماضي للفعل stop:", opts: ["stopped", "stoped", "stoppped"], answer: 0, why: "مقطع واحد + ساكن بعد علة ← نضاعف p: stopped." },
+    { ar: "ما نفي الجملة: He played football.", en: "He played football.", opts: ["He didn't play football.", "He didn't played football.", "He wasn't play football.", "He don't play football."], answer: 0, why: "بعد didn't الفعل يعود أساسي: play." },
+    { ar: "ما سؤال الجملة: She visited Paris.", en: "She visited Paris.", opts: ["Did she visit Paris?", "Did she visited Paris?", "Was she visit Paris?", "Does she visit Paris?"], answer: 0, why: "Did تحمل الماضي — الفعل أساسي: visit." },
+    { ar: "أجب بـ Yes عن: Did you see him?", en: "Did you see him?", opts: ["Yes, I did.", "Yes, I was.", "Yes, I do.", "Yes, I am."], answer: 0, why: "السؤال بـ Did ← الجواب بـ did." },
+    { ar: "اختر الكلمة الدالة على الماضي:", opts: ["yesterday", "every day", "usually", "always"], answer: 0, why: "yesterday تعني أمس — انتهى." },
+    { ar: "أي جملة صحيحة؟", opts: ["I went to school yesterday.", "I goed to school yesterday.", "I go to school yesterday.", "I going to school yesterday."], answer: 0, why: "go شاذ: went." },
+    { ar: "صحح الخطأ: He didn't went to school.", en: "He didn't went to school.", opts: ["He didn't go to school.", "He didn't goed to school.", "He wasn't go to school.", "He didn't goes to school."], answer: 0, why: "بعد didn't الفعل أساسي: go." },
+  ],
+
   // ---------------- الدرس 9 ----------------
   9: [
     { ar: "أكمل: I ___ watching a movie.", en: "I ___ watching a movie.", opts: ["am", "is", "are", "be"], answer: 0, why: "مع I نستخدم am دائمًا." },

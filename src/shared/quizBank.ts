@@ -177,6 +177,22 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "قارن: I think this movie is great. vs I am thinking about my future. ما الفرق؟", opts: ["think = رأي (Simple) / thinking = عملية الآن (Continuous)", "كلاهما نفس المعنى", "الأولى خطأ", "الثانية خطأ"], answer: 0, why: "think كرأي = Simple، thinking كعملية ذهنية الآن = Continuous — المعنى هو الحكم." },
   ],
 
+  // ---------------- الدرس 12 ----------------
+  12: [
+    { ar: "أكمل: I _______ the museum yesterday.", en: "I _______ the museum yesterday.", opts: ["visited", "visit", "visits", "am visiting"], answer: 0, why: "yesterday يدل على الماضي → زرنا: visited، والماضي لا يأخذ s." },
+    { ar: "أكمل: She _______ a new phone last week.", en: "She _______ a new phone last week.", opts: ["bought", "buyed", "buys", "buy"], answer: 0, why: "buy فعل غير منتظم → bought، ولا نقول buyed." },
+    { ar: "اختر صيغة الماضي الصحيحة للفعل study:", opts: ["studied", "studyed", "studed", "studyied"], answer: 0, why: "consonant + y: نحوّل y إلى i ثم نضيف ed → studied." },
+    { ar: "اختر صيغة الماضي الصحيحة للفعل live:", opts: ["lived", "liveed", "livd", "livved"], answer: 0, why: "الفعل ينتهي أصلًا بـ e → نضيف d فقط: lived." },
+    { ar: "أي كلمة تدل على الماضي؟", opts: ["two days ago", "every day", "now", "usually"], answer: 0, why: "two days ago (منذ يومين) كلمة دالة على Past Simple." },
+    { ar: "أكمل: They _______ pizza last night.", en: "They _______ pizza last night.", opts: ["ate", "eated", "eat", "eats"], answer: 0, why: "eat فعل غير منتظم → ate، ولا نقول eated." },
+    { ar: "أي جملة صحيحة؟", opts: ["He played football yesterday.", "He playeds football yesterday.", "He plays football yesterday.", "He is played football yesterday."], answer: 0, why: "yesterday ماضٍ → played بدون s وبدون is: He played football yesterday." },
+    { ar: "أكمل: The bus _______ near the school. (stop)", en: "The bus _______ near the school.", opts: ["stopped", "stoped", "stopt", "stopied"], answer: 0, why: "فعل قصير → نضاعف الحرف الأخير p ثم نضيف ed: stopped." },
+    { ar: "أكمل: We _______ to the zoo last Friday.", en: "We _______ to the zoo last Friday.", opts: ["went", "goed", "go", "goes"], answer: 0, why: "go فعل غير منتظم → went، ولا نقول goed." },
+    { ar: "اختر الترتيب الصحيح لعبارة (منذ يومين):", opts: ["two days ago", "ago two days", "two ago days", "days two ago"], answer: 0, why: "ago تأتي بعد المدة: two days ago وليس ago two days." },
+    { ar: "أي فعل من الأفعال التالية غير منتظم (Irregular)؟", opts: ["went", "played", "opened", "cleaned"], answer: 0, why: "went هو ماضي go غير المنتظم؛ البقية منتظمة بإضافة ed." },
+    { ar: "أكمل: Yesterday, I _______ a great book.", en: "Yesterday, I _______ a great book.", opts: ["read", "readed", "red", "reads"], answer: 0, why: "read تكتب كما هي في الماضي (لكن نطقها يتغير رِد) — لا نضيف ed." },
+  ],
+
   // ---------------- الدرس 9 ----------------
   9: [
     { ar: "أكمل: I ___ watching a movie.", en: "I ___ watching a movie.", opts: ["am", "is", "are", "be"], answer: 0, why: "مع I نستخدم am دائمًا." },

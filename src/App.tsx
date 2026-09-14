@@ -9,6 +9,7 @@ import Lesson7 from "./lessons/lesson7/Lesson7";
 import Lesson8 from "./lessons/lesson8/Lesson8";
 import Lesson9 from "./lessons/lesson9/Lesson9";
 import Lesson10 from "./lessons/lesson10/Lesson10";
+import Lesson11 from "./lessons/lesson11/Lesson11";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -20,6 +21,7 @@ import { SLIDES as L7_SLIDES } from "./lessons/lesson7/data";
 import { SLIDES as L8_SLIDES } from "./lessons/lesson8/data";
 import { SLIDES as L9_SLIDES } from "./lessons/lesson9/data";
 import { SLIDES as L10_SLIDES } from "./lessons/lesson10/data";
+import { SLIDES as L11_SLIDES } from "./lessons/lesson11/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 
 // ------------------------------------------------------------
@@ -145,6 +147,15 @@ const CARDS: Card[] = [
     href: "#/lesson/10",
     grad: "from-cyan-500 to-indigo-500",
   },
+  {
+    n: 11,
+    title: "المضارع البسيط مقابل المستمر",
+    en: "Present Simple vs Present Continuous",
+    emoji: "⚖️",
+    stats: `${L11_SLIDES.length} شريحة · 11 مستوى · IQ200 وGrammar Detective`,
+    href: "#/lesson/11",
+    grad: "from-indigo-500 to-cyan-500",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -232,6 +243,7 @@ export default function App() {
   else if (route === 8) page = <Lesson8 onExit={goHome} />;
   else if (route === 9) page = <Lesson9 onExit={goHome} />;
   else if (route === 10) page = <Lesson10 onExit={goHome} />;
+  else if (route === 11) page = <Lesson11 onExit={goHome} />;
   else page = <Hub />;
   return (
     <>

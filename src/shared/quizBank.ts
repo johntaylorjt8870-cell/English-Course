@@ -161,6 +161,22 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "قارن: I think you are right. vs I am thinking about the problem. ما الفرق؟", opts: ["think = رأي (Simple) / thinking = عملية الآن (Continuous)", "كلاهما نفس المعنى", "الأولى خطأ", "الثانية خطأ"], answer: 0, why: "think كرأي = Simple، thinking كعملية ذهنية الآن = Continuous — حسب المعنى." },
   ],
 
+  // ---------------- الدرس 11 ----------------
+  11: [
+    { ar: "أكمل: Every morning, Salma _______ her bicycle. (عادة)", en: "Every morning, Salma _______ her bicycle.", opts: ["checks", "is checking", "check", "checking"], answer: 0, why: "Every morning عادة → Present Simple: checks (She → +s)." },
+    { ar: "أكمل: Look! Salma _______ her bicycle. (الآن)", en: "Look! Salma _______ her bicycle.", opts: ["is checking", "checks", "check", "checking"], answer: 0, why: "Look! الآن → Present Continuous: is checking." },
+    { ar: "أكمل: My parents _______ in a quiet neighborhood. (وضع مستقر)", en: "My parents _______ in a quiet neighborhood.", opts: ["live", "are living", "lives", "is living"], answer: 0, why: "وضع مستقر/حقيقة → Simple: live." },
+    { ar: "أكمل: This month, my parents _______ in a hotel. (مؤقت)", en: "This month, my parents _______ in a hotel.", opts: ["are living", "live", "lives", "is living"], answer: 0, why: "This month مؤقت → Continuous: are living." },
+    { ar: "أكمل: The Earth _______ around the Sun. (حقيقة عامة)", en: "The Earth _______ around the Sun.", opts: ["moves", "is moving", "move", "moving"], answer: 0, why: "حقيقة عامة → Simple: moves." },
+    { ar: "أكمل: He _______ coffee every morning. (عادة)", en: "He _______ coffee every morning.", opts: ["drinks", "is drinking", "drink", "drinking"], answer: 0, why: "every morning عادة → drinks." },
+    { ar: "أكمل: He _______ coffee right now.", en: "He _______ coffee right now.", opts: ["is drinking", "drinks", "drink", "drinking"], answer: 0, why: "right now الآن → is drinking." },
+    { ar: "ما الصحيح؟", en: "He is plays football.", opts: ["He plays football.", "He is plays football.", "He playing football.", "He play football."], answer: 0, why: "لا نخلط is + plays — إما plays (Simple) أو is playing (Continuous)." },
+    { ar: "ما نفي الجملة: She is painting a landscape.", en: "She is painting a landscape.", opts: ["She isn't painting a landscape.", "She doesn't painting a landscape.", "She doesn't paint a landscape.", "She not is painting."], answer: 0, why: "نفي Continuous: isn't + verb-ing." },
+    { ar: "ما سؤال الجملة: She studies French.", en: "She studies French.", opts: ["Does she study French?", "Is she study French?", "Does she studies French?", "Is she studying French?"], answer: 0, why: "Simple مع فعل عادي → Does + base verb." },
+    { ar: "اختر الصحيح مع الأفعال الحالة:", en: "I _______ the answer.", opts: ["know", "am knowing", "knowing", "knows"], answer: 0, why: "know فعل حالة → Simple: I know." },
+    { ar: "قارن: I think this movie is great. vs I am thinking about my future. ما الفرق؟", opts: ["think = رأي (Simple) / thinking = عملية الآن (Continuous)", "كلاهما نفس المعنى", "الأولى خطأ", "الثانية خطأ"], answer: 0, why: "think كرأي = Simple، thinking كعملية ذهنية الآن = Continuous — المعنى هو الحكم." },
+  ],
+
   // ---------------- الدرس 9 ----------------
   9: [
     { ar: "أكمل: I ___ watching a movie.", en: "I ___ watching a movie.", opts: ["am", "is", "are", "be"], answer: 0, why: "مع I نستخدم am دائمًا." },

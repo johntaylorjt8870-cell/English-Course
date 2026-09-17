@@ -81,6 +81,7 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import Lesson1 from ${JSON.stringify(join(root, "src/lessons/lesson1/Lesson1.tsx"))};
 import Lesson4 from ${JSON.stringify(join(root, "src/lessons/lesson4/Lesson4.tsx"))};
+import Lesson10 from ${JSON.stringify(join(root, "src/lessons/lesson10/Lesson10.tsx"))};
 import Lesson13, { FormulaBoard, SlideView } from ${JSON.stringify(join(root, "src/lessons/lesson13/Lesson13.tsx"))};
 import { SLIDES as L13_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson13/data.ts"))};
 import Lesson14, { FormulaBoard14, SlideView14 } from ${JSON.stringify(join(root, "src/lessons/lesson14/Lesson14.tsx"))};
@@ -92,7 +93,10 @@ import Lesson18, { SlideView18 } from ${JSON.stringify(join(root, "src/lessons/l
 import { SLIDES as L18_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson18/data.ts"))};
 import Lesson19, { SlideView19 } from ${JSON.stringify(join(root, "src/lessons/lesson19/Lesson19.tsx"))};
 import { SLIDES as L19_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson19/data.ts"))};
-export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES };
+import Lesson20, { SlideView20 } from ${JSON.stringify(join(root, "src/lessons/lesson20/Lesson20.tsx"))};
+import { SLIDES as L20_SLIDES, SOURCE_SECTIONS as L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20 } from ${JSON.stringify(join(root, "src/lessons/lesson20/data.ts"))};
+import { QUIZZES } from ${JSON.stringify(join(root, "src/shared/quizBank.ts"))};
+export { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, QUIZZES };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -107,7 +111,7 @@ export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideV
 });
 
 try {
-  const { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES } = await import(pathToFileURL(outFile).href);
+  const { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, QUIZZES } = await import(pathToFileURL(outFile).href);
 
   // --- LatinRuns: mixed SVO phrase stays one LTR unit ---
   {
@@ -172,6 +176,13 @@ try {
         `English words preserved in mixed line: ${text}`
       );
     }
+  }
+
+  // --- Lesson 10: representative regression render after Lesson 20 registration ---
+  {
+    const html = renderToString(React.createElement(Lesson10, { onExit: () => {} }));
+    ok(html.length > 2000, "Lesson 10 representative route renders without throwing");
+    ok(/dir=\"ltr\"/.test(html), "Lesson 10 representative route keeps English LTR isolation");
   }
 
   // --- Lesson 13: الصيغ الأربع لـ Past Simple (did / didn't) بترتيبها الإنجليزي ---
@@ -1043,6 +1054,133 @@ try {
     ok(/dir="ltr"/.test(html), "Lesson 19 isolates English as LTR");
     ok(html.includes('dir="rtl"'), "Lesson 19 keeps the Arabic RTL shell");
     ok(!html.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 19 renders no GB flag emoji");
+  }
+
+  // --- الدرس 20: كل شرائح المصدر 1→41، الاختبار المشترك، والخاتمة ترندر فعليًا ---
+  {
+    const noop = () => {};
+    let rendered = 0;
+    const broken = [];
+    const missingLtr = [];
+    const missingSourceMarker = [];
+    for (const s of L20_SLIDES) {
+      try {
+        const html = renderToString(React.createElement(SlideView20, { s, onExit: noop }));
+        if (html.length < 200) broken.push(`${s.kind}:${s.title ?? ""}`);
+        if (!html.includes('dir="ltr"')) missingLtr.push(`${s.kind}:${s.title ?? ""}`);
+        if (s.sourceIndex !== undefined && !html.includes('data-source-section')) missingSourceMarker.push(`${s.sourceIndex + 1}:${s.title ?? ""}`);
+        rendered++;
+      } catch (err) {
+        broken.push(`${s.kind}:${s.title ?? ""} (${err.message || String(err)})`);
+      }
+    }
+    ok(L20_SLIDES.length === 44, `Lesson 20 keeps the complete 44-slide sequence (got ${L20_SLIDES.length})`);
+    ok(rendered === L20_SLIDES.length, `Lesson 20 every slide renders (${rendered}/${L20_SLIDES.length})`);
+    ok(broken.length === 0, `Lesson 20 has no empty or throwing slide (${broken.join(", ")})`);
+    ok(missingLtr.length === 0, `Lesson 20 isolates English on every slide (${missingLtr.join(", ")})`);
+    ok(missingSourceMarker.length === 0, `Lesson 20 renders a source-section marker on all 41 source slides (${missingSourceMarker.join(", ")})`);
+
+    const sourceSlides = L20_SLIDES.filter((s) => s.sourceIndex !== undefined);
+    ok(sourceSlides.length === 41, `Lesson 20 maps all 41 source sections to slides (${sourceSlides.length})`);
+    ok(
+      sourceSlides.every((s, i) => s.sourceIndex === i),
+      `Lesson 20 source slide order remains 1→41 (${sourceSlides.map((s) => (s.sourceIndex ?? -1) + 1).join(",")})`
+    );
+    ok(L20_SOURCE_SECTIONS.length === 41, `Lesson 20 source-heading ledger has 41 headings (${L20_SOURCE_SECTIONS.length})`);
+    ok(L20_SLIDES.some((s) => s.kind === "quiz") && L20_SLIDES.some((s) => s.kind === "closing"), "Lesson 20 includes shared final quiz and closing slides");
+    const exerciseTypes = ["detective", "challenge1", "challenge2", "iq200", "iq200b", "finalBoss", "speed", "golden", "builder"];
+    for (const type of exerciseTypes) {
+      ok(sourceSlides.some((s) => s.kind === "ex" && s.ex.type === type), `Lesson 20 exercise type present: ${type}`);
+    }
+    ok(Array.isArray(QUIZZES[20]) && QUIZZES[20].length === 12, `Lesson 20 shared quiz has 12 questions (${QUIZZES[20]?.length ?? 0})`);
+  }
+
+  // --- الدرس 20: الوحدات الإنجليزية المصدرية والأخطاء المقصودة لا تنعكس ---
+  {
+    const unesc20 = (h) => h.replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
+    const all20 = L20_SLIDES.map((s) => unesc20(renderToString(React.createElement(SlideView20, { s, onExit: () => {} })))).join("\n");
+    const plain20 = all20.replace(/<[^>]+>/g, "");
+    for (const phrase of [
+      "This book is interesting.",
+      "This apple is red.",
+      "These apples are fresh.",
+      "Those students are waiting outside.",
+      "This child.",
+      "These children.",
+      "This is Ali.",
+      "Those are my teachers.",
+      "What are these?",
+      "This is my notebook.",
+      "Those are the children's toys.",
+      "That idea is interesting.",
+      "This is not my bag.",
+      "Whose are those?",
+      "This books ❌",
+      "This children ❌",
+      "These child ❌",
+      "Those car is red ❌",
+      "This are my shoes ❌",
+      "That are my friends ❌",
+      "This books are new.",
+      "It's my new camera.",
+      "That's my brother's telescope.",
+      "Those are the children's bicycles.",
+      "Those are the children's toys.",
+    ]) {
+      ok(plain20.includes(phrase), `Lesson 20 rendered HTML keeps English unit: ${phrase}`);
+    }
+    for (const intentional of ["This books ❌", "This children ❌", "These child ❌", "Those car is red ❌", "This are my shoes ❌", "That are my friends ❌"]) {
+      ok(INTENTIONALLY_WRONG_20.includes(intentional), `Lesson 20 keeps intentional error inventory: ${intentional}`);
+    }
+    ok(!/books\s+This\b/.test(plain20) && !/children\s+These\b/.test(plain20), "Lesson 20 never renders reversed demonstrative/noun order");
+    ok(!all20.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 20 renders no GB flag emoji");
+  }
+
+  // --- الدرس 20: Control Center boards keep their LTR order and real controls ---
+  {
+    const bySource = (sourceIndex) => L20_SLIDES.find((s) => s.sourceIndex === sourceIndex);
+    const mapHtml = renderToString(React.createElement(SlideView20, { s: bySource(2), onExit: () => {} }));
+    ok(mapHtml.includes('data-en-seq="l20-magic-map"'), "Lesson 20 four-zone map renders");
+    assertSeq("Lesson 20 magic map", fontEnSeq(mapHtml), ["This", "That", "These", "Those"]);
+
+    const thisHtml = renderToString(React.createElement(SlideView20, { s: bySource(6), onExit: () => {} }));
+    ok(thisHtml.includes('data-en-seq="l20-this-radar"'), "Lesson 20 demonstrative radar renders");
+    ok(thisHtml.includes("button"), "Lesson 20 demonstrative radar exposes selectable controls");
+
+    const decisionHtml = renderToString(React.createElement(SlideView20, { s: bySource(23), onExit: () => {} }));
+    ok(decisionHtml.includes('data-en-seq="l20-decision-engine"'), "Lesson 20 two-question decision engine renders");
+    for (const formula of ["This / That", "These / Those", "This / These", "That / Those"]) {
+      ok(decisionHtml.includes(formula), `Lesson 20 decision engine keeps LTR choice formula: ${formula}`);
+    }
+
+    const bossHtml = renderToString(React.createElement(SlideView20, { s: bySource(34), onExit: () => {} }));
+    ok(bossHtml.includes('data-en-seq="l20-final-boss"'), "Lesson 20 Final Boss renders");
+    assertOrderStrict("Lesson 20 Final Boss dialogue", fontEnSeq(bossHtml), [
+      "What is this?",
+      "It's my new camera.",
+      "And what is that?",
+      "That's my brother's telescope.",
+      "What are these?",
+      "These are our notebooks.",
+      "And what are those?",
+      "Those are the children's bicycles.",
+    ]);
+
+    const speedHtml = renderToString(React.createElement(SlideView20, { s: bySource(35), onExit: () => {} }));
+    ok(speedHtml.includes('data-en-seq="l20-speed-game"'), "Lesson 20 Speed Game renders");
+    assertSeq("Lesson 20 Speed Game word bank", fontEnSeq(speedHtml), ["This", "That", "These", "Those"]);
+
+    const assembledBuilderGroups = SENTENCE_BUILDER_20.groups.every((group) => {
+      const be = group.answer.includes(" are ") ? "are" : "is";
+      const target = group.answer.replace(/\.$/, "").split(" ").sort().join("|");
+      const pool = [group.tokens[1], be, group.tokens[0], group.tokens[2]].join(" ").split(" ").sort().join("|");
+      return pool === target;
+    });
+    ok(assembledBuilderGroups, "Lesson 20 sentence-builder token banks can assemble every supplied model exactly");
+
+    const quizSlide = L20_SLIDES.find((s) => s.kind === "quiz");
+    const quizHtml = renderToString(React.createElement(SlideView20, { s: quizSlide, onExit: () => {} }));
+    ok(quizHtml.includes("Teacher’s Space") && !quizHtml.includes("These books are heavy. ✅"), "Lesson 20 shared quiz renders a locked Teacher’s Space without key disclosure");
   }
 
 } catch (err) {

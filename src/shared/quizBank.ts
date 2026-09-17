@@ -322,4 +322,20 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "ما الشكل الأساسي الصحيح في المستوى الأساسي؟", opts: ["James's book", "James s book", "Jameses book", "The book of James s"], answer: 0, why: "المفرد يأخذ 's حتى لو انتهى الاسم بحرف s — بعض الأساليب تعرض James' لكننا نستخدم James's." },
     { ar: "صحح الخطأ:", en: "The students's books are new.", opts: ["The students' books are new.", "The student's books are new.", "The students books are new.", "The students'' books are new."], answer: 0, why: "students ينتهي أصلًا بـ s ← نضيف ' فقط، ولا نقول students's." },
   ],
+
+  // ---------------- الدرس 20 ----------------
+  20: [
+    { ar: "اختر اسم الإشارة لكتاب واحد قريب منك:", en: "___ notebook is on my desk.", opts: ["This", "That", "These", "Those"], answer: 0, why: "notebook مفرد وقريب ← This." },
+    { ar: "اختر اسم الإشارة لسيارة واحدة بعيدة في آخر الشارع:", en: "___ car at the end of the street is blue.", opts: ["This", "That", "These", "Those"], answer: 1, why: "car مفرد وبعيدة ← That." },
+    { ar: "اختر اسم الإشارة لعدة تفاحات قريبة:", en: "___ apples are fresh.", opts: ["This", "That", "These", "Those"], answer: 2, why: "apples جمع وقريبة ← These." },
+    { ar: "أكمل باسم الإشارة وVerb to be مع جمع شاذ بعيد:", en: "___ children ___ playing in the park.", opts: ["Those / are", "That / is", "These / is", "This / are"], answer: 0, why: "children جمع شاذ، والمجموعة بعيدة ← Those are." },
+    { ar: "اختر السؤال الصحيح عن أشياء جمع بعيدة:", en: "You can see several old buildings far away.", opts: ["What are those?", "What is those?", "What are that?", "What is that buildings?"], answer: 0, why: "those جمع، لذلك السؤال يبدأ بـ What are those?" },
+    { ar: "اختر الإجابة القصيرة الصحيحة:", en: "Are these your keys? — Yes, ___.", opts: ["they are", "these are", "it is", "they is"], answer: 0, why: "These تتحول إلى الضمير they في الإجابة القصيرة، ومع الجمع نستخدم are." },
+    { ar: "اختر التركيب الصحيح مع صفة الملكية:", en: "___ is my new camera.", opts: ["This", "These", "Those", "They"], answer: 0, why: "camera مفرد وقريبة ← This. ثم تأتي صفة الملكية my قبل الاسم." },
+    { ar: "اختر الجملة الصحيحة لحقائب الطلاب:", en: "Several bags near us belong to the students.", opts: ["These are the students' bags.", "This is the students' bags.", "These is the student's bags.", "Those are the students's bags."], answer: 0, why: "bags جمع وقريبة ← These are؛ students جمع ينتهي بـ s فتكون ملكيته students'." },
+    { ar: "صحح الخطأ الشائع في الاختيار للمفرد والجمع:", en: "This books are heavy.", opts: ["These books are heavy.", "This book are heavy.", "Those book is heavy.", "That books is heavy."], answer: 0, why: "books جمع وقريبة في هذا السياق ← These، ومع الجمع نستخدم are." },
+    { ar: "صحح الخطأ الشائع في توافق الإشارة والفعل:", en: "That are my friends.", opts: ["Those are my friends.", "That is my friends.", "These is my friends.", "This are my friends."], answer: 0, why: "friends جمع، لذلك نحتاج Those أو These ومعها are؛ هنا الجواب Those are." },
+    { ar: "اختر السؤال والإجابة الصحيحين عن دراجات الأطفال البعيدة:", en: "You see the children's bicycles across the playground.", opts: ["Whose bicycles are those? — They are the children's.", "Whose bicycle is that? — It is the children.", "Whose bicycles is those? — Those is children's.", "Whose are these bicycles? — It is children's."], answer: 0, why: "bicycles جمع وبعيدة ← those / are / they. children جمع شاذ، لذا ملكيته children's." },
+    { ar: "اختر الجملة المتكاملة الصحيحة:", en: "You point to several telescopes far from you. They belong to your brother.", opts: ["Those are my brother's telescopes.", "That is my brother's telescopes.", "These are my brother telescope.", "Those is my brothers' telescope."], answer: 0, why: "telescopes جمع وبعيدة ← Those are؛ brother مفرد فتكون الملكية brother's." },
+  ],
 };

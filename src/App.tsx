@@ -18,6 +18,7 @@ import Lesson16 from "./lessons/lesson16/Lesson16";
 import Lesson17 from "./lessons/lesson17/Lesson17";
 import Lesson18 from "./lessons/lesson18/Lesson18";
 import Lesson19 from "./lessons/lesson19/Lesson19";
+import Lesson20 from "./lessons/lesson20/Lesson20";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -38,6 +39,7 @@ import { SLIDES as L16_SLIDES } from "./lessons/lesson16/data";
 import { SLIDES as L17_SLIDES } from "./lessons/lesson17/data";
 import { SLIDES as L18_SLIDES } from "./lessons/lesson18/data";
 import { SLIDES as L19_SLIDES } from "./lessons/lesson19/data";
+import { SLIDES as L20_SLIDES } from "./lessons/lesson20/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 
 // ------------------------------------------------------------
@@ -244,6 +246,15 @@ const CARDS: Card[] = [
     href: "#/lesson/19",
     grad: "from-amber-400 to-rose-500",
   },
+  {
+    n: 20,
+    title: "الدرس 20: Demonstratives — أسماء الإشارة",
+    en: "This / That / These / Those",
+    emoji: "🛰️",
+    stats: `${L20_SLIDES.length} شريحة · 9 تحديات · Demonstrative Control Center`,
+    href: "#/lesson/20",
+    grad: "from-cyan-600 to-indigo-700",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -340,6 +351,7 @@ export default function App() {
   else if (route === 17) page = <Lesson17 onExit={goHome} />;
   else if (route === 18) page = <Lesson18 onExit={goHome} />;
   else if (route === 19) page = <Lesson19 onExit={goHome} />;
+  else if (route === 20) page = <Lesson20 onExit={goHome} />;
   else page = <Hub />;
   return (
     <>

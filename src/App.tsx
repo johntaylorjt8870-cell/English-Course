@@ -11,6 +11,7 @@ import Lesson9 from "./lessons/lesson9/Lesson9";
 import Lesson10 from "./lessons/lesson10/Lesson10";
 import Lesson11 from "./lessons/lesson11/Lesson11";
 import Lesson12 from "./lessons/lesson12/Lesson12";
+import Lesson13 from "./lessons/lesson13/Lesson13";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -24,6 +25,7 @@ import { SLIDES as L9_SLIDES } from "./lessons/lesson9/data";
 import { SLIDES as L10_SLIDES } from "./lessons/lesson10/data";
 import { SLIDES as L11_SLIDES } from "./lessons/lesson11/data";
 import { SLIDES as L12_SLIDES } from "./lessons/lesson12/data";
+import { SLIDES as L13_SLIDES } from "./lessons/lesson13/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 
 // ------------------------------------------------------------
@@ -167,6 +169,15 @@ const CARDS: Card[] = [
     href: "#/lesson/12",
     grad: "from-orange-500 to-rose-500",
   },
+  {
+    n: 13,
+    title: "الماضي البسيط — النفي والأسئلة",
+    en: "Past Simple — did / didn't",
+    emoji: "❓",
+    stats: `${L13_SLIDES.length} شريحة · 10 مستويات · صائد الأخطاء وIQ200`,
+    href: "#/lesson/13",
+    grad: "from-amber-500 to-orange-500",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -256,6 +267,7 @@ export default function App() {
   else if (route === 10) page = <Lesson10 onExit={goHome} />;
   else if (route === 11) page = <Lesson11 onExit={goHome} />;
   else if (route === 12) page = <Lesson12 onExit={goHome} />;
+  else if (route === 13) page = <Lesson13 onExit={goHome} />;
   else page = <Hub />;
   return (
     <>

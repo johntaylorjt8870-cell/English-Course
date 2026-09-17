@@ -95,8 +95,10 @@ import Lesson19, { SlideView19 } from ${JSON.stringify(join(root, "src/lessons/l
 import { SLIDES as L19_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson19/data.ts"))};
 import Lesson20, { SlideView20 } from ${JSON.stringify(join(root, "src/lessons/lesson20/Lesson20.tsx"))};
 import { SLIDES as L20_SLIDES, SOURCE_SECTIONS as L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20 } from ${JSON.stringify(join(root, "src/lessons/lesson20/data.ts"))};
+import Lesson21, { SlideView21 } from ${JSON.stringify(join(root, "src/lessons/lesson21/Lesson21.tsx"))};
+import { SLIDES as L21_SLIDES, SOURCE_SECTIONS as L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21 } from ${JSON.stringify(join(root, "src/lessons/lesson21/data.ts"))};
 import { QUIZZES } from ${JSON.stringify(join(root, "src/shared/quizBank.ts"))};
-export { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, QUIZZES };
+export { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, Lesson21, SlideView21, L21_SLIDES, L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21, QUIZZES };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -111,7 +113,7 @@ export { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoa
 });
 
 try {
-  const { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, QUIZZES } = await import(pathToFileURL(outFile).href);
+  const { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, Lesson21, SlideView21, L21_SLIDES, L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21, QUIZZES } = await import(pathToFileURL(outFile).href);
 
   // --- LatinRuns: mixed SVO phrase stays one LTR unit ---
   {
@@ -1181,6 +1183,378 @@ try {
     const quizSlide = L20_SLIDES.find((s) => s.kind === "quiz");
     const quizHtml = renderToString(React.createElement(SlideView20, { s: quizSlide, onExit: () => {} }));
     ok(quizHtml.includes("Teacher’s Space") && !quizHtml.includes("These books are heavy. ✅"), "Lesson 20 shared quiz renders a locked Teacher’s Space without key disclosure");
+  }
+
+  // --- الدرس 21: كل شرائح المصدر 1→48، الاختبار المشترك، والخاتمة ترندر فعليًا ---
+  {
+    const noop = () => {};
+    let rendered = 0;
+    const broken = [];
+    const missingLtr = [];
+    const missingSourceMarker = [];
+    for (const s of L21_SLIDES) {
+      try {
+        const html = renderToString(React.createElement(SlideView21, { s, onExit: noop }));
+        if (html.length < 200) broken.push(`${s.kind}:${s.title ?? ""}`);
+        if (!html.includes('dir="ltr"')) missingLtr.push(`${s.kind}:${s.title ?? ""}`);
+        if (s.sourceIndex !== undefined && !html.includes('data-source-section')) missingSourceMarker.push(`${s.sourceIndex + 1}:${s.title ?? ""}`);
+        rendered++;
+      } catch (err) {
+        broken.push(`${s.kind}:${s.title ?? ""} (${err.message || String(err)})`);
+      }
+    }
+    ok(L21_SLIDES.length === 51, `Lesson 21 keeps the complete 51-slide sequence (got ${L21_SLIDES.length})`);
+    ok(rendered === L21_SLIDES.length, `Lesson 21 every slide renders (${rendered}/${L21_SLIDES.length})`);
+    ok(broken.length === 0, `Lesson 21 has no empty or throwing slide (${broken.join(", ")})`);
+    ok(missingLtr.length === 0, `Lesson 21 isolates English on every slide (${missingLtr.join(", ")})`);
+    ok(missingSourceMarker.length === 0, `Lesson 21 renders a source-section marker on all 48 source slides (${missingSourceMarker.join(", ")})`);
+
+    const sourceSlides = L21_SLIDES.filter((s) => s.sourceIndex !== undefined);
+    ok(sourceSlides.length === 48, `Lesson 21 maps all 48 source sections to slides (${sourceSlides.length})`);
+    ok(
+      sourceSlides.every((s, i) => s.sourceIndex === i),
+      `Lesson 21 source slide order remains 1→48 (${sourceSlides.map((s) => (s.sourceIndex ?? -1) + 1).join(",")})`
+    );
+    ok(L21_SOURCE_SECTIONS.length === 48, `Lesson 21 source-heading ledger has 48 headings (${L21_SOURCE_SECTIONS.length})`);
+    ok(L21_SLIDES.some((s) => s.kind === "quiz") && L21_SLIDES.some((s) => s.kind === "closing"), "Lesson 21 includes shared final quiz and closing slides");
+    const exerciseTypes = ["detective", "solutions", "challenge1", "challenge2", "challenge3", "challenge4", "iq200", "iq200b", "finalBoss"];
+    for (const type of exerciseTypes) {
+      ok(sourceSlides.some((s) => s.kind === "ex" && s.ex.type === type), `Lesson 21 exercise type present: ${type}`);
+    }
+    ok(Array.isArray(QUIZZES[21]) && QUIZZES[21].length === 12, `Lesson 21 shared quiz has 12 questions (${QUIZZES[21]?.length ?? 0})`);
+  }
+
+  // --- الدرس 21: الوحدات الإنجليزية المصدرية والأخطاء المقصودة لا تنعكس ---
+  const unesc21 = (h) => h.replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
+  {
+    const all21 = L21_SLIDES.map((s) => unesc21(renderToString(React.createElement(SlideView21, { s, onExit: () => {} })))).join("\n");
+    const plain21 = all21.replace(/<!--[\s\S]*?-->/g, "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+    for (const phrase of [
+      "There is a cat in the garden.",
+      "There is a computer on the desk.",
+      "There is a tree near the house.",
+      "There is an apple in the basket.",
+      "There is a strange noise outside.",
+      "There is a dog.",
+      "There is a bird.",
+      "There is an orange.",
+      "There is an umbrella.",
+      "There is dog. ❌",
+      "There is apple. ❌",
+      "There is a dog. ✅",
+      "There is an apple. ✅",
+      "There are two cats in the garden.",
+      "There are five books on the shelf.",
+      "There are three windows in the room.",
+      "There are many students in the classroom.",
+      "There is a book.",
+      "There are three books.",
+      "There is a child in the room.",
+      "There are three children in the room.",
+      "There is one child in the park.",
+      "There are three children in the park.",
+      "There is one woman outside.",
+      "There are two women outside.",
+      "There is one mouse under the table.",
+      "There are four mice under the table.",
+      "There is a lamp on the table.",
+      "There is a bag under the chair.",
+      "There is a bicycle near the door.",
+      "There is a cat behind the sofa.",
+      "There is a picture above the bed.",
+      "There are books on the desk.",
+      "There are shoes under the bed.",
+      "There are trees behind the house.",
+      "There are two chairs next to the window.",
+      "There is a robot in the laboratory.",
+      "There are three robots in the laboratory.",
+      "There is not a computer here.",
+      "There isn't a computer here.",
+      "There are not any computers here.",
+      "There aren't any computers here.",
+      "There isn't a car outside.",
+      "There isn't a teacher in the room.",
+      "There aren't any students here.",
+      "There aren't any chairs in the room.",
+      "Is there a bathroom upstairs?",
+      "Is there a computer on the desk?",
+      "Are there any books here?",
+      "Are there two windows in the room?",
+      "Yes, there is.",
+      "No, there isn't.",
+      "Yes, there are.",
+      "No, there aren't.",
+      "Is there a problem?",
+      "Yes, it is. ❌",
+      "Yes, there is. ✅",
+      "There is a cat in the garden.",
+      "It is black.",
+      "This is a laptop.",
+      "There is a laptop on the table.",
+      "This is my laptop.",
+      "There is a laptop in my room.",
+      "There are some books on the table.",
+      "There are some students outside.",
+      "There are some apples in the basket.",
+      "Are there any books?",
+      "Are there any students outside?",
+      "There aren't any books.",
+      "There aren't any students outside.",
+      "some books",
+      "some students",
+      "some apples",
+      "some chairs",
+      "There is an apple.",
+      "There is one chair.",
+      "There are two chairs.",
+      "There are seven chairs.",
+      "There are twenty chairs.",
+      "There is two chairs. ❌",
+      "There are two chairs. ✅",
+      "There are many students here.",
+      "There are a lot of cars outside.",
+      "There are several trees in the park.",
+      "There is a large window in my bedroom.",
+      "There is a desk near the window.",
+      "There are two chairs beside the desk.",
+      "There are some books on the shelf.",
+      "There is a small lamp on the desk.",
+      "There are pictures on the wall.",
+      "There is a bed in the room.",
+      "There are two chairs.",
+      "There is a lamp next to the bed.",
+      "There are five books on the desk.",
+      "There are three pictures on the wall.",
+      "Is there a desk in the room?",
+      "Is there a television?",
+      "Are there any computers?",
+      "There is a laptop on the desk.",
+      "There are three books next to the laptop.",
+      "There is a lamp behind the laptop.",
+      "There aren't any pictures on the wall.",
+      "Is there a desk?",
+      "Are there two chairs?",
+      "Is there a laptop?",
+      "Are there four books?",
+      "Is there a lamp?",
+      "Are there any pictures?",
+      "There is some water in the bottle.",
+      "There is some milk in the fridge.",
+      "There are some water. ❌",
+      "There is a bottle.",
+      "There is some water.",
+      "There are three bottles.",
+      "There are some bottles.",
+      "There is a small blue book on the wooden table.",
+      "There is a small house near the river.",
+      "There is a beautiful garden behind the house.",
+      "There is an old computer on the desk.",
+      "There is Ali's bag on the chair.",
+      "There is Sara's phone on the desk.",
+      "There are the children's toys in the box.",
+      "There is a book on the table.",
+      "This is the book.",
+      "These are the books.",
+      "That is the book.",
+      "Those are the books.",
+      "There is a red car outside.",
+      "This is the red car.",
+      "It is very expensive.",
+      "The car is Sara's.",
+      "There are a book. ❌",
+      "There is a book. ✅",
+      "There is two books. ❌",
+      "There are two books. ✅",
+      "There is many students. ❌",
+      "There are many students. ✅",
+      "Is there two chairs? ❌",
+      "Are there two chairs? ✅",
+      "Are there a computer? ❌",
+      "Is there a computer? ✅",
+      "There are a water bottle. ❌",
+      "There is a water bottle. ✅",
+      "There are a cat under the table.",
+      "There is three students outside.",
+      "There are a computer on the desk.",
+      "Is there two windows?",
+      "Are there a teacher in the classroom?",
+      "There is many books on the shelf.",
+      "There isn't any chairs here.",
+      "There aren't a chair in the room.",
+      "Yes, it is.",
+      "There is two children in the garden.",
+      "Are there two windows?",
+      "Is there a teacher in the classroom?",
+      "There are two children in the garden.",
+      "______ a book on the desk.",
+      "______ three pencils in the bag.",
+      "______ a strange sound outside.",
+      "______ five students in the room.",
+      "______ a dog near the door.",
+      "______ two bicycles in the garage.",
+      "______ a child in the garden.",
+      "______ four children in the garden.",
+      "______ a computer on the table.",
+      "______ two computers on the table.",
+      "______ a child in the park.",
+      "______ three children in the park.",
+      "There is a dog outside.",
+      "There are some books on the desk.",
+      "There is a computer in the room.",
+      "There are three chairs here.",
+      "There is a restaurant nearby.",
+      "There are two bathrooms upstairs.",
+      "There is a problem.",
+      "There are some students outside.",
+      "one child",
+      "three children",
+      "one woman",
+      "four women",
+      "one mouse",
+      "five mice",
+      "There is a large table in the kitchen.",
+      "There are four chairs around the table.",
+      "There is a bowl on the table.",
+      "There are some apples in the bowl.",
+      "There is a refrigerator next to the wall.",
+      "Is there a table?",
+      "Are there four chairs?",
+      "Is there a bowl?",
+      "Are there any apples?",
+      "Is there a refrigerator?",
+      "Are there any pictures?",
+      "There is...",
+      "There are...",
+      "There isn't...",
+      "There aren't...",
+      "Is there...?",
+      "Are there...?",
+      "There are two small children in the beautiful garden near Sara's house.",
+    ]) {
+      ok(plain21.includes(phrase), `Lesson 21 rendered HTML keeps English unit: ${phrase}`);
+    }
+    for (const intentional of [
+      "There is dog. ❌",
+      "There is apple. ❌",
+      "There are a book. ❌",
+      "There is two books. ❌",
+      "There is many students. ❌",
+      "Is there two chairs? ❌",
+      "Are there a computer? ❌",
+      "There are a water bottle. ❌",
+      "There is two chairs. ❌",
+      "There are some water. ❌",
+    ]) {
+      ok(INTENTIONALLY_WRONG_21.includes(intentional), `Lesson 21 keeps intentional error inventory: ${intentional}`);
+    }
+    ok(plain21.includes("يوجد مكتب بجانب النافذة.") && plain21.includes("توجد ساعة فوق الباب."), "Lesson 21 Final Boss keeps all Arabic clue lines");
+    ok(!/book a is There/.test(plain21) && !/books two are There/.test(plain21) && !/car a is There/.test(plain21), "Lesson 21 never renders reversed English order");
+    ok(!all21.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 21 renders no GB flag emoji");
+  }
+
+  // --- الدرس 21: لوحات Scene Detective Lab تحافظ على الترتيب LTR والتحكم الحي ---
+  {
+    const bySource = (sourceIndex) => L21_SLIDES.find((s) => s.sourceIndex === sourceIndex);
+
+    const detectorHtml = renderToString(React.createElement(SlideView21, { s: bySource(1), onExit: () => {} }));
+    ok(detectorHtml.includes('data-en-seq="l21-existence"'), "Lesson 21 existence detector renders");
+    assertSeq("Lesson 21 existence detector paths", fontEnSeq(detectorHtml), ["There is", "There are"]);
+    ok(detectorHtml.includes("There is + Singular Noun") && detectorHtml.includes("There are + Plural Noun"), "Lesson 21 golden rule formulas render");
+
+    const locationHtml = renderToString(React.createElement(SlideView21, { s: bySource(8), onExit: () => {} }));
+    ok(locationHtml.includes('data-en-seq="l21-location"'), "Lesson 21 location lab renders");
+    for (const prep of ["in", "on", "under", "near", "behind", "in front of", "next to", "between"]) {
+      ok(locationHtml.includes(prep), `Lesson 21 location lab keeps preposition: ${prep}`);
+    }
+
+    const summaryHtml = renderToString(React.createElement(SlideView21, { s: bySource(44), onExit: () => {} }));
+    ok(summaryHtml.includes('data-source-section="الخلاصة الذهبية"'), "Lesson 21 golden summary slide renders");
+    assertOrderStrict("Lesson 21 golden summary", fontEnSeq(summaryHtml), [
+      "There is...",
+      "There are...",
+      "There isn't...",
+      "There aren't...",
+      "Is there...?",
+      "Are there...?",
+      "Yes, there is.",
+      "No, there isn't.",
+      "Yes, there are.",
+      "No, there aren't.",
+    ]);
+
+    const mindHtml = renderToString(React.createElement(SlideView21, { s: bySource(45), onExit: () => {} }));
+    const mindSeq = fontEnSeq(mindHtml);
+    const expectedMind = MINDMAP_21.flatMap((row) => [row.label, row.answer]);
+    assertSeq("Lesson 21 mind map", mindSeq, expectedMind);
+
+    const reachedHtml = renderToString(React.createElement(SlideView21, { s: bySource(46), onExit: () => {} }));
+    const reachedPlain = reachedHtml.replace(/&#x27;/g, "'").replace(/<[^>]+>/g, " ");
+    ok(reachedPlain.includes("There are two small children in the beautiful garden near Sara's house."), "Lesson 21 final IQ200 sentence renders verbatim");
+    for (const part of ["There are", "two", "small", "children", "in the beautiful garden", "near Sara's house"]) {
+      ok(unesc21(reachedHtml).includes(part), `Lesson 21 sentence breakdown keeps part: ${part}`);
+    }
+
+    const bossHtml = renderToString(React.createElement(SlideView21, { s: bySource(43), onExit: () => {} }));
+    const bossPlain = bossHtml.replace(/<!--[\s\S]*?-->/g, "").replace(/<[^>]+>/g, " ");
+    ok(bossHtml.includes('data-en-seq="l21-final-boss"'), "Lesson 21 Final Boss renders");
+    for (const clue of [
+      "يوجد مكتب بجانب النافذة.",
+      "يوجد حاسوب على المكتب.",
+      "توجد ثلاثة كتب بجانب الحاسوب.",
+      "توجد حقيبة تحت المكتب.",
+      "يوجد طفل في الغرفة.",
+      "يوجد طفلان آخران خارج الغرفة.",
+      "لا توجد صور على الجدار.",
+      "توجد ساعة فوق الباب.",
+    ]) {
+      ok(bossPlain.includes(clue), `Lesson 21 Final Boss keeps clue: ${clue}`);
+    }
+    ok(bossPlain.includes("There is") && bossPlain.includes("There are"), "Lesson 21 Final Boss keeps required formulas");
+
+    const kitchenHtml = renderToString(React.createElement(SlideView21, { s: bySource(42), onExit: () => {} }));
+    const kitchenPlain = unesc21(kitchenHtml).replace(/<!--[\s\S]*?-->/g, "").replace(/<[^>]+>/g, " ");
+    ok(kitchenHtml.includes('data-en-seq="l21-kitchen"'), "Lesson 21 kitchen investigation renders");
+    for (const line of KITCHEN_21.scene) {
+      ok(kitchenPlain.includes(line), `Lesson 21 kitchen keeps scene line: ${line}`);
+    }
+
+    const iqHtml = renderToString(React.createElement(SlideView21, { s: bySource(41), onExit: () => {} }));
+    ok(iqHtml.includes('data-en-seq="l21-iq200"'), "Lesson 21 IQ200 reasoning lab renders");
+    for (const given of ["one child", "three children", "one woman", "four women", "one mouse", "five mice"]) {
+      ok(iqHtml.includes(given), `Lesson 21 IQ200 keeps given phrase: ${given}`);
+    }
+
+    const detectiveHtml = renderToString(React.createElement(SlideView21, { s: bySource(35), onExit: () => {} }));
+    const detectivePlain = unesc21(detectiveHtml).replace(/<!--[\s\S]*?-->/g, "").replace(/<[^>]+>/g, " ");
+    ok(detectiveHtml.includes('data-en-seq="l21-detective"'), "Lesson 21 Grammar Detective renders");
+    for (const wrong of [
+      "There are a cat under the table.",
+      "There is three students outside.",
+      "There are a computer on the desk.",
+      "Is there two windows?",
+      "Are there a teacher in the classroom?",
+      "There is many books on the shelf.",
+      "There isn't any chairs here.",
+      "There aren't a chair in the room.",
+      "There is two children in the garden.",
+    ]) {
+      ok(detectivePlain.includes(wrong), `Lesson 21 detective keeps wrong sentence: ${wrong}`);
+    }
+
+    const quizSlide = L21_SLIDES.find((s) => s.kind === "quiz");
+    const quizHtml = renderToString(React.createElement(SlideView21, { s: quizSlide, onExit: () => {} }));
+    ok(quizHtml.includes("Teacher’s Space"), "Lesson 21 shared quiz renders Teacher’s Space section");
+    ok(quizHtml.includes("تحقق من الإجابات"), "Lesson 21 shared quiz keeps STEP 3 check button");
+    ok(!quizHtml.includes("الإجابة الصحيحة:"), "Lesson 21 quiz renders no answer key before unlocking");
+  }
+
+  // --- الدرس 21: الدرس كاملًا يُعرض من المكوّن الرئيسي ---
+  {
+    const html = renderToString(React.createElement(Lesson21, { onExit: () => {} }));
+    ok(html.length > 2000, "Lesson 21 renders without throwing");
+    ok(/dir="ltr"/.test(html), "Lesson 21 isolates English as LTR");
+    ok(html.includes('dir="rtl"'), "Lesson 21 keeps the Arabic RTL shell");
+    ok(!html.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 21 full lesson renders no GB flag emoji");
   }
 
 } catch (err) {

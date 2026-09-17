@@ -19,7 +19,7 @@ function ok(cond, msg) {
 function src(lesson, file) {
   return readFileSync(join(ROOT, lesson, file), "utf8");
 }
-ok(lessons.length === 20, `full-course regression inventory contains 20 lessons (got ${lessons.length})`);
+ok(lessons.length === 21, `full-course regression inventory contains 21 lessons (got ${lessons.length})`);
 // يقتطع جسم دالة بالاسم: من تعريفها حتى بداية الدالة التالية
 function fnBody(code, name) {
   const start = code.search(new RegExp(`function ${name}\\s*\\(`));
@@ -1203,7 +1203,9 @@ for (const [l, fn] of LTR_SPOTS) {
   ok(!t20.includes("const QUIZZES") && !t20.includes("TEACHER_PASSWORD"), "lesson20: does not duplicate quiz data or Teacher’s Space gate");
   const q20Start = bank.indexOf("  20: [");
   const q20End = bank.indexOf("  ],\n};", q20Start);
-  const q20 = q20Start === -1 ? "" : bank.slice(q20Start, q20End === -1 ? q20Start : q20End);
+  const q21Start = bank.indexOf("  21: [", q20Start);
+  const q20EndEff = Math.min(...[q20End, q21Start].filter((n) => n !== -1), q20Start === -1 ? -1 : Infinity);
+  const q20 = q20Start === -1 ? "" : bank.slice(q20Start, q20EndEff === -1 || q20EndEff === Infinity ? q20Start : q20EndEff);
   ok((q20.match(/\{ ar:/g) || []).length === 12, `lesson20: quizBank has 12 new quiz questions (got ${(q20.match(/\{ ar:/g) || []).length})`);
   for (const coverage of ["notebook is on my desk", "far away", "children", "What are those?", "they are", "students' bags", "This books are heavy.", "That are my friends.", "children's bicycles", "my brother's telescopes"]) {
     ok(q20.includes(coverage), `lesson20: shared quiz covers ${coverage}`);

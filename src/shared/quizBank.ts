@@ -256,4 +256,20 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "أكمل: What did Omar _______?", en: "What did Omar _______?", opts: ["write", "wrote", "writes", "writing"], answer: 0, why: "بعد did نستخدم write، حتى لو كان الماضي الشاذ wrote." },
     { ar: "اختر السؤال الصحيح عن الزمن في جملة: They arrived at 7:30.", en: "They arrived at 7:30.", opts: ["When did they arrive?", "When did they arrived?", "Where did they arrive?", "When they did arrive?"], answer: 0, why: "When للسؤال عن الوقت، وبعد did نستخدم arrive." },
   ],
+
+  // ---------------- الدرس 16 ----------------
+  16: [
+    { ar: "أكمل: I have a book. This is ______ book.", en: "This is ______ book.", opts: ["my", "his", "her", "their"], answer: 0, why: "I → my. صفة الملكية تعتمد على صاحب الشيء." },
+    { ar: "أكمل: Sara has a bag. ______ bag is new.", en: "______ bag is new.", opts: ["Her", "His", "Its", "Their"], answer: 0, why: "Sara → She → her. صفة الملكية تتبع صاحب الشيء." },
+    { ar: "أكمل: Omar has a bicycle. ______ bicycle is fast.", en: "______ bicycle is fast.", opts: ["His", "Her", "Its", "Our"], answer: 0, why: "Omar → He → his." },
+    { ar: "أكمل: The cat lost ______ toy.", en: "The cat lost ______ toy.", opts: ["its", "his", "her", "their"], answer: 0, why: "The cat → It → its. غير عاقل مفرد." },
+    { ar: "أكمل: We have a teacher. ______ teacher is kind.", en: "______ teacher is kind.", opts: ["Our", "Their", "My", "Your"], answer: 0, why: "We → our. نحن → خاص بنا." },
+    { ar: "أكمل: They have a house. ______ house is big.", en: "______ house is big.", opts: ["Their", "Our", "His", "Her"], answer: 0, why: "They → their. هم → خاص بهم." },
+    { ar: "ما الفرق بين its و it's؟", opts: ["its = ملكية | it's = it is", "its = it is | it's = ملكية", "لا يوجد فرق", "its للمفرد و it's للجمع"], answer: 0, why: "its = ملكية (بدون فاصلة عليا). it's = اختصار it is." },
+    { ar: "أكمل: Sara has a brother. ______ brother is 10.", en: "______ brother is 10.", opts: ["Her", "His", "Its", "Their"], answer: 0, why: "صاحب الأخ هو Sara (She) → her. حتى لو كان brother ذكراً، الملكية تتبع صاحب الشيء." },
+    { ar: "أكمل: Ali and Omar have a project. ______ project is difficult.", en: "______ project is difficult.", opts: ["Their", "Our", "His", "Her"], answer: 0, why: "Ali and Omar → They → their. أكثر من شخص → their." },
+    { ar: "صحح الخطأ: I have a dog. His dog is friendly.", en: "I have a dog. His dog is friendly.", opts: ["I have a dog. My dog is friendly.", "I have a dog. Her dog is friendly.", "I have a dog. Their dog is friendly.", "الجملة صحيحة."], answer: 0, why: "صاحب الكلب أنا (I) → my وليس his." },
+    { ar: "أكمل: This is my book. ولكن: This book is _____.", en: "This book is _____.", opts: ["mine", "my", "me", "I"], answer: 0, why: "my + noun (my book) لكن mine وحدها بدون اسم بعدها. هذا تمهيد للدرس 17." },
+    { ar: "أكمل: Ahmed's car يمكن تحويلها إلى:", en: "Ahmed's car = ______ car", opts: ["His", "Her", "Its", "Their"], answer: 0, why: "Ahmed → He → his. اسم + 's يمكن تحويلها إلى صفة ملكية." },
+  ],
 };

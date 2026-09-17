@@ -16,6 +16,7 @@ import Lesson14 from "./lessons/lesson14/Lesson14";
 import Lesson15 from "./lessons/lesson15/Lesson15";
 import Lesson16 from "./lessons/lesson16/Lesson16";
 import Lesson17 from "./lessons/lesson17/Lesson17";
+import Lesson18 from "./lessons/lesson18/Lesson18";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -34,6 +35,7 @@ import { SLIDES as L14_SLIDES } from "./lessons/lesson14/data";
 import { SLIDES as L15_SLIDES } from "./lessons/lesson15/data";
 import { SLIDES as L16_SLIDES } from "./lessons/lesson16/data";
 import { SLIDES as L17_SLIDES } from "./lessons/lesson17/data";
+import { SLIDES as L18_SLIDES } from "./lessons/lesson18/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 
 // ------------------------------------------------------------
@@ -222,6 +224,15 @@ const CARDS: Card[] = [
     href: "#/lesson/17",
     grad: "from-indigo-500 to-amber-500",
   },
+  {
+    n: 18,
+    title: "الدرس 18: Plural Nouns — جمع الأسماء",
+    en: "Plural Nouns — Regular & Irregular Plurals",
+    emoji: "🔢",
+    stats: `${L18_SLIDES.length} شريحة · 8 تحديات · Transformation Machine وMonster Zone`,
+    href: "#/lesson/18",
+    grad: "from-teal-500 to-cyan-600",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -316,6 +327,7 @@ export default function App() {
   else if (route === 15) page = <Lesson15 onExit={goHome} />;
   else if (route === 16) page = <Lesson16 onExit={goHome} />;
   else if (route === 17) page = <Lesson17 onExit={goHome} />;
+  else if (route === 18) page = <Lesson18 onExit={goHome} />;
   else page = <Hub />;
   return (
     <>

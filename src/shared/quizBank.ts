@@ -290,4 +290,20 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "Omar has a phone. حذفنا الاسم: The phone is ______.", en: "Omar has a phone. → The phone is ______.", opts: ["he", "him", "his", "he's"], answer: 2, why: "Omar → He → his. كلمة his نفسها قبل الاسم وبعده، والموقع يحدد الوظيفة." },
     { ar: "I have five books. أكمل: The books are ______.", en: "I have five books. The books are ______.", opts: ["my", "mine", "mines", "me"], answer: 1, why: "ضمير الملكية لا يتغير مع الجمع — نفس mine للمفرد والجمع." },
   ],
+
+  // ---------------- الدرس 18 ----------------
+  18: [
+    { ar: "أي كلمة من الكلمات التالية Plural (جمع)؟", opts: ["children", "child", "mouse", "person"], answer: 0, why: "children جمع شاذ — child / mouse / person أسماء مفردة." },
+    { ar: "اختر العبارة الصحيحة:", opts: ["I have a book.", "I have a books.", "I have an apples.", "I have a cats."], answer: 0, why: "a / an للمفرد المعدود فقط — الجمع يأتي بدون أداة: books / apples." },
+    { ar: "ما جمع كلمة book؟", en: "book → ?", opts: ["books", "bookes", "bookies", "bookss"], answer: 0, why: "القاعدة الأساسية للجمع العادي: Noun + s." },
+    { ar: "ما جمع كلمة box؟", en: "box → ?", opts: ["boxes", "boxs", "boxies", "boxeez"], answer: 0, why: "تنتهي بـ x ← نضيف es: boxes." },
+    { ar: "ما جمع كلمة baby؟", en: "baby → ?", opts: ["babies", "babys", "babyes", "babieses"], answer: 0, why: "b حرف ساكن قبل y ← نحوّل y إلى ies: babies." },
+    { ar: "ما جمع كلمة toy؟", en: "toy → ?", opts: ["toys", "toies", "toyes", "toyss"], answer: 0, why: "o حرف علة قبل y ← y تبقى كما هي + s: toys." },
+    { ar: "ما جمع كلمة knife؟", en: "knife → ?", opts: ["knives", "knifes", "knifves", "knifeses"], answer: 0, why: "من كلمات f/fe المشهورة: fe → ves — لكن انتبه، ليست كل f/fe تتحول (roof → roofs)." },
+    { ar: "ما جمع كلمة mouse؟", en: "mouse → ?", opts: ["mice", "mouses", "mices", "mouse"], answer: 0, why: "mouse → mice — جمع شاذ لا يتبع قاعدة s / es." },
+    { ar: "ما جمع كلمة sheep؟", en: "sheep → ?", opts: ["sheep", "sheeps", "sheepes", "shoop"], answer: 0, why: "sheep = sheep — المفرد والجمع بنفس الشكل. لا نقول sheeps." },
+    { ar: "أكمل: The children ______ happy.", en: "The children ______ happy.", opts: ["are", "is", "am", "been"], answer: 0, why: "children جمع ← are. children is خطأ شائع." },
+    { ar: "أكمل: The men ______ tired yesterday.", en: "The men ______ tired yesterday.", opts: ["were", "was", "did", "are"], answer: 0, why: "men جمع في الماضي ← were." },
+    { ar: "أكمل: The boys ______ football every day.", en: "The boys ______ football every day.", opts: ["play", "plays", "played", "playing"], answer: 0, why: "The boys = They ← الفعل الأساسي بدون s. The boys plays خطأ." },
+  ],
 };

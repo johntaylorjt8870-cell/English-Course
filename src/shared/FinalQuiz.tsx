@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { QUIZZES } from "./quizBank";
+import TeachersSpace from "./TeachersSpace";
 
 /**
  * الاختبار النهائي لكل درس — أسئلة جديدة كليًا مع تصحيح وشرح.
@@ -170,6 +171,10 @@ export default function FinalQuiz({ lesson, accent = "bg-slate-900" }: { lesson:
           )}
         </div>
       </div>
+
+      {/* فضاء المعلم (الخطوة 4): مفتاح نفس هذا الاختبار خلف كلمة مرور —
+          حالة مستقلة تمامًا عن pick/checked ولا تمسّ سلوك الاختبار */}
+      <TeachersSpace lesson={lesson} questions={questions} accent={accent} />
     </div>
   );
 }

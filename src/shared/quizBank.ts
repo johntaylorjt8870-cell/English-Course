@@ -306,4 +306,20 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "أكمل: The men ______ tired yesterday.", en: "The men ______ tired yesterday.", opts: ["were", "was", "did", "are"], answer: 0, why: "men جمع في الماضي ← were." },
     { ar: "أكمل: The boys ______ football every day.", en: "The boys ______ football every day.", opts: ["play", "plays", "played", "playing"], answer: 0, why: "The boys = They ← الفعل الأساسي بدون s. The boys plays خطأ." },
   ],
+
+  // ---------------- الدرس 19 ----------------
+  19: [
+    { ar: "أكمل (معلم واحد): This is the ______ desk.", en: "This is the ______ desk.", opts: ["teacher's", "teachers'", "teachers", "teacher"], answer: 0, why: "معلم واحد = مفرد ← 's: teacher's." },
+    { ar: "أكمل (عدة طلاب): These are the ______ bags.", en: "These are the ______ bags.", opts: ["students'", "student's", "students", "students's"], answer: 0, why: "students جمع ينتهي بـ s ← نضع ' فقط: students'." },
+    { ar: "ما صيغة الملكية الصحيحة للجمع children؟", en: "children → ? (possessive)", opts: ["children's", "childrens'", "childs'", "children"], answer: 0, why: "children جمع شاذ لا ينتهي بـ s ← 's، ولا نقول childrens' أبداً." },
+    { ar: "ولدان يملكان دراجة واحدة: This is the ______ bike.", en: "This is the ______ bike.", opts: ["boys'", "boy's", "boys", "boy"], answer: 0, why: "أكثر من ولد والجمع ينتهي بـ s ← boys' وليس boy's." },
+    { ar: "طفل واحد يملك لعبة: This is the ______ toy.", en: "This is the ______ toy.", opts: ["child's", "children's", "childs'", "children"], answer: 0, why: "طفل واحد = مفرد ← child's." },
+    { ar: "اختر الجملة الصحيحة (قرأنا ثلاثة كتب):", opts: ["We read three books.", "We read three book's.", "We read three books'.", "We read three book'."], answer: 0, why: "apostrophe ليست جمعًا — الجمع العادي هو books بدون أي علامة." },
+    { ar: "أي جملة تستخدم Possessive Noun؟", opts: ["The woman's hat is red.", "Her hat is red.", "The hat is hers.", "The hat is her."], answer: 0, why: "The woman's = اسم المالك + 's ← Possessive Noun، والبقية صفات أو ضمائر ملكية." },
+    { ar: "أي جملة فيها hers كضمير ملكية (Possessive Pronoun)؟", opts: ["The book is hers.", "Her book is new.", "This is her book.", "She has a book."], answer: 0, why: "في The book is hers لا يوجد اسم بعد hers ← ضمير ملكية." },
+    { ar: "The girls' room is clean. كم عدد الفتيات؟", opts: ["More than one girl", "one girl", "no girls", "a room only"], answer: 0, why: "girls' = أكثر من فتاة؛ لو كانت فتاة واحدة لقلنا girl's." },
+    { ar: "لماذا نقول: Liam's room؟ (فكرة من Final Boss)", opts: ["Liam is one person (singular)", "Liam is plural", "room is plural", "we add s to the room"], answer: 0, why: "Liam شخص واحد (مفرد) ← 's." },
+    { ar: "ما الشكل الأساسي الصحيح في المستوى الأساسي؟", opts: ["James's book", "James s book", "Jameses book", "The book of James s"], answer: 0, why: "المفرد يأخذ 's حتى لو انتهى الاسم بحرف s — بعض الأساليب تعرض James' لكننا نستخدم James's." },
+    { ar: "صحح الخطأ:", en: "The students's books are new.", opts: ["The students' books are new.", "The student's books are new.", "The students books are new.", "The students'' books are new."], answer: 0, why: "students ينتهي أصلًا بـ s ← نضيف ' فقط، ولا نقول students's." },
+  ],
 };

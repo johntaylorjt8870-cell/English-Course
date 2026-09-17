@@ -19,6 +19,7 @@ function ok(cond, msg) {
 function src(lesson, file) {
   return readFileSync(join(ROOT, lesson, file), "utf8");
 }
+ok(lessons.length === 20, `full-course regression inventory contains 20 lessons (got ${lessons.length})`);
 // يقتطع جسم دالة بالاسم: من تعريفها حتى بداية الدالة التالية
 function fnBody(code, name) {
   const start = code.search(new RegExp(`function ${name}\\s*\\(`));
@@ -1072,6 +1073,152 @@ for (const [l, fn] of LTR_SPOTS) {
 
   const GB19 = String.fromCodePoint(0x1f1ec, 0x1f1e7);
   ok(!d19.includes(GB19) && !t19.includes(GB19), "lesson19: no GB flag emoji anywhere in the lesson");
+}
+
+// ---------- 11.6) الدرس 20 — Demonstratives / This / That / These / Those ----------
+{
+  const d20 = src("lesson20", "data.ts");
+  const t20 = src("lesson20", "Lesson20.tsx");
+  const app = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "App.tsx"), "utf8");
+  const bank = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "shared", "quizBank.ts"), "utf8");
+  const finalQuiz = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "shared", "FinalQuiz.tsx"), "utf8");
+  const teachers = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "shared", "TeachersSpace.tsx"), "utf8");
+
+  // واجهة عربية RTL، وكل تشغيل إنجليزي يستخدم العازل المشترك أو حاوية LTR صريحة.
+  ok(t20.includes("../../shared/bidi"), "lesson20: must import LatinRuns from shared/bidi");
+  ok(!t20.includes("split(/(\\s+)/)"), "lesson20: per-token split must not exist (word-reversal engine)");
+  const ltrCount20 = (t20.match(/dir="ltr"/g) || []).length;
+  ok(ltrCount20 >= 40, `lesson20: English units must be LTR-isolated throughout (got ${ltrCount20})`);
+  ok(t20.includes('dir="rtl"'), "lesson20: Arabic lesson shell must remain RTL");
+
+  // مصدر الدرس: 41 عنوانًا، 41 mapping إلى الشرائح، ثم FinalQuiz وخاتمة.
+  ok(d20.includes("export const SOURCE_NUMBERED_COUNT = 41"), "lesson20: source-section count is exactly 41");
+  ok(d20.includes("export const SOURCE_FIDELITY_MARKERS_20"), "lesson20: source-fidelity marker index exists");
+  const secStart20 = d20.indexOf("export const SOURCE_SECTIONS");
+  const secEnd20 = d20.indexOf("];", secStart20);
+  const secBlock20 = d20.slice(secStart20, secEnd20);
+  const headings20 = secBlock20.match(/\n\s+"/g) || [];
+  ok(headings20.length === 41, `lesson20: SOURCE_SECTIONS contains all 41 headings (got ${headings20.length})`);
+  for (const heading of [
+    "أهداف الدرس",
+    "الفكرة الأساسية",
+    "النظام السحري",
+    "احفظها بهذه الطريقة",
+    "مثال بسيط جدًا",
+    "الجدول الأساسي",
+    "This",
+    "That",
+    "These",
+    "Those",
+    "الآن لدينا النظام كاملًا",
+    "العلاقة مع درس الجمع",
+    "ماذا عن الأشياء غير العاقلة؟",
+    "This/That + اسم",
+    "This/That كضمير",
+    "الأسئلة",
+    "الإجابات القصيرة",
+    "IQ200 Connection",
+    "This + Possessive Adjective",
+    "This + Possessive Noun",
+    "This vs These",
+    "That vs Those",
+    "لا تحفظها منفصلة!",
+    "كيف تختار الكلمة؟",
+    "مثال IQ200",
+    String.raw`هل \"بعيد\" يعني فقط المسافة؟`,
+    "This يمكن أن تشير إلى الوقت أيضًا",
+    "النفي",
+    "الأسئلة مع الملكية",
+    "Grammar Detective",
+    "Challenge 1 — اختر الكلمة",
+    "Challenge 2 — أكمل بـ is أو are",
+    "IQ200 Challenge",
+    "IQ200 Challenge 2",
+    "FINAL BOSS",
+    "لعبة السرعة",
+    "الاختبار الذهبي",
+    "تحدي بناء الجمل",
+    "الخلاصة",
+    "المستوى الذي وصلنا إليه",
+    "خريطة المنهج",
+  ]) ok(secBlock20.includes(heading), `lesson20: source section is indexed: ${heading}`);
+  ok((d20.match(/sourceIndex:/g) || []).length === 41, "lesson20: every source section has one slide mapping");
+  ok(d20.includes("{ kind: \"quiz\"") && d20.includes("{ kind: \"closing\""), "lesson20: shared quiz and closing slides are registered");
+
+  // الأمثلة والأخطاء المتعمدة يجب أن تبقى حرفيًا، مع التصحيح المنفصل في البيانات.
+  for (const exact of [
+    "This books ❌",
+    "This children ❌",
+    "These child ❌",
+    "Those car is red ❌",
+    "This are my shoes ❌",
+    "That are my friends ❌",
+    "These books. ✅",
+    "This apple. ✅",
+    "These apples. ✅",
+    "This child. ✅",
+    "These children. ✅",
+    "That woman. ✅",
+    "Those women. ✅",
+    "This man.",
+    "These men.",
+    "This is Ali's notebook.",
+    "That is Sara's bicycle.",
+    "These are the boys' shoes.",
+    "Those are the children's toys.",
+    "It's my new camera.",
+    "That's my brother's telescope.",
+    "Those ___ the students' bags.",
+    "Those are the children's bicycles.",
+  ]) ok(d20.includes(exact), `lesson20: supplied unit remains verbatim: ${exact}`);
+  ok(d20.includes("export const INTENTIONALLY_WRONG_20"), "lesson20: intentional-error inventory is explicit");
+
+  // كل تفاعل مصدره موجود بعدد عناصره ومفتاح حلّه، وليس نصًا ثابتًا فقط.
+  const between20 = (from, to) => {
+    const a = d20.indexOf(from);
+    const b = to ? d20.indexOf(to, a + 1) : -1;
+    return a === -1 ? "" : d20.slice(a, b === -1 ? a + 20000 : b);
+  };
+  const detective20 = between20("export const GRAMMAR_DETECTIVE_20", "export const CHALLENGE1_20");
+  ok((detective20.match(/wrong: "/g) || []).length === 8 && (detective20.match(/correct: "/g) || []).length === 8, "lesson20: Grammar Detective keeps 8 errors and 8 corrections");
+  const c1_20 = between20("export const CHALLENGE1_20", "export const CHALLENGE2_20");
+  ok((c1_20.match(/stem: "/g) || []).length === 6 && (c1_20.match(/answer: \d/g) || []).length === 6, "lesson20: Challenge 1 keeps 6 choice tasks and keys");
+  const c2_20 = between20("export const CHALLENGE2_20", "export const IQ200_CHALLENGE_20");
+  ok((c2_20.match(/stem: "/g) || []).length === 8 && (c2_20.match(/answer: "/g) || []).length === 8, "lesson20: Challenge 2 keeps 8 is/are tasks and keys");
+  const iq20 = between20("export const IQ200_CHALLENGE_20", "export const IQ200_CHALLENGE2_20");
+  ok((iq20.match(/blank: "/g) || []).length === 4 && (iq20.match(/answer: "/g) || []).length === 4, "lesson20: IQ200 Challenge keeps four prompts and keys");
+  const iq2_20 = between20("export const IQ200_CHALLENGE2_20", "export const FINAL_BOSS_20");
+  ok((iq2_20.match(/wrong: "/g) || []).length === 6 && (iq2_20.match(/correct: "/g) || []).length === 6, "lesson20: IQ200 Challenge 2 keeps 6 corrections");
+  const boss20 = between20("export const FINAL_BOSS_20", "export const SPEED_GAME_20");
+  ok((boss20.match(/speaker: "/g) || []).length === 8 && (boss20.match(/\{\s*n: "/g) || []).length === 8, "lesson20: Final Boss keeps full 8-line dialogue and 8 questions");
+  const speed20 = between20("export const SPEED_GAME_20", "export const GOLDEN_TEST_20");
+  ok((speed20.match(/id: "/g) || []).length === 4, "lesson20: Speed Game keeps four demonstrative zones");
+  const golden20 = between20("export const GOLDEN_TEST_20", "export const SENTENCE_BUILDER_20");
+  ok((golden20.match(/stem: "/g) || []).length === 8, "lesson20: Golden Test keeps eight recall prompts");
+  const builder20 = between20("export const SENTENCE_BUILDER_20", "export const SUMMARY_20");
+  ok((builder20.match(/tokens: \[/g) || []).length === 6 && (builder20.match(/answer: "/g) || []).length === 6, "lesson20: sentence builder keeps six groups and models");
+
+  // الاختبار النهائي المشترك: لا نسخة مستقلة، 12 سؤالًا يغطي المحاور المطلوبة.
+  ok(t20.includes('import FinalQuiz from "../../shared/FinalQuiz"') && t20.includes("<FinalQuiz lesson={20}"), "lesson20: reuses shared FinalQuiz for lesson 20");
+  ok(!t20.includes("const QUIZZES") && !t20.includes("TEACHER_PASSWORD"), "lesson20: does not duplicate quiz data or Teacher’s Space gate");
+  const q20Start = bank.indexOf("  20: [");
+  const q20End = bank.indexOf("  ],\n};", q20Start);
+  const q20 = q20Start === -1 ? "" : bank.slice(q20Start, q20End === -1 ? q20Start : q20End);
+  ok((q20.match(/\{ ar:/g) || []).length === 12, `lesson20: quizBank has 12 new quiz questions (got ${(q20.match(/\{ ar:/g) || []).length})`);
+  for (const coverage of ["notebook is on my desk", "far away", "children", "What are those?", "they are", "students' bags", "This books are heavy.", "That are my friends.", "children's bicycles", "my brother's telescopes"]) {
+    ok(q20.includes(coverage), `lesson20: shared quiz covers ${coverage}`);
+  }
+  ok(finalQuiz.includes("disabled={checked}") && finalQuiz.includes("setChecked(true)") && finalQuiz.includes("const reset"), "shared FinalQuiz preserves neutral/check/lock/reset lifecycle");
+  ok(teachers.includes('const TEACHER_PASSWORD = "63971"'), "Teacher’s Space gate remains password 63971");
+
+  // التطبيق/المركز: بطاقة واحدة ومسار واحد للدرس الجديد، بلا تعديل مسارات الدروس السابقة.
+  ok(app.includes('import Lesson20 from "./lessons/lesson20/Lesson20"'), "App imports Lesson20");
+  ok(app.includes('import { SLIDES as L20_SLIDES } from "./lessons/lesson20/data"'), "App reads Lesson20 slide count for hub card");
+  ok(app.includes('n: 20,') && app.includes('href: "#/lesson/20"'), "App registers one Lesson 20 hub card");
+  ok(app.includes('route === 20') && app.includes('<Lesson20 onExit={goHome} />'), "App registers Lesson 20 hash route");
+
+  const GB20 = String.fromCodePoint(0x1f1ec, 0x1f1e7);
+  ok(!d20.includes(GB20) && !t20.includes(GB20), "lesson20: no GB flag emoji anywhere in the lesson");
 }
 
 // ---------- 12) العلامة التجارية ونظافة الأعلام على مستوى المستودع ----------

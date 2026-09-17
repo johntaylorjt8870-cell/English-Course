@@ -1004,7 +1004,7 @@ function Cover() {
   return (
     <div className="rounded-[2rem] border-2 border-teal-200 bg-gradient-to-br from-teal-600 to-emerald-700 p-8 text-white shadow-xl md:p-12">
       <div className="text-7xl anim-float">🏠</div>
-      <h1 className="font-head mt-4 text-3xl font-bold md:text-5xl">🇬🇧 الدرس 16: Possessive Adjectives</h1>
+      <h1 className="font-head mt-4 text-3xl font-bold md:text-5xl">الدرس 16: Possessive Adjectives</h1>
       <div className="mt-2 text-xl font-bold text-teal-100">صفات الملكية</div>
       <div className="mt-6 rounded-2xl bg-white/10 p-5 text-lg leading-relaxed text-teal-50">
         <Rich text={COVER_PLAN_16} />

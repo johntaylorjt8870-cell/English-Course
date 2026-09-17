@@ -370,6 +370,215 @@ for (const [l, fn] of LTR_SPOTS) {
   ]) ok(!rx.test(d14) && !rx.test(t14), `lesson14: reversed formula is forbidden (${rx})`);
 }
 
+// ---------- 10) الدرس 17 — Possessive Pronouns ----------
+{
+  const d17 = src("lesson17", "data.ts");
+  const t17 = src("lesson17", "Lesson17.tsx");
+
+  ok(t17.includes("../../shared/bidi"), "lesson17: must import LatinRuns from shared/bidi");
+  ok(!t17.includes("split(/(\\s+)/)"), "lesson17: per-token split must not exist (word-reversal engine)");
+  const ltrCount = (t17.match(/dir="ltr"/g) || []).length;
+  ok(ltrCount >= 40, `lesson17: English units must be wrapped with dir=ltr throughout (got ${ltrCount})`);
+  ok(d17.includes("export const SOURCE_FIDELITY_MARKERS_17"), "lesson17: source-fidelity marker index exists");
+
+  // فهرس أقسام المصدر: 45 قسماً مرقماً + الأهداف + 4 أقسام ختامية
+  const secStart = d17.indexOf("export const SOURCE_SECTIONS");
+  const secEnd = d17.indexOf("];", secStart);
+  const secBlock = d17.slice(secStart, secEnd);
+  const secItems = secBlock.match(/\n\s+"/g) || [];
+  ok(secItems.length >= 50, `lesson17: SOURCE_SECTIONS must index every source section (got ${secItems.length}, expected 50)`);
+  for (let n = 1; n <= 45; n++) {
+    ok(new RegExp(`"\\S*\\s*${n}\\.\\s`).test(secBlock) || secBlock.includes(` ${n}. `), `lesson17: source section ${n} must be indexed`);
+  }
+  for (const heading of [
+    "أهداف الدرس",
+    "1. تذكير سريع من الدرس 16",
+    "2. ما المشكلة التي سنحلها اليوم؟",
+    "3. ما هو Possessive Pronoun؟",
+    "4. الخريطة الأساسية",
+    "5. الفرق الأساسي",
+    "6. MY → MINE",
+    "7. YOUR → YOURS",
+    "8. HIS → HIS",
+    "9. HER → HERS",
+    "10. OUR → OURS",
+    "11. THEIR → THEIRS",
+    "12. لاحظ شيئاً مهماً جداً",
+    "13. مقارنة كاملة",
+    "14. خطأ مشهور جداً",
+    "17. حركة التحويل السحرية",
+    "18. مثال IQ200",
+    "19. ثلاثة أنظمة للملكية",
+    "22. السؤال المهم: Whose?",
+    "25. الفرق بين MY و MINE",
+    "30. خطأ شديد الشيوع",
+    "32. his حالة خاصة",
+    "33. ماذا عن IT؟",
+    "35. الملكية لا تعتمد على عدد الأشياء",
+    "36. تمارين المستوى الأول",
+    "39. المستوى الرابع — صحح الأخطاء",
+    "40. المستوى الخامس — Whose?",
+    "41. المستوى السادس — التحويل",
+    "42. Grammar Detective",
+    "43. IQ200 Challenge",
+    "44. IQ200 Challenge 2",
+    "45. التحدي النهائي",
+    "الخلاصة الكبرى",
+    "قاعدة IQ200",
+    "أهم 5 أخطاء ممنوعة",
+    "خريطة المنهج بعد الدرس 17",
+  ]) ok(d17.includes(heading), `lesson17: source section is indexed: ${heading}`);
+
+  // المعادلات محفوظة بترتيبها الإنجليزي
+  for (const formula of [
+    "Possessive Adjective + Noun",
+    "MY + NOUN",
+    "MINE = وحدها",
+    "my + noun",
+    "my → mine",
+    "my book → mine",
+    "your bag → yours",
+    "her phone → hers",
+    "our house → ours",
+    "their car → theirs",
+    "her + noun",
+    "its + noun → ???",
+    "Whose = لِمَن؟",
+    "Whose...?",
+  ]) ok(d17.includes(formula), `lesson17: required formula remains verbatim: ${formula}`);
+
+  // الجمل المفتاحية بترتيبها الصحيح
+  for (const exact of [
+    "This is my book.",
+    "This book is mine.",
+    "This is my notebook.",
+    "This notebook is mine.",
+    "This is your jacket.",
+    "This jacket is yours.",
+    "This is his laptop.",
+    "This laptop is his.",
+    "This is her camera.",
+    "This camera is hers.",
+    "This is our classroom.",
+    "This classroom is ours.",
+    "This is their house.",
+    "This house is theirs.",
+    "These books are theirs.",
+    "Whose phone is this?",
+    "Whose book is this?",
+    "Whose jacket is that?",
+    "It's mine.",
+    "It's hers.",
+    "It's theirs.",
+    "Yes, it is mine.",
+    "Yes, it is my backpack.",
+    "Is this your backpack?",
+    "This is Sara's notebook.",
+    "This is Alex's laptop.",
+    "Whose laptop is this?",
+    "The robot moved its arm.",
+    "His car is fast.",
+    "The car is his.",
+    "Their car is new.",
+    "They're happy.",
+    "You're happy.",
+    "The book is yours.",
+    "Emma brought her camera to the competition.",
+  ]) ok(d17.includes(exact), `lesson17: supplied sentence remains verbatim: ${exact}`);
+
+  // الأهداف الثمانية
+  {
+    const objBlock = d17.slice(d17.indexOf("export const OBJECTIVES_17"), d17.indexOf("// -------------------- 1."));
+    ok((objBlock.match(/\bn: "[①②③④⑤⑥⑦⑧]"/g) || []).length === 8, "lesson17: all 8 objectives remain");
+  }
+
+  // التمارين — العدد ومفاتيح الحل
+  const between = (from, to) => {
+    const a = d17.indexOf(from);
+    const b = to ? d17.indexOf(to, a + 1) : -1;
+    return a === -1 ? "" : d17.slice(a, b === -1 ? a + 20000 : b);
+  };
+  const l1 = between("export const LEVEL1_17", "export const LEVEL2_17:");
+  ok((l1.match(/\{ n: "/g) || []).length === 6, "lesson17: level 1 keeps 6 items");
+  ok((l1.match(/answer: \d/g) || []).length === 6, "lesson17: level 1 keeps 6 answer keys");
+  const l2 = between("export const LEVEL2_17:", "export const LEVEL3_17");
+  ok((l2.match(/\{ n: "/g) || []).length === 6, "lesson17: level 2 keeps 6 transforms");
+  ok((l2.match(/answer: "/g) || []).length === 6, "lesson17: level 2 keeps 6 answer keys");
+  const l3 = between("export const LEVEL3_17", "export const LEVEL4_17");
+  ok((l3.match(/\{ n: "/g) || []).length === 6, "lesson17: level 3 keeps 6 items");
+  const l4 = between("export const LEVEL4_17", "export const LEVEL5_17:");
+  ok((l4.match(/wrong: "/g) || []).length === 6 && (l4.match(/correct: "/g) || []).length === 6, "lesson17: level 4 keeps 6 errors and 6 corrections");
+  const l5 = between("export const LEVEL5_17:", "export const LEVEL6_17:");
+  ok((l5.match(/\{ n: "/g) || []).length === 5, "lesson17: Whose level keeps 5 items");
+  ok((l5.match(/answer: "/g) || []).length === 5, "lesson17: Whose level keeps 5 answer keys");
+  const l6 = between("export const LEVEL6_17:", "export const DETECTIVE_PASSAGE_17");
+  ok((l6.match(/\{ n: "/g) || []).length === 5, "lesson17: transformation level keeps 5 items");
+  ok((d17.match(/\{ n: "①", word: "her"|\{ n: "②", word: "his"|\{ n: "③", word: "their"|\{ n: "④", word: "yours"|\{ n: "⑤", word: "mine"|\{ n: "⑥", word: "hers"/g) || []).length === 6, "lesson17: Grammar Detective keeps all 6 targets");
+  ok((between("export const IQ200_CHALLENGE_17", "export const IQ200_CHALLENGE2_17").match(/\{ n: "①"|\{ n: "②"|\{ n: "③"/g) || []).length === 3, "lesson17: IQ200 keeps its 3 transformations");
+  ok((d17.match(/\{ n: \d, wrong: "/g) || []).length === 5, "lesson17: the 5 forbidden errors are all kept");
+  ok((between("export const ROADMAP_17:", "export const ROADMAP_17_CLOSING").match(/n: \d+/g) || []).length === 17, "lesson17: roadmap lists all 17 lessons");
+  ok(d17.includes("Possessive Pronouns — نحن هنا"), "lesson17: roadmap marks the current lesson");
+  ok(d17.includes("Irregular Plurals") && d17.includes("the children → the children's"), "lesson17: roadmap keeps the next-step preview");
+  ok((d17.match(/my|mine|your|yours|his|her|hers|our|ours|their/g) || []).length > 0 && d17.includes("theirs"), "lesson17: final challenge keeps theirs as the alternative");
+  const fin = between("export const FINAL_CHALLENGE_17", "// ============================================================\n// الخاتمة");
+  ok((fin.match(/"/g) || []).length > 20 && fin.includes("Whose...?"), "lesson17: final challenge keeps its word list and the Whose requirement");
+
+  // لا ترتيب معكوس للإنجليزية — الأخطاء المقصودة مستثناة
+  const wrongBlockStart = d17.indexOf("export const INTENTIONALLY_WRONG_17");
+  const wrongBlockEnd = d17.indexOf("];", wrongBlockStart);
+  const scannable = d17.slice(0, wrongBlockStart) + d17.slice(wrongBlockEnd === -1 ? d17.length : wrongBlockEnd);
+  const PRONOUN_NOUN = /\b(mine|yours|hers|ours|theirs)\s+(book|books|bag|bags|car|cars|house|houses|jacket|jackets|notebook|notebooks|camera|cameras|school|table|project|bicycle|bicycles|seat|idea|backpack|room|team|phone|phones)\b/gi;
+  const offenders = [];
+  for (const line of scannable.split("\n")) {
+    PRONOUN_NOUN.lastIndex = 0;
+    const m = PRONOUN_NOUN.exec(line);
+    if (m && !line.includes("❌") && !line.includes("wrong:") && !line.includes("stem:") && !line.includes("ok: false")) offenders.push(line.trim());
+  }
+  ok(offenders.length === 0, `lesson17: possessive pronoun must never precede a noun outside the intentional-error list (${offenders.join(" | ")})`);
+
+  for (const rx of [/\bbook\s+my\b/, /\bbag\s+your\b/, /\bcar\s+their\b/, /\bhouse\s+our\b/, /\bcamera\s+her\b/, /\bmine\s+is\s+book\b/]) {
+    ok(!rx.test(d17) && !rx.test(t17), `lesson17: reversed English must not appear (${rx})`);
+  }
+  const GB = String.fromCodePoint(0x1f1ec, 0x1f1e7);
+  ok(!d17.includes(GB) && !t17.includes(GB), "lesson17: no GB flag emoji anywhere in the lesson");
+}
+
+// ---------- 11) العلامة التجارية ونظافة الأعلام على مستوى المستودع ----------
+{
+  const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+  const skip = new Set(["node_modules", ".git", "dist", ".cache"]);
+  const files = [];
+  (function walk(dir) {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      if (skip.has(entry.name)) continue;
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else files.push(full);
+    }
+  })(root);
+  // تُبنى الإبرتان من نقاط الترميز حتى لا يحتوي هذا الملف نفسه على العلامة
+  const GB_FLAG = String.fromCodePoint(0x1f1ec, 0x1f1e7);
+  const OLD_BRAND_RX = new RegExp(["Englishwith", "sommer"].join(""), "i");
+  const flagged = [];
+  const oldBrand = [];
+  for (const file of files) {
+    let text;
+    try {
+      text = readFileSync(file, "utf8");
+    } catch {
+      continue;
+    }
+    if (text.includes(GB_FLAG)) flagged.push(file.replace(root, ""));
+    if (OLD_BRAND_RX.test(text)) oldBrand.push(file.replace(root, ""));
+  }
+  ok(flagged.length === 0, `repo: no GB flag emoji may remain anywhere (found in: ${flagged.join(", ")})`);
+  ok(oldBrand.length === 0, `repo: old branding ${["Englishwith", "sommer"].join("")} must be absent (found in: ${oldBrand.join(", ")})`);
+  const indexHtml = readFileSync(join(root, "index.html"), "utf8");
+  ok(indexHtml.includes("EnglishwithSomeR"), "repo: index.html keeps the EnglishwithSomeR branding");
+  const app = readFileSync(join(root, "src", "App.tsx"), "utf8");
+  ok(app.includes("EnglishwithSomeR"), "repo: hub keeps the EnglishwithSomeR branding");
+}
+
 // ---------- النتيجة ----------
 if (failures.length > 0) {
   console.error(`✕ English-direction check FAILED (${failures.length}/${checks}):`);

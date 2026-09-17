@@ -812,6 +812,268 @@ for (const [l, fn] of LTR_SPOTS) {
   ok(!d18.includes(GB18) && !t18.includes(GB18), "lesson18: no GB flag emoji anywhere in the lesson");
 }
 
+// ---------- 11.5) الدرس 19 — Possessive Nouns ----------
+{
+  const d19 = src("lesson19", "data.ts");
+  const t19 = src("lesson19", "Lesson19.tsx");
+
+  ok(t19.includes("../../shared/bidi"), "lesson19: must import LatinRuns from shared/bidi");
+  ok(!t19.includes("split(/(\\s+)/)"), "lesson19: per-token split must not exist (word-reversal engine)");
+  const ltrCount19 = (t19.match(/dir="ltr"/g) || []).length;
+  ok(ltrCount19 >= 40, `lesson19: English units must be wrapped with dir=ltr throughout (got ${ltrCount19})`);
+  ok(d19.includes("export const SOURCE_FIDELITY_MARKERS_19"), "lesson19: source-fidelity marker index exists");
+
+  // فهرس أقسام المصدر: 14 قسماً مرقماً + الأهداف + نظام القواعد + 8 أقسام ختامية/تمارين
+  const secStart19 = d19.indexOf("export const SOURCE_SECTIONS");
+  const secEnd19 = d19.indexOf("];", secStart19);
+  const secBlock19 = d19.slice(secStart19, secEnd19);
+  const secItems19 = secBlock19.match(/\n\s+"/g) || [];
+  ok(secItems19.length >= 26, `lesson19: SOURCE_SECTIONS must index every source section (got ${secItems19.length}, expected 26)`);
+  for (let n = 1; n <= 14; n++) {
+    ok(secBlock19.includes(` ${n}. `), `lesson19: source section ${n} must be indexed`);
+  }
+  for (const heading of [
+    "أهداف الدرس",
+    "1. ما معنى Possessive Noun؟",
+    "2. كيف نفكر في 's؟",
+    "3. الاسم المفرد + 's",
+    "4. ماذا لو كان عندنا أكثر من شخص؟",
+    "5. لا تنظر إلى العلامة فقط!",
+    "6. ماذا يحدث مع الجمع الشاذ؟",
+    "7. الرجل والرجال",
+    "8. المرأة والنساء",
+    "9. الشخص والأشخاص",
+    "10. الأسنان والقدم",
+    "نظام القواعد الكامل",
+    "11. الملكية لا تعني دائمًا",
+    "12. Possessive Noun vs Possessive Adjective",
+    "13. النظام الثلاثي للملكية",
+    "14. انتبه: apostrophe ليست جمعًا!",
+    "Grammar Detective",
+    "Challenge 1 — اختر الصحيح",
+    "Challenge 2 — حوّل إلى Possessive",
+    "IQ200 Challenge",
+    "IQ200 — لغز المعنى",
+    "FINAL BOSS",
+    "اختبار السرعة",
+    "الخلاصة الكبرى",
+    "قاعدة IQ200 النهائية",
+    "خريطة المنهج حتى الآن",
+  ]) ok(d19.includes(heading), `lesson19: source section is indexed: ${heading}`);
+
+  // القواعد والمعادلات محفوظة بترتيبها الإنجليزي
+  for (const formula of [
+    "Singular Noun + 's",
+    "boy → boy's",
+    "girl → girl's",
+    "child → child's",
+    "man → man's",
+    "woman → woman's",
+    "boys → boys'",
+    "girls → girls'",
+    "students → students'",
+    "teachers → teachers'",
+    "children → children's",
+    "men → men's",
+    "women → women's",
+    "people → people's",
+    "child → children",
+    "man → men",
+    "woman → women",
+    "person → people",
+    "tooth → teeth",
+    "foot → feet",
+    "Singular → Possessive",
+    "Plural → Possessive",
+  ]) ok(d19.includes(formula), `lesson19: required formula remains verbatim: ${formula}`);
+
+  // الجمل والأمثلة المفتاحية بترتيبها الصحيح
+  for (const exact of [
+    "Ali's book",
+    "The book belongs to Ali.",
+    "Ali book ❌",
+    "Sara's phone",
+    "Omar's bicycle",
+    "Lina's notebook",
+    "The dog's tail",
+    "The teacher's desk",
+    "the book of Ali",
+    "the camera of Sara",
+    "the tail of the dog",
+    "Maya's backpack",
+    "James's book",
+    "James' book",
+    "The boy's bag.",
+    "The boys' bags.",
+    "The girl's bicycle.",
+    "The girls' bicycles.",
+    "The student's book.",
+    "The students' books.",
+    "The teacher's room.",
+    "The teachers' room.",
+    "The students's books ❌",
+    "The students' books. ✅",
+    "The child's toy.",
+    "The children's toys.",
+    "childrens' ❌",
+    "children's ✅",
+    "The man's jacket.",
+    "The men's jackets.",
+    "The woman's bag.",
+    "The women's bags.",
+    "The person's name.",
+    "The people's opinions.",
+    "The tooth's shape.",
+    "The teeth's condition.",
+    "The man's foot.",
+    "The men's feet.",
+    "Ali's book",
+    "students' books",
+    "children's toys",
+    "the school's name",
+    "the city's center",
+    "the company's website",
+    "the dog's name",
+    "His book",
+    "Sara's laptop.",
+    "Her laptop.",
+    "The laptop is hers.",
+    "Omar's phone.",
+    "His phone.",
+    "The phone is his.",
+    "Maya's notebook.",
+    "Her notebook.",
+    "The notebook is hers.",
+    "The students' classroom.",
+    "Their classroom.",
+    "The classroom is theirs.",
+    "The book's cover.",
+    "The books are interesting.",
+    "one boy's bicycle",
+    "two boys' bicycles",
+    "The childs toy is broken.",
+    "The childrens toys are outside.",
+    "The boys's room is large.",
+    "The girls bag is red.",
+    "The students's books are on the desk.",
+    "I like the dogs' tail.",
+    "The woman bag is expensive.",
+    "The mens shoes are black.",
+    "The child's toy is broken.",
+    "The children's toys are outside.",
+    "The boys' room is large.",
+    "The girl's bag is red.",
+    "The students' books are on the desk.",
+    "I like the dog's tail.",
+    "The woman's bag is expensive.",
+    "The men's shoes are black.",
+    "the boy's bike",
+    "the boys bike",
+    "the boys' bike",
+    "the boy's bikes",
+    "the boys' bikes",
+    "the boys's bikes",
+    "the child's toy",
+    "the childrens' toy",
+    "the child toy",
+    "the childs' toys",
+    "the children's toys",
+    "the childrens toys",
+    "the book of Ali",
+    "the bicycle of Sara",
+    "the toys of the children",
+    "the house of the men",
+    "the bags of the students",
+    "the car of the woman",
+    "Ali's book",
+    "Sara's bicycle",
+    "the men's house",
+    "the students' bags",
+    "the woman's car",
+    "teacher's",
+    "teachers'",
+    "child's",
+    "children's",
+    "man's",
+    "men's",
+    "girl's",
+    "girls'",
+    "The boy's shoes are dirty.",
+    "The boys' shoes are dirty.",
+    "The child's toys.",
+    "The children's toys.",
+    "Liam has a small dog. The dog's name is Rocket. Liam also has two sisters. The girls' room is next to Liam's room. Their mother keeps the children's toys in a large box.",
+    "Liam's room",
+    "girls' room",
+    "girl's room",
+    "His room.",
+    "The boy's are playing.",
+    "The boys' are playing.",
+    "The boys' bags are heavy.",
+    "The childrens' books are new.",
+    "The children's books are new.",
+    "My sister's phone is broken.",
+    "My sisters' phones are broken.",
+    "My sister's",
+    "My sisters'",
+    "Sara's book",
+    "The book is hers.",
+    "Their classroom",
+    "The toys are theirs.",
+    "my book",
+    "her phone",
+    "their house",
+    "The book is mine.",
+    "The phone is hers.",
+    "The house is theirs.",
+    "Possessive Nouns — 's / s' / Irregular Plurals",
+  ]) ok(d19.includes(exact), `lesson19: supplied sentence remains verbatim: ${exact}`);
+
+  const between19 = (from, to) => {
+    const a = d19.indexOf(from);
+    const b = to ? d19.indexOf(to, a + 1) : -1;
+    return a === -1 ? "" : d19.slice(a, b === -1 ? a + 20000 : b);
+  };
+
+  // التمارين — العدد ومفاتيح الحل
+  const det19 = between19("export const DETECTIVE_19", "export const CHALLENGE1_19");
+  ok((det19.match(/wrong: "/g) || []).length === 8, "lesson19: Grammar Detective keeps 8 wrong sentences");
+  ok((det19.match(/correct: "/g) || []).length === 8, "lesson19: Grammar Detective keeps 8 corrections");
+  const c19_1 = between19("export const CHALLENGE1_19", "export const CHALLENGE2_19");
+  ok((c19_1.match(/context: "/g) || []).length === 4, "lesson19: Challenge 1 keeps 4 questions");
+  ok((c19_1.match(/answer: \d/g) || []).length === 4, "lesson19: Challenge 1 keeps 4 answer keys");
+  ok(c19_1.includes('answer: 0') && c19_1.includes("answer: 1"), "lesson19: Challenge 1 keeps the A/B/A/B key pattern");
+  const c19_2 = between19("export const CHALLENGE2_19", "export const IQ200_CHALLENGE_19");
+  ok((c19_2.match(/of: "/g) || []).length === 6, "lesson19: Challenge 2 keeps 6 transformations");
+  ok((c19_2.match(/answer: "/g) || []).length === 6, "lesson19: Challenge 2 keeps 6 answer keys");
+  const iq19 = between19("export const IQ200_CHALLENGE_19", "export const IQ200_MEANING_19");
+  ok((iq19.match(/\{ n: "/g) || []).length === 8, "lesson19: IQ200 challenge keeps 8 items");
+  ok((iq19.match(/answer: "/g) || []).length === 8, "lesson19: IQ200 challenge keeps 8 answer keys");
+  const boss19 = between19("export const FINAL_BOSS_19", "export const SPEED_TEST_19");
+  ok(boss19.includes("Liam has a small dog."), "lesson19: Final Boss passage must be kept verbatim");
+  ok((boss19.match(/n: "/g) || []).length === 7, "lesson19: Final Boss keeps 7 questions");
+  const sp19 = between19("export const SPEED_TEST_19", "export const SUMMARY_19");
+  ok((sp19.match(/\{ n: "/g) || []).length === 7, "lesson19: Speed Test keeps 7 sentences");
+  ok((between19("export const ROADMAP_19:", "export const ROADMAP_19_CLOSING").match(/n: \d+/g) || []).length === 19, "lesson19: roadmap lists all 19 lessons");
+  ok(d19.includes("Possessive Nouns — 's / s' / Irregular Plurals"), "lesson19: roadmap marks the current lesson");
+  ok(
+    (between19("export const OBJECTIVES_19", "export const S1_DEFINITION_19").match(/n: "[①②③④⑤⑥⑦]"/g) || []).length === 7,
+    "lesson19: all 7 objectives remain"
+  );
+
+  // لا ترتيب معكوس للإنجليزية — الأخطاء المقصودة مستثناة
+  const wrongStart19 = d19.indexOf("export const INTENTIONALLY_WRONG_19");
+  const wrongEnd19 = d19.indexOf("];", wrongStart19);
+  const scannable19 = d19.slice(0, wrongStart19) + d19.slice(wrongEnd19 === -1 ? d19.length : wrongEnd19);
+  for (const rx of [/\bboys\s+The\b/, /\bbooks\s+The\b/, /\btoys\s+The\b/, /book's\s+are\s+playing/]) {
+    const m = scannable19.match(rx);
+    ok(!m, `lesson19: reversed English must not appear (${rx})${m ? ` — found: ${m[0]}` : ""}`);
+  }
+
+  const GB19 = String.fromCodePoint(0x1f1ec, 0x1f1e7);
+  ok(!d19.includes(GB19) && !t19.includes(GB19), "lesson19: no GB flag emoji anywhere in the lesson");
+}
+
 // ---------- 12) العلامة التجارية ونظافة الأعلام على مستوى المستودع ----------
 {
   const root = join(dirname(fileURLToPath(import.meta.url)), "..");

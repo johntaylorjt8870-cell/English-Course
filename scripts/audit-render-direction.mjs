@@ -90,7 +90,9 @@ import Lesson17, { SlideView17 } from ${JSON.stringify(join(root, "src/lessons/l
 import { SLIDES as L17_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson17/data.ts"))};
 import Lesson18, { SlideView18 } from ${JSON.stringify(join(root, "src/lessons/lesson18/Lesson18.tsx"))};
 import { SLIDES as L18_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson18/data.ts"))};
-export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES };
+import Lesson19, { SlideView19 } from ${JSON.stringify(join(root, "src/lessons/lesson19/Lesson19.tsx"))};
+import { SLIDES as L19_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson19/data.ts"))};
+export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -105,7 +107,7 @@ export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideV
 });
 
 try {
-  const { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES } = await import(pathToFileURL(outFile).href);
+  const { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES } = await import(pathToFileURL(outFile).href);
 
   // --- LatinRuns: mixed SVO phrase stays one LTR unit ---
   {
@@ -838,6 +840,209 @@ try {
     ok(/dir="ltr"/.test(html), "Lesson 18 isolates English as LTR");
     ok(html.includes('dir="rtl"'), "Lesson 18 keeps the Arabic RTL shell");
     ok(!html.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 18 renders no GB flag emoji");
+  }
+
+  // --- الدرس 19: كل الوحدات الإنجليزية المهمة تُعرض نصًا حرفيًا ---
+  // renderToString يحوّل ' إلى &#x27; — نعيد التطبيع قبل المقارنة الحرفية.
+  const unesc19 = (h) => h.replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
+  {
+    const all19 = L19_SLIDES.map((s) =>
+      unesc19(renderToString(React.createElement(SlideView19, { s, onExit: () => {} })))
+    ).join("\n");
+    const plain19 = all19.replace(/<[^>]+>/g, "");
+    for (const phrase of [
+      "Ali's book",
+      "The book belongs to Ali.",
+      "Ali book",
+      "Sara's phone",
+      "Omar's bicycle",
+      "Lina's notebook",
+      "The dog's tail",
+      "The teacher's desk",
+      "the book of Ali",
+      "the camera of Sara",
+      "the tail of the dog",
+      "Maya's backpack",
+      "James's book",
+      "James' book",
+      "The boy's bag.",
+      "The boys' bags.",
+      "The girl's bicycle.",
+      "The girls' bicycles.",
+      "The student's book.",
+      "The students' books.",
+      "The teacher's room.",
+      "The teachers' room.",
+      "The students's books",
+      "The students' books.",
+      "The child's toy.",
+      "The children's toys.",
+      "childrens'",
+      "children's",
+      "The man's jacket.",
+      "The men's jackets.",
+      "The woman's bag.",
+      "The women's bags.",
+      "The person's name.",
+      "The people's opinions.",
+      "The tooth's shape.",
+      "The teeth's condition.",
+      "The man's foot.",
+      "The men's feet.",
+      "students' books",
+      "children's toys",
+      "the school's name",
+      "the city's center",
+      "the company's website",
+      "the dog's name",
+      "His book",
+      "Sara's laptop.",
+      "Her laptop.",
+      "The laptop is hers.",
+      "Omar's phone.",
+      "His phone.",
+      "The phone is his.",
+      "Maya's notebook.",
+      "The notebook is hers.",
+      "The students' classroom.",
+      "Their classroom.",
+      "The classroom is theirs.",
+      "The book's cover.",
+      "The books are interesting.",
+      "one boy's bicycle",
+      "two boys' bicycles",
+      "The boy's shoes are dirty.",
+      "The boys' shoes are dirty.",
+      "The child's toys.",
+      "The children's toys.",
+      "Liam has a small dog. The dog's name is Rocket. Liam also has two sisters. The girls' room is next to Liam's room. Their mother keeps the children's toys in a large box.",
+      "The boy's are playing.",
+      "The boys' are playing.",
+      "The boys' bags are heavy.",
+      "The childrens' books are new.",
+      "The children's books are new.",
+      "My sister's phone is broken.",
+      "My sisters' phones are broken.",
+      "boy → boy's",
+      "boys → boys'",
+      "children → children's",
+      "Sara's book",
+      "The book is hers.",
+      "Their toys",
+      "The toys are theirs.",
+    ]) {
+      // نحذف الوسوم للنص العاري: بعض الوحدات الإنجليزية تُعرض كسلسلة لفرط مع
+      // إبراز الفعل/الكلمة داخل <span> — الترتيب البصري يبقى إنجليزيًا دائمًا.
+      ok(plain19.includes(phrase), `Lesson 19 rendered HTML keeps English unit: ${phrase}`);
+    }
+  }
+
+  // --- الدرس 19: آلة apostrophe + المقارن + المختبرات ---
+  {
+    const machineSlide = L19_SLIDES.find((s) => s.kind === "lesson" && s.step === "★");
+    const mHtml = renderToString(React.createElement(SlideView19, { s: machineSlide, onExit: () => {} }));
+    ok(mHtml.includes('data-en-seq="l19-rules"'), "Lesson 19 rule cases render");
+    ok(mHtml.includes('data-en-seq="l19-golden"'), "Lesson 19 golden table renders");
+    ok(mHtml.includes('data-en-seq="l19-machine"'), "Lesson 19 apostrophe machine renders");
+    // بطاقات الحالات الثلاث تُعرض مفتوحة من الحالة الأولى (الجدول والآلة تكشفان عند الضغط)
+    const tokens = fontEnSeq(mHtml);
+    ok(
+      tokens.includes("Ali's") && tokens.includes("students'") && tokens.includes("children's") &&
+      tokens.includes("Ali's book") && tokens.includes("students' books") && tokens.includes("children's toys"),
+      "Lesson 19 rule cases keep all three possessive forms intact"
+    );
+    ok(!tokens.includes("book's boy"), "Lesson 19 rule cases never reverse possessive order");
+
+    const s4 = L19_SLIDES.find((s) => s.kind === "lesson" && s.step === "4");
+    const s4Html = renderToString(React.createElement(SlideView19, { s: s4, onExit: () => {} }));
+    ok(s4Html.includes('data-en-seq="l19-comparator"'), "Lesson 19 boy's vs boys' comparator renders");
+
+    const s5 = L19_SLIDES.find((s) => s.kind === "lesson" && s.step === "5");
+    const s5Html = renderToString(React.createElement(SlideView19, { s: s5, onExit: () => {} }));
+    ok(s5Html.includes('data-en-seq="l19-number"'), "Lesson 19 number detector renders");
+    const s2 = L19_SLIDES.find((s) => s.kind === "lesson" && s.step === "2");
+    const s2Html = renderToString(React.createElement(SlideView19, { s: s2, onExit: () => {} }));
+    ok(s2Html.includes('data-en-seq="l19-owner"'), "Lesson 19 owner detector renders");
+    const s13 = L19_SLIDES.find((s) => s.kind === "lesson" && s.step === "13");
+    const s13Html = renderToString(React.createElement(SlideView19, { s: s13, onExit: () => {} }));
+    ok(s13Html.includes('data-en-seq="l19-three-system"'), "Lesson 19 three-system machine renders");
+    const s14 = L19_SLIDES.find((s) => s.kind === "lesson" && s.step === "14");
+    const s14Html = renderToString(React.createElement(SlideView19, { s: s14, onExit: () => {} }));
+    ok(s14Html.includes('data-en-seq="l19-apos"'), "Lesson 19 apostrophe≠plural lab renders");
+  }
+
+  // --- الدرس 19: Grammar Detective — الجمل الثمانية الخاطئة تبقى كما هي ---
+  {
+    const det = L19_SLIDES.find((s) => s.kind === "ex" && s.badge === "16");
+    const detHtml = unesc19(renderToString(React.createElement(SlideView19, { s: det, onExit: () => {} })));
+    for (const s of [
+      "The childs toy is broken.",
+      "The childrens toys are outside.",
+      "The boys's room is large.",
+      "The girls bag is red.",
+      "The students's books are on the desk.",
+      "I like the dogs' tail.",
+      "The woman bag is expensive.",
+      "The mens shoes are black.",
+    ]) {
+      ok(detHtml.includes(s), `Lesson 19 detective keeps: ${s}`);
+    }
+  }
+
+  // --- الدرس 19: Challenge 1 — ترتيب A ثم B ثم C في الأسئلة الأربعة ---
+  {
+    const slide = L19_SLIDES.find((s) => s.kind === "ex" && s.badge === "17");
+    const html = renderToString(React.createElement(SlideView19, { s: slide, onExit: () => {} }));
+    const groups = html.match(/data-en-seq="l19-opts-[^"]+"/g) || [];
+    ok(groups.length === 4, `Lesson 19 Challenge 1: four option groups rendered (got ${groups.length})`);
+    const aIdx = [...html.matchAll(/data-en-opt="A"/g)].map((m) => m.index);
+    const bIdx = [...html.matchAll(/data-en-opt="B"/g)].map((m) => m.index);
+    const cIdx = [...html.matchAll(/data-en-opt="C"/g)].map((m) => m.index);
+    ok(aIdx.length === 4 && bIdx.length === 4 && cIdx.length === 4, "Lesson 19 Challenge 1: A/B/C markers on all four questions");
+    ok(aIdx.every((v, i) => v < bIdx[i]) && bIdx.every((v, i) => v < cIdx[i]), "Lesson 19 Challenge 1: A precedes B and B precedes C");
+  }
+
+  // --- الدرس 19: FINAL BOSS + Speed Test + IQ200 ---
+  {
+    const boss = L19_SLIDES.find((s) => s.kind === "ex" && s.badge === "21");
+    const bossHtml = unesc19(renderToString(React.createElement(SlideView19, { s: boss, onExit: () => {} })));
+    ok(bossHtml.includes('data-en-seq="l19-boss"'), "Lesson 19 final boss renders");
+    // الفقرة مقسمة إلى مقاطع لإبراز تراكيب الملكية — الترتيب البصري يبقى إنجليزيًا:
+    ok(
+      bossHtml.replace(/<[^>]+>/g, "").includes("Liam has a small dog. The dog's name is Rocket. Liam also has two sisters. The girls' room is next to Liam's room. Their mother keeps the children's toys in a large box."),
+      "Lesson 19 final boss passage renders verbatim (word order intact)"
+    );
+    for (const w of ["The dog's name", "the girls'", "Liam's room", "children's toys"]) {
+      ok(bossHtml.includes(w), `Lesson 19 final boss keeps passage word: ${w}`);
+    }
+
+    const speed = L19_SLIDES.find((s) => s.kind === "ex" && s.badge === "22");
+    const speedHtml = unesc19(renderToString(React.createElement(SlideView19, { s: speed, onExit: () => {} })));
+    ok(speedHtml.includes('data-en-seq="l19-speed"'), "Lesson 19 speed test renders");
+    for (const s of [
+      "The boy's are playing.",
+      "The boys' are playing.",
+      "The boys' bags are heavy.",
+      "The childrens' books are new.",
+      "The children's books are new.",
+      "My sister's phone is broken.",
+      "My sisters' phones are broken.",
+    ]) {
+      ok(speedHtml.includes(s), `Lesson 19 speed test keeps: ${s}`);
+    }
+
+    const iq = L19_SLIDES.find((s) => s.kind === "ex" && s.badge === "19");
+    const iqHtml = renderToString(React.createElement(SlideView19, { s: iq, onExit: () => {} }));
+    ok(iqHtml.includes("one teacher") && iqHtml.includes("many children"), "Lesson 19 IQ200 keeps count prompts");
+  }
+
+  // --- الدرس 19: الدرس كاملًا يُعرض من المكوّن الرئيسي ---
+  {
+    const html = renderToString(React.createElement(Lesson19, { onExit: () => {} }));
+    ok(html.length > 2000, "Lesson 19 renders without throwing");
+    ok(/dir="ltr"/.test(html), "Lesson 19 isolates English as LTR");
+    ok(html.includes('dir="rtl"'), "Lesson 19 keeps the Arabic RTL shell");
+    ok(!html.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 19 renders no GB flag emoji");
   }
 
 } catch (err) {

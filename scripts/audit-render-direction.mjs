@@ -97,8 +97,10 @@ import Lesson20, { SlideView20 } from ${JSON.stringify(join(root, "src/lessons/l
 import { SLIDES as L20_SLIDES, SOURCE_SECTIONS as L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20 } from ${JSON.stringify(join(root, "src/lessons/lesson20/data.ts"))};
 import Lesson21, { SlideView21 } from ${JSON.stringify(join(root, "src/lessons/lesson21/Lesson21.tsx"))};
 import { SLIDES as L21_SLIDES, SOURCE_SECTIONS as L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21 } from ${JSON.stringify(join(root, "src/lessons/lesson21/data.ts"))};
+import Lesson22, { SlideView22 } from ${JSON.stringify(join(root, "src/lessons/lesson22/Lesson22.tsx"))};
+import { SLIDES as L22_SLIDES, SOURCE_SECTIONS as L22_SOURCE_SECTIONS, INTENTIONALLY_WRONG_22, GOLDEN_SUMMARY_22_WORDS, FINAL_BOSS_22_CLUES_AR, IQ200_1_SCENE, ROOM_SENTENCES as L22_ROOM_SENTENCES } from ${JSON.stringify(join(root, "src/lessons/lesson22/data.ts"))};
 import { QUIZZES } from ${JSON.stringify(join(root, "src/shared/quizBank.ts"))};
-export { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, Lesson21, SlideView21, L21_SLIDES, L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21, QUIZZES };
+export { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, Lesson21, SlideView21, L21_SLIDES, L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21, Lesson22, SlideView22, L22_SLIDES, L22_SOURCE_SECTIONS, INTENTIONALLY_WRONG_22, GOLDEN_SUMMARY_22_WORDS, FINAL_BOSS_22_CLUES_AR, IQ200_1_SCENE, L22_ROOM_SENTENCES, QUIZZES };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -113,7 +115,7 @@ export { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoa
 });
 
 try {
-  const { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, Lesson21, SlideView21, L21_SLIDES, L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21, QUIZZES } = await import(pathToFileURL(outFile).href);
+  const { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, Lesson21, SlideView21, L21_SLIDES, L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21, Lesson22, SlideView22, L22_SLIDES, L22_SOURCE_SECTIONS, INTENTIONALLY_WRONG_22, GOLDEN_SUMMARY_22_WORDS, FINAL_BOSS_22_CLUES_AR, IQ200_1_SCENE, L22_ROOM_SENTENCES, QUIZZES } = await import(pathToFileURL(outFile).href);
 
   // --- LatinRuns: mixed SVO phrase stays one LTR unit ---
   {
@@ -1555,6 +1557,166 @@ try {
     ok(/dir="ltr"/.test(html), "Lesson 21 isolates English as LTR");
     ok(html.includes('dir="rtl"'), "Lesson 21 keeps the Arabic RTL shell");
     ok(!html.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 21 full lesson renders no GB flag emoji");
+  }
+
+  // --- الدرس 22: عرض كل الشرائح بدون أخطاء + علامات المصدر + عزل LTR ---
+  {
+    const noop22 = () => {};
+    let rendered22 = 0;
+    const broken22 = [];
+    const missingLtr22 = [];
+    const missingSrc22 = [];
+    for (const s of L22_SLIDES) {
+      try {
+        const html = renderToString(React.createElement(SlideView22, { s, onExit: noop22 }));
+        if (html.length < 200) broken22.push(`${s.kind}:${s.title ?? ""}`);
+        if (!html.includes('dir="ltr"')) missingLtr22.push(`${s.kind}:${s.title ?? ""}`);
+        if (s.sourceIndex !== undefined && !html.includes('data-source-section')) missingSrc22.push(`${s.sourceIndex + 1}:${s.title ?? ""}`);
+        rendered22++;
+      } catch (err) {
+        broken22.push(`${s.kind}:${s.title ?? ""} (${err.message || String(err)})`);
+      }
+    }
+    ok(L22_SLIDES.length >= 44, `Lesson 22 keeps the complete slide sequence (got ${L22_SLIDES.length})`);
+    ok(rendered22 === L22_SLIDES.length, `Lesson 22 every slide renders (${rendered22}/${L22_SLIDES.length})`);
+    ok(broken22.length === 0, `Lesson 22 has no empty or throwing slide (${broken22.join(", ")})`);
+    ok(missingLtr22.length === 0, `Lesson 22 isolates English on every slide (${missingLtr22.join(", ")})`);
+    ok(missingSrc22.length === 0, `Lesson 22 renders a source-section marker on all source slides (${missingSrc22.join(", ")})`);
+
+    const sourceSlides22 = L22_SLIDES.filter((s) => s.sourceIndex !== undefined);
+    ok(sourceSlides22.length >= 40, `Lesson 22 maps source sections to slides (${sourceSlides22.length})`);
+    ok(L22_SOURCE_SECTIONS.length === 42, `Lesson 22 source-heading ledger has 42 headings (${L22_SOURCE_SECTIONS.length})`);
+    ok(L22_SLIDES.some((s) => s.kind === "quiz") && L22_SLIDES.some((s) => s.kind === "closing"), "Lesson 22 includes shared final quiz and closing slides");
+    const exTypes22 = ["detective", "challenge1", "challenge2", "challenge3", "iq200a", "iq200b", "finalBoss", "trueFalse"];
+    for (const type of exTypes22) {
+      ok(sourceSlides22.some((s) => s.kind === "ex" && s.ex.type === type), `Lesson 22 exercise type present: ${type}`);
+    }
+    ok(Array.isArray(QUIZZES[22]) && QUIZZES[22].length === 12, `Lesson 22 shared quiz has 12 questions (${QUIZZES[22]?.length ?? 0})`);
+  }
+
+  // --- الدرس 22: الوحدات الإنجليزية المصدرية والاخطاء المقصودة لا تنعكس ---
+  const unesc22 = (h) => h.replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
+  {
+    const all22 = L22_SLIDES.map((s) => unesc22(renderToString(React.createElement(SlideView22, { s, onExit: () => {} })))).join("\n");
+    const plain22 = all22.replace(/<!--[\s\S]*?-->/g, "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+    for (const phrase of [
+      "The book is in the bag.",
+      "The keys are in the drawer.",
+      "The children are in the classroom.",
+      "There is a cat in the box.",
+      "The phone is on the table.",
+      "The cat is under the table.",
+      "The clock is above the door.",
+      "The temperature is below zero.",
+      "The car is behind the house.",
+      "The teacher is in front of the students.",
+      "The chair is next to the table.",
+      "The school is near my house.",
+      "The ball is between the boxes.",
+      "The bank is opposite the school.",
+      "The children are inside the house.",
+      "There is a car outside the garage.",
+      "There is a book on the table.",
+      "There are two books on the desk.",
+      "Where is the book?",
+      "Where are the keys?",
+      "The book is on the table.",
+      "The cat is under the chair.",
+      "She is in the kitchen.",
+      "He is next to the window.",
+      "Where is Omar's bag?",
+      "It is under the desk.",
+      "Where are the children's shoes?",
+      "There is a small box under the table next to the door.",
+      "There are two chairs in front of the desk near the window.",
+      "Ali is behind Sara.",
+      "The lamp is above the table.",
+      "The lamp is over the table.",
+      "The ball is between Ali and Omar.",
+      "The teacher is among the students.",
+      "There is a bed in the room.",
+      "The children's shoes are near the door.",
+      "Sara's phone is inside her bag.",
+      "The school is between the library and the park.",
+    ]) {
+      ok(plain22.includes(phrase), `Lesson 22 rendered HTML keeps English unit: ${phrase}`);
+    }
+    for (const intentional of INTENTIONALLY_WRONG_22) {
+      ok(plain22.includes(intentional.replace(/<[^>]+>/g, "")), `Lesson 22 renders intentional error visibly: ${intentional}`);
+    }
+    const challenge1slide = L22_SLIDES.find((s) => s.kind === "ex" && s.ex.type === "challenge1");
+    ok(challenge1slide && challenge1slide.ex.type === "challenge1", "Lesson 22 Short Answer Challenge slide is registered");
+    // Arabic clues present
+    for (const clue of FINAL_BOSS_22_CLUES_AR) {
+      ok(plain22.includes(clue), `Lesson 22 Final Boss keeps Arabic clue: ${clue}`);
+    }
+    // IQ200 scene sentences present
+    for (const line of IQ200_1_SCENE) {
+      ok(plain22.includes(line.en), `Lesson 22 IQ200 scene keeps line: ${line.en}`);
+    }
+    // Bedroom scene sentences present
+    for (const line of L22_ROOM_SENTENCES) {
+      ok(plain22.includes(line.en), `Lesson 22 room scene keeps line: ${line.en}`);
+    }
+    ok(!/book the on table the is/.test(plain22) && !/elbat eht no si koob ehT/.test(plain22), "Lesson 22 never renders reversed English word order");
+    ok(!all22.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 22 renders no GB flag emoji as branding");
+  }
+
+  // --- الدرس 22: لوحات Position Lab تحافظ على الترتيب والتحكم الحي ---
+  {
+    const bySource22 = (sourceIndex) => L22_SLIDES.find((s) => s.sourceIndex === sourceIndex);
+
+    const overviewHtml = renderToString(React.createElement(SlideView22, { s: bySource22(2), onExit: () => {} }));
+    ok(overviewHtml.includes('data-en-seq="l22-overview"'), "Lesson 22 position overview renders");
+    for (const prep of ["in", "on", "under", "above", "below", "behind", "in front of", "next to", "near", "between", "opposite", "inside", "outside"]) {
+      ok(overviewHtml.includes(prep), `Lesson 22 overview keeps preposition: ${prep}`);
+    }
+
+    const mapHtml = renderToString(React.createElement(SlideView22, { s: bySource22(16), onExit: () => {} }));
+    ok(mapHtml.includes('data-en-seq="l22-map"'), "Lesson 22 preposition map renders");
+    for (const row of GOLDEN_SUMMARY_22_WORDS) {
+      ok(unesc22(mapHtml).includes(row.en), `Lesson 22 map keeps word: ${row.en}`);
+    }
+
+    const summaryHtml = renderToString(React.createElement(SlideView22, { s: L22_SLIDES.find((s) => s.kind === "summary"), onExit: () => {} }));
+    ok(summaryHtml.includes('data-source-section="الخلاصة الذهبية"') || summaryHtml.includes("الخلاصة الذهبية"), "Lesson 22 golden summary slide renders");
+    assertSeq("Lesson 22 golden summary words", fontEnSeq(summaryHtml), GOLDEN_SUMMARY_22_WORDS.map((r) => r.en));
+
+    const whereHtml = renderToString(React.createElement(SlideView22, { s: bySource22(19), onExit: () => {} }));
+    ok(whereHtml.includes('data-en-seq="l22-where"'), "Lesson 22 Where question machine renders");
+    const whereSeq = fontEnSeq(whereHtml);
+    ok(whereSeq.includes("Where is...?") && whereSeq.includes("Where are...?"), "Lesson 22 Where forms (Where is / Where are) both present");
+
+    const bossHtml = renderToString(React.createElement(SlideView22, { s: bySource22(36), onExit: () => {} }));
+    const bossPlain = unesc22(bossHtml).replace(/<!--[\s\S]*?-->/g, "").replace(/<[^>]+>/g, " ");
+    ok(bossHtml.includes('data-en-seq="l22-final-boss"'), "Lesson 22 Final Boss renders");
+    for (const req of ["There is", "There are", "in", "on", "under", "next to", "behind", "in front of", "above"]) {
+      ok(bossPlain.includes(req), `Lesson 22 Final Boss keeps requirement: ${req}`);
+    }
+
+    const roomHtml = renderToString(React.createElement(SlideView22, { s: bySource22(29), onExit: () => {} }));
+    ok(roomHtml.includes('data-en-seq="l22-room"'), "Lesson 22 room scene builder renders");
+
+    const detHtml = renderToString(React.createElement(SlideView22, { s: bySource22(30), onExit: () => {} }));
+    ok(detHtml.includes('data-en-seq="l22-detective"'), "Lesson 22 Grammar Detective renders");
+
+    const iq22Html = renderToString(React.createElement(SlideView22, { s: bySource22(34), onExit: () => {} }));
+    ok(iq22Html.includes('data-en-seq="l22-iq200a"'), "Lesson 22 IQ200 Challenge renders");
+
+    const quizSlide22 = L22_SLIDES.find((s) => s.kind === "quiz");
+    const quizHtml22 = renderToString(React.createElement(SlideView22, { s: quizSlide22, onExit: () => {} }));
+    ok(quizHtml22.includes("Teacher’s Space"), "Lesson 22 shared quiz renders Teacher’s Space section");
+    ok(quizHtml22.includes("تحقق من الإجابات"), "Lesson 22 shared quiz keeps STEP 3 check button");
+    ok(!quizHtml22.includes("الإجابة الصحيحة:"), "Lesson 22 quiz renders no answer key before unlocking");
+  }
+
+  // --- الدرس 22: الدرس كاملًا يُعرض من المكوّن الرئيسي ---
+  {
+    const html = renderToString(React.createElement(Lesson22, { onExit: () => {} }));
+    ok(html.length > 2000, "Lesson 22 renders without throwing");
+    ok(/dir="ltr"/.test(html), "Lesson 22 isolates English as LTR");
+    ok(html.includes('dir="rtl"'), "Lesson 22 keeps the Arabic RTL shell");
+    ok(!html.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 22 full lesson renders no GB flag emoji");
   }
 
 } catch (err) {

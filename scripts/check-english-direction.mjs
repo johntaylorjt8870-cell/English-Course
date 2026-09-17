@@ -19,7 +19,7 @@ function ok(cond, msg) {
 function src(lesson, file) {
   return readFileSync(join(ROOT, lesson, file), "utf8");
 }
-ok(lessons.length === 21, `full-course regression inventory contains 21 lessons (got ${lessons.length})`);
+ok(lessons.length === 22, `full-course regression inventory contains 22 lessons (got ${lessons.length})`);
 // يقتطع جسم دالة بالاسم: من تعريفها حتى بداية الدالة التالية
 function fnBody(code, name) {
   const start = code.search(new RegExp(`function ${name}\\s*\\(`));
@@ -1221,6 +1221,25 @@ for (const [l, fn] of LTR_SPOTS) {
 
   const GB20 = String.fromCodePoint(0x1f1ec, 0x1f1e7);
   ok(!d20.includes(GB20) && !t20.includes(GB20), "lesson20: no GB flag emoji anywhere in the lesson");
+
+  // ---------- lesson 22 ----------
+  {
+    const d22 = src("lesson22", "data.ts");
+    const t22 = src("lesson22", "Lesson22.tsx");
+    ok(d22.includes('en: "in"') && d22.includes('en: "on"') && d22.includes('en: "under"'), "lesson22: core prepositions in/on/under present");
+    ok(d22.includes('en: "in front of"') && d22.includes('en: "next to"') && d22.includes('en: "between"'), "lesson22: multi-word prepositions present");
+    ok(d22.includes("GRAMMAR_DETECTIVE_22") && d22.includes("FINAL_BOSS_22_TITLE") && d22.includes("IQ200_1_SCENE"), "lesson22: Grammar Detective, Final Boss, and IQ200 challenge retained");
+    ok(t22.includes('import FinalQuiz from "../../shared/FinalQuiz"') && t22.includes("<FinalQuiz lesson={22}"), "lesson22: reuses shared FinalQuiz for lesson 22");
+    ok(!t22.includes("const QUIZZES") && !t22.includes("TEACHER_PASSWORD"), "lesson22: does not duplicate quiz data or Teacher’s Space gate");
+  }
+  ok(app.includes('import Lesson22 from "./lessons/lesson22/Lesson22"'), "App imports Lesson22");
+  ok(app.includes('import { SLIDES as L22_SLIDES } from "./lessons/lesson22/data"'), "App reads Lesson22 slide count for hub card");
+  ok(app.includes('n: 22,') && app.includes('href: "#/lesson/22"'), "App registers one Lesson 22 hub card");
+  ok(app.includes('route === 22') && app.includes('<Lesson22 onExit={goHome} />'), "App registers Lesson 22 hash route");
+  const q22Start = bank.indexOf("  22: [");
+  ok(q22Start !== -1, "lesson22: quizBank block for lesson 22 exists");
+  const q22 = q22Start === -1 ? "" : bank.slice(q22Start, bank.indexOf("  ],\n};", q22Start));
+  ok((q22.match(/\{ ar:/g) || []).length === 12, `lesson22: quizBank has 12 new quiz questions (got ${(q22.match(/\{ ar:/g) || []).length})`);
 }
 
 // ---------- 12) العلامة التجارية ونظافة الأعلام على مستوى المستودع ----------

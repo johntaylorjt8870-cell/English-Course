@@ -66,8 +66,10 @@ import Lesson1 from ${JSON.stringify(join(root, "src/lessons/lesson1/Lesson1.tsx
 import Lesson4 from ${JSON.stringify(join(root, "src/lessons/lesson4/Lesson4.tsx"))};
 import Lesson13, { FormulaBoard, SlideView } from ${JSON.stringify(join(root, "src/lessons/lesson13/Lesson13.tsx"))};
 import { SLIDES as L13_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson13/data.ts"))};
+import Lesson14, { FormulaBoard14, SlideView14 } from ${JSON.stringify(join(root, "src/lessons/lesson14/Lesson14.tsx"))};
+import { SLIDES as L14_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson14/data.ts"))};
 import { LatinRuns } from ${JSON.stringify(join(root, "src/shared/bidi.tsx"))};
-export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, LatinRuns };
+export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -82,7 +84,7 @@ export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideV
 });
 
 try {
-  const { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, LatinRuns } = await import(pathToFileURL(outFile).href);
+  const { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns } = await import(pathToFileURL(outFile).href);
 
   // --- LatinRuns: mixed SVO phrase stays one LTR unit ---
   {
@@ -234,6 +236,90 @@ try {
       ok(L13_SLIDES.some((s) => s.kind === k), `Lesson 13 closing slide present: ${k}`);
     }
   }
+
+  // --- Lesson 14: الصيغ الأربع وترتيب Wh → did → Subject → Base Verb ---
+  {
+    const html = renderToString(React.createElement(FormulaBoard14));
+    ok(html.includes('data-en-seq="l14-formulas"'), "Lesson 14 FormulaBoard renders [data-en-seq=l14-formulas]");
+    const rows14 = [
+      ["affirmative", ["Subject", "Past Verb"], 1],
+      ["negative", ["Subject", "didn't", "Base Verb"], 2],
+      ["yesNo", ["Did", "Subject", "Base Verb", "?"], 2],
+      ["wh", ["Wh-word", "did", "Subject", "Base Verb", "?"], 3],
+    ];
+    const starts = rows14.map(([key]) => html.indexOf(`data-en-formula="${key}"`));
+    rows14.forEach(([key, expected, plusCount], i) => {
+      const start = starts[i];
+      ok(start >= 0, `Lesson 14 formula row present: ${key}`);
+      if (start < 0) return;
+      const end = i + 1 < starts.length && starts[i + 1] > start ? starts[i + 1] : start + 3500;
+      const fragment = html.slice(start, end);
+      ok(/dir="ltr"/.test(html.slice(Math.max(0, start - 120), start)), `Lesson 14 ${key} row is dir=ltr`);
+      const tokens = fontEnSeq(fragment);
+      assertSeq(`Lesson 14 ${key}`, tokens, expected);
+      ok(tokens.filter((token) => token === "+").length === plusCount, `Lesson 14 ${key}: keeps ${plusCount} plus separators`);
+      if (key === "yesNo" || key === "wh") {
+        const visible = fragment.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+        ok(visible.indexOf("Base Verb") < visible.indexOf("?"), `Lesson 14 ${key}: question mark follows Base Verb`);
+      }
+    });
+    for (const rx of [/Base Verb\s*\+\s*did\s*\+\s*Subject/, /Past Verb\s*\+\s*Subject/, /Subject\s*\+\s*Did\s*\+/]) {
+      ok(!rx.test(html.replace(/<[^>]+>/g, " > ")), `Lesson 14 FormulaBoard has no reversed formula (${rx})`);
+    }
+  }
+
+  // --- Lesson 14: every source slide renders, contains content, and keeps the exercise controls ---
+  {
+    const noop = () => {};
+    let rendered = 0;
+    const broken = [];
+    const reversed = [];
+    const noControls = [];
+    const REV14 = [
+      /Base Verb\s*\+\s*did\s*\+\s*Subject/,
+      /Past Verb\s*\+\s*Subject/,
+      /Subject\s*\+\s*Did\s*\+/,
+      /went\s+did\s+he/,
+      /bought\s+did\s+she/,
+    ];
+    const renderedSlides = [];
+    for (const slide of L14_SLIDES) {
+      try {
+        const html = renderToString(React.createElement(SlideView14, { s: slide, onExit: noop }));
+        renderedSlides.push(html);
+        if (html.length < 200) broken.push(`${slide.kind}:${slide.title ?? ""}`);
+        const plain = html.replace(/<[^>]+>/g, " > ");
+        for (const rx of REV14) if (rx.test(plain)) reversed.push(`${slide.kind}:${slide.title ?? ""} (${rx})`);
+        if (slide.kind === "ex" && !html.includes("<button") && !html.includes("<textarea")) noControls.push(slide.title);
+        rendered++;
+      } catch (err) {
+        broken.push(`${slide.kind}:${slide.title ?? ""} → ${err.message}`);
+      }
+    }
+    const all14 = renderedSlides.join("\n");
+    ok(L14_SLIDES.length === 35, `Lesson 14 keeps the complete 35-slide sequence (got ${L14_SLIDES.length})`);
+    ok(rendered === L14_SLIDES.length, `Lesson 14 every slide renders (${rendered}/${L14_SLIDES.length})`);
+    ok(broken.length === 0, `Lesson 14 has no empty or throwing slide (${broken.join(", ")})`);
+    ok(reversed.length === 0, `Lesson 14 has no reversed English formula/order (${reversed.join(", ")})`);
+    ok(noControls.length === 0, `Lesson 14 exercise slides expose interactive controls (${noControls.join(", ")})`);
+    for (const phrase of ["Where did Ali go?", "What did she buy?", "When did they arrive?", "Why did he leave early?", "How did she solve the puzzle?", "Who did Sara meet?"]) {
+      ok(all14.includes(phrase), `Lesson 14 rendered HTML keeps English phrase: ${phrase}`);
+    }
+
+    const teaching = L14_SLIDES.filter((slide) => slide.kind === "lesson");
+    ok(teaching.length === 19, `Lesson 14 teaching sections 1–19 are present (${teaching.length})`);
+    const steps = teaching.map((slide) => Number(slide.step));
+    ok(steps.every((value, i) => value === i + 1), `Lesson 14 teaching order remains 1→19 (got ${steps.join(",")})`);
+    const exercises = L14_SLIDES.filter((slide) => slide.kind === "ex");
+    ok(exercises.length === 9, `Lesson 14 exercises 20–28 are present (${exercises.length})`);
+    for (const type of ["level1", "level2", "level3", "level4", "detective", "iq200", "hard", "conversation", "finalChallenge"]) {
+      ok(exercises.some((slide) => slide.ex.type === type), `Lesson 14 exercise type present: ${type}`);
+    }
+    for (const kind of ["summary", "keyRule", "roadmap", "quiz", "closing"]) {
+      ok(L14_SLIDES.some((slide) => slide.kind === kind), `Lesson 14 closing slide present: ${kind}`);
+    }
+  }
+
 } catch (err) {
   ok(false, err.stack || String(err));
 } finally {

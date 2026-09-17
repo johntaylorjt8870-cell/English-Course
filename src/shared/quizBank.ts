@@ -224,4 +224,20 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "ما الإجابة القصيرة الصحيحة بـ No للسؤال: Did she call you?", en: "Did she call you?", opts: ["No, she didn't.", "No, she did.", "No, she doesn't.", "No, she wasn't."], answer: 0, why: "الإجابة القصيرة: No, subject + didn't → No, she didn't." },
     { ar: "أي جملة صحيحة؟", opts: ["She didn't see the message.", "She didn't saw the message.", "She not saw the message.", "She doesn't saw the message."], answer: 0, why: "بعد didn't يأتي الفعل الأساسي see — لا نستخدم saw بعد did / didn't." },
   ],
+
+  // ---------------- الدرس 14 ----------------
+  14: [
+    { ar: "أكمل سؤال Wh: Where did Ali _______?", en: "Where did Ali _______?", opts: ["go", "went", "goes", "going"], answer: 0, why: "بعد Wh-word + did يأتي الفعل الأساسي: Where did Ali go?" },
+    { ar: "اختر السؤال الصحيح عن الشيء الذي اشترته سارة:", en: "She bought a telescope.", opts: ["What did she buy?", "What did she bought?", "Where did she buy?", "What she did buy?"], answer: 0, why: "What يسأل عن الشيء، وبعد did نستخدم buy لا bought." },
+    { ar: "اختر السؤال الصحيح عن المكان:", en: "Nora went to the library.", opts: ["Where did Nora go?", "Where did Nora went?", "When did Nora go?", "Where Nora did go?"], answer: 0, why: "Where للمكان، وتركيب السؤال: Where + did + Nora + go." },
+    { ar: "أكمل: When did Lina _______?", en: "When did Lina _______?", opts: ["arrive", "arrived", "arrives", "arriving"], answer: 0, why: "When للوقت، وبعد did يأتي Base Verb: arrive." },
+    { ar: "أكمل: Why did they _______ the experiment?", en: "Why did they _______ the experiment?", opts: ["stop", "stopped", "stops", "stopping"], answer: 0, why: "Why للسبب، وبعد did نستخدم stop." },
+    { ar: "أكمل: How did she _______ the puzzle?", en: "How did she _______ the puzzle?", opts: ["solve", "solved", "solves", "solving"], answer: 0, why: "How للطريقة، وبعد did نستخدم الفعل الأساسي solve." },
+    { ar: "أي جملة تفرق بين Who كفاعل وWho كمفعول به بشكل صحيح؟", opts: ["Who visited the museum? / Who did Emma visit?", "Who did visited the museum? / Who Emma visit?", "Who visited the museum? / Who Emma did visit?", "Who did Emma visited? / Who visit Emma?"], answer: 0, why: "Who كفاعل لا يحتاج did، وWho كمفعول به يحتاج did." },
+    { ar: "ما الإجابة القصيرة الصحيحة للسؤال: Did you travel?", en: "Did you travel?", opts: ["Yes, I did.", "Yes, I traveled.", "Yes, I do.", "Yes, I went."], answer: 0, why: "الإجابة القصيرة لسؤال Yes/No بـ Did هي Yes, subject + did." },
+    { ar: "ما الإجابة الكاملة الصحيحة؟", en: "Where did Noah travel?", opts: ["Noah traveled to Canada.", "Noah did travel to Canada.", "Noah travel to Canada.", "Noah traveled Canada?"], answer: 0, why: "في الإجابة العادية لا نكرر did؛ يعود الفعل إلى الماضي: traveled." },
+    { ar: "اختر المجموعة التي تعرض الأشكال الأربعة الصحيحة للفعل go:", opts: ["went / didn't go / Did she go? / Where did she go?", "go / didn't went / Did she went? / Where she did go?", "went / didn't went / Did she go? / Where did she went?", "go / didn't go / Did she went? / Where went she?"], answer: 0, why: "الماضي في المثبت went، وبعد did أو didn't يعود الفعل إلى go." },
+    { ar: "أكمل: What did Omar _______?", en: "What did Omar _______?", opts: ["write", "wrote", "writes", "writing"], answer: 0, why: "بعد did نستخدم write، حتى لو كان الماضي الشاذ wrote." },
+    { ar: "اختر السؤال الصحيح عن الزمن في جملة: They arrived at 7:30.", en: "They arrived at 7:30.", opts: ["When did they arrive?", "When did they arrived?", "Where did they arrive?", "When they did arrive?"], answer: 0, why: "When للسؤال عن الوقت، وبعد did نستخدم arrive." },
+  ],
 };

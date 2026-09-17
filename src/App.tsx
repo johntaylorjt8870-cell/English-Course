@@ -12,6 +12,7 @@ import Lesson10 from "./lessons/lesson10/Lesson10";
 import Lesson11 from "./lessons/lesson11/Lesson11";
 import Lesson12 from "./lessons/lesson12/Lesson12";
 import Lesson13 from "./lessons/lesson13/Lesson13";
+import Lesson14 from "./lessons/lesson14/Lesson14";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -26,6 +27,7 @@ import { SLIDES as L10_SLIDES } from "./lessons/lesson10/data";
 import { SLIDES as L11_SLIDES } from "./lessons/lesson11/data";
 import { SLIDES as L12_SLIDES } from "./lessons/lesson12/data";
 import { SLIDES as L13_SLIDES } from "./lessons/lesson13/data";
+import { SLIDES as L14_SLIDES } from "./lessons/lesson14/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 
 // ------------------------------------------------------------
@@ -178,6 +180,15 @@ const CARDS: Card[] = [
     href: "#/lesson/13",
     grad: "from-amber-500 to-orange-500",
   },
+  {
+    n: 14,
+    title: "الدرس 14: Past Simple — Wh Questions والتطبيق الشامل",
+    en: "Past Simple — Wh Questions + Comprehensive Application",
+    emoji: "🧭",
+    stats: `${L14_SLIDES.length} شريحة · 4 مستويات · Grammar Detective وIQ200`,
+    href: "#/lesson/14",
+    grad: "from-violet-500 to-fuchsia-500",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -268,6 +279,7 @@ export default function App() {
   else if (route === 11) page = <Lesson11 onExit={goHome} />;
   else if (route === 12) page = <Lesson12 onExit={goHome} />;
   else if (route === 13) page = <Lesson13 onExit={goHome} />;
+  else if (route === 14) page = <Lesson14 onExit={goHome} />;
   else page = <Hub />;
   return (
     <>

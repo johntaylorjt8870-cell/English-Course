@@ -225,6 +225,22 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "أي جملة صحيحة؟", opts: ["She didn't see the message.", "She didn't saw the message.", "She not saw the message.", "She doesn't saw the message."], answer: 0, why: "بعد didn't يأتي الفعل الأساسي see — لا نستخدم saw بعد did / didn't." },
   ],
 
+  // ---------------- الدرس 15 ----------------
+  15: [
+    { ar: "أكمل: I ___ tired yesterday.", en: "I ___ tired yesterday.", opts: ["was", "were", "did", "are"], answer: 0, why: "I مفرد → was. لا نستخدم did مع الصفات." },
+    { ar: "أكمل: They ___ excited about the trip.", en: "They ___ excited about the trip.", opts: ["were", "was", "did", "are"], answer: 0, why: "They جمع → were. excited صفة." },
+    { ar: "ما النفي الصحيح: She was at home.", en: "She was at home.", opts: ["She wasn't at home.", "She didn't was at home.", "She didn't be at home.", "She wasn't at home not."], answer: 0, why: "نفي was/were: wasn't / weren't — لا نستخدم didn't مع was/were." },
+    { ar: "ما السؤال الصحيح: He was nervous.", en: "He was nervous.", opts: ["Was he nervous?", "Did he be nervous?", "Did he nervous?", "Was he be nervous?"], answer: 0, why: "سؤال was/were: Was/Were + Subject. لا نستخدم did." },
+    { ar: "أجب بـ Yes عن: Were you busy?", en: "Were you busy?", opts: ["Yes, I was.", "Yes, I were.", "Yes, you were.", "Yes, I did."], answer: 0, why: "Were you...? الإجابة: Yes, I was. الضمير يتحول إلى I و was للمفرد." },
+    { ar: "اختر الجملة الصحيحة:", opts: ["He wasn't tired.", "He didn't was tired.", "He didn't were tired.", "He wasn't tireded."], answer: 0, why: "النفي الصحيح: wasn't / weren't. لا نقول didn't was." },
+    { ar: "اختر الصحيح: ___ he tired? (تعبير عن حالة)", en: "___ he tired?", opts: ["Was", "Did", "Were", "Do"], answer: 0, why: "tired صفة → نستخدم Was، ليس Did. Did للفعل العادي." },
+    { ar: "اختر الصحيح: ___ he visit the castle? (فعل عادي)", en: "___ he visit the castle?", opts: ["Did", "Was", "Were", "Is"], answer: 0, why: "visit فعل عادي → نستخدم Did. Was/Were للصفات والأماكن." },
+    { ar: "ما نوع الجملة: She was happy.", en: "She was happy.", opts: ["Verb to be + Adjective", "ordinary verb", "Present Simple", "Present Continuous"], answer: 0, why: "was = Verb to be و happy = Adjective — نصف حالة، ليس فعل حدث." },
+    { ar: "أكمل سؤال Wh: Where ___ she yesterday?", en: "Where ___ she yesterday?", opts: ["was", "were", "did", "is"], answer: 0, why: "Where + was/were + Subject للسؤال عن المكان مع Verb to be." },
+    { ar: "أكمل: What ___ the problem?", en: "What ___ the problem?", opts: ["was", "were", "did", "are"], answer: 0, why: "What + was/were للسؤال عن المشكلة — problem مفرد → was." },
+    { ar: "أكمل: He ___ a student last year.", en: "He ___ a student last year.", opts: ["was", "were", "did", "is"], answer: 0, why: "a student اسم مفرد → was. نحتاج a لأن الاسم مفرد معدود." },
+  ],
+
   // ---------------- الدرس 14 ----------------
   14: [
     { ar: "أكمل سؤال Wh: Where did Ali _______?", en: "Where did Ali _______?", opts: ["go", "went", "goes", "going"], answer: 0, why: "بعد Wh-word + did يأتي الفعل الأساسي: Where did Ali go?" },

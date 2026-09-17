@@ -14,6 +14,7 @@ import Lesson12 from "./lessons/lesson12/Lesson12";
 import Lesson13 from "./lessons/lesson13/Lesson13";
 import Lesson14 from "./lessons/lesson14/Lesson14";
 import Lesson15 from "./lessons/lesson15/Lesson15";
+import Lesson16 from "./lessons/lesson16/Lesson16";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -30,6 +31,7 @@ import { SLIDES as L12_SLIDES } from "./lessons/lesson12/data";
 import { SLIDES as L13_SLIDES } from "./lessons/lesson13/data";
 import { SLIDES as L14_SLIDES } from "./lessons/lesson14/data";
 import { SLIDES as L15_SLIDES } from "./lessons/lesson15/data";
+import { SLIDES as L16_SLIDES } from "./lessons/lesson16/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 
 // ------------------------------------------------------------
@@ -200,6 +202,15 @@ const CARDS: Card[] = [
     href: "#/lesson/15",
     grad: "from-amber-500 to-orange-500",
   },
+  {
+    n: 16,
+    title: "الدرس 16: Possessive Adjectives — صفات الملكية",
+    en: "Possessive Adjectives — my / your / his / her / its / our / their",
+    emoji: "🏠",
+    stats: `${L16_SLIDES.length} شريحة · 11 مستوى · Ownership Detective وIQ200`,
+    href: "#/lesson/16",
+    grad: "from-teal-500 to-emerald-500",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -247,7 +258,7 @@ function Hub() {
           <div className="pop text-6xl anim-float">📚</div>
           <div className="pop pop-1 mt-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 shadow-sm">
             <span className="text-lg">🌐</span>
-            <span dir="ltr" className="font-en text-sm font-extrabold tracking-wide text-slate-700">englishwithsommer</span>
+            <span dir="ltr" className="font-en text-sm font-extrabold tracking-wide text-slate-700">EnglishwithSomeR</span>
           </div>
           <h1 className="pop pop-2 font-head mt-3 text-4xl font-bold text-slate-900 md:text-5xl">دروس اللغة الإنجليزية</h1>
           <p className="pop pop-3 mt-3 text-lg text-slate-500">المستوى الأساسي · اختر الدرس لبدء الشرح</p>
@@ -292,6 +303,7 @@ export default function App() {
   else if (route === 13) page = <Lesson13 onExit={goHome} />;
   else if (route === 14) page = <Lesson14 onExit={goHome} />;
   else if (route === 15) page = <Lesson15 onExit={goHome} />;
+  else if (route === 16) page = <Lesson16 onExit={goHome} />;
   else page = <Hub />;
   return (
     <>

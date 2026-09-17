@@ -43,6 +43,7 @@ import { SLIDES as L19_SLIDES } from "./lessons/lesson19/data";
 import { SLIDES as L20_SLIDES } from "./lessons/lesson20/data";
 import { SLIDES as L21_SLIDES } from "./lessons/lesson21/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
+import SitePasswordGate from "./shared/SitePasswordGate";
 
 // ------------------------------------------------------------
 // توجيه بسيط عبر الـ hash: #/lesson/1 · #/lesson/2
@@ -366,9 +367,9 @@ export default function App() {
   else if (route === 21) page = <Lesson21 onExit={goHome} />;
   else page = <Hub />;
   return (
-    <>
+    <SitePasswordGate>
       <ArenaClean />
       {page}
-    </>
+    </SitePasswordGate>
   );
 }

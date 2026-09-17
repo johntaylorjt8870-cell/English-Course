@@ -543,7 +543,276 @@ for (const [l, fn] of LTR_SPOTS) {
   ok(!d17.includes(GB) && !t17.includes(GB), "lesson17: no GB flag emoji anywhere in the lesson");
 }
 
-// ---------- 11) العلامة التجارية ونظافة الأعلام على مستوى المستودع ----------
+// ---------- 11) الدرس 18 — Plural Nouns ----------
+{
+  const d18 = src("lesson18", "data.ts");
+  const t18 = src("lesson18", "Lesson18.tsx");
+
+  ok(t18.includes("../../shared/bidi"), "lesson18: must import LatinRuns from shared/bidi");
+  ok(!t18.includes("split(/(\\s+)/)"), "lesson18: per-token split must not exist (word-reversal engine)");
+  const ltrCount18 = (t18.match(/dir="ltr"/g) || []).length;
+  ok(ltrCount18 >= 40, `lesson18: English units must be wrapped with dir=ltr throughout (got ${ltrCount18})`);
+  ok(d18.includes("export const SOURCE_FIDELITY_MARKERS_18"), "lesson18: source-fidelity marker index exists");
+
+  // فهرس أقسام المصدر: 19 قسماً مرقماً + الأهداف + 3 أقسام ختامية
+  const secStart18 = d18.indexOf("export const SOURCE_SECTIONS");
+  const secEnd18 = d18.indexOf("];", secStart18);
+  const secBlock18 = d18.slice(secStart18, secEnd18);
+  const secItems18 = secBlock18.match(/\n\s+"/g) || [];
+  ok(secItems18.length >= 23, `lesson18: SOURCE_SECTIONS must index every source section (got ${secItems18.length}, expected 23)`);
+  for (let n = 1; n <= 19; n++) {
+    ok(secBlock18.includes(` ${n}. `), `lesson18: source section ${n} must be indexed`);
+  }
+  for (const heading of [
+    "أهداف الدرس",
+    "1. ما معنى Singular و Plural؟",
+    "2. الجمع العادي Regular Plural",
+    "3. متى نضيف ES بدل S؟",
+    "4. الكلمات التي تنتهي بـ Y",
+    "5. بعض الكلمات التي تنتهي بـ F أو FE",
+    "6. الآن نصل إلى الوحوش الحقيقية",
+    "7. لا تحفظ الكلمات منفصلة... احفظها كعائلات",
+    "8. الجمع وعلاقته بـ IS / ARE",
+    "9. الجمع مع WAS / WERE",
+    "10. الجمع وعلاقته بـ Present Simple",
+    "11. أخطاء شائعة جدًا",
+    "12. Grammar Detective",
+    "13. Challenge 1 — حوّل إلى جمع",
+    "14. Challenge 2 — اختر الإجابة الصحيحة",
+    "15. Challenge 3 — is or are?",
+    "16. IQ200 Challenge",
+    "17. IQ200 — لماذا؟",
+    "18. FINAL BOSS — تحدي المرحلة",
+    "19. Mini Game — Singular or Plural?",
+    "خلاصة الدرس",
+    "أهم قاعدة يجب أن تخرج بها اليوم",
+    "أين وصلنا في المنهج؟",
+  ]) ok(d18.includes(heading), `lesson18: source section is indexed: ${heading}`);
+
+  // القواعد والمعادلات محفوظة بترتيبها الإنجليزي
+  for (const formula of [
+    "Noun + s",
+    "a / an",
+    "y → ies",
+    "f / fe → ves",
+    "He / She / It → verb + s",
+    "They → base verb",
+    "is / was",
+    "are / were",
+    "Singular → Plural",
+    "Singular → verb + s",
+    "Plural → base verb",
+    "S = Singular",
+    "P = Plural",
+  ]) ok(d18.includes(formula), `lesson18: required formula remains verbatim: ${formula}`);
+
+  // الجمل والأمثلة المفتاحية بترتيبها الصحيح
+  for (const exact of [
+    "I have a book.",
+    "I have two books.",
+    "a book",
+    "a car",
+    "an apple",
+    "an orange",
+    "a books",
+    "an apples",
+    "boxs ❌",
+    "box → boxes ✅",
+    "book → books",
+    "car → cars",
+    "pen → pens",
+    "student → students",
+    "robot → robots",
+    "window → windows",
+    "planet → planets",
+    "cat → cats",
+    "dog → dogs",
+    "chair → chairs",
+    "table → tables",
+    "phone → phones",
+    "computer → computers",
+    "river → rivers",
+    "star → stars",
+    "game → games",
+    "friend → friends",
+    "bus → buses",
+    "class → classes",
+    "dish → dishes",
+    "brush → brushes",
+    "watch → watches",
+    "fox → foxes",
+    "tomato → tomatoes",
+    "potato → potatoes",
+    "baby → babies",
+    "city → cities",
+    "story → stories",
+    "family → families",
+    "country → countries",
+    "library → libraries",
+    "boy → boys",
+    "toy → toys",
+    "day → days",
+    "key → keys",
+    "monkey → monkeys",
+    "knife → knives",
+    "wife → wives",
+    "life → lives",
+    "leaf → leaves",
+    "wolf → wolves",
+    "shelf → shelves",
+    "half → halves",
+    "roof → roofs",
+    "chief → chiefs",
+    "safe → safes",
+    "The man is tall.",
+    "The men are tall.",
+    "The woman is a doctor.",
+    "The women are doctors.",
+    "The child is happy.",
+    "The children are happy.",
+    "One person is waiting.",
+    "Five people are waiting.",
+    "I have one tooth.",
+    "I have many teeth.",
+    "My foot is cold.",
+    "My feet are cold.",
+    "I see one mouse.",
+    "I see two mice.",
+    "one sheep",
+    "five sheep",
+    "one fish",
+    "two fish",
+    "I can see three fish.",
+    "The boy is happy.",
+    "The boys are happy.",
+    "The child is tired.",
+    "The children are tired.",
+    "The woman is busy.",
+    "The women are busy.",
+    "The children is happy.",
+    "The child was tired.",
+    "The children were tired.",
+    "The man was angry.",
+    "The men were angry.",
+    "The woman was at home.",
+    "The women were at home.",
+    "The boy plays football.",
+    "The boys play football.",
+    "The girl works here.",
+    "The girls work here.",
+    "The student studies English.",
+    "The students study English.",
+    "The child plays outside.",
+    "The children play outside.",
+    "The children play.",
+    "The children plays.",
+    "two book",
+    "a books",
+    "three childs",
+    "two womans",
+    "five tooths",
+    "The children is happy.",
+    "The boys plays football.",
+    "The men works here.",
+    "two books",
+    "three children",
+    "two women",
+    "five teeth",
+    "The children are happy.",
+    "The boys play football.",
+    "The men work here.",
+    "I have two book.",
+    "Three child are playing.",
+    "The womans are doctors.",
+    "The boys plays chess.",
+    "She has five tooths.",
+    "The men is outside.",
+    "I can see two mouses.",
+    "There are three boxs.",
+    "I have two books.",
+    "Three children are playing.",
+    "The women are doctors.",
+    "The boys play chess.",
+    "She has five teeth.",
+    "The men are outside.",
+    "I can see two mice.",
+    "There are three boxes.",
+    "The children plays in the garden.",
+    "The child play in the garden.",
+    "The men is very strong.",
+    "The woman are doctors.",
+    "Two mouse are under the table.",
+    "A children is waiting outside.",
+    "Three person are talking.",
+    "The boys studies English.",
+    "The children play football.",
+    "The child plays football.",
+    "children = plural",
+    "plural = they",
+    "They play.",
+    "child = singular",
+    "singular = he/she/it",
+    "He plays.",
+    "Yesterday, a child walked into a park. He saw two mice near some trees. A woman was sitting on a bench, and three children were playing nearby. The children had two balls and the woman had a small box.",
+    "The children were playing.",
+    "The children was playing.",
+    "Ali's book",
+    "Sara's phone",
+    "the boy's bicycle",
+    "the boys' bicycles",
+    "the child's toy",
+    "the children's toys",
+    "Plural Nouns — أنت هنا",
+  ]) ok(d18.includes(exact), `lesson18: supplied sentence remains verbatim: ${exact}`);
+
+  // الأهداف التسعة
+  ok((d18.match(/n: "[①②③④⑤⑥⑦⑧⑨]"/g) || []).length >= 9, "lesson18: all 9 objectives remain");
+
+  const between18 = (from, to) => {
+    const a = d18.indexOf(from);
+    const b = to ? d18.indexOf(to, a + 1) : -1;
+    return a === -1 ? "" : d18.slice(a, b === -1 ? a + 20000 : b);
+  };
+
+  // التمارين — العدد ومفاتيح الحل
+  const c1 = between18("export const CHALLENGE1_18", "export const CHALLENGE1_BANK_18");
+  ok((c1.match(/\{ n: "/g) || []).length === 10, "lesson18: Challenge 1 keeps 10 words");
+  ok((c1.match(/answer: "/g) || []).length === 10, "lesson18: Challenge 1 keeps 10 answer keys");
+  const c2 = between18("export const CHALLENGE2_18", "export const CHALLENGE3_18");
+  ok((c2.match(/\{ n: "/g) || []).length === 5, "lesson18: Challenge 2 keeps 5 questions");
+  ok((c2.match(/options: \[/g) || []).length === 5, "lesson18: Challenge 2 keeps A/B/C choices");
+  const c3 = between18("export const CHALLENGE3_18", "export const IQ200_18");
+  ok((c3.match(/\{ n: "/g) || []).length === 8, "lesson18: Challenge 3 keeps 8 is/are items");
+  const det = between18("export const DETECTIVE_18", "export const CHALLENGE1_18");
+  ok((det.match(/wrong: "/g) || []).length === 8, "lesson18: Grammar Detective keeps 8 wrong sentences");
+  ok((det.match(/correct: "/g) || []).length === 8, "lesson18: Grammar Detective keeps 8 corrections");
+  const iq = between18("export const IQ200_18", "export const IQ200_WHY_18");
+  ok((iq.match(/wrong: "/g) || []).length === 8, "lesson18: IQ200 challenge keeps 8 sentences");
+  const boss = between18("export const FINAL_BOSS_18", "export const MINI_GAME_18");
+  ok((boss.match(/n: "/g) || []).length === 8, "lesson18: Final Boss keeps 8 questions");
+  ok((boss.match(/word: "/g) || []).length === 6, "lesson18: Final Boss keeps 6 investigation targets");
+  const mg = between18("export const MINI_GAME_18", "// ============================================================\n// الخاتمة");
+  ok((mg.match(/\{ n: "/g) || []).length === 12, "lesson18: Mini Game keeps 12 words");
+  const monsters = between18("export const MONSTERS_18", "export const SAME_FORM_18");
+  ok((monsters.match(/n: "/g) || []).length === 9, "lesson18: monster zone keeps 9 irregular nouns");
+  const sf = between18("export const SAME_FORM_18", "export const SAME_FORM_EXTRA_18");
+  ok((sf.match(/n: "/g) || []).length === 2, "lesson18: same-form zone keeps sheep + fish");
+  ok((between18("export const ROADMAP_18:", "export const ROADMAP_18_CLOSING").match(/n: \d+/g) || []).length === 18, "lesson18: roadmap lists all 18 lessons");
+
+  // لا ترتيب معكوس للإنجليزية — الأخطاء المقصودة مستثناة
+  const wrongStart18 = d18.indexOf("export const INTENTIONALLY_WRONG_18");
+  const wrongEnd18 = d18.indexOf("];", wrongStart18);
+  const scannable18 = d18.slice(0, wrongStart18) + d18.slice(wrongEnd18 === -1 ? d18.length : wrongEnd18);
+  for (const rx of [/\bbooks\s+a\b/, /\bapples\s+an\b/, /\bplay\s+boys\s+The\b/, /\bplay\s+children\s+The\b/, /\bwas\s+children\s+The\b/]) {
+    const m = scannable18.match(rx);
+    ok(!m, `lesson18: reversed English must not appear (${rx})${m ? ` — found: ${m[0]}` : ""}`);
+  }
+
+  const GB18 = String.fromCodePoint(0x1f1ec, 0x1f1e7);
+  ok(!d18.includes(GB18) && !t18.includes(GB18), "lesson18: no GB flag emoji anywhere in the lesson");
+}
+
+// ---------- 12) العلامة التجارية ونظافة الأعلام على مستوى المستودع ----------
 {
   const root = join(dirname(fileURLToPath(import.meta.url)), "..");
   const skip = new Set(["node_modules", ".git", "dist", ".cache"]);

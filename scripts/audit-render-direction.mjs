@@ -88,7 +88,9 @@ import { SLIDES as L14_SLIDES } from ${JSON.stringify(join(root, "src/lessons/le
 import { LatinRuns } from ${JSON.stringify(join(root, "src/shared/bidi.tsx"))};
 import Lesson17, { SlideView17 } from ${JSON.stringify(join(root, "src/lessons/lesson17/Lesson17.tsx"))};
 import { SLIDES as L17_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson17/data.ts"))};
-export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES };
+import Lesson18, { SlideView18 } from ${JSON.stringify(join(root, "src/lessons/lesson18/Lesson18.tsx"))};
+import { SLIDES as L18_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson18/data.ts"))};
+export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -103,7 +105,7 @@ export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideV
 });
 
 try {
-  const { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES } = await import(pathToFileURL(outFile).href);
+  const { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES } = await import(pathToFileURL(outFile).href);
 
   // --- LatinRuns: mixed SVO phrase stays one LTR unit ---
   {
@@ -586,6 +588,256 @@ try {
     ok(/dir="ltr"/.test(html), "Lesson 17 isolates English as LTR");
     ok(html.includes('dir="rtl"'), "Lesson 17 keeps the Arabic RTL shell");
     ok(!html.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 17 renders no GB flag emoji");
+  }
+
+  // --- الدرس 18 — Plural Nouns: كل شريحة تُعرض، بلا انعكاس، وبلا فراغ ---
+  {
+    const noop = () => {};
+    let rendered = 0;
+    const broken = [];
+    const reversed = [];
+    const noControls = [];
+    const REV18 = [
+      /\bbooks\s+a\b/,
+      /\bapples\s+an\b/,
+      /\bplay\s+boys\s+The\b/,
+      /\bplay\s+children\s+The\b/,
+      /\bwere\s+children\s+The\b/,
+      /\bwas\s+children\s+The\b/,
+    ];
+    const renderedSlides = [];
+    for (const slide of L18_SLIDES) {
+      try {
+        const html = renderToString(React.createElement(SlideView18, { s: slide, onExit: noop }));
+        renderedSlides.push(html);
+        if (html.length < 200) broken.push(`${slide.kind}:${slide.title ?? ""}`);
+        const plain = html.replace(/<[^>]+>/g, " > ");
+        for (const rx of REV18) if (rx.test(plain)) reversed.push(`${slide.kind}:${slide.title ?? ""} (${rx})`);
+        if (slide.kind === "ex" && !/<button|<input|<textarea/.test(html)) noControls.push(slide.title);
+        rendered++;
+      } catch (err) {
+        broken.push(`${slide.kind}:${slide.title ?? ""} → ${err.message}`);
+      }
+    }
+    const all18 = renderedSlides
+      .join("\n")
+      .replace(/&#x27;/g, "'")
+      .replace(/&quot;/g, '"')
+      .replace(/&amp;/g, "&");
+
+    ok(L18_SLIDES.length === 26, `Lesson 18 keeps its complete 26-slide sequence (got ${L18_SLIDES.length})`);
+    ok(rendered === L18_SLIDES.length, `Lesson 18 every slide renders (${rendered}/${L18_SLIDES.length})`);
+    ok(broken.length === 0, `Lesson 18 has no empty or throwing slide (${broken.join(", ")})`);
+    ok(reversed.length === 0, `Lesson 18 has no reversed English word order (${reversed.join(", ")})`);
+    ok(noControls.length === 0, `Lesson 18 exercise slides expose interactive controls (${noControls.join(", ")})`);
+
+    const teaching18 = L18_SLIDES.filter((s) => s.kind === "lesson");
+    ok(teaching18.length === 11, `Lesson 18 teaching sections 1–11 are present (${teaching18.length})`);
+    const steps18 = teaching18.map((s) => Number(s.step));
+    ok(steps18.every((v, i) => v === i + 1), `Lesson 18 teaching order remains 1→11 (${steps18.join(",")})`);
+    const exercises18 = L18_SLIDES.filter((s) => s.kind === "ex");
+    ok(exercises18.length === 8, `Lesson 18 exercises 12–19 are present (${exercises18.length})`);
+    const badges18 = exercises18.map((s) => Number(s.badge));
+    ok(badges18.every((v, i) => v === 12 + i), `Lesson 18 exercise numbering stays 12→19 (${badges18.join(",")})`);
+    for (const type of ["detective", "challenge1", "challenge2", "challenge3", "iq200", "iq200why", "finalBoss", "miniGame"]) {
+      ok(exercises18.some((s) => s.ex.type === type), `Lesson 18 exercise type present: ${type}`);
+    }
+    for (const kind of ["cover", "objectives", "summary", "keyRule", "roadmap", "quiz", "closing"]) {
+      ok(L18_SLIDES.some((s) => s.kind === kind), `Lesson 18 slide present: ${kind}`);
+    }
+
+    for (const phrase of [
+      "I have a book.",
+      "I have two books.",
+      "boxs",
+      "The man is tall.",
+      "The men are tall.",
+      "The woman is a doctor.",
+      "The women are doctors.",
+      "The child is happy.",
+      "The children are happy.",
+      "One person is waiting.",
+      "Five people are waiting.",
+      "I have one tooth.",
+      "I have many teeth.",
+      "My foot is cold.",
+      "My feet are cold.",
+      "I see one mouse.",
+      "I see two mice.",
+      "one sheep",
+      "five sheep",
+      "I can see three fish.",
+      "The boy is happy.",
+      "The boys are happy.",
+      "The child is tired.",
+      "The children are tired.",
+      "The woman is busy.",
+      "The women are busy.",
+      "The child was tired.",
+      "The children were tired.",
+      "The man was angry.",
+      "The men were angry.",
+      "The woman was at home.",
+      "The women were at home.",
+      "The boy plays football.",
+      "The boys play football.",
+      "The girl works here.",
+      "The girls work here.",
+      "The student studies English.",
+      "The students study English.",
+      "The child plays outside.",
+      "The children play outside.",
+      "The children play.",
+      "I have two book.",
+      "Three child are playing.",
+      "The womans are doctors.",
+      "The boys plays chess.",
+      "She has five tooths.",
+      "The men is outside.",
+      "I can see two mouses.",
+      "There are three boxs.",
+      "I have two books.",
+      "Three children are playing.",
+      "The women are doctors.",
+      "The boys play chess.",
+      "She has five teeth.",
+      "The men are outside.",
+      "I can see two mice.",
+      "There are three boxes.",
+      "The children plays in the garden.",
+      "The child play in the garden.",
+      "The men is very strong.",
+      "The woman are doctors.",
+      "Two mouse are under the table.",
+      "A children is waiting outside.",
+      "Three person are talking.",
+      "The boys studies English.",
+      "The children play football.",
+      "The child plays football.",
+      "children = plural",
+      "plural = they",
+      "They play.",
+      "child = singular",
+      "singular = he/she/it",
+      "He plays.",
+      "Yesterday, a child walked into a park.",
+      "The children were playing.",
+      "The children was playing.",
+      "Ali's book",
+      "Sara's phone",
+      "the boy's bicycle",
+      "the boys' bicycles",
+      "the child's toy",
+      "the children's toys",
+    ]) {
+      // نحذف الوسوم للنص العاري: بعض الوحدات الإنجليزية تُعرض كسلسلة لفرط مع
+      // إبراز الفعل/الكلمة داخل <span> — الترتيب البصري يبقى إنجليزيًا دائمًا.
+      const plain18 = all18.replace(/<[^>]+>/g, "");
+      ok(plain18.includes(phrase), `Lesson 18 rendered HTML keeps English unit: ${phrase}`);
+    }
+  }
+
+  // --- الدرس 18: آلة التحويل — المفرد ثم الجمع بترتيبها الإنجليزي ---
+  {
+    const machineSlide = L18_SLIDES.find((s) => s.kind === "lesson" && s.step === "2");
+    const html = renderToString(React.createElement(SlideView18, { s: machineSlide, onExit: () => {} }));
+    ok(html.includes('data-en-seq="l18-machine"'), "Lesson 18 transformation machine renders [data-en-seq=l18-machine]");
+    const i = html.indexOf('data-en-seq="l18-machine"');
+    ok(html.slice(Math.max(0, i - 160), i).includes('dir="ltr"'), "Lesson 18 machine container is dir=ltr");
+    const tokens = fontEnSeq(html.slice(i, i + 9000));
+    assertSeq("Lesson 18 machine word bank", tokens, ["book", "box", "baby", "knife", "child", "sheep"]);
+    ok(!tokens.includes("book box"), "Lesson 18 machine never reverses the word bank");
+
+  }
+
+  // --- الدرس 18: مختبر S / ES / IES على شريحة ES ---
+  {
+    const esSlide = L18_SLIDES.find((s) => s.kind === "lesson" && s.step === "3");
+    const esHtml = renderToString(React.createElement(SlideView18, { s: esSlide, onExit: () => {} }));
+    ok(esHtml.includes('data-en-seq="l18-sesies"'), "Lesson 18 S/ES/IES lab renders");
+  }
+
+  // --- الدرس 18: لوحة is/are — is للمفرد قبل are للجمع ---
+  {
+    const slide = L18_SLIDES.find((s) => s.kind === "lesson" && s.step === "8");
+    const html = renderToString(React.createElement(SlideView18, { s: slide, onExit: () => {} }));
+    ok(html.includes('data-en-seq="l18-isare"'), "Lesson 18 is/are control panel renders");
+    const i = html.indexOf('data-en-seq="l18-isare"');
+    const tokens = fontEnSeq(html.slice(i, i + 9000));
+    assertOrderStrict("Lesson 18 is/are pair 1", tokens, ["The boy", "is", "happy.", "The boys", "are", "happy."]);
+    assertOrderStrict("Lesson 18 is/are pair 2", tokens, ["The child", "is", "tired.", "The children", "are", "tired."]);
+
+    const wasSlide = L18_SLIDES.find((s) => s.kind === "lesson" && s.step === "9");
+    const wHtml = renderToString(React.createElement(SlideView18, { s: wasSlide, onExit: () => {} }));
+    const wTokens = fontEnSeq(wHtml);
+    assertSeq("Lesson 18 was/were quick rule", wTokens, ["is / was", "are / were"]);
+
+    const pSlide = L18_SLIDES.find((s) => s.kind === "lesson" && s.step === "10");
+    const pHtml = renderToString(React.createElement(SlideView18, { s: pSlide, onExit: () => {} }));
+    ok(pHtml.includes('data-en-seq="l18-present"'), "Lesson 18 present simple machine renders");
+    ok(pHtml.includes('data-en-seq="l18-present-both"'), "Lesson 18 present simple both-sides contrast renders");
+    const pTokens = fontEnSeq(pHtml);
+    ok(pTokens.includes("The boy plays football.") && pTokens.includes("The boys play football."), "Lesson 18 keeps both present simple sentences intact");
+    assertSeq("Lesson 18 present simple chain", pTokens, ["The boy plays football.", "The boys play football."]);
+    ok(!pTokens.includes("football plays boy The"), "Lesson 18 present simple never reverses word order");
+  }
+
+  // --- الدرس 18: ترتيب الخيارات A ثم B ثم C في Challenge 2 ---
+  {
+    const slide = L18_SLIDES.find((s) => s.kind === "ex" && s.badge === "14");
+    const html = renderToString(React.createElement(SlideView18, { s: slide, onExit: () => {} }));
+    const groups = html.match(/data-en-seq="l18-opts-[^\"]+"/g) || [];
+    ok(groups.length === 5, `Lesson 18 Challenge 2: five option groups rendered (got ${groups.length})`);
+    const aIdx = [...html.matchAll(/data-en-opt="A"/g)].map((m) => m.index);
+    const bIdx = [...html.matchAll(/data-en-opt="B"/g)].map((m) => m.index);
+    const cIdx = [...html.matchAll(/data-en-opt="C"/g)].map((m) => m.index);
+    ok(aIdx.length === 5 && bIdx.length === 5 && cIdx.length === 5, "Lesson 18 Challenge 2: A/B/C markers present on all five questions");
+    ok(aIdx.every((v, i) => v < bIdx[i]) && bIdx.every((v, i) => v < cIdx[i]), "Lesson 18 Challenge 2: option A always precedes B and B precedes C");
+  }
+
+  // --- الدرس 18: FINAL BOSS + Mini Game + Grammar Detective ---
+  {
+    const boss = L18_SLIDES.find((s) => s.kind === "ex" && s.badge === "18");
+    const bossHtml = renderToString(React.createElement(SlideView18, { s: boss, onExit: () => {} }));
+    ok(bossHtml.includes('data-en-seq="l18-boss"'), "Lesson 18 final boss renders");
+    ok(
+      bossHtml.includes("Yesterday, a child walked into a park. He saw two mice near some trees. A woman was sitting on a bench, and three children were playing nearby. The children had two balls and the woman had a small box."),
+      "Lesson 18 final boss passage renders verbatim"
+    );
+    for (const w of ["child", "mice", "woman", "children", "balls", "box"]) {
+      ok(new RegExp(`>${w}<`).test(bossHtml), `Lesson 18 final boss keeps investigation word: ${w}`);
+    }
+
+    const game = L18_SLIDES.find((s) => s.kind === "ex" && s.badge === "19");
+    const gameHtml = renderToString(React.createElement(SlideView18, { s: game, onExit: () => {} }));
+    ok(gameHtml.includes('data-en-seq="l18-game"'), "Lesson 18 mini game renders");
+    for (const w of ["child", "children", "woman", "women", "mouse", "mice", "book", "books", "sheep", "men", "person", "people"]) {
+      ok(new RegExp(`data-en-word="${w}"`).test(gameHtml), `Lesson 18 mini game keeps word: ${w}`);
+    }
+
+    const det = L18_SLIDES.find((s) => s.kind === "ex" && s.badge === "12");
+    const detHtml = renderToString(React.createElement(SlideView18, { s: det, onExit: () => {} }));
+    for (const s of [
+      "I have two book.",
+      "Three child are playing.",
+      "The womans are doctors.",
+      "The boys plays chess.",
+      "She has five tooths.",
+      "The men is outside.",
+      "I can see two mouses.",
+      "There are three boxs.",
+    ]) {
+      ok(detHtml.includes(s), `Lesson 18 detective keeps: ${s}`);
+    }
+  }
+
+  // --- الدرس 18: الدرس كاملًا يُعرض من المكوّن الرئيسي ---
+  {
+    const html = renderToString(React.createElement(Lesson18, { onExit: () => {} }));
+    ok(html.length > 2000, "Lesson 18 renders without throwing");
+    ok(/dir="ltr"/.test(html), "Lesson 18 isolates English as LTR");
+    ok(html.includes('dir="rtl"'), "Lesson 18 keeps the Arabic RTL shell");
+    ok(!html.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 18 renders no GB flag emoji");
   }
 
 } catch (err) {

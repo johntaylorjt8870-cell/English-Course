@@ -1,0 +1,6 @@
+# متتبع الحزم والمخرجات المولّدة — لا تُرفع إلى Git
+node_modules/
+dist/
+scripts/.audit-bundle.mjs
+*.local
+.DS_Store

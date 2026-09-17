@@ -35,7 +35,11 @@ function fontEnSeq(fragment) {
     /dir="ltr"[^>]*class="[^"]*font-en[^"]*"[^>]*>([^<]*)|class="[^"]*font-en[^"]*"[^>]*>([^<]*)/g;
   let m;
   while ((m = re.exec(fragment))) {
-    const t = (m[1] || m[2] || "").replace(/\s+/g, " ").trim();
+    const t = (m[1] || m[2] || "")
+      .replace(/&#x27;/g, "'")
+      .replace(/&amp;/g, "&")
+      .replace(/\s+/g, " ")
+      .trim();
     if (t) out.push(t);
   }
   return out;
@@ -60,8 +64,10 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import Lesson1 from ${JSON.stringify(join(root, "src/lessons/lesson1/Lesson1.tsx"))};
 import Lesson4 from ${JSON.stringify(join(root, "src/lessons/lesson4/Lesson4.tsx"))};
+import Lesson13, { FormulaBoard, SlideView } from ${JSON.stringify(join(root, "src/lessons/lesson13/Lesson13.tsx"))};
+import { SLIDES as L13_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson13/data.ts"))};
 import { LatinRuns } from ${JSON.stringify(join(root, "src/shared/bidi.tsx"))};
-export { React, renderToString, Lesson1, Lesson4, LatinRuns };
+export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, LatinRuns };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -76,7 +82,7 @@ export { React, renderToString, Lesson1, Lesson4, LatinRuns };
 });
 
 try {
-  const { React, renderToString, Lesson1, Lesson4, LatinRuns } = await import(pathToFileURL(outFile).href);
+  const { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, LatinRuns } = await import(pathToFileURL(outFile).href);
 
   // --- LatinRuns: mixed SVO phrase stays one LTR unit ---
   {
@@ -140,6 +146,92 @@ try {
         must.every((w) => visible.includes(w)),
         `English words preserved in mixed line: ${text}`
       );
+    }
+  }
+
+  // --- Lesson 13: الصيغ الأربع لـ Past Simple (did / didn't) بترتيبها الإنجليزي ---
+  {
+    const html = renderToString(React.createElement(FormulaBoard));
+    ok(html.includes('data-en-seq="l13-formulas"'), "Lesson 13 FormulaBoard renders [data-en-seq=l13-formulas]");
+    // الكلمات بترتيبها — و (+) تُفحص بالعدد لأنها تتكرر في الصيغة الواحدة
+    const rows13 = [
+      ["l13-formula-aff", ["Subject", "Past Verb"], 1],
+      ["l13-formula-neg", ["Subject", "didn't", "Base Verb"], 2],
+      ["l13-formula-q", ["Did", "Subject", "Base Verb", "?"], 2],
+      ["l13-formula-wh", ["Wh-word", "did", "Subject", "Base Verb", "?"], 3],
+    ];
+    const starts = rows13.map(([seq]) => html.indexOf(`data-en-seq="${seq}"`));
+    rows13.forEach(([seq, expected, plusCount], i) => {
+      const j = starts[i];
+      ok(j >= 0, `Lesson 13 ${seq} present`);
+      if (j < 0) return;
+      ok(html.slice(Math.max(0, j - 130), j).includes('dir="ltr"'), `Lesson 13 ${seq} row element is dir=ltr`);
+      const end = i + 1 < starts.length && starts[i + 1] > j ? starts[i + 1] : j + 4000;
+      const toks = fontEnSeq(html.slice(j, end));
+      assertSeq(`Lesson 13 ${seq}`, toks, expected);
+      ok(toks.filter((t) => t === "+").length === plusCount, `Lesson 13 ${seq}: must keep ${plusCount} "+" separators`);
+      // علامة الاستفهام تبقى بعد الفعل الأساسي وليست معكوسة
+      if (seq === "l13-formula-q" || seq === "l13-formula-wh") {
+        const visible = html.slice(j, end).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+        ok(visible.indexOf("Base Verb") < visible.indexOf("?"), `Lesson 13 ${seq}: "?" must come after Base Verb, never reversed`);
+      }
+    });
+    for (const rx of [/Base Verb\s*\+\s*did\s*\+\s*Subject/, /Past Verb\s*\+\s*Subject/, /Subject\s*\+\s*Did\s*\+/]) {
+      ok(!rx.test(html.replace(/<[^>]+>/g, " > ")), `Lesson 13 must not render a reversed formula (${rx})`);
+    }
+  }
+
+  // --- Lesson 13: يعرض الدرس كاملًا بدون أخطاء (شريحة الغلاف) ---
+  {
+    const html = renderToString(React.createElement(Lesson13, { onExit: () => {} }));
+    ok(html.length > 2000, "Lesson 13 renders without throwing");
+    ok(/dir="ltr"/.test(html), "Lesson 13 cover isolates English as LTR");
+    const coverVisible = html.replace(/<[^>]+>/g, " ");
+    ok(/Subject/.test(coverVisible) && /didn/.test(coverVisible), "Lesson 13 cover renders Subject + didn't + Base Verb in LTR");
+  }
+
+  // --- Lesson 13: كل الشرائح تُعرض بلا أخطاء (فحص شامل للدرس كاملًا) ---
+  {
+    const noop = () => {};
+    let rendered = 0;
+    const broken = [];
+    const reversed = [];
+    const REV = [
+      /Base Verb\s*\+\s*did\s*\+\s*Subject/,
+      /Past Verb\s*\+\s*Subject/,
+      /Subject\s*\+\s*Did\s*\+/,
+    ];
+    for (const s of L13_SLIDES) {
+      try {
+        const h = renderToString(React.createElement(SlideView, { s, onExit: noop }));
+        if (h.length < 200) broken.push(`${s.kind}:${s.title ?? ""}`);
+        const plain = h.replace(/<[^>]+>/g, " > ");
+        for (const rx of REV) if (rx.test(plain)) reversed.push(`${s.kind}:${s.title ?? ""} (${rx})`);
+        rendered++;
+      } catch (err) {
+        broken.push(`${s.kind}:${s.title ?? ""} → ${err.message}`);
+      }
+    }
+    ok(L13_SLIDES.length >= 35, `Lesson 13 must keep its full slide count (got ${L13_SLIDES.length})`);
+    ok(rendered === L13_SLIDES.length, `Lesson 13: every slide must render without errors (${rendered}/${L13_SLIDES.length}${broken.length ? " — broken: " + broken.join(", ") : ""})`);
+    ok(broken.length === 0, `Lesson 13: no slide may throw or render empty (${broken.join(", ")})`);
+    ok(reversed.length === 0, `Lesson 13: no slide may render a reversed formula (${reversed.join(", ")})`);
+
+    // كل تمارين الدرس موجودة وبياناتها كاملة
+    const exSlides = L13_SLIDES.filter((s) => s.kind === "ex");
+    ok(exSlides.length >= 10, `Lesson 13 must keep all 10 exercise/game slides (got ${exSlides.length})`);
+    const exTypes = exSlides.map((s) => s.ex.type);
+    for (const t of ["errorHunter", "negTransform", "qTransform", "choose", "fill", "triple", "iq200", "pattern", "detective", "finalChallenge"]) {
+      ok(exTypes.includes(t), `Lesson 13 exercise type present: ${t}`);
+    }
+    // شرائح الشرح ①–⑳ كاملة
+    const lessonSlides = L13_SLIDES.filter((s) => s.kind === "lesson");
+    ok(lessonSlides.length === 20, `Lesson 13 must keep all 20 teaching sections (got ${lessonSlides.length})`);
+    const steps = lessonSlides.map((s) => Number(s.step));
+    ok(steps.every((v, i) => v === i + 1), `Lesson 13 teaching sections must stay in source order 1→20 (got ${steps.join(",")})`);
+    // الخاتمة
+    for (const k of ["summary", "keyRule", "roadmap", "quiz", "closing"]) {
+      ok(L13_SLIDES.some((s) => s.kind === k), `Lesson 13 closing slide present: ${k}`);
     }
   }
 } catch (err) {

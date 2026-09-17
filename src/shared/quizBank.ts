@@ -208,4 +208,20 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "أي جملة صحيحة؟", opts: ["Look! He is running.", "Look! He run.", "Look! He running.", "Look! He runs now."], answer: 0, why: "بعد Look! نستخدم Present Continuous كاملًا: is + verb-ing." },
     { ar: "صحح الخطأ: We not are playing.", en: "We not are playing.", opts: ["We are not playing.", "We not playing are.", "We aren't not playing.", "We not is playing."], answer: 0, why: "not تأتي بعد فعل الكينونة are وليس قبله." },
   ],
+
+  // ---------------- الدرس 13 ----------------
+  13: [
+    { ar: "ما النفي الصحيح للجملة: She went to the library.", en: "She went to the library.", opts: ["She didn't go to the library.", "She didn't went to the library.", "She doesn't go to the library.", "She not went to the library."], answer: 0, why: "بعد didn't يعود الفعل إلى شكله الأساسي → didn't go، وليس didn't went." },
+    { ar: "اختر السؤال الصحيح:", en: "He bought a telescope.", opts: ["Did he buy a telescope?", "Did he bought a telescope?", "Did he buys a telescope?", "Does he bought a telescope?"], answer: 0, why: "السؤال: Did + Subject + Base Verb? → Did he buy ...?" },
+    { ar: "أكمل: Did she _______ the door?", en: "Did she _______ the door?", opts: ["open", "opened", "opens", "opening"], answer: 0, why: "بعد Did نستخدم الفعل الأساسي: open — والماضي عند Did." },
+    { ar: "ما الإجابة القصيرة الصحيحة بـ Yes للسؤال: Did you finish your homework?", en: "Did you finish your homework?", opts: ["Yes, I did.", "Yes, I finished.", "Yes, I do.", "Yes, I was."], answer: 0, why: "الإجابة القصيرة: Yes, subject + did → Yes, I did." },
+    { ar: "اختر النفي الصحيح للجملة: I visited the castle.", en: "I visited the castle.", opts: ["I didn't visit the castle.", "I didn't visited the castle.", "I don't visited the castle.", "I not visit the castle."], answer: 0, why: "النفي: Subject + didn't + Base Verb → didn't visit." },
+    { ar: "أكمل: They _______ not finish the race.", en: "They _______ not finish the race.", opts: ["did", "do", "does", "are"], answer: 0, why: "في الماضي: did not = didn't → They did not finish the race." },
+    { ar: "أكمل سؤال Wh: Where did they _______?", en: "Where did they _______?", opts: ["go", "went", "goes", "going"], answer: 0, why: "Wh-word + did + Subject + Base Verb → Where did they go?" },
+    { ar: "ما الصحيح بدلًا من: Did he be tired?", en: "Did he be tired?", opts: ["Was he tired?", "Did he be tired?", "Did he tired?", "Was he be tired?"], answer: 0, why: "لا نخلط did مع Verb to be — مع was/were نقول: Was he tired?" },
+    { ar: "أكمل: I _______ my homework yesterday. (فعل أساسي بمعنى أنجزت)", en: "I _______ my homework yesterday.", opts: ["did", "do", "does", "done"], answer: 0, why: "هنا did فعل أساسي في الماضي بمعنى (أنجزت) — وليست أداة سؤال." },
+    { ar: "أكمل: Did you _______ your homework?", en: "Did you _______ your homework?", opts: ["do", "did", "does", "done"], answer: 0, why: "بعد Did المساعدة يأتي الفعل الأساسي do: Did you do ...?" },
+    { ar: "ما الإجابة القصيرة الصحيحة بـ No للسؤال: Did she call you?", en: "Did she call you?", opts: ["No, she didn't.", "No, she did.", "No, she doesn't.", "No, she wasn't."], answer: 0, why: "الإجابة القصيرة: No, subject + didn't → No, she didn't." },
+    { ar: "أي جملة صحيحة؟", opts: ["She didn't see the message.", "She didn't saw the message.", "She not saw the message.", "She doesn't saw the message."], answer: 0, why: "بعد didn't يأتي الفعل الأساسي see — لا نستخدم saw بعد did / didn't." },
+  ],
 };

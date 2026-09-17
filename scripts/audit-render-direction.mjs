@@ -45,6 +45,23 @@ function fontEnSeq(fragment) {
   return out;
 }
 
+function assertOrderStrict(label, haystack, expected) {
+  let from = 0;
+  let failedAt = null;
+  for (const w of expected) {
+    const i = haystack.indexOf(w, from);
+    if (i === -1) {
+      failedAt = w;
+      break;
+    }
+    from = i + 1;
+  }
+  ok(
+    failedAt === null,
+    `${label}: ${expected.join(" → ")} in strict order${failedAt ? ` — missing/out of order at "${failedAt}"` : ""}  (got ${JSON.stringify(haystack)})`
+  );
+}
+
 function assertSeq(label, haystack, expected) {
   const idx = expected.map((w) => haystack.findIndex((t) => t === w));
   ok(
@@ -69,7 +86,9 @@ import { SLIDES as L13_SLIDES } from ${JSON.stringify(join(root, "src/lessons/le
 import Lesson14, { FormulaBoard14, SlideView14 } from ${JSON.stringify(join(root, "src/lessons/lesson14/Lesson14.tsx"))};
 import { SLIDES as L14_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson14/data.ts"))};
 import { LatinRuns } from ${JSON.stringify(join(root, "src/shared/bidi.tsx"))};
-export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns };
+import Lesson17, { SlideView17 } from ${JSON.stringify(join(root, "src/lessons/lesson17/Lesson17.tsx"))};
+import { SLIDES as L17_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson17/data.ts"))};
+export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -84,7 +103,7 @@ export { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideV
 });
 
 try {
-  const { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns } = await import(pathToFileURL(outFile).href);
+  const { React, renderToString, Lesson1, Lesson4, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES } = await import(pathToFileURL(outFile).href);
 
   // --- LatinRuns: mixed SVO phrase stays one LTR unit ---
   {
@@ -210,7 +229,7 @@ try {
         const plain = h.replace(/<[^>]+>/g, " > ");
         for (const rx of REV) if (rx.test(plain)) reversed.push(`${s.kind}:${s.title ?? ""} (${rx})`);
         rendered++;
-      } catch (err) {
+} catch (err) {
         broken.push(`${s.kind}:${s.title ?? ""} → ${err.message}`);
       }
     }
@@ -318,6 +337,255 @@ try {
     for (const kind of ["summary", "keyRule", "roadmap", "quiz", "closing"]) {
       ok(L14_SLIDES.some((slide) => slide.kind === kind), `Lesson 14 closing slide present: ${kind}`);
     }
+  }
+
+        // --- الدرس 17 — Possessive Pronouns: كل شريحة تُعرض، بلا انعكاس، وبلا فراغ ---
+  {
+    const noop = () => {};
+    let rendered = 0;
+    const broken = [];
+    const reversed = [];
+    const noControls = [];
+    const REV17 = [
+      /\bbook\s+my\b/,
+      /\bbag\s+your\b/,
+      /\bcar\s+their\b/,
+      /\bhouse\s+our\b/,
+      /\bcamera\s+her\b/,
+      /\bnotebook\s+my\b/,
+      /\bmine\s+is\s+book\b/,
+      /\bis\s+mine\s+This\b/,
+      /Noun\s*\+\s*Adjective\s*\+\s*Possessive/,
+      /Pronoun\s*\+\s*Possessive/,
+    ];
+    const renderedSlides = [];
+    for (const slide of L17_SLIDES) {
+      try {
+        const html = renderToString(React.createElement(SlideView17, { s: slide, onExit: noop }));
+        renderedSlides.push(html);
+        if (html.length < 200) broken.push(`${slide.kind}:${slide.title ?? ""}`);
+        const plain = html.replace(/<[^>]+>/g, " > ");
+        for (const rx of REV17) if (rx.test(plain)) reversed.push(`${slide.kind}:${slide.title ?? ""} (${rx})`);
+        if (slide.kind === "ex" && !/<button|<input|<textarea/.test(html)) noControls.push(slide.title);
+        rendered++;
+      } catch (err) {
+        broken.push(`${slide.kind}:${slide.title ?? ""} → ${err.message}`);
+      }
+    }
+    const all17 = renderedSlides
+      .join("\n")
+      .replace(/&#x27;/g, "'")
+      .replace(/&quot;/g, '"')
+      .replace(/&amp;/g, "&");
+
+    ok(L17_SLIDES.length >= 53, `Lesson 17 keeps its complete slide sequence (got ${L17_SLIDES.length})`);
+    ok(rendered === L17_SLIDES.length, `Lesson 17 every slide renders (${rendered}/${L17_SLIDES.length})`);
+    ok(broken.length === 0, `Lesson 17 has no empty or throwing slide (${broken.join(", ")})`);
+    ok(reversed.length === 0, `Lesson 17 has no reversed English word order (${reversed.join(", ")})`);
+    ok(noControls.length === 0, `Lesson 17 exercise slides expose interactive controls (${noControls.join(", ")})`);
+
+    const teaching = L17_SLIDES.filter((s) => s.kind === "lesson");
+    ok(teaching.length === 35, `Lesson 17 teaching sections 1–35 are present (${teaching.length})`);
+    const steps = teaching.map((s) => Number(s.step));
+    ok(steps.every((v, i) => v === i + 1), `Lesson 17 teaching order remains 1→35 (${steps.join(",")})`);
+    const exercises = L17_SLIDES.filter((s) => s.kind === "ex");
+    ok(exercises.length === 10, `Lesson 17 exercises 36–45 are present (${exercises.length})`);
+    const badges = exercises.map((s) => Number(s.badge));
+    ok(badges.every((v, i) => v === 36 + i), `Lesson 17 exercise numbering stays 36→45 (${badges.join(",")})`);
+    for (const type of ["level1", "level2", "level3", "level4", "level5", "level6", "detective", "iq200", "iq200b", "finalChallenge"]) {
+      ok(exercises.some((s) => s.ex.type === type), `Lesson 17 exercise type present: ${type}`);
+    }
+    for (const kind of ["cover", "objectives", "summary", "iq200Rule", "fiveErrors", "roadmap", "quiz", "closing"]) {
+      ok(L17_SLIDES.some((s) => s.kind === kind), `Lesson 17 slide present: ${kind}`);
+    }
+
+    for (const phrase of [
+      "This is my book.",
+      "This book is mine.",
+      "This is my notebook.",
+      "This notebook is mine.",
+      "This is his laptop.",
+      "This laptop is his.",
+      "This is her camera.",
+      "This camera is hers.",
+      "This is our classroom.",
+      "This classroom is ours.",
+      "This house is theirs.",
+      "Whose phone is this?",
+      "Whose bag is this?",
+      "Whose car is that?",
+      "It's mine.",
+      "It's hers.",
+      "It's theirs.",
+      "Yes, it is mine.",
+      "This is Sara's notebook.",
+      "Alex's laptop",
+      "The robot moved its arm.",
+      "His car is fast.",
+      "The car is his.",
+      "Their car is new.",
+      "They're happy.",
+      "The book is yours.",
+      "my book",
+      "your bag",
+      "her phone",
+      "our house",
+      "their car",
+      "Possessive Adjective + Noun",
+      "my → mine",
+      "my book → mine",
+      "her camera",
+      "his camera",
+      "Their cameras",
+      "Is this yours?",
+      "This one is hers.",
+      "Sara's book",
+      "the book is hers",
+      "Omar's phone",
+      "the phone is his",
+      "This book is mine.",
+      "These books are mine.",
+      "I have five books.",
+      "The books are mine.",
+      "Emma brought her camera to the competition.",
+    ]) {
+      ok(all17.includes(phrase), `Lesson 17 rendered HTML keeps English unit: ${phrase}`);
+    }
+  }
+
+  // --- الدرس 17: الخريطة الأساسية — I → my → mine بترتيبها الإنجليزي ---
+  {
+    const slide = L17_SLIDES.find((s) => s.kind === "lesson" && s.step === "4");
+    const html = renderToString(React.createElement(SlideView17, { s: slide, onExit: () => {} }));
+    ok(html.includes('data-en-seq="l17-coremap"'), "Lesson 17 core map renders [data-en-seq=l17-coremap]");
+    const i = html.indexOf('data-en-seq="l17-coremap"');
+    ok(html.slice(Math.max(0, i - 160), i).includes('dir="ltr"'), "Lesson 17 core map row container is dir=ltr");
+    const tokens = fontEnSeq(html.slice(i, i + 9000));
+    assertSeq("Lesson 17 core map (I)", tokens, ["I", "my", "mine"]);
+    assertSeq("Lesson 17 core map (She)", tokens, ["She", "her", "hers"]);
+    assertSeq("Lesson 17 core map (They)", tokens, ["They", "their", "theirs"]);
+    assertSeq("Lesson 17 must-memorize", tokens, ["my", "mine", "your", "yours"]);
+    ok(!tokens.includes("my I") && !tokens.includes("mine my"), "Lesson 17 core map never reverses the pair");
+  }
+
+  // --- الدرس 17: جدول المقارنة الكاملة ---
+  {
+    const slide = L17_SLIDES.find((s) => s.kind === "lesson" && s.step === "13");
+    const html = renderToString(React.createElement(SlideView17, { s: slide, onExit: () => {} }));
+    ok(html.includes('data-en-seq="l17-compare"'), "Lesson 17 comparison table renders [data-en-seq=l17-compare]");
+    const i = html.indexOf('data-en-seq="l17-compare"');
+    const end = html.indexOf('data-en-seq="l17-beforeafter"');
+    const tokens = fontEnSeq(html.slice(i, end === -1 ? i + 6000 : end));
+    assertOrderStrict("Lesson 17 comparison table", tokens, [
+      "I", "my", "mine",
+      "You", "your", "yours",
+      "He", "his", "his",
+      "She", "her", "hers",
+      "We", "our", "ours",
+      "They", "their", "theirs",
+    ]);
+    ok(end > i, "Lesson 17 before/after ownership cards render");
+    const afterTokens = fontEnSeq(html.slice(end));
+    assertOrderStrict("Lesson 17 before/after pairs", afterTokens, ["my book", "your car", "his jacket", "her bag", "our house", "their school"]);
+  }
+
+  // --- الدرس 17: آلة التحويل — الصفة قبل الاسم، والضمير بعدها ---
+  {
+    const slide = L17_SLIDES.find((s) => s.kind === "lesson" && s.step === "17");
+    const html = renderToString(React.createElement(SlideView17, { s: slide, onExit: () => {} }));
+    ok(html.includes('data-en-seq="l17-machine"'), "Lesson 17 transformation machine renders [data-en-seq=l17-machine]");
+    const i = html.indexOf('data-en-seq="l17-machine"');
+    const tokens = fontEnSeq(html.slice(i, i + 6000));
+    assertOrderStrict("Lesson 17 machine pairs", tokens, ["my book", "your bag", "his jacket", "her phone", "our house", "their car"]);
+    assertSeq("Lesson 17 machine stage", tokens, ["my", "book"]);
+    ok(!tokens.includes("book my"), "Lesson 17 machine never renders 'book my'");
+    ok(html.includes('data-en-seq="l17-lab"'), "Lesson 17 noun removal lab renders");
+    const labTokens = fontEnSeq(html.slice(html.indexOf('data-en-seq="l17-lab"')));
+    assertSeq("Lesson 17 noun removal lab", labTokens, ["my", "notebook"]);
+  }
+
+  // --- الدرس 17: قاعدة IQ200 النهائية بترتيبها ---
+  {
+    const slide = L17_SLIDES.find((s) => s.kind === "iq200Rule");
+    const html = renderToString(React.createElement(SlideView17, { s: slide, onExit: () => {} }));
+    ok(html.includes('data-en-seq="l17-iq200rule"'), "Lesson 17 IQ200 rule renders [data-en-seq=l17-iq200rule]");
+    const i = html.indexOf('data-en-seq="l17-iq200rule"');
+    ok(html.slice(Math.max(0, i - 160), i).includes('dir="ltr"'), "Lesson 17 IQ200 rule container is dir=ltr");
+    const tokens = fontEnSeq(html.slice(i, i + 4000));
+    assertSeq("Lesson 17 IQ200 rule", tokens, ["Possessive Adjective + Noun", "my book", "my → mine", "my book → mine"]);
+    assertSeq("Lesson 17 IQ200 pairs", tokens, ["your bag → yours", "her phone → hers", "our house → ours", "their car → theirs"]);
+  }
+
+  // --- الدرس 17: الخلاصة الكبرى ---
+  {
+    const slide = L17_SLIDES.find((s) => s.kind === "summary");
+    const html = renderToString(React.createElement(SlideView17, { s: slide, onExit: () => {} }));
+    const adj = html.indexOf('data-en-seq="l17-sum-adj"');
+    const pron = html.indexOf('data-en-seq="l17-sum-pron"');
+    ok(adj >= 0 && pron >= 0 && adj < pron, "Lesson 17 summary renders both ownership columns");
+    assertSeq("Lesson 17 summary adjectives", fontEnSeq(html.slice(adj, pron)), ["my", "your", "his", "her", "our", "their", "my book", "her phone", "their house"]);
+    assertSeq("Lesson 17 summary pronouns", fontEnSeq(html.slice(pron, pron + 4000)), ["mine", "yours", "his", "hers", "ours", "theirs", "The book is mine.", "The phone is hers.", "The house is theirs."]);
+  }
+
+  // --- الدرس 17: ترتيب الخيارات A ثم B ---
+  {
+    for (const badge of ["36", "38"]) {
+      const slide = L17_SLIDES.find((s) => s.kind === "ex" && s.badge === badge);
+      const html = renderToString(React.createElement(SlideView17, { s: slide, onExit: () => {} }));
+      const groups = html.match(/data-en-seq="l17-opts-[^"]+"/g) || [];
+      ok(groups.length === 6, `Lesson 17 ${badge}: six option groups rendered (got ${groups.length})`);
+      const aIdx = [...html.matchAll(/data-en-opt="A"/g)].map((m) => m.index);
+      const bIdx = [...html.matchAll(/data-en-opt="B"/g)].map((m) => m.index);
+      ok(aIdx.length === 6 && bIdx.length === 6, `Lesson 17 ${badge}: A/B markers present on all six questions`);
+      ok(aIdx.every((v, i) => v < bIdx[i]), `Lesson 17 ${badge}: option A always precedes option B`);
+    }
+  }
+
+  // --- الدرس 17: Whose? و Grammar Detective و IQ200 و المهمة النهائية ---
+  {
+    const whose = L17_SLIDES.find((s) => s.kind === "ex" && s.badge === "40");
+    const whoseHtml = renderToString(React.createElement(SlideView17, { s: whose, onExit: () => {} }));
+    for (const q of ["Whose phone is this?", "Whose bicycle is this?", "Whose jacket is this?", "Whose house is this?", "Whose books are these?"]) {
+      ok(whoseHtml.includes(q), `Lesson 17 Whose exercise keeps: ${q}`);
+    }
+    const whosePlain = whoseHtml.replace(/&#x27;/g, "'");
+    ok(whosePlain.includes("It's ______."), "Lesson 17 Whose exercise keeps the It's ______ pattern");
+    ok(whosePlain.includes("They're ______."), "Lesson 17 Whose exercise keeps the They're ______ pattern");
+
+    const det = L17_SLIDES.find((s) => s.kind === "ex" && s.badge === "42");
+    const detHtml = renderToString(React.createElement(SlideView17, { s: det, onExit: () => {} }));
+    for (const w of ["her", "his", "their", "yours", "mine", "hers"]) {
+      ok(new RegExp(`>${w}<`).test(detHtml), `Lesson 17 detective keeps target: ${w}`);
+    }
+    const detPlain = detHtml.replace(/&#x27;/g, "'").replace(/&quot;/g, '"');
+    ok(detPlain.includes("Emma brought her camera to the competition."), "Lesson 17 detective passage renders verbatim");
+    ok(detPlain.includes("Is this yours?") && detPlain.includes("This one is hers."), "Lesson 17 detective keeps the quoted lines");
+
+    const iq = L17_SLIDES.find((s) => s.kind === "ex" && s.badge === "43");
+    const iqHtml = renderToString(React.createElement(SlideView17, { s: iq, onExit: () => {} }));
+    ok(iqHtml.includes('data-en-seq="l17-iq200chain"'), "Lesson 17 IQ200 chain renders [data-en-seq=l17-iq200chain]");
+    const iqPlain = iqHtml.replace(/&#x27;/g, "'");
+    ok(iqPlain.includes("Alex's laptop"), "Lesson 17 IQ200 keeps Alex's laptop in LTR");
+    const chainTokens = fontEnSeq(iqHtml.slice(iqHtml.indexOf('data-en-seq="l17-iq200chain"')));
+    ok(chainTokens[0] === "Alex's laptop", `Lesson 17 IQ200 chain starts with the source sentence (got ${JSON.stringify(chainTokens.slice(0, 3))})`);
+    ok(iqPlain.includes("This is Alex's laptop."), "Lesson 17 IQ200 prompt sentence is verbatim");
+
+    const fin = L17_SLIDES.find((s) => s.kind === "ex" && s.badge === "45");
+    const finHtml = renderToString(React.createElement(SlideView17, { s: fin, onExit: () => {} }));
+    ok(finHtml.includes("<textarea"), "Lesson 17 final mission exposes a writing area");
+    for (const w of ["my", "mine", "your", "yours", "his", "her", "hers", "our", "ours", "their", "theirs"]) {
+      ok(new RegExp(`>${w}<`).test(finHtml) || finHtml.includes(`✅ ${w}`) || finHtml.includes(w), `Lesson 17 final mission keeps required word: ${w}`);
+    }
+    ok(finHtml.includes("Whose...?"), "Lesson 17 final mission keeps the Whose requirement");
+  }
+
+  // --- الدرس 17: الدرس كاملًا يُعرض من المكوّن الرئيسي ---
+  {
+    const html = renderToString(React.createElement(Lesson17, { onExit: () => {} }));
+    ok(html.length > 2000, "Lesson 17 renders without throwing");
+    ok(/dir="ltr"/.test(html), "Lesson 17 isolates English as LTR");
+    ok(html.includes('dir="rtl"'), "Lesson 17 keeps the Arabic RTL shell");
+    ok(!html.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 17 renders no GB flag emoji");
   }
 
 } catch (err) {

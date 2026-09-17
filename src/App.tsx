@@ -15,6 +15,7 @@ import Lesson13 from "./lessons/lesson13/Lesson13";
 import Lesson14 from "./lessons/lesson14/Lesson14";
 import Lesson15 from "./lessons/lesson15/Lesson15";
 import Lesson16 from "./lessons/lesson16/Lesson16";
+import Lesson17 from "./lessons/lesson17/Lesson17";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -32,6 +33,7 @@ import { SLIDES as L13_SLIDES } from "./lessons/lesson13/data";
 import { SLIDES as L14_SLIDES } from "./lessons/lesson14/data";
 import { SLIDES as L15_SLIDES } from "./lessons/lesson15/data";
 import { SLIDES as L16_SLIDES } from "./lessons/lesson16/data";
+import { SLIDES as L17_SLIDES } from "./lessons/lesson17/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 
 // ------------------------------------------------------------
@@ -211,6 +213,15 @@ const CARDS: Card[] = [
     href: "#/lesson/16",
     grad: "from-teal-500 to-emerald-500",
   },
+  {
+    n: 17,
+    title: "الدرس 17: Possessive Pronouns — ضمائر الملكية",
+    en: "Possessive Pronouns — mine / yours / his / hers / ours / theirs",
+    emoji: "🔬",
+    stats: `${L17_SLIDES.length} شريحة · 6 مستويات · Transformation Machine وWhose? Lab`,
+    href: "#/lesson/17",
+    grad: "from-indigo-500 to-amber-500",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -304,6 +315,7 @@ export default function App() {
   else if (route === 14) page = <Lesson14 onExit={goHome} />;
   else if (route === 15) page = <Lesson15 onExit={goHome} />;
   else if (route === 16) page = <Lesson16 onExit={goHome} />;
+  else if (route === 17) page = <Lesson17 onExit={goHome} />;
   else page = <Hub />;
   return (
     <>

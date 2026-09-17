@@ -1,6 +1,6 @@
-# English with Sommer — Master Course
+# EnglishwithSomeR — Master Course
 
-Production source for the English with Sommer interactive Arabic-first English course.
+Production source for the **EnglishwithSomeR** interactive Arabic-first English course.
 
 ## Architecture
 

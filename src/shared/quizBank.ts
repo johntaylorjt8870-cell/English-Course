@@ -272,4 +272,22 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "أكمل: This is my book. ولكن: This book is _____.", en: "This book is _____.", opts: ["mine", "my", "me", "I"], answer: 0, why: "my + noun (my book) لكن mine وحدها بدون اسم بعدها. هذا تمهيد للدرس 17." },
     { ar: "أكمل: Ahmed's car يمكن تحويلها إلى:", en: "Ahmed's car = ______ car", opts: ["His", "Her", "Its", "Their"], answer: 0, why: "Ahmed → He → his. اسم + 's يمكن تحويلها إلى صفة ملكية." },
   ],
+
+  // ---------------- الدرس 17 ----------------
+  17: [
+    { ar: "أكمل: This is ______ book.", en: "This is ______ book.", opts: ["mine", "my", "me", "I"], answer: 1, why: "my + Noun ← قبل الاسم نستخدم my، وليس mine." },
+    { ar: "أكمل: This book is ______.", en: "This book is ______.", opts: ["my", "me", "mine", "I"], answer: 2, why: "لا يوجد اسم بعدها ← ضمير الملكية mine وحدها." },
+    { ar: "أكمل: That jacket is ______.", en: "That jacket is ______.", opts: ["your", "you're", "yours", "you"], answer: 2, why: "بدون اسم بعدها ← yours. أما your فتحتاج اسماً بعدها." },
+    { ar: "أكمل: This is ______ camera.", en: "This is ______ camera.", opts: ["hers", "her", "she", "him"], answer: 1, why: "بعدها اسم (camera) ← صفة الملكية her." },
+    { ar: "أكمل: These books are ______.", en: "These books are ______.", opts: ["ours", "our", "us", "we"], answer: 0, why: "بدون اسم بعدها ← ours." },
+    { ar: "أكمل: That house is ______.", en: "That house is ______.", opts: ["their", "they're", "theirs", "them"], answer: 2, why: "بدون اسم بعدها ← theirs. their تحتاج اسماً بعدها." },
+    { ar: "أي جملة فيها his كضمير ملكية (Possessive Pronoun)؟", opts: ["His car is fast.", "The car is his.", "This is his laptop.", "His laptop is new."], answer: 1, why: "في The car is his لا يوجد اسم بعد his ← ضمير ملكية. أما His car فصفة ملكية." },
+    { ar: "اختر الجملة الصحيحة:", opts: ["This is my notebook.", "This is mine notebook.", "This notebook is my.", "This is my."], answer: 0, why: "mine لا تأتي قبل اسم، و my لا تقف وحدها بدون اسم." },
+    { ar: "أي جملة خاطئة؟", opts: ["The bag is hers.", "This bag is hers.", "This is hers bag.", "Her bag is new."], answer: 2, why: "hers ضمير ملكية ولا يأتي قبل اسم — الصحيح: This is her bag." },
+    { ar: "Whose bag is this? — It belongs to Sara. أكمل: It's ______.", en: "Whose bag is this? — It belongs to Sara. It's ______.", opts: ["she", "her", "hers", "herself"], answer: 2, why: "Sara → She → hers. بعد حذف الاسم نستخدم ضمير الملكية." },
+    { ar: "أكمل: ______ happy today.", en: "______ happy today.", opts: ["Your", "Yours", "You're", "You"], answer: 2, why: "you're = you are ← ليست ملكية. your للملكية و yours ضمير ملكية." },
+    { ar: "أكمل: ______ house is large.", en: "______ house is large.", opts: ["They're", "Theirs", "Their", "Them"], answer: 2, why: "بعدها اسم (house) ← صفة الملكية their. they're = they are و theirs وحدها." },
+    { ar: "Omar has a phone. حذفنا الاسم: The phone is ______.", en: "Omar has a phone. → The phone is ______.", opts: ["he", "him", "his", "he's"], answer: 2, why: "Omar → He → his. كلمة his نفسها قبل الاسم وبعده، والموقع يحدد الوظيفة." },
+    { ar: "I have five books. أكمل: The books are ______.", en: "I have five books. The books are ______.", opts: ["my", "mine", "mines", "me"], answer: 1, why: "ضمير الملكية لا يتغير مع الجمع — نفس mine للمفرد والجمع." },
+  ],
 };

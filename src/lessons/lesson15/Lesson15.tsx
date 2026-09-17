@@ -912,7 +912,7 @@ function Cover() {
       <div className="relative p-7 md:p-12">
         <div className="absolute -right-10 -top-10 text-9xl opacity-10">🟠</div>
         <div className="relative">
-          <div className="inline-flex items-center gap-2 rounded-full border-2 border-amber-200 bg-white px-4 py-2 text-sm font-bold text-amber-700">🇬🇧 <Rich text="الدرس 15" /></div>
+          <div className="inline-flex items-center gap-2 rounded-full border-2 border-amber-200 bg-white px-4 py-2 text-sm font-bold text-amber-700"><Rich text="الدرس 15" /></div>
           <h1 className="font-head mt-5 max-w-3xl text-3xl font-bold leading-tight text-slate-900 md:text-5xl"><Rich text="الدرس 15: Past Simple of Verb to be — was / were" /></h1>
           <div className="mt-3" dir="ltr"><En className="text-xl font-extrabold text-amber-700 md:text-2xl">Past Simple of Verb to be — was / were</En></div>
           <div className="mt-3 rounded-2xl border-2 border-amber-200 bg-amber-50 p-3 text-center font-bold text-amber-900">🚨 We do NOT use did with was/were.</div>

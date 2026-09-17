@@ -354,4 +354,20 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "يوجد كتاب على الطاولة، وأنت تشير إليه الآن. اختر الجملة الصحيحة:", en: "There is a book on the table. → I point to it: ?", opts: ["This is the book.", "There is the book.", "This are the book.", "Those is the books."], answer: 0, why: "الوجود: There is...، وعند الإشارة القربية: This is the book." },
     { ar: "أي جملة من الجمل التالية خاطئة؟", opts: ["There is many students.", "There are many students.", "There is a book.", "There are two books."], answer: 0, why: "many students جمع ← تحتاج There are، وليس There is." },
   ],
+
+  // ---------------- الدرس 22 ----------------
+  22: [
+    { ar: "الكتاب موجود داخل الحقيبة. أكمل:", en: "The book is ___ the bag.", opts: ["in", "on", "under", "behind"], answer: 0, why: "داخل شيء → in." },
+    { ar: "الهاتف على الطاولة. أكمل:", en: "The phone is ___ the table.", opts: ["on", "in", "under", "next to"], answer: 0, why: "على سطح شيء → on." },
+    { ar: "القطة تحت الكرسي. أكمل:", en: "The cat is ___ the chair.", opts: ["under", "above", "on", "in"], answer: 0, why: "أسفل شيء مكانيًا → under." },
+    { ar: "اختر الجملة التي تعني: الكرة بين علي وعمر.", en: "The ball is ___ Ali and Omar.", opts: ["between", "among", "opposite", "behind"], answer: 0, why: "بين شيئين محددين → between A and B." },
+    { ar: "أكمل بسؤال صحيح: ___ is the book?", en: "___ is the book?", opts: ["Where", "What", "When", "Why"], answer: 0, why: "للسؤال عن المكان نستخدم Where." },
+    { ar: "أكمل: Where ___ the keys?", en: "Where ___ the keys?", opts: ["are", "is", "am", "be"], answer: 0, why: "keys جمع → are." },
+    { ar: "المعلم أمام الطلاب. أكمل:", en: "The teacher is ___ the students.", opts: ["in front of", "behind", "between", "under"], answer: 0, why: "أمام → in front of — عكس behind." },
+    { ar: "أي حرف جر يعني أن الشيء في موضع أعلى (لا يلامس بالضرورة)؟", opts: ["above", "on", "under", "in"], answer: 0, why: "above = أعلى من، أما on فهي على سطح شيء وتلامسه." },
+    { ar: "المدرسة مقابل الحديقة. أكمل:", en: "The school is ___ the park.", opts: ["opposite", "between", "next to", "in"], answer: 0, why: "مقابل/في الجهة المقابلة → opposite." },
+    { ar: "أكمل: There ___ a book on the table.", en: "There ___ a book on the table.", opts: ["is", "are", "am", "be"], answer: 0, why: "a book مفرد → There is." },
+    { ar: "أين حقيبة عمر؟ — هي تحت المكتب. أكمل:", en: "Where is Omar's bag? — ___ under the desk.", opts: ["It is", "They are", "He is", "She is"], answer: 0, why: "bag شيء مفرد (It) → It is." },
+    { ar: "أي جملة تستخدم حرفَي جر في نفس الوقت؟", opts: ["There is a small box under the table next to the door.", "The book is on the table.", "The cat is under the chair.", "There is a pen in the drawer."], answer: 0, why: "تحتوي على under و next to معًا: أكثر من حرف جر في جملة واحدة." },
+  ],
 };

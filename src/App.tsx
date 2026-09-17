@@ -20,6 +20,7 @@ import Lesson18 from "./lessons/lesson18/Lesson18";
 import Lesson19 from "./lessons/lesson19/Lesson19";
 import Lesson20 from "./lessons/lesson20/Lesson20";
 import Lesson21 from "./lessons/lesson21/Lesson21";
+import Lesson22 from "./lessons/lesson22/Lesson22";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -42,6 +43,7 @@ import { SLIDES as L18_SLIDES } from "./lessons/lesson18/data";
 import { SLIDES as L19_SLIDES } from "./lessons/lesson19/data";
 import { SLIDES as L20_SLIDES } from "./lessons/lesson20/data";
 import { SLIDES as L21_SLIDES } from "./lessons/lesson21/data";
+import { SLIDES as L22_SLIDES } from "./lessons/lesson22/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 import SitePasswordGate from "./shared/SitePasswordGate";
 
@@ -267,6 +269,15 @@ const CARDS: Card[] = [
     href: "#/lesson/21",
     grad: "from-emerald-600 to-teal-700",
   },
+  {
+    n: 22,
+    title: "الدرس 22: Prepositions of Place",
+    en: "Prepositions of Place",
+    emoji: "🗺️",
+    stats: `${L22_SLIDES.length} شريحة · 8 تحديات · The Position Lab`,
+    href: "#/lesson/22",
+    grad: "from-cyan-600 to-teal-700",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -365,6 +376,7 @@ export default function App() {
   else if (route === 19) page = <Lesson19 onExit={goHome} />;
   else if (route === 20) page = <Lesson20 onExit={goHome} />;
   else if (route === 21) page = <Lesson21 onExit={goHome} />;
+  else if (route === 22) page = <Lesson22 onExit={goHome} />;
   else page = <Hub />;
   return (
     <SitePasswordGate>

@@ -118,6 +118,11 @@ const LTR_SPOTS = [
   ["lesson13", "Summary"],
   ["lesson13", "KeyRule"],
   ["lesson13", "ChangedLine"],
+  ["lesson14", "FormulaBoard14"],
+  ["lesson14", "PartsLine"],
+  ["lesson14", "WhMeanings"],
+  ["lesson14", "ControlTable"],
+  ["lesson14", "FinalChallengeEx"],
 ];
 for (const [l, fn] of LTR_SPOTS) {
   const body = fnBody(src(l, tsxName(l)), fn);
@@ -265,6 +270,104 @@ for (const [l, fn] of LTR_SPOTS) {
   ok((between("export const ROADMAP_13", "export const ROADMAP_13_NEXT").match(/n: \d+/g) || []).length === 13, "lesson13: roadmap must list 13 lessons");
   ok(d13.includes("Past Simple — did / didn't والأسئلة"), "lesson13: roadmap must mark the current lesson");
   ok(d13.includes("ثم الانتقال إلى **was / were**"), "lesson13: roadmap must keep the next-step sentence");
+}
+
+
+// ---------- 9) الدرس 14 — Wh Questions والتطبيق الشامل ----------
+{
+  const d14 = src("lesson14", "data.ts");
+  const t14 = src("lesson14", "Lesson14.tsx");
+
+  ok(t14.includes("../../shared/bidi"), "lesson14: must import LatinRuns from shared/bidi");
+  ok(!t14.includes("split(/(\\s+)/)"), "lesson14: per-token split must not exist (word-reversal engine)");
+  ok((t14.match(/dir="ltr"/g) || []).length >= 15, `lesson14: LTR isolation must be used throughout (got ${(t14.match(/dir="ltr"/g) || []).length})`);
+  ok(d14.includes("export const SOURCE_FIDELITY_MARKERS_14"), "lesson14: source-fidelity marker index exists");
+
+  const sectionStart = d14.indexOf("export const SOURCE_SECTIONS");
+  const sectionEnd = d14.indexOf("];", sectionStart);
+  const sectionBlock = d14.slice(sectionStart, sectionEnd);
+  ok((sectionBlock.match(/^\s+"/gm) || []).length >= 33, "lesson14: SOURCE_SECTIONS indexes every supplied section heading");
+  for (const heading of [
+    "1. قبل أن نبدأ",
+    "2. ما هي Wh Questions",
+    "3. القاعدة الأساسية",
+    "9. Who",
+    "12. انتبه إلى الفرق",
+    "16. جدول التحكم",
+    "19. لعبة تحويل الزمن",
+    "20. تمارين المستوى الأول",
+    "23. المستوى الرابع",
+    "24. Grammar Detective",
+    "25. IQ200 Challenge",
+    "26. تحدي أصعب",
+    "27. Mini Conversation",
+    "28. التحدي النهائي",
+    "خلاصة الدرس 14",
+    "القاعدة الذهبية",
+    "مكاننا في المنهج",
+  ]) ok(d14.includes(heading), `lesson14: source section is indexed: ${heading}`);
+
+  for (const formula of [
+    "Subject + Past Verb",
+    "Subject + didn't + Base Verb",
+    "Did + Subject + Base Verb?",
+    "Wh-word + did + Subject + Base Verb?",
+    "Wh + did + Subject + Base Verb?",
+  ]) ok(d14.includes(formula), `lesson14: required formula remains verbatim: ${formula}`);
+
+  for (const exact of [
+    "What did she buy?",
+    "Where did Nora go?",
+    "When did Lina arrive?",
+    "Why did he leave early?",
+    "How did she solve the puzzle?",
+    "Who did Sara meet?",
+    "Who visited the science museum?",
+    "Who did Emma visit?",
+    "Where did Emma go?",
+    "What did Daniel find?",
+    "When did Daniel find the key?",
+    "To Canada.",
+    "Noah traveled to Canada.",
+    "She did go to the park.",
+    "She went to the park.",
+    "He didn't discover a hidden room.",
+    "What did he discover?",
+    "What did he take?",
+    "did + Base Verb",
+    "Where did she go?",
+    "What did she write?",
+    "What did he buy?",
+    "Where did he went?",
+    "What did she bought?",
+    "Why did they left?",
+    "How did he solved the problem?",
+    "Who discovered an old map?",
+    "Last Sunday, Maya traveled to a small coastal town with her family.",
+    "The young scientist discovered a strange signal near the mountain three days ago.",
+    "The explorers found an ancient door behind the waterfall last night.",
+    "What did you do last weekend?",
+    "We returned late in the evening.",
+    "Wh + did + Subject + Base Verb?",
+    "Past Simple — Wh Questions + تطبيق شامل",
+  ]) ok(d14.includes(exact), `lesson14: supplied example/content remains: ${exact}`);
+
+  ok((d14.match(/n: "[①②③④⑤⑥⑦]"/g) || []).length >= 7, "lesson14: all 7 objectives remain");
+  ok((d14.match(/export const LEVEL1_14/) || []).length === 1 && (d14.match(/options:/g) || []).length >= 5, "lesson14: Level 1 keeps five option pairs and answer keys");
+  ok((d14.match(/export const LEVEL2_14/) || []).length === 1 && (d14.match(/wh: "/g) || []).length >= 5, "lesson14: Level 2 keeps five Wh prompts and answer keys");
+  ok((d14.match(/export const LEVEL3_14/) || []).length === 1 && (d14.match(/wrong: "/g) || []).length >= 5 && (d14.match(/correct: "/g) || []).length >= 5, "lesson14: Level 3 keeps five intentional errors and five corrections");
+  ok((d14.match(/export const DETECTIVE_Q_14/) || []).length === 1 && (d14.match(/answer: "/g) || []).length >= 7, "lesson14: Grammar Detective keeps seven questions and answer keys");
+  ok(d14.includes("أريد منك استخراج أكبر عدد ممكن من الأسئلة الصحيحة.") && d14.includes("بل يجب أن يكون تركيبه النحوي صحيحاً."), "lesson14: IQ200 instructions remain complete");
+  ok((d14.match(/speaker: "/g) || []).length === 8, "lesson14: Mini Conversation keeps all eight lines");
+  ok((d14.match(/\"(go|see|find|take|meet|bring|build|write|leave|discover)\"/g) || []).length >= 10, "lesson14: final challenge keeps all ten suggested verbs");
+  ok((d14.match(/n: \d+, en:/g) || []).length === 14, "lesson14: roadmap keeps all 14 lessons");
+  ok(d14.includes("التالي منطقياً: الدرس 15 = Past Simple مع was / were"), "lesson14: Lesson 15 preview remains complete");
+
+  for (const rx of [
+    /Base Verb\s*\+\s*did\s*\+\s*Subject/,
+    /Past Verb\s*\+\s*Subject/,
+    /Subject\s*\+\s*Did\s*\+/,
+  ]) ok(!rx.test(d14) && !rx.test(t14), `lesson14: reversed formula is forbidden (${rx})`);
 }
 
 // ---------- النتيجة ----------

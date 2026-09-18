@@ -12,4 +12,10 @@ try {const m=await import(pathToFileURL(out).href); const html=m.renderToString(
  ok(m.MINI_TEST.length===8 && m.MINI_TEST.every(x=>plain.includes(x[0])), 'mini final test: all 8 questions render');
  for(const s of ['many books','much water','a few books','few books','a little water','little water','some books','some water','any books','any water','a lot of books','a lot of water','lots of books','lots of water','How many apples do you need?','How much water do you drink?','There are many books.','There is much water.','three times']) ok(plain.includes(s),`BIDI/source phrase renders: ${s}`);
  ok(plain.includes('There are a lot of students in the classroom.'),'intentionally correct detective sentence preserved'); ok(plain.includes('12 customers')&&plain.includes('3 tables')&&plain.includes('2 chefs'),'Final Boss requirements render'); ok(plain.includes('Past Continuous'),'roadmap renders');
+ // --- Render-level source ledger: every unit's full body + title must reach the rendered UI ---
+ const norm=(x)=>String(x).replace(/[\s\u200b\u200c\u2060]/g,'');
+ const plainN=norm(plain);
+ for(const s of m.SOURCE_SECTIONS){ok(plainN.includes(norm(s.title)),`render-level ledger: title of unit "${s.id}" reaches UI`);ok(plainN.includes(norm(s.body)),`render-level ledger: full body of unit "${s.id}" reaches UI`)}
+ const markers=[...html.matchAll(/data-source-section="(\d+)"/g)].map((x)=>x[1]);
+ ok(markers.length===m.SOURCE_SECTIONS.length&&new Set(markers).size===m.SOURCE_SECTIONS.length&&m.SOURCE_SECTIONS.every((_,i)=>markers.includes(String(i+1))),`render-level ledger: markers 01..${m.SOURCE_SECTIONS.length} each present exactly once`);
 } catch(e){ok(false,e.stack||String(e))} finally {rmSync(out,{force:true})} if(fail.length){console.error(`Lesson 24 audit FAILED (${fail.length}/${checks})`);process.exit(1)} console.log(`Lesson 24 audit passed (${checks} assertions): ${checks} checks, ${fail.length} failures.`);

@@ -6,7 +6,7 @@
  *   4) فضاء المعلم مقفلة أولًا، كلمة مرور خاطئة لا تسرّب المفتاح،
  *      وكلمة المرور 63971 تفتح المفتاح نفسه (نفس أسئلة الاختبار).
  *
- * الدروس: 1، 10، 13، 17، 19، 20، 21، 22، 23
+ * الدروس: 1، 10، 13، 17، 19، 20، 21، 22، 23، 24
  * تشغيل: node scripts/interaction-test.mjs
  */
 import { createRequire } from "node:module";
@@ -60,6 +60,14 @@ export function mountSlide23(slide) {
   r.render(React.createElement(SlideView23, { s: slide, onExit: () => {} }));
   return el;
 }
+import Lesson24 from ${JSON.stringify(join(dirname(root), "src/lessons/lesson24/Lesson24.tsx"))};
+export function mountLesson24() {
+  const el = document.createElement("div");
+  document.body.appendChild(el);
+  const r = createRoot(el);
+  r.render(React.createElement(Lesson24, { onExit: () => {} }));
+  return el;
+}
 export function unmount(el) { el.remove(); }
 export { QUIZZES, L23_SLIDES };
 `,
@@ -74,7 +82,7 @@ export { QUIZZES, L23_SLIDES };
   packages: "external",
   logLevel: "silent",
 });
-const { mount, mountSlide23, unmount, QUIZZES, L23_SLIDES } = await import(pathToFileURL(outFile).href);
+const { mount, mountSlide23, mountLesson24, unmount, QUIZZES, L23_SLIDES } = await import(pathToFileURL(outFile).href);
 
 let pass = 0;
 let fail = 0;
@@ -95,7 +103,7 @@ const setNativeValue = (el, value) => {
 };
 const byText = (scope, text) => [...scope.querySelectorAll("button")].find((b) => b.textContent.includes(text));
 
-const LESSONS = [1, 10, 13, 17, 19, 20, 21, 22, 23];
+const LESSONS = [1, 10, 13, 17, 19, 20, 21, 22, 23, 24];
 
 for (const lesson of LESSONS) {
   const questions = QUIZZES[lesson];
@@ -229,6 +237,101 @@ for (const lesson of LESSONS) {
 
     unmount(el);
   }
+}
+
+// ---------------- الدرس 24: محطات Quantity Lab (إعادة التصميم البصرية) ----------------
+// نفس السلوك المؤسَّس: اختيار محايد → لا كشف → «تحقق من الإجابات» → كشف → ↺ إعادة.
+{
+  const el = mountLesson24();
+  await tick(120);
+
+  const secs = [...el.querySelectorAll("[data-exercise]")];
+  ok(secs.length === 9, `L24 Quantity Lab exposes 9 interactive stations (got ${secs.length})`);
+  ok(el.innerHTML.includes('data-source-section="64"') && (el.innerHTML.match(/data-source-section=/g) || []).length === 64, "L24 renders all 64 source ledger markers");
+
+  // محطات التدريب الاختيارية (خمس محطات + المصغر + كاشف المعنى)
+  for (const sec of secs.filter((s) => !/-detective|-iq200$/.test(s.dataset.exercise))) {
+    const tag = sec.dataset.exercise;
+    const optButtons = () => [...sec.querySelectorAll("button[aria-pressed]")];
+    const groups = () => [...new Set(optButtons().map((b) => b.parentElement))];
+    const verdict = () => /✓ صحيح!|✕/.test(sec.textContent);
+    const checkBtn = () => [...sec.querySelectorAll("button")].find((b) => b.textContent.includes("تحقق من الإجابات"));
+    ok(optButtons().length > 0 && groups().length > 0, `L24 ${tag}: renders neutral selectable options`);
+    ok(!verdict(), `L24 ${tag}: no verdict before check`);
+    ok(!!checkBtn() && checkBtn().disabled, `L24 ${tag}: check locked until every item is answered`);
+    for (const g of groups()) g.querySelector("button[aria-pressed]").click();
+    await tick(20);
+    ok(!verdict(), `L24 ${tag}: still neutral after answering (before check)`);
+    const firstGroupButtons = groups()[0].querySelectorAll("button[aria-pressed]");
+    if (firstGroupButtons.length > 1) {
+      firstGroupButtons[1].click();
+      await tick(15);
+      ok(!verdict(), `L24 ${tag}: changing an answer reveals nothing`);
+    }
+    ok(!checkBtn().disabled, `L24 ${tag}: check enabled once all answered`);
+    checkBtn().click();
+    await tick(25);
+    ok(verdict() || sec.textContent.includes("SCORE"), `L24 ${tag}: feedback revealed only after check`);
+    ok(optButtons().every((b) => b.disabled), `L24 ${tag}: options lock after check`);
+    const resetBtn = [...sec.querySelectorAll("button")].find((b) => b.textContent.includes("↺ إعادة"));
+    ok(!!resetBtn, `L24 ${tag}: reset control exists after check`);
+    resetBtn.click();
+    await tick(25);
+    ok(!verdict(), `L24 ${tag}: reset clears verdicts`);
+    ok(optButtons().every((b) => !b.disabled && b.getAttribute("aria-pressed") !== "true"), `L24 ${tag}: reset returns to neutral selections`);
+  }
+
+  // لوحتا التحليل (المحقق + IQ200): تعليم محايد ثم كشف ملاحظات فقط بعد التحقق
+  for (const sec of secs.filter((s) => /-detective|-iq200$/.test(s.dataset.exercise))) {
+    const tag = sec.dataset.exercise;
+    const cards = () => [...sec.querySelectorAll("button[aria-pressed]")];
+    const checkBtn = () => [...sec.querySelectorAll("button")].find((b) => b.textContent.includes("تحقق من الإجابات"));
+    ok(cards().length > 0, `L24 ${tag}: renders selectable case cards`);
+    ok(!/✓|✕/.test(sec.textContent), `L24 ${tag}: no verdict before check`);
+    ok(checkBtn().disabled, `L24 ${tag}: check locked until all cards marked`);
+    for (const c of cards()) { c.click(); await tick(10); }
+    ok(!/✓|✕/.test(sec.textContent), `L24 ${tag}: marking cards reveals no verdict`);
+    ok(!checkBtn().disabled, `L24 ${tag}: check enabled once all marked`);
+    checkBtn().click();
+    await tick(25);
+    ok(sec.textContent.includes("راجع النوع والمعنى"), `L24 ${tag}: guidance revealed after check`);
+    if (tag === "l24-detective") {
+      ok(sec.textContent.includes("✓ الجملة الصحيحة"), `L24 ${tag}: the intentionally correct sentence is stamped after check`);
+    }
+    const resetBtn = [...sec.querySelectorAll("button")].find((b) => b.textContent.includes("↺ إعادة"));
+    resetBtn.click();
+    await tick(25);
+    ok(!sec.textContent.includes("راجع النوع والمعنى"), `L24 ${tag}: reset hides guidance`);
+    ok(cards().every((c) => c.getAttribute("aria-pressed") === "false"), `L24 ${tag}: reset clears marks`);
+  }
+
+  // منصة المهمة النهائية: عدّاد العُدّة + سجل القصة + إعادة الضبط (بلا كشف إجابات)
+  {
+    const mission = [...el.querySelectorAll("textarea")][0];
+    ok(!!mission, "L24 final boss: story log textarea exists");
+    const deck = mission.closest("div[dir=\"rtl\"]");
+    const supplyBtn = [...el.querySelectorAll("button[aria-pressed]")].find((b) => b.textContent.includes("some rice"));
+    ok(!!supplyBtn, "L24 final boss: supply chips render");
+    supplyBtn.click();
+    await tick(20);
+    ok(deck.textContent.includes("SUPPLIES 1 / 8"), "L24 final boss: supply counter updates after toggling a chip");
+    setNativeValue(mission, "There are 12 customers in the restaurant.\nThere is some rice on the table.");
+    await tick(20);
+    ok(deck.textContent.includes("LINES 2 / 10"), "L24 final boss: story line counter tracks the learner");
+    const missionReset = [...deck.querySelectorAll("button")].find((b) => b.textContent.includes("إعادة ضبط المهمة"));
+    ok(!!missionReset, "L24 final boss: mission reset exists");
+    missionReset.click();
+    await tick(20);
+    ok(deck.textContent.includes("SUPPLIES 0 / 8") && deck.textContent.includes("LINES 0 / 10"), "L24 final boss: mission reset clears supplies and story");
+  }
+
+  // لا تسريب لمفتاح FinalQuiz قبل التحقق، ومساحة المعلم مقفلة داخل الصفحة
+  const quizZone = el.querySelector("#zone-quiz");
+  ok(!!quizZone && !quizZone.textContent.includes("الإجابة الصحيحة"), "L24: shared FinalQuiz zone shows no answer key before check");
+  ok(!!quizZone && quizZone.textContent.includes("أجبت عن 0 / 12"), "L24: shared FinalQuiz starts neutral with 12 questions");
+  ok(el.textContent.includes("🔒 مقفلة"), "L24: Teacher's Space renders locked inside the page");
+
+  unmount(el);
 }
 
 rmSync(outFile, { force: true });

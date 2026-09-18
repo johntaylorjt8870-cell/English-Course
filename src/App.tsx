@@ -22,6 +22,7 @@ import Lesson20 from "./lessons/lesson20/Lesson20";
 import Lesson21 from "./lessons/lesson21/Lesson21";
 import Lesson22 from "./lessons/lesson22/Lesson22";
 import Lesson23 from "./lessons/lesson23/Lesson23";
+import Lesson24 from "./lessons/lesson24/Lesson24";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -46,6 +47,7 @@ import { SLIDES as L20_SLIDES } from "./lessons/lesson20/data";
 import { SLIDES as L21_SLIDES } from "./lessons/lesson21/data";
 import { SLIDES as L22_SLIDES } from "./lessons/lesson22/data";
 import { SLIDES as L23_SLIDES } from "./lessons/lesson23/data";
+import { SLIDES as L24_SLIDES } from "./lessons/lesson24/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 import SitePasswordGate from "./shared/SitePasswordGate";
 
@@ -289,6 +291,15 @@ const CARDS: Card[] = [
     href: "#/lesson/23",
     grad: "from-indigo-500 to-violet-600",
   },
+  {
+    n: 24,
+    title: "الدرس 24: Quantifiers — أدوات الكمية",
+    en: "Quantifiers",
+    emoji: "🧪",
+    stats: `${L24_SLIDES.length} قسمًا · 5 تدريبات · Quantity Lab`,
+    href: "#/lesson/24",
+    grad: "from-cyan-600 to-indigo-700",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -389,6 +400,7 @@ export default function App() {
   else if (route === 21) page = <Lesson21 onExit={goHome} />;
   else if (route === 22) page = <Lesson22 onExit={goHome} />;
   else if (route === 23) page = <Lesson23 onExit={goHome} />;
+  else if (route === 24) page = <Lesson24 onExit={goHome} />;
   else page = <Hub />;
   return (
     <SitePasswordGate>

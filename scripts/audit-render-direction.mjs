@@ -1725,7 +1725,7 @@ try {
   {
     const lessonsDir = join(root, "src", "lessons");
     const lessonFolders = readdirSync(lessonsDir).filter((d) => /^lesson\d+$/.test(d));
-    ok(lessonFolders.length === 23, `full course: 23 lesson folders exist (got ${lessonFolders.length})`);
+    ok(lessonFolders.length === 24, `full course: 24 lesson folders exist (got ${lessonFolders.length})`);
     const missing = lessonFolders.filter((folder) => {
       const n = folder.replace("lesson", "");
       return !(

@@ -19,7 +19,7 @@ function ok(cond, msg) {
 function src(lesson, file) {
   return readFileSync(join(ROOT, lesson, file), "utf8");
 }
-ok(lessons.length === 23, `full-course regression inventory contains 23 lessons (got ${lessons.length})`);
+ok(lessons.length === 24, `full-course regression inventory contains 24 lessons (got ${lessons.length})`);
 // يقتطع جسم دالة بالاسم: من تعريفها حتى بداية الدالة التالية
 function fnBody(code, name) {
   const start = code.search(new RegExp(`function ${name}\\s*\\(`));
@@ -1254,7 +1254,8 @@ for (const [l, fn] of LTR_SPOTS) {
   const q22Start = bank.indexOf("  22: [");
   ok(q22Start !== -1, "lesson22: quizBank block for lesson 22 exists");
   const q23Start = bank.indexOf("  23: [");
-  const q22End = Math.min(...[bank.indexOf("  ],\n};", q22Start), q23Start].filter((n) => n !== -1), Infinity);
+  const q24Start = bank.indexOf("  24: [");
+  const q22End = Math.min(...[bank.indexOf("  ],\n};", q22Start), q23Start, q24Start].filter((n) => n !== -1), Infinity);
   const q22 = q22Start === -1 ? "" : bank.slice(q22Start, q22End === Infinity ? q22Start : q22End);
   ok((q22.match(/\{ ar:/g) || []).length === 12, `lesson22: quizBank has 12 new quiz questions (got ${(q22.match(/\{ ar:/g) || []).length})`);
 
@@ -1421,7 +1422,23 @@ for (const [l, fn] of LTR_SPOTS) {
   }
 }
 
-// ---------- 12) العلامة التجارية ونظافة الأعلام على مستوى المستودع ----------
+// ---------- 12) lesson 24 — explicit quantifier direction and source coverage ----------
+{
+  const d24 = src("lesson24", "data.ts");
+  const t24 = src("lesson24", "Lesson24.tsx");
+  const bank = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "shared", "quizBank.ts"), "utf8");
+  ok(t24.includes("../../shared/bidi"), "lesson24: uses shared bidi helper");
+  ok(t24.includes("data-source-section") && t24.includes("SOURCE_SECTIONS.map"), "lesson24: source ledger renders at student-facing level");
+  for (const phrase of ["many books","much water","a few books","few books","a little water","little water","some books","any books","a lot of books","lots of books","How many apples do you need?","How much water do you drink?","three times","Past Continuous"]) ok(d24.includes(phrase), `lesson24: preserves direction-sensitive source phrase ${phrase}`);
+  ok(d24.includes("There are a lot of students in the classroom."), "lesson24: preserves intentionally correct detective sentence");
+  const q24Start = bank.indexOf("  24: [");
+  ok(q24Start !== -1, "lesson24: quizBank block exists");
+  const q24End = bank.indexOf("  23: [", q24Start);
+  const q24 = q24Start === -1 ? "" : bank.slice(q24Start, q24End === -1 ? undefined : q24End);
+  ok((q24.match(/\{ ar:/g) || []).length === 12, `lesson24: quizBank has 12 questions (got ${(q24.match(/\{ ar:/g) || []).length})`);
+}
+
+// ---------- 13) العلامة التجارية ونظافة الأعلام على مستوى المستودع ----------
 {
   const root = join(dirname(fileURLToPath(import.meta.url)), "..");
   const skip = new Set(["node_modules", ".git", "dist", ".cache"]);

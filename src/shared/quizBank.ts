@@ -372,6 +372,21 @@ export const QUIZZES: Record<number, QuizQ[]> = {
   ],
 
   // ---------------- الدرس 23 ----------------
+  24: [
+    { ar: "اختر أداة الكمية مع الكتب المعدودة الجمع:", en: "I have ___ books.", opts: ["much", "many", "a little", "little"], answer: 1, why: "many تُستخدم مع Countable Plural: many books." },
+    { ar: "اختر أداة الكمية مع الماء غير المعدود:", en: "How ___ water do you drink?", opts: ["many", "much", "few", "a few"], answer: 1, why: "water غير معدود، لذلك نقول How much water?" },
+    { ar: "اختر الاستخدام الطبيعي في الجملة المثبتة:", en: "She has ___ information.", opts: ["a lot of", "a few", "many", "few"], answer: 0, why: "information غير معدود، وa lot of يعمل مع النوعين." },
+    { ar: "اختر الجملة التي تحمل معنى إيجابيًا: عدد قليل لكنه موجود:", en: "I have ___ friends.", opts: ["few", "a few", "a little", "little"], answer: 1, why: "a few = عدد قليل لكنه موجود وكافٍ نسبيًا." },
+    { ar: "اختر الجملة التي تعبر عن نقص:", en: "We have ___ time, so we must hurry.", opts: ["a little", "a few", "little", "many"], answer: 2, why: "little مع uncountable يعطي إحساسًا بالنقص." },
+    { ar: "في السؤال والنفي غالبًا نستخدم:", en: "Are there ___ students?", opts: ["some", "any", "much", "a little"], answer: 1, why: "any تُستخدم أساسًا في الأسئلة والنفي، مع countable وuncountable." },
+    { ar: "اختر الجملة الصحيحة:", en: "There ___ a few books.", opts: ["is", "are", "am", "be"], answer: 1, why: "books جمع معدود، لذلك There are." },
+    { ar: "اختر الجملة الصحيحة:", en: "There ___ a little water.", opts: ["are", "is", "be", "am"], answer: 1, why: "water غير معدود، لذلك There is." },
+    { ar: "ما الفرق الصحيح؟", opts: ["many = uncountable", "much = countable", "a few = countable and a little = uncountable", "few = uncountable"], answer: 2, why: "a few/few للمعدود الجمع، وa little/little لغير المعدود." },
+    { ar: "أي جملة تستخدم some في عرض أو طلب؟", opts: ["Would you like some water?", "I don't have some water.", "Are there some books?", "How many some books?"], answer: 0, why: "some يمكن أن تظهر في offers/requests مثل Would you like some water?" },
+    { ar: "اختر استعمال time الصحيح:", opts: ["How many time?", "How much time?", "much times", "a few time"], answer: 1, why: "time ككمية عامة غير معدود، لكن three times = ثلاث مناسبات معدودة." },
+    { ar: "اختر الكمية التي تعمل مع النوعين:", opts: ["many", "much", "a lot of", "a few"], answer: 2, why: "a lot of يعمل مع countable plural وuncountable." },
+  ],
+
   23: [
     { ar: "أي كلمة من الكلمات التالية Uncountable؟", en: "Which word is uncountable?", opts: ["furniture", "chair", "apple", "student"], answer: 0, why: "furniture غير معدود: some furniture، ولا نقول a furniture ولا furnitures." },
     { ar: "أكمل: اشتريت بيضة واحدة هذا الصباح.", en: "I bought ___ egg this morning.", opts: ["an", "a", "some", "many"], answer: 0, why: "egg مفرد معدود يبدأ بصوت علة ← an egg." },

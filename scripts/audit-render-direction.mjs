@@ -10,7 +10,7 @@
 //   node scripts/audit-render-direction.mjs
 // ============================================================
 import { createRequire } from "node:module";
-import { rmSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -99,8 +99,10 @@ import Lesson21, { SlideView21 } from ${JSON.stringify(join(root, "src/lessons/l
 import { SLIDES as L21_SLIDES, SOURCE_SECTIONS as L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21 } from ${JSON.stringify(join(root, "src/lessons/lesson21/data.ts"))};
 import Lesson22, { SlideView22 } from ${JSON.stringify(join(root, "src/lessons/lesson22/Lesson22.tsx"))};
 import { SLIDES as L22_SLIDES, SOURCE_SECTIONS as L22_SOURCE_SECTIONS, INTENTIONALLY_WRONG_22, GOLDEN_SUMMARY_22_WORDS, FINAL_BOSS_22_CLUES_AR, IQ200_1_SCENE, ROOM_SENTENCES as L22_ROOM_SENTENCES } from ${JSON.stringify(join(root, "src/lessons/lesson22/data.ts"))};
+import Lesson23, { SlideView23 } from ${JSON.stringify(join(root, "src/lessons/lesson23/Lesson23.tsx"))};
+import { SLIDES as L23_SLIDES, SOURCE_SECTIONS as L23_SOURCE_SECTIONS, INTENTIONALLY_WRONG_23, GOLDEN_23_COUNTABLE_EXAMPLES, GOLDEN_23_UNCOUNTABLE_WORDS, MAGIC_TABLE_23, SEVEN_RULES_23, FINAL_BOSS_23_ITEMS, KITCHEN_SENTENCES as L23_KITCHEN_SENTENCES, ROADMAP_23 as L23_ROADMAP, DETECTIVE_23, IQ200_23, THINKING_23 } from ${JSON.stringify(join(root, "src/lessons/lesson23/data.ts"))};
 import { QUIZZES } from ${JSON.stringify(join(root, "src/shared/quizBank.ts"))};
-export { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, Lesson21, SlideView21, L21_SLIDES, L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21, Lesson22, SlideView22, L22_SLIDES, L22_SOURCE_SECTIONS, INTENTIONALLY_WRONG_22, GOLDEN_SUMMARY_22_WORDS, FINAL_BOSS_22_CLUES_AR, IQ200_1_SCENE, L22_ROOM_SENTENCES, QUIZZES };
+export { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, Lesson21, SlideView21, L21_SLIDES, L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21, Lesson22, SlideView22, L22_SLIDES, L22_SOURCE_SECTIONS, INTENTIONALLY_WRONG_22, GOLDEN_SUMMARY_22_WORDS, FINAL_BOSS_22_CLUES_AR, IQ200_1_SCENE, L22_ROOM_SENTENCES, Lesson23, SlideView23, L23_SLIDES, L23_SOURCE_SECTIONS, INTENTIONALLY_WRONG_23, GOLDEN_23_COUNTABLE_EXAMPLES, GOLDEN_23_UNCOUNTABLE_WORDS, MAGIC_TABLE_23, SEVEN_RULES_23, FINAL_BOSS_23_ITEMS, L23_KITCHEN_SENTENCES, L23_ROADMAP, DETECTIVE_23, IQ200_23, THINKING_23, QUIZZES };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -115,7 +117,7 @@ export { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoa
 });
 
 try {
-  const { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, Lesson21, SlideView21, L21_SLIDES, L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21, Lesson22, SlideView22, L22_SLIDES, L22_SOURCE_SECTIONS, INTENTIONALLY_WRONG_22, GOLDEN_SUMMARY_22_WORDS, FINAL_BOSS_22_CLUES_AR, IQ200_1_SCENE, L22_ROOM_SENTENCES, QUIZZES } = await import(pathToFileURL(outFile).href);
+  const { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, Lesson21, SlideView21, L21_SLIDES, L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21, Lesson22, SlideView22, L22_SLIDES, L22_SOURCE_SECTIONS, INTENTIONALLY_WRONG_22, GOLDEN_SUMMARY_22_WORDS, FINAL_BOSS_22_CLUES_AR, IQ200_1_SCENE, L22_ROOM_SENTENCES, Lesson23, SlideView23, L23_SLIDES, L23_SOURCE_SECTIONS, INTENTIONALLY_WRONG_23, GOLDEN_23_COUNTABLE_EXAMPLES, GOLDEN_23_UNCOUNTABLE_WORDS, MAGIC_TABLE_23, SEVEN_RULES_23, FINAL_BOSS_23_ITEMS, L23_KITCHEN_SENTENCES, L23_ROADMAP, DETECTIVE_23, IQ200_23, THINKING_23, QUIZZES } = await import(pathToFileURL(outFile).href);
 
   // --- LatinRuns: mixed SVO phrase stays one LTR unit ---
   {
@@ -1717,6 +1719,313 @@ try {
     ok(/dir="ltr"/.test(html), "Lesson 22 isolates English as LTR");
     ok(html.includes('dir="rtl"'), "Lesson 22 keeps the Arabic RTL shell");
     ok(!html.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 22 full lesson renders no GB flag emoji");
+  }
+
+  // --- تغطية الدورة كاملة: 23 درسًا ممثلة وجاهزة للعرض ---
+  {
+    const lessonsDir = join(root, "src", "lessons");
+    const lessonFolders = readdirSync(lessonsDir).filter((d) => /^lesson\d+$/.test(d));
+    ok(lessonFolders.length === 23, `full course: 23 lesson folders exist (got ${lessonFolders.length})`);
+    const missing = lessonFolders.filter((folder) => {
+      const n = folder.replace("lesson", "");
+      return !(
+        existsSync(join(lessonsDir, folder, `Lesson${n}.tsx`)) && existsSync(join(lessonsDir, folder, "data.ts"))
+      );
+    });
+    ok(missing.length === 0, `full course: every lesson folder has LessonN.tsx + data.ts (missing: ${missing.join(", ")})`);
+    const appSource = readFileSync(join(root, "src", "App.tsx"), "utf8");
+    for (let n = 1; n <= 23; n++) {
+      ok(
+        appSource.includes(`route === ${n}`) && appSource.includes(`<Lesson${n} onExit={goHome} />`),
+        `full course: Lesson ${n} is routed in App.tsx`
+      );
+    }
+    for (let n = 1; n <= 23; n++) {
+      ok(Array.isArray(QUIZZES[n]) && QUIZZES[n].length >= 12, `full course: QUIZZES[${n}] registered with at least 12 questions (got ${QUIZZES[n]?.length ?? 0})`);
+    }
+  }
+
+  // --- الدرس 23: عرض كل الشرائح بدون أخطاء + علامات المصدر + عزل LTR ---
+  {
+    const noop23 = () => {};
+    let rendered23 = 0;
+    const broken23 = [];
+    const missingLtr23 = [];
+    const missingSrc23 = [];
+    for (const s of L23_SLIDES) {
+      try {
+        const html = renderToString(React.createElement(SlideView23, { s, onExit: noop23 }));
+        if (html.length < 200) broken23.push(`${s.kind}:${s.title ?? ""}`);
+        if (!html.includes('dir="ltr"')) missingLtr23.push(`${s.kind}:${s.title ?? ""}`);
+        if (s.sourceIndex !== undefined && !html.includes("data-source-section")) missingSrc23.push(`${s.sourceIndex + 1}:${s.title ?? ""}`);
+        rendered23++;
+      } catch (err) {
+        broken23.push(`${s.kind}:${s.title ?? ""} (${err.message || String(err)})`);
+      }
+    }
+    ok(L23_SLIDES.length >= 60, `Lesson 23 keeps the complete slide sequence (got ${L23_SLIDES.length})`);
+    ok(rendered23 === L23_SLIDES.length, `Lesson 23 every slide renders (${rendered23}/${L23_SLIDES.length})`);
+    ok(broken23.length === 0, `Lesson 23 has no empty or throwing slide (${broken23.join(", ")})`);
+    ok(missingLtr23.length === 0, `Lesson 23 isolates English on every slide (${missingLtr23.join(", ")})`);
+    ok(missingSrc23.length === 0, `Lesson 23 renders a source-section marker on all source slides (${missingSrc23.join(", ")})`);
+
+    const sourceSlides23 = L23_SLIDES.filter((s) => s.sourceIndex !== undefined);
+    ok(sourceSlides23.length >= 55, `Lesson 23 maps source sections to slides (${sourceSlides23.length})`);
+    ok(L23_SOURCE_SECTIONS.length === 57, `Lesson 23 source-heading ledger has 57 headings (${L23_SOURCE_SECTIONS.length})`);
+    const mappedSources = new Set(sourceSlides23.map((s) => s.sourceIndex));
+    ok(mappedSources.size === L23_SOURCE_SECTIONS.length, `Lesson 23 covers every source section exactly once (${mappedSources.size}/${L23_SOURCE_SECTIONS.length})`);
+    ok(L23_SLIDES.some((s) => s.kind === "quiz") && L23_SLIDES.some((s) => s.kind === "closing"), "Lesson 23 includes shared final quiz and closing slides");
+    const exTypes23 = ["training1", "training2", "training3", "training4", "detective", "iq200", "thinking", "finalBoss"];
+    for (const type of exTypes23) {
+      ok(sourceSlides23.some((s) => s.kind === "ex" && s.ex.type === type), `Lesson 23 exercise type present: ${type}`);
+    }
+    ok(Array.isArray(QUIZZES[23]) && QUIZZES[23].length === 12, `Lesson 23 shared quiz has 12 questions (${QUIZZES[23]?.length ?? 0})`);
+  }
+
+  // --- الدرس 23: الوحدات الإنجليزية المصدرية والأخطاء المقصودة لا تنعكس ---
+  const unesc23 = (h) => h.replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
+  {
+    const all23 = L23_SLIDES.map((s) => unesc23(renderToString(React.createElement(SlideView23, { s, onExit: () => {} })))).join("\n");
+    const plain23 = all23.replace(/<!--[\s\S]*?-->/g, "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+    for (const phrase of [
+      "Countable Noun",
+      "Uncountable Noun",
+      "a book",
+      "an apple",
+      "two books",
+      "five cars",
+      "some books",
+      "some water",
+      "a bottle of water",
+      "two bottles of water",
+      "There is a book on the desk.",
+      "There are three books on the desk.",
+      "There is some water in the bottle.",
+      "How many books do you have?",
+      "How much water do you drink?",
+      "How many children are in the park?",
+      "How much money do you have?",
+      "a piece of information",
+      "two pieces of information",
+      "a piece of advice",
+      "three pieces of furniture",
+      "There is an apple in the basket.",
+      "There are three apples in the basket.",
+      "There is some milk in the fridge.",
+      "There are three apples in the kitchen.",
+      "There are two eggs on the table.",
+      "There is some rice in the cupboard.",
+      "There is a bottle of water next to the fridge.",
+      "I have some books.",
+      "She bought some apples.",
+      "He bought some bread.",
+      "Are there any books?",
+      "There aren't any books.",
+      "Is there any water?",
+      "There isn't any water.",
+      "How many students are there?",
+      "How many apples did she buy?",
+      "How many cars are in the parking lot?",
+      "How much rice do we need?",
+      "How much milk is in the fridge?",
+      "There are six chairs.",
+      "There are five children.",
+      "There is some money in the box.",
+      "I have some money. ✅",
+      "I have a lot of money. ✅",
+      "three coins",
+      "two banknotes",
+      "five dollars",
+      "I drink some coffee.",
+      "Two coffees, please.",
+      "two cups of coffee",
+      "a chicken",
+      "two chickens",
+      "some chicken",
+      "many books",
+      "many students",
+      "many apples",
+      "much water",
+      "much money",
+      "much information",
+      "much rice",
+      "an assignment",
+      "three assignments",
+      "some + plural countable",
+      "some + uncountable",
+      "How many + Countable Plural?",
+      "How much + Uncountable Noun?",
+      "There is a/an + noun",
+      "There are + plural noun",
+      "There is some + uncountable noun",
+      "There are some books.",
+    ]) {
+      ok(plain23.includes(phrase), `Lesson 23 rendered HTML keeps English unit: ${phrase}`);
+    }
+    for (const intentional of INTENTIONALLY_WRONG_23) {
+      ok(plain23.includes(intentional), `Lesson 23 renders intentional teaching error visibly: ${intentional}`);
+    }
+    for (const sentence of L23_KITCHEN_SENTENCES) {
+      ok(plain23.includes(sentence), `Lesson 23 kitchen analysis keeps sentence: ${sentence}`);
+    }
+    for (const item of FINAL_BOSS_23_ITEMS) {
+      ok(plain23.includes(item.item), `Lesson 23 Final Boss keeps room content: ${item.item}`);
+      ok(/^There (is|are) /.test(item.model), `Lesson 23 Final Boss model sentence starts with There is / There are: ${item.model}`);
+    }
+    ok(FINAL_BOSS_23_ITEMS.filter((item) => item.model.startsWith("There are")).length === 4, "Lesson 23 Final Boss keeps 4 There are room sentences");
+    ok(FINAL_BOSS_23_ITEMS.filter((item) => item.model.startsWith("There is")).length === 4, "Lesson 23 Final Boss keeps 4 There is room sentences");
+    for (const item of DETECTIVE_23) {
+      ok(plain23.includes(item.sentence), `Lesson 23 Grammar Detective keeps sentence ${item.n}: ${item.sentence}`);
+    }
+    for (const item of IQ200_23) {
+      ok(plain23.includes(item.sentence), `Lesson 23 IQ200 keeps sentence ${item.n}: ${item.sentence}`);
+    }
+    for (const item of THINKING_23) {
+      ok(plain23.includes(item.item), `Lesson 23 Thinking Challenge keeps quantity: ${item.item}`);
+    }
+    for (const step of L23_ROADMAP) {
+      ok(plain23.includes(step.en), `Lesson 23 roadmap keeps title: ${step.en}`);
+    }
+    ok(plain23.includes("He gave me two pieces of advice."), "Lesson 23 IQ200 keeps the one correct sentence unchanged");
+    // لا انعكاس داخل أي عازل LTR: كل مقطع إنجليزي يُفحص وحده
+    const runs23 = L23_SLIDES.flatMap((slide) =>
+      fontEnSeq(unesc23(renderToString(React.createElement(SlideView23, { s: slide, onExit: () => {} }))))
+    );
+    ok(runs23.length > 300, `Lesson 23 renders many isolated English runs (${runs23.length})`);
+    const REVERSED_RUNS_23 = [
+      /\b(apple|orange|egg)\s+an\b/i,
+      /\b(book|car|table|room|student|cat|dog|house|pen|teacher|chair|computer)\s+a\b/i,
+      /\b(books|students|apples|chairs)\s+many\b/i,
+      /\b(water|rice|milk|money|bread|advice|information|furniture)\s+some\b/i,
+      /\b(books|students)\s+are\s+(a|an)\b/i,
+      /\bbooks\s+how\s+many\b/i,
+    ];
+    for (const rx of REVERSED_RUNS_23) {
+      const bad = runs23.filter((run) => rx.test(run));
+      ok(bad.length === 0, `Lesson 23 no reversed English order inside any LTR run for ${rx} (found: ${bad.slice(0, 3).join(" | ")})`);
+    }
+    // الجمل الكاملة تبقى بترتيب SVO
+    for (const sentence of [
+      "There is a book on the desk.",
+      "There are three books on the desk.",
+      "How many books do you have?",
+      "How much water do you drink?",
+      "She gave me some advice.",
+      "I have a bottle of water.",
+    ]) {
+      ok(runs23.some((run) => run.startsWith(sentence)), `Lesson 23 keeps the sentence as one intact LTR run: ${sentence}`);
+    }
+    ok(!all23.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 23 renders no GB flag emoji as branding");
+  }
+
+  // --- الدرس 23: مختبر العدّ واللوحات التفاعلية والترتيب الذهبي ---
+  {
+    const bySource23 = (sourceIndex) => L23_SLIDES.find((s) => s.sourceIndex === sourceIndex);
+
+    const machineHtml = renderToString(React.createElement(SlideView23, { s: bySource23(2), onExit: () => {} }));
+    ok(machineHtml.includes('data-en-seq="l23-machine"'), "Lesson 23 counting machine renders");
+    for (const word of ["apple", "book", "water", "milk", "rice", "money", "information", "furniture"]) {
+      ok(machineHtml.includes(word), `Lesson 23 counting machine keeps noun: ${word}`);
+    }
+
+    const testHtml = renderToString(React.createElement(SlideView23, { s: bySource23(4), onExit: () => {} }));
+    ok(testHtml.includes('data-en-seq="l23-magic-test"'), "Lesson 23 one-two-three test renders");
+
+    const thereHtml = renderToString(React.createElement(SlideView23, { s: bySource23(20), onExit: () => {} }));
+    ok(thereHtml.includes('data-en-seq="l23-there-bridge"'), "Lesson 23 There is / There are switch renders");
+
+    const kitchenHtml = renderToString(React.createElement(SlideView23, { s: bySource23(22), onExit: () => {} }));
+    ok(kitchenHtml.includes('data-en-seq="l23-kitchen"'), "Lesson 23 kitchen analysis renders");
+
+    const manyHtml = renderToString(React.createElement(SlideView23, { s: bySource23(30), onExit: () => {} }));
+    ok(manyHtml.includes('data-en-seq="l23-how-many"'), "Lesson 23 How many lab renders");
+    const muchHtml = renderToString(React.createElement(SlideView23, { s: bySource23(31), onExit: () => {} }));
+    ok(muchHtml.includes('data-en-seq="l23-how-much"'), "Lesson 23 How much lab renders");
+
+    const battleHtml = renderToString(React.createElement(SlideView23, { s: bySource23(33), onExit: () => {} }));
+    ok(battleHtml.includes('data-en-seq="l23-battle"'), "Lesson 23 many/much gate renders");
+
+    const infoHtml = renderToString(React.createElement(SlideView23, { s: bySource23(36), onExit: () => {} }));
+    ok(infoHtml.includes('data-en-seq="l23-information"'), "Lesson 23 information unit converter renders");
+    assertSeq("Lesson 23 information pieces", fontEnSeq(infoHtml), ["a piece of information", "two pieces of information", "three pieces of information"]);
+
+    const threeHtml = renderToString(React.createElement(SlideView23, { s: bySource23(41), onExit: () => {} }));
+    ok(threeHtml.includes('data-en-seq="l23-three-test"'), "Lesson 23 three-question test renders");
+
+    const errorsHtml = renderToString(React.createElement(SlideView23, { s: bySource23(43), onExit: () => {} }));
+    ok(errorsHtml.includes('data-en-seq="l23-common-errors"'), "Lesson 23 common errors board renders");
+    const errorsPlain = unesc23(errorsHtml).replace(/<[^>]+>/g, " ");
+    for (const wrong of ["I have a water.", "She gave me an advice.", "I need two informations.", "There are some milk in the fridge.", "How much books do you have?", "How many water do you drink?"]) {
+      ok(errorsPlain.includes(wrong), `Lesson 23 common errors keeps wrong sentence: ${wrong}`);
+    }
+
+    const detHtml = renderToString(React.createElement(SlideView23, { s: bySource23(49), onExit: () => {} }));
+    ok(detHtml.includes('data-en-seq="l23-detective"'), "Lesson 23 Grammar Detective renders");
+    ok(detHtml.includes("تحقق من الإجابات"), "Lesson 23 Grammar Detective keeps the neutral → check button");
+
+    const iqHtml = renderToString(React.createElement(SlideView23, { s: bySource23(50), onExit: () => {} }));
+    ok(iqHtml.includes('data-en-seq="l23-iq200"'), "Lesson 23 IQ200 Challenge renders");
+
+    const thinkHtml = renderToString(React.createElement(SlideView23, { s: bySource23(51), onExit: () => {} }));
+    ok(thinkHtml.includes('data-en-seq="l23-thinking"'), "Lesson 23 Thinking Challenge renders");
+
+    const bossHtml = renderToString(React.createElement(SlideView23, { s: bySource23(52), onExit: () => {} }));
+    ok(bossHtml.includes('data-en-seq="l23-final-boss"'), "Lesson 23 Final Boss renders");
+    const bossPlain = unesc23(bossHtml).replace(/<[^>]+>/g, " ");
+    for (const requirement of ["There is", "There are", "a/an", "some", "Countable nouns", "Uncountable nouns", "How many?", "How much?"]) {
+      ok(bossPlain.includes(requirement), `Lesson 23 Final Boss keeps requirement: ${requirement}`);
+    }
+    ok(bossPlain.includes("How many books are there?"), "Lesson 23 Final Boss keeps the supplied How many example question");
+
+    const trainingSlides = L23_SLIDES.filter((s) => s.kind === "ex" && s.ex.type.startsWith("training"));
+    ok(trainingSlides.length === 4, `Lesson 23 keeps the four supplied trainings (${trainingSlides.length})`);
+    for (const slide of trainingSlides) {
+      const html = renderToString(React.createElement(SlideView23, { s: slide, onExit: () => {} }));
+      ok(html.includes("تحقق من الإجابات"), `Lesson 23 ${slide.title} keeps the neutral → check button`);
+      ok(!html.includes("✓ صحيح!"), `Lesson 23 ${slide.title} reveals no feedback before checking`);
+      ok(html.includes("disabled"), `Lesson 23 ${slide.title} locks options after checking`);
+    }
+
+    const goldenHtml = renderToString(React.createElement(SlideView23, { s: L23_SLIDES.find((s) => s.kind === "goldenSummary"), onExit: () => {} }));
+    ok(goldenHtml.includes('data-source-section="🧠 الخلاصة الذهبية"'), "Lesson 23 golden summary slide renders its source marker");
+    ok(goldenHtml.includes('data-en-seq="l23-golden"'), "Lesson 23 golden summary panel renders");
+    const goldenSeq = fontEnSeq(goldenHtml);
+    assertSeq("Lesson 23 golden summary countable examples", goldenSeq, GOLDEN_23_COUNTABLE_EXAMPLES);
+    assertSeq("Lesson 23 golden summary uncountable words", goldenSeq, GOLDEN_23_UNCOUNTABLE_WORDS);
+
+    const tableHtml = renderToString(React.createElement(SlideView23, { s: L23_SLIDES.find((s) => s.kind === "magicTable"), onExit: () => {} }));
+    ok(tableHtml.includes('data-en-seq="l23-magic-table"'), "Lesson 23 magic table renders");
+    const tableSeq = fontEnSeq(tableHtml);
+    for (const column of MAGIC_TABLE_23) {
+      assertSeq(`Lesson 23 magic table ${column.title}`, tableSeq, column.rows);
+    }
+
+    const rulesHtml = renderToString(React.createElement(SlideView23, { s: L23_SLIDES.find((s) => s.kind === "sevenRules"), onExit: () => {} }));
+    ok(rulesHtml.includes('data-en-seq="l23-seven-rules"'), "Lesson 23 seven rules panel renders");
+    ok(rulesHtml.includes("⑦"), "Lesson 23 keeps all seven rules (last marker ⑦)");
+    ok(SEVEN_RULES_23.length === 7, `Lesson 23 golden rules count is 7 (${SEVEN_RULES_23.length})`);
+
+    const roadmapHtml = renderToString(React.createElement(SlideView23, { s: L23_SLIDES.find((s) => s.kind === "roadmap"), onExit: () => {} }));
+    ok(roadmapHtml.includes('data-en-seq="l23-roadmap"'), "Lesson 23 roadmap renders");
+    ok(unesc23(roadmapHtml).includes("Countable & Uncountable Nouns"), "Lesson 23 roadmap highlights lesson 23 as the current step");
+
+    const quizSlide23 = L23_SLIDES.find((s) => s.kind === "quiz");
+    const quizHtml23 = renderToString(React.createElement(SlideView23, { s: quizSlide23, onExit: () => {} }));
+    ok(quizHtml23.includes("Teacher’s Space"), "Lesson 23 shared quiz renders Teacher's Space section");
+    ok(quizHtml23.includes("تحقق من الإجابات"), "Lesson 23 shared quiz keeps STEP 3 check button");
+    ok(!quizHtml23.includes("الإجابة الصحيحة:"), "Lesson 23 quiz renders no answer key before unlocking");
+    ok(quizHtml23.includes("🔒 مقفلة"), "Lesson 23 Teacher's Space starts locked");
+  }
+
+  // --- الدرس 23: الدرس كاملًا يُعرض من المكوّن الرئيسي ---
+  {
+    const html = renderToString(React.createElement(Lesson23, { onExit: () => {} }));
+    ok(html.length > 2000, "Lesson 23 renders without throwing");
+    ok(/dir="ltr"/.test(html), "Lesson 23 isolates English as LTR");
+    ok(html.includes('dir="rtl"'), "Lesson 23 keeps the Arabic RTL shell");
+    ok(html.includes("THE COUNTING LAB"), "Lesson 23 cover shows THE COUNTING LAB identity");
+    ok(!html.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 23 full lesson renders no GB flag emoji");
+    ok(!/Englishwith[sS]ommer/.test(html), "Lesson 23 keeps the EnglishwithSomeR branding");
   }
 
 } catch (err) {

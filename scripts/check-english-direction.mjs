@@ -19,7 +19,7 @@ function ok(cond, msg) {
 function src(lesson, file) {
   return readFileSync(join(ROOT, lesson, file), "utf8");
 }
-ok(lessons.length === 22, `full-course regression inventory contains 22 lessons (got ${lessons.length})`);
+ok(lessons.length === 23, `full-course regression inventory contains 23 lessons (got ${lessons.length})`);
 // يقتطع جسم دالة بالاسم: من تعريفها حتى بداية الدالة التالية
 function fnBody(code, name) {
   const start = code.search(new RegExp(`function ${name}\\s*\\(`));
@@ -124,6 +124,21 @@ const LTR_SPOTS = [
   ["lesson14", "WhMeanings"],
   ["lesson14", "ControlTable"],
   ["lesson14", "FinalChallengeEx"],
+  ["lesson23", "Cover"],
+  ["lesson23", "SourceLine"],
+  ["lesson23", "FormulaStrip"],
+  ["lesson23", "CountingMachine"],
+  ["lesson23", "MagicTest"],
+  ["lesson23", "WaterLab"],
+  ["lesson23", "ThereGoldenRule"],
+  ["lesson23", "HowManyLab"],
+  ["lesson23", "HowMuchLab"],
+  ["lesson23", "BigBattle"],
+  ["lesson23", "InformationLab"],
+  ["lesson23", "MagicTable"],
+  ["lesson23", "GoldenSummary"],
+  ["lesson23", "Drill"],
+  ["lesson23", "FinalBossEx"],
 ];
 for (const [l, fn] of LTR_SPOTS) {
   const body = fnBody(src(l, tsxName(l)), fn);
@@ -1238,8 +1253,172 @@ for (const [l, fn] of LTR_SPOTS) {
   ok(app.includes('route === 22') && app.includes('<Lesson22 onExit={goHome} />'), "App registers Lesson 22 hash route");
   const q22Start = bank.indexOf("  22: [");
   ok(q22Start !== -1, "lesson22: quizBank block for lesson 22 exists");
-  const q22 = q22Start === -1 ? "" : bank.slice(q22Start, bank.indexOf("  ],\n};", q22Start));
+  const q23Start = bank.indexOf("  23: [");
+  const q22End = Math.min(...[bank.indexOf("  ],\n};", q22Start), q23Start].filter((n) => n !== -1), Infinity);
+  const q22 = q22Start === -1 ? "" : bank.slice(q22Start, q22End === Infinity ? q22Start : q22End);
   ok((q22.match(/\{ ar:/g) || []).length === 12, `lesson22: quizBank has 12 new quiz questions (got ${(q22.match(/\{ ar:/g) || []).length})`);
+
+  // ---------- lesson 23 ----------
+  {
+    const d23 = src("lesson23", "data.ts");
+    const t23 = src("lesson23", "Lesson23.tsx");
+
+    // (أ) مفردات المصدر الأساسية موجودة حرفيًا
+    for (const word of ["book", "pen", "apple", "car", "student", "teacher", "chair", "table", "dog", "cat", "house", "computer", "phone", "egg", "coin"]) {
+      ok(d23.includes(`en: "${word}"`), `lesson23: countable example retained: ${word}`);
+    }
+    for (const word of ["water", "milk", "juice", "rice", "sugar", "salt", "flour", "bread", "cheese", "money", "information", "advice", "furniture", "homework", "traffic", "air", "sand"]) {
+      ok(d23.includes(`en: "${word}"`), `lesson23: must-know uncountable word retained: ${word}`);
+    }
+
+    // (ب) الوحدات الإنجليزية الحساسة للاتجاه تبقى بترتيبها الطبيعي
+    for (const exact of [
+      "Countable",
+      "Uncountable",
+      "a book",
+      "an apple",
+      "two books",
+      "five cars",
+      "some books",
+      "some water",
+      "a bottle of water",
+      "two bottles of water",
+      "There is a book on the desk.",
+      "There are three books on the desk.",
+      "There is some water in the bottle.",
+      "How many books do you have?",
+      "How much water do you drink?",
+      "How many children are in the park?",
+      "How much money do you have?",
+      "a piece of information",
+      "two pieces of information",
+      "a piece of advice",
+      "three pieces of furniture",
+      "There is an apple in the basket.",
+      "There are three apples in the basket.",
+      "There is some milk in the fridge.",
+      "There is a bottle of water next to the fridge.",
+      "Are there any books?",
+      "There aren't any books.",
+      "Is there any water?",
+      "There isn't any water.",
+      "Two coffees, please.",
+      "I drink some coffee.",
+      "two cups of coffee",
+      "many books",
+      "much water",
+      "There are some books.",
+      "How many chairs are there?",
+      "How much money is in the box?",
+      "three coins",
+      "two banknotes",
+      "five dollars",
+      "an assignment",
+      "three assignments",
+    ]) ok(d23.includes(exact), `lesson23: supplied English unit remains verbatim: ${exact}`);
+
+    // (ج) الأخطاء المقصودة في المصدر محفوظة (لا تُصحَّح بصمت)
+    for (const wrong of [
+      "a water",
+      "a milk",
+      "a rice",
+      "some informations",
+      "some advices",
+      "some furnitures",
+      "two waters",
+      "three rices",
+      "I have three money.",
+      "an information",
+      "advices",
+      "informations",
+      "a furniture",
+      "homeworks",
+      "How much books do you have?",
+      "How many water do you drink?",
+      "one water",
+      "one rice",
+      "two rices",
+      "three waters",
+      "an advice",
+      "a homework",
+      "furnitures",
+      "There are some water",
+      "some book",
+      "I have a water.",
+      "She gave me an advice.",
+      "I need two informations.",
+      "There are some milk in the fridge.",
+      "There is two apples on the table.",
+      "There are some water in the glass.",
+      "I need an information.",
+      "She bought three bread.",
+      "How much chairs are there?",
+      "How many rice do we need?",
+      "There is some books in my bag.",
+      "I have two waters.",
+      "He gave me an advice.",
+      "I need three informations.",
+      "She has a furniture.",
+    ]) ok(d23.includes(wrong), `lesson23: intentional teaching error retained: ${wrong}`);
+    ok(d23.includes("export const INTENTIONALLY_WRONG_23"), "lesson23: intentional-error inventory is explicit");
+
+    // (د) دفتر أقسام المصدر
+    ok(d23.includes("export const SOURCE_SECTIONS"), "lesson23: SOURCE_SECTIONS ledger exists");
+    ok(d23.includes("export const SOURCE_NUMBERED_COUNT = 57"), "lesson23: source ledger counts 57 sections");
+
+    // (هـ) كل تفاعل مصدره بيانات بعدد عناصره ومفتاح حلّه
+    const between23 = (from, to) => {
+      const a = d23.indexOf(from);
+      const b = to ? d23.indexOf(to, a + 1) : -1;
+      return a === -1 ? "" : d23.slice(a, b === -1 ? a + 20000 : b);
+    };
+    const t1_23 = between23("export const TRAINING1_23:", "export const TRAINING2_23_INTRO");
+    ok((t1_23.match(/stem: "/g) || []).length === 12 && (t1_23.match(/answer: \d/g) || []).length === 12, "lesson23: Training 1 keeps 12 classification words and keys");
+    const t2_23 = between23("export const TRAINING2_23:", "export const TRAINING2_23_REMEMBER");
+    ok((t2_23.match(/stem: "/g) || []).length === 8 && (t2_23.match(/answer: \d/g) || []).length === 8, "lesson23: Training 2 keeps 8 a/an vs some items and keys");
+    const t3_23 = between23("export const TRAINING3_23:", "export const TRAINING4_23_OPTIONS");
+    ok((t3_23.match(/stem: "/g) || []).length === 8 && (t3_23.match(/answer: \d/g) || []).length === 8, "lesson23: Training 3 keeps 8 There is/There are items and keys");
+    const t4_23 = between23("export const TRAINING4_23:", "export const DETECTIVE_23_INTRO");
+    ok((t4_23.match(/stem: "/g) || []).length === 8 && (t4_23.match(/answer: \d/g) || []).length === 8, "lesson23: Training 4 keeps 8 How many/How much items and keys");
+    const det23 = between23("export const DETECTIVE_23:", "export const IQ200_23_TASK");
+    ok((det23.match(/sentence: "/g) || []).length === 10 && (det23.match(/answer: \d/g) || []).length === 10, "lesson23: Grammar Detective keeps 10 source sentences and verdicts");
+    ok((det23.match(/fix: "/g) || []).length === 5, "lesson23: Grammar Detective keeps the 5 corrections for the 5 wrong sentences");
+    const iq23 = between23("export const IQ200_23:", "export const THINKING_23_INTRO");
+    ok((iq23.match(/sentence: "/g) || []).length === 8 && (iq23.match(/answer: \d/g) || []).length === 8, "lesson23: IQ200 Challenge keeps 8 sentences and verdicts");
+    ok((iq23.match(/answer: 1/g) || []).length === 1 && (iq23.match(/fix: "/g) || []).length === 7, "lesson23: IQ200 keeps exactly one correct sentence among 7 wrong ones");
+    const think23 = between23("export const THINKING_23:", "export const FINAL_BOSS_23_TITLE");
+    ok((think23.match(/item: "/g) || []).length === 6 && (think23.match(/answer: \d/g) || []).length === 6, "lesson23: Thinking Challenge keeps all 6 supplied quantities");
+    const boss23 = between23("export const FINAL_BOSS_23_ITEMS", "export const FINAL_BOSS_23_OPTIONS");
+    ok((boss23.match(/item: "/g) || []).length === 8 && (boss23.match(/model: "/g) || []).length === 8, "lesson23: Final Boss keeps all 8 room contents and 8 model sentences");
+    ok(d23.includes("many: 2, much: 2"), "lesson23: Final Boss keeps the 2 How many + 2 How much quota");
+    ok(d23.includes("export const MAGIC_TABLE_23") && d23.includes("export const SEVEN_RULES_23") && d23.includes("export const ROADMAP_23"), "lesson23: magic table, seven rules, and roadmap retained");
+    ok((d23.match(/\{ n: \d+, en: "/g) || []).length >= 23, "lesson23: roadmap keeps the full 1-23 curriculum map");
+
+    // (و) السلوك التفاعلي: اختيار محايد ثم «تحقق من الإجابات» (نموذج FinalQuiz)
+    ok(t23.includes("تحقق من الإجابات"), "lesson23: source drills keep the neutral → check behaviour");
+    ok(t23.includes("aria-pressed") && t23.includes("disabled={checked}"), "lesson23: drills expose neutral selection and lock after checking");
+    ok(!t23.includes("TEACHER_PASSWORD"), "lesson23: does not duplicate the Teacher's Space gate");
+
+    // (ز) الاختبار النهائي المشترك
+    ok(t23.includes('import FinalQuiz from "../../shared/FinalQuiz"') && t23.includes("<FinalQuiz lesson={23}"), "lesson23: reuses shared FinalQuiz for lesson 23");
+    ok(!t23.includes("const QUIZZES"), "lesson23: does not duplicate quiz data");
+    ok(t23.includes('import { LatinRuns } from "../../shared/bidi"'), "lesson23: isolates mixed Arabic/English runs through shared bidi");
+    ok(t23.includes('dir="rtl"') && t23.includes('dir="ltr"'), "lesson23: keeps the Arabic RTL shell with LTR-isolated English");
+
+    // (ح) العلامة التجارية
+    const GB23 = String.fromCodePoint(0x1f1ec, 0x1f1e7);
+    ok(!d23.includes(GB23) && !t23.includes(GB23), "lesson23: no GB flag emoji anywhere in the lesson");
+  }
+  ok(app.includes('import Lesson23 from "./lessons/lesson23/Lesson23"'), "App imports Lesson23");
+  ok(app.includes('import { SLIDES as L23_SLIDES } from "./lessons/lesson23/data"'), "App reads Lesson23 slide count for hub card");
+  ok(app.includes('n: 23,') && app.includes('href: "#/lesson/23"'), "App registers one Lesson 23 hub card");
+  ok(app.includes('route === 23') && app.includes('<Lesson23 onExit={goHome} />'), "App registers Lesson 23 hash route");
+  const q23 = q23Start === -1 ? "" : bank.slice(q23Start, bank.indexOf("  ],\n};", q23Start));
+  ok(q23Start !== -1, "lesson23: quizBank block for lesson 23 exists");
+  ok((q23.match(/\{ ar:/g) || []).length === 12, `lesson23: quizBank has 12 new quiz questions (got ${(q23.match(/\{ ar:/g) || []).length})`);
+  for (const coverage of ["furniture", "an egg", "a rice", "Are there ___ books on the shelf?", "There isn't ___ money in the box.", "___ some water in the bottle.", "___ three eggs on the table.", "___ water do you drink?", "___ books are on the shelf?", "much information", "two bottles of water", "a piece of advice"]) {
+    ok(q23.includes(coverage), `lesson23: shared quiz covers ${coverage}`);
+  }
 }
 
 // ---------- 12) العلامة التجارية ونظافة الأعلام على مستوى المستودع ----------

@@ -370,4 +370,20 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "أين حقيبة عمر؟ — هي تحت المكتب. أكمل:", en: "Where is Omar's bag? — ___ under the desk.", opts: ["It is", "They are", "He is", "She is"], answer: 0, why: "bag شيء مفرد (It) → It is." },
     { ar: "أي جملة تستخدم حرفَي جر في نفس الوقت؟", opts: ["There is a small box under the table next to the door.", "The book is on the table.", "The cat is under the chair.", "There is a pen in the drawer."], answer: 0, why: "تحتوي على under و next to معًا: أكثر من حرف جر في جملة واحدة." },
   ],
+
+  // ---------------- الدرس 23 ----------------
+  23: [
+    { ar: "أي كلمة من الكلمات التالية Uncountable؟", en: "Which word is uncountable?", opts: ["furniture", "chair", "apple", "student"], answer: 0, why: "furniture غير معدود: some furniture، ولا نقول a furniture ولا furnitures." },
+    { ar: "أكمل: اشتريت بيضة واحدة هذا الصباح.", en: "I bought ___ egg this morning.", opts: ["an", "a", "some", "many"], answer: 0, why: "egg مفرد معدود يبدأ بصوت علة ← an egg." },
+    { ar: "أي جملة خاطئة؟", opts: ["I need a rice.", "I need some rice.", "I need a bag of rice.", "There is some rice in the bowl."], answer: 0, why: "rice غير معدود ← لا نستخدم a مباشرة؛ نقول some rice أو a bag of rice." },
+    { ar: "أكمل السؤال:", en: "Are there ___ books on the shelf?", opts: ["any", "some", "much", "a"], answer: 0, why: "في الأسئلة والنفي نستخدم any مع الجمع المعدود: Are there any books?" },
+    { ar: "أكمل النفي:", en: "There isn't ___ money in the box.", opts: ["any", "some", "many", "an"], answer: 0, why: "النفي مع غير المعدود ← any: There isn't any money؛ وmoney غير معدود." },
+    { ar: "أكمل:", en: "___ some water in the bottle.", opts: ["There is", "There are", "There am", "There be"], answer: 0, why: "water غير معدود ← There is some water." },
+    { ar: "أكمل:", en: "___ three eggs on the table.", opts: ["There are", "There is", "There are a", "There be"], answer: 0, why: "three eggs جمع معدود ← There are." },
+    { ar: "أكمل السؤال عن كمية الماء:", en: "___ water do you drink?", opts: ["How much", "How many", "How", "How many of"], answer: 0, why: "water غير معدود ← How much water do you drink?" },
+    { ar: "أكمل السؤال عن عدد الكتب:", en: "___ books are on the shelf?", opts: ["How many", "How much", "How", "How much of"], answer: 0, why: "books جمع معدود ← How many books...?" },
+    { ar: "اختر الجملة الصحيحة:", opts: ["There isn't much information about it.", "There isn't an information about it.", "There aren't many informations.", "There is many information."], answer: 0, why: "much + غير معدود؛ ولا نقول an information ولا informations." },
+    { ar: "كيف تقول: زجاجتا ماء؟", opts: ["two bottles of water", "two waters", "two water", "a two water"], answer: 0, why: "لا نعدّ الماء نفسه بل نعدّ الوحدات ← two bottles of water." },
+    { ar: "أكمل: أعطتني نصيحة قبل الامتحان.", en: "She gave me ___ before the exam.", opts: ["a piece of advice", "an advice", "advices", "a advices"], answer: 0, why: "advice غير معدود ← نعدّ pieces: a piece of advice." },
+  ],
 };

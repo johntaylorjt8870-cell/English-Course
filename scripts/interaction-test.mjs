@@ -6,7 +6,7 @@
  *   4) فضاء المعلم مقفلة أولًا، كلمة مرور خاطئة لا تسرّب المفتاح،
  *      وكلمة المرور 63971 تفتح المفتاح نفسه (نفس أسئلة الاختبار).
  *
- * الدروس: 1، 10، 13، 17، 19، 20، 21
+ * الدروس: 1، 10، 13، 17، 19، 20، 21، 22، 23
  * تشغيل: node scripts/interaction-test.mjs
  */
 import { createRequire } from "node:module";
@@ -44,6 +44,8 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import FinalQuiz from ${JSON.stringify(join(dirname(root), "src/shared/FinalQuiz.tsx"))};
 import { QUIZZES } from ${JSON.stringify(join(dirname(root), "src/shared/quizBank.ts"))};
+import { SlideView23 } from ${JSON.stringify(join(dirname(root), "src/lessons/lesson23/Lesson23.tsx"))};
+import { SLIDES as L23_SLIDES } from ${JSON.stringify(join(dirname(root), "src/lessons/lesson23/data.ts"))};
 export function mount(lesson) {
   const el = document.createElement("div");
   document.body.appendChild(el);
@@ -51,8 +53,15 @@ export function mount(lesson) {
   r.render(React.createElement(FinalQuiz, { lesson, accent: "bg-cyan-700" }));
   return el;
 }
+export function mountSlide23(slide) {
+  const el = document.createElement("div");
+  document.body.appendChild(el);
+  const r = createRoot(el);
+  r.render(React.createElement(SlideView23, { s: slide, onExit: () => {} }));
+  return el;
+}
 export function unmount(el) { el.remove(); }
-export { QUIZZES };
+export { QUIZZES, L23_SLIDES };
 `,
     resolveDir: dirname(root),
     loader: "tsx",
@@ -65,7 +74,7 @@ export { QUIZZES };
   packages: "external",
   logLevel: "silent",
 });
-const { mount, unmount, QUIZZES } = await import(pathToFileURL(outFile).href);
+const { mount, mountSlide23, unmount, QUIZZES, L23_SLIDES } = await import(pathToFileURL(outFile).href);
 
 let pass = 0;
 let fail = 0;
@@ -86,7 +95,7 @@ const setNativeValue = (el, value) => {
 };
 const byText = (scope, text) => [...scope.querySelectorAll("button")].find((b) => b.textContent.includes(text));
 
-const LESSONS = [1, 10, 13, 17, 19, 20, 21];
+const LESSONS = [1, 10, 13, 17, 19, 20, 21, 22, 23];
 
 for (const lesson of LESSONS) {
   const questions = QUIZZES[lesson];
@@ -159,6 +168,67 @@ for (const lesson of LESSONS) {
   ok(!txt().includes("🔒 مقفلة"), `L${lesson} lock badge gone after unlock`);
 
   unmount(el);
+}
+
+// ---------------- الدرس 23: تدريبات المصدر داخل الدرس ----------------
+// نفس القاعدة: الاختيار محايد، ولا تظهر أي تغذية راجعة قبل «تحقق من الإجابات».
+{
+  const exerciseSlides = L23_SLIDES.filter((s) => s.kind === "ex");
+  ok(exerciseSlides.length === 8, `Lesson 23 exposes 8 source exercises in-lesson (got ${exerciseSlides.length})`);
+
+  for (const slide of exerciseSlides) {
+    const el = mountSlide23(slide);
+    await tick(60);
+    const optButtons = () => [...el.querySelectorAll("button[aria-pressed]")];
+    // كل فقرة تحتفظ بخياراتها داخل صف واحد — التجميع بالصف الأب لا بنوع البطاقة
+    const cards = () => [...new Set(optButtons().map((b) => b.parentElement))];
+    const optionClasses = () => optButtons().map((b) => b.className).join(" ");
+    const checkBtn = () => byText(el, "تحقق من الإجابات");
+    // التدريب النهائي يكشف الجمل النموذجية بدل علامات ✓/✕
+    const marker = slide.ex.type === "finalBoss" ? "There are two computers in the room." : null;
+    const hasFeedback = () => (marker ? el.textContent.includes(marker) : /✓ صحيح!|✕/.test(el.textContent));
+
+    ok(optButtons().length > 0, `L23 ${slide.title}: renders selectable options`);
+    ok(!hasFeedback(), `L23 ${slide.title}: no right/wrong feedback before check`);
+    ok(!!checkBtn() && checkBtn().disabled, `L23 ${slide.title}: check button locked until everything is answered`);
+
+    // أجب عن كل فقرة بالخيار الأول — يجب أن يبقى المظهر محايدًا
+    const perCard = Math.round(optButtons().length / cards().length);
+    for (let i = 0; i < cards().length; i++) {
+      optButtons()[i * perCard].click();
+      await tick(5);
+    }
+    ok(!hasFeedback(), `L23 ${slide.title}: still neutral after answering (before check)`);
+    ok(!optionClasses().includes("bg-emerald-600"), `L23 ${slide.title}: no green reveal before check`);
+    ok(!optionClasses().includes("bg-rose-600"), `L23 ${slide.title}: no red reveal before check`);
+    ok(!el.innerHTML.includes("border-emerald-300") && !el.innerHTML.includes("border-rose-300"), `L23 ${slide.title}: no verdict card colour before check`);
+    ok(checkBtn() && !checkBtn().disabled, `L23 ${slide.title}: check button enabled once all answered`);
+
+    // تغيير الإجابة مسموح قبل التحقق
+    const firstCard = cards()[0];
+    const firstOptions = [...firstCard.querySelectorAll("button[aria-pressed]")];
+    if (firstOptions.length > 1) {
+      firstOptions[1].click();
+      await tick(10);
+      ok(firstOptions[1].getAttribute("aria-pressed") === "true" || [...cards()[0].querySelectorAll("button[aria-pressed]")][1].getAttribute("aria-pressed") === "true", `L23 ${slide.title}: answer can be changed before check`);
+      ok(!hasFeedback(), `L23 ${slide.title}: changing an answer reveals nothing`);
+    }
+
+    checkBtn().click();
+    await tick(20);
+    ok(hasFeedback(), `L23 ${slide.title}: feedback appears only after check`);
+    ok(optionClasses().includes("bg-emerald-600") || optionClasses().includes("bg-rose-600"), `L23 ${slide.title}: correct/incorrect colours appear after check`);
+    ok(optButtons().every((b) => b.disabled), `L23 ${slide.title}: options lock after check`);
+
+    const resetBtn = byText(el, "أعد") || byText(el, "↺ إعادة");
+    ok(!!resetBtn, `L23 ${slide.title}: reset control exists after check`);
+    resetBtn.click();
+    await tick(20);
+    ok(!hasFeedback(), `L23 ${slide.title}: reset clears all feedback`);
+    ok(optButtons().every((b) => !b.disabled), `L23 ${slide.title}: reset re-enables options`);
+
+    unmount(el);
+  }
 }
 
 rmSync(outFile, { force: true });

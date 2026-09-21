@@ -417,4 +417,19 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "أي جملة تمثل الخلفية في قصة؟", opts: ["The wind was blowing and the rain was falling.", "The wind blew and the rain fell.", "The wind is blowing.", "The wind blows. "], answer: 0, why: "الخلفية في القصة تُبنى بـ Past Continuous: was blowing / was falling." },
     { ar: "اختر الجملة الصحيحة:", opts: ["We weren't sleeping at midnight.", "We wasn't sleeping at midnight.", "We weren't sleep at midnight.", "We didn't sleeping at midnight."], answer: 0, why: "We جمع → weren't + verb-ing: weren't sleeping." },
   ],
+  // ---------------- الدرس 26 — Past Simple vs Past Continuous ----------------
+  26: [
+    { ar: "أكمل: في لحظة محددة ليلة أمس، ننظر إلى نشاط كان جاريًا.", en: "At 8:00 last night, I ___ a book.", opts: ["was reading", "read", "am reading", "have read"], answer: 0, why: "At 8:00 last night لحظة محددة → Past Continuous: was reading." },
+    { ar: "أكمل: تقرير عن حدث مكتمل بلا لحظة محددة.", en: "She ___ her grandmother yesterday.", opts: ["visited", "was visiting", "visits", "has visited"], answer: 0, why: "خبر عن حدث ماضٍ مكتمل → Past Simple: visited." },
+    { ar: "أكمل: فعل كان جاريًا قاطعه حدث آخر.", en: "They ___ football when the teacher arrived.", opts: ["were playing", "played", "are playing", "play"], answer: 0, why: "اللعب كان جاريًا والحدث القاطع arrived → were playing." },
+    { ar: "أكمل بأداة الربط الصحيحة:", en: "I was sleeping ___ the alarm rang.", opts: ["when", "while", "because", "during"], answer: 0, why: "when تُدخل حدثًا وقع أثناء فعل آخر: I was sleeping when the alarm rang." },
+    { ar: "أكمل: فعلان جاريان في الفترة نفسها.", en: "While Mom was cooking, Dad ___.", opts: ["was reading", "read", "reads", "has read"], answer: 0, why: "while تربط فعلين جاريين → Past Continuous + Past Continuous: was reading." },
+    { ar: "أي جملة تصف حدثين متزامنين؟", opts: ["While I was cooking, my brother was washing the dishes.", "I cooked and my brother washed the dishes.", "I was cooking when my brother called.", "I cooked dinner last night."], answer: 0, why: "الحدثان متوازيان في الفترة نفسها → Past Continuous + Past Continuous مع while." },
+    { ar: "أكمل بـ was/were الصحيحة:", en: "The students ___ listening to the teacher.", opts: ["were", "was", "is", "are"], answer: 0, why: "The students جمع → were." },
+    { ar: "أكمل بـ was/were الصحيحة:", en: "Ali ___ studying when I called.", opts: ["was", "were", "is", "are"], answer: 0, why: "Ali مفرد → was." },
+    { ar: "أكمل بصيغة الفعل الصحيحة:", en: "He was ___ to school when he found a wallet.", opts: ["walking", "walk", "walked", "walks"], answer: 0, why: "بعد was نستخدم verb-ing دائمًا: walking." },
+    { ar: "أي جملة خاطئة؟", opts: ["Did you were sleeping?", "Were you sleeping?", "I was sleeping when the phone rang.", "They were playing football while I was reading."], answer: 0, why: "لا نستخدم did مع was/were في Past Continuous؛ الصحيح: Were you sleeping?" },
+    { ar: "ماذا تعبّر هذه الجملة؟", en: "I visited my grandmother yesterday.", opts: ["حدث ماضٍ مكتمل نرويه كواقعة", "نشاط كان جاريًا في لحظة محددة", "حدثان يحدثان في الوقت نفسه", "خلفية قصة + حدث قاطع"], answer: 0, why: "Past Simple = حدث ماضٍ مكتمل؛ ولو أردنا المشهد الجاري لقلنا At 5:00 yesterday, I was visiting my uncle." },
+    { ar: "أي جملتين صحيحتان لكن معناهما مختلف؟", opts: ["I watched TV last night. / I was watching TV last night.", "I watched TV last night. / I watched TV last night.", "I was watch TV last night. / I watched TV last night.", "I watching TV last night. / I watched TV last night."], answer: 0, why: "كلتاهما صحيحة: الأولى تقرير عن حدث مكتمل، والثانية تركيز على مشاهدة كانت مستمرة خلال فترة ماضية." },
+  ],
 };

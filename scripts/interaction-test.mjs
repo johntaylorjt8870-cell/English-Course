@@ -6,7 +6,7 @@
  *   4) فضاء المعلم مقفلة أولًا، كلمة مرور خاطئة لا تسرّب المفتاح،
  *      وكلمة المرور 63971 تفتح المفتاح نفسه (نفس أسئلة الاختبار).
  *
- * الدروس: 1، 10، 13، 17، 19، 20، 21، 22، 23، 24
+ * الدروس: 1، 10، 13، 17، 19، 20، 21، 22، 23، 24، 26
  * تشغيل: node scripts/interaction-test.mjs
  */
 import { createRequire } from "node:module";
@@ -68,8 +68,17 @@ export function mountLesson24() {
   r.render(React.createElement(Lesson24, { onExit: () => {} }));
   return el;
 }
+import { SlideView26 } from ${JSON.stringify(join(dirname(root), "src/lessons/lesson26/Lesson26.tsx"))};
+import { SLIDES as L26_SLIDES, SOURCE_SECTIONS as L26_SOURCE_SECTIONS } from ${JSON.stringify(join(dirname(root), "src/lessons/lesson26/data.ts"))};
+export function mountSlide26(slide) {
+  const el = document.createElement("div");
+  document.body.appendChild(el);
+  const r = createRoot(el);
+  r.render(React.createElement(SlideView26, { s: slide, onExit: () => {} }));
+  return el;
+}
 export function unmount(el) { el.remove(); }
-export { QUIZZES, L23_SLIDES };
+export { QUIZZES, L23_SLIDES, L26_SLIDES, L26_SOURCE_SECTIONS };
 `,
     resolveDir: dirname(root),
     loader: "tsx",
@@ -82,7 +91,7 @@ export { QUIZZES, L23_SLIDES };
   packages: "external",
   logLevel: "silent",
 });
-const { mount, mountSlide23, mountLesson24, unmount, QUIZZES, L23_SLIDES } = await import(pathToFileURL(outFile).href);
+const { mount, mountSlide23, mountSlide26, mountLesson24, unmount, QUIZZES, L23_SLIDES, L26_SLIDES, L26_SOURCE_SECTIONS } = await import(pathToFileURL(outFile).href);
 
 let pass = 0;
 let fail = 0;
@@ -103,7 +112,8 @@ const setNativeValue = (el, value) => {
 };
 const byText = (scope, text) => [...scope.querySelectorAll("button")].find((b) => b.textContent.includes(text));
 
-const LESSONS = [1, 10, 13, 17, 19, 20, 21, 22, 23, 24];
+const LESSONS = [1, 10, 13, 17, 19, 20, 21, 22, 23, 24, 26];
+// درس 26: الكشف المتأخر داخل الشرح (Error Detective / Meaning First / IQ200)
 
 for (const lesson of LESSONS) {
   const questions = QUIZZES[lesson];
@@ -332,6 +342,76 @@ for (const lesson of LESSONS) {
   ok(el.textContent.includes("🔒 مقفلة"), "L24: Teacher's Space renders locked inside the page");
 
   unmount(el);
+}
+
+
+// ---------------- الدرس 26: الكشف المتأخر داخل الشرح (لا إجابة قبل «تحقق من الإجابات») ----------------
+{
+  const interactive = L26_SOURCE_SECTIONS
+    .map((section, index) => ({ section, index }))
+    .filter(({ section }) => (section.revealUnits ?? []).length > 0)
+    .map(({ section, index }) => ({ section, slide: L26_SLIDES.find((s) => s.sourceIndex === index && s.kind === "lesson") }))
+    .filter(({ slide }) => !!slide);
+  ok(interactive.length >= 3, `L26 exposes ${interactive.length} delayed-reveal source interactions`);
+
+  for (const { section, slide } of interactive) {
+    const el = mountSlide26(slide);
+    await tick(60);
+    ok(!el.innerHTML.includes("data-reveal-block"), `L26 ${section.id}: no reveal block before checking`);
+    ok(!el.textContent.includes("✓ صحيح!"), `L26 ${section.id}: no correctness mark before checking`);
+
+    // إجابة كل عنصر ثم التحقق
+    const toggles = () => [...el.querySelectorAll("button[aria-pressed]")].filter((b) => !b.disabled);
+    for (const btn of toggles()) {
+      btn.click();
+      await tick(12);
+    }
+    ok(!el.innerHTML.includes("data-reveal-block"), `L26 ${section.id}: still no reveal while answering`);
+    const check = byText(el, "تحقق من الإجابات");
+    if (check && !check.disabled) {
+      check.click();
+      await tick(50);
+      ok(el.innerHTML.includes("data-reveal-block"), `L26 ${section.id}: reveal block appears after checking`);
+      ok(el.textContent.includes("↺ إعادة"), `L26 ${section.id}: reset is offered after checking`);
+      byText(el, "↺ إعادة")?.click();
+      await tick(40);
+      ok(!el.innerHTML.includes("data-reveal-block"), `L26 ${section.id}: reset hides the reveal again`);
+    } else {
+      ok(false, `L26 ${section.id}: check button unlocks after answering`);
+    }
+    unmount(el);
+  }
+
+  // Grammar Detective: لا تصحيح قبل تحديد الأخطاء
+  const detSlide = L26_SLIDES.find((s) => s.kind === "ex" && s.ex.type === "grammarDetective");
+  const det = mountSlide26(detSlide);
+  await tick(60);
+  ok(!det.innerHTML.includes("data-reveal-block"), "L26 Grammar Detective: no correction before selecting");
+  byText(det, "تحقق من الإجابات").click();
+  await tick(40);
+  ok(!det.innerHTML.includes("data-reveal-block"), "L26 Grammar Detective: locked check leaks nothing");
+  unmount(det);
+
+  // Exercise 26 (choose) + Complete the Story: لا نتائج قبل التحقق
+  const chooseSlide = L26_SLIDES.find((s) => s.kind === "ex" && s.ex.type === "choose");
+  const choose = mountSlide26(chooseSlide);
+  await tick(60);
+  const opts = [...choose.querySelectorAll("button[aria-pressed]")];
+  ok(opts.length >= 16, `L26 Exercise 26 renders its two options per question (${opts.length})`);
+  ok(!choose.textContent.includes("✓ صحيح!"), "L26 Exercise 26 shows no feedback before checking");
+  opts[0].click();
+  await tick(20);
+  ok(!choose.textContent.includes("✓ صحيح!"), "L26 Exercise 26 shows no feedback after selecting");
+  const chooseCheck = el => byText(el, "تحقق من الإجابات");
+  ok(!!chooseCheck(choose) && chooseCheck(choose).disabled, "L26 Exercise 26 keeps the check button locked until every question is answered");
+  unmount(choose);
+
+  const storySlide = L26_SLIDES.find((s) => s.kind === "ex" && s.ex.type === "completeStory");
+  const story = mountSlide26(storySlide);
+  await tick(60);
+  ok([...story.querySelectorAll("input")].length >= 10, "L26 Complete the Story renders all 10 gap inputs");
+  ok(!story.textContent.includes("✓ صحيح!"), "L26 Complete the Story leaks no answer before checking");
+  unmount(story);
 }
 
 rmSync(outFile, { force: true });

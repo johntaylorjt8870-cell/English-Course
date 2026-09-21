@@ -24,6 +24,7 @@ import Lesson22 from "./lessons/lesson22/Lesson22";
 import Lesson23 from "./lessons/lesson23/Lesson23";
 import Lesson24 from "./lessons/lesson24/Lesson24";
 import Lesson25 from "./lessons/lesson25/Lesson25";
+import Lesson26 from "./lessons/lesson26/Lesson26";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -50,6 +51,7 @@ import { SLIDES as L22_SLIDES } from "./lessons/lesson22/data";
 import { SLIDES as L23_SLIDES } from "./lessons/lesson23/data";
 import { SLIDES as L24_SLIDES } from "./lessons/lesson24/data";
 import { SLIDES as L25_SLIDES } from "./lessons/lesson25/data";
+import { SLIDES as L26_SLIDES } from "./lessons/lesson26/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 import SitePasswordGate from "./shared/SitePasswordGate";
 
@@ -311,6 +313,15 @@ const CARDS: Card[] = [
     href: "#/lesson/25",
     grad: "from-indigo-600 to-violet-700",
   },
+  {
+    n: 26,
+    title: "الدرس 26: Past Simple vs Past Continuous",
+    en: "Past Simple vs Past Continuous",
+    emoji: "🎥",
+    stats: `${L26_SLIDES.length} شريحة · 4 تمارين + IQ200 + Final Boss · THE TIME DIRECTOR`,
+    href: "#/lesson/26",
+    grad: "from-teal-500 to-orange-400",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -413,6 +424,7 @@ export default function App() {
   else if (route === 23) page = <Lesson23 onExit={goHome} />;
   else if (route === 24) page = <Lesson24 onExit={goHome} />;
   else if (route === 25) page = <Lesson25 onExit={goHome} />;
+  else if (route === 26) page = <Lesson26 onExit={goHome} />;
   else page = <Hub />;
   return (
     <SitePasswordGate>

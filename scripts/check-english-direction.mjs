@@ -19,7 +19,7 @@ function ok(cond, msg) {
 function src(lesson, file) {
   return readFileSync(join(ROOT, lesson, file), "utf8");
 }
-ok(lessons.length === 25, `full-course regression inventory contains 25 lessons (got ${lessons.length})`);
+ok(lessons.length === 26, `full-course regression inventory contains 26 lessons (got ${lessons.length})`);
 // يقتطع جسم دالة بالاسم: من تعريفها حتى بداية الدالة التالية
 function fnBody(code, name) {
   const start = code.search(new RegExp(`function ${name}\\s*\\(`));
@@ -1474,6 +1474,54 @@ for (const [l, fn] of LTR_SPOTS) {
   ok(indexHtml.includes("EnglishwithSomeR"), "repo: index.html keeps the EnglishwithSomeR branding");
   const app = readFileSync(join(root, "src", "App.tsx"), "utf8");
   ok(app.includes("EnglishwithSomeR"), "repo: hub keeps the EnglishwithSomeR branding");
+}
+
+// ---------- 14) lesson 26 — Past Simple vs Past Continuous (🎬 THE TIME DIRECTOR) ----------
+{
+  const d26 = src("lesson26", "data.ts");
+  const t26 = src("lesson26", "Lesson26.tsx");
+  const app = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "App.tsx"), "utf8");
+  const bank = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "shared", "quizBank.ts"), "utf8");
+
+  ok(t26.includes("../../shared/bidi"), "lesson26: uses the shared bidi helper (LatinRuns)");
+  ok(t26.includes("data-source-section"), "lesson26: renders source-section markers");
+  ok(t26.includes("data-en-seq"), "lesson26: exposes interactive lab hooks (data-en-seq)");
+  ok(!t26.includes("split(/(\\s+)/)"), "lesson26: never splits English into isolated tokens");
+  ok(t26.includes('direction: "ltr"'), "lesson26: English wrappers force direction ltr inline as well as by class");
+  ok(t26.includes("تحقق من الإجابات"), "lesson26: keeps the neutral → check convention");
+  ok(t26.includes("data-reveal-block"), "lesson26: delayed reveal blocks are explicit");
+  ok(d26.includes("export const SOURCE_SECTIONS"), "lesson26: SOURCE_SECTIONS ledger exists");
+  ok(d26.includes("export const SOURCE_NUMBERED_COUNT = 31"), "lesson26: source ledger counts 31 numbered sections");
+  ok(/export const SOURCE_LEDGER_COUNT = SOURCE_SECTIONS\.length/.test(d26), "lesson26: source ledger count is derived from the full section list");
+  ok(d26.includes("export const INTENTIONALLY_WRONG_26"), "lesson26: intentional-error inventory is explicit");
+  ok(d26.includes("export const INTENTIONALLY_WRONG_26: string[] = [\n  \"I was played football.\""), "lesson26: first supplied wrong sentence kept verbatim");
+  for (const phrase of [
+    "Past Simple",
+    "Past Continuous = was/were + verb-ing",
+    "Past Continuous + when + Past Simple",
+    "Past Continuous + Past Continuous",
+    "was/were + ing",
+    "I watched TV last night.",
+    "I was watching TV at 9:00 last night.",
+    "I was walking home when I saw a strange bird.",
+    "She was cooking dinner when I arrived.",
+    "I was sleeping when the phone rang.",
+    "While I was watching TV, my brother was reading.",
+    "I visited my uncle yesterday.",
+    "At 5:00 yesterday, I was visiting my uncle.",
+    "Were you sleeping?",
+    "I was playing football. ✅",
+  ]) ok(d26.includes(phrase), `lesson26: preserves direction-sensitive source phrase ${phrase}`);
+  const OLD26 = ["Englishwith", "sommer"].join("");
+  ok(!d26.includes(OLD26) && !t26.includes(OLD26), "lesson26: keeps the EnglishwithSomeR branding");
+  ok(app.includes("Lesson26 onExit={goHome}") && app.includes("route === 26"), "lesson26: routed in App.tsx");
+  ok(app.includes("الدرس 26: Past Simple vs Past Continuous") && app.includes("#/lesson/26"), "lesson26: hub card present");
+  const q26Start = bank.indexOf("  26: [");
+  ok(q26Start !== -1, "lesson26: quizBank block exists");
+  const q26End = bank.indexOf("\n};", q26Start);
+  const q26 = q26Start === -1 ? "" : bank.slice(q26Start, q26End === -1 ? undefined : q26End);
+  ok((q26.match(/\{ ar:/g) || []).length === 12, `lesson26: quizBank has 12 questions (got ${(q26.match(/\{ ar:/g) || []).length})`);
+  ok(!/rather than/.test(q26), "lesson26: quiz explanations are free of stray English connectives");
 }
 
 // ---------- النتيجة ----------

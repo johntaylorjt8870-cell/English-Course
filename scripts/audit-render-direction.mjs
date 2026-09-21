@@ -101,8 +101,10 @@ import Lesson22, { SlideView22 } from ${JSON.stringify(join(root, "src/lessons/l
 import { SLIDES as L22_SLIDES, SOURCE_SECTIONS as L22_SOURCE_SECTIONS, INTENTIONALLY_WRONG_22, GOLDEN_SUMMARY_22_WORDS, FINAL_BOSS_22_CLUES_AR, IQ200_1_SCENE, ROOM_SENTENCES as L22_ROOM_SENTENCES } from ${JSON.stringify(join(root, "src/lessons/lesson22/data.ts"))};
 import Lesson23, { SlideView23 } from ${JSON.stringify(join(root, "src/lessons/lesson23/Lesson23.tsx"))};
 import { SLIDES as L23_SLIDES, SOURCE_SECTIONS as L23_SOURCE_SECTIONS, INTENTIONALLY_WRONG_23, GOLDEN_23_COUNTABLE_EXAMPLES, GOLDEN_23_UNCOUNTABLE_WORDS, MAGIC_TABLE_23, SEVEN_RULES_23, FINAL_BOSS_23_ITEMS, KITCHEN_SENTENCES as L23_KITCHEN_SENTENCES, ROADMAP_23 as L23_ROADMAP, DETECTIVE_23, IQ200_23, THINKING_23 } from ${JSON.stringify(join(root, "src/lessons/lesson23/data.ts"))};
+import Lesson26, { SlideView26 } from ${JSON.stringify(join(root, "src/lessons/lesson26/Lesson26.tsx"))};
+import { SLIDES as L26_SLIDES, SOURCE_SECTIONS as L26_SOURCE_SECTIONS, INTENTIONALLY_WRONG_26, EX26_ITEMS, COMPLETE_STORY_26, DETECTIVE_26_PARTS, IQ200_MATCH_26, IQ200_BOTH_26, FINAL_BOSS_26_SCENE, FINAL_BOSS_26_REQUIREMENTS, FINAL_BOSS_26_MODEL_STORY, TIME_CLUES_26, SOURCE_NUMBERED_COUNT as L26_SOURCE_NUMBERED } from ${JSON.stringify(join(root, "src/lessons/lesson26/data.ts"))};
 import { QUIZZES } from ${JSON.stringify(join(root, "src/shared/quizBank.ts"))};
-export { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, Lesson21, SlideView21, L21_SLIDES, L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21, Lesson22, SlideView22, L22_SLIDES, L22_SOURCE_SECTIONS, INTENTIONALLY_WRONG_22, GOLDEN_SUMMARY_22_WORDS, FINAL_BOSS_22_CLUES_AR, IQ200_1_SCENE, L22_ROOM_SENTENCES, Lesson23, SlideView23, L23_SLIDES, L23_SOURCE_SECTIONS, INTENTIONALLY_WRONG_23, GOLDEN_23_COUNTABLE_EXAMPLES, GOLDEN_23_UNCOUNTABLE_WORDS, MAGIC_TABLE_23, SEVEN_RULES_23, FINAL_BOSS_23_ITEMS, L23_KITCHEN_SENTENCES, L23_ROADMAP, DETECTIVE_23, IQ200_23, THINKING_23, QUIZZES };
+export { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, Lesson21, SlideView21, L21_SLIDES, L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21, Lesson22, SlideView22, L22_SLIDES, L22_SOURCE_SECTIONS, INTENTIONALLY_WRONG_22, GOLDEN_SUMMARY_22_WORDS, FINAL_BOSS_22_CLUES_AR, IQ200_1_SCENE, L22_ROOM_SENTENCES, Lesson23, SlideView23, L23_SLIDES, L23_SOURCE_SECTIONS, INTENTIONALLY_WRONG_23, GOLDEN_23_COUNTABLE_EXAMPLES, GOLDEN_23_UNCOUNTABLE_WORDS, MAGIC_TABLE_23, SEVEN_RULES_23, FINAL_BOSS_23_ITEMS, L23_KITCHEN_SENTENCES, L23_ROADMAP, DETECTIVE_23, IQ200_23, THINKING_23, Lesson26, SlideView26, L26_SLIDES, L26_SOURCE_SECTIONS, INTENTIONALLY_WRONG_26, EX26_ITEMS, COMPLETE_STORY_26, DETECTIVE_26_PARTS, IQ200_MATCH_26, IQ200_BOTH_26, FINAL_BOSS_26_SCENE, FINAL_BOSS_26_REQUIREMENTS, FINAL_BOSS_26_MODEL_STORY, TIME_CLUES_26, L26_SOURCE_NUMBERED, QUIZZES };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -117,7 +119,7 @@ export { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoa
 });
 
 try {
-  const { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, Lesson21, SlideView21, L21_SLIDES, L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21, Lesson22, SlideView22, L22_SLIDES, L22_SOURCE_SECTIONS, INTENTIONALLY_WRONG_22, GOLDEN_SUMMARY_22_WORDS, FINAL_BOSS_22_CLUES_AR, IQ200_1_SCENE, L22_ROOM_SENTENCES, Lesson23, SlideView23, L23_SLIDES, L23_SOURCE_SECTIONS, INTENTIONALLY_WRONG_23, GOLDEN_23_COUNTABLE_EXAMPLES, GOLDEN_23_UNCOUNTABLE_WORDS, MAGIC_TABLE_23, SEVEN_RULES_23, FINAL_BOSS_23_ITEMS, L23_KITCHEN_SENTENCES, L23_ROADMAP, DETECTIVE_23, IQ200_23, THINKING_23, QUIZZES } = await import(pathToFileURL(outFile).href);
+  const { React, renderToString, Lesson1, Lesson4, Lesson10, Lesson13, FormulaBoard, SlideView, L13_SLIDES, Lesson14, FormulaBoard14, SlideView14, L14_SLIDES, LatinRuns, Lesson17, SlideView17, L17_SLIDES, Lesson18, SlideView18, L18_SLIDES, Lesson19, SlideView19, L19_SLIDES, Lesson20, SlideView20, L20_SLIDES, L20_SOURCE_SECTIONS, INTENTIONALLY_WRONG_20, SENTENCE_BUILDER_20, Lesson21, SlideView21, L21_SLIDES, L21_SOURCE_SECTIONS, INTENTIONALLY_WRONG_21, MINDMAP_21, KITCHEN_21, Lesson22, SlideView22, L22_SLIDES, L22_SOURCE_SECTIONS, INTENTIONALLY_WRONG_22, GOLDEN_SUMMARY_22_WORDS, FINAL_BOSS_22_CLUES_AR, IQ200_1_SCENE, L22_ROOM_SENTENCES, Lesson23, SlideView23, L23_SLIDES, L23_SOURCE_SECTIONS, INTENTIONALLY_WRONG_23, GOLDEN_23_COUNTABLE_EXAMPLES, GOLDEN_23_UNCOUNTABLE_WORDS, MAGIC_TABLE_23, SEVEN_RULES_23, FINAL_BOSS_23_ITEMS, L23_KITCHEN_SENTENCES, L23_ROADMAP, DETECTIVE_23, IQ200_23, THINKING_23, Lesson26, SlideView26, L26_SLIDES, L26_SOURCE_SECTIONS, INTENTIONALLY_WRONG_26, EX26_ITEMS, COMPLETE_STORY_26, DETECTIVE_26_PARTS, IQ200_MATCH_26, IQ200_BOTH_26, FINAL_BOSS_26_SCENE, FINAL_BOSS_26_REQUIREMENTS, FINAL_BOSS_26_MODEL_STORY, TIME_CLUES_26, L26_SOURCE_NUMBERED, QUIZZES } = await import(pathToFileURL(outFile).href);
 
   // --- LatinRuns: mixed SVO phrase stays one LTR unit ---
   {
@@ -1725,7 +1727,7 @@ try {
   {
     const lessonsDir = join(root, "src", "lessons");
     const lessonFolders = readdirSync(lessonsDir).filter((d) => /^lesson\d+$/.test(d));
-    ok(lessonFolders.length === 25, `full course: 25 lesson folders exist (got ${lessonFolders.length})`);
+    ok(lessonFolders.length === 26, `full course: 26 lesson folders exist (got ${lessonFolders.length})`);
     const missing = lessonFolders.filter((folder) => {
       const n = folder.replace("lesson", "");
       return !(
@@ -1734,13 +1736,13 @@ try {
     });
     ok(missing.length === 0, `full course: every lesson folder has LessonN.tsx + data.ts (missing: ${missing.join(", ")})`);
     const appSource = readFileSync(join(root, "src", "App.tsx"), "utf8");
-    for (let n = 1; n <= 25; n++) {
+    for (let n = 1; n <= 26; n++) {
       ok(
         appSource.includes(`route === ${n}`) && appSource.includes(`<Lesson${n} onExit={goHome} />`),
         `full course: Lesson ${n} is routed in App.tsx`
       );
     }
-    for (let n = 1; n <= 25; n++) {
+    for (let n = 1; n <= 26; n++) {
       ok(Array.isArray(QUIZZES[n]) && QUIZZES[n].length >= 12, `full course: QUIZZES[${n}] registered with at least 12 questions (got ${QUIZZES[n]?.length ?? 0})`);
     }
   }
@@ -2026,6 +2028,125 @@ try {
     ok(html.includes("THE COUNTING LAB"), "Lesson 23 cover shows THE COUNTING LAB identity");
     ok(!html.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 23 full lesson renders no GB flag emoji");
     ok(!/Englishwith[sS]ommer/.test(html), "Lesson 23 keeps the EnglishwithSomeR branding");
+  }
+
+
+  // --- الدرس 26: كل الشرائح تُعرض، عزل LTR، وعلامات المصدر ---
+  {
+    const noop26 = () => {};
+    let rendered26 = 0;
+    const broken26 = [];
+    const missingLtr26 = [];
+    const missingSrc26 = [];
+    const corpus = [];
+    for (const s of L26_SLIDES) {
+      try {
+        const html = renderToString(React.createElement(SlideView26, { s, onExit: noop26 }));
+        if (html.length < 200) broken26.push(`${s.kind}:${s.title ?? ""}`);
+        if (!html.includes('dir="ltr"')) missingLtr26.push(`${s.kind}:${s.title ?? ""}`);
+        if (s.sourceIndex !== undefined && s.kind !== "quiz" && !html.includes("data-source-section")) {
+          missingSrc26.push(`${s.sourceIndex}:${s.title ?? ""}`);
+        }
+        corpus.push(html);
+        rendered26++;
+      } catch (err) {
+        broken26.push(`${s.kind}:${s.title ?? ""} (${err.message || String(err)})`);
+      }
+    }
+    ok(L26_SLIDES.length >= 50 && L26_SLIDES.length <= 60, `Lesson 26 keeps the 50–60 screen flow (got ${L26_SLIDES.length})`);
+    ok(rendered26 === L26_SLIDES.length, `Lesson 26 every slide renders (${rendered26}/${L26_SLIDES.length})`);
+    ok(broken26.length === 0, `Lesson 26 has no empty or throwing slide (${broken26.join(", ")})`);
+    ok(missingLtr26.length === 0, `Lesson 26 isolates English on every slide (${missingLtr26.join(", ")})`);
+    ok(missingSrc26.length === 0, `Lesson 26 renders a source marker for every source slide (${missingSrc26.join(", ")})`);
+
+    const all26 = corpus.join("\n");
+    const unesc26 = (h) => h.replace(/&#x27;/g, "'").replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+    const plain26 = unesc26(all26).replace(/<!--[\s\S]*?-->/g, "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+
+    ok(L26_SOURCE_SECTIONS.length === 38, `Lesson 26 source ledger has 38 supplied sections (got ${L26_SOURCE_SECTIONS.length})`);
+    ok(L26_SOURCE_NUMBERED === 31, `Lesson 26 source ledger counts 31 numbered sections (got ${L26_SOURCE_NUMBERED})`);
+    const mapped26 = new Set(L26_SLIDES.filter((s) => s.sourceIndex !== undefined).map((s) => s.sourceIndex));
+    ok(mapped26.size === L26_SOURCE_SECTIONS.length, `Lesson 26 maps every source section to a slide (${mapped26.size}/${L26_SOURCE_SECTIONS.length})`);
+
+    for (const type of ["choose", "completeStory", "grammarDetective", "finalBoss"]) {
+      ok(L26_SLIDES.some((s) => s.kind === "ex" && s.ex.type === type), `Lesson 26 exercise type present: ${type}`);
+    }
+    ok(L26_SLIDES.some((s) => s.kind === "quiz") && L26_SLIDES.some((s) => s.kind === "closing"), "Lesson 26 includes the shared final quiz and closing slides");
+
+    // المصدر يصل إلى العرض فعلًا (وحدات المصدر كلها ظاهرة في متون الشرائح الثابتة أو التفاعلية)
+    for (const phrase of [
+      "I watched TV last night.",
+      "I was watching TV at 9:00 last night.",
+      "I was walking home when I saw a strange bird.",
+      "She was cooking dinner when I arrived.",
+      "I was sleeping when the phone rang.",
+      "While I was watching TV, my brother was reading.",
+      "I visited my uncle yesterday.",
+      "Were you sleeping?",
+      "Past Continuous = was/were + verb-ing",
+      "Past Continuous + when + Past Simple",
+    ]) {
+      ok(plain26.includes(phrase), `Lesson 26 renders source phrase verbatim: ${phrase}`);
+    }
+    // العبارات التي تظهر في مسار تفاعلي مغلق تُفحص في scripts/audit-lesson26.mjs (مشي تفاعلي كامل)
+    // لا انعكاس لكلمات الجملة الإنجليزية داخل التشغيل الحقيقي
+    ok(!/night last TV watched I\./.test(plain26), "Lesson 26 never reverses \"I watched TV last night.\"");
+    ok(!/night last 9:00 at TV watching was I\./.test(plain26), "Lesson 26 never reverses \"I was watching TV at 9:00 last night.\"");
+    {
+      const runs26 = fontEnSeq(all26);
+      ok(runs26.some((r) => r.includes("Past Simple")), "Lesson 26 renders \"Past Simple\" inside an LTR run");
+      ok(runs26.some((r) => r.includes("Past Continuous")), "Lesson 26 renders \"Past Continuous\" inside an LTR run");
+      ok(!runs26.some((r) => /Simple Past|Continuous Past|Continuous Simple/.test(r)), "Lesson 26 never flips the tense names inside LTR runs");
+    }
+    const plainN26 = plain26.replace(/\s+/g, "");
+    for (const wrong of INTENTIONALLY_WRONG_26) {
+      ok(plainN26.includes(wrong.replace(/\s+/g, "")), `Lesson 26 renders the supplied wrong sentence as-is: ${wrong}`);
+    }
+
+    // الأخطاء الأربعة في Grammar Detective: لا تُصحّح قبل الضغط
+    const det26 = DETECTIVE_26_PARTS.filter((p) => p.error);
+    ok(det26.length === 4, `Lesson 26 Grammar Detective keeps 4 real errors (got ${det26.length})`);
+    ok(det26.every((p) => p.fix && p.why), "Lesson 26 Grammar Detective keeps the 4 fixes and explanations");
+    const detSlide26 = L26_SLIDES.find((s) => s.kind === "ex" && s.ex.type === "grammarDetective");
+    const detHtml26 = renderToString(React.createElement(SlideView26, { s: detSlide26, onExit: noop26 }));
+    ok(!detHtml26.includes("data-reveal-block"), "Lesson 26 Grammar Detective reveals no fix before checking");
+    ok(plain26.includes("تحقق من الإجابات"), "Lesson 26 Grammar Detective keeps the neutral check button");
+
+    // الدروس التفاعلية داخل الشرح: لا كشف مسبق
+    for (const sectionIndex of L26_SOURCE_SECTIONS.map((s, i) => i).filter((i) => (L26_SOURCE_SECTIONS[i].revealUnits ?? []).length > 0)) {
+      const slide = L26_SLIDES.find((s) => s.sourceIndex === sectionIndex);
+      if (!slide) continue;
+      const html = renderToString(React.createElement(SlideView26, { s: slide, onExit: noop26 }));
+      ok(!html.includes("data-reveal-block"), `Lesson 26 ${L26_SOURCE_SECTIONS[sectionIndex].id}: no answer block in the static render`);
+    }
+
+    ok(EX26_ITEMS.length === 8, `Lesson 26 Exercise 26 keeps 8 questions (got ${EX26_ITEMS.length})`);
+    ok(COMPLETE_STORY_26.filter((p) => "blank" in p).length === 10, "Lesson 26 Complete the Story keeps 10 gaps");
+    ok(IQ200_BOTH_26.answer === 2, "Lesson 26 IQ200 both-sentences drill has no single “wrong” answer");
+    ok(IQ200_MATCH_26.answer.A === "m1" && IQ200_MATCH_26.answer.B === "m2", "Lesson 26 IQ200 matching keeps the supplied meanings");
+    ok(FINAL_BOSS_26_SCENE.length === 7 && FINAL_BOSS_26_REQUIREMENTS.length === 7, "Lesson 26 Final Boss keeps its 7 scene steps and 7 requirements");
+    ok(FINAL_BOSS_26_MODEL_STORY.includes("was walking home while the rain was falling heavily"), "Lesson 26 Final Boss keeps the supplied model story");
+    ok(TIME_CLUES_26.length === 10, `Lesson 26 keeps the 10 time expressions (got ${TIME_CLUES_26.length})`);
+
+    const bossSlide26 = L26_SLIDES.find((s) => s.kind === "ex" && s.ex.type === "finalBoss");
+    const bossHtml26 = renderToString(React.createElement(SlideView26, { s: bossSlide26, onExit: noop26 }));
+    const bossPlain26 = unesc26(bossHtml26).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+    ok(bossPlain26.includes("اكتب قصة من 10–12 جملة"), "Lesson 26 Final Boss keeps the 10–12 sentence instruction");
+
+    const quizSlide26 = L26_SLIDES.find((s) => s.kind === "quiz");
+    const quizHtml26 = renderToString(React.createElement(SlideView26, { s: quizSlide26, onExit: noop26 }));
+    ok(quizHtml26.includes("Teacher’s Space"), "Lesson 26 shared quiz renders Teacher's Space section");
+    ok(quizHtml26.includes("تحقق من الإجابات"), "Lesson 26 shared quiz keeps the STEP 3 check button");
+    ok(!quizHtml26.includes("الإجابة الصحيحة:"), "Lesson 26 quiz renders no answer key before unlocking");
+    ok(Array.isArray(QUIZZES[26]) && QUIZZES[26].length === 12, `Lesson 26 shared quiz has 12 questions (${QUIZZES[26]?.length ?? 0})`);
+
+    const html26 = renderToString(React.createElement(Lesson26, { onExit: noop26 }));
+    ok(html26.length > 3000, "Lesson 26 renders without throwing");
+    ok(/dir="ltr"/.test(html26), "Lesson 26 isolates English as LTR");
+    ok(html26.includes('dir="rtl"'), "Lesson 26 keeps the Arabic RTL shell");
+    ok(html26.includes("THE TIME DIRECTOR"), "Lesson 26 cover shows THE TIME DIRECTOR identity");
+    ok(!html26.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 26 full lesson renders no GB flag emoji");
+    ok(!/Englishwith[sS]ommer/.test(html26), "Lesson 26 keeps the EnglishwithSomeR branding");
   }
 
 } catch (err) {

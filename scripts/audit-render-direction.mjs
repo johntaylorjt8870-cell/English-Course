@@ -1721,11 +1721,11 @@ try {
     ok(!html.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 22 full lesson renders no GB flag emoji");
   }
 
-  // --- تغطية الدورة كاملة: 23 درسًا ممثلة وجاهزة للعرض ---
+  // --- تغطية الدورة كاملة: 25 درسًا ممثلة وجاهزة للعرض ---
   {
     const lessonsDir = join(root, "src", "lessons");
     const lessonFolders = readdirSync(lessonsDir).filter((d) => /^lesson\d+$/.test(d));
-    ok(lessonFolders.length === 24, `full course: 24 lesson folders exist (got ${lessonFolders.length})`);
+    ok(lessonFolders.length === 25, `full course: 25 lesson folders exist (got ${lessonFolders.length})`);
     const missing = lessonFolders.filter((folder) => {
       const n = folder.replace("lesson", "");
       return !(
@@ -1734,13 +1734,13 @@ try {
     });
     ok(missing.length === 0, `full course: every lesson folder has LessonN.tsx + data.ts (missing: ${missing.join(", ")})`);
     const appSource = readFileSync(join(root, "src", "App.tsx"), "utf8");
-    for (let n = 1; n <= 23; n++) {
+    for (let n = 1; n <= 25; n++) {
       ok(
         appSource.includes(`route === ${n}`) && appSource.includes(`<Lesson${n} onExit={goHome} />`),
         `full course: Lesson ${n} is routed in App.tsx`
       );
     }
-    for (let n = 1; n <= 23; n++) {
+    for (let n = 1; n <= 25; n++) {
       ok(Array.isArray(QUIZZES[n]) && QUIZZES[n].length >= 12, `full course: QUIZZES[${n}] registered with at least 12 questions (got ${QUIZZES[n]?.length ?? 0})`);
     }
   }

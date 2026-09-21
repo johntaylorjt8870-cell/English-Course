@@ -19,7 +19,7 @@ function ok(cond, msg) {
 function src(lesson, file) {
   return readFileSync(join(ROOT, lesson, file), "utf8");
 }
-ok(lessons.length === 24, `full-course regression inventory contains 24 lessons (got ${lessons.length})`);
+ok(lessons.length === 25, `full-course regression inventory contains 25 lessons (got ${lessons.length})`);
 // يقتطع جسم دالة بالاسم: من تعريفها حتى بداية الدالة التالية
 function fnBody(code, name) {
   const start = code.search(new RegExp(`function ${name}\\s*\\(`));
@@ -1414,7 +1414,9 @@ for (const [l, fn] of LTR_SPOTS) {
   ok(app.includes('import { SLIDES as L23_SLIDES } from "./lessons/lesson23/data"'), "App reads Lesson23 slide count for hub card");
   ok(app.includes('n: 23,') && app.includes('href: "#/lesson/23"'), "App registers one Lesson 23 hub card");
   ok(app.includes('route === 23') && app.includes('<Lesson23 onExit={goHome} />'), "App registers Lesson 23 hash route");
-  const q23 = q23Start === -1 ? "" : bank.slice(q23Start, bank.indexOf("  ],\n};", q23Start));
+  const q23Next = bank.slice(q23Start + 5).search(/\n  \d+: \[/);
+  const q23End = q23Next === -1 ? bank.indexOf("  ],\n};", q23Start) : q23Start + 5 + q23Next;
+  const q23 = q23Start === -1 ? "" : bank.slice(q23Start, q23End);
   ok(q23Start !== -1, "lesson23: quizBank block for lesson 23 exists");
   ok((q23.match(/\{ ar:/g) || []).length === 12, `lesson23: quizBank has 12 new quiz questions (got ${(q23.match(/\{ ar:/g) || []).length})`);
   for (const coverage of ["furniture", "an egg", "a rice", "Are there ___ books on the shelf?", "There isn't ___ money in the box.", "___ some water in the bottle.", "___ three eggs on the table.", "___ water do you drink?", "___ books are on the shelf?", "much information", "two bottles of water", "a piece of advice"]) {

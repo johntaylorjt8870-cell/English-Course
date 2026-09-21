@@ -401,4 +401,20 @@ export const QUIZZES: Record<number, QuizQ[]> = {
     { ar: "كيف تقول: زجاجتا ماء؟", opts: ["two bottles of water", "two waters", "two water", "a two water"], answer: 0, why: "لا نعدّ الماء نفسه بل نعدّ الوحدات ← two bottles of water." },
     { ar: "أكمل: أعطتني نصيحة قبل الامتحان.", en: "She gave me ___ before the exam.", opts: ["a piece of advice", "an advice", "advices", "a advices"], answer: 0, why: "advice غير معدود ← نعدّ pieces: a piece of advice." },
   ],
+
+  // ---------------- الدرس 25 — Past Continuous ----------------
+  25: [
+    { ar: "أكمل: At 8:00 last night, I ___ TV.", en: "At 8:00 last night, I ___ TV.", opts: ["was watching", "watched", "watch", "is watching"], answer: 0, why: "At 8:00 last night وقت محدد في الماضي → Past Continuous: was watching." },
+    { ar: "أكمل: She ___ when the phone rang.", en: "She ___ when the phone rang.", opts: ["was cooking", "cooked", "cooks", "is cooking"], answer: 0, why: "فعل مستمر قاطعه حدث آخر → Past Continuous + when + Past Simple." },
+    { ar: "اختر صيغة was/were الصحيحة: They ___ sleeping.", en: "They ___ sleeping.", opts: ["was", "were", "is", "are"], answer: 1, why: "They جمع → were." },
+    { ar: "اختر صيغة -ing الصحيحة: make → ?", opts: ["making", "makeing", "makking", "maiking"], answer: 0, why: "make تنتهي بـ e: نحذف e ثم + ing → making." },
+    { ar: "اختر النفي الصحيح: He was studying. → ?", en: "He was studying. → ?", opts: ["He wasn't studying.", "He didn't studying.", "He wasn't study.", "He didn't was studying."], answer: 0, why: "نفي Past Continuous: was/were + not + verb-ing — لا نستخدم didn't." },
+    { ar: "ما السؤال الصحيح؟ They were playing. → ?", en: "They were playing. → ?", opts: ["Were they playing?", "Was they playing?", "Did they playing?", "Are they playing?"], answer: 0, why: "نقلب were قبل They: Were they playing? وليس Did." },
+    { ar: "أجب بـ Yes عن: Was he sleeping?", en: "Was he sleeping?", opts: ["Yes, he was.", "Yes, he did.", "Yes, he is.", "Yes, he were."], answer: 0, why: "الإجابة القصيرة تكرر was/were: Yes, he was. وليس Yes, he did." },
+    { ar: "اختر Wh-question الصحيح:", opts: ["What were you doing?", "What was you doing?", "What did you doing?", "What you were doing?"], answer: 0, why: "What + were + you + verb-ing — البنية: Wh + was/were + subject + verb-ing?" },
+    { ar: "اختر الجملة الصحيحة لفعلين متوازيين:", opts: ["While I was reading, she was writing.", "While I was reading, she wrote.", "While I read, she was writing.", "I was reading while she write."], answer: 0, why: "حدثان متوازيان → While + Past Continuous + Past Continuous." },
+    { ar: "اختر الجملة الصحيحة مع when:", opts: ["I was walking home when it started to rain.", "I was walking home when it was starting to rain.", "I walked home when it was raining.", "I was walking home when it starts to rain."], answer: 0, why: "الشكل الأساسي: Past Continuous + when + Past Simple — it started to rain هو الحدث القاطع." },
+    { ar: "أي جملة تمثل الخلفية في قصة؟", opts: ["The wind was blowing and the rain was falling.", "The wind blew and the rain fell.", "The wind is blowing.", "The wind blows. "], answer: 0, why: "الخلفية في القصة تُبنى بـ Past Continuous: was blowing / was falling." },
+    { ar: "اختر الجملة الصحيحة:", opts: ["We weren't sleeping at midnight.", "We wasn't sleeping at midnight.", "We weren't sleep at midnight.", "We didn't sleeping at midnight."], answer: 0, why: "We جمع → weren't + verb-ing: weren't sleeping." },
+  ],
 };

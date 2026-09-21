@@ -23,6 +23,7 @@ import Lesson21 from "./lessons/lesson21/Lesson21";
 import Lesson22 from "./lessons/lesson22/Lesson22";
 import Lesson23 from "./lessons/lesson23/Lesson23";
 import Lesson24 from "./lessons/lesson24/Lesson24";
+import Lesson25 from "./lessons/lesson25/Lesson25";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -48,6 +49,7 @@ import { SLIDES as L21_SLIDES } from "./lessons/lesson21/data";
 import { SLIDES as L22_SLIDES } from "./lessons/lesson22/data";
 import { SLIDES as L23_SLIDES } from "./lessons/lesson23/data";
 import { SLIDES as L24_SLIDES } from "./lessons/lesson24/data";
+import { SLIDES as L25_SLIDES } from "./lessons/lesson25/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 import SitePasswordGate from "./shared/SitePasswordGate";
 
@@ -300,6 +302,15 @@ const CARDS: Card[] = [
     href: "#/lesson/24",
     grad: "from-cyan-600 to-indigo-700",
   },
+  {
+    n: 25,
+    title: "الدرس 25: Past Continuous — الماضي المستمر",
+    en: "Past Continuous",
+    emoji: "🎬",
+    stats: `${L25_SLIDES.length} شريحة · 8 تمارين + IQ200 + Final Boss · THE PAST CAMERA`,
+    href: "#/lesson/25",
+    grad: "from-indigo-600 to-violet-700",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -401,6 +412,7 @@ export default function App() {
   else if (route === 22) page = <Lesson22 onExit={goHome} />;
   else if (route === 23) page = <Lesson23 onExit={goHome} />;
   else if (route === 24) page = <Lesson24 onExit={goHome} />;
+  else if (route === 25) page = <Lesson25 onExit={goHome} />;
   else page = <Hub />;
   return (
     <SitePasswordGate>

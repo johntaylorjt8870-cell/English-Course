@@ -21,7 +21,7 @@ import { LatinRuns } from "./bidi";
  * اختيارات الطالب ولا التصحيح ولا إعادة الاختبار.
  */
 
-const TEACHER_PASSWORD = "63971";
+const TEACHER_PASSWORD = "somer173";
 const LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H"];
 
 export default function TeachersSpace({

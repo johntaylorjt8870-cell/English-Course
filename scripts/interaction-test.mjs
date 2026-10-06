@@ -4,7 +4,7 @@
  *   2) بعد التحقق: تغذية راجعة كاملة، والقفل يمنع تغيير الإجابة.
  *   3) إعادة الاختبار تعيد الحالة المحايدة.
  *   4) فضاء المعلم مقفلة أولًا، كلمة مرور خاطئة لا تسرّب المفتاح،
- *      وكلمة المرور 63971 تفتح المفتاح نفسه (نفس أسئلة الاختبار).
+ *      وكلمة المرور somer173 تفتح المفتاح نفسه (نفس أسئلة الاختبار).
  *
  * الدروس: 1، 10، 13، 17، 19، 20، 21، 22، 23، 24، 26
  * تشغيل: node scripts/interaction-test.mjs
@@ -177,11 +177,11 @@ for (const lesson of LESSONS) {
   ok(!txt().includes("الإجابة الصحيحة"), `L${lesson} wrong password leaks nothing`);
   ok(txt().includes("🔒 مقفلة"), `L${lesson} still locked after wrong password`);
 
-  setNativeValue(pw, "63971");
+  setNativeValue(pw, "somer173");
   await tick();
   byText(el, "فتح المساحة").click();
   await tick();
-  ok(txt().includes("Unlocked"), `L${lesson} 63971 unlocks Teacher's Space`);
+  ok(txt().includes("Unlocked"), `L${lesson} somer173 unlocks Teacher's Space`);
   ok(txt().includes("الإجابة الصحيحة"), `L${lesson} answer key visible after unlock`);
   ok(!txt().includes("🔒 مقفلة"), `L${lesson} lock badge gone after unlock`);
 

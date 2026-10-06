@@ -1727,7 +1727,7 @@ try {
   {
     const lessonsDir = join(root, "src", "lessons");
     const lessonFolders = readdirSync(lessonsDir).filter((d) => /^lesson\d+$/.test(d));
-    ok(lessonFolders.length === 27, `full course: 27 lesson folders exist (got ${lessonFolders.length})`);
+    ok(lessonFolders.length === 28, `full course: 28 lesson folders exist (got ${lessonFolders.length})`);
     const missing = lessonFolders.filter((folder) => {
       const n = folder.replace("lesson", "");
       return !(
@@ -1736,14 +1736,14 @@ try {
     });
     ok(missing.length === 0, `full course: every lesson folder has LessonN.tsx + data.ts (missing: ${missing.join(", ")})`);
     const appSource = readFileSync(join(root, "src", "App.tsx"), "utf8");
-    for (let n = 1; n <= 27; n++) {
+    for (let n = 1; n <= 28; n++) {
       ok(
         appSource.includes(`route === ${n}`) && appSource.includes(`<Lesson${n} onExit={goHome} />`),
         `full course: Lesson ${n} is routed in App.tsx`
       );
     }
-    // Lessons 1–26 use the shared FinalQuiz/quizBank system; Lesson 27 ships its own
-    // structured 20-question assessment (audited in scripts/audit-lesson27.mjs instead).
+    // Lessons 1–26 use the shared FinalQuiz/quizBank system; Lessons 27–28 ship their own
+    // structured 20-question assessments (audited in scripts/audit-lesson27.mjs / audit-lesson28.mjs).
     for (let n = 1; n <= 26; n++) {
       ok(Array.isArray(QUIZZES[n]) && QUIZZES[n].length >= 12, `full course: QUIZZES[${n}] registered with at least 12 questions (got ${QUIZZES[n]?.length ?? 0})`);
     }

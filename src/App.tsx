@@ -26,6 +26,7 @@ import Lesson24 from "./lessons/lesson24/Lesson24";
 import Lesson25 from "./lessons/lesson25/Lesson25";
 import Lesson26 from "./lessons/lesson26/Lesson26";
 import Lesson27 from "./lessons/lesson27/Lesson27";
+import Lesson28 from "./lessons/lesson28/Lesson28";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -54,6 +55,7 @@ import { SLIDES as L24_SLIDES } from "./lessons/lesson24/data";
 import { SLIDES as L25_SLIDES } from "./lessons/lesson25/data";
 import { SLIDES as L26_SLIDES } from "./lessons/lesson26/data";
 import { SLIDES as L27_SLIDES } from "./lessons/lesson27/data";
+import { SLIDES as L28_SLIDES } from "./lessons/lesson28/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 import SitePasswordGate from "./shared/SitePasswordGate";
 
@@ -333,6 +335,15 @@ const CARDS: Card[] = [
     href: "#/lesson/27",
     grad: "from-violet-600 to-indigo-500",
   },
+  {
+    n: 28,
+    title: "الدرس 28: Past Perfect vs Past Simple",
+    en: "Past Perfect vs Past Simple",
+    emoji: "🧭",
+    stats: `${L28_SLIDES.length} شريحة · 9 تحديات + اختبار 20 سؤالًا · THE TIMELINE MASTER`,
+    href: "#/lesson/28",
+    grad: "from-indigo-600 to-sky-500",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -437,6 +448,7 @@ export default function App() {
   else if (route === 25) page = <Lesson25 onExit={goHome} />;
   else if (route === 26) page = <Lesson26 onExit={goHome} />;
   else if (route === 27) page = <Lesson27 onExit={goHome} />;
+  else if (route === 28) page = <Lesson28 onExit={goHome} />;
   else page = <Hub />;
   return (
     <SitePasswordGate>

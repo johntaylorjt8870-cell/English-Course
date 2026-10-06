@@ -27,6 +27,7 @@ import Lesson25 from "./lessons/lesson25/Lesson25";
 import Lesson26 from "./lessons/lesson26/Lesson26";
 import Lesson27 from "./lessons/lesson27/Lesson27";
 import Lesson28 from "./lessons/lesson28/Lesson28";
+import Lesson29 from "./lessons/lesson29/Lesson29";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -344,6 +345,15 @@ const CARDS: Card[] = [
     href: "#/lesson/28",
     grad: "from-indigo-600 to-sky-500",
   },
+  {
+    n: 29,
+    title: "الدرس 29: Past Perfect Continuous — الماضي التام المستمر",
+    en: "Past Perfect Continuous",
+    emoji: "⏳",
+    stats: "44 قسمًا · 12 مختبرًا تفاعليًا · اختبار 20 سؤالًا · IQ200",
+    href: "#/lesson/29",
+    grad: "from-sky-600 to-violet-700",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -449,6 +459,7 @@ export default function App() {
   else if (route === 26) page = <Lesson26 onExit={goHome} />;
   else if (route === 27) page = <Lesson27 onExit={goHome} />;
   else if (route === 28) page = <Lesson28 onExit={goHome} />;
+  else if (route === 29) page = <Lesson29 onExit={goHome} />;
   else page = <Hub />;
   return (
     <SitePasswordGate>

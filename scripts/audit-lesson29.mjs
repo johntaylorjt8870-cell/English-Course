@@ -1,0 +1,16 @@
+import {readFileSync} from 'node:fs';
+import {join} from 'node:path';
+import {createRequire} from 'node:module';
+const root=join(process.cwd()); const fail=[]; let checks=0; const ok=(x,m)=>{checks++;if(!x)fail.push(m)};
+const data=readFileSync(join(root,'src/lessons/lesson29/data.ts'),'utf8');
+const view=readFileSync(join(root,'src/lessons/lesson29/Lesson29.tsx'),'utf8');
+ok((data.match(/s\((\d+),/g)||[]).length===44,'all 44 numbered source sections indexed');
+for(let i=1;i<=44;i++) ok(data.includes(`s(${i},`),`source section ${i} present`);
+for(const phrase of ['I had been studying for three hours when my friend called.','I had cleaned the room before my parents arrived.','Her clothes were wet because she had been walking in the rain.','I had known him for years.','When Mia arrived at the science lab','When the rescue team arrived'])ok(data.includes(phrase),`source phrase preserved: ${phrase}`);
+ok(data.includes('export const TEST_29='),'dedicated test exists'); ok((data.match(/\['(?:single|tf|multi|order|match)'/g)||[]).length===20,'exactly 20 test questions');
+ok(data.includes('TEST_29_SOLUTIONS=TEST_29.map'),'20 solution set derives from test data');
+for(const lab of ['Four-Tense Timeline Lab','FOR vs SINCE Lab','Past Perfect vs Past Perfect Continuous Switch','Four-Tense Story Map'])ok(view.includes(lab),`interactive lab: ${lab}`);
+for(const area of ['data-area="lesson29-test"','data-area="lesson29-solutions"','data-area="lesson29-teacher"'])ok(view.includes(area),`area separation: ${area}`);
+ok(view.includes("TEACHER_PASSWORD_29='somer173'" )||data.includes("TEACHER_PASSWORD_29='somer173'"),'teacher password retained');
+ok(view.includes('dir="ltr"'),'English content has LTR isolation');
+if(fail.length){console.error(`✕ Lesson 29 audit FAILED (${fail.length}/${checks})\n`+fail.map(x=>'  - '+x).join('\n'));process.exit(1)}console.log(`✓ Lesson 29 audit passed (${checks} checks)`);

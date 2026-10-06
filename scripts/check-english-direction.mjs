@@ -19,7 +19,7 @@ function ok(cond, msg) {
 function src(lesson, file) {
   return readFileSync(join(ROOT, lesson, file), "utf8");
 }
-ok(lessons.length === 27, `full-course regression inventory contains 27 lessons (got ${lessons.length})`);
+ok(lessons.length === 28, `full-course regression inventory contains 28 lessons (got ${lessons.length})`);
 // يقتطع جسم دالة بالاسم: من تعريفها حتى بداية الدالة التالية
 function fnBody(code, name) {
   const start = code.search(new RegExp(`function ${name}\\s*\\(`));
@@ -1522,6 +1522,79 @@ for (const [l, fn] of LTR_SPOTS) {
   const q26 = q26Start === -1 ? "" : bank.slice(q26Start, q26End === -1 ? undefined : q26End);
   ok((q26.match(/\{ ar:/g) || []).length === 12, `lesson26: quizBank has 12 questions (got ${(q26.match(/\{ ar:/g) || []).length})`);
   ok(!/rather than/.test(q26), "lesson26: quiz explanations are free of stray English connectives");
+}
+
+// ---------- 15) lesson 28 — Past Perfect vs Past Simple (🧭 THE TIMELINE MASTER) ----------
+{
+  const d28 = src("lesson28", "data.ts");
+  const t28 = src("lesson28", "Lesson28.tsx");
+  const app = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "App.tsx"), "utf8");
+
+  ok(t28.includes("../../shared/bidi"), "lesson28: uses the shared bidi helper (LatinRuns)");
+  ok(t28.includes("data-source-section"), "lesson28: renders source-section markers");
+  ok(t28.includes("data-en-seq"), "lesson28: exposes interactive lab hooks (data-en-seq)");
+  ok(!t28.includes("split(/(\\s+)/)"), "lesson28: never splits English into isolated tokens");
+  ok(t28.includes('direction: "ltr"'), "lesson28: English wrappers force direction ltr inline as well as by class");
+  ok(t28.includes("تحقق من الإجابات"), "lesson28: keeps the neutral → check convention");
+  ok(t28.includes("data-reveal-block"), "lesson28: delayed reveal blocks are explicit");
+  ok(d28.includes("export const SOURCE_SECTIONS"), "lesson28: SOURCE_SECTIONS ledger exists");
+  ok(d28.includes("export const SOURCE_NUMBERED_COUNT = 40"), "lesson28: source ledger counts 40 numbered sections");
+  ok(/export const SOURCE_LEDGER_COUNT = SOURCE_SECTIONS\.length/.test(d28), "lesson28: source ledger count is derived from the full section list");
+  ok(d28.includes("export const INTENTIONALLY_WRONG_28"), "lesson28: intentional-error inventory is explicit");
+  ok(d28.includes("export const LOGIC_NOTE_S33"), "lesson28: ㉝ source-logic note is explicit");
+  ok(d28.includes('sourceAnswer: "A"'), "lesson28: ㉝ keeps the original source answer verbatim");
+  for (const phrase of [
+    "The train had left before I arrived.",
+    "I visited my uncle yesterday.",
+    "I had visited my uncle before I went to the museum.",
+    "I lost my key.",
+    "I had lost my key before I arrived home.",
+    "When I arrived, the shop had closed.",
+    "When Maya arrived, Daniel had left.",
+    "When I opened the box, someone had taken the necklace.",
+    "The students had left before the teacher arrived.",
+    "The students left before the teacher arrived.",
+    "When the teacher arrived, the students had left.",
+    "After I had finished my homework, I played a game.",
+    "After I finished my homework, I played a game.",
+    "By the time we arrived, the movie had started.",
+    "By the time the firefighters arrived, the fire had spread.",
+    "When I called Lina, she had already gone to bed.",
+    "When we reached the stadium, the game had already started.",
+    "When I entered the room, the teacher had just arrived.",
+    "I arrived at the airport, but my flight had already left.",
+    "Sara opened the refrigerator, but someone had eaten all the cake.",
+    "I was walking home when I realized that I had forgotten my wallet.",
+    "When I arrived at the station, the train had already left, and people were waiting for the next train.",
+    "Emma entered the kitchen.",
+    "go → went → gone",
+    "eat → ate → eaten",
+    "see → saw → seen",
+    "Had + subject + V3?",
+    "I visited Paris in 2024.",
+    "I had visited Paris before I moved to France.",
+    "I visited Paris and took many photos.",
+    "I woke up, brushed my teeth, ate breakfast, and left the house.",
+    "When I left the house, I realized that I had forgotten my backpack.",
+    "I arrived home.",
+    "I realized that I had left my phone at school.",
+    "When the explorers reached the cave, they discovered that someone had already entered it. They were surprised because the cave was supposed to be empty.",
+    "When I arrived, Tom had eaten lunch.",
+    "When Sara called me, I had finished my work.",
+    "When the police arrived, the thief had escaped.",
+    "A. When John arrived, Mary had left.",
+    "B. When Mary arrived, John had left.",
+    "A. When Sarah arrived, Tom had left.",
+    "B. When Tom left, Sarah had arrived.",
+    "When Daniel entered the laboratory, the scientists were discussing the experiment. They had already completed the first stage, so Daniel joined the second stage.",
+    "When Alex entered the house, his sister was sitting in the living room. She was reading a book, and their parents were preparing dinner. Alex looked around and realized that someone had opened the back door. The family had never left it unlocked before.",
+    "I was running in the park when I saw a dog. I realized that I had seen this dog before.",
+    "When I arrived at the airport, the plane had already taken off, people were running toward the gates, and an employee was talking to a confused passenger.",
+  ]) ok(d28.includes(phrase), `lesson28: preserves direction-sensitive source phrase ${phrase.slice(0, 48)}`);
+  const OLD28 = ["Englishwith", "sommer"].join("");
+  ok(!d28.includes(OLD28) && !t28.includes(OLD28), "lesson28: keeps the EnglishwithSomeR branding");
+  ok(app.includes("Lesson28 onExit={goHome}") && app.includes("route === 28"), "lesson28: routed in App.tsx");
+  ok(app.includes("الدرس 28: Past Perfect vs Past Simple") && app.includes("#/lesson/28"), "lesson28: hub card present");
 }
 
 // ---------- النتيجة ----------

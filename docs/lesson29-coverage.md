@@ -1,102 +1,92 @@
-# Lesson 29 coverage ledger — Past Perfect Continuous
+# Lesson 29 coverage ledger — native corrective implementation
 
-## Fidelity and integration
+## Architecture
 
-Lesson 29 is additive. Lessons 1–28 were not rewritten. The lesson is registered
-in `src/App.tsx` at `#/lesson/29`, with a hub card, and uses the existing React,
-RTL shell, `LatinRuns`, password, and area-separation conventions. No new
-runtime dependency was added.
+Lesson 29 now uses the same native full-screen lesson pattern as Lessons 27 and
+28: one step at a time, a persistent progress bar and counter, desktop step rail,
+mobile drawer, Previous/Next controls, keyboard arrows/space navigation, and four
+separate areas (Student Lesson, Test, Solutions, Teacher).
 
-The source ledger in `src/lessons/lesson29/data.ts` contains all numbered
-sections **①–㊹** in source order. The student view renders the cover, objectives,
-all 44 numbered sections, the final summary, four-tense comparison, and final
-rescue-team challenge. English strings are isolated through `LatinRuns` and
-explicit `dir="ltr"` containers. The existing no-flag branding validation is
-respected; the source title is preserved without adding a country-flag emoji to
-the application chrome.
+The implementation intentionally keeps the existing site-password infrastructure
+and does not change Lessons 1–28 or shared routing. Teacher access remains
+`somer173`; the global site password remains `CloseYourEyes173` in the existing
+site gate.
 
-## Numbered source map
+There are exactly **48 navigable steps**:
 
-| Sections | Implementation |
+- opening cover and objectives: steps 1–2
+- numbered source sections ①–㊹: steps 3–46
+- final summary plus four-tense recap: step 47
+- final IQ200 rescue-team challenge: step 48
+
+The source ledger in `src/lessons/lesson29/data.ts` remains authoritative and all
+44 numbered sections are rendered in source order. The final summary, four-tense
+comparison, and final challenge are also rendered. English content is passed
+through `LatinRuns` and explicit LTR containers; Arabic UI remains RTL.
+
+## Source coverage map
+
+| Source | Coverage |
 | --- | --- |
-| ①–⑤ | Source-ledger cards: definition, timeline, formula, invariant `had`, role of `been` |
-| ⑥–⑩ | Source-ledger cards plus Past Perfect/Continuous focus lab and FOR/SINCE lab |
-| ⑪–⑮ | Source-ledger cards plus duration/point and completion/activity interactions |
-| ⑯–㉑ | nuance, visible effect, non-continuation, stative verbs, and -ing spelling cards |
-| ㉒–㉘ | negatives, questions, short answers, Wh questions, `how long`, `for`, and `since` |
-| ㉙–㉟ | four-tense comparison, Daniel Grammar Detective, IQ200 choices, and stative trap |
-| ㊱–㊵ | all three source exercises, source answers, meaning selection, and Smart-Time Challenge |
-| ㊶–㊷ | complete Mia story, analysis, and meaningful story timeline map |
-| ㊸–㊹ | Boss Battle, decision process, final summary, and rescue-team four-tense challenge |
+| ①–⑤ | definition, timeline, golden formula, invariant `had`, and role of `been` |
+| ⑥–⑦ | Past Perfect versus Past Perfect Continuous |
+| ⑧–⑪ | `for`, `since`, contrast, and IQ200 distinction |
+| ⑫–⑭ | examples and Past Continuous versus Past Perfect Continuous |
+| ⑮–⑱ | completion/activity, visible effect, and non-continuation nuance |
+| ⑲–㉑ | stative verbs and regular `-ing` spelling |
+| ㉒–㉘ | negative, questions, short answers, Wh questions, `how long`, `for`, `since` |
+| ㉙–㉟ | four-tense comparison, study comparison, detective, IQ200, and meaning rules |
+| ㊱–㊵ | source exercises, error correction, tense selection, and Smart Tense Challenge |
+| ㊶–㊷ | complete Mia story and story timeline |
+| ㊸–㊹ | Boss Battle and final IQ200 rule |
+| Final material | summary, four-tense recap, and rescue-team final challenge |
 
-No source exercise is substituted. Source answer wording is retained in the
-ledger and teacher notes; platform feedback is clearly presented as interaction
-scaffolding rather than replacement curriculum.
+## Interactive learning
 
-## Interactive mapping
+The student steps include genuine stateful interactions for:
 
-1. **Four-Tense Timeline Lab** — same `study` verb, four viewpoints.
-2. **Duration vs point-in-time** — source ⑬–⑭ contrast is presented through the
-   timeline lab and source cards.
-3. **Past Perfect vs Past Perfect Continuous Switch** — bicycle completion vs
-   repair activity/duration.
-4. **FOR vs SINCE Lab** — six duration/starting-point sorting controls.
-5. **Timeline builder** — start → continue → past point is represented in the
-   source timeline and duration lab.
-6. **Result / Cause Lab** — wet clothes and muddy ground source examples are
-   retained and discussed in ⑯–⑱.
-7. **Stative Verb Trap** — `had known` vs `had been knowing` in ⑲ and ㉟.
-8. **-ING Formation Lab** — the interactive lesson includes the source spelling
-   transformations and feedback is only produced after a selection.
-9. **Grammar Detective** — Daniel gym sentence and tense roles in ㉛.
-10. **Four-Tense Story Map** — Mia story labels for seven verb phrases.
-11. **Smart-Time Challenge** — coach/practice questions in ㊵.
-12. **Boss Battle** — all three source choices in ㊸.
+1. Four-Tense Timeline Lab
+2. Formula Builder
+3. FOR vs SINCE Lab
+4. Four-Tense Comparator
+5. Result vs Duration Lab
+6. Stative Verb Trap
+7. interactive source-exercise correction and selection
+8. Mia Story Timeline
+9. Boss Battle
+10. Final IQ200 Challenge
 
-## Test Area
+Platform additions are explicitly labelled **Platform Explanation**. The notes
+preserve the source nuances: Past Perfect Continuous need not continue until the
+later event, `for` does not automatically force PPC, and stative `know` uses
+`I had known him for years`.
 
-`TEST_29` contains exactly **20 newly authored questions**, with single choice,
-true/false, multi-select, ordering, matching, form, meaning, chronology,
-stative verbs, `for`/`since`, negative/question/short-answer, and mixed four-tense
-reasoning. Before submission there is no score, correctness feedback, solution
-text, or answer-key UI. Submit reveals the score; Reset clears answers,
-submission, score, and returns to 0/20.
+## Test, solutions, and teacher areas
 
-## Test Solutions
+- Test Area contains exactly 20 newly authored questions from the existing
+  Lesson 29 data, including single choice, true/false, multi-select, ordering,
+  matching, error analysis, chronology, and meaning-based selection.
+- No score or correctness feedback is shown before Submit. Submit reveals the
+  score; Reset clears answers, submission, score, and state.
+- Test Solutions is separate and gated until test submission or teacher unlock;
+  it contains 20 detailed solution records with explanations and traps.
+- Teacher Area is separate and password-protected with `somer173`. It includes
+  overview, objectives, prerequisites, grammar notes, exercise support, story
+  analysis, Boss Battle guidance, misconceptions, and test-solution access.
 
-`TEST_29_SOLUTIONS` provides exactly 20 gated solution entries. Each includes a
-correct answer, a tense/timeline explanation, and a common trap. The area is
-locked until Test submission or Teacher Area unlock and has a distinct
-`data-area="lesson29-solutions"` marker.
+## Validation
 
-## Teacher Area
-
-`Teacher Area` is distinct and protected by `somer173`. It includes the overview,
-all 10 objectives, detailed notes for form, meaning, timeline, effects, `for`,
-`since`, stative verbs, spelling, questions and short answers, four-tense
-comparison, common mistakes, source-exercise solution notes for ㊱–㊵ and ㊸,
-story/timeline evaluation notes, and a link to Test Solutions. Locked teacher
-content is not rendered before unlock.
-
-## Validation and regression
-
-- `npm run build` — passed. Vite emitted only the existing large-bundle warning.
-- `npm run check:english-direction` — passed (1,470 assertions; 29 lesson inventory).
-- `node scripts/audit-lesson29.mjs` — passed (63 checks).
+- `npm run build` — passed; Vite emitted only the existing large-bundle warning.
+- `npm run check:english-direction` — passed (1,470 assertions).
+- `node scripts/audit-lesson29.mjs` — passed (72 checks).
+- `node scripts/audit-lesson27.mjs` — passed (274 assertions).
 - `node scripts/audit-lesson28.mjs` — passed (330 assertions).
-- Existing direction/audit chain was extended minimally with Lesson 29 audit.
-- Lessons 1–28 source directories and routes remain present; Lesson 28 audit and
-  direction regression pass. The global site password remains in the existing
-  `SitePasswordGate`; Teacher password is unchanged (`somer173`).
-- Runtime browser preview QA was not claimed in this ledger; automated build,
-  render-direction, source, and Lesson 28 regression checks were run.
+- `node scripts/interaction-test.mjs` — passed (558 tests).
+- `git diff --check` — passed.
+- Browser visual verification — not performed; no visual browser claim is made.
 
-## Files changed for Lesson 29
+## Corrective files
 
-- `src/lessons/lesson29/data.ts`
 - `src/lessons/lesson29/Lesson29.tsx`
-- `src/App.tsx`
-- `scripts/check-english-direction.mjs`
 - `scripts/audit-lesson29.mjs`
-- `package.json`
-- `docs/lesson29-coverage.md`
+- this coverage ledger

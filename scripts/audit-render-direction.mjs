@@ -1727,7 +1727,7 @@ try {
   {
     const lessonsDir = join(root, "src", "lessons");
     const lessonFolders = readdirSync(lessonsDir).filter((d) => /^lesson\d+$/.test(d));
-    ok(lessonFolders.length === 28, `full course: 28 lesson folders exist (got ${lessonFolders.length})`);
+    ok(lessonFolders.length === 29, `full course: 29 lesson folders exist (got ${lessonFolders.length})`);
     const missing = lessonFolders.filter((folder) => {
       const n = folder.replace("lesson", "");
       return !(
@@ -1736,7 +1736,7 @@ try {
     });
     ok(missing.length === 0, `full course: every lesson folder has LessonN.tsx + data.ts (missing: ${missing.join(", ")})`);
     const appSource = readFileSync(join(root, "src", "App.tsx"), "utf8");
-    for (let n = 1; n <= 28; n++) {
+    for (let n = 1; n <= 29; n++) {
       ok(
         appSource.includes(`route === ${n}`) && appSource.includes(`<Lesson${n} onExit={goHome} />`),
         `full course: Lesson ${n} is routed in App.tsx`

@@ -19,7 +19,7 @@ function ok(cond, msg) {
 function src(lesson, file) {
   return readFileSync(join(ROOT, lesson, file), "utf8");
 }
-ok(lessons.length === 26, `full-course regression inventory contains 26 lessons (got ${lessons.length})`);
+ok(lessons.length === 27, `full-course regression inventory contains 27 lessons (got ${lessons.length})`);
 // يقتطع جسم دالة بالاسم: من تعريفها حتى بداية الدالة التالية
 function fnBody(code, name) {
   const start = code.search(new RegExp(`function ${name}\\s*\\(`));
@@ -1226,7 +1226,7 @@ for (const [l, fn] of LTR_SPOTS) {
     ok(q20.includes(coverage), `lesson20: shared quiz covers ${coverage}`);
   }
   ok(finalQuiz.includes("disabled={checked}") && finalQuiz.includes("setChecked(true)") && finalQuiz.includes("const reset"), "shared FinalQuiz preserves neutral/check/lock/reset lifecycle");
-  ok(teachers.includes('const TEACHER_PASSWORD = "63971"'), "Teacher’s Space gate remains password 63971");
+  ok(teachers.includes('const TEACHER_PASSWORD = "somer173"'), "Teacher’s Space gate remains password somer173");
 
   // التطبيق/المركز: بطاقة واحدة ومسار واحد للدرس الجديد، بلا تعديل مسارات الدروس السابقة.
   ok(app.includes('import Lesson20 from "./lessons/lesson20/Lesson20"'), "App imports Lesson20");

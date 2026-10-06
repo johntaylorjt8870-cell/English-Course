@@ -25,6 +25,7 @@ import Lesson23 from "./lessons/lesson23/Lesson23";
 import Lesson24 from "./lessons/lesson24/Lesson24";
 import Lesson25 from "./lessons/lesson25/Lesson25";
 import Lesson26 from "./lessons/lesson26/Lesson26";
+import Lesson27 from "./lessons/lesson27/Lesson27";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -52,6 +53,7 @@ import { SLIDES as L23_SLIDES } from "./lessons/lesson23/data";
 import { SLIDES as L24_SLIDES } from "./lessons/lesson24/data";
 import { SLIDES as L25_SLIDES } from "./lessons/lesson25/data";
 import { SLIDES as L26_SLIDES } from "./lessons/lesson26/data";
+import { SLIDES as L27_SLIDES } from "./lessons/lesson27/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 import SitePasswordGate from "./shared/SitePasswordGate";
 
@@ -322,6 +324,15 @@ const CARDS: Card[] = [
     href: "#/lesson/26",
     grad: "from-teal-500 to-orange-400",
   },
+  {
+    n: 27,
+    title: "الدرس 27: Past Perfect — الماضي التام",
+    en: "Past Perfect",
+    emoji: "⏪",
+    stats: `${L27_SLIDES.length} شريحة · 11 تمرينًا + اختبار 20 سؤالًا · THE FLASHBACK DIRECTOR`,
+    href: "#/lesson/27",
+    grad: "from-violet-600 to-indigo-500",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -425,6 +436,7 @@ export default function App() {
   else if (route === 24) page = <Lesson24 onExit={goHome} />;
   else if (route === 25) page = <Lesson25 onExit={goHome} />;
   else if (route === 26) page = <Lesson26 onExit={goHome} />;
+  else if (route === 27) page = <Lesson27 onExit={goHome} />;
   else page = <Hub />;
   return (
     <SitePasswordGate>

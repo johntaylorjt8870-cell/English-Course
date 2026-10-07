@@ -1,19 +1,7 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
-  SLIDES,
   SOURCE_SECTIONS,
-  SOURCE_LEDGER_COUNT,
-  SOURCE_NUMBERED_COUNT,
   SEC,
-  LESSON_TITLE_27,
-  LAB_NAME_27,
-  LAB_MOTTO_27,
-  VIEW_EVENT_TAG,
-  VIEW_PROGRESS_TAG,
-  VIEW_FLASHBACK_TAG,
-  VIEW_EVENT_AR,
-  VIEW_PROGRESS_AR,
-  VIEW_FLASHBACK_AR,
   VERB_TABLE_27,
   EX27_V3,
   EX27_HADHAVE,
@@ -27,6 +15,8 @@ import {
   BOSS_27,
   EX27_FINAL,
   TEST_27,
+  TEST_27_SOLUTIONS,
+  OBJECTIVES_27,
   TEACHER_PASSWORD_27,
   TEACHER_27_OVERVIEW,
   TEACHER_27_NOTES,
@@ -36,2287 +26,2608 @@ import {
   STORY_27_REQUIREMENTS,
   STORY_27_STARTER,
   TYPO_S43_Q2,
-  type Block27,
-  type Exercise27,
-  type Lab27,
-  type Mcq27,
-  type Slide27,
   type TestQ27,
-  type Tone27,
+  type Mcq27,
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
 import { LatinRuns } from "../../shared/bidi";
+import {
+  En,
+  Rich,
+  Frame,
+  Note,
+  Verdict,
+  PartsLine,
+  SentenceCard,
+  Nub,
+  PlatformTag,
+  type Part,
+  type RoleStyle,
+  type FrameAccent,
+} from "../../shared/lessonKit";
 
 // ============================================================
-// ⏪ الدرس 27 — THE FLASHBACK DIRECTOR
-// لوحة الألوان: بنفسجي (⏪) + برتقالي (📸) + نعناعي (🎥)، وخلفية ورقية فاتحة.
-// قواعد العزل: كل وحدة إنجليزية داخل LTR، والنص المختلط عبر LatinRuns.
-// المناطق الأربع: الدرس | منطقة الاختبارات | حلول الاختبارات | منطقة المعلم.
+// ⏪ الدرس 27 — Past Perfect — الماضي التام
+// THE FLASHBACK DIRECTOR — المخرج الذي يرتّب حدثين في الماضي
+//
+// إعادة بناء native multi-step بمعيار الدرس 6 والدرس 29:
+// - فكرة واحدة لكل خطوة · لا جدران نصوص · التفاعل هو الشرح
+// - سجل المصدر (SOURCE_SECTIONS) هو المرجع الحرفي للتغطية والتدقيق
+// - المناطق الأربع: الدرس (53 خطوة) | الاختبار (20 سؤالًا) | الحلول | المعلم (somer173)
 // ============================================================
 
-const EVENT = {
-  tag: VIEW_EVENT_TAG,
-  ar: VIEW_EVENT_AR,
-  chip: "bg-orange-500 text-white",
-  soft: "border-orange-200 bg-orange-50",
-  text: "text-orange-900",
-  ring: "ring-orange-300",
-  bar: "bg-orange-400",
-};
-const PROGRESS = {
-  tag: VIEW_PROGRESS_TAG,
-  ar: VIEW_PROGRESS_AR,
-  chip: "bg-teal-600 text-white",
-  soft: "border-teal-200 bg-teal-50",
-  text: "text-teal-900",
-  ring: "ring-teal-300",
-  bar: "bg-teal-500",
-};
-const FLASHBACK = {
-  tag: VIEW_FLASHBACK_TAG,
-  ar: VIEW_FLASHBACK_AR,
-  chip: "bg-violet-700 text-white",
-  soft: "border-violet-200 bg-violet-50",
-  text: "text-violet-900",
-  ring: "ring-violet-300",
-  bar: "bg-violet-500",
+const ACCENT27: FrameAccent = {
+  step: "bg-violet-700",
+  badge: "bg-violet-100 text-violet-800",
+  tip: "from-violet-800 to-indigo-800",
+  shadow: "shadow-[0_14px_44px_-20px_rgba(109,40,217,0.3)]",
 };
 
-const ARABIC_RX = /[ً-ٿݐ-ݿﭐ-﷿ﹰ-﻿]/;
-const LATIN_RX = /[A-Za-z]/;
-const HEAD_RX = /^(🎥|📸|⏪|🧠|🔥|⭐|⚠️|⚔️|🚨|🕵️|🚀|🏆|🏅|🎬|🧪|🔎|🔍|📖|🐦|🔄|📞|🎯|🔗|✅|💡|🎞️|⏱️|⏳|⚡|🧩|❌|❓|🗣️|🟢)/u;
-const NUM_RX = /^[①②③④⑤⑥⑦⑧⑨⑩]/;
+// ---------------- نظام أدوار الجملة (تشريح Past Perfect) ----------------
+const R27: Record<string, RoleStyle> = {
+  s: { chip: "bg-sky-100 border-sky-300 text-sky-900", label: "الفاعل" },
+  had: { chip: "bg-violet-100 border-violet-300 text-violet-900", label: "المساعد الثابت" },
+  hadnt: { chip: "bg-rose-100 border-rose-300 text-rose-900", label: "النفي" },
+  v3: { chip: "bg-fuchsia-100 border-fuchsia-300 text-fuchsia-900", label: "التصريف الثالث V3" },
+  v2: { chip: "bg-orange-100 border-orange-300 text-orange-900", label: "الماضي البسيط V2" },
+  conn: { chip: "bg-amber-100 border-amber-300 text-amber-900", label: "أداة الربط" },
+  adv: { chip: "bg-emerald-100 border-emerald-300 text-emerald-900", label: "الظرف" },
+  obj: { chip: "bg-slate-100 border-slate-300 text-slate-900", label: "المفعول/التكملة" },
+};
+const P = (text: string, role: string): Part => ({ text, role });
 
-function isEn(text: string) {
-  return LATIN_RX.test(text) && !ARABIC_RX.test(text);
-}
-
-type Kind = "en" | "ar" | "head" | "bad" | "good" | "num" | "chip" | "arrow";
-
-function kindOf(text: string): Kind {
-  if (text.includes("❌")) return "bad";
-  if (text.startsWith("✅")) return "good";
-  if (NUM_RX.test(text)) return "num";
-  if (HEAD_RX.test(text)) return "head";
-  if (isEn(text)) return "en";
-  if (text.startsWith("→")) return "arrow";
-  return "ar";
-}
-
-// ---------------- Helpers ----------------
-
-function En({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
-      {children}
-    </span>
-  );
-}
-
-function Rich({ text, className = "" }: { text: string; className?: string }) {
-  return (
-    <span className={className}>
-      <LatinRuns text={text} />
-    </span>
-  );
-}
-
-/** شارة تمييز شروح المنصة عن محتوى المصدر المورّد. */
-function PlatformTag() {
-  return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-slate-900 px-2.5 py-0.5 text-[11px] font-black text-white">
-      🛠️ <Rich text="Platform Explanation" />
-    </span>
-  );
-}
-
-function Note({ emoji, text, platform = false }: { emoji: string; text: string; platform?: boolean }) {
-  return (
-    <div className="flex items-start gap-3 rounded-3xl border-2 border-amber-200 bg-amber-50/80 p-4">
-      <span className="text-2xl">{emoji}</span>
-      <div className="min-w-0 flex-1">
-        {platform && (
-          <div className="mb-1.5">
-            <PlatformTag />
-          </div>
-        )}
-        <Rich text={text} className="text-base font-semibold leading-relaxed text-slate-800 md:text-lg" />
-      </div>
-    </div>
-  );
-}
-
-function Frame({
-  mascot,
-  step,
-  badge,
-  title,
-  lead,
-  children,
-  tip,
-  sourceHeading,
-}: {
-  mascot: string;
-  step?: string;
-  badge?: string;
-  title: ReactNode;
-  lead?: string;
-  children: ReactNode;
-  tip?: string;
-  sourceHeading?: string;
-}) {
-  return (
-    <section
-      dir="rtl"
-      className="relative overflow-hidden rounded-[1.75rem] border-2 border-violet-900/[0.07] bg-white p-5 shadow-[0_16px_44px_-24px_rgba(124,58,237,0.45)] md:p-8"
-    >
-      <div className="pointer-events-none absolute -left-1 top-3 select-none text-4xl anim-drift md:text-5xl" aria-hidden>
-        {mascot}
-      </div>
-      <div className="flex flex-wrap items-center gap-2.5">
-        {step && (
-          <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-violet-700 text-lg font-bold text-white shadow-sm">
-            {step}
-          </span>
-        )}
-        {badge && (
-          <span className="rounded-full bg-violet-100 px-3.5 py-1.5 text-sm font-bold text-violet-800">
-            <Rich text={badge} />
-          </span>
-        )}
-      </div>
-      {sourceHeading && (
-        <div
-          data-source-section={sourceHeading}
-          className="mt-3 flex flex-wrap items-center gap-1.5 rounded-xl border border-violet-100 bg-violet-50/70 px-3 py-2 text-xs font-bold text-violet-900"
-        >
-          <span className="rounded-md bg-white px-1.5 py-0.5 text-violet-700">SOURCE SECTION</span>
-          <Rich text={sourceHeading} />
-        </div>
-      )}
-      <h2 className="font-head mt-3 max-w-[92%] text-2xl font-bold leading-snug text-slate-900 md:text-[2rem]">{title}</h2>
-      {lead && (
-        <div className="mt-2 max-w-[94%] text-base text-slate-500 md:text-lg">
-          <Rich text={lead} />
-        </div>
-      )}
-      <div className="mt-5 space-y-3">{children}</div>
-      {tip && (
-        <div className="mt-5 flex items-center gap-3 rounded-2xl bg-gradient-to-l from-violet-700 to-indigo-600 p-4 text-white">
-          <span className="text-2xl">🔦</span>
-          <span className="text-base font-semibold md:text-lg">
-            <Rich text={tip} />
-          </span>
-        </div>
-      )}
-    </section>
-  );
-}
-
-function LabPanel({
-  emoji,
-  label,
-  ar,
-  children,
-  seq,
-}: {
-  emoji: string;
-  label: string;
-  ar?: string;
-  children: ReactNode;
-  seq?: string;
-}) {
-  return (
-    <div
-      data-en-seq={seq}
-      className="rounded-3xl border-2 border-violet-200 bg-gradient-to-br from-violet-50 via-indigo-50 to-amber-50/70 p-3.5 sm:p-4"
-    >
-      <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-violet-100 bg-white px-3 py-2">
-        <span className="text-xl">{emoji}</span>
-        <En className="text-[11px] font-black uppercase tracking-[0.16em] text-violet-700">{label}</En>
-        {ar && <Rich text={ar} className="text-sm font-bold text-slate-600" />}
-      </div>
-      {children}
-    </div>
-  );
-}
-
-function FormulaStrip({
-  items,
-  tone = "violet",
-}: {
-  items: readonly string[];
-  tone?: "violet" | "orange" | "teal" | "amber" | "sky" | "rose";
-}) {
-  const colors: Record<string, string> = {
-    violet: "border-violet-200 bg-white text-violet-900",
-    orange: "border-orange-200 bg-white text-orange-900",
-    teal: "border-teal-200 bg-white text-teal-900",
-    amber: "border-amber-200 bg-white text-amber-900",
-    sky: "border-sky-200 bg-white text-sky-900",
-    rose: "border-rose-200 bg-white text-rose-900",
-  };
-  return (
-    <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row flex flex-wrap justify-center gap-2">
-      {items.map((item) => (
-        <En key={item} className={`rounded-xl border-2 px-3 py-2 text-sm font-black ${colors[tone]}`}>
-          {item}
-        </En>
-      ))}
-    </div>
-  );
-}
-
-/** سطر مصدري واحد — كل وحدة تُعرض بترتيبها وبعزلها الصحيح. */
-function LineRow({ text, tone }: { text: string; tone?: Tone27 }) {
-  const kind = tone === "en" ? "en" : tone === "good" ? "good" : tone === "bad" ? "bad" : tone === "head" ? "head" : kindOf(text);
-  if (kind === "en") {
-    return (
-      <div dir="ltr" className="ltr-row">
-        <En className="block w-full rounded-2xl border-2 border-slate-100 bg-white px-4 py-2.5 text-left text-lg font-extrabold text-slate-900 shadow-sm md:text-xl">
-          {text}
-        </En>
-      </div>
-    );
-  }
-  if (kind === "bad") {
-    return (
-      <div dir="ltr" className="ltr-row">
-        <En className="block w-full rounded-2xl border-2 border-rose-200 bg-rose-50 px-4 py-2.5 text-left text-base font-extrabold text-rose-800 md:text-lg">
-          {text}
-        </En>
-      </div>
-    );
-  }
-  if (kind === "good") {
-    return (
-      <div dir="ltr" className="ltr-row">
-        <En className="block w-full rounded-2xl border-2 border-emerald-200 bg-emerald-50 px-4 py-2.5 text-left text-base font-extrabold text-emerald-800 md:text-lg">
-          {text}
-        </En>
-      </div>
-    );
-  }
-  if (kind === "num") {
-    return (
-      <div className="flex items-start gap-3 rounded-2xl border-2 border-violet-100 bg-violet-50/70 p-3">
-        <span className="font-head grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-violet-700 text-sm font-bold text-white">
-          {text.slice(0, 1)}
-        </span>
-        <Rich text={text.slice(1).trim()} className="pt-1 text-base font-bold text-slate-800 md:text-lg" />
-      </div>
-    );
-  }
-  if (kind === "head") {
-    return (
-      <div className="rounded-2xl bg-violet-700/95 px-4 py-2.5 text-center text-lg font-black text-white shadow-sm">
-        <Rich text={text} />
-      </div>
-    );
-  }
-  return (
-    <div className="rounded-2xl border-2 border-white bg-white/80 px-3.5 py-2 text-base font-bold leading-relaxed text-slate-700 md:text-lg">
-      <Rich text={text} />
-    </div>
-  );
-}
-
-function Lines({ lines, tone }: { lines: string[]; tone?: Tone27 }) {
-  return (
-    <div className="space-y-2">
-      {lines.map((line, i) => (
-        <LineRow key={`${i}-${line.slice(0, 12)}`} text={line} tone={tone} />
-      ))}
-    </div>
-  );
-}
-
-/** شريط زمني أفقي (LTR) — يُستخدم في كل المختبرات البصرية. */
-function TrackBar({
-  label,
-  color,
-  width,
-  marker,
-}: {
-  label: ReactNode;
-  color: string;
-  width: string;
-  marker?: ReactNode;
-}) {
-  return (
-    <div dir="ltr" className="ltr-row rounded-2xl border-2 border-slate-200 bg-white p-2.5">
-      <div className="text-left text-xs font-black text-slate-700">{label}</div>
-      <div className="relative mt-2 h-3 overflow-visible rounded-full bg-slate-100">
-        <div className={`absolute left-0 top-0 h-3 rounded-full ${color}`} style={{ width }} />
-        {marker}
-      </div>
-      <div className="mt-1.5 flex justify-between text-[10px] font-black text-slate-400">
-        <En>EARLIER PAST</En>
-        <En>LATER PAST</En>
-        <En>NOW</En>
-      </div>
-    </div>
-  );
-}
-
-function TenseChip({ tense }: { tense: "event" | "progress" | "flashback" }) {
-  const v = tense === "event" ? EVENT : tense === "progress" ? PROGRESS : FLASHBACK;
-  return (
-    <span className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm font-black ${v.chip}`}>
-      <En>{v.tag}</En>
-      <span className="text-white/90">·</span>
-      <Rich text={v.ar} />
-    </span>
-  );
-}
-
-// ============================================================
-// المختبرات — تعرض الوحدات المصدرية أولًا ثم التفاعل البصري
-// ============================================================
-
-function TimelineLab({ lines }: { lines: string[] }) {
-  const [show, setShow] = useState(false);
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-timeline" emoji="🕰️" label="TIMELINE LAB" ar="خط الزمن: الأقدم ← الأحدث ← الآن">
-        <div dir="ltr" className="ltr-row grid grid-cols-3 gap-2 text-center">
-          <div className={`rounded-2xl border-2 p-3 ${FLASHBACK.soft}`}>
-            <div className="text-2xl">⏪</div>
-            <En className="text-sm font-black text-violet-900">Earlier event</En>
-          </div>
-          <div className={`rounded-2xl border-2 p-3 ${EVENT.soft}`}>
-            <div className="text-2xl">📸</div>
-            <En className="text-sm font-black text-orange-900">Later event</En>
-          </div>
-          <div className="rounded-2xl border-2 border-slate-200 bg-white p-3">
-            <div className="text-2xl">📍</div>
-            <En className="text-sm font-black text-slate-700">NOW</En>
-          </div>
-        </div>
-        <div className="mt-2 text-center">
-          <button
-            type="button"
-            onClick={() => setShow((s) => !s)}
-            aria-pressed={show}
-            className="rounded-xl bg-violet-700 px-5 py-2.5 text-sm font-black text-white transition hover:bg-violet-800"
-          >
-            <Rich text={show ? "إخفاء الأزمنة" : "أظهر أي زمن لكل حدث"} />
-          </button>
-        </div>
-        {show && (
-          <div className="mt-2 grid gap-2 sm:grid-cols-2">
-            <div className={`rounded-2xl border-2 p-3 text-center ${FLASHBACK.soft}`}>
-              <TenseChip tense="flashback" />
-              <div className="mt-1 text-sm font-bold text-slate-600">
-                <Rich text="الحدث الأقدم" />
-              </div>
-            </div>
-            <div className={`rounded-2xl border-2 p-3 text-center ${EVENT.soft}`}>
-              <TenseChip tense="event" />
-              <div className="mt-1 text-sm font-bold text-slate-600">
-                <Rich text="الحدث الأحدث" />
-              </div>
-            </div>
-          </div>
-        )}
-        <div className="mt-2" aria-live="polite">
-          <TrackBar label={<En>The train had left → I arrived → NOW</En>} color={FLASHBACK.bar} width="35%" marker={<span className="absolute -top-1 left-[34%] text-lg">⏪</span>} />
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function OrderQuizLab({ lines }: { lines: string[] }) {
-  const [pick, setPick] = useState<"train" | "me" | null>(null);
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-order-quiz" emoji="🚂" label="WHICH FIRST?" ar="أي حدث وقع أولًا؟">
-        <div className="grid gap-2 sm:grid-cols-2">
-          <button
-            type="button"
-            onClick={() => setPick("train")}
-            aria-pressed={pick === "train"}
-            className={`rounded-2xl border-2 p-3 text-center transition ${pick === "train" ? `${FLASHBACK.soft} ring-2 ${FLASHBACK.ring}` : "border-slate-200 bg-white"}`}
-          >
-            <En className="text-base font-black text-slate-900">The train left.</En>
-          </button>
-          <button
-            type="button"
-            onClick={() => setPick("me")}
-            aria-pressed={pick === "me"}
-            className={`rounded-2xl border-2 p-3 text-center transition ${pick === "me" ? `${EVENT.soft} ring-2 ${EVENT.ring}` : "border-slate-200 bg-white"}`}
-          >
-            <En className="text-base font-black text-slate-900">I arrived.</En>
-          </button>
-        </div>
-        <div className="mt-2 min-h-16 rounded-2xl border-2 border-slate-100 bg-white p-3 text-center" aria-live="polite">
-          {pick === null && <Rich text="المس الحدث الذي تعتقد أنه وقع أولًا…" className="text-sm font-bold text-slate-500" />}
-          {pick === "train" && (
-            <div className="space-y-1">
-              <div className="text-sm font-black text-emerald-700"><Rich text="✓ صحيح! القطار غادر أولًا — لذلك يأخذ Past Perfect." /></div>
-              <En className="block text-base font-black text-violet-900">The train had left. ← Past Perfect</En>
-            </div>
-          )}
-          {pick === "me" && (
-            <div className="text-sm font-black text-rose-700"><Rich text="✕ ليس بعد — أعد قراءة الجملة: had left تعني أن المغادرة هي الأقدم." /></div>
-          )}
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function SaraDiagramLab({ lines }: { lines: string[] }) {
-  const [step, setStep] = useState(0);
-  const steps = [
-    { en: "The movie had started.", chip: "flashback" as const, ar: "① الفيلم بدأ — Past Perfect" },
-    { en: "Sara arrived.", chip: "event" as const, ar: "② سارة وصلت — Past Simple" },
-    { en: "NOW", chip: "event" as const, ar: "الآن — لحظة الكلام" },
-  ];
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-sara" emoji="🎬" label="SARA TIMELINE" ar="امشِ على الخط الزمني خطوة خطوة">
-        <div dir="ltr" className="ltr-row flex items-stretch justify-center gap-1.5 text-center">
-          {steps.map((s, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setStep(i)}
-              aria-pressed={step === i}
-              className={`min-w-0 flex-1 rounded-2xl border-2 p-2.5 transition ${step === i ? "border-violet-500 bg-violet-700 text-white shadow" : "border-slate-200 bg-white"}`}
-            >
-              <div className="text-xl">{i === 0 ? "⏪" : i === 1 ? "📸" : "📍"}</div>
-              <En className={`block truncate text-xs font-black md:text-sm ${step === i ? "text-white" : "text-slate-800"}`}>{s.en}</En>
-            </button>
-          ))}
-        </div>
-        <div className="mt-2 rounded-2xl border-2 border-violet-100 bg-white p-3 text-center" aria-live="polite">
-          <TenseChip tense={steps[step].chip} />
-          <div className="mt-1 text-sm font-black text-slate-800">
-            <Rich text={steps[step].ar} />
-          </div>
-          <En className="mt-1 block text-base font-black text-slate-900">{steps[step].en}</En>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function HadGridLab({ lines }: { lines: string[] }) {
-  const [sel, setSel] = useState<string | null>(null);
-  const pronouns = ["I", "You", "He", "She", "It", "We", "They"];
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-had-grid" emoji="⭐" label="HAD NEVER CHANGES" ar="المس أي ضمير — المساعد ثابت!">
-        <FormulaStrip items={["Subject + had + V3"]} tone="violet" />
-        <div dir="ltr" className="ltr-row mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
-          {pronouns.map((p) => (
-            <button
-              key={p}
-              type="button"
-              onClick={() => setSel(p)}
-              aria-pressed={sel === p}
-              className={`rounded-2xl border-2 px-3 py-2.5 text-center font-en text-base font-black transition ${sel === p ? "border-transparent bg-violet-700 text-white shadow" : "border-slate-200 bg-white text-slate-800 hover:border-violet-300"}`}
-            >
-              {p} + had
-            </button>
-          ))}
-        </div>
-        <div className="mt-2 rounded-2xl border-2 border-violet-100 bg-white p-3 text-center text-sm font-black text-violet-900" aria-live="polite">
-          <Rich text={sel === null ? "…المس ضميرًا لتتأكد" : `${sel} had — نفس had مع الجميع!`} />
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function VerbRegularLab({ lines }: { lines: string[] }) {
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-verbs-regular" emoji="🧱" label="REGULAR VERBS" ar="V2 = V3 — سهلة!">
-        <div className="grid gap-2 sm:grid-cols-2">
-          {VERB_TABLE_27.filter((v) => v.regular).map((v) => (
-            <div key={v.v1} dir="ltr" className="ltr-row rounded-2xl border-2 border-emerald-200 bg-white p-3 text-center">
-              <En className="text-lg font-black text-slate-900">{`${v.v1} → ${v.v2} → ${v.v3}`}</En>
-              <div className="mt-1 text-xs font-black text-emerald-700">
-                <En>{`had ${v.v3} ✓`}</En>
-              </div>
-            </div>
-          ))}
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function VerbIrregularLab({ lines }: { lines: string[] }) {
-  const verbs = VERB_TABLE_27.filter((v) => !v.regular);
-  const [sel, setSel] = useState(0);
-  const [build, setBuild] = useState<string | null>(null);
-  const v = verbs[sel];
-  const correct = build === v.v3;
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-verbs-irregular" emoji="🧪" label="V1 → V2 → V3 LAB" ar="اختر فعلًا ثم ابنِ مع had">
-        <div dir="ltr" className="ltr-row flex flex-wrap justify-center gap-1.5">
-          {verbs.map((x, i) => (
-            <button
-              key={x.v1}
-              type="button"
-              onClick={() => { setSel(i); setBuild(null); }}
-              aria-pressed={sel === i}
-              className={`rounded-xl border-2 px-3 py-1.5 font-en text-sm font-black transition ${sel === i ? "border-transparent bg-violet-700 text-white" : "border-slate-200 bg-white text-slate-700 hover:border-violet-300"}`}
-            >
-              {x.v1}
-            </button>
-          ))}
-        </div>
-        <div dir="ltr" className="ltr-row mt-2 grid grid-cols-3 gap-2 text-center">
-          {(["V1", "V2", "V3"] as const).map((tag, i) => (
-            <div key={tag} className={`rounded-2xl border-2 p-2.5 ${i === 2 ? "border-violet-300 bg-violet-50" : "border-slate-200 bg-white"}`}>
-              <En className="text-[10px] font-black uppercase tracking-widest text-slate-400">{tag}</En>
-              <En className={`block text-xl font-black ${i === 2 ? "text-violet-900" : "text-slate-800"}`}>{[v.v1, v.v2, v.v3][i]}</En>
-            </div>
-          ))}
-        </div>
-        <div className="mt-2 rounded-2xl border-2 border-slate-200 bg-white p-3 text-center">
-          <div className="text-sm font-black text-slate-700"><Rich text="أكمل: had + ؟" /></div>
-          <div dir="ltr" className="ltr-row mt-2 flex justify-center gap-2">
-            {[v.v2, v.v3].map((opt) => (
-              <button
-                key={opt}
-                type="button"
-                onClick={() => setBuild(opt)}
-                aria-pressed={build === opt}
-                className={`rounded-xl border-2 px-5 py-2 font-en text-base font-black transition ${
-                  build === null ? "border-slate-200 bg-slate-50 text-slate-800 hover:border-violet-400"
-                  : opt === v.v3 ? "border-transparent bg-emerald-600 text-white"
-                  : build === opt ? "border-transparent bg-rose-600 text-white"
-                  : "border-slate-200 bg-white text-slate-300"
-                }`}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-          <div className="mt-2 text-sm font-black" aria-live="polite">
-            {build !== null && (correct
-              ? <span className="text-emerald-700"><Rich text="✓ أحسنت! had + V3" /></span>
-              : <span className="text-rose-700"><Rich text="✕ هذا V2 — بعد had نحتاج V3" /></span>)}
-          </div>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function V2V3Lab({ lines }: { lines: string[] }) {
-  const [mode, setMode] = useState<"v2" | "v3">("v3");
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-v2v3" emoji="🚨" label="HAD + ?" ar="قارن بنفسك">
-        <div className="flex justify-center gap-2">
-          <button
-            type="button" onClick={() => setMode("v3")} aria-pressed={mode === "v3"}
-            className={`rounded-xl px-4 py-2 text-sm font-black transition ${mode === "v3" ? "bg-emerald-600 text-white" : "border-2 border-slate-200 bg-white text-slate-600"}`}
-          >
-            <En>had + V3 ✓</En>
-          </button>
-          <button
-            type="button" onClick={() => setMode("v2")} aria-pressed={mode === "v2"}
-            className={`rounded-xl px-4 py-2 text-sm font-black transition ${mode === "v2" ? "bg-rose-600 text-white" : "border-2 border-slate-200 bg-white text-slate-600"}`}
-          >
-            <En>had + V2 ✕</En>
-          </button>
-        </div>
-        <div className={`mt-2 rounded-2xl border-2 p-4 text-center ${mode === "v3" ? "border-emerald-300 bg-emerald-50" : "border-rose-300 bg-rose-50"}`} aria-live="polite">
-          <En className={`block text-xl font-black md:text-2xl ${mode === "v3" ? "text-emerald-800" : "text-rose-800"}`}>
-            {mode === "v3" ? "I had gone to school. ✓" : "I had went to school. ✕"}
-          </En>
-          <div className={`mt-1 text-sm font-bold ${mode === "v3" ? "text-emerald-700" : "text-rose-700"}`}>
-            <Rich text={mode === "v3" ? "gone هو V3 — صحيح مع had." : "went هو V2 — لا يأتي بعد had أبدًا."} />
-          </div>
-        </div>
-        <div className="mt-2">
-          <FormulaStrip items={["go → went → gone", "V1 = go", "V2 = went", "V3 = gone"]} tone={mode === "v3" ? "violet" : "rose"} />
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function TeacherSwitchLab({ lines }: { lines: string[] }) {
-  const [which, setWhich] = useState<"simple" | "perfect">("perfect");
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-teacher-switch" emoji="🔀" label="ONE WORD CHANGES TIME" ar="بدّل الزمن وشاهد الترتيب ينقلب">
-        <div className="flex justify-center gap-2">
-          <button
-            type="button" onClick={() => setWhich("simple")} aria-pressed={which === "simple"}
-            className={`rounded-xl px-4 py-2 text-sm font-black transition ${which === "simple" ? EVENT.chip : "border-2 border-slate-200 bg-white text-slate-600"}`}
-          >
-            <En>left — Past Simple</En>
-          </button>
-          <button
-            type="button" onClick={() => setWhich("perfect")} aria-pressed={which === "perfect"}
-            className={`rounded-xl px-4 py-2 text-sm font-black transition ${which === "perfect" ? FLASHBACK.chip : "border-2 border-slate-200 bg-white text-slate-600"}`}
-          >
-            <En>had left — Past Perfect</En>
-          </button>
-        </div>
-        <div className="mt-2 rounded-2xl border-2 border-slate-200 bg-white p-3 text-center" aria-live="polite">
-          <En className="block text-lg font-black text-slate-900 md:text-xl">
-            {which === "simple" ? "When I arrived, the teacher left." : "When I arrived, the teacher had left."}
-          </En>
-          <div className="mt-2 grid gap-1.5 sm:grid-cols-2">
-            <div className={`rounded-xl border-2 p-2 ${which === "simple" ? EVENT.soft : "border-slate-100 bg-slate-50"}`}>
-              <div className="text-xs font-black text-slate-500"><Rich text="① أولًا" /></div>
-              <En className="text-sm font-black text-slate-800">{which === "simple" ? "I arrived." : "The teacher left."}</En>
-            </div>
-            <div className={`rounded-xl border-2 p-2 ${which === "perfect" ? EVENT.soft : "border-slate-100 bg-slate-50"}`}>
-              <div className="text-xs font-black text-slate-500"><Rich text="② ثانيًا" /></div>
-              <En className="text-sm font-black text-slate-800">{which === "simple" ? "The teacher left." : "I arrived."}</En>
-            </div>
-          </div>
-          <div className="mt-1 text-sm font-bold text-slate-600">
-            <Rich text={which === "simple" ? "وصلتُ، ثم غادر المعلم." : "عندما وصلت، كان المعلم قد غادر بالفعل."} />
-          </div>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function AliOrderLab({ lines }: { lines: string[] }) {
-  const [which, setWhich] = useState<"and" | "had">("had");
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-ali" emoji="🍽️" label="ALI SCENE" ar="نفس الحدثين — ترتيبان مختلفان">
-        <div className="flex flex-wrap justify-center gap-2">
-          <button
-            type="button" onClick={() => setWhich("and")} aria-pressed={which === "and"}
-            className={`rounded-xl px-4 py-2 text-sm font-black transition ${which === "and" ? EVENT.chip : "border-2 border-slate-200 bg-white text-slate-600"}`}
-          >
-            <En>…, and closed</En>
-          </button>
-          <button
-            type="button" onClick={() => setWhich("had")} aria-pressed={which === "had"}
-            className={`rounded-xl px-4 py-2 text-sm font-black transition ${which === "had" ? FLASHBACK.chip : "border-2 border-slate-200 bg-white text-slate-600"}`}
-          >
-            <En>…, had closed</En>
-          </button>
-        </div>
-        <div className="mt-2" aria-live="polite">
-          <TrackBar
-            label={<En>{which === "and" ? "Ali arrived → restaurant closed" : "restaurant closed → Ali arrived"}</En>}
-            color={which === "and" ? EVENT.bar : FLASHBACK.bar}
-            width={which === "and" ? "80%" : "35%"}
-          />
-          <div className="mt-1 text-center text-sm font-bold text-slate-600">
-            <Rich text={which === "and" ? "① Ali arrived. ② restaurant closed." : "① المطعم أغلق. ② علي وصل — Past Perfect وضّح الأقدم."} />
-          </div>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function PairsLab({ lines, seq, verbs }: { lines: string[]; seq: string; verbs: [string, string, string][] }) {
-  const [sel, setSel] = useState(0);
-  const [form, setForm] = useState<"simple" | "perfect">("perfect");
-  const [verb, simple, perfect] = verbs[sel];
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq={seq} emoji="🔥" label="SIMPLE → PERFECT" ar="حوّل الماضي البسيط إلى تام">
-        <div dir="ltr" className="ltr-row flex flex-wrap justify-center gap-1.5">
-          {verbs.map((x, i) => (
-            <button
-              key={x[0]}
-              type="button" onClick={() => setSel(i)} aria-pressed={sel === i}
-              className={`rounded-xl border-2 px-3 py-1.5 font-en text-sm font-black transition ${sel === i ? "border-transparent bg-violet-700 text-white" : "border-slate-200 bg-white text-slate-700"}`}
-            >
-              {x[0]}
-            </button>
-          ))}
-        </div>
-        <div className="mt-2 text-center">
-          <En className="text-base font-black text-violet-900">{verb}</En>
-        </div>
-        <div className="mt-1 flex justify-center gap-2">
-          <button
-            type="button" onClick={() => setForm("simple")} aria-pressed={form === "simple"}
-            className={`rounded-xl px-4 py-2 text-sm font-black transition ${form === "simple" ? EVENT.chip : "border-2 border-slate-200 bg-white text-slate-600"}`}
-          >
-            <En>Past Simple</En>
-          </button>
-          <button
-            type="button" onClick={() => setForm("perfect")} aria-pressed={form === "perfect"}
-            className={`rounded-xl px-4 py-2 text-sm font-black transition ${form === "perfect" ? FLASHBACK.chip : "border-2 border-slate-200 bg-white text-slate-600"}`}
-          >
-            <En>Past Perfect</En>
-          </button>
-        </div>
-        <div className={`mt-2 rounded-2xl border-2 p-3 text-center ${form === "simple" ? EVENT.soft : FLASHBACK.soft}`} aria-live="polite">
-          <En className="block text-lg font-black text-slate-900">{form === "simple" ? simple : perfect}</En>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function ShortFlipLab({ lines }: { lines: string[] }) {
-  const pairs = [
-    { q: "Had you finished?", yes: "Yes, I had.", no: "No, I hadn't." },
-    { q: "Had she arrived?", yes: "Yes, she had.", no: "No, she hadn't." },
-    { q: "Had they eaten?", yes: "Yes, they had.", no: "No, they hadn't." },
-  ];
-  const [sel, setSel] = useState(0);
-  const [ans, setAns] = useState<"yes" | "no">("yes");
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-short-flip" emoji="🗣️" label="SHORT ANSWERS" ar="اقلب بين Yes و No">
-        <div dir="ltr" className="ltr-row flex flex-wrap justify-center gap-1.5">
-          {pairs.map((p, i) => (
-            <button
-              key={i} type="button" onClick={() => setSel(i)} aria-pressed={sel === i}
-              className={`rounded-xl border-2 px-3 py-1.5 font-en text-sm font-black transition ${sel === i ? "border-transparent bg-violet-700 text-white" : "border-slate-200 bg-white text-slate-700"}`}
-            >
-              {p.q}
-            </button>
-          ))}
-        </div>
-        <div className="mt-2 rounded-2xl border-2 border-slate-200 bg-white p-3 text-center">
-          <En className="block text-lg font-black text-slate-900">{pairs[sel].q}</En>
-          <div className="mt-2 flex justify-center gap-2">
-            {(["yes", "no"] as const).map((a) => (
-              <button
-                key={a} type="button" onClick={() => setAns(a)} aria-pressed={ans === a}
-                className={`rounded-xl px-5 py-2 font-en text-base font-black transition ${ans === a ? "bg-slate-900 text-white" : "border-2 border-slate-200 bg-white text-slate-600"}`}
-              >
-                {a === "yes" ? pairs[sel].yes : pairs[sel].no}
-              </button>
-            ))}
-          </div>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function SideBySideLab({ lines }: { lines: string[] }) {
-  const [focus, setFocus] = useState<"simple" | "perfect">("perfect");
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-side-by-side" emoji="⚖️" label="SIMPLE VS PERFECT" ar="المس كل بطاقة لتقارن">
-        <div className="grid gap-2 sm:grid-cols-2">
-          <button
-            type="button" onClick={() => setFocus("simple")} aria-pressed={focus === "simple"}
-            className={`rounded-2xl border-2 p-3 text-center transition ${focus === "simple" ? `${EVENT.soft} ring-2 ${EVENT.ring}` : "border-slate-200 bg-white"}`}
-          >
-            <En className="text-xs font-black uppercase tracking-widest text-slate-400">Past Simple</En>
-            <En className="mt-1 block text-base font-black text-slate-900">I finished my homework.</En>
-            <div className="mt-1 text-sm font-bold text-slate-600"><Rich text="أنهيت واجبي — مجرد خبر عن حدث." /></div>
-          </button>
-          <button
-            type="button" onClick={() => setFocus("perfect")} aria-pressed={focus === "perfect"}
-            className={`rounded-2xl border-2 p-3 text-center transition ${focus === "perfect" ? `${FLASHBACK.soft} ring-2 ${FLASHBACK.ring}` : "border-slate-200 bg-white"}`}
-          >
-            <En className="text-xs font-black uppercase tracking-widest text-slate-400">Past Perfect</En>
-            <En className="mt-1 block text-base font-black text-slate-900">I had finished my homework before dinner.</En>
-            <div className="mt-1 text-sm font-bold text-slate-600"><Rich text="كنت قد أنهيت واجبي — قبل حدث آخر." /></div>
-          </button>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function LinaSwitchLab({ lines }: { lines: string[] }) {
-  const [which, setWhich] = useState<"simple" | "perfect">("perfect");
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-lina-switch" emoji="🔥" label="THE KEY SWITCH" ar="أهم مقارنة في الدرس — بدّل وشاهد">
-        <div className="flex justify-center gap-2">
-          <button
-            type="button" onClick={() => setWhich("simple")} aria-pressed={which === "simple"}
-            className={`rounded-xl px-4 py-2 text-sm font-black transition ${which === "simple" ? EVENT.chip : "border-2 border-slate-200 bg-white text-slate-600"}`}
-          >
-            <En>Lina left</En>
-          </button>
-          <button
-            type="button" onClick={() => setWhich("perfect")} aria-pressed={which === "perfect"}
-            className={`rounded-xl px-4 py-2 text-sm font-black transition ${which === "perfect" ? FLASHBACK.chip : "border-2 border-slate-200 bg-white text-slate-600"}`}
-          >
-            <En>Lina had left</En>
-          </button>
-        </div>
-        <div className="mt-2 rounded-2xl border-2 border-slate-200 bg-white p-3 text-center" aria-live="polite">
-          <En className="block text-lg font-black text-slate-900 md:text-xl">
-            {which === "simple" ? "When I arrived, Lina left." : "When I arrived, Lina had left."}
-          </En>
-          <div className="mt-2">
-            <TrackBar
-              label={<En>{which === "simple" ? "I arrived → Lina left" : "Lina left → I arrived"}</En>}
-              color={which === "simple" ? EVENT.bar : FLASHBACK.bar}
-              width={which === "simple" ? "80%" : "35%"}
-            />
-          </div>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function WordOrderLab({ lines, seq, emoji, label, pairs }: {
-  lines: string[]; seq: string; emoji: string; label: string;
-  pairs: { sentence: string; first: string; second: string }[];
-}) {
-  const [sel, setSel] = useState(0);
-  const p = pairs[sel];
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq={seq} emoji={emoji} label={label} ar="المس كل مثال لترى ترتيبه">
-        <div className="flex flex-wrap justify-center gap-1.5">
-          {pairs.map((x, i) => (
-            <button
-              key={i} type="button" onClick={() => setSel(i)} aria-pressed={sel === i}
-              className={`rounded-xl border-2 px-3 py-1.5 text-sm font-black transition ${sel === i ? "border-transparent bg-violet-700 text-white" : "border-slate-200 bg-white text-slate-700"}`}
-            >
-              <Rich text={`مثال ${i + 1}`} />
-            </button>
-          ))}
-        </div>
-        <div className="mt-2 rounded-2xl border-2 border-slate-200 bg-white p-3 text-center" aria-live="polite">
-          <En className="block text-base font-black text-slate-900 md:text-lg">{p.sentence}</En>
-          <div className="mt-2 grid gap-1.5 sm:grid-cols-2">
-            <div className={`rounded-xl border-2 p-2 ${FLASHBACK.soft}`}>
-              <div className="text-xs font-black text-violet-700"><Rich text="① حدث أولًا — Past Perfect" /></div>
-              <En className="text-sm font-black text-slate-800">{p.first}</En>
-            </div>
-            <div className={`rounded-xl border-2 p-2 ${EVENT.soft}`}>
-              <div className="text-xs font-black text-orange-700"><Rich text="② ثم — Past Simple" /></div>
-              <En className="text-sm font-black text-slate-800">{p.second}</En>
-            </div>
-          </div>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function EmmaDetectiveLab({ lines }: { lines: string[] }) {
-  const [found, setFound] = useState<Set<string>>(new Set());
-  const toggle = (k: string) =>
-    setFound((s) => {
-      const n = new Set(s);
-      if (n.has(k)) n.delete(k);
-      else n.add(k);
-      return n;
-    });
-  const all = found.has("pp") && found.has("ps");
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-emma-detective" emoji="🕵️" label="DETECTIVE: EMMA" ar="المس الفعلين وحدد زمن كل منهما">
-        <div dir="ltr" className="ltr-row rounded-2xl border-2 border-slate-200 bg-white p-3 text-center text-lg font-black leading-relaxed">
-          <En className="text-slate-800">When Emma </En>
-          <button
-            type="button" onClick={() => toggle("ps")} aria-pressed={found.has("ps")}
-            className={`mx-1 rounded-lg px-2 font-en text-lg font-black transition ${found.has("ps") ? EVENT.chip : "bg-slate-100 text-slate-800 hover:bg-slate-200"}`}
-          >
-            got
-          </button>
-          <En className="text-slate-800"> home, her brother </En>
-          <button
-            type="button" onClick={() => toggle("pp")} aria-pressed={found.has("pp")}
-            className={`mx-1 rounded-lg px-2 font-en text-lg font-black transition ${found.has("pp") ? FLASHBACK.chip : "bg-slate-100 text-slate-800 hover:bg-slate-200"}`}
-          >
-            had cooked
-          </button>
-          <En className="text-slate-800"> dinner.</En>
-        </div>
-        <div className="mt-2 grid gap-2 sm:grid-cols-2" aria-live="polite">
-          <div className={`rounded-2xl border-2 p-2.5 text-center ${found.has("pp") ? FLASHBACK.soft : "border-slate-200 bg-white"}`}>
-            <En className="text-sm font-black text-slate-800">had cooked = Past Perfect</En>
-            <div className="text-xs font-bold text-slate-600"><Rich text="① الطبخ حدث أولًا" /></div>
-          </div>
-          <div className={`rounded-2xl border-2 p-2.5 text-center ${found.has("ps") ? EVENT.soft : "border-slate-200 bg-white"}`}>
-            <En className="text-sm font-black text-slate-800">got = Past Simple</En>
-            <div className="text-xs font-bold text-slate-600"><Rich text="② ثم وصول Emma" /></div>
-          </div>
-        </div>
-        {all && (
-          <div className="mt-2 rounded-2xl bg-emerald-600 p-2.5 text-center text-sm font-black text-white">
-            <Rich text="✓ ممتاز! ① Her brother cooked dinner. ② Emma got home." />
-          </div>
-        )}
-      </LabPanel>
-    </div>
-  );
-}
-
-function NeedToggleLab({ lines }: { lines: string[] }) {
-  const [which, setWhich] = useState<"simple" | "perfect">("simple");
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-need-toggle" emoji="🧩" label="BOTH ARE FINE" ar="كلتاهما ممكنة حسب السياق">
-        <div className="flex justify-center gap-2">
-          <button
-            type="button" onClick={() => setWhich("simple")} aria-pressed={which === "simple"}
-            className={`rounded-xl px-4 py-2 text-sm font-black transition ${which === "simple" ? EVENT.chip : "border-2 border-slate-200 bg-white text-slate-600"}`}
-          >
-            <En>After I finished…</En>
-          </button>
-          <button
-            type="button" onClick={() => setWhich("perfect")} aria-pressed={which === "perfect"}
-            className={`rounded-xl px-4 py-2 text-sm font-black transition ${which === "perfect" ? FLASHBACK.chip : "border-2 border-slate-200 bg-white text-slate-600"}`}
-          >
-            <En>After I had finished…</En>
-          </button>
-        </div>
-        <div className="mt-2 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-3 text-center" aria-live="polite">
-          <En className="block text-base font-black text-slate-900 md:text-lg">
-            {which === "simple" ? "After I finished my homework, I played football. ✓" : "After I had finished my homework, I played football. ✓"}
-          </En>
-          <div className="mt-1 text-sm font-bold text-emerald-800">
-            <Rich text="كلتاهما صحيحة — لأن after أصلًا توضّح الترتيب." />
-          </div>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function IqStepperLab({ lines }: { lines: string[] }) {
-  const [step, setStep] = useState(0);
-  const steps = [
-    { t: "هل لدي حدثان في الماضي؟", d: "The bus arrived. / I reached the station. — نعم، حدثان." },
-    { t: "أي حدث حدث أولًا؟", d: "الباص وصل أولًا." },
-    { t: "الحدث الأول ← Past Perfect", d: "The bus had arrived." },
-    { t: "الحدث الثاني ← Past Simple", d: "When I reached the station, the bus had arrived." },
-  ];
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-iq-stepper" emoji="🧠" label="IQ200 RULE" ar="امشِ على الخطوات الأربع">
-        <div className="flex flex-wrap justify-center gap-1.5">
-          {steps.map((s, i) => (
-            <button
-              key={i} type="button" onClick={() => setStep(i)} aria-pressed={step === i}
-              className={`grid h-10 w-10 place-items-center rounded-xl text-base font-black transition ${step === i ? "bg-violet-700 text-white shadow" : "border-2 border-slate-200 bg-white text-slate-500"}`}
-            >
-              {i + 1}
-            </button>
-          ))}
-        </div>
-        <div className="mt-2 rounded-2xl border-2 border-violet-200 bg-white p-3 text-center" aria-live="polite">
-          <div className="text-base font-black text-violet-900"><Rich text={steps[step].t} /></div>
-          <div className="mt-1 text-sm font-bold text-slate-700"><Rich text={steps[step].d} /></div>
-        </div>
-        <div className="mt-2 flex justify-center gap-2">
-          <button
-            type="button" onClick={() => setStep((s) => Math.max(0, s - 1))} disabled={step === 0}
-            className="rounded-xl bg-slate-100 px-4 py-2 text-sm font-black text-slate-600 transition enabled:hover:bg-slate-200 disabled:opacity-40"
-          >
-            <Rich text="→ السابق" />
-          </button>
-          <button
-            type="button" onClick={() => setStep((s) => Math.min(3, s + 1))} disabled={step === 3}
-            className="rounded-xl bg-violet-700 px-4 py-2 text-sm font-black text-white transition enabled:hover:bg-violet-800 disabled:opacity-40"
-          >
-            <Rich text="التالي ←" />
-          </button>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function EmmaCinemaLab({ lines }: { lines: string[] }) {
-  const [role, setRole] = useState<"progress" | "event" | "flashback">("flashback");
-  const roles = {
-    progress: { verbs: ["was walking"], ar: "خلفية مستمرة — ما كان يحدث", chip: "progress" as const },
-    event: { verbs: ["found", "looked", "realized"], ar: "أحداث تحرّك القصة", chip: "event" as const },
-    flashback: { verbs: ["had seen"], ar: "فلاش باك — شيء حدث قبل لحظة إدراكها", chip: "flashback" as const },
-  };
-  const r = roles[role];
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-emma-cinema" emoji="🎬" label="THREE-TENSE CINEMA" ar="اختر الدور وأبرز أفعاله">
-        <div className="flex flex-wrap justify-center gap-2">
-          {(Object.keys(roles) as (keyof typeof roles)[]).map((k) => (
-            <button
-              key={k} type="button" onClick={() => setRole(k)} aria-pressed={role === k}
-              aria-label={k === "progress" ? "Past Continuous role" : k === "event" ? "Past Simple role" : "Past Perfect role"}
-              className={`rounded-xl px-3 py-2 text-sm font-black transition ${role === k ? (k === "progress" ? PROGRESS.chip : k === "event" ? EVENT.chip : FLASHBACK.chip) : "border-2 border-slate-200 bg-white text-slate-600"}`}
-            >
-              <En>{k === "progress" ? "🎥 Past Continuous" : k === "event" ? "📸 Past Simple" : "⏪ Past Perfect"}</En>
-            </button>
-          ))}
-        </div>
-        <div dir="ltr" className="ltr-row mt-2 rounded-2xl border-2 border-slate-200 bg-white p-3 text-left text-base font-black leading-loose md:text-lg" aria-live="polite">
-          <Hi on={role === "progress"} tone="teal">Emma was walking</Hi>
-          <En className="text-slate-800"> through the old market when she </En>
-          <Hi on={role === "event"} tone="orange">found</Hi>
-          <En className="text-slate-800"> a mysterious key. She </En>
-          <Hi on={role === "event"} tone="orange">looked</Hi>
-          <En className="text-slate-800"> at it carefully and </En>
-          <Hi on={role === "event"} tone="orange">realized</Hi>
-          <En className="text-slate-800"> that she </En>
-          <Hi on={role === "flashback"} tone="violet">had seen</Hi>
-          <En className="text-slate-800"> it before.</En>
-        </div>
-        <div className="mt-2 rounded-2xl border-2 border-violet-100 bg-white p-2.5 text-center">
-          <TenseChip tense={r.chip} />
-          <div className="mt-1 text-sm font-bold text-slate-600"><Rich text={r.ar} /></div>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function Hi({ on, tone, children }: { on: boolean; tone: "teal" | "orange" | "violet"; children: ReactNode }) {
-  const bg = tone === "teal" ? "bg-teal-600 text-white" : tone === "orange" ? "bg-orange-500 text-white" : "bg-violet-700 text-white";
-  return (
-    <span className={`mx-0.5 rounded-lg px-1.5 transition ${on ? bg : "bg-slate-100 text-slate-500"}`}>
-      <En>{children}</En>
-    </span>
-  );
-}
-
-function LiamSceneLab({ lines }: { lines: string[] }) {
-  const [step, setStep] = useState(2);
-  const steps = [
-    { en: "Liam was studying.", q: "🎥 ماذا كان يحدث؟", chip: "progress" as const, time: "At 8:00" },
-    { en: "His phone rang.", q: "📸 ماذا حدث؟", chip: "event" as const, time: "ثم…" },
-    { en: "He had forgotten to charge it.", q: "⏪ ماذا كان قد حدث قبل لحظة الإدراك؟", chip: "flashback" as const, time: "الفلاش باك" },
-  ];
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-liam" emoji="📱" label="ONE SCENE, THREE TENSES" ar="مشهد واحد — ثلاثة أزمنة">
-        <div className="grid gap-1.5 sm:grid-cols-3">
-          {steps.map((s, i) => (
-            <button
-              key={i} type="button" onClick={() => setStep(i)} aria-pressed={step === i}
-              className={`rounded-2xl border-2 p-2.5 text-center transition ${step === i ? "border-violet-500 bg-violet-700 text-white shadow" : "border-slate-200 bg-white"}`}
-            >
-              <div className={`text-xs font-black ${step === i ? "text-white/80" : "text-slate-400"}`}><Rich text={s.time} /></div>
-              <En className={`mt-0.5 block text-sm font-black ${step === i ? "text-white" : "text-slate-800"}`}>{s.en}</En>
-            </button>
-          ))}
-        </div>
-        <div className="mt-2 rounded-2xl border-2 border-violet-100 bg-white p-3 text-center" aria-live="polite">
-          <TenseChip tense={steps[step].chip} />
-          <div className="mt-1 text-sm font-black text-slate-800"><Rich text={steps[step].q} /></div>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function JohnSwitchLab({ lines }: { lines: string[] }) {
-  const [which, setWhich] = useState<"simple" | "perfect">("simple");
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-john-switch" emoji="🔀" label="JOHN SWITCH" ar="الجملة الأولى أم الثانية؟">
-        <div className="flex justify-center gap-2">
-          <button
-            type="button" onClick={() => setWhich("simple")} aria-pressed={which === "simple"}
-            className={`rounded-xl px-4 py-2 text-sm font-black transition ${which === "simple" ? EVENT.chip : "border-2 border-slate-200 bg-white text-slate-600"}`}
-          >
-            <Rich text="الأولى" />
-          </button>
-          <button
-            type="button" onClick={() => setWhich("perfect")} aria-pressed={which === "perfect"}
-            className={`rounded-xl px-4 py-2 text-sm font-black transition ${which === "perfect" ? FLASHBACK.chip : "border-2 border-slate-200 bg-white text-slate-600"}`}
-          >
-            <Rich text="الثانية" />
-          </button>
-        </div>
-        <div className="mt-2 rounded-2xl border-2 border-slate-200 bg-white p-3 text-center" aria-live="polite">
-          <En className="block text-lg font-black text-slate-900">
-            {which === "simple" ? "When I arrived, John left." : "When I arrived, John had left."}
-          </En>
-          <En className="mt-1 block text-base font-black text-violet-900">
-            {which === "simple" ? "I arrived → John left." : "John left → I arrived."}
-          </En>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-function DancePrecisionLab({ lines }: { lines: string[] }) {
-  const [mean, setMean] = useState<"done" | "ongoing">("ongoing");
-  return (
-    <div className="space-y-3">
-      <Lines lines={lines} />
-      <LabPanel seq="l27-dance" emoji="💃" label="MEANING PRECISION" ar="اختر المعنى المقصود أولًا">
-        <div className="grid gap-2 sm:grid-cols-2">
-          <button
-            type="button" onClick={() => setMean("done")} aria-pressed={mean === "done"}
-            className={`rounded-2xl border-2 p-3 text-center transition ${mean === "done" ? `${FLASHBACK.soft} ring-2 ${FLASHBACK.ring}` : "border-slate-200 bg-white"}`}
-          >
-            <div className="text-sm font-black text-slate-800"><Rich text="«كان الجميع قد رقصوا وانتهى الأمر»" /></div>
-          </button>
-          <button
-            type="button" onClick={() => setMean("ongoing")} aria-pressed={mean === "ongoing"}
-            className={`rounded-2xl border-2 p-3 text-center transition ${mean === "ongoing" ? `${PROGRESS.soft} ring-2 ${PROGRESS.ring}` : "border-slate-200 bg-white"}`}
-          >
-            <div className="text-sm font-black text-slate-800"><Rich text="«كان الجميع يرقصون لحظة وصولي»" /></div>
-          </button>
-        </div>
-        <div className={`mt-2 rounded-2xl border-2 p-3 text-center ${mean === "done" ? FLASHBACK.soft : PROGRESS.soft}`} aria-live="polite">
-          <En className="block text-base font-black text-slate-900 md:text-lg">
-            {mean === "done" ? "When I arrived at the party, everyone had danced." : "When I arrived at the party, everyone was dancing."}
-          </En>
-          <div className="mt-1 text-sm font-bold text-slate-600">
-            <Rich text={mean === "done" ? "had danced ← الرقص حدث وانتهى قبل نقطة ماضية." : "was dancing ← الرقص كان مستمرًا عند وصولي."} />
-          </div>
-        </div>
-      </LabPanel>
-    </div>
-  );
-}
-
-// ============================================================
-// التدريبات — الاختيار ≠ التصحيح: لا كشف قبل «تحقق من الإجابات»
-// ============================================================
-
-const CIRCLED = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩"];
-
-function McqDrill({
-  items, reveals, seq, exercise, intro, platformAnswers, typoNote, answersHead, letters, circled,
-}: {
-  items: Mcq27[];
-  reveals: string[];
-  seq: string;
-  exercise: string;
-  intro: string;
-  platformAnswers?: boolean;
-  typoNote?: string;
-  answersHead?: string;
-  letters?: string[];
-  circled?: boolean;
-}) {
-  const [picks, setPicks] = useState<Record<number, number>>({});
-  const [checked, setChecked] = useState(false);
-  const answered = items.filter((it) => picks[it.n] !== undefined).length;
-  const allAnswered = answered === items.length;
-  const score = items.reduce((n, it) => n + (picks[it.n] === it.answer ? 1 : 0), 0);
-  const reset = () => {
-    setPicks({});
-    setChecked(false);
-  };
-  return (
-    <div data-en-seq={seq} data-exercise={exercise} className="space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-violet-200 bg-violet-50 px-3 py-2">
-        <span className="text-sm font-black text-violet-900">
-          <Rich text={intro} />
-        </span>
-        <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-violet-700">
-          {answered} / {items.length}
-        </span>
-      </div>
-      {typoNote && (
-        <div className="rounded-2xl border-2 border-amber-300 bg-amber-50 p-3">
-          <PlatformTag />
-          <div className="mt-1 text-sm font-bold text-slate-700">
-            <Rich text={typoNote} />
-          </div>
-        </div>
-      )}
-      {items.map((item) => {
-        const pick = picks[item.n];
-        const picked = pick !== undefined;
-        const right = picked && pick === item.answer;
-        const card = checked
-          ? !picked
-            ? "border-slate-200 bg-white"
-            : right
-              ? "border-emerald-300 bg-emerald-50/60"
-              : "border-rose-300 bg-rose-50/60"
-          : picked
-            ? "border-slate-300 bg-slate-50/70"
-            : "border-slate-200 bg-white";
-        const stemParts = item.stem.split("______");
-        return (
-          <div key={item.n} className={`rounded-3xl border-2 p-3 transition ${card}`}>
-            <div className="flex flex-wrap items-start gap-2">
-              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-violet-700 text-xs font-black text-white">{circled ? CIRCLED[item.n - 1] : item.n}</span>
-              <div dir="ltr" className="ltr-row min-w-0 flex-1">
-                <En className="text-left text-sm font-black text-slate-900 md:text-base">
-                  {stemParts[0]}
-                  <span className="mx-1 rounded bg-slate-200 px-2 text-slate-400">______</span>
-                  {stemParts[1] ?? ""}
-                </En>
-              </div>
-            </div>
-            {item.context && (
-              <div className="mt-2 rounded-xl border border-dashed border-slate-300 bg-slate-50 px-3 py-1.5">
-                <PlatformTag />
-                <span className="mr-2 text-xs font-bold text-slate-600">
-                  <Rich text={item.context} />
-                </span>
-              </div>
-            )}
-            <div dir="ltr" className="ltr-row mt-2 flex flex-wrap justify-end gap-2">
-              {item.opts.map((opt, oi) => {
-                const isPick = pick === oi;
-                let cls = "border-slate-200 bg-white text-slate-700 hover:border-violet-400";
-                if (checked) {
-                  if (oi === item.answer) cls = "border-transparent bg-emerald-600 text-white";
-                  else if (isPick) cls = "border-transparent bg-rose-600 text-white";
-                  else cls = "border-slate-200 bg-white text-slate-300";
-                } else if (isPick) {
-                  cls = "border-transparent bg-slate-900 text-white";
-                }
-                return (
-                  <button
-                    key={oi}
-                    type="button"
-                    onClick={() => setPicks((p) => ({ ...p, [item.n]: oi }))}
-                    disabled={checked}
-                    aria-pressed={isPick}
-                    className={`rounded-xl border-2 px-4 py-2 font-en text-sm font-black transition disabled:cursor-default ${cls}`}
-                  >
-                    {letters?.[oi] ? `${letters[oi]} ${opt}` : opt}
-                  </button>
-                );
-              })}
-            </div>
-            {checked && (
-              <div className="mt-2 text-xs font-bold text-slate-600 md:text-sm">
-                <Rich text={!picked ? "⚠ لم تختر إجابة لهذا السؤال." : right ? `✓ صحيح! ${item.why}` : `✕ ${item.why}`} />
-              </div>
-            )}
-          </div>
-        );
-      })}
-      <div className="flex flex-wrap items-center gap-2 rounded-2xl border-2 border-slate-100 bg-white p-3">
-        <button
-          type="button"
-          onClick={() => setChecked(true)}
-          disabled={checked || !allAnswered}
-          title={allAnswered ? undefined : "أجب عن كل الأسئلة أولًا"}
-          className="rounded-xl bg-violet-700 px-5 py-2.5 text-sm font-black text-white transition enabled:hover:bg-violet-800 disabled:opacity-30"
-        >
-          <Rich text={`تحقق من الإجابات (${answered}/${items.length})`} />
-        </button>
-        {checked ? (
-          <>
-            <span className="rounded-xl bg-violet-700 px-3 py-2 text-sm font-black text-white">
-              <Rich text={`${score} / ${items.length}`} />
-            </span>
-            <button type="button" onClick={reset} className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-black text-slate-600 transition hover:bg-slate-200">
-              <Rich text="↺ إعادة" />
-            </button>
-          </>
-        ) : (
-          <span className="text-xs font-bold text-slate-500">
-            <Rich text="لا يظهر أي تصحيح قبل الضغط على الزر." />
-          </span>
-        )}
-      </div>
-      {checked && (
-        <div data-reveal-block={seq} className="space-y-1.5 rounded-3xl border-2 border-emerald-200 bg-emerald-50/60 p-3">
-          {platformAnswers && <PlatformTag />}
-          {answersHead && (
-            <div className="px-1 text-sm font-black text-emerald-900">
-              <Rich text={answersHead} />
-            </div>
-          )}
-          {reveals.map((r, i) => (
-            <div key={i} className="rounded-xl bg-white px-3 py-1.5 text-sm font-black text-emerald-900">
-              <Rich text={r} />
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ExV3() {
-  const sec = SOURCE_SECTIONS[SEC.s30];
-  return (
-    <McqDrill
-      items={EX27_V3}
-      reveals={sec.revealUnits ?? []}
-      seq="l27-ex-v3"
-      exercise="l27-v3"
-      intro={sec.units[0]}
-      letters={["a)", "b)", "c)"]}
-      answersHead={sec.units[sec.units.length - 1]}
-    />
-  );
-}
-
-function ExHadHave() {
-  const sec = SOURCE_SECTIONS[SEC.s31];
-  return (
-    <div className="space-y-3">
-      <Lines lines={sec.units.slice(5)} />
-      <McqDrill items={EX27_HADHAVE} reveals={sec.revealUnits ?? []} seq="l27-ex-hadhave" exercise="l27-hadhave" intro={sec.units[0]} platformAnswers letters={["a)", "b)"]} />
-    </div>
-  );
-}
-
-function ExSimplePerfect() {
-  const sec = SOURCE_SECTIONS[SEC.s32];
-  return (
-    <div className="space-y-3">
-      <McqDrill items={EX27_SIMPLE_PERFECT} reveals={sec.revealUnits ?? []} seq="l27-ex-simple-perfect" exercise="l27-simple-perfect" intro={sec.units[0]} platformAnswers letters={["a)", "b)"]} />
-      <Lines lines={[sec.units[sec.units.length - 1]]} />
-    </div>
-  );
-}
-
-function ExFinal10() {
-  const sec = SOURCE_SECTIONS[SEC.s43];
-  return (
-    <McqDrill
-      items={EX27_FINAL}
-      reveals={sec.revealUnits ?? []}
-      seq="l27-ex-final10"
-      exercise="l27-final10"
-      intro={sec.units[0]}
-      platformAnswers
-      letters={["A)", "B)", "C)"]}
-      circled
-      typoNote={`Source typo correction — Section ㊸ Question ②: ${TYPO_S43_Q2.note}`}
-    />
-  );
-}
-
-function ExNoah() {
-  const sec = SOURCE_SECTIONS[SEC.s33];
-  const [pick, setPick] = useState<string | null>(null);
-  const [checked, setChecked] = useState(false);
-  const right = pick === EX27_NOAH.first;
-  return (
-    <div data-en-seq="l27-ex-noah" data-exercise="l27-noah" className="space-y-3">
-      <Lines lines={sec.units.slice(0, 6)} />
-      <div className="grid gap-2 sm:grid-cols-2">
-        {EX27_NOAH.events.map((e) => (
-          <button
-            key={e.key}
-            type="button"
-            onClick={() => setPick(e.key)}
-            disabled={checked}
-            aria-pressed={pick === e.key}
-            className={`rounded-2xl border-2 p-3 text-center transition disabled:cursor-default ${
-              checked
-                ? e.key === EX27_NOAH.first
-                  ? "border-transparent bg-emerald-600 text-white"
-                  : pick === e.key
-                    ? "border-transparent bg-rose-600 text-white"
-                    : "border-slate-200 bg-white text-slate-300"
-                : pick === e.key
-                  ? "border-transparent bg-slate-900 text-white"
-                  : "border-slate-200 bg-white hover:border-violet-400"
-            }`}
-          >
-            <span className={`font-head grid h-8 w-8 place-items-center rounded-lg text-sm font-bold ${checked && e.key === EX27_NOAH.first ? "bg-white/25 text-white" : "bg-violet-100 text-violet-800"}`}>
-              {e.key}
-            </span>
-            <En className={`mt-1 block text-base font-black ${checked && e.key !== EX27_NOAH.first && pick !== e.key ? "text-slate-300" : ""}`}>{e.en}</En>
-            <span className="mt-0.5 block text-xs font-bold opacity-80">
-              <Rich text={e.ar} />
-            </span>
-          </button>
-        ))}
-      </div>
-      <div className="flex flex-wrap items-center gap-2 rounded-2xl border-2 border-slate-100 bg-white p-3">
-        <button
-          type="button"
-          onClick={() => setChecked(true)}
-          disabled={checked || pick === null}
-          title={pick !== null ? undefined : "اختر الحدث الأول أولًا"}
-          className="rounded-xl bg-violet-700 px-5 py-2.5 text-sm font-black text-white transition enabled:hover:bg-violet-800 disabled:opacity-30"
-        >
-          <Rich text="تحقق من الإجابات" />
-        </button>
-        {checked ? (
-          <>
-            <span className={`rounded-xl px-3 py-2 text-sm font-black text-white ${right ? "bg-emerald-600" : "bg-rose-600"}`}>
-              <Rich text={right ? "✓ صحيح!" : "✕ راجع الترتيب"} />
-            </span>
-            <button type="button" onClick={() => { setPick(null); setChecked(false); }} className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-black text-slate-600 transition hover:bg-slate-200">
-              <Rich text="↺ إعادة" />
-            </button>
-          </>
-        ) : (
-          <span className="text-xs font-bold text-slate-500">
-            <Rich text="لا يظهر أي تصحيح قبل الضغط على الزر." />
-          </span>
-        )}
-      </div>
-      {checked && (
-        <div data-reveal-block="l27-ex-noah" className="space-y-1.5 rounded-3xl border-2 border-emerald-200 bg-emerald-50/60 p-3">
-          <div className="text-center text-sm font-black text-emerald-900">
-            <Rich text={sec.units[6]} />
-          </div>
-          {(sec.revealUnits ?? []).map((r, i) => (
-            <div key={i} className="rounded-xl bg-white px-3 py-1.5 text-sm font-black text-emerald-900">
-              <Rich text={r} />
-            </div>
-          ))}
-          <div className="px-1 text-xs font-bold text-slate-600">
-            <Rich text={EX27_NOAH.why} />
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ExErrors() {
-  const sec = SOURCE_SECTIONS[SEC.s34];
-  const [picks, setPicks] = useState<Record<number, number>>({});
-  const [checked, setChecked] = useState(false);
-  const answered = EX27_ERRORS.filter((_, i) => picks[i] !== undefined).length;
-  const allAnswered = answered === EX27_ERRORS.length;
-  const score = EX27_ERRORS.reduce((n, _, i) => n + (picks[i] === EX27_ERROR_SPOTS[i].answer ? 1 : 0), 0);
-  return (
-    <div data-en-seq="l27-ex-errors" data-exercise="l27-errors" className="space-y-3">
-      <Lines lines={[sec.units[0]]} />
-      <Lines lines={sec.units.slice(1, 7)} />
-      {EX27_ERRORS.map((item, i) => {
-        const spots = EX27_ERROR_SPOTS[i];
-        const pick = picks[i];
-        const picked = pick !== undefined;
-        const right = picked && pick === spots.answer;
-        const card = checked
-          ? !picked ? "border-slate-200 bg-white" : right ? "border-emerald-300 bg-emerald-50/60" : "border-rose-300 bg-rose-50/60"
-          : picked ? "border-slate-300 bg-slate-50/70" : "border-slate-200 bg-white";
-        return (
-          <div key={i} className={`rounded-3xl border-2 p-3 transition ${card}`}>
-            <div className="mb-2 flex items-center gap-2">
-              <span className="font-head grid h-7 w-7 place-items-center rounded-lg bg-violet-700 text-xs font-black text-white">{item.n}</span>
-              <span className="text-xs font-bold text-slate-500"><Rich text="المس الجزء الخاطئ:" /></span>
-            </div>
-            <div dir="ltr" className="ltr-row flex flex-wrap gap-1.5">
-              {spots.segs.map((seg, si) => {
-                const isPick = pick === si;
-                let cls = "border-slate-200 bg-white text-slate-800 hover:border-rose-400";
-                if (checked) {
-                  if (si === spots.answer) cls = "border-transparent bg-rose-600 text-white";
-                  else if (isPick) cls = "border-slate-200 bg-white text-slate-300";
-                  else cls = "border-slate-200 bg-white text-slate-400";
-                } else if (isPick) {
-                  cls = "border-transparent bg-slate-900 text-white";
-                }
-                return (
-                  <button
-                    key={si}
-                    type="button"
-                    data-spot={`l27-err-${i}-${si}`}
-                    onClick={() => setPicks((p) => ({ ...p, [i]: si }))}
-                    disabled={checked}
-                    aria-pressed={isPick}
-                    className={`rounded-xl border-2 px-3 py-2 font-en text-sm font-black transition disabled:cursor-default ${cls}`}
-                  >
-                    {seg}
-                  </button>
-                );
-              })}
-            </div>
-            {checked && (
-              <div className="mt-2 space-y-1 rounded-2xl bg-white p-2.5">
-                <En className="block text-sm font-black text-emerald-800">{item.fixed}</En>
-                <div className="text-xs font-bold text-slate-600"><Rich text={(right ? "✓ " : "✕ ") + item.why} /></div>
-              </div>
-            )}
-          </div>
-        );
-      })}
-      <div className="flex flex-wrap items-center gap-2 rounded-2xl border-2 border-slate-100 bg-white p-3">
-        <button
-          type="button"
-          onClick={() => setChecked(true)}
-          disabled={checked || !allAnswered}
-          title={allAnswered ? undefined : "حدد الجزء الخاطئ في كل جملة أولًا"}
-          className="rounded-xl bg-violet-700 px-5 py-2.5 text-sm font-black text-white transition enabled:hover:bg-violet-800 disabled:opacity-30"
-        >
-          <Rich text={`تحقق من الإجابات (${answered}/${EX27_ERRORS.length})`} />
-        </button>
-        {checked ? (
-          <>
-            <span className="rounded-xl bg-violet-700 px-3 py-2 text-sm font-black text-white">
-              <Rich text={`${score} / ${EX27_ERRORS.length}`} />
-            </span>
-            <button type="button" onClick={() => { setPicks({}); setChecked(false); }} className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-black text-slate-600 transition hover:bg-slate-200">
-              <Rich text="↺ إعادة" />
-            </button>
-          </>
-        ) : (
-          <span className="text-xs font-bold text-slate-500">
-            <Rich text="التصحيحات الكاملة تظهر بعد التحقق." />
-          </span>
-        )}
-      </div>
-      {checked && (
-        <div data-reveal-block="l27-ex-errors" className="space-y-1.5 rounded-3xl border-2 border-emerald-200 bg-emerald-50/60 p-3">
-          <div className="text-center text-sm font-black text-emerald-900">
-            <Rich text={sec.units[7]} />
-          </div>
-          {(sec.revealUnits ?? []).map((r, i) => (
-            <div key={i} className="rounded-xl bg-white px-3 py-1.5 text-sm font-black text-emerald-900">
-              <Rich text={r} />
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-const normAnswer = (s: string) => s.trim().toLowerCase().replace(/\s+/g, " ").replace(/[.?!]+$/, "");
-
-function ExTransform() {
-  const sec = SOURCE_SECTIONS[SEC.s35];
-  const blanks = EX27_TRANSFORM.items;
-  const [values, setValues] = useState<string[]>(() => blanks.map(() => ""));
-  const [checked, setChecked] = useState(false);
-  const filled = values.filter((v) => v.trim().length > 0).length;
-  const score = blanks.reduce((n, b, i) => n + (normAnswer(values[i]) === normAnswer(b.answer) ? 1 : 0), 0);
-  const w = EX27_TRANSFORM.worked;
-  return (
-    <div data-en-seq="l27-ex-transform" data-exercise="l27-transform" className="space-y-3">
-      <Lines lines={sec.units.slice(0, 2)} />
-      <div className="rounded-3xl border-2 border-sky-200 bg-sky-50/60 p-3">
-        <div dir="ltr" className="ltr-row mt-1 space-y-1 text-center">
-          <En className="block text-base font-black text-slate-800">{w.a}</En>
-          <En className="block text-base font-black text-slate-800">{w.b}</En>
-        </div>
-        <div className="mt-1 text-center text-xs font-bold text-slate-600"><Rich text={w.want} /></div>
-        <div className="mt-1 text-center text-sm font-black text-sky-900"><Rich text={sec.units[5]} /></div>
-        <div dir="ltr" className="ltr-row mt-1 rounded-xl bg-white p-2 text-center">
-          <En className="text-base font-black text-emerald-800">{w.answer}</En>
-        </div>
-      </div>
-      {blanks.map((b, i) => {
-        const ok = checked && normAnswer(values[i]) === normAnswer(b.answer);
-        const bad = checked && !ok;
-        return (
-          <div key={b.n} className="rounded-3xl border-2 border-slate-200 bg-white p-3">
-            <div className="mb-1 flex items-center gap-2">
-              <span className="font-head grid h-7 w-7 place-items-center rounded-lg bg-violet-700 text-xs font-black text-white">{b.n}</span>
-              <span className="text-sm font-black text-slate-700"><Rich text={i === 0 ? sec.units[7] : sec.units[11]} /></span>
-            </div>
-            <div dir="ltr" className="ltr-row space-y-1">
-              <En className="block text-base font-black text-slate-800">{b.a}</En>
-              <En className="block text-base font-black text-slate-800">{b.b}</En>
-            </div>
-            <div className="mt-1 text-sm font-black text-slate-700"><Rich text={sec.units[i === 0 ? 10 : 14]} /></div>
-            <input
-              dir="ltr"
-              value={values[i]}
-              onChange={(e) => setValues((v) => { const n = [...v]; n[i] = e.target.value; return n; })}
-              disabled={checked}
-              aria-label={`transformed sentence ${i + 1}`}
-              placeholder="Type the Past Perfect sentence…"
-              className={`font-en mt-1 w-full rounded-xl border-2 px-3 py-2.5 text-left text-sm font-bold outline-none ${
-                ok ? "border-emerald-400 bg-emerald-50 text-emerald-900" : bad ? "border-rose-400 bg-rose-50 text-rose-900" : "border-violet-200 bg-violet-50/40 text-slate-900 focus:border-violet-500"
-              }`}
-            />
-            {checked && (
-              <div data-reveal-block={`l27-transform-${i + 1}`} className="mt-1.5 rounded-xl bg-emerald-50 px-3 py-2">
-                <En className="block text-sm font-black text-emerald-800">{b.answer}</En>
-                <div className="mt-0.5 text-xs font-bold text-slate-600"><Rich text={ok ? `✓ صحيح! ${b.why}` : `✕ ${b.why}`} /></div>
-              </div>
-            )}
-          </div>
-        );
-      })}
-      <div className="flex flex-wrap items-center gap-2 rounded-2xl border-2 border-slate-100 bg-white p-3">
-        <button
-          type="button"
-          onClick={() => setChecked(true)}
-          disabled={checked || filled !== blanks.length}
-          title={filled === blanks.length ? undefined : "اكتب الجملتين أولًا"}
-          className="rounded-xl bg-violet-700 px-5 py-2.5 text-sm font-black text-white transition enabled:hover:bg-violet-800 disabled:opacity-30"
-        >
-          <Rich text={`تحقق من الإجابات (${filled}/${blanks.length})`} />
-        </button>
-        {checked ? (
-          <>
-            <span className="rounded-xl bg-violet-700 px-3 py-2 text-sm font-black text-white">
-              <Rich text={`${score} / ${blanks.length}`} />
-            </span>
-            <button type="button" onClick={() => { setValues(blanks.map(() => "")); setChecked(false); }} className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-black text-slate-600 transition hover:bg-slate-200">
-              <Rich text="↺ إعادة" />
-            </button>
-          </>
-        ) : (
-          <span className="text-xs font-bold text-slate-500">
-            <Rich text="الإجابات النموذجية تظهر بعد التحقق." />
-          </span>
-        )}
-      </div>
-    </div>
-  );
-}
-
-const IRREG_V3_27 = new Set(
-  "gone eaten seen taken written broken spoken chosen forgotten known been done had made sold told felt kept slept heard left met paid said sent spent stood understood won thought bought brought caught fought sought taught forgot frozen hidden risen driven ridden beaten bitten become come run".split(" ")
-);
-const IRREG_PS_27 = new Set(
-  "went ate saw took wrote broke spoke chose forgot knew left arrived started finished closed cooked walked looked realized found lost ran stopped heard came rang knocked began opened noticed dropped stepped picked met watched entered called sat stood turned felt got woke fell drove rode sang sank drank swam".split(" ")
-);
-
-function countPP27(text: string): number {
-  const re = /\bhad(?:n't|\s+not)?(?:\s+(?:never|already|just|ever|also|even|really))?\s+([a-zA-Z]+)/gi;
-  let n = 0;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(text)) !== null) {
-    const w = m[1].toLowerCase();
-    if (w.endsWith("ed") || w.endsWith("en") || IRREG_V3_27.has(w)) n++;
-  }
-  return n;
-}
-
-function countPC27(text: string): number {
-  return (text.match(/\b(was|were)\b\s+\w+ing/gi) || []).length;
-}
-
-function countPS27(text: string): number {
-  const words = text.toLowerCase().match(/[a-z']+/g) || [];
-  let n = 0;
-  for (let i = 0; i < words.length; i++) {
-    const w = words[i];
-    const prev = words[i - 1] ?? "";
-    if (["was", "were", "had", "has", "have", "hadn't", "hasn't", "haven't"].includes(prev)) continue;
-    if (IRREG_PS_27.has(w)) {
-      n++;
-      continue;
-    }
-    if (w.endsWith("ed") && w.length > 3 && !w.endsWith("eed")) n++;
-  }
-  return n;
-}
-
-const MUSEUM_TENSES_27 = ["Past Simple", "Past Continuous", "Past Perfect"] as const;
-
-function ExMuseum() {
-  const sec = SOURCE_SECTIONS[SEC.s36];
-  const [picks, setPicks] = useState<Record<number, string>>({});
-  const [checked, setChecked] = useState(false);
-  const answered = DETECTIVE_27.filter((_, i) => picks[i] !== undefined).length;
-  const allAnswered = answered === DETECTIVE_27.length;
-  const score = DETECTIVE_27.reduce((n, d, i) => n + (picks[i] === d.tense ? 1 : 0), 0);
-  return (
-    <div data-en-seq="l27-ex-museum" data-exercise="l27-museum" className="space-y-3">
-      <Lines lines={sec.units} />
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-violet-200 bg-violet-50 px-3 py-2">
-        <span className="text-sm font-black text-violet-900">
-          <Rich text="حدد زمن كل فعل — ثم تحقق." />
-        </span>
-        <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-violet-700">
-          {answered} / {DETECTIVE_27.length}
-        </span>
-      </div>
-      {DETECTIVE_27.map((d, i) => {
-        const pick = picks[i];
-        return (
-          <div key={i} className="rounded-3xl border-2 border-slate-200 bg-white p-3">
-            <div dir="ltr" className="ltr-row">
-              <En className="text-base font-black text-slate-900 md:text-lg">{d.verb}</En>
-            </div>
-            <div dir="ltr" className="ltr-row mt-2 flex flex-wrap justify-end gap-2">
-              {MUSEUM_TENSES_27.map((t) => {
-                const isPick = pick === t;
-                const isAnswer = d.tense === t;
-                let cls = "border-slate-200 bg-white text-slate-700 hover:border-violet-400";
-                if (checked) {
-                  if (isAnswer) cls = "border-transparent bg-emerald-600 text-white";
-                  else if (isPick) cls = "border-transparent bg-rose-600 text-white";
-                  else cls = "border-slate-200 bg-white text-slate-300";
-                } else if (isPick) {
-                  cls = "border-transparent bg-slate-900 text-white";
-                }
-                return (
-                  <button
-                    key={t}
-                    type="button"
-                    onClick={() => setPicks((prev) => ({ ...prev, [i]: t }))}
-                    disabled={checked}
-                    aria-pressed={isPick}
-                    className={`rounded-xl border-2 px-4 py-2 font-en text-sm font-black transition disabled:cursor-default ${cls}`}
-                  >
-                    {t}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
-      <div className="flex flex-wrap items-center gap-2 rounded-2xl border-2 border-slate-100 bg-white p-3">
-        <button
-          type="button"
-          onClick={() => setChecked(true)}
-          disabled={checked || !allAnswered}
-          title={allAnswered ? undefined : "حدد زمن كل فعل أولًا"}
-          className="rounded-xl bg-violet-700 px-5 py-2.5 text-sm font-black text-white transition enabled:hover:bg-violet-800 disabled:opacity-30"
-        >
-          <Rich text={`تحقق من الإجابات (${answered}/${DETECTIVE_27.length})`} />
-        </button>
-        {checked ? (
-          <>
-            <span className="rounded-xl bg-violet-700 px-3 py-2 text-sm font-black text-white">
-              <Rich text={`${score} / ${DETECTIVE_27.length}`} />
-            </span>
-            <button
-              type="button"
-              onClick={() => { setPicks({}); setChecked(false); }}
-              className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-black text-slate-600 transition hover:bg-slate-200"
-            >
-              <Rich text="↺ إعادة" />
-            </button>
-          </>
-        ) : (
-          <span className="text-xs font-bold text-slate-500">
-            <Rich text="لا يظهر أي تصحيح قبل الضغط على الزر." />
-          </span>
-        )}
-      </div>
-      {checked && (
-        <div data-reveal-block="l27-ex-museum" className="space-y-1.5 rounded-3xl border-2 border-emerald-200 bg-emerald-50/60 p-3">
-          {(sec.revealUnits ?? []).map((r, i) => (
-            <div key={i} className="rounded-xl bg-white px-3 py-1.5 text-sm font-black text-emerald-900">
-              <Rich text={r} />
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ExOrderChal() {
-  const sec = SOURCE_SECTIONS[SEC.s39];
-  const [current, setCurrent] = useState<string[]>([]);
-  const [checked, setChecked] = useState(false);
-  const items = ORDER_27_CHALLENGE.items;
-  const toggle = (key: string) =>
-    setCurrent((c) => (c.includes(key) ? c.filter((k) => k !== key) : c.length >= items.length ? c : [...c, key]));
-  const ok = ORDER_27_CHALLENGE.accept.some((a) => a.join("|") === current.join("|"));
-  const reset = () => {
-    setCurrent([]);
-    setChecked(false);
-  };
-  return (
-    <div data-en-seq="l27-ex-order" data-exercise="l27-order" className="space-y-3">
-      <Lines lines={[sec.units[0]]} />
-      <div className="flex flex-wrap items-center gap-2">
-        <PlatformTag />
-        <span className="text-xs font-bold text-slate-500">
-          <Rich text="الترجمات العربية المساعدة من المنصة — الجمل الإنجليزية من المصدر." />
-        </span>
-      </div>
-      <div className="grid gap-2">
-        {items.map((it) => {
-          const pos = current.indexOf(it.key);
-          const on = pos !== -1;
-          return (
-            <button
-              key={it.key}
-              type="button"
-              data-order-item={it.key}
-              onClick={() => toggle(it.key)}
-              disabled={checked}
-              aria-pressed={on}
-              className={`flex items-center gap-3 rounded-2xl border-2 px-3 py-2.5 text-left transition disabled:cursor-default ${
-                checked
-                  ? "border-slate-200 bg-white"
-                  : on
-                    ? "border-transparent bg-slate-900 text-white"
-                    : "border-slate-200 bg-white text-slate-800 hover:border-violet-400"
-              }`}
-            >
-              <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg text-sm font-black ${on && !checked ? "bg-white/25 text-white" : "bg-violet-700 text-white"}`}>
-                {on ? pos + 1 : it.key}
-              </span>
-              <span className="min-w-0 flex-1">
-                <span dir="ltr" className="ltr block text-left font-en text-sm font-black md:text-base">
-                  {it.key}. {it.en}
-                </span>
-                <span className={`block text-right text-xs font-bold ${on && !checked ? "text-white/80" : "text-slate-400"}`}>
-                  <Rich text={it.ar} />
-                </span>
-              </span>
-            </button>
-          );
-        })}
-      </div>
-      <div className="flex flex-wrap items-center gap-2 rounded-2xl border-2 border-slate-100 bg-white p-3">
-        <button
-          type="button"
-          onClick={() => setChecked(true)}
-          disabled={checked || current.length !== items.length}
-          title={current.length === items.length ? undefined : "رتب الأحداث الأربعة أولًا"}
-          className="rounded-xl bg-violet-700 px-5 py-2.5 text-sm font-black text-white transition enabled:hover:bg-violet-800 disabled:opacity-30"
-        >
-          <Rich text={`تحقق من ترتيبك (${current.length}/${items.length})`} />
-        </button>
-        {checked ? (
-          <>
-            <span className={`rounded-xl px-3 py-2 text-sm font-black text-white ${ok ? "bg-emerald-600" : "bg-rose-600"}`}>
-              <Rich text={ok ? "✓ ترتيب صحيح!" : "✕ ليس بعد — قارن مع القصة ثم أعد المحاولة."} />
-            </span>
-            <button
-              type="button"
-              onClick={reset}
-              className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-black text-slate-600 transition hover:bg-slate-200"
-            >
-              <Rich text="↺ إعادة" />
-            </button>
-          </>
-        ) : (
-          <span className="text-xs font-bold text-slate-500">
-            <Rich text="المس الأحداث من الأقدم إلى الأحدث — المس الحدث مرة أخرى لإلغائه." />
-          </span>
-        )}
-      </div>
-      {checked && (
-        <div data-reveal-block="l27-ex-order" className="space-y-1.5 rounded-3xl border-2 border-emerald-200 bg-emerald-50/60 p-3">
-          <div className="px-1 text-sm font-black text-emerald-900">
-            <Rich text={sec.units[sec.units.length - 1]} />
-          </div>
-          {(sec.revealUnits ?? []).map((r, i) => (
-            <div key={i} className="rounded-xl bg-white px-3 py-1.5 text-sm font-black text-emerald-900">
-              <Rich text={r} />
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ExBoss() {
-  const sec = SOURCE_SECTIONS[SEC.s42];
-  const [picks, setPicks] = useState<Record<number, number>>({});
-  const [checked, setChecked] = useState(false);
-  const answered = BOSS_27.filter((b) => picks[b.n] !== undefined).length;
-  const allAnswered = answered === BOSS_27.length;
-  const score = BOSS_27.reduce((n, b) => n + (picks[b.n] === b.answer ? 1 : 0), 0);
-  const answerHead = sec.units[4];
-  return (
-    <div data-en-seq="l27-ex-boss" data-exercise="l27-boss" className="space-y-3">
-      <div className="rounded-2xl border-2 border-violet-200 bg-violet-50 px-3 py-2 text-sm font-black text-violet-900">
-        <Rich text={sec.units[0]} />
-      </div>
-      {BOSS_27.map((b, bi) => {
-        const pick = picks[b.n];
-        return (
-          <div key={b.n} className="rounded-3xl border-2 border-slate-200 bg-white p-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-lg bg-slate-900 px-2.5 py-1 text-xs font-black text-white">⚔️ {b.n}</span>
-              <span className="text-sm font-black text-slate-800">
-                <Rich text={sec.units[bi === 0 ? 1 : 5]} />
-              </span>
-            </div>
-            <div className="mt-2 grid gap-2">
-              {b.opts.map((opt, oi) => {
-                const isPick = pick === oi;
-                const isAnswer = oi === b.answer;
-                let cls = "border-slate-200 bg-white text-slate-700 hover:border-violet-400";
-                if (checked) {
-                  if (isAnswer) cls = "border-transparent bg-emerald-600 text-white";
-                  else if (isPick) cls = "border-transparent bg-rose-600 text-white";
-                  else cls = "border-slate-200 bg-white text-slate-300";
-                } else if (isPick) {
-                  cls = "border-transparent bg-slate-900 text-white";
-                }
-                return (
-                  <button
-                    key={oi}
-                    type="button"
-                    onClick={() => setPicks((prev) => ({ ...prev, [b.n]: oi }))}
-                    disabled={checked}
-                    aria-pressed={isPick}
-                    dir="ltr"
-                    className={`rounded-xl border-2 px-4 py-2 text-left font-en text-sm font-black transition disabled:cursor-default ${cls}`}
-                  >
-                    {oi === 0 ? "A" : "B"}. {opt}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
-      <div className="flex flex-wrap items-center gap-2 rounded-2xl border-2 border-slate-100 bg-white p-3">
-        <button
-          type="button"
-          onClick={() => setChecked(true)}
-          disabled={checked || !allAnswered}
-          title={allAnswered ? undefined : "اختر الجملة المناسبة في المعركتين أولًا"}
-          className="rounded-xl bg-violet-700 px-5 py-2.5 text-sm font-black text-white transition enabled:hover:bg-violet-800 disabled:opacity-30"
-        >
-          <Rich text={`⚔️ تحقق من المعركتين (${answered}/${BOSS_27.length})`} />
-        </button>
-        {checked ? (
-          <>
-            <span className="rounded-xl bg-violet-700 px-3 py-2 text-sm font-black text-white">
-              <Rich text={`${score} / ${BOSS_27.length}`} />
-            </span>
-            <button
-              type="button"
-              onClick={() => { setPicks({}); setChecked(false); }}
-              className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-black text-slate-600 transition hover:bg-slate-200"
-            >
-              <Rich text="↺ إعادة" />
-            </button>
-          </>
-        ) : (
-          <span className="text-xs font-bold text-slate-500">
-            <Rich text="لا يظهر أي تصحيح قبل الضغط على الزر." />
-          </span>
-        )}
-      </div>
-      {checked && (
-        <div data-reveal-block="l27-ex-boss" className="space-y-1.5 rounded-3xl border-2 border-emerald-200 bg-emerald-50/60 p-3">
-          {BOSS_27.map((b, bi) => (
-            <div key={b.n} className="space-y-1.5">
-              <div className="px-1 text-sm font-black text-emerald-900">
-                <Rich text={answerHead} />
-              </div>
-              {(sec.revealUnits ?? []).slice(bi * 2, bi * 2 + 2).map((r, i) => (
-                <div key={i} className="rounded-xl bg-white px-3 py-1.5 text-sm font-black text-emerald-900">
-                  <Rich text={r} />
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ExStory() {
-  const sec = SOURCE_SECTIONS[SEC.s44];
-  const [text, setText] = useState("");
-  const [done, setDone] = useState<Set<number>>(new Set());
-  const sentences = (text.match(/[.?!]+/g) || []).length;
-  const pc = countPC27(text);
-  const pp = countPP27(text);
-  const ps = countPS27(text);
-  const hasWhen = /\bwhen\b/i.test(text);
-  const hasWhile = /\bwhile\b/i.test(text);
-  const hasBeforeAfter = /\b(before|after)\b/i.test(text);
-  const chrono = pp >= 1 && ps >= 1;
-  const checks = [
-    { label: "الجمل ≥ 10", pass: sentences >= 10, value: `${sentences}` },
-    { label: "Past Simple ≥ 3", pass: ps >= 3, value: `${ps}` },
-    { label: "Past Continuous ≥ 2", pass: pc >= 2, value: `${pc}` },
-    { label: "Past Perfect ≥ 3", pass: pp >= 3, value: `${pp}` },
-    { label: "when", pass: hasWhen, value: hasWhen ? "✓" : "✕" },
-    { label: "while", pass: hasWhile, value: hasWhile ? "✓" : "✕" },
-    { label: "before / after", pass: hasBeforeAfter, value: hasBeforeAfter ? "✓" : "✕" },
-    { label: "زوج مرتب (had+V3 + ماضٍ بسيط)", pass: chrono, value: chrono ? "✓" : "✕" },
-  ];
-  const reqIdx = [0, 2, 3, 4, 5, 6, 7, 8];
-  return (
-    <div data-en-seq="l27-ex-story" data-exercise="l27-story" className="space-y-3">
-      <Lines lines={[sec.units[1]]} />
-      <div className="grid gap-2 sm:grid-cols-2">
-        {reqIdx.map((ui, i) => {
-          const on = done.has(i);
-          return (
-            <button
-              key={ui}
-              type="button"
-              onClick={() => setDone((s) => { const n = new Set(s); if (n.has(i)) n.delete(i); else n.add(i); return n; })}
-              aria-pressed={on}
-              className={`flex min-w-0 items-center gap-2 rounded-2xl border-2 px-3 py-2 text-right transition ${on ? "border-emerald-400 bg-emerald-50" : "border-slate-200 bg-white"}`}
-            >
-              <span className={`grid h-6 w-6 shrink-0 place-items-center rounded-lg text-xs font-black ${on ? "bg-emerald-600 text-white" : "bg-slate-100 text-slate-400"}`}>
-                {on ? "✓" : ""}
-              </span>
-              <span className="min-w-0 flex-1 text-xs font-bold text-slate-700">
-                <Rich text={sec.units[ui]} />
-              </span>
-            </button>
-          );
-        })}
-      </div>
-      <Lines lines={sec.units.slice(9, 16)} />
-      <div className="rounded-3xl border-2 border-violet-200 bg-violet-50/50 p-3">
-        <div className="text-center text-xs font-black text-violet-900">
-          <Rich text="اكتب قصتك هنا — ابدأ من سطر البداية أو من خيالك:" />
-        </div>
-        <textarea
-          dir="ltr"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          rows={8}
-          aria-label="story text"
-          placeholder={STORY_27_STARTER}
-          className="font-en mt-2 w-full rounded-2xl border-2 border-slate-200 bg-white p-3 text-left text-base font-bold text-slate-800 outline-none focus:border-violet-400"
-        />
-        <div className="mt-1 text-center text-[11px] font-bold text-slate-400">
-          <Rich text="العدّادات مؤشرات تلقائية تقريبية — التأكد النهائي بمراجعتك أنت." />
-        </div>
-        <div className="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-4" aria-live="polite">
-          {checks.map((c) => (
-            <div key={c.label} className={`rounded-xl border-2 px-3 py-2 text-center text-xs font-black ${c.pass ? "border-emerald-300 bg-emerald-50 text-emerald-800" : "border-slate-200 bg-white text-slate-500"}`}>
-              <Rich text={c.label} />
-              <span className="mx-1">·</span>
-              <En>{c.value}</En>
-            </div>
-          ))}
-        </div>
-        <div className="mt-2 text-center text-xs font-black text-slate-500">
-          <Rich text={`المتطلبات المعلّمة: ${done.size} / ${reqIdx.length}`} />
-        </div>
-        <div className="mt-2 text-center">
-          <button
-            type="button"
-            onClick={() => { setText(""); setDone(new Set()); }}
-            className="rounded-xl bg-slate-100 px-4 py-2 text-xs font-black text-slate-600 transition hover:bg-slate-200"
-          >
-            <Rich text="↺ إعادة ضبط المهمة" />
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ============================================================
-// منطقة الاختبارات — 20 سؤالًا بأنواع منظمة
-// لا كشف قبل «إنهاء الاختبار»: لا ألوان صواب، لا درجات، لا شروح.
-// ============================================================
-
-export type TestAnswer27 = number | boolean | number[] | string[] | Record<number, number>;
-
-const TYPE_LABEL_27: Record<TestQ27["type"], string> = {
-  single: "اختيار واحد",
-  tf: "صح / خطأ",
-  multi: "اختيار متعدد",
-  order: "ترتيب",
-  match: "توصيل",
-  spot: "اكتشاف الخطأ",
+// ---------------- الأدوار البصرية الثلاثة للأزمنة ----------------
+type TenseLens = "ps" | "pc" | "pp";
+const TENSES27: Record<
+  TenseLens,
+  { en: string; ar: string; emoji: string; qEn: string; qAr: string; chip: string; soft: string; ring: string }
+> = {
+  ps: {
+    en: "Past Simple",
+    ar: "الماضي البسيط",
+    emoji: "📸",
+    qEn: "What happened?",
+    qAr: "ماذا حدث؟ (حدث مكتمل)",
+    chip: "bg-orange-500 text-white",
+    soft: "border-orange-300 bg-orange-50",
+    ring: "ring-orange-300",
+  },
+  pc: {
+    en: "Past Continuous",
+    ar: "الماضي المستمر",
+    emoji: "🎥",
+    qEn: "What was happening?",
+    qAr: "ماذا كان يحدث؟ (خلفية مستمرة)",
+    chip: "bg-sky-500 text-white",
+    soft: "border-sky-300 bg-sky-50",
+    ring: "ring-sky-300",
+  },
+  pp: {
+    en: "Past Perfect",
+    ar: "الماضي التام",
+    emoji: "⏪",
+    qEn: "What had happened before that?",
+    qAr: "ماذا كان قد حدث قبل ذلك؟ (فلاش باك / الأقدم)",
+    chip: "bg-violet-700 text-white",
+    soft: "border-violet-300 bg-violet-50",
+    ring: "ring-violet-300",
+  },
 };
 
-function isAnswered27(q: TestQ27, a: TestAnswer27 | undefined): boolean {
-  if (a === undefined) return false;
-  switch (q.type) {
-    case "single":
-    case "spot":
-      return typeof a === "number";
-    case "tf":
-      return typeof a === "boolean";
-    case "multi":
-      return Array.isArray(a) && a.length > 0;
-    case "order":
-      return Array.isArray(a) && a.length === q.items.length;
-    case "match":
-      return typeof a === "object" && !Array.isArray(a) && q.left.every((_, i) => (a as Record<number, number>)[i] !== undefined);
-    default:
-      return false;
-  }
-}
-
-function isCorrect27(q: TestQ27, a: TestAnswer27 | undefined): boolean {
-  if (!isAnswered27(q, a)) return false;
-  switch (q.type) {
-    case "single":
-    case "spot":
-      return a === q.answer;
-    case "tf":
-      return a === q.answer;
-    case "multi": {
-      const got = [...(a as number[])].sort().join(",");
-      const want = [...q.answer].sort().join(",");
-      return got === want;
-    }
-    case "order":
-      return (a as string[]).join("|") === q.answer.join("|");
-    case "match":
-      return q.left.every((_, i) => (a as Record<number, number>)[i] === q.answer[i]);
-    default:
-      return false;
-  }
-}
-
-function QShell({ n, type, ar, en, children, state }: {
-  n: number; type: TestQ27["type"]; ar: string; en?: string; children: ReactNode;
-  state: "idle" | "picked" | "right" | "wrong" | "skipped";
-}) {
-  const card =
-    state === "right" ? "border-emerald-300 bg-emerald-50/50"
-    : state === "wrong" ? "border-rose-300 bg-rose-50/50"
-    : state === "picked" ? "border-slate-300 bg-slate-50/70"
-    : "border-slate-200 bg-white";
-  return (
-    <div data-test-q={n} className={`rounded-3xl border-2 p-4 transition ${card}`}>
-      <div className="flex flex-wrap items-start gap-3">
-        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-violet-700 text-sm font-bold text-white">
-          {n}
-        </span>
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-violet-100 px-2.5 py-0.5 text-[11px] font-black text-violet-800">
-              {TYPE_LABEL_27[type]}
-            </span>
-            {(state === "right" || state === "wrong") && (
-              <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-black ${state === "right" ? "bg-emerald-600 text-white" : "bg-rose-600 text-white"}`}>
-                {state === "right" ? "✓ صحيح" : "✕ خطأ"}
-              </span>
-            )}
-          </div>
-          <div className="mt-1 font-bold text-slate-800">
-            <Rich text={ar} />
-          </div>
-          {en && (
-            <div dir="ltr" className="font-en mt-1 text-left text-lg font-extrabold text-slate-900">
-              {en}
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="mt-3">{children}</div>
-    </div>
-  );
-}
-
-function NeutralOpt({ selected, revealed, isAnswer, isPick, onClick, disabled, label, en }: {
-  selected: boolean; revealed: boolean; isAnswer: boolean; isPick: boolean;
-  onClick: () => void; disabled: boolean; label: string; en?: boolean;
-}) {
-  let cls = "border-slate-200 bg-white text-slate-700 hover:border-violet-400";
-  if (revealed) {
-    if (isAnswer) cls = "border-transparent bg-emerald-600 text-white";
-    else if (isPick) cls = "border-transparent bg-rose-600 text-white";
-    else cls = "border-slate-200 bg-white text-slate-300";
-  } else if (selected) {
-    cls = "border-transparent bg-slate-900 text-white";
+function TenseChip({ t, small = false, onClick, active }: { t: TenseLens; small?: boolean; onClick?: () => void; active?: boolean }) {
+  const v = TENSES27[t];
+  const base = `inline-flex items-center gap-1.5 rounded-xl font-black transition ${small ? "px-2.5 py-1 text-xs" : "px-3 py-1.5 text-sm"} ${v.chip} ${active === false ? "opacity-40" : ""}`;
+  if (!onClick) {
+    return (
+      <span className={base}>
+        {v.emoji} <En>{v.en}</En>
+      </span>
+    );
   }
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      aria-pressed={selected}
-      dir={en ? "ltr" : undefined}
-      className={`rounded-xl border-2 px-3 py-2 text-sm font-black transition active:scale-[0.98] disabled:cursor-default ${en ? "font-en text-left" : ""} ${cls}`}
-    >
-      {en ? label : <Rich text={label} />}
+    <button type="button" onClick={onClick} className={`${base} active:scale-95 ${active ? `ring-4 ${v.ring}` : ""}`}>
+      {v.emoji} <En>{v.en}</En>
     </button>
   );
 }
 
-function TSingle({ q, value, checked, onChange }: { q: Extract<TestQ27, { type: "single" }>; value: number | undefined; checked: boolean; onChange: (v: number) => void }) {
-  return (
-    <div dir="ltr" className="ltr-row grid gap-2 sm:grid-cols-3">
-      {q.opts.map((o, oi) => (
-        <NeutralOpt key={oi} en selected={value === oi} revealed={checked} isAnswer={oi === q.answer} isPick={value === oi} onClick={() => onChange(oi)} disabled={checked} label={o} />
-      ))}
-    </div>
-  );
-}
+// ---------------- أدوات عرض وتفاعل مشتركة ----------------
 
-function TTf({ q, value, checked, onChange }: { q: Extract<TestQ27, { type: "tf" }>; value: boolean | undefined; checked: boolean; onChange: (v: boolean) => void }) {
+function Lab({ emoji, label, ar, children }: { emoji: string; label: string; ar?: string; children: ReactNode }) {
   return (
-    <div className="flex flex-wrap gap-2">
-      {([true, false] as const).map((b) => (
-        <NeutralOpt key={String(b)} selected={value === b} revealed={checked} isAnswer={b === q.answer} isPick={value === b} onClick={() => onChange(b)} disabled={checked} label={b ? "✓ صحيح" : "✕ خطأ"} />
-      ))}
-    </div>
-  );
-}
-
-function TMulti({ q, value, checked, onChange }: { q: Extract<TestQ27, { type: "multi" }>; value: number[] | undefined; checked: boolean; onChange: (v: number[]) => void }) {
-  const sel = value ?? [];
-  const toggle = (oi: number) => {
-    if (checked) return;
-    onChange(sel.includes(oi) ? sel.filter((x) => x !== oi) : [...sel, oi]);
-  };
-  return (
-    <div className="space-y-2">
-      <div className="text-xs font-bold text-slate-500">
-        <Rich text="اختر كل الإجابات الصحيحة — تُحتسب الدرجة عند اختيار الصحيح فقط." />
+    <div className="rounded-3xl border-2 border-violet-100 bg-gradient-to-br from-violet-50/80 via-white to-indigo-50/60 p-3.5 sm:p-5">
+      <div className="mb-3.5 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-violet-100 bg-white px-3 py-2 shadow-sm">
+        <span className="text-xl">{emoji}</span>
+        <En className="text-xs font-black uppercase tracking-[0.16em] text-violet-700">{label}</En>
+        {ar && <Rich text={ar} className="text-sm font-bold text-slate-600" />}
       </div>
-      <div dir="ltr" className="ltr-row grid gap-2">
-        {q.opts.map((o, oi) => (
-          <NeutralOpt key={oi} en selected={sel.includes(oi)} revealed={checked} isAnswer={q.answer.includes(oi)} isPick={sel.includes(oi)} onClick={() => toggle(oi)} disabled={checked} label={o} />
+      <div className="space-y-3.5">{children}</div>
+    </div>
+  );
+}
+
+function PlatformPanel({ children }: { children: ReactNode }) {
+  return (
+    <aside className="rounded-2xl border-2 border-slate-700 bg-slate-900 p-4 text-sm font-semibold leading-relaxed text-white">
+      <div className="mb-1.5 text-[11px] font-black uppercase tracking-wide text-amber-300">
+        <PlatformTag />
+      </div>
+      {children}
+    </aside>
+  );
+}
+
+function SourceReveal({ text }: { text: string }) {
+  return (
+    <div data-reveal-block className="tada flex flex-wrap items-center gap-2 rounded-2xl border-2 border-emerald-200 bg-emerald-50 px-3.5 py-2.5">
+      <span className="rounded-full bg-emerald-600 px-2.5 py-0.5 text-[11px] font-black text-white">📜 من المصدر</span>
+      <Rich text={text} className="text-sm font-bold text-emerald-900 md:text-base" />
+    </div>
+  );
+}
+
+function FormulaStrip({ items }: { items: string[] }) {
+  return (
+    <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row flex flex-wrap justify-center gap-2">
+      {items.map((x) => (
+        <En key={x} className="rounded-xl border-2 border-violet-200 bg-white px-3.5 py-2 text-base font-black text-violet-900 shadow-sm md:text-lg">
+          {x}
+        </En>
+      ))}
+    </div>
+  );
+}
+
+/** خط زمني مرئي ثنائي للأحداث الماضية */
+function DualPastTimeline({
+  firstEn,
+  firstAr,
+  secondEn,
+  secondAr,
+  highlight = "all",
+}: {
+  firstEn: string;
+  firstAr: string;
+  secondEn: string;
+  secondAr: string;
+  highlight?: "first" | "second" | "all";
+}) {
+  return (
+    <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row rounded-2xl border-2 border-violet-100 bg-white p-3.5 sm:p-4">
+      <div className="mb-2 flex items-center justify-between text-xs font-black text-slate-400">
+        <span>⏪ EARLIER PAST (الأقدم)</span>
+        <span>📸 LATER PAST (الأحدث)</span>
+        <span>⏰ NOW (الآن)</span>
+      </div>
+      <div className="relative flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        {/* الحدث الأول */}
+        <div
+          className={`flex-1 rounded-2xl border-2 p-3 transition ${
+            highlight === "first" || highlight === "all"
+              ? "border-violet-400 bg-violet-50 text-violet-950 shadow-sm ring-2 ring-violet-200"
+              : "border-slate-200 bg-slate-50 opacity-60"
+          }`}
+        >
+          <div className="flex items-center gap-1.5 text-xs font-black text-violet-700">
+            <span>⏪ الحدث ① (Past Perfect)</span>
+          </div>
+          <En className="mt-1 block text-lg font-extrabold text-violet-900">{firstEn}</En>
+          <Rich text={firstAr} className="mt-0.5 block text-xs font-bold text-slate-600" />
+        </div>
+
+        <div className="hidden text-xl font-black text-slate-300 md:block">→</div>
+
+        {/* الحدث الثاني */}
+        <div
+          className={`flex-1 rounded-2xl border-2 p-3 transition ${
+            highlight === "second" || highlight === "all"
+              ? "border-orange-400 bg-orange-50 text-orange-950 shadow-sm ring-2 ring-orange-200"
+              : "border-slate-200 bg-slate-50 opacity-60"
+          }`}
+        >
+          <div className="flex items-center gap-1.5 text-xs font-black text-orange-700">
+            <span>📸 الحدث ② (Past Simple)</span>
+          </div>
+          <En className="mt-1 block text-lg font-extrabold text-orange-900">{secondEn}</En>
+          <Rich text={secondAr} className="mt-0.5 block text-xs font-bold text-slate-600" />
+        </div>
+
+        <div className="hidden text-xl font-black text-slate-300 md:block">→</div>
+
+        {/* الآن */}
+        <div className="flex shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 px-3 py-2 text-xs font-black text-slate-500">
+          📍 NOW
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// لبنات الممارسة التفاعلية مع التغذية الفورية
+// ============================================================
+
+function McqRow({
+  n,
+  stem,
+  stemAr,
+  opts,
+  answer,
+  why,
+  context,
+  onFirstAnswer,
+}: {
+  n: number;
+  stem?: string;
+  stemAr?: string;
+  opts: string[];
+  answer: number;
+  why: string;
+  context?: string;
+  onFirstAnswer?: () => void;
+}) {
+  const [pick, setPick] = useState<number | undefined>(undefined);
+  const right = pick === answer;
+  return (
+    <div
+      className={`rounded-3xl border-2 p-3.5 transition ${
+        pick === undefined
+          ? "border-slate-200 bg-white"
+          : right
+            ? "border-emerald-300 bg-emerald-50/60"
+            : "border-rose-300 bg-rose-50/60"
+      }`}
+    >
+      <div className="flex flex-wrap items-center gap-2.5">
+        <Nub n={n} className="bg-violet-700" />
+        {stem && <En className="text-lg font-bold text-slate-800 md:text-xl">{stem}</En>}
+        {stemAr && <Rich text={stemAr} className="text-base font-bold text-slate-800 md:text-lg" />}
+      </div>
+      {context && (
+        <div className="mt-1.5 pr-10">
+          <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-bold text-slate-600">
+            📌 <Rich text={context} />
+          </span>
+        </div>
+      )}
+      <div className="mt-2.5 flex flex-wrap gap-2 pr-10">
+        {opts.map((o, oi) => (
+          <button
+            key={oi}
+            type="button"
+            onClick={() => {
+              if (pick === undefined) onFirstAnswer?.();
+              setPick(oi);
+            }}
+            className={`rounded-xl border-2 px-3.5 py-1.5 font-en font-bold transition active:scale-95 ${
+              pick === oi
+                ? oi === answer
+                  ? "border-transparent bg-emerald-600 text-white"
+                  : "border-transparent bg-rose-600 text-white"
+                : "border-slate-200 bg-white text-slate-700 hover:border-violet-300"
+            }`}
+          >
+            {o}
+          </button>
+        ))}
+      </div>
+      {pick !== undefined && (
+        <div className={`mt-2 pr-10 text-sm font-bold ${right ? "text-emerald-700" : "text-rose-600"}`}>
+          {right ? (
+            <span className="tada inline-block">✓ <Rich text={why} /></span>
+          ) : (
+            <span>
+              ✕ الصحيح: <En className="font-extrabold">{opts[answer]}</En> — <Rich text={why} />
+            </span>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// مكونات الخطوات الفردية (53 خطوة تغطي المصدر كاملًا)
+// ============================================================
+
+function CoverStep() {
+  const [lens, setLens] = useState<TenseLens>("pp");
+  return (
+    <div className="space-y-4">
+      <div className="rounded-3xl border-2 border-violet-100 bg-gradient-to-br from-violet-600 via-indigo-700 to-purple-800 p-6 text-center text-white shadow-lg md:p-10">
+        <div className="text-5xl anim-drift md:text-6xl">⏪</div>
+        <En className="mt-3 block text-2xl font-black uppercase tracking-widest text-violet-200 md:text-3xl">
+          THE FLASHBACK DIRECTOR
+        </En>
+        <h1 className="font-head mt-2 text-2xl font-black md:text-4xl">الدرس 27: Past Perfect — الماضي التام</h1>
+        <p className="mt-3 text-base font-semibold text-violet-100 md:text-xl">
+          الماضي التام — أي حدث وقع أولًا في الماضي؟ المخرج الذي يرتّب حدثين في الماضي بدقة.
+        </p>
+      </div>
+
+      <Lab emoji="🎬" label="Three Cameras Preview" ar="عدسات الزمن الثلاث — بدّل بينها لتشاهد الفكرة">
+        <div className="flex flex-wrap justify-center gap-2">
+          <TenseChip t="ps" onClick={() => setLens("ps")} active={lens === "ps"} />
+          <TenseChip t="pc" onClick={() => setLens("pc")} active={lens === "pc"} />
+          <TenseChip t="pp" onClick={() => setLens("pp")} active={lens === "pp"} />
+        </div>
+        <div className={`rounded-2xl border-2 p-4 text-center transition ${TENSES27[lens].soft}`}>
+          <div className="text-3xl">{TENSES27[lens].emoji}</div>
+          <En className="mt-1 block text-xl font-black">{TENSES27[lens].en}</En>
+          <div className="mt-1 text-sm font-bold text-slate-700">
+            <En className="font-black text-slate-900">{TENSES27[lens].qEn}</En> — {TENSES27[lens].qAr}
+          </div>
+        </div>
+      </Lab>
+    </div>
+  );
+}
+
+function BridgeStep() {
+  return (
+    <div className="space-y-4">
+      <Note
+        emoji="🧠"
+        text="هذا الدرس هو الخطوة الطبيعية التالية بعد أن أتقنا الماضي البسيط Past Simple، والماضي المستمر Past Continuous، والفرق بينهما، وأدوات when / while، والأحداث والخلفية في القصص."
+      />
+      <Lab emoji="🎯" label="The Next Tool" ar="الأداة الجديدة">
+        <div className="rounded-2xl border-2 border-violet-200 bg-white p-4 text-center">
+          <p className="text-base font-bold leading-relaxed text-slate-800 md:text-lg">
+            الآن سنضيف أداة قوية جدًا تجعلنا قادرين على <span className="font-black text-violet-700">ترتيب حدثين كلاهما في الماضي بدقة</span>.
+          </p>
+        </div>
+        <DualPastTimeline
+          firstEn="The train had left."
+          firstAr="القطار كان قد غادر أولًا"
+          secondEn="I arrived."
+          secondAr="أنا وصلت لاحقًا"
+        />
+      </Lab>
+    </div>
+  );
+}
+
+function ObjectivesStep() {
+  const [checked, setChecked] = useState<Record<number, boolean>>({});
+  const toggle = (i: number) => setChecked((p) => ({ ...p, [i]: !p[i] }));
+  return (
+    <div className="space-y-4">
+      <div className="grid gap-2 sm:grid-cols-2">
+        {OBJECTIVES_27.map((obj, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => toggle(i)}
+            className={`flex items-start gap-2.5 rounded-2xl border-2 p-3 text-right transition active:scale-98 ${
+              checked[i] ? "border-emerald-300 bg-emerald-50 text-emerald-950" : "border-slate-200 bg-white text-slate-800 hover:border-violet-200"
+            }`}
+          >
+            <span className={`grid h-6 w-6 shrink-0 place-items-center rounded-lg text-xs font-bold ${checked[i] ? "bg-emerald-600 text-white" : "bg-slate-200 text-slate-700"}`}>
+              {checked[i] ? "✓" : i + 1}
+            </span>
+            <Rich text={obj} className="text-sm font-bold leading-snug" />
+          </button>
+        ))}
+      </div>
+      <Note emoji="💡" text="اضغط على أي هدف لتعليمه أثناء تقدمك في الدرس!" />
+    </div>
+  );
+}
+
+// ---------------- S1: ما هو Past Perfect؟ ----------------
+function S1Timeline() {
+  const [active, setActive] = useState<"both" | "first" | "second">("both");
+  return (
+    <div className="space-y-4" data-en-seq="l27-timeline">
+      <Note emoji="🧠" text="Past Perfect = الماضي التام. الفكرة الأساسية بسيطة جدًا: نحن نتحدث عن حدثين في الماضي، ونريد أن نوضح أن أحدهما حدث قبل الآخر." />
+      
+      <Lab emoji="🕰️" label="Chronological Timeline" ar="خط الزمن: الماضي الأقدم ← الحدث الأول ← الحدث الثاني ← الآن">
+        <div className="flex justify-center gap-2">
+          <button
+            type="button"
+            onClick={() => setActive("first")}
+            className={`rounded-xl px-3 py-1.5 text-xs font-bold transition ${active === "first" ? "bg-violet-700 text-white" : "bg-slate-100 text-slate-700"}`}
+          >
+            ⏪ الحدث الأول (Past Perfect)
+          </button>
+          <button
+            type="button"
+            onClick={() => setActive("second")}
+            className={`rounded-xl px-3 py-1.5 text-xs font-bold transition ${active === "second" ? "bg-orange-500 text-white" : "bg-slate-100 text-slate-700"}`}
+          >
+            📸 الحدث الثاني (Past Simple)
+          </button>
+          <button
+            type="button"
+            onClick={() => setActive("both")}
+            className={`rounded-xl px-3 py-1.5 text-xs font-bold transition ${active === "both" ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-700"}`}
+          >
+            عرض الاثنين معًا
+          </button>
+        </div>
+
+        <DualPastTimeline
+          firstEn="The train had left."
+          firstAr="القطار غادر أولًا (الأقدم = Past Perfect)"
+          secondEn="I arrived."
+          secondAr="أنا وصلت لاحقًا (الأحدث = Past Simple)"
+          highlight={active === "both" ? "all" : active}
+        />
+
+        <SentenceCard
+          parts={[P("When", "conn"), P("I", "s"), P("arrived", "v2"), P(",", "obj"), P("the train", "s"), P("had", "had"), P("left", "v3")]}
+          roles={R27}
+          ar="عندما وصلت، كان القطار قد غادر."
+          note="القطار غادر أولًا، ثم أنا وصلت!"
+        />
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S2: الفكرة الذهبية ----------------
+function S2GoldenIdea() {
+  const examples = [
+    { en: [P("I", "s"), P("had", "had"), P("eaten", "v3")], ar: "كنت قد أكلت." },
+    { en: [P("She", "s"), P("had", "had"), P("finished", "v3")], ar: "كانت قد أنهت." },
+    { en: [P("They", "s"), P("had", "had"), P("left", "v3")], ar: "كانوا قد غادروا." },
+    { en: [P("He", "s"), P("had", "had"), P("forgotten", "v3")], ar: "كان قد نسي." },
+  ];
+  const [idx, setIdx] = useState(0);
+
+  return (
+    <div className="space-y-4">
+      <div className="rounded-3xl border-2 border-amber-300 bg-amber-50 p-5 text-center">
+        <span className="text-3xl">🔥</span>
+        <div className="mt-1 text-xs font-black uppercase text-amber-800">القاعدة الذهبية</div>
+        <div className="font-head mt-1 text-2xl font-black text-amber-950 md:text-3xl">
+          Past Perfect = «كان قد فعل»
+        </div>
+      </div>
+
+      <Lab emoji="🎧" label="Interactive Sentence Explorer" ar="تصفح الأمثلة المصدرية الأربعة">
+        <div className="flex flex-wrap justify-center gap-2">
+          {examples.map((ex, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setIdx(i)}
+              className={`rounded-xl px-3.5 py-1.5 font-en font-bold transition ${
+                idx === i ? "bg-violet-700 text-white shadow-sm" : "border border-slate-200 bg-white text-slate-700"
+              }`}
+            >
+              {ex.en.map((p) => p.text).join(" ")}
+            </button>
+          ))}
+        </div>
+
+        <SentenceCard parts={examples[idx].en} roles={R27} ar={examples[idx].ar} />
+      </Lab>
+
+      <Note emoji="🚨" text="لكن انتبه: لا تترجم Past Perfect حرفيًا في كل جملة. المهم هو فهم العلاقة الزمنية بين الحدثين." />
+    </div>
+  );
+}
+
+// ---------------- S3: خط الزمن وسارة في السينما ----------------
+function S3SaraDiagram() {
+  const [step, setStep] = useState<1 | 2>(1);
+  return (
+    <div className="space-y-4" data-en-seq="l27-sara">
+      <SentenceCard
+        parts={[P("When", "conn"), P("Sara", "s"), P("arrived", "v2"), P("at the cinema,", "obj"), P("the movie", "s"), P("had", "had"), P("started", "v3")]}
+        roles={R27}
+        ar="عندما وصلت سارة إلى السينما، كان الفيلم قد بدأ."
+      />
+
+      <Lab emoji="🎬" label="Event Chronology Simulator" ar="المحاكي الزمني لوصول سارة والفيلم">
+        <div className="flex justify-center gap-2">
+          <button
+            type="button"
+            onClick={() => setStep(1)}
+            className={`rounded-xl px-4 py-2 font-bold transition ${step === 1 ? "bg-violet-700 text-white" : "bg-white border border-slate-200 text-slate-700"}`}
+          >
+            ① الفيلم بدأ (Past Perfect)
+          </button>
+          <button
+            type="button"
+            onClick={() => setStep(2)}
+            className={`rounded-xl px-4 py-2 font-bold transition ${step === 2 ? "bg-orange-500 text-white" : "bg-white border border-slate-200 text-slate-700"}`}
+          >
+            ② سارة وصلت (Past Simple)
+          </button>
+        </div>
+
+        <DualPastTimeline
+          firstEn="The movie had started."
+          firstAr="① الفيلم بدأ أولًا ← Past Perfect"
+          secondEn="Sara arrived."
+          secondAr="② سارة وصلت لاحقًا ← Past Simple"
+          highlight={step === 1 ? "first" : "second"}
+        />
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S4: كيف نكوّن Past Perfect؟ ----------------
+function S4HadGrid() {
+  const pronouns = ["I", "You", "He", "She", "It", "We", "They"];
+  const [pIndex, setPIndex] = useState(3); // She
+  return (
+    <div className="space-y-4" data-en-seq="l27-had-grid">
+      <div className="text-center">
+        <FormulaStrip items={["Subject", "+", "had", "+", "V3 (Past Participle)"]} />
+      </div>
+
+      <Lab emoji="⭐" label="Had Never Changes Grid" ar="اختر أي فاعل وشاهد: had لا تتغير أبدًا!">
+        <div className="flex flex-wrap justify-center gap-1.5">
+          {pronouns.map((p, i) => (
+            <button
+              key={p}
+              type="button"
+              onClick={() => setPIndex(i)}
+              className={`rounded-xl px-3 py-1.5 font-en font-black transition ${
+                pIndex === i ? "bg-violet-700 text-white shadow-md scale-105" : "border border-slate-200 bg-white text-slate-700"
+              }`}
+            >
+              {p}
+            </button>
+          ))}
+        </div>
+
+        <SentenceCard
+          parts={[P(pronouns[pIndex], "s"), P("had", "had"), P("finished", "v3"), P("the work", "obj")]}
+          roles={R27}
+          ar={`${pronouns[pIndex]} had finished... (had ثابتة مع جميع الضمائر)`}
+          note="وهذا يجعل Past Perfect أسهل من Present Perfect من ناحية اختيار المساعد!"
+        />
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S5: ما هو V3؟ ----------------
+function S5VerbTable() {
+  const [tab, setTab] = useState<"all" | "regular" | "irregular">("all");
+  const filtered = VERB_TABLE_27.filter((v) => {
+    if (tab === "regular") return v.regular;
+    if (tab === "irregular") return !v.regular;
+    return true;
+  });
+
+  return (
+    <div className="space-y-4" data-en-seq="l27-verbs-regular">
+      <Note emoji="🧱" text="V3 = Past Participle (الشكل الثالث للفعل). في الأفعال المنتظمة V2 = V3 (إضافة ed)، لكن في الأفعال غير المنتظمة يتغير الشكل ويجب حفظه." />
+
+      <Lab emoji="📚" label="14 Source Verbs Library" ar="جدول الأفعال الـ 14 من المصدر">
+        <div className="flex justify-center gap-2">
+          <button
+            type="button"
+            onClick={() => setTab("all")}
+            className={`rounded-xl px-3 py-1 text-xs font-bold ${tab === "all" ? "bg-violet-700 text-white" : "bg-white border text-slate-700"}`}
+          >
+            الكل (14)
+          </button>
+          <button
+            type="button"
+            onClick={() => setTab("regular")}
+            className={`rounded-xl px-3 py-1 text-xs font-bold ${tab === "regular" ? "bg-violet-700 text-white" : "bg-white border text-slate-700"}`}
+          >
+            منتظمة (V2 = V3)
+          </button>
+          <button
+            type="button"
+            onClick={() => setTab("irregular")}
+            className={`rounded-xl px-3 py-1 text-xs font-bold ${tab === "irregular" ? "bg-violet-700 text-white" : "bg-white border text-slate-700"}`}
+          >
+            غير منتظمة (10 أفعال)
+          </button>
+        </div>
+
+        <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3">
+          {filtered.map((v) => (
+            <div key={v.v1} className="rounded-2xl border-2 border-slate-100 bg-white p-3 text-center">
+              <span className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-black ${v.regular ? "bg-emerald-100 text-emerald-800" : "bg-fuchsia-100 text-fuchsia-800"}`}>
+                {v.regular ? "منتظم" : "غير منتظم"}
+              </span>
+              <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row mt-1 font-en text-sm font-extrabold text-slate-800">
+                <span>{v.v1}</span> <span className="text-slate-300">→</span> <span>{v.v2}</span> <span className="text-slate-300">→</span> <span className="text-violet-700">{v.v3}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S6: لا تخلط بين V2 و V3 ----------------
+function S6V2V3Trap() {
+  return (
+    <div className="space-y-4" data-en-seq="l27-v2v3">
+      <Note emoji="🚨" text="هذه واحدة من أهم النقاط في الدرس: بعد had نحتاج V3 دائمًا، وليس V2!" />
+
+      <Lab emoji="⚖️" label="V2 vs V3 Analyzer" ar="المقارنة الحاسمة مع الفعل go">
+        <Verdict ok={true} en="I went to school yesterday." ar="ذهبتُ إلى المدرسة أمس. (Past Simple = V2)" why="حدث بسيط ماضٍ" />
+        <Verdict ok={true} en="I had gone to school before my brother arrived." ar="كنت قد ذهبتُ إلى المدرسة قبل وصول أخي. (Past Perfect = had + V3)" why="had + V3 صحيح" />
+        <Verdict ok={false} en="I had went..." ar="خطأ شائع جدًا!" why="had + V2 ❌ — خطأ!" />
+      </Lab>
+
+      <div className="text-center font-bold text-violet-900">
+        القاعدة: <En className="font-black">had + V3</En> وليس <En className="line-through decoration-rose-500 font-black">had + V2</En>
+      </div>
+    </div>
+  );
+}
+
+// ---------------- S7: لماذا نحتاج Past Perfect أصلًا؟ ----------------
+function S7TeacherSwitch() {
+  const [withHad, setWithHad] = useState(false);
+  return (
+    <div className="space-y-4" data-en-seq="l27-teacher-switch">
+      <Note emoji="🧠" text="سؤال IQ200: إذا كان لدينا Past Simple، فلماذا نحتاج Past Perfect؟ لأن Past Perfect يزيل الغموض ويرتّب الأحداث بدقة!" />
+
+      <Lab emoji="🔄" label="The Meaning Switch" ar="اضغط لتبديل الجملة وشاهد كيف ينقلب الترتيب الزمني بالكامل!">
+        <div className="flex justify-center gap-2">
+          <button
+            type="button"
+            onClick={() => setWithHad(false)}
+            className={`rounded-2xl px-4 py-2.5 font-bold transition ${!withHad ? "bg-orange-500 text-white shadow-md" : "border bg-white text-slate-700"}`}
+          >
+            بدون had (الماضي البسيط)
+          </button>
+          <button
+            type="button"
+            onClick={() => setWithHad(true)}
+            className={`rounded-2xl px-4 py-2.5 font-bold transition ${withHad ? "bg-violet-700 text-white shadow-md" : "border bg-white text-slate-700"}`}
+          >
+            مع had (الماضي التام)
+          </button>
+        </div>
+
+        {!withHad ? (
+          <div className="space-y-2 rounded-2xl border-2 border-orange-200 bg-orange-50/50 p-4">
+            <En className="block text-xl font-black text-orange-950">When I arrived, the teacher left.</En>
+            <p className="text-sm font-bold text-slate-700">المعنى: وصلتُ، <span className="text-orange-700 font-extrabold">ثم</span> غادر المعلم.</p>
+            <div className="text-xs font-black text-slate-500">الترتيب: ① I arrived ← ② The teacher left</div>
+          </div>
+        ) : (
+          <div className="space-y-2 rounded-2xl border-2 border-violet-200 bg-violet-50/50 p-4">
+            <En className="block text-xl font-black text-violet-950">When I arrived, the teacher had left.</En>
+            <p className="text-sm font-bold text-slate-700">المعنى: عندما وصلت، كان المعلم <span className="text-violet-700 font-extrabold">قد غادر بالفعل</span>.</p>
+            <div className="text-xs font-black text-violet-800">الترتيب: ① The teacher left ← ② I arrived</div>
+          </div>
+        )}
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S8: مثال علي والمطعم ----------------
+function S8AliOrder() {
+  const [mode, setMode] = useState<"plain" | "perfect">("perfect");
+  return (
+    <div className="space-y-4" data-en-seq="l27-ali">
+      <Lab emoji="🎯" label="Restaurant Scenario" ar="علي والمطعم: كيف تغيّر had الترتيب؟">
+        <div className="flex justify-center gap-2">
+          <button
+            type="button"
+            onClick={() => setMode("plain")}
+            className={`rounded-xl px-3.5 py-1.5 font-bold ${mode === "plain" ? "bg-orange-500 text-white" : "border bg-white text-slate-700"}`}
+          >
+            تتابع عادي (and)
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("perfect")}
+            className={`rounded-xl px-3.5 py-1.5 font-bold ${mode === "perfect" ? "bg-violet-700 text-white" : "border bg-white text-slate-700"}`}
+          >
+            Past Perfect (When + had)
+          </button>
+        </div>
+
+        {mode === "plain" ? (
+          <div className="rounded-2xl border-2 border-orange-200 bg-orange-50 p-4">
+            <En className="text-lg font-black text-orange-950">Ali arrived at the restaurant, and the restaurant closed.</En>
+            <p className="mt-1 text-sm font-bold text-slate-700">الفهم: ① علي وصل ← ② المطعم أغلق.</p>
+          </div>
+        ) : (
+          <div className="rounded-2xl border-2 border-violet-200 bg-violet-50 p-4">
+            <En className="text-lg font-black text-violet-950">When Ali arrived at the restaurant, the restaurant had closed.</En>
+            <p className="mt-1 text-sm font-bold text-slate-700">الفهم: ① المطعم أغلق أولًا ← ② علي وصل بعد الإغلاق.</p>
+          </div>
+        )}
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S9: الجملة المثبتة ----------------
+function S9Affirmative() {
+  const sentences = [
+    { parts: [P("I", "s"), P("had", "had"), P("finished", "v3"), P("my homework", "obj")], ar: "كنت قد أنهيت واجبي." },
+    { parts: [P("She", "s"), P("had", "had"), P("cleaned", "v3"), P("her room", "obj")], ar: "كانت قد نظفت غرفتها." },
+    { parts: [P("He", "s"), P("had", "had"), P("eaten", "v3"), P("breakfast", "obj")], ar: "كان قد تناول الفطور." },
+    { parts: [P("We", "s"), P("had", "had"), P("arrived", "v3"), P("before noon", "obj")], ar: "كنا قد وصلنا قبل الظهر." },
+    { parts: [P("They", "s"), P("had", "had"), P("completed", "v3"), P("the project", "obj")], ar: "كانوا قد أكملوا المشروع." },
+    { parts: [P("The dog", "s"), P("had", "had"), P("escaped", "v3")], ar: "كان الكلب قد هرب." },
+  ];
+
+  return (
+    <div className="space-y-3.5">
+      <div className="text-center">
+        <FormulaStrip items={["Subject", "+", "had", "+", "V3"]} />
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        {sentences.map((s, i) => (
+          <SentenceCard key={i} parts={s.parts} roles={R27} ar={s.ar} size="sm" />
         ))}
       </div>
     </div>
   );
 }
 
-function TOrder({ q, value, checked, onChange }: { q: Extract<TestQ27, { type: "order" }>; value: string[] | undefined; checked: boolean; onChange: (v: string[]) => void }) {
-  const seq = value ?? [];
-  const toggle = (item: string) => {
-    if (checked) return;
-    onChange(seq.includes(item) ? seq.filter((x) => x !== item) : seq.length >= q.items.length ? seq : [...seq, item]);
-  };
+// ---------------- S10: مع الأفعال غير المنتظمة ----------------
+function S10IrregularPairs() {
+  const pairs = [
+    { v: "eat", simple: "I ate breakfast.", perfect: "I had eaten breakfast before school started." },
+    { v: "go", simple: "She went home.", perfect: "She had gone home before I called." },
+    { v: "see", simple: "We saw the painting.", perfect: "We had seen the painting before." },
+    { v: "take", simple: "He took the book.", perfect: "He had taken the book before the lesson started." },
+    { v: "write", simple: "Maya wrote the message.", perfect: "Maya had written the message before she lost her phone." },
+    { v: "break", simple: "Tom broke the window.", perfect: "The window had broken before we arrived." },
+  ];
+  const [cur, setCur] = useState(0);
+
   return (
-    <div className="space-y-2">
-      <div className="text-xs font-bold text-slate-500">
-        <Rich text="المس الأحداث بالترتيب من الأقدم إلى الأحدث." />
+    <div className="space-y-4" data-en-seq="l27-pairs-a">
+      <Note emoji="🔥" text="هنا يبدأ التحدي الحقيقي: قارن بين V2 في الماضي البسيط و V3 بعد had." />
+
+      <Lab emoji="🔀" label="Irregular Pairs Explorer" ar="اختر الفعل وشاهد الفرق بين V2 و V3 في سياق الجملة">
+        <div className="flex flex-wrap justify-center gap-1.5">
+          {pairs.map((p, i) => (
+            <button
+              key={p.v}
+              type="button"
+              onClick={() => setCur(i)}
+              className={`rounded-xl px-3 py-1 font-en font-black transition ${cur === i ? "bg-violet-700 text-white" : "border bg-white text-slate-700"}`}
+            >
+              {p.v}
+            </button>
+          ))}
+        </div>
+
+        <div className="space-y-2">
+          <div className="rounded-2xl border-2 border-orange-200 bg-orange-50/60 p-3">
+            <span className="rounded-full bg-orange-500 px-2.5 py-0.5 text-xs font-black text-white">📸 Past Simple (V2)</span>
+            <En className="mt-1.5 block text-lg font-extrabold text-orange-950">{pairs[cur].simple}</En>
+          </div>
+          <div className="rounded-2xl border-2 border-violet-200 bg-violet-50/60 p-3">
+            <span className="rounded-full bg-violet-700 px-2.5 py-0.5 text-xs font-black text-white">⏪ Past Perfect (had + V3)</span>
+            <En className="mt-1.5 block text-lg font-extrabold text-violet-950">{pairs[cur].perfect}</En>
+          </div>
+        </div>
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S11: النفي ----------------
+function S11Negative() {
+  const [shortForm, setShortForm] = useState(true);
+  const examples = [
+    { long: "I had not finished.", short: "I hadn't finished.", ar: "لم أكن قد أنهيت." },
+    { long: "She had not arrived.", short: "She hadn't arrived.", ar: "لم تكن قد وصلت." },
+    { long: "They had not eaten.", short: "They hadn't eaten.", ar: "لم يكونوا قد أكلوا." },
+    { long: "He had not seen the movie.", short: "He hadn't seen the movie.", ar: "لم يكن قد شاهد الفيلم." },
+    { long: "We had not finished the work.", short: "We hadn't finished the work.", ar: "لم نكن قد أنهينا العمل." },
+  ];
+
+  return (
+    <div className="space-y-4">
+      <div className="text-center">
+        <FormulaStrip items={["Subject", "+", shortForm ? "hadn't" : "had not", "+", "V3"]} />
       </div>
-      <div className="grid gap-2">
-        {q.items.map((item) => {
-          const pos = seq.indexOf(item);
-          const on = pos !== -1;
-          let cls = "border-slate-200 bg-white text-slate-800 hover:border-violet-400";
-          if (checked) {
-            const wantPos = q.answer.indexOf(item);
-            cls = pos === wantPos && on ? "border-transparent bg-emerald-600 text-white" : "border-slate-200 bg-white text-slate-400";
-          } else if (on) {
-            cls = "border-transparent bg-slate-900 text-white";
-          }
+
+      <div className="flex justify-center">
+        <button
+          type="button"
+          onClick={() => setShortForm(!shortForm)}
+          className="rounded-full border-2 border-violet-200 bg-white px-4 py-1.5 text-xs font-bold text-violet-900 shadow-sm"
+        >
+          🔄 التبديل بين الصيغة الكاملة والمختصرة (<En>{shortForm ? "hadn't" : "had not"}</En>)
+        </button>
+      </div>
+
+      <div className="grid gap-2.5 sm:grid-cols-2">
+        {examples.map((ex, i) => (
+          <div key={i} className="rounded-2xl border-2 border-slate-100 bg-white p-3.5">
+            <En className="text-lg font-bold text-slate-800">{shortForm ? ex.short : ex.long}</En>
+            <Rich text={ex.ar} className="mt-1 block text-sm font-semibold text-slate-500" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ---------------- S12: انتبه بعد hadn't ----------------
+function S12NegativeV3Trap() {
+  return (
+    <div className="space-y-4">
+      <Note emoji="🚨" text="قاعدة واحدة لا تتغير: بعد had و hadn't نستخدم V3 دائمًا!" />
+
+      <Lab emoji="🎯" label="Correct vs Wrong in Negatives" ar="صحيح مقابل خاطئ في النفي">
+        <Verdict ok={true} en="She hadn't eaten." ar="eat → ate → eaten (V3)" />
+        <Verdict ok={false} en="She hadn't ate." why="ate هو V2 ❌" />
+        <Verdict ok={true} en="They hadn't gone." ar="go → went → gone (V3)" />
+        <Verdict ok={false} en="They hadn't went." why="went هو V2 ❌" />
+        <Verdict ok={true} en="He hadn't seen it." ar="see → saw → seen (V3)" />
+        <Verdict ok={false} en="He hadn't saw it." why="saw هو V2 ❌" />
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S13: الأسئلة ----------------
+function S13Questions() {
+  const qs = [
+    { en: [P("Had", "had"), P("you", "s"), P("finished", "v3"), P("your homework", "obj")], ar: "هل كنت قد أنهيت واجبك؟" },
+    { en: [P("Had", "had"), P("she", "s"), P("arrived", "v3"), P("before you", "obj")], ar: "هل كانت قد وصلت قبلك؟" },
+    { en: [P("Had", "had"), P("they", "s"), P("eaten", "v3"), P("dinner", "obj")], ar: "هل كانوا قد تناولوا العشاء؟" },
+    { en: [P("Had", "had"), P("he", "s"), P("seen", "v3"), P("the movie", "obj")], ar: "هل كان قد شاهد الفيلم؟" },
+    { en: [P("Had", "had"), P("the train", "s"), P("left", "v3")], ar: "هل كان القطار قد غادر؟" },
+  ];
+
+  return (
+    <div className="space-y-4">
+      <div className="text-center">
+        <FormulaStrip items={["Had", "+", "Subject", "+", "V3", "?"]} />
+      </div>
+
+      <div className="space-y-2.5">
+        {qs.map((q, i) => (
+          <SentenceCard key={i} parts={q.en} roles={R27} ar={q.ar} q={true} size="sm" />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ---------------- S14: الإجابات القصيرة ----------------
+function S14ShortAnswers() {
+  const items = [
+    { q: "Had you finished?", pos: "Yes, I had.", neg: "No, I hadn't." },
+    { q: "Had she arrived?", pos: "Yes, she had.", neg: "No, she hadn't." },
+    { q: "Had they eaten?", pos: "Yes, they had.", neg: "No, they hadn't." },
+  ];
+  return (
+    <div className="space-y-4" data-en-seq="l27-short-flip">
+      <Note emoji="🗣️" text="في الإجابة القصيرة نستخدم had فقط: Yes, ... had. / No, ... hadn't." />
+
+      <div className="grid gap-3 sm:grid-cols-3">
+        {items.map((it, i) => (
+          <div key={i} className="rounded-3xl border-2 border-violet-100 bg-white p-4 text-center">
+            <En className="font-en text-base font-extrabold text-violet-900">{it.q}</En>
+            <div className="mt-3 space-y-1.5">
+              <div className="rounded-xl bg-emerald-50 py-1.5 font-en text-sm font-bold text-emerald-800">
+                ✓ {it.pos}
+              </div>
+              <div className="rounded-xl bg-rose-50 py-1.5 font-en text-sm font-bold text-rose-800">
+                ✕ {it.neg}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ---------------- S15: الفرق بين Simple و Perfect ----------------
+function S15SideBySide() {
+  return (
+    <div className="space-y-4" data-en-seq="l27-side-by-side">
+      <Lab emoji="⚖️" label="Side-by-Side Comparison" ar="مقارنة مباشرة بين الجملتين">
+        <div className="rounded-2xl border-2 border-orange-200 bg-orange-50/60 p-4">
+          <span className="rounded-full bg-orange-500 px-2.5 py-0.5 text-xs font-black text-white">📸 Past Simple</span>
+          <En className="mt-2 block text-xl font-extrabold text-orange-950">I finished my homework.</En>
+          <p className="mt-1 text-sm font-semibold text-slate-700">«أنهيتُ واجبي» — نخبرك بحدث وقع في الماضي فقط.</p>
+        </div>
+
+        <div className="rounded-2xl border-2 border-violet-200 bg-violet-50/60 p-4">
+          <span className="rounded-full bg-violet-700 px-2.5 py-0.5 text-xs font-black text-white">⏪ Past Perfect</span>
+          <En className="mt-2 block text-xl font-extrabold text-violet-950">I had finished my homework before dinner.</En>
+          <p className="mt-1 text-sm font-semibold text-slate-700">«كنت قد أنهيتُ واجبي قبل العشاء» — نحدد أن الإنهاء وقع قبل حدث ماضٍ آخر.</p>
+        </div>
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S16: المقارنة الأهم — لينا ----------------
+function S16LinaSwitch() {
+  const [had, setHad] = useState(true);
+  return (
+    <div className="space-y-4" data-en-seq="l27-lina-switch">
+      <Lab emoji="🔥" label="Lina Departure Switcher" ar="تبديل جملة لينا">
+        <div className="flex justify-center gap-2">
+          <button
+            type="button"
+            onClick={() => setHad(false)}
+            className={`rounded-xl px-4 py-2 font-bold transition ${!had ? "bg-orange-500 text-white" : "border bg-white text-slate-700"}`}
+          >
+            Lina left (بسيط)
+          </button>
+          <button
+            type="button"
+            onClick={() => setHad(true)}
+            className={`rounded-xl px-4 py-2 font-bold transition ${had ? "bg-violet-700 text-white" : "border bg-white text-slate-700"}`}
+          >
+            Lina had left (تام)
+          </button>
+        </div>
+
+        {!had ? (
+          <div className="rounded-2xl border-2 border-orange-200 bg-orange-50 p-4 text-center">
+            <En className="text-xl font-black text-orange-950">When I arrived, Lina left.</En>
+            <div className="mt-2 text-sm font-bold text-slate-700">الترتيب الطبيعي: <En className="font-black">I arrived → Lina left.</En> (وصلتُ ثم غادرت هي)</div>
+          </div>
+        ) : (
+          <div className="rounded-2xl border-2 border-violet-200 bg-violet-50 p-4 text-center">
+            <En className="text-xl font-black text-violet-950">When I arrived, Lina had left.</En>
+            <div className="mt-2 text-sm font-bold text-violet-900">الترتيب المعكوس: <En className="font-black">Lina left → I arrived.</En> (كانت قد غادرت قبل وصولي)</div>
+          </div>
+        )}
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S17: before ----------------
+function S17BeforeLab() {
+  return (
+    <div className="space-y-4" data-en-seq="l27-before">
+      <Note emoji="⏱️" text="before = قبل. تساعدنا على ترتيب الأحداث: [Past Perfect] + before + [Past Simple]." />
+
+      <SentenceCard
+        parts={[P("The students", "s"), P("had", "had"), P("left", "v3"), P("before", "conn"), P("the teacher", "s"), P("arrived", "v2")]}
+        roles={R27}
+        ar="كان الطلاب قد غادروا قبل أن يصل المعلم."
+        note="الترتيب: ① الطلاب غادروا ← ② المعلم وصل."
+      />
+
+      <SentenceCard
+        parts={[P("I", "s"), P("had", "had"), P("locked", "v3"), P("the door", "obj"), P("before", "conn"), P("I", "s"), P("went", "v2"), P("to bed", "obj")]}
+        roles={R27}
+        ar="كنت قد أغلقت الباب قبل أن أذهب إلى النوم."
+        note="الترتيب: ① أغلقت الباب ← ② ذهبت للنوم."
+      />
+    </div>
+  );
+}
+
+// ---------------- S18: after ----------------
+function S18AfterLab() {
+  return (
+    <div className="space-y-4" data-en-seq="l27-after">
+      <Note emoji="🔄" text="after = بعد. النمط الشائع: After + [Past Perfect] ← [Past Simple]." />
+
+      <SentenceCard
+        parts={[P("After", "conn"), P("I", "s"), P("had", "had"), P("finished", "v3"), P("my project,", "obj"), P("I", "s"), P("watched", "v2"), P("a movie", "obj")]}
+        roles={R27}
+        ar="بعد أن كنت قد أنهيت مشروعي، شاهدت فيلمًا."
+        note="الترتيب: ① finished project ← ② watched movie."
+      />
+
+      <SentenceCard
+        parts={[P("After", "conn"), P("she", "s"), P("had", "had"), P("eaten", "v3"), P("dinner,", "obj"), P("she", "s"), P("went", "v2"), P("for a walk", "obj")]}
+        roles={R27}
+        ar="بعد أن كانت قد تناولت العشاء، ذهبت للمشي."
+        note="الترتيب: ① أكلت العشاء ← ② ذهبت للمشي."
+      />
+    </div>
+  );
+}
+
+// ---------------- S19: by the time ----------------
+function S19ByTimeLab() {
+  return (
+    <div className="space-y-4" data-en-seq="l27-bytime">
+      <Note emoji="⏳" text="by the time = بحلول الوقت الذي... وهي من أهم العبارات مع Past Perfect: ما بعدها حدث لاحق، وما قبلها/معها had حدث أسبق." />
+
+      <SentenceCard
+        parts={[P("By the time", "conn"), P("we", "s"), P("arrived,", "v2"), P("the concert", "s"), P("had", "had"), P("started", "v3")]}
+        roles={R27}
+        ar="بحلول الوقت الذي وصلنا فيه، كان الحفل قد بدأ."
+        note="الترتيب: ① الحفل بدأ ← ② نحن وصلنا."
+      />
+
+      <SentenceCard
+        parts={[P("By the time", "conn"), P("the doctor", "s"), P("arrived,", "v2"), P("the patient", "s"), P("had", "had"), P("fallen", "v3"), P("asleep", "obj")]}
+        roles={R27}
+        ar="عندما وصل الطبيب، كان المريض قد نام."
+      />
+    </div>
+  );
+}
+
+// ---------------- S20: already ----------------
+function S20Already() {
+  return (
+    <div className="space-y-4">
+      <Note emoji="⭐" text="already = بالفعل / مسبقًا. موقعها بين had والفعل: had already + V3." />
+
+      <SentenceCard
+        parts={[P("When", "conn"), P("I", "s"), P("called", "v2"), P("Omar,", "obj"), P("he", "s"), P("had", "had"), P("already", "adv"), P("left", "v3")]}
+        roles={R27}
+        ar="عندما اتصلت بعمر، كان قد غادر بالفعل."
+        note="الترتيب: ① Omar left ← ② I called."
+      />
+
+      <SentenceCard
+        parts={[P("The students", "s"), P("had", "had"), P("already", "adv"), P("finished", "v3"), P("the test", "obj"), P("when the bell rang", "conn")]}
+        roles={R27}
+        ar="كان الطلاب قد أنهوا الاختبار بالفعل عندما رن الجرس."
+      />
+    </div>
+  );
+}
+
+// ---------------- S21: just ----------------
+function S21Just() {
+  return (
+    <div className="space-y-4">
+      <Note emoji="⚡" text="just = للتو / قبل قليل جدًا. تدل على أن الحدث انتهى قبل لحظة النقطة الماضية مباشرة." />
+
+      <SentenceCard
+        parts={[P("When", "conn"), P("I", "s"), P("entered", "v2"), P("the kitchen,", "obj"), P("Mom", "s"), P("had", "had"), P("just", "adv"), P("finished", "v3"), P("cooking", "obj")]}
+        roles={R27}
+        ar="عندما دخلت المطبخ، كانت أمي قد انتهت من الطبخ للتو."
+      />
+    </div>
+  );
+}
+
+// ---------------- S22: never ----------------
+function S22Never() {
+  return (
+    <div className="space-y-4">
+      <Note emoji="🧠" text="never = أبدًا. مع Past Perfect تعني أن التجربة لم تحدث إطلاقًا حتى تلك النقطة الماضية." />
+
+      <SentenceCard
+        parts={[P("Before that trip,", "conn"), P("I", "s"), P("had", "had"), P("never", "adv"), P("seen", "v3"), P("snow", "obj")]}
+        roles={R27}
+        ar="قبل تلك الرحلة، لم أكن قد رأيت الثلج أبدًا."
+      />
+    </div>
+  );
+}
+
+// ---------------- S23: المثال الأسطوري — دانيال ----------------
+function S23DanielLegend() {
+  return (
+    <div className="space-y-4">
+      <SentenceCard
+        parts={[P("When", "conn"), P("Daniel", "s"), P("arrived", "v2"), P("at the airport,", "obj"), P("his plane", "s"), P("had", "had"), P("already", "adv"), P("left", "v3")]}
+        roles={R27}
+        ar="عندما وصل دانيال إلى المطار، كانت طائرته قد غادرت بالفعل."
+      />
+
+      <DualPastTimeline
+        firstEn="His plane had already left."
+        firstAr="① الطائرة غادرت مسبقًا (Past Perfect)"
+        secondEn="Daniel arrived at airport."
+        secondAr="② دانيال وصل متأخرًا (Past Simple)"
+      />
+    </div>
+  );
+}
+
+// ---------------- S24: Grammar Detective — إيما ----------------
+function S24EmmaDetective() {
+  const [ans, setAns] = useState<number | undefined>(undefined);
+  return (
+    <div className="space-y-4" data-en-seq="l27-emma-detective">
+      <SentenceCard
+        parts={[P("When", "conn"), P("Emma", "s"), P("got", "v2"), P("home,", "obj"), P("her brother", "s"), P("had", "had"), P("cooked", "v3"), P("dinner", "obj")]}
+        roles={R27}
+        ar="عندما وصلت إيما إلى البيت، كان أخوها قد طهى العشاء."
+      />
+
+      <Lab emoji="🕵️" label="Detective Question" ar="سؤال المحقق: هل كان أخوها يطبخ عندما دخلت، أم وجدته جاهزًا؟">
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <button
+            type="button"
+            onClick={() => setAns(0)}
+            className={`flex-1 rounded-2xl border-2 p-3 font-bold transition ${ans === 0 ? "border-emerald-400 bg-emerald-50 text-emerald-950" : "border-slate-200 bg-white"}`}
+          >
+            وجدت العشاء جاهزًا لأن الطهو اكتمل قبل وصولها
+          </button>
+          <button
+            type="button"
+            onClick={() => setAns(1)}
+            className={`flex-1 rounded-2xl border-2 p-3 font-bold transition ${ans === 1 ? "border-rose-400 bg-rose-50 text-rose-950" : "border-slate-200 bg-white"}`}
+          >
+            كان يطبخ في تلك اللحظة
+          </button>
+        </div>
+
+        {ans !== undefined && (
+          <div className="mt-2 text-sm font-bold text-slate-800">
+            {ans === 0 ? (
+              <span className="text-emerald-700">✓ صحيح! العشاء كان جاهزًا لأن <En>had cooked</En> حدث أسبق. لو كان لا يزال يطبخ لقلنا: <En>was cooking</En>.</span>
+            ) : (
+              <span className="text-rose-600">✕ خطأ — <En>was cooking</En> هي التي تعني الاستمرار. أما <En>had cooked</En> فتعني الاكتمال قبل وصولها.</span>
+            )}
+          </div>
+        )}
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S25: هل Past Perfect يعني دائمًا «كان قد»؟ ----------------
+function S25Nuance() {
+  return (
+    <div className="space-y-4">
+      <Note emoji="🔥" text="ليس دائمًا بالضرورة! في العربية قد نترجمها أحيانًا بماضٍ بسيط عادي، لكن التركيب الإنجليزي يُستخدم لأن المتحدث يريد تحديد أن حدثًا سبق حدثًا آخر." />
+      <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 text-center">
+        <p className="text-base font-bold leading-relaxed text-slate-800 md:text-lg">
+          لا تبحث عن كلمة «كان قد» في رأسك لتقرر — ابحث عن <span className="text-violet-700 font-black">الترتيب الزمني بين الحدثين</span>!
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ---------------- S26: لا يعني «حدث منذ زمن طويل» ----------------
+function S26MythBuster() {
+  return (
+    <div className="space-y-4">
+      <div className="rounded-3xl border-2 border-rose-200 bg-rose-50/70 p-5">
+        <div className="text-xs font-black uppercase text-rose-700">❌ خرافة شائعة</div>
+        <div className="mt-1 text-lg font-black text-rose-950">Past Perfect = حدث منذ زمن طويل جدًا؟</div>
+        <p className="mt-2 text-sm font-semibold text-slate-700">
+          خطأ! قد يفصل بين الحدثين ثانية واحدة فقط. المهم ليس بُعد الحدث عن الحاضر، بل <span className="font-black text-violet-800">أسبقية حدث على حدث آخر</span>.
+        </p>
+      </div>
+
+      <SentenceCard
+        parts={[P("When I reached the station,", "conn"), P("the bus", "s"), P("had", "had"), P("arrived", "v3")]}
+        roles={R27}
+        ar="عندما وصلتُ إلى المحطة، كان الباص قد وصل (ربما قبل ثوانٍ فقط)."
+      />
+    </div>
+  );
+}
+
+// ---------------- S27: ليس مطلوبًا دائمًا ----------------
+function S27NotAlwaysNeeded() {
+  return (
+    <div className="space-y-4">
+      <Note emoji="🚨" text="إذا كنت تتحدث عن حدث ماضٍ واحد فقط، استخدم Past Simple ولا تستخدم Past Perfect!" />
+      <Verdict ok={true} en="Yesterday, I visited my grandmother." ar="زرتُ جدتي أمس. (حدث واحد ← Past Simple)" />
+      <Verdict ok={false} en="Yesterday, I had visited my grandmother." why="خطأ: لا يوجد حدث ماضٍ ثانٍ لنقارن به!" />
+    </div>
+  );
+}
+
+// ---------------- S28: عندما يكون الترتيب واضحًا أصلًا ----------------
+function S28OrderClear() {
+  const [mode, setMode] = useState<"then" | "perfect">("then");
+  return (
+    <div className="space-y-4" data-en-seq="l27-need-toggle">
+      <Lab emoji="🧩" label="Clear Sequence Toggle" ar="عندما يكون الترتيب مفهومًا بـ and then أو after">
+        <div className="flex justify-center gap-2">
+          <button
+            type="button"
+            onClick={() => setMode("then")}
+            className={`rounded-xl px-3.5 py-1.5 font-bold ${mode === "then" ? "bg-orange-500 text-white" : "border bg-white text-slate-700"}`}
+          >
+            سلسلة أحداث مع and then
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("perfect")}
+            className={`rounded-xl px-3.5 py-1.5 font-bold ${mode === "perfect" ? "bg-violet-700 text-white" : "border bg-white text-slate-700"}`}
+          >
+            صيغة Past Perfect
+          </button>
+        </div>
+
+        {mode === "then" ? (
+          <div className="rounded-2xl border-2 border-orange-200 bg-orange-50 p-4">
+            <En className="text-lg font-black text-orange-950">I ate dinner and then I watched TV.</En>
+            <p className="mt-1 text-xs font-bold text-slate-600">الماضي البسيط كافٍ وطبيعي جدًا لأن and then توضّح الترتيب.</p>
+          </div>
+        ) : (
+          <div className="rounded-2xl border-2 border-violet-200 bg-violet-50 p-4">
+            <En className="text-lg font-black text-violet-950">After I had eaten dinner, I watched TV.</En>
+            <p className="mt-1 text-xs font-bold text-slate-600">كلاهما صحيح — Past Perfect يعطي تركيزًا إضافيًا على الأسبقية.</p>
+          </div>
+        )}
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S29: قاعدة IQ200 ----------------
+function S29IqStepper() {
+  const steps = [
+    { n: "1", title: "هل هناك حدثان في الماضي؟", no: "حدث واحد فقط ← Past Simple", yes: "نعم ← انتقل للخطوة 2" },
+    { n: "2", title: "هل وقع أحدهما قبل الآخر؟", no: "حدثان متزامنان ← Past Continuous", yes: "نعم ← انتقل للخطوة 3" },
+    { n: "3", title: "هل ترتيبهما مهم وغير واضح؟", no: "الترتيب واضح بـ then ← Past Simple يصح", yes: "نعم ← استخدم Past Perfect للأقدم" },
+    { n: "4", title: "طبق الصيغة:", no: "الحدث الأحدث ← Past Simple", yes: "الحدث الأقدم ← had + V3" },
+  ];
+  const [cur, setCur] = useState(0);
+
+  return (
+    <div className="space-y-4" data-en-seq="l27-iq-stepper">
+      <Lab emoji="🧠" label="IQ200 4-Step Decision Stepper" ar="مخطط اتخاذ القرار في 4 خطوات">
+        <div className="flex justify-center gap-1.5">
+          {steps.map((st, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setCur(i)}
+              className={`grid h-9 w-9 place-items-center rounded-xl font-bold transition ${
+                cur === i ? "bg-violet-700 text-white shadow" : "border bg-white text-slate-700"
+              }`}
+            >
+              {st.n}
+            </button>
+          ))}
+        </div>
+
+        <div className="rounded-2xl border-2 border-violet-200 bg-white p-4">
+          <div className="text-xs font-black text-violet-700">خطوة {steps[cur].n} من 4</div>
+          <div className="mt-1 text-lg font-black text-slate-900">{steps[cur].title}</div>
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
+            <div className="rounded-xl bg-slate-50 p-2.5 text-xs font-bold text-slate-700">
+              ❌ إذا كان لا: {steps[cur].no}
+            </div>
+            <div className="rounded-xl bg-emerald-50 p-2.5 text-xs font-bold text-emerald-900">
+              ✓ إذا كان نعم: {steps[cur].yes}
+            </div>
+          </div>
+        </div>
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S30: تدريب 1 ----------------
+function S30PracticeV3() {
+  const [ansCount, setAnsCount] = useState(0);
+  return (
+    <div className="space-y-3.5" data-en-seq="l27-ex-v3">
+      {EX27_V3.map((q) => (
+        <McqRow key={q.n} n={q.n} stem={q.stem} opts={q.opts} answer={q.answer} why={q.why} onFirstAnswer={() => setAnsCount((c) => c + 1)} />
+      ))}
+      {ansCount >= 5 && (
+        <SourceReveal text="إجابات المصدر: ① started  ② eaten  ③ gone  ④ written  ⑤ seen" />
+      )}
+    </div>
+  );
+}
+
+// ---------------- S31: تدريب 2 ----------------
+function S31PracticeHadHave() {
+  const [ansCount, setAnsCount] = useState(0);
+  return (
+    <div className="space-y-3.5" data-en-seq="l27-ex-hadhave">
+      <PlatformPanel>
+        <Rich text="المصدر يقدم هذا التمرين لتثبيت أن had للماضي و have للحاضر. الإجابات مشتقة من القاعدة المصدرية." />
+      </PlatformPanel>
+      {EX27_HADHAVE.map((q) => (
+        <McqRow key={q.n} n={q.n} stem={q.stem} opts={q.opts} answer={q.answer} why={q.why} onFirstAnswer={() => setAnsCount((c) => c + 1)} />
+      ))}
+      {ansCount >= 4 && (
+        <SourceReveal text="إجابات التدريب 2: ① had  ② have  ③ had  ④ have" />
+      )}
+    </div>
+  );
+}
+
+// ---------------- S32: تدريب 3 ----------------
+function S32PracticeSimplePerfect() {
+  const [ansCount, setAnsCount] = useState(0);
+  return (
+    <div className="space-y-3.5" data-en-seq="l27-ex-simple-perfect">
+      <PlatformPanel>
+        <Rich text="السياقات الموضحة أدناه تبيّن المعنى المقصود لكل جملة لإزالة أي لبس." />
+      </PlatformPanel>
+      {EX27_SIMPLE_PERFECT.map((q) => (
+        <McqRow key={q.n} n={q.n} stem={q.stem} opts={q.opts} answer={q.answer} why={q.why} context={q.context} onFirstAnswer={() => setAnsCount((c) => c + 1)} />
+      ))}
+      {ansCount >= 5 && (
+        <SourceReveal text="إجابات التدريب 3: ① had left  ② finished  ③ had closed  ④ visited  ⑤ had finished" />
+      )}
+    </div>
+  );
+}
+
+// ---------------- S33: تدريب Noah ----------------
+function S33Noah() {
+  const [pick, setPick] = useState<string | undefined>(undefined);
+  return (
+    <div className="space-y-4" data-en-seq="l27-ex-noah">
+      <SentenceCard
+        parts={[P("When", "conn"), P("Noah", "s"), P("arrived", "v2"), P("at the station,", "obj"), P("the train", "s"), P("had", "had"), P("already", "adv"), P("disappeared", "v3")]}
+        roles={R27}
+        ar="عندما وصل نوح إلى المحطة، كان القطار قد اختفى مسبقًا."
+      />
+
+      <Lab emoji="🧠" label="Sequence Order Quiz" ar="أي حدث وقع أولًا؟">
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <button
+            type="button"
+            onClick={() => setPick("A")}
+            className={`flex-1 rounded-2xl border-2 p-3 font-bold transition ${pick === "A" ? "border-rose-400 bg-rose-50 text-rose-950" : "border-slate-200 bg-white"}`}
+          >
+            A = Noah arrived (نوح وصل أولًا)
+          </button>
+          <button
+            type="button"
+            onClick={() => setPick("B")}
+            className={`flex-1 rounded-2xl border-2 p-3 font-bold transition ${pick === "B" ? "border-emerald-400 bg-emerald-50 text-emerald-950" : "border-slate-200 bg-white"}`}
+          >
+            B = The train disappeared (القطار اختفى أولًا)
+          </button>
+        </div>
+
+        {pick !== undefined && (
+          <div className={`text-sm font-bold ${pick === "B" ? "text-emerald-700" : "text-rose-600"}`}>
+            {pick === "B" ? "✓ صحيح! الترتيب: B ثم A لأن had disappeared هي Past Perfect." : "✕ خطأ — had disappeared تدل على أن الاختفاء هو الأقدم (B ثم A)."}
+          </div>
+        )}
+
+        {pick !== undefined && (
+          <SourceReveal text="من المصدر: الإجابة B → A لأن The train had disappeared وقع قبل وصول نوح." />
+        )}
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S34: اكتشف الخطأ ----------------
+function S34ErrorHunter() {
+  const [fixed, setFixed] = useState<Record<number, boolean>>({});
+  const toggle = (i: number) => setFixed((p) => ({ ...p, [i]: !p[i] }));
+  const allFixed = Object.keys(fixed).length >= 5;
+
+  return (
+    <div className="space-y-4" data-en-seq="l27-ex-errors">
+      <Note emoji="🔍" text="اضغط على أي جملة لاكتشاف الخطأ وتصحيحه الفوري مع التعليل!" />
+
+      <div className="space-y-2.5">
+        {EX27_ERRORS.map((err, i) => (
+          <div
+            key={i}
+            onClick={() => toggle(i)}
+            className={`cursor-pointer rounded-2xl border-2 p-3.5 transition active:scale-98 ${
+              fixed[i] ? "border-emerald-300 bg-emerald-50/70" : "border-rose-200 bg-rose-50/50"
+            }`}
+          >
+            <div className="flex items-center justify-between">
+              <span className="font-bold text-slate-800">{err.n}</span>
+              <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${fixed[i] ? "bg-emerald-600 text-white" : "bg-rose-600 text-white"}`}>
+                {fixed[i] ? "✓ تم التصحيح" : "المس لكشف التصحيح"}
+              </span>
+            </div>
+            <En className="mt-1.5 block text-lg font-bold text-rose-900 line-through decoration-rose-400">{err.wrong}</En>
+            {fixed[i] && (
+              <div className="tada mt-2 border-t border-emerald-200 pt-2">
+                <En className="text-lg font-extrabold text-emerald-900">{err.fixed}</En>
+                <div className="mt-1 text-xs font-bold text-emerald-700">📌 <Rich text={err.why} /></div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {allFixed && (
+        <SourceReveal text="إجابات المصدر: ① had gone  ② had eaten  ③ Had he finished?  ④ hadn't seen  ⑤ had already left" />
+      )}
+    </div>
+  );
+}
+
+// ---------------- S35: تحدي التحويل ----------------
+function S35Transform() {
+  const [show1, setShow1] = useState(false);
+  const [show2, setShow2] = useState(false);
+  return (
+    <div className="space-y-4" data-en-seq="l27-ex-transform">
+      {/* المثال المحلول في المصدر */}
+      <div className="rounded-2xl border-2 border-slate-200 bg-slate-50 p-4">
+        <span className="rounded-full bg-slate-800 px-2.5 py-0.5 text-xs font-black text-white">المثال المحلول في المصدر</span>
+        <div className="mt-2 text-sm font-bold text-slate-700">
+          <En className="font-black text-slate-900">{EX27_TRANSFORM.worked.a}</En> + <En className="font-black text-slate-900">{EX27_TRANSFORM.worked.b}</En>
+        </div>
+        <div className="mt-2 text-sm font-black text-violet-800">
+          ← <En>{EX27_TRANSFORM.worked.answer}</En>
+        </div>
+      </div>
+
+      {/* التحدي 1 */}
+      <div className="rounded-2xl border-2 border-violet-100 bg-white p-4">
+        <div className="flex items-center justify-between">
+          <span className="font-bold text-violet-900">تحدي 1: Sara finished the test. The teacher collected the papers.</span>
+          <button
+            type="button"
+            onClick={() => setShow1(!show1)}
+            className="rounded-xl bg-violet-700 px-3 py-1 text-xs font-bold text-white"
+          >
+            {show1 ? "إخفاء" : "تحقق"}
+          </button>
+        </div>
+        {show1 && (
+          <div className="tada mt-3 rounded-xl bg-emerald-50 p-3 text-sm font-bold text-emerald-900">
+            <En className="text-base font-extrabold">{EX27_TRANSFORM.items[0].answer}</En>
+            <div className="mt-1 text-xs text-slate-600">📌 <Rich text={EX27_TRANSFORM.items[0].why} /></div>
+          </div>
+        )}
+      </div>
+
+      {/* التحدي 2 */}
+      <div className="rounded-2xl border-2 border-violet-100 bg-white p-4">
+        <div className="flex items-center justify-between">
+          <span className="font-bold text-violet-900">تحدي 2 (أصعب): The children ate dinner. Their parents came home.</span>
+          <button
+            type="button"
+            onClick={() => setShow2(!show2)}
+            className="rounded-xl bg-violet-700 px-3 py-1 text-xs font-bold text-white"
+          >
+            {show2 ? "إخفاء" : "تحقق"}
+          </button>
+        </div>
+        {show2 && (
+          <div className="tada mt-3 rounded-xl bg-emerald-50 p-3 text-sm font-bold text-emerald-900">
+            <En className="text-base font-extrabold">{EX27_TRANSFORM.items[1].answer}</En>
+            <div className="mt-1 text-xs text-slate-600">📌 <Rich text={EX27_TRANSFORM.items[1].why} /></div>
+          </div>
+        )}
+      </div>
+
+      {show1 && show2 && (
+        <SourceReveal text="المصدر: Sara had finished the test before the teacher collected the papers. / The children had eaten dinner before their parents came home." />
+      )}
+    </div>
+  );
+}
+
+// ---------------- S36: محقق المتحف المتقدم ----------------
+function S36MuseumDetective() {
+  const [picks, setPicks] = useState<Record<number, string>>({});
+  const setVerbTense = (idx: number, t: string) => setPicks((p) => ({ ...p, [idx]: t }));
+  const allAnswered = Object.keys(picks).length >= 6;
+
+  return (
+    <div className="space-y-4" data-en-seq="l27-ex-museum">
+      <div className="rounded-3xl border-2 border-slate-200 bg-slate-900 p-5 text-white">
+        <span className="rounded-full bg-amber-400 px-2.5 py-0.5 text-xs font-black text-slate-900">📜 قصة المتحف</span>
+        <En className="mt-3 block text-base font-semibold leading-relaxed text-slate-200 md:text-lg">
+          When the police arrived at the museum, the thief had disappeared. The guards were looking around, and several visitors were talking quietly. The police searched the building, but they couldn't find the thief.
+        </En>
+      </div>
+
+      <Lab emoji="🕵️" label="Classify the 6 Verbs" ar="حدد زمن كل فعل من أفعال القصة الستة:">
+        <div className="space-y-2.5">
+          {DETECTIVE_27.map((item, i) => {
+            const userPick = picks[i];
+            const isRight = userPick === item.tense;
+            return (
+              <div key={i} className="flex flex-col gap-2 rounded-2xl border-2 border-slate-100 bg-white p-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <En className="text-lg font-black text-violet-900">{item.verb}</En>
+                  <div className="text-xs text-slate-500">{item.role}</div>
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  {(["Past Simple", "Past Continuous", "Past Perfect"] as const).map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => setVerbTense(i, t)}
+                      className={`rounded-xl px-2.5 py-1 text-xs font-bold transition ${
+                        userPick === t
+                          ? isRight
+                            ? "bg-emerald-600 text-white"
+                            : "bg-rose-600 text-white"
+                          : "border bg-slate-50 text-slate-700"
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </Lab>
+
+      {allAnswered && (
+        <SourceReveal text="المصدر: had disappeared ← Past Perfect | arrived / searched / couldn't find ← Past Simple | were looking / were talking ← Past Continuous" />
+      )}
+    </div>
+  );
+}
+
+// ---------------- S37: القصة السينمائية ----------------
+function S37EmmaCinema() {
+  const [lens, setLens] = useState<"all" | "bg" | "evt" | "flash">("all");
+  return (
+    <div className="space-y-4" data-en-seq="l27-emma-cinema">
+      <div className="rounded-3xl border-2 border-violet-100 bg-white p-5">
+        <En className="text-lg font-bold leading-relaxed text-slate-900 md:text-xl">
+          Emma was walking through the old market when she found a mysterious key. She looked at it carefully and realized that she had seen it before.
+        </En>
+      </div>
+
+      <Lab emoji="🎬" label="Cinematic 3-Camera Breakdown" ar="تفكيك المشهد بعدسات الإخراج الثلاث">
+        <div className="flex flex-wrap justify-center gap-2">
+          <button
+            type="button"
+            onClick={() => setLens("all")}
+            className={`rounded-xl px-3 py-1.5 text-xs font-bold ${lens === "all" ? "bg-slate-900 text-white" : "border bg-white"}`}
+          >
+            المشهد كاملًا
+          </button>
+          <button
+            type="button"
+            onClick={() => setLens("bg")}
+            className={`rounded-xl px-3 py-1.5 text-xs font-bold ${lens === "bg" ? "bg-sky-500 text-white" : "border bg-white"}`}
+          >
+            🎥 1. الخلفية المستمرة
+          </button>
+          <button
+            type="button"
+            onClick={() => setLens("evt")}
+            className={`rounded-xl px-3 py-1.5 text-xs font-bold ${lens === "evt" ? "bg-orange-500 text-white" : "border bg-white"}`}
+          >
+            📸 2. الأحداث المتتابعة
+          </button>
+          <button
+            type="button"
+            onClick={() => setLens("flash")}
+            className={`rounded-xl px-3 py-1.5 text-xs font-bold ${lens === "flash" ? "bg-violet-700 text-white" : "border bg-white"}`}
+          >
+            ⏪ 3. الفلاش باك
+          </button>
+        </div>
+
+        <div className="space-y-2 text-sm font-bold">
+          {(lens === "all" || lens === "bg") && (
+            <div className="rounded-xl border border-sky-300 bg-sky-50 p-3 text-sky-950">
+              🎥 <En className="font-black">was walking</En> → خلفية مستمرة (Past Continuous)
+            </div>
+          )}
+          {(lens === "all" || lens === "evt") && (
+            <div className="rounded-xl border border-orange-300 bg-orange-50 p-3 text-orange-950">
+              📸 <En className="font-black">found · looked · realized</En> → أحداث متتابعة (Past Simple)
+            </div>
+          )}
+          {(lens === "all" || lens === "flash") && (
+            <div className="rounded-xl border border-violet-300 bg-violet-50 p-3 text-violet-950">
+              ⏪ <En className="font-black">had seen</En> → شيء حدث قبل لحظة إدراكها (Past Perfect)
+            </div>
+          )}
+        </div>
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S38: مشهد Liam ----------------
+function S38LiamScene() {
+  return (
+    <div className="space-y-4" data-en-seq="l27-liam">
+      <div className="grid gap-3 sm:grid-cols-3">
+        <div className="rounded-3xl border-2 border-sky-200 bg-sky-50 p-4 text-center">
+          <div className="text-2xl">🎥</div>
+          <span className="rounded-full bg-sky-500 px-2.5 py-0.5 text-xs font-black text-white">Past Continuous</span>
+          <En className="mt-2 block text-lg font-black text-sky-950">Liam was studying.</En>
+          <div className="mt-1 text-xs font-bold text-slate-600">ماذا كان يحدث؟ (عند الساعة 8:00)</div>
+        </div>
+
+        <div className="rounded-3xl border-2 border-orange-200 bg-orange-50 p-4 text-center">
+          <div className="text-2xl">📸</div>
+          <span className="rounded-full bg-orange-500 px-2.5 py-0.5 text-xs font-black text-white">Past Simple</span>
+          <En className="mt-2 block text-lg font-black text-orange-950">His phone rang.</En>
+          <div className="mt-1 text-xs font-bold text-slate-600">ماذا حدث؟ (الحدث القاطع)</div>
+        </div>
+
+        <div className="rounded-3xl border-2 border-violet-200 bg-violet-50 p-4 text-center">
+          <div className="text-2xl">⏪</div>
+          <span className="rounded-full bg-violet-700 px-2.5 py-0.5 text-xs font-black text-white">Past Perfect</span>
+          <En className="mt-2 block text-lg font-black text-violet-950">He had forgotten to charge it.</En>
+          <div className="mt-1 text-xs font-bold text-slate-600">ماذا كان قد حدث قبل ذلك؟</div>
+        </div>
+      </div>
+
+      <Note emoji="💡" text="هذه هي قوة اللغة الإنجليزية: ثلاثة أزمنة تعمل معًا لتصنع مشهدًا سينمائيًا متكاملًا!" />
+    </div>
+  );
+}
+
+// ---------------- S39: تحدي IQ200 الحقيقي ----------------
+function S39OrderChallenge() {
+  const [seq, setSeq] = useState<string[]>([]);
+  const [checked, setChecked] = useState(false);
+  const items = ORDER_27_CHALLENGE.items;
+
+  const toggleItem = (k: string) => {
+    if (seq.includes(k)) setSeq(seq.filter((x) => x !== k));
+    else if (seq.length < 4) setSeq([...seq, k]);
+  };
+
+  const isAccepted = ORDER_27_CHALLENGE.accept.some(
+    (acc) => acc.length === seq.length && acc.every((v, i) => v === seq[i])
+  );
+
+  return (
+    <div className="space-y-4" data-en-seq="l27-ex-order">
+      <Note emoji="🏆" text="رتّب الأحداث الأربعة التالية لبناء قصة متناسقة:" />
+
+      <div className="grid gap-2 sm:grid-cols-2">
+        {items.map((it) => {
+          const idx = seq.indexOf(it.key);
+          const chosen = idx !== -1;
           return (
             <button
-              key={item}
+              key={it.key}
               type="button"
-              onClick={() => toggle(item)}
-              disabled={checked}
-              aria-pressed={on}
-              dir="ltr"
-              className={`flex items-center gap-2 rounded-xl border-2 px-3 py-2 text-left font-en text-sm font-black transition disabled:cursor-default ${cls}`}
+              onClick={() => {
+                setChecked(false);
+                toggleItem(it.key);
+              }}
+              className={`flex items-center gap-3 rounded-2xl border-2 p-3 text-right transition active:scale-98 ${
+                chosen ? "border-violet-500 bg-violet-50" : "border-slate-200 bg-white hover:border-violet-200"
+              }`}
             >
-              <span className={`grid h-6 w-6 shrink-0 place-items-center rounded-md text-xs ${on || checked ? "bg-white/25" : "bg-slate-100 text-slate-500"}`}>
-                {on ? pos + 1 : "·"}
+              <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-xl font-en font-black ${chosen ? "bg-violet-700 text-white" : "bg-slate-100 text-slate-600"}`}>
+                {chosen ? idx + 1 : it.key}
               </span>
-              {item}
+              <div>
+                <En className="font-bold text-slate-900">{it.en}</En>
+                <div className="text-xs text-slate-500">{it.ar}</div>
+              </div>
             </button>
           );
         })}
       </div>
-      <div className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-1.5 text-xs font-black text-slate-600" aria-live="polite">
-        <Rich text="ترتيبك:" />
-        <En>{seq.length ? seq.map((s) => q.items.indexOf(s) + 1).join(" → ") : "—"}</En>
-        {seq.length > 0 && !checked && (
-          <button type="button" onClick={() => onChange([])} className="mr-auto rounded-lg bg-white px-2.5 py-1 text-[11px] font-black text-slate-500 shadow-sm">
-            <Rich text="↺ مسح" />
+
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="font-en text-sm font-bold text-slate-700">
+          الترتيب المختار: {seq.length > 0 ? seq.join(" → ") : "اضغط على البطاقات بالترتيب"}
+        </div>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              setSeq([]);
+              setChecked(false);
+            }}
+            className="rounded-xl border px-3 py-1.5 text-xs font-bold text-slate-600"
+          >
+            إعادة تعيين
+          </button>
+          <button
+            type="button"
+            disabled={seq.length < 4}
+            onClick={() => setChecked(true)}
+            className="rounded-xl bg-violet-700 px-4 py-1.5 text-xs font-bold text-white disabled:opacity-40"
+          >
+            تحقق
+          </button>
+        </div>
+      </div>
+
+      {checked && (
+        <div className="space-y-3">
+          <div className={`rounded-2xl border-2 p-4 text-sm font-bold ${isAccepted ? "border-emerald-300 bg-emerald-50 text-emerald-950" : "border-amber-300 bg-amber-50 text-amber-950"}`}>
+            {isAccepted ? "✓ ترتيب ممتاز متوافق مع المعنى!" : "📌 فكّر في أسبقية إنهاء التمرين ودخول المعلم."}
+          </div>
+          <SourceReveal text={`القصة من المصدر: ${ORDER_27_CHALLENGE.story}`} />
+          <Note emoji="💡" text={ORDER_27_CHALLENGE.nuance} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ---------------- S40: سؤال John ----------------
+function S40JohnSwitch() {
+  const [had, setHad] = useState(false);
+  return (
+    <div className="space-y-4" data-en-seq="l27-john-switch">
+      <Lab emoji="🧠" label="John Arrival / Departure Switch" ar="سؤال صعب جدًا: ما الفرق الدقيق بين الجملتين؟">
+        <div className="flex justify-center gap-2">
+          <button
+            type="button"
+            onClick={() => setHad(false)}
+            className={`rounded-xl px-3.5 py-1.5 font-bold ${!had ? "bg-orange-500 text-white" : "border bg-white"}`}
+          >
+            John left
+          </button>
+          <button
+            type="button"
+            onClick={() => setHad(true)}
+            className={`rounded-xl px-3.5 py-1.5 font-bold ${had ? "bg-violet-700 text-white" : "border bg-white"}`}
+          >
+            John had left
+          </button>
+        </div>
+
+        {!had ? (
+          <div className="rounded-2xl border-2 border-orange-200 bg-orange-50 p-4">
+            <En className="text-xl font-black text-orange-950">When I arrived, John left.</En>
+            <p className="mt-1 text-sm font-bold text-slate-700">الأولى: <En>I arrived → John left.</En> (وصلتُ ثم غادر جون)</p>
+          </div>
+        ) : (
+          <div className="rounded-2xl border-2 border-violet-200 bg-violet-50 p-4">
+            <En className="text-xl font-black text-violet-950">When I arrived, John had left.</En>
+            <p className="mt-1 text-sm font-bold text-violet-900">الثانية: <En>John left → I arrived.</En> (كان جون قد غادر قبل وصولي)</p>
+          </div>
+        )}
+
+        <div className="text-center text-xs font-bold text-slate-500">
+          تغيير صغير جدًا في الكلمة، لكنه يغيّر ترتيب الأحداث بالكامل!
+        </div>
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S41: had danced أم was dancing؟ ----------------
+function S41DancePrecision() {
+  const [choice, setChoice] = useState<"perfect" | "continuous">("continuous");
+  return (
+    <div className="space-y-4" data-en-seq="l27-dance">
+      <Note emoji="🚀" text="IQ200: هل جملة «When I arrived at the party, everyone had danced» صحيحة نحويًا؟ نعم صحيحة نحويًا، لكن معناها: كان الجميع قد رقصوا وانتهوا قبل وصولي!" />
+
+      <Lab emoji="💃" label="Party Dance Precision Lab" ar="قارن بين المعنيين:">
+        <div className="flex justify-center gap-2">
+          <button
+            type="button"
+            onClick={() => setChoice("continuous")}
+            className={`rounded-xl px-3.5 py-1.5 font-bold ${choice === "continuous" ? "bg-sky-500 text-white" : "border bg-white"}`}
+          >
+            كانوا يرقصون (مستمر)
+          </button>
+          <button
+            type="button"
+            onClick={() => setChoice("perfect")}
+            className={`rounded-xl px-3.5 py-1.5 font-bold ${choice === "perfect" ? "bg-violet-700 text-white" : "border bg-white"}`}
+          >
+            كانوا قد رقصوا وانتهوا
+          </button>
+        </div>
+
+        {choice === "continuous" ? (
+          <div className="rounded-2xl border-2 border-sky-200 bg-sky-50 p-4">
+            <En className="text-lg font-black text-sky-950">When I arrived at the party, everyone was dancing.</En>
+            <div className="mt-1 text-sm font-bold text-sky-900">→ الرقص كان مستمرًا في لحظة وصولي (🎥).</div>
+          </div>
+        ) : (
+          <div className="rounded-2xl border-2 border-violet-200 bg-violet-50 p-4">
+            <En className="text-lg font-black text-violet-950">When I arrived at the party, everyone had danced.</En>
+            <div className="mt-1 text-sm font-bold text-violet-900">→ الرقص حدث وانتهى قبل وصولي (⏪).</div>
+          </div>
+        )}
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- S42: Boss Battle ----------------
+function S42BossBattle() {
+  const [picks, setPicks] = useState<Record<number, number>>({});
+  const setBattle = (n: number, opt: number) => setPicks((p) => ({ ...p, [n]: opt }));
+  const done = Object.keys(picks).length >= 2;
+
+  return (
+    <div className="space-y-4" data-en-seq="l27-ex-boss">
+      <Note emoji="⚔️" text="Boss Battle: اختر الجملة التي تناسب المعنى المقصود بالضبط!" />
+
+      {BOSS_27.map((b) => {
+        const userPick = picks[b.n];
+        return (
+          <div key={b.n} className="rounded-3xl border-2 border-violet-100 bg-white p-4">
+            <div className="text-base font-black text-slate-900">{b.meaning}</div>
+            <div className="mt-2.5 space-y-2">
+              {b.opts.map((opt, oi) => (
+                <button
+                  key={oi}
+                  type="button"
+                  onClick={() => setBattle(b.n, oi)}
+                  className={`w-full rounded-2xl border-2 p-3 text-right font-en font-bold transition active:scale-98 ${
+                    userPick === oi
+                      ? oi === b.answer
+                        ? "border-emerald-400 bg-emerald-50 text-emerald-950 shadow-sm"
+                        : "border-rose-400 bg-rose-50 text-rose-950"
+                      : "border-slate-100 bg-slate-50 text-slate-800 hover:border-violet-200"
+                  }`}
+                >
+                  <span className="font-mono font-black">{oi === 0 ? "A" : "B"}.</span> {opt}
+                </button>
+              ))}
+            </div>
+            {userPick !== undefined && (
+              <div className={`mt-2 text-xs font-bold ${userPick === b.answer ? "text-emerald-700" : "text-rose-600"}`}>
+                📌 <Rich text={b.why} />
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      {done && (
+        <SourceReveal text="المصدر: المعركة 1: B (was sleeping) | المعركة 2: B (had left)" />
+      )}
+    </div>
+  );
+}
+
+// ---------------- S43: الاختبار النهائي المورّد ----------------
+function S43Final10() {
+  const [ansCount, setAnsCount] = useState(0);
+  return (
+    <div className="space-y-3.5" data-en-seq="l27-ex-final10">
+      <PlatformPanel>
+        <Rich text={TYPO_S43_Q2.note} />
+      </PlatformPanel>
+
+      {EX27_FINAL.map((q) => (
+        <McqRow key={q.n} n={q.n} stem={q.stem} opts={q.opts} answer={q.answer} why={q.why} context={q.context} onFirstAnswer={() => setAnsCount((c) => c + 1)} />
+      ))}
+
+      {ansCount >= 10 && (
+        <SourceReveal text="إجابات الاختبار النهائي المورّد: 1. had started  2. found  3. were eating  4. had lost  5. had left  6. visited  7. read  8. seen  9. was watching  10. gone" />
+      )}
+    </div>
+  );
+}
+
+// ---------------- S44: استوديو القصة ----------------
+function S44StoryStudio() {
+  const [text, setText] = useState("");
+
+  const stats = useMemo(() => {
+    const raw = text.trim();
+    if (!raw) return { sentences: 0, ps: 0, pc: 0, pp: 0, when: false, whileWord: false, beforeAfter: false };
+    const sentences = raw.split(/[.?!]+/).filter((s) => s.trim().length > 3).length;
+    const ps = (raw.match(/\b(noticed|opened|stepped|saw|looked|realized|ran|arrived|found|walked|went|came)\b/gi) || []).length;
+    const pc = (raw.match(/\b(was|were)\s+[a-z]+ing\b/gi) || []).length;
+    const pp = (raw.match(/\bhad\s+(?:already\s+|never\s+|just\s+)?([a-z]+ed|seen|heard|brought|entered|lived|gone|left|lost|done|taken)\b/gi) || []).length;
+    const when = /\bwhen\b/i.test(raw);
+    const whileWord = /\bwhile\b/i.test(raw);
+    const beforeAfter = /\b(before|after)\b/i.test(raw);
+    return { sentences, ps, pc, pp, when, whileWord, beforeAfter };
+  }, [text]);
+
+  const insertStarter = () => {
+    if (!text.includes(STORY_27_STARTER)) {
+      setText((t) => (t ? `${t}\n${STORY_27_STARTER}` : STORY_27_STARTER));
+    }
+  };
+
+  const reqList = [
+    { label: "10 جمل على الأقل", ok: stats.sentences >= 10, val: `${stats.sentences}/10` },
+    { label: "3 جمل Past Simple على الأقل", ok: stats.ps >= 3, val: `${stats.ps}/3` },
+    { label: "2 جمل Past Continuous على الأقل", ok: stats.pc >= 2, val: `${stats.pc}/2` },
+    { label: "3 جمل Past Perfect على الأقل", ok: stats.pp >= 3, val: `${stats.pp}/3` },
+    { label: "استخدام when", ok: stats.when, val: stats.when ? "✓" : "—" },
+    { label: "استخدام while", ok: stats.whileWord, val: stats.whileWord ? "✓" : "—" },
+    { label: "استخدام before أو after", ok: stats.beforeAfter, val: stats.beforeAfter ? "✓" : "—" },
+  ];
+
+  return (
+    <div className="space-y-4" data-en-seq="l27-ex-story">
+      <div className="rounded-3xl border-2 border-violet-100 bg-white p-4">
+        <div className="flex items-center justify-between">
+          <span className="font-head text-lg font-black text-violet-950">«The Mysterious Door» — الباب الغامض</span>
+          <button
+            type="button"
+            onClick={insertStarter}
+            className="rounded-xl border border-violet-200 bg-violet-50 px-3 py-1 text-xs font-bold text-violet-800"
+          >
+            + إدراج جملة البداية
+          </button>
+        </div>
+        <div className="mt-2 text-xs text-slate-500">
+          بداية مقترحة: <En className="font-bold text-slate-800">{STORY_27_STARTER}</En>
+        </div>
+      </div>
+
+      <textarea
+        dir="ltr"
+        style={{ direction: "ltr" }}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Write your story here in English..."
+        rows={7}
+        className="w-full rounded-2xl border-2 border-slate-200 bg-white p-4 font-en text-base font-semibold text-slate-900 shadow-inner focus:border-violet-500 focus:outline-none"
+      />
+
+      <Lab emoji="📊" label="Live Requirements Tracker" ar="محلل المتطلبات الفوري للقصة">
+        <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3">
+          {reqList.map((req, i) => (
+            <div
+              key={i}
+              className={`flex items-center justify-between rounded-xl border-2 p-2.5 text-xs font-bold ${
+                req.ok ? "border-emerald-300 bg-emerald-50 text-emerald-950" : "border-slate-100 bg-slate-50 text-slate-600"
+              }`}
+            >
+              <span>{req.label}</span>
+              <span className={`font-mono font-black ${req.ok ? "text-emerald-700" : "text-slate-400"}`}>{req.val}</span>
+            </div>
+          ))}
+        </div>
+      </Lab>
+    </div>
+  );
+}
+
+// ---------------- الخواتم والملخصات ----------------
+function GoldenSummary() {
+  return (
+    <div className="space-y-4">
+      <div className="rounded-3xl border-2 border-amber-300 bg-amber-50 p-6 text-center">
+        <span className="text-4xl">🧠</span>
+        <h3 className="font-head mt-2 text-2xl font-black text-amber-950">الملخص الذهبي لـ Past Perfect</h3>
+        <p className="mt-2 text-base font-semibold text-amber-900">
+          حدث أقدم في الماضي + حدث أحدث في الماضي.
+        </p>
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div className="rounded-2xl border-2 border-slate-100 bg-white p-4">
+          <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-black text-emerald-800">🟢 المثبت</span>
+          <En className="mt-2 block text-lg font-black">Subject + had + V3</En>
+        </div>
+        <div className="rounded-2xl border-2 border-slate-100 bg-white p-4">
+          <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-xs font-black text-rose-800">❌ النفي</span>
+          <En className="mt-2 block text-lg font-black">Subject + hadn't + V3</En>
+        </div>
+        <div className="rounded-2xl border-2 border-slate-100 bg-white p-4">
+          <span className="rounded-full bg-violet-100 px-2.5 py-0.5 text-xs font-black text-violet-800">❓ السؤال</span>
+          <En className="mt-2 block text-lg font-black">Had + Subject + V3?</En>
+        </div>
+        <div className="rounded-2xl border-2 border-slate-100 bg-white p-4">
+          <span className="rounded-full bg-sky-100 px-2.5 py-0.5 text-xs font-black text-sky-800">🗣️ الإجابة القصيرة</span>
+          <En className="mt-2 block text-lg font-black">Yes, ... had. / No, ... hadn't.</En>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WordsSummary() {
+  const words = [
+    { en: "before", ar: "قبل" },
+    { en: "after", ar: "بعد" },
+    { en: "by the time", ar: "بحلول الوقت الذي" },
+    { en: "already", ar: "بالفعل / مسبقًا" },
+    { en: "just", ar: "للتوّ" },
+    { en: "never", ar: "أبدًا حتى تلك اللحظة" },
+  ];
+  return (
+    <div className="grid gap-2.5 sm:grid-cols-2 md:grid-cols-3">
+      {words.map((w) => (
+        <div key={w.en} className="rounded-2xl border-2 border-violet-100 bg-white p-4 text-center">
+          <En className="text-xl font-black text-violet-900">{w.en}</En>
+          <Rich text={w.ar} className="mt-1 block text-sm font-bold text-slate-600" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function KeyRule() {
+  return (
+    <div className="space-y-4 text-center">
+      <div className="rounded-3xl border-2 border-violet-300 bg-gradient-to-br from-violet-600 to-indigo-700 p-8 text-white shadow-md">
+        <span className="text-4xl">🚨</span>
+        <h3 className="font-head mt-2 text-2xl font-black">إذا رأيت had فكّر مباشرة بـ V3</h3>
+        <En className="mt-2 block text-xl font-extrabold text-violet-200">had + V3 (NOT V2!)</En>
+      </div>
+
+      <div className="grid gap-2 sm:grid-cols-5">
+        {["go → went → gone", "eat → ate → eaten", "see → saw → seen", "write → wrote → written", "take → took → taken"].map((row) => (
+          <div key={row} className="rounded-xl border border-slate-200 bg-white p-2.5 font-en text-xs font-bold text-slate-800">
+            {row}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TenseMap() {
+  const mapItems = [
+    { n: "①", en: "Present Simple", ar: "العادات والحقائق" },
+    { n: "②", en: "Present Continuous", ar: "ما يحدث الآن أو في الفترة الحالية" },
+    { n: "③", en: "Past Simple", ar: "حدث وقع وانتهى في الماضي" },
+    { n: "④", en: "Past Continuous", ar: "شيء كان يحدث في لحظة ماضية" },
+    { n: "⑤", en: "Past Simple vs Continuous", ar: "حدث قاطع مقابل نشاط مستمر" },
+    { n: "⑥", en: "Past Perfect", ar: "حدث أقدم من حدث ماضٍ آخر" },
+  ];
+  return (
+    <div className="space-y-2.5">
+      {mapItems.map((it) => (
+        <div key={it.n} className="flex items-center gap-3 rounded-2xl border-2 border-slate-100 bg-white p-3.5">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-violet-700 font-bold text-white">
+            {it.n}
+          </span>
+          <div>
+            <En className="text-base font-black text-slate-900">{it.en}</En>
+            <div className="text-xs font-bold text-slate-500">{it.ar}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FinalRule() {
+  return (
+    <div className="space-y-4">
+      <div className="grid gap-3 sm:grid-cols-3">
+        <div className="rounded-3xl border-2 border-orange-200 bg-orange-50 p-5 text-center">
+          <div className="text-3xl">📸</div>
+          <En className="mt-1 block text-lg font-black text-orange-950">Past Simple</En>
+          <div className="mt-1 text-sm font-bold text-orange-900">ماذا حدث؟</div>
+        </div>
+        <div className="rounded-3xl border-2 border-sky-200 bg-sky-50 p-5 text-center">
+          <div className="text-3xl">🎥</div>
+          <En className="mt-1 block text-lg font-black text-sky-950">Past Continuous</En>
+          <div className="mt-1 text-sm font-bold text-sky-900">ماذا كان يحدث؟</div>
+        </div>
+        <div className="rounded-3xl border-2 border-violet-200 bg-violet-50 p-5 text-center">
+          <div className="text-3xl">⏪</div>
+          <En className="mt-1 block text-lg font-black text-violet-950">Past Perfect</En>
+          <div className="mt-1 text-sm font-bold text-violet-900">ماذا كان قد حدث قبل ذلك؟</div>
+        </div>
+      </div>
+      <Note emoji="🧠" text="إذا استطعت أن تجيب عن هذه الأسئلة الثلاثة، فأنت تفكر بالزمن كما يفكر به المتحدث باللغة الإنجليزية!" />
+    </div>
+  );
+}
+
+function ClosingStep({ onGoTest }: { onGoTest: () => void }) {
+  return (
+    <div className="space-y-5 text-center">
+      <div className="rounded-3xl border-2 border-violet-200 bg-gradient-to-br from-violet-600 to-indigo-800 p-8 text-white shadow-lg">
+        <div className="text-5xl anim-drift">🏆</div>
+        <h3 className="font-head mt-3 text-2xl font-black md:text-3xl">أحسنت! — LESSON 27 COMPLETE</h3>
+        <p className="mt-2 text-base font-semibold text-violet-100 md:text-lg">
+          أكملت الدرس 27: Past Perfect — الماضي التام. الآن أنت جاهز لاختبار فهمك عبر 20 سؤالًا شاملة!
+        </p>
+      </div>
+
+      <button
+        type="button"
+        onClick={onGoTest}
+        className="inline-flex items-center gap-2 rounded-2xl bg-violet-700 px-8 py-3.5 text-lg font-black text-white shadow-md transition active:scale-95 hover:bg-violet-800"
+      >
+        <span>📝</span>
+        <span>انتقل إلى منطقة الاختبارات (20 سؤالًا)</span>
+      </button>
+    </div>
+  );
+}
+
+// ============================================================
+// تعريف الخطوات الـ 53 (تغطية كاملة لسجل المصدر)
+// ============================================================
+
+type Slide = {
+  id: string;
+  section: string;
+  mascot: string;
+  title: string;
+  step?: string;
+  lead?: string;
+  tip?: string;
+  sourceTag?: string;
+};
+
+const slides: Slide[] = [
+  { id: "cover", section: "البداية", mascot: "⏪", title: "الغلاف — الدرس 27: Past Perfect", sourceTag: "الغلاف — الدرس 27: Past Perfect — الماضي التام" },
+  { id: "bridge", section: "البداية", mascot: "🧠", title: "الافتتاح — كيف نرتّب حدثين في الماضي؟", sourceTag: "الافتتاح — 🧠 IQ200: كيف نعرف أي حدث حدث أولًا في الماضي؟" },
+  { id: "objectives", section: "البداية", mascot: "🎯", title: "أهداف الدرس العشرة", sourceTag: "🎯 أهداف الدرس" },
+  { id: "s1", section: "المفهوم", mascot: "🧠", title: "ما هو Past Perfect؟", step: "1", lead: "الحدث الأقدم في الماضي = Past Perfect · الأحدث = Past Simple.", tip: "القطار غادر أولًا ثم وصلت: The train had left.", sourceTag: "① 🧠 ما هو Past Perfect؟" },
+  { id: "s2", section: "المفهوم", mascot: "🔥", title: "الفكرة الذهبية — «كان قد فعل»", step: "2", sourceTag: "② 🔥 الفكرة الذهبية" },
+  { id: "s3", section: "المفهوم", mascot: "🕰️", title: "خط الزمن — سارة في السينما", step: "3", sourceTag: "③ 🕰️ خط الزمن" },
+  { id: "s4", section: "التكوين", mascot: "⭐", title: "كيف نكوّن Past Perfect؟", step: "4", lead: "Subject + had + V3 — و had لا تتغير مع أي ضمير!", sourceTag: "④ ⭐ كيف نكوّن Past Perfect؟" },
+  { id: "s5", section: "التكوين", mascot: "🧱", title: "ما هو V3؟ (Past Participle)", step: "5", lead: "الأفعال المنتظمة وغير المنتظمة.", sourceTag: "⑤ 🧱 ما هو V3؟" },
+  { id: "s6", section: "التكوين", mascot: "🚨", title: "لا تخلط بين V2 و V3!", step: "6", lead: "had gone وليس had went!", sourceTag: "⑥ 🚨 لا تخلط بين V2 و V3" },
+  { id: "s7", section: "الاستخدام", mascot: "🧠", title: "لماذا نحتاج Past Perfect أصلًا؟", step: "7", lead: "مفتاح المعلم: كلمة had تقلب الترتيب الزمني!", sourceTag: "⑦ 🧠 لماذا نحتاج Past Perfect أصلًا؟" },
+  { id: "s8", section: "الاستخدام", mascot: "🎯", title: "مثال ذكي جدًا — علي والمطعم", step: "8", sourceTag: "⑧ 🎯 مثال ذكي جدًا" },
+  { id: "s9", section: "الجمل", mascot: "🟢", title: "الجملة المثبتة", step: "9", lead: "Subject + had + V3", sourceTag: "⑨ 🟢 الجملة المثبتة" },
+  { id: "s10", section: "الجمل", mascot: "🔥", title: "مع الأفعال غير المنتظمة", step: "10", sourceTag: "⑩ 🔥 Past Perfect مع الأفعال غير المنتظمة" },
+  { id: "s11", section: "النفي والسؤال", mascot: "❌", title: "النفي — hadn't + V3", step: "11", sourceTag: "⑪ ❌ النفي" },
+  { id: "s12", section: "النفي والسؤال", mascot: "🚨", title: "انتبه! V3 بعد hadn't أيضًا", step: "12", sourceTag: "⑫ 🚨 انتبه!" },
+  { id: "s13", section: "النفي والسؤال", mascot: "❓", title: "الأسئلة — Had + Subject + V3?", step: "13", sourceTag: "⑬ ❓ الأسئلة" },
+  { id: "s14", section: "النفي والسؤال", mascot: "🗣️", title: "الإجابات القصيرة", step: "14", sourceTag: "⑭ 🗣️ الإجابات القصيرة" },
+  { id: "s15", section: "المقارنات", mascot: "🧠", title: "الفرق بين Past Simple و Past Perfect", step: "15", sourceTag: "⑮ 🧠 الفرق بين Past Simple و Past Perfect" },
+  { id: "s16", section: "المقارنات", mascot: "🔥", title: "المقارنة الأهم — Lina left أم had left؟", step: "16", sourceTag: "⑯ 🔥 المقارنة الأهم" },
+  { id: "s17", section: "أدوات الربط", mascot: "⏱️", title: "before = قبل", step: "17", sourceTag: "⑰ ⏱️ before" },
+  { id: "s18", section: "أدوات الربط", mascot: "🔄", title: "after = بعد", step: "18", sourceTag: "⑱ 🔄 after" },
+  { id: "s19", section: "أدوات الربط", mascot: "⏳", title: "by the time = بحلول الوقت الذي", step: "19", sourceTag: "⑲ ⏳ by the time" },
+  { id: "s20", section: "الظروف", mascot: "⭐", title: "already = مسبقًا / بالفعل", step: "20", sourceTag: "⑳ ⭐ already" },
+  { id: "s21", section: "الظروف", mascot: "⚡", title: "just = للتوّ", step: "21", sourceTag: "㉑ ⚡ just" },
+  { id: "s22", section: "الظروف", mascot: "🧠", title: "never = أبدًا", step: "22", sourceTag: "㉒ 🧠 never" },
+  { id: "s23", section: "أمثلة", mascot: "🏆", title: "المثال الأسطوري — Daniel في المطار", step: "23", sourceTag: "㉓ 🏆 المثال الأسطوري" },
+  { id: "s24", section: "أمثلة", mascot: "🕵️", title: "Grammar Detective — Emma والعشاء", step: "24", sourceTag: "㉔ 🕵️ Grammar Detective" },
+  { id: "s25", section: "مفاهيم دقيقة", mascot: "🔥", title: "هل يعني دائمًا «كان قد»؟", step: "25", sourceTag: "㉕ 🔥 هل Past Perfect يعني دائمًا «كان قد»؟" },
+  { id: "s26", section: "مفاهيم دقيقة", mascot: "🧠", title: "لا يعني «حدث منذ زمن طويل»", step: "26", sourceTag: "㉖ 🧠 Past Perfect لا يعني «حدث منذ زمن طويل»" },
+  { id: "s27", section: "مفاهيم دقيقة", mascot: "🚨", title: "Past Perfect ليس مطلوبًا دائمًا", step: "27", sourceTag: "㉗ 🚨 Past Perfect ليس مطلوبًا دائمًا" },
+  { id: "s28", section: "مفاهيم دقيقة", mascot: "🧩", title: "عندما يكون الترتيب واضحًا أصلًا", step: "28", sourceTag: "㉘ 🧩 عندما يكون الترتيب واضحًا أصلًا" },
+  { id: "s29", section: "قواعد IQ200", mascot: "🧠", title: "قاعدة IQ200 — أربع خطوات", step: "29", sourceTag: "㉙ 🧠 قاعدة IQ200" },
+  { id: "s30", section: "التدريبات", mascot: "🧪", title: "تدريب 1 — اختر الفعل الصحيح", step: "30", sourceTag: "㉚ 🧪 تدريب 1 — اختر الفعل الصحيح" },
+  { id: "s31", section: "التدريبات", mascot: "🧪", title: "تدريب 2 — had أو have؟", step: "31", sourceTag: "㉛ 🧪 تدريب 2 — had أو have؟" },
+  { id: "s32", section: "التدريبات", mascot: "🧪", title: "تدريب 3 — Past Simple أم Past Perfect؟", step: "32", sourceTag: "㉜ 🧪 تدريب 3 — Past Simple أم Past Perfect؟" },
+  { id: "s33", section: "تحديات", mascot: "🧠", title: "تدريب IQ200 — رتّب أحداث Noah", step: "33", sourceTag: "㉝ 🧠 تدريب IQ200 — رتّب الأحداث" },
+  { id: "s34", section: "تحديات", mascot: "🔍", title: "تدريب IQ200 — اكتشف الخطأ", step: "34", sourceTag: "㉞ 🧠 تدريب IQ200 — اكتشف الخطأ" },
+  { id: "s35", section: "تحديات", mascot: "🔥", title: "تحدي التحويل — ادمج الجملتين", step: "35", sourceTag: "㉟ 🔥 تحدي التحويل" },
+  { id: "s36", section: "المحقق المتقدم", mascot: "🕵️", title: "محقق المتحف — المستوى المتقدم", step: "36", sourceTag: "㊱ 🕵️ Grammar Detective — المستوى المتقدم" },
+  { id: "s37", section: "السينما", mascot: "🎬", title: "القصة السينمائية — Emma والمفتاح الغامض", step: "37", sourceTag: "㊲ 🎬 القصة السينمائية" },
+  { id: "s38", section: "السينما", mascot: "🧠", title: "الفرق بين الأزمنة الثلاثة — مشهد Liam", step: "38", sourceTag: "㊳ 🧠 الفرق بين الأزمنة الثلاثة" },
+  { id: "s39", section: "التحديات الكبرى", mascot: "🏆", title: "تحدي IQ200 الحقيقي — رتّب أحداث الصف", step: "39", sourceTag: "㊴ 🏆 تحدي IQ200 الحقيقي" },
+  { id: "s40", section: "التحديات الكبرى", mascot: "🧠", title: "سؤال صعب جدًا — John left أم had left؟", step: "40", sourceTag: "㊵ 🧠 سؤال صعب جدًا" },
+  { id: "s41", section: "التحديات الكبرى", mascot: "🚀", title: "IQ200 — had danced أم was dancing؟", step: "41", sourceTag: "㊶ 🚀 IQ200 — هل يمكنك اكتشاف المشكلة؟" },
+  { id: "s42", section: "Boss Battle", mascot: "⚔️", title: "Boss Battle — معركتان مصيريتان", step: "42", sourceTag: "㊷ ⚔️ Boss Battle" },
+  { id: "s43", section: "الاختبار المورّد", mascot: "🧪", title: "الاختبار النهائي المورّد — 10 أسئلة", step: "43", sourceTag: "㊸ 🧪 الاختبار النهائي" },
+  { id: "s44", section: "استوديو القصة", mascot: "🏆", title: "المهمة النهائية — Build the Story", step: "44", sourceTag: "㊹ 🏆 المهمة النهائية — Build the Story" },
+  { id: "golden", section: "الخاتمة", mascot: "🧠", title: "الملخص الذهبي", sourceTag: "🧠 الملخص الذهبي" },
+  { id: "words", section: "الخاتمة", mascot: "⭐", title: "الكلمات المهمة", sourceTag: "⭐ الكلمات المهمة" },
+  { id: "rule", section: "الخاتمة", mascot: "🧠", title: "القاعدة التي يجب ألا تنساها", sourceTag: "🧠 القاعدة التي يجب ألا تنساها" },
+  { id: "map", section: "الخاتمة", mascot: "🗺️", title: "خريطة الأزمنة التي وصلنا إليها", sourceTag: "🗺️ خريطة الأزمنة التي وصلنا إليها" },
+  { id: "finalrule", section: "الخاتمة", mascot: "🧠", title: "IQ200 FINAL RULE", sourceTag: "🧠 IQ200 FINAL RULE" },
+  { id: "closing", section: "الخاتمة", mascot: "🏆", title: "الخاتمة — LESSON 27 COMPLETE", sourceTag: "الخاتمة — LESSON 27 COMPLETE" },
+];
+
+function SlideBody({ id, onGoTest }: { id: string; onGoTest: () => void }) {
+  switch (id) {
+    case "cover": return <CoverStep />;
+    case "bridge": return <BridgeStep />;
+    case "objectives": return <ObjectivesStep />;
+    case "s1": return <S1Timeline />;
+    case "s2": return <S2GoldenIdea />;
+    case "s3": return <S3SaraDiagram />;
+    case "s4": return <S4HadGrid />;
+    case "s5": return <S5VerbTable />;
+    case "s6": return <S6V2V3Trap />;
+    case "s7": return <S7TeacherSwitch />;
+    case "s8": return <S8AliOrder />;
+    case "s9": return <S9Affirmative />;
+    case "s10": return <S10IrregularPairs />;
+    case "s11": return <S11Negative />;
+    case "s12": return <S12NegativeV3Trap />;
+    case "s13": return <S13Questions />;
+    case "s14": return <S14ShortAnswers />;
+    case "s15": return <S15SideBySide />;
+    case "s16": return <S16LinaSwitch />;
+    case "s17": return <S17BeforeLab />;
+    case "s18": return <S18AfterLab />;
+    case "s19": return <S19ByTimeLab />;
+    case "s20": return <S20Already />;
+    case "s21": return <S21Just />;
+    case "s22": return <S22Never />;
+    case "s23": return <S23DanielLegend />;
+    case "s24": return <S24EmmaDetective />;
+    case "s25": return <S25Nuance />;
+    case "s26": return <S26MythBuster />;
+    case "s27": return <S27NotAlwaysNeeded />;
+    case "s28": return <S28OrderClear />;
+    case "s29": return <S29IqStepper />;
+    case "s30": return <S30PracticeV3 />;
+    case "s31": return <S31PracticeHadHave />;
+    case "s32": return <S32PracticeSimplePerfect />;
+    case "s33": return <S33Noah />;
+    case "s34": return <S34ErrorHunter />;
+    case "s35": return <S35Transform />;
+    case "s36": return <S36MuseumDetective />;
+    case "s37": return <S37EmmaCinema />;
+    case "s38": return <S38LiamScene />;
+    case "s39": return <S39OrderChallenge />;
+    case "s40": return <S40JohnSwitch />;
+    case "s41": return <S41DancePrecision />;
+    case "s42": return <S42BossBattle />;
+    case "s43": return <S43Final10 />;
+    case "s44": return <S44StoryStudio />;
+    case "golden": return <GoldenSummary />;
+    case "words": return <WordsSummary />;
+    case "rule": return <KeyRule />;
+    case "map": return <TenseMap />;
+    case "finalrule": return <FinalRule />;
+    case "closing": return <ClosingStep onGoTest={onGoTest} />;
+    default: return <div className="p-4 text-center">خطوة غير معروفة</div>;
+  }
+}
+
+// ============================================================
+// منطقة الاختبارات (Test Area) — 20 سؤالًا مستقلة
+// ============================================================
+
+export function TestArea27({ onShowSolutions }: { onShowSolutions?: () => void }) {
+  const [answers, setAnswers] = useState<Record<number, any>>({});
+  const [submitted, setSubmitted] = useState(false);
+
+  const setSingle = (qn: number, optIdx: number) => {
+    if (submitted) return;
+    setAnswers((p) => ({ ...p, [qn]: optIdx }));
+  };
+
+  const setTf = (qn: number, val: boolean) => {
+    if (submitted) return;
+    setAnswers((p) => ({ ...p, [qn]: val }));
+  };
+
+  const setMulti = (qn: number, optIdx: number) => {
+    if (submitted) return;
+    setAnswers((p) => {
+      const cur: number[] = p[qn] ?? [];
+      const next = cur.includes(optIdx) ? cur.filter((x) => x !== optIdx) : [...cur, optIdx].sort((a, b) => a - b);
+      return { ...p, [qn]: next };
+    });
+  };
+
+  const setOrderPick = (qn: number, item: string, total: number) => {
+    if (submitted) return;
+    setAnswers((p) => {
+      const cur: string[] = p[qn] ?? [];
+      const next = cur.includes(item) ? cur.filter((x) => x !== item) : cur.length < total ? [...cur, item] : cur;
+      return { ...p, [qn]: next };
+    });
+  };
+
+  const setMatchPick = (qn: number, leftIdx: number, rightIdx: number) => {
+    if (submitted) return;
+    setAnswers((p) => {
+      const cur: Record<number, number> = p[qn] ?? {};
+      return { ...p, [qn]: { ...cur, [leftIdx]: rightIdx } };
+    });
+  };
+
+  const setSpotPick = (qn: number, segIdx: number) => {
+    if (submitted) return;
+    setAnswers((p) => ({ ...p, [qn]: segIdx }));
+  };
+
+  const isQuestionAnswered = (q: TestQ27): boolean => {
+    const a = answers[q.n];
+    if (a === undefined) return false;
+    if (q.type === "single" || q.type === "spot") return typeof a === "number";
+    if (q.type === "tf") return typeof a === "boolean";
+    if (q.type === "multi") return Array.isArray(a) && a.length > 0;
+    if (q.type === "order") return Array.isArray(a) && a.length === q.items.length;
+    if (q.type === "match") return typeof a === "object" && a !== null && Object.keys(a).length === q.left.length;
+    return false;
+  };
+
+  const isQuestionCorrect = (q: TestQ27): boolean => {
+    const a = answers[q.n];
+    if (a === undefined) return false;
+    if (q.type === "single" || q.type === "spot") return a === q.answer;
+    if (q.type === "tf") return a === q.answer;
+    if (q.type === "multi") {
+      if (!Array.isArray(a) || a.length !== q.answer.length) return false;
+      return q.answer.every((v) => a.includes(v));
+    }
+    if (q.type === "order") {
+      if (!Array.isArray(a) || a.length !== q.answer.length) return false;
+      return q.answer.every((v, i) => a[i] === v);
+    }
+    if (q.type === "match") {
+      if (typeof a !== "object" || a === null) return false;
+      return q.answer.every((rIdx, lIdx) => a[lIdx] === rIdx);
+    }
+    return false;
+  };
+
+  const answeredCount = TEST_27.filter(isQuestionAnswered).length;
+  const allAnswered = answeredCount === TEST_27.length;
+
+  const score = useMemo(() => {
+    if (!submitted) return 0;
+    return TEST_27.filter(isQuestionCorrect).length;
+  }, [submitted, answers]);
+
+  const handleSubmit = () => {
+    if (!allAnswered) return;
+    setSubmitted(true);
+  };
+
+  const handleReset = () => {
+    setAnswers({});
+    setSubmitted(false);
+  };
+
+  return (
+    <div data-area="l27-test" className="space-y-6">
+      <div className="rounded-3xl border-2 border-violet-100 bg-white p-6 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">📝</span>
+              <h2 className="font-head text-2xl font-black text-slate-900">اختبار الدرس 27 — 20 سؤالًا</h2>
+            </div>
+            <p className="mt-1 text-sm font-bold text-slate-500">
+              أسئلة تطبيقية جديدة تقيس فهمك العميق لـ Past Perfect · لا تظهر النتيجة إلا بعد إنهاء الاختبار بالكامل.
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="rounded-full bg-violet-100 px-3.5 py-1.5 text-xs font-black text-violet-800">
+              أجبت عن {answeredCount} / 20
+            </span>
+          </div>
+        </div>
+
+        {submitted && (
+          <div className="mt-6 rounded-2xl border-2 border-violet-200 bg-violet-50 p-5 text-center shadow-sm">
+            <div className="text-3xl">🎉</div>
+            <div className="font-head mt-1 text-2xl font-black text-violet-950">
+              نتيجتك: {score} / 20
+            </div>
+            <div className="mt-1 text-sm font-bold text-slate-600">
+              صحيح {score} · خطأ {20 - score}
+            </div>
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
+              {onShowSolutions && (
+                <button
+                  type="button"
+                  onClick={onShowSolutions}
+                  className="rounded-xl bg-violet-700 px-5 py-2 font-bold text-white shadow transition hover:bg-violet-800"
+                >
+                  عرض حلول الاختبارات
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={handleReset}
+                className="rounded-xl border border-slate-300 bg-white px-5 py-2 font-bold text-slate-700 transition hover:bg-slate-50"
+              >
+                إعادة الاختبار
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="space-y-4">
+        {TEST_27.map((q) => {
+          const isCorrect = submitted ? isQuestionCorrect(q) : undefined;
+          const cardBorder = submitted
+            ? isCorrect
+              ? "border-emerald-300 bg-emerald-50/40"
+              : "border-rose-300 bg-rose-50/40"
+            : "border-slate-200 bg-white";
+
+          return (
+            <div key={q.n} data-test-q={q.n} className={`rounded-3xl border-2 p-5 transition ${cardBorder}`}>
+              <div className="flex items-start gap-3">
+                <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-xl font-en text-sm font-black text-white ${submitted ? (isCorrect ? "bg-emerald-600" : "bg-rose-600") : "bg-violet-700"}`}>
+                  {q.n}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <div className="text-base font-bold text-slate-900">{q.ar}</div>
+                  {q.en && <En className="mt-1 block text-lg font-black text-violet-900">{q.en}</En>}
+
+                  {/* Single Choice */}
+                  {q.type === "single" && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {q.opts.map((opt, oi) => {
+                        const sel = answers[q.n] === oi;
+                        return (
+                          <button
+                            key={oi}
+                            type="button"
+                            disabled={submitted}
+                            onClick={() => setSingle(q.n, oi)}
+                            className={`rounded-xl border-2 px-3.5 py-1.5 font-en font-bold transition active:scale-95 ${
+                              sel
+                                ? submitted
+                                  ? isCorrect
+                                    ? "border-transparent bg-emerald-600 text-white"
+                                    : "border-transparent bg-rose-600 text-white"
+                                  : "border-slate-900 bg-slate-900 text-white shadow-sm"
+                                : "border-slate-200 bg-white text-slate-700 hover:border-violet-300"
+                            }`}
+                          >
+                            {opt}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* True / False */}
+                  {q.type === "tf" && (
+                    <div className="mt-3 flex gap-2">
+                      {[true, false].map((val) => {
+                        const sel = answers[q.n] === val;
+                        const label = val ? "✓ صحيح" : "✕ خطأ";
+                        return (
+                          <button
+                            key={String(val)}
+                            type="button"
+                            disabled={submitted}
+                            onClick={() => setTf(q.n, val)}
+                            className={`rounded-xl border-2 px-4 py-1.5 font-bold transition active:scale-95 ${
+                              sel
+                                ? submitted
+                                  ? isCorrect
+                                    ? "border-transparent bg-emerald-600 text-white"
+                                    : "border-transparent bg-rose-600 text-white"
+                                  : "border-slate-900 bg-slate-900 text-white shadow-sm"
+                                : "border-slate-200 bg-white text-slate-700 hover:border-violet-300"
+                            }`}
+                          >
+                            {label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Multi Select */}
+                  {q.type === "multi" && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {q.opts.map((opt, oi) => {
+                        const cur: number[] = answers[q.n] ?? [];
+                        const sel = cur.includes(oi);
+                        return (
+                          <button
+                            key={oi}
+                            type="button"
+                            disabled={submitted}
+                            onClick={() => setMulti(q.n, oi)}
+                            className={`rounded-xl border-2 px-3.5 py-1.5 font-en font-bold transition active:scale-95 ${
+                              sel
+                                ? submitted
+                                  ? isCorrect
+                                    ? "border-transparent bg-emerald-600 text-white"
+                                    : "border-transparent bg-rose-600 text-white"
+                                  : "border-slate-900 bg-slate-900 text-white shadow-sm"
+                                : "border-slate-200 bg-white text-slate-700 hover:border-violet-300"
+                            }`}
+                          >
+                            {opt}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Ordering */}
+                  {q.type === "order" && (
+                    <div className="mt-3 space-y-2">
+                      <div className="flex flex-wrap gap-1.5">
+                        {q.items.map((item, ii) => {
+                          const cur: string[] = answers[q.n] ?? [];
+                          const idx = cur.indexOf(item);
+                          const sel = idx !== -1;
+                          return (
+                            <button
+                              key={ii}
+                              type="button"
+                              disabled={submitted}
+                              onClick={() => setOrderPick(q.n, item, q.items.length)}
+                              className={`rounded-xl border-2 px-3 py-1.5 font-en text-xs font-bold transition active:scale-95 ${
+                                sel
+                                  ? submitted
+                                    ? isCorrect
+                                      ? "border-transparent bg-emerald-600 text-white"
+                                      : "border-transparent bg-rose-600 text-white"
+                                    : "border-slate-900 bg-slate-900 text-white shadow-sm"
+                                  : "border-slate-200 bg-white text-slate-700 hover:border-violet-300"
+                              }`}
+                            >
+                              {sel && <span className="ml-1 text-violet-200">({idx + 1})</span>} {item}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Matching */}
+                  {q.type === "match" && (
+                    <div className="mt-3 space-y-2">
+                      {q.left.map((l, li) => {
+                        const curMap: Record<number, number> = answers[q.n] ?? {};
+                        const chosenRight = curMap[li];
+                        return (
+                          <div key={li} className="flex flex-col gap-1.5 rounded-2xl border border-slate-200 bg-slate-50 p-2.5 sm:flex-row sm:items-center sm:justify-between">
+                            <En className="font-bold text-slate-900">{l}</En>
+                            <div className="flex flex-wrap gap-1">
+                              {q.right.map((r, ri) => {
+                                const sel = chosenRight === ri;
+                                return (
+                                  <button
+                                    key={ri}
+                                    type="button"
+                                    disabled={submitted}
+                                    onClick={() => setMatchPick(q.n, li, ri)}
+                                    className={`rounded-xl border px-2.5 py-1 text-xs font-bold transition ${
+                                      sel
+                                        ? submitted
+                                          ? isCorrect
+                                            ? "border-transparent bg-emerald-600 text-white"
+                                            : "border-transparent bg-rose-600 text-white"
+                                          : "border-slate-900 bg-slate-900 text-white"
+                                        : "border-slate-200 bg-white text-slate-700"
+                                    }`}
+                                  >
+                                    {r}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Spot the Error */}
+                  {q.type === "spot" && (
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {q.segments.map((seg, si) => {
+                        const sel = answers[q.n] === si;
+                        return (
+                          <button
+                            key={si}
+                            type="button"
+                            disabled={submitted}
+                            onClick={() => setSpotPick(q.n, si)}
+                            className={`rounded-xl border-2 px-3 py-1.5 font-en text-sm font-bold transition active:scale-95 ${
+                              sel
+                                ? submitted
+                                  ? isCorrect
+                                    ? "border-transparent bg-emerald-600 text-white"
+                                    : "border-transparent bg-rose-600 text-white"
+                                  : "border-slate-900 bg-slate-900 text-white shadow-sm"
+                                : "border-slate-200 bg-white text-slate-700 hover:border-violet-300"
+                            }`}
+                          >
+                            {seg}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="rounded-3xl border-2 border-violet-100 bg-white p-5 text-center">
+        {!submitted ? (
+          <button
+            type="button"
+            disabled={!allAnswered}
+            onClick={handleSubmit}
+            className="rounded-2xl bg-violet-700 px-10 py-3.5 text-lg font-black text-white shadow-md transition active:scale-95 hover:bg-violet-800 disabled:opacity-40"
+          >
+            إنهاء الاختبار
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={handleReset}
+            className="rounded-2xl border-2 border-slate-300 bg-white px-8 py-3 font-bold text-slate-700 transition hover:bg-slate-50"
+          >
+            إعادة الاختبار
           </button>
         )}
       </div>
@@ -2324,1046 +2635,498 @@ function TOrder({ q, value, checked, onChange }: { q: Extract<TestQ27, { type: "
   );
 }
 
-function TMatch({ q, value, checked, onChange }: { q: Extract<TestQ27, { type: "match" }>; value: Record<number, number> | undefined; checked: boolean; onChange: (v: Record<number, number>) => void }) {
-  const pairs = value ?? {};
-  const [active, setActive] = useState<number | null>(null);
-  // عرض العمود الأيمن بترتيب مدوّر ثابت — حتى لا يكشف الترتيبُ الأصلي الإجابةَ.
-  const rightOrder = useMemo(() => q.right.map((_, i) => (i + 1) % q.right.length), [q.right.length]);
-  const tapLeft = (li: number) => {
-    if (checked) return;
-    if (pairs[li] !== undefined) {
-      const n = { ...pairs };
-      delete n[li];
-      onChange(n);
-      setActive(null);
-      return;
-    }
-    setActive(li);
-  };
-  const tapRight = (origRi: number) => {
-    if (checked || active === null) return;
-    if (Object.values(pairs).includes(origRi)) return;
-    onChange({ ...pairs, [active]: origRi });
-    setActive(null);
-  };
-  const usedBy = (origRi: number) => Object.entries(pairs).find(([, r]) => r === origRi)?.[0];
-  return (
-    <div className="space-y-2">
-      <div className="text-xs font-bold text-slate-500">
-        <Rich text="المس فعلًا من اليمين ثم دوره من اليسار — المس الزوج مرة أخرى لفكّه." />
-      </div>
-      <div className="grid gap-2 sm:grid-cols-2">
-        <div className="space-y-1.5">
-          <div className="text-center text-xs font-black text-slate-400"><Rich text="الأفعال" /></div>
-          {q.left.map((l, li) => {
-            const paired = pairs[li] !== undefined;
-            let cls = "border-slate-200 bg-white text-slate-800 hover:border-violet-400";
-            if (checked) {
-              cls = pairs[li] === q.answer[li] ? "border-transparent bg-emerald-600 text-white" : "border-transparent bg-rose-600 text-white";
-            } else if (paired) {
-              cls = "border-transparent bg-slate-900 text-white";
-            } else if (active === li) {
-              cls = "border-violet-500 bg-violet-50 text-violet-900";
-            }
-            return (
-              <button key={li} type="button" onClick={() => tapLeft(li)} disabled={checked} aria-pressed={paired} dir="ltr"
-                className={`w-full rounded-xl border-2 px-3 py-2 font-en text-sm font-black transition disabled:cursor-default ${cls}`}>
-                {l}
-              </button>
-            );
-          })}
-        </div>
-        <div className="space-y-1.5">
-          <div className="text-center text-xs font-black text-slate-400"><Rich text="الأدوار" /></div>
-          {rightOrder.map((origRi) => {
-            const by = usedBy(origRi);
-            const paired = by !== undefined;
-            let cls = "border-slate-200 bg-white text-slate-700 hover:border-violet-400";
-            if (checked) {
-              const li = Number(by);
-              cls = paired && q.answer[li] === origRi ? "border-transparent bg-emerald-600 text-white" : "border-slate-200 bg-white text-slate-300";
-            } else if (paired) {
-              cls = "border-transparent bg-slate-900 text-white";
-            }
-            return (
-              <button key={origRi} type="button" onClick={() => tapRight(origRi)} disabled={checked || active === null} aria-pressed={paired}
-                className={`w-full rounded-xl border-2 px-3 py-2 text-sm font-black transition disabled:cursor-default ${cls}`}>
-                <Rich text={q.right[origRi]} />
-              </button>
-            );
-          })}
-        </div>
-      </div>
-      <div className="rounded-xl bg-slate-50 px-3 py-1.5 text-center text-xs font-black text-slate-600" aria-live="polite">
-        <Rich text={Object.keys(pairs).length === q.left.length ? `تم التوصيل: ${Object.keys(pairs).length} / ${q.left.length}` : active !== null ? "الآن المس الدور المناسب…" : "ابدأ بلمس فعل…"} />
-      </div>
-    </div>
-  );
-}
+// ============================================================
+// حلول الاختبارات (Solutions Area)
+// ============================================================
 
-function TSpot({ q, value, checked, onChange }: { q: Extract<TestQ27, { type: "spot" }>; value: number | undefined; checked: boolean; onChange: (v: number) => void }) {
+export function Solutions27({ unlocked }: { unlocked: boolean }) {
+  if (!unlocked) {
+    return (
+      <div data-area="l27-solutions" className="rounded-3xl border-2 border-amber-200 bg-amber-50/80 p-8 text-center">
+        <div className="text-4xl">🔒</div>
+        <h3 className="font-head mt-2 text-xl font-black text-amber-950">حلول الاختبار مقفلة</h3>
+        <p className="mt-1 text-sm font-bold text-amber-800">
+          تفتح حلول الاختبار التفسيرية بعد إنهاء الاختبار وتقديمه في منطقة الاختبار، أو بفتح منطقة المعلم.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div dir="ltr" className="ltr-row flex flex-wrap gap-1.5">
-      {q.segments.map((seg, si) => (
-        <NeutralOpt key={si} en selected={value === si} revealed={checked} isAnswer={si === q.answer} isPick={value === si} onClick={() => onChange(si)} disabled={checked} label={seg} />
+    <div data-area="l27-solutions" className="space-y-4">
+      <div className="rounded-3xl border-2 border-violet-100 bg-white p-5">
+        <h2 className="font-head text-2xl font-black text-slate-900">💡 الحلول التفسيرية لاختبار الدرس 27</h2>
+        <p className="mt-1 text-sm font-bold text-slate-500">
+          توضيح تفصيلي لسبب صحة كل إجابة مع التنبيه على الفخاخ والمفاهيم الشائعة.
+        </p>
+      </div>
+
+      {TEST_27_SOLUTIONS.map((sol) => (
+        <div key={sol.n} data-solution={sol.n} className="rounded-3xl border-2 border-slate-100 bg-white p-5 shadow-sm">
+          <div className="flex items-start gap-3">
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-violet-700 font-en text-sm font-black text-white">
+              {sol.n}
+            </span>
+            <div className="min-w-0 flex-1 space-y-2">
+              <div className="text-base font-bold text-slate-900">{sol.ar}</div>
+              {sol.en && <En className="block text-lg font-black text-violet-900">{sol.en}</En>}
+
+              <div className="rounded-2xl border border-emerald-200 bg-emerald-50/70 p-3">
+                <span className="text-xs font-black text-emerald-800">الإجابة الصحيحة:</span>
+                <div className="mt-0.5 text-base font-black text-emerald-950"><Rich text={sol.answer} /></div>
+              </div>
+
+              <div className="text-sm font-semibold text-slate-700">
+                <span className="font-bold text-slate-900">💡 التفسير: </span>
+                <Rich text={sol.explanation} />
+              </div>
+
+              {sol.trap && (
+                <div className="rounded-xl bg-amber-50 p-2.5 text-xs font-bold text-amber-900">
+                  ⚠️ <span className="font-black">الفخ الشائع: </span>
+                  <Rich text={sol.trap} />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       ))}
     </div>
   );
 }
 
-export function TestArea27({ onCheckedChange, onShowSolutions }: { onCheckedChange?: (c: boolean) => void; onShowSolutions?: () => void }) {
-  const [answers, setAnswers] = useState<Record<number, TestAnswer27>>({});
-  const [checked, setChecked] = useState(false);
-  const answered = TEST_27.filter((q) => isAnswered27(q, answers[q.n])).length;
-  const allAnswered = answered === TEST_27.length;
-  const score = useMemo(
-    () => TEST_27.reduce((s, q) => s + (isCorrect27(q, answers[q.n]) ? 1 : 0), 0),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [answers, checked]
-  );
-  const pct = Math.round((score / TEST_27.length) * 100);
-  const msg =
-    pct === 100 ? "🏆 ممتاز! علامة كاملة في الماضي التام."
-    : pct >= 80 ? "🌟 رائع جدًا! راجع الحلول للأسئلة الخاطئة فقط."
-    : pct >= 60 ? "👍 جيد! راجع الخط الزمني و had + V3 ثم حاول مجددًا."
-    : "💪 لا بأس — أعد الدرس من البداية ثم أعد الاختبار.";
-  const submit = () => {
-    setChecked(true);
-    onCheckedChange?.(true);
+// ============================================================
+// منطقة المعلم (Teacher Area) — خلف somer173
+// ============================================================
+
+export function TeacherArea27({
+  unlocked,
+  onUnlockChange,
+  onGoSolutions,
+}: {
+  unlocked: boolean;
+  onUnlockChange: (u: boolean) => void;
+  onGoSolutions?: () => void;
+}) {
+  const [pass, setPass] = useState("");
+  const [err, setErr] = useState(false);
+
+  const handleUnlock = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (pass.trim() === TEACHER_PASSWORD_27) {
+      setErr(false);
+      onUnlockChange(true);
+    } else {
+      setErr(true);
+    }
   };
-  const reset = () => {
-    setAnswers({});
-    setChecked(false);
-    onCheckedChange?.(false);
-  };
-  const set = (n: number, v: TestAnswer27) => setAnswers((p) => ({ ...p, [n]: v }));
+
+  if (!unlocked) {
+    return (
+      <div data-area="l27-teacher" className="rounded-3xl border-2 border-violet-100 bg-white p-8 shadow-sm">
+        <div className="mx-auto max-w-md text-center">
+          <div className="text-4xl">🔐</div>
+          <h2 className="font-head mt-2 text-2xl font-black text-slate-900">منطقة المعلم — 🔒 مقفلة</h2>
+          <p className="mt-1 text-sm font-bold text-slate-500">
+            أدخل كلمة مرور المعلم المعتمدة للوصول إلى الملاحظات التعليمية وسلالم التقييم وحلول الأنشطة.
+          </p>
+
+          <form onSubmit={handleUnlock} className="mt-5 space-y-3">
+            <input
+              type="password"
+              value={pass}
+              onChange={(e) => {
+                setPass(e.target.value);
+                setErr(false);
+              }}
+              placeholder="كلمة المرور..."
+              className="w-full rounded-2xl border-2 border-slate-200 px-4 py-2.5 text-center font-mono text-lg font-bold text-slate-800 focus:border-violet-600 focus:outline-none"
+            />
+            {err && <div className="text-sm font-bold text-rose-600">كلمة المرور غير صحيحة. حاول مرة أخرى.</div>}
+            <button
+              type="submit"
+              className="w-full rounded-2xl bg-violet-700 py-2.5 text-base font-bold text-white shadow transition hover:bg-violet-800"
+            >
+              فتح المنطقة
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div data-area="l27-test" className="space-y-3">
-      <div className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-violet-200 bg-violet-50/70 p-4">
-        <span className="text-2xl">📝</span>
-        <div className="min-w-0 flex-1">
-          <div className="font-black text-slate-800">
-            <Rich text={`منطقة الاختبارات — ${TEST_27.length} سؤالًا جديدًا بأنواع منظمة`} />
+    <div data-area="l27-teacher" className="space-y-6">
+      <div className="rounded-3xl border-2 border-emerald-200 bg-emerald-50/80 p-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl">🔓</span>
+            <div>
+              <h2 className="font-head text-xl font-black text-emerald-950">منطقة المعلم — مفتوحة</h2>
+              <div className="text-xs font-bold text-emerald-800">ملاحظات تعليمية · حلول الأنشطة · سلّم القصة</div>
+            </div>
           </div>
-          <div className="text-xs font-bold text-slate-500">
-            <Rich text="أجب عنها كلها بحرية — لا يظهر أي تصحيح قبل «إنهاء الاختبار»." />
+          {onGoSolutions && (
+            <button
+              type="button"
+              onClick={onGoSolutions}
+              className="rounded-xl bg-violet-700 px-4 py-1.5 text-xs font-bold text-white shadow hover:bg-violet-800"
+            >
+              عرض حلول الاختبارات
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* 1) Overview */}
+      <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
+        <h3 className="font-head text-lg font-black text-slate-900">Lesson Overview — نظرة عامة</h3>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="rounded-2xl bg-slate-50 p-3 text-xs space-y-1">
+            <span className="font-black text-slate-800">الأهداف التدريسية:</span>
+            {TEACHER_27_OVERVIEW.objectives.map((o, i) => (
+              <div key={i}>• {o}</div>
+            ))}
+          </div>
+          <div className="rounded-2xl bg-slate-50 p-3 text-xs space-y-1">
+            <span className="font-black text-slate-800">المتطلبات السابقة:</span>
+            {TEACHER_27_OVERVIEW.prerequisites.map((p, i) => (
+              <div key={i}>• {p}</div>
+            ))}
           </div>
         </div>
-        <span className="rounded-full bg-white px-3 py-1 text-sm font-bold text-slate-500 shadow-sm">
-          <Rich text={`أجبت عن ${answered} / ${TEST_27.length}`} />
-        </span>
       </div>
 
-      <div className="grid gap-3">
-        {TEST_27.map((q) => {
-          const a = answers[q.n];
-          const state = !checked ? (isAnswered27(q, a) ? "picked" : "idle") : isCorrect27(q, a) ? "right" : "wrong";
-          return (
-            <QShell key={q.n} n={q.n} type={q.type} ar={q.ar} en={q.type === "spot" ? undefined : q.en} state={state}>
-              {q.type === "single" && <TSingle q={q} value={a as number | undefined} checked={checked} onChange={(v) => set(q.n, v)} />}
-              {q.type === "tf" && <TTf q={q} value={a as boolean | undefined} checked={checked} onChange={(v) => set(q.n, v)} />}
-              {q.type === "multi" && <TMulti q={q} value={a as number[] | undefined} checked={checked} onChange={(v) => set(q.n, v)} />}
-              {q.type === "order" && <TOrder q={q} value={a as string[] | undefined} checked={checked} onChange={(v) => set(q.n, v)} />}
-              {q.type === "match" && <TMatch q={q} value={a as Record<number, number> | undefined} checked={checked} onChange={(v) => set(q.n, v)} />}
-              {q.type === "spot" && <TSpot q={q} value={a as number | undefined} checked={checked} onChange={(v) => set(q.n, v)} />}
-            </QShell>
-          );
-        })}
-      </div>
-
-      <div className="sticky bottom-4 z-10">
-        <div className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-violet-900/10 bg-white/95 p-4 shadow-xl backdrop-blur" role="status" aria-live="polite">
-          {!checked ? (
-            <>
-              <button
-                type="button"
-                onClick={submit}
-                disabled={!allAnswered}
-                title={allAnswered ? undefined : "أجب عن كل الأسئلة أولًا"}
-                className="rounded-xl bg-violet-700 px-5 py-2.5 font-bold text-white shadow transition enabled:hover:bg-violet-800 disabled:opacity-30"
-              >
-                <Rich text={`إنهاء الاختبار (${answered}/${TEST_27.length})`} />
-              </button>
-              <button
-                type="button"
-                onClick={reset}
-                className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-bold text-slate-600 transition hover:bg-slate-200"
-              >
-                <Rich text="↺ إعادة" />
-              </button>
-            </>
-          ) : (
-            <>
-              <div className="grid h-14 w-14 place-items-center rounded-2xl bg-violet-700 text-xl font-extrabold text-white">
-                {pct}%
+      {/* 2) Teaching Notes */}
+      <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
+        <h3 className="font-head text-lg font-black text-slate-900">Teaching Notes — ملاحظات تعليمية (16 بندًا)</h3>
+        <div className="grid gap-2.5 sm:grid-cols-2">
+          {TEACHER_27_NOTES.map((note, i) => (
+            <div key={i} className="rounded-2xl border border-slate-100 bg-slate-50/60 p-3 text-xs">
+              <div className="font-black text-violet-900">{note.head}</div>
+              <div className="mt-1 space-y-0.5 text-slate-700">
+                {note.lines.map((l, li) => (
+                  <div key={li}>• {l}</div>
+                ))}
               </div>
-              <div className="min-w-0 flex-1">
-                <div className="font-extrabold text-slate-800">
-                  <Rich text={`نتيجتك: ${score} / ${TEST_27.length} — صحيح ${score} · خطأ ${TEST_27.length - score}`} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 3) Activity Solutions */}
+      <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
+        <h3 className="font-head text-lg font-black text-slate-900">Activity Solutions — حلول الأنشطة والتدريبات (10 أقسام)</h3>
+        <div className="space-y-2">
+          {TEACHER_27_SOLUTIONS.map((sol, i) => (
+            <div key={i} className="rounded-2xl border border-slate-100 bg-slate-50 p-3 text-xs">
+              <div className="font-black text-slate-900">{sol.head}</div>
+              <div className="mt-1 space-y-0.5 text-slate-700">
+                {sol.lines.map((l, li) => (
+                  <div key={li}>• {l}</div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 4) Story Rubric */}
+      <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-2">
+        <h3 className="font-head text-lg font-black text-slate-900">Story Rubric — سلّم قصة «The Mysterious Door»</h3>
+        <div className="rounded-2xl bg-violet-50 p-3.5 text-xs font-semibold text-violet-950 space-y-1">
+          {TEACHER_27_RUBRIC.lines.map((l, i) => (
+            <div key={i}>✓ {l}</div>
+          ))}
+        </div>
+      </div>
+
+      {/* 5) Common Mistakes */}
+      <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
+        <h3 className="font-head text-lg font-black text-slate-900">Common Mistakes — الأخطاء الشائعة (8 محاور)</h3>
+        <div className="grid gap-2 sm:grid-cols-2">
+          {TEACHER_27_MISTAKES.map((m, i) => (
+            <div key={i} className="rounded-2xl border border-rose-100 bg-rose-50/50 p-3 text-xs">
+              <div className="font-black text-rose-900">{m.head}</div>
+              <div className="mt-1 space-y-0.5 text-slate-700">
+                {m.lines.map((l, li) => (
+                  <div key={li}>• {l}</div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// المكون الرئيسي للدرس 27
+// ============================================================
+
+export default function Lesson27({ onExit }: { onExit?: () => void }) {
+  const [tab, setTab] = useState<"lesson" | "test" | "solutions" | "teacher">("lesson");
+  const [slideIdx, setSlideIdx] = useState(0);
+  const [drawer, setDrawer] = useState(false);
+  const [teacherUnlocked, setTeacherUnlocked] = useState(false);
+  const [testUnlocked, setTestUnlocked] = useState(false);
+
+  const curSlide = slides[slideIdx];
+  const total = slides.length;
+  const progress = Math.round(((slideIdx + 1) / total) * 100);
+
+  const prev = () => setSlideIdx((i) => Math.max(0, i - 1));
+  const next = () => setSlideIdx((i) => Math.min(total - 1, i + 1));
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (tab !== "lesson") return;
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === "ArrowLeft") next();
+      if (e.key === "ArrowRight") prev();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [tab, total]);
+
+  return (
+    <div dir="rtl" className="min-h-screen bg-slate-50 font-sans text-slate-800 antialiased selection:bg-violet-200">
+      {/* الشريط العلوي العام */}
+      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur-md">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+          <div className="flex items-center gap-3">
+            {onExit && (
+              <button
+                type="button"
+                onClick={onExit}
+                className="grid h-9 w-9 place-items-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm transition active:scale-95 hover:bg-slate-50"
+                title="العودة للصفحة الرئيسية"
+              >
+                🏠
+              </button>
+            )}
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="rounded-lg bg-violet-700 px-2 py-0.5 text-xs font-black text-white">الدرس 27</span>
+                <span className="font-head text-base font-black text-slate-900 md:text-lg">Past Perfect — الماضي التام</span>
+              </div>
+              <div className="hidden text-xs font-bold text-slate-500 sm:block">
+                THE FLASHBACK DIRECTOR · المخرج الذي يرتّب حدثين في الماضي
+              </div>
+            </div>
+          </div>
+
+          {/* أزرار التبويب الرئيسية */}
+          <div className="flex items-center gap-1.5 rounded-2xl border border-slate-200 bg-slate-100 p-1">
+            <button
+              type="button"
+              onClick={() => setTab("lesson")}
+              className={`rounded-xl px-3 py-1.5 text-xs font-bold transition ${tab === "lesson" ? "bg-white text-violet-900 shadow-sm" : "text-slate-600 hover:text-slate-900"}`}
+            >
+              📖 الدرس
+            </button>
+            <button
+              type="button"
+              onClick={() => setTab("test")}
+              className={`rounded-xl px-3 py-1.5 text-xs font-bold transition ${tab === "test" ? "bg-white text-violet-900 shadow-sm" : "text-slate-600 hover:text-slate-900"}`}
+            >
+              📝 الاختبار
+            </button>
+            <button
+              type="button"
+              onClick={() => setTab("solutions")}
+              className={`rounded-xl px-3 py-1.5 text-xs font-bold transition ${tab === "solutions" ? "bg-white text-violet-900 shadow-sm" : "text-slate-600 hover:text-slate-900"}`}
+            >
+              💡 الحلول
+            </button>
+            <button
+              type="button"
+              onClick={() => setTab("teacher")}
+              className={`rounded-xl px-3 py-1.5 text-xs font-bold transition ${tab === "teacher" ? "bg-white text-violet-900 shadow-sm" : "text-slate-600 hover:text-slate-900"}`}
+            >
+              🔐 المعلم
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* محتوى التبويبات */}
+      <main id="l27-main" className="mx-auto max-w-6xl px-4 py-6">
+        {tab === "lesson" && (
+          <div data-area="student-lesson" className="grid gap-6 lg:grid-cols-[280px_1fr]">
+            {/* القائمة الجانبية للشاشات الكبيرة */}
+            <aside className="hidden lg:block">
+              <div className="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto rounded-3xl border-2 border-slate-200 bg-white p-4 shadow-sm space-y-2">
+                <div className="flex items-center justify-between border-b pb-2">
+                  <span className="font-head text-sm font-black text-slate-800">خطوات الدرس ({total})</span>
+                  <span data-slide-counter className="text-xs font-bold text-violet-700">{slideIdx + 1}/{total}</span>
                 </div>
-                <div className="text-sm font-semibold text-slate-500">{msg}</div>
+                <div className="space-y-1">
+                  {slides.map((s, idx) => (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onClick={() => setSlideIdx(idx)}
+                      className={`flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-right text-xs font-bold transition ${
+                        slideIdx === idx ? "bg-violet-700 text-white shadow-sm" : "text-slate-700 hover:bg-slate-100"
+                      }`}
+                    >
+                      <span className="text-base shrink-0">{s.mascot}</span>
+                      <span className="truncate">{s.title}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
-              {onShowSolutions && (
+            </aside>
+
+            {/* محتوى الشريحة المعروضة */}
+            <div className="space-y-4">
+              {/* شريط التقدم والتنقل السريع */}
+              <div className="flex items-center justify-between rounded-2xl border-2 border-slate-200 bg-white px-4 py-2.5 shadow-sm">
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setDrawer(true)}
+                    className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-bold text-slate-700 lg:hidden"
+                  >
+                    ☰ الفهرس
+                  </button>
+                  <span data-slide-counter className="text-xs font-black text-violet-800">
+                    خطوة {slideIdx + 1} من {total}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    disabled={slideIdx === 0}
+                    onClick={prev}
+                    className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-700 transition active:scale-95 disabled:opacity-30 hover:bg-slate-50"
+                  >
+                    → السابق
+                  </button>
+                  <button
+                    type="button"
+                    disabled={slideIdx === total - 1}
+                    onClick={next}
+                    className="rounded-xl bg-violet-700 px-4 py-1.5 text-xs font-bold text-white transition active:scale-95 disabled:opacity-30 hover:bg-violet-800"
+                  >
+                    التالي ←
+                  </button>
+                </div>
+              </div>
+
+              {/* خط التقدم المتحرك */}
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+                <div
+                  className="h-full bg-gradient-to-r from-violet-600 to-indigo-600 transition-all duration-300"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+
+              {/* إطار الشريحة الفعلي */}
+              <Frame
+                mascot={curSlide.mascot}
+                step={curSlide.step}
+                badge={curSlide.section}
+                title={curSlide.title}
+                lead={curSlide.lead}
+                tip={curSlide.tip}
+                accent={ACCENT27}
+                sourceTag={curSlide.sourceTag}
+              >
+                <SlideBody id={curSlide.id} onGoTest={() => setTab("test")} />
+              </Frame>
+
+              {/* أزرار التنقل السفلية */}
+              <div className="flex items-center justify-between pt-2">
                 <button
                   type="button"
-                  onClick={onShowSolutions}
-                  className="rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white shadow transition hover:bg-emerald-700"
+                  disabled={slideIdx === 0}
+                  onClick={prev}
+                  className="rounded-2xl border-2 border-slate-200 bg-white px-5 py-2.5 text-sm font-bold text-slate-700 transition active:scale-95 disabled:opacity-30 hover:bg-slate-50"
                 >
-                  <Rich text="📖 عرض حلول الاختبارات" />
+                  → الخطوة السابقة
                 </button>
-              )}
+                <button
+                  type="button"
+                  disabled={slideIdx === total - 1}
+                  onClick={next}
+                  className="rounded-2xl bg-violet-700 px-6 py-2.5 text-sm font-black text-white shadow transition active:scale-95 disabled:opacity-30 hover:bg-violet-800"
+                >
+                  الخطوة التالية ←
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {tab === "test" && (
+          <TestArea27
+            onShowSolutions={() => {
+              setTestUnlocked(true);
+              setTab("solutions");
+            }}
+          />
+        )}
+
+        {tab === "solutions" && (
+          <Solutions27 unlocked={testUnlocked || teacherUnlocked} />
+        )}
+
+        {tab === "teacher" && (
+          <TeacherArea27
+            unlocked={teacherUnlocked}
+            onUnlockChange={(u) => {
+              setTeacherUnlocked(u);
+              if (u) setTestUnlocked(true);
+            }}
+            onGoSolutions={() => setTab("solutions")}
+          />
+        )}
+      </main>
+
+      {/* Drawer للتنقل على الشاشات الصغيرة */}
+      {drawer && (
+        <div className="fixed inset-0 z-50 flex bg-slate-900/60 backdrop-blur-sm lg:hidden">
+          <div className="mr-auto h-full w-4/5 max-w-sm overflow-y-auto bg-white p-5 shadow-2xl">
+            <div className="flex items-center justify-between border-b pb-3">
+              <span className="font-head text-base font-black text-slate-900">فهرس الخطوات ({total})</span>
               <button
                 type="button"
-                onClick={reset}
-                className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-bold text-slate-600 transition hover:bg-slate-200"
+                onClick={() => setDrawer(false)}
+                className="grid h-8 w-8 place-items-center rounded-lg bg-slate-100 font-bold text-slate-600"
               >
-                <Rich text="↺ إعادة الاختبار" />
+                ✕
               </button>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ============================================================
-// حلول الاختبارات — منطقة مستقلة: 20 حلًا مفصلًا
-// لا يُرنَّر أي حل قبل الاستحقاق (إنهاء الاختبار أو فتح المعلم).
-// ============================================================
-
-function solutionAnswer(q: TestQ27): ReactNode {
-  switch (q.type) {
-    case "single":
-      return <En className="text-emerald-800">{q.opts[q.answer]}</En>;
-    case "tf":
-      return <Rich text={q.answer ? "✓ صحيح" : "✕ خطأ"} />;
-    case "multi":
-      return (
-        <span className="space-y-1">
-          {q.answer.map((i) => (
-            <En key={i} className="mr-2 block text-emerald-800 md:inline">{`✓ ${q.opts[i]}`}</En>
-          ))}
-        </span>
-      );
-    case "order":
-      return (
-        <span className="space-y-1">
-          {q.answer.map((s, i) => (
-            <En key={i} className="block text-emerald-800">{`${i + 1}. ${s}`}</En>
-          ))}
-        </span>
-      );
-    case "match":
-      return (
-        <span className="space-y-1">
-          {q.left.map((l, i) => (
-            <span key={i} className="block">
-              <En className="text-emerald-800">{l}</En>
-              <span className="mx-1 text-slate-400">←→</span>
-              <Rich text={q.right[q.answer[i]]} className="text-emerald-800" />
-            </span>
-          ))}
-        </span>
-      );
-    case "spot":
-      return <En className="text-emerald-800">{q.fix}</En>;
-  }
-}
-
-export function Solutions27({ unlocked, onGoTest, onGoTeacher }: { unlocked: boolean; onGoTest?: () => void; onGoTeacher?: () => void }) {
-  if (!unlocked) {
-    return (
-      <div data-area="l27-solutions" className="rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50/60 p-6 text-center md:p-10">
-        <div className="text-5xl">📖</div>
-        <h3 className="font-head mt-3 text-2xl font-bold text-slate-900">
-          <Rich text="حلول الاختبارات — الدرس 27" />
-        </h3>
-        <p className="mx-auto mt-2 max-w-md text-base font-semibold text-slate-500">
-          <Rich text="الحلول المفصلة للأسئلة العشرين تظهر بعد إنهاء الاختبار — أو بفتح منطقة المعلم." />
-        </p>
-        <div className="mt-4 flex flex-wrap justify-center gap-2">
-          {onGoTest && (
-            <button type="button" onClick={onGoTest} className="rounded-xl bg-violet-700 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-violet-800">
-              <Rich text="← إلى منطقة الاختبارات" />
-            </button>
-          )}
-          {onGoTeacher && (
-            <button type="button" onClick={onGoTeacher} className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-slate-700">
-              <Rich text="فتح منطقة المعلم" />
-            </button>
-          )}
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div data-area="l27-solutions" className="space-y-3">
-      <div className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-emerald-200 bg-emerald-50/70 p-4">
-        <span className="text-2xl">📖</span>
-        <div className="min-w-0 flex-1">
-          <div className="font-black text-slate-800">
-            <Rich text={`حلول الاختبارات — ${TEST_27.length} حلًا مفصلًا`} />
-          </div>
-          <div className="text-xs font-bold text-slate-500">
-            <Rich text="كل حل: الإجابة الصحيحة + التعليل + تنبيه الفخ." />
-          </div>
-        </div>
-      </div>
-      {TEST_27.map((q) => (
-        <div key={q.n} data-solution={q.n} className="rounded-3xl border-2 border-slate-200 bg-white p-4">
-          <div className="flex flex-wrap items-start gap-3">
-            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-emerald-600 text-sm font-bold text-white">
-              {q.n}
-            </span>
-            <div className="min-w-0 flex-1">
-              <span className="rounded-full bg-violet-100 px-2.5 py-0.5 text-[11px] font-black text-violet-800">
-                {TYPE_LABEL_27[q.type]}
-              </span>
-              <div className="mt-1 font-bold text-slate-800">
-                <Rich text={q.ar} />
-              </div>
-              {q.type !== "spot" && q.en && (
-                <div dir="ltr" className="font-en mt-1 text-left text-lg font-extrabold text-slate-900">
-                  {q.en}
-                </div>
-              )}
-              {q.type === "spot" && (
-                <div dir="ltr" className="font-en mt-1 text-left text-lg font-extrabold text-slate-900">
-                  {q.segments.join(" ")}
-                </div>
-              )}
             </div>
-          </div>
-          <div className="mt-3 rounded-2xl border-2 border-emerald-200 bg-emerald-50/60 p-3 text-sm font-bold">
-            <span className="text-slate-500"><Rich text="الإجابة الصحيحة: " /></span>
-            {solutionAnswer(q)}
-          </div>
-          <div className="mt-2 text-sm font-bold text-slate-700">
-            <Rich text={`💡 ${q.why}`} />
-          </div>
-          {q.trap && (
-            <div className="mt-1 text-sm font-bold text-amber-800">
-              <Rich text={`⚠️ فخ: ${q.trap}`} />
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-// ============================================================
-// منطقة المعلم — الدرس 27 (خلف كلمة المرور somer173)
-// دليل تعليمي كامل: نظرة عامة + ملاحظات + حلول الأنشطة + سلّم القصة + أخطاء شائعة.
-// ============================================================
-
-export function TeacherArea27({ unlocked, onUnlockChange, onGoSolutions }: { unlocked: boolean; onUnlockChange?: (ok: boolean) => void; onGoSolutions?: () => void }) {
-  const [value, setValue] = useState("");
-  const [wrong, setWrong] = useState(false);
-  const [attempts, setAttempts] = useState(0);
-
-  if (!unlocked) {
-    return (
-      <div data-area="l27-teacher" className="rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50/60 p-4 sm:p-6">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-slate-200 text-xl">🧑‍🏫</span>
-          <div className="min-w-0 flex-1">
-            <div dir="ltr" className="font-en text-left text-lg font-extrabold text-slate-700">
-              Teacher's Area — Lesson 27
-            </div>
-            <div className="text-sm font-bold text-slate-500">
-              <Rich text="منطقة المعلم — الدرس 27 · دليل التدريس وحلول الأنشطة" />
-            </div>
-          </div>
-          <span className="rounded-full bg-white px-3 py-1 text-sm font-bold text-slate-400 shadow-sm">🔒 مقفلة</span>
-        </div>
-        <form
-          className="mt-4 flex flex-wrap items-center gap-2"
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (value.trim() === TEACHER_PASSWORD_27) {
-              onUnlockChange?.(true);
-              setWrong(false);
-              setValue("");
-            } else {
-              setWrong(true);
-              setAttempts((n) => n + 1);
-            }
-          }}
-        >
-          <input
-            type="password"
-            value={value}
-            onChange={(e) => { setValue(e.target.value); if (wrong) setWrong(false); }}
-            placeholder="كلمة المرور"
-            aria-label="كلمة مرور منطقة المعلم"
-            dir="ltr"
-            autoComplete="off"
-            className="font-en w-44 rounded-xl border-2 border-slate-200 bg-white px-3 py-2 text-left text-base font-bold text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-violet-400"
-          />
-          <button type="submit" className="rounded-xl bg-violet-700 px-4 py-2 font-bold text-white shadow transition hover:bg-violet-800 active:scale-[0.98]">
-            🔓 فتح المنطقة
-          </button>
-          <span className="text-sm font-bold text-slate-400">خاص بالمعلم فقط</span>
-          {wrong && (
-            <div key={attempts} className="shake w-full text-sm font-bold text-rose-600">
-              ✕ كلمة المرور غير صحيحة — المنطقة ما زالت مقفلة.
-            </div>
-          )}
-        </form>
-      </div>
-    );
-  }
-
-  return (
-    <div data-area="l27-teacher" className="space-y-3">
-      <div className="flex flex-wrap items-center gap-3 rounded-3xl border-2 border-violet-200 bg-white/80 p-4">
-        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-violet-700 text-xl text-white">🧑‍🏫</span>
-        <div className="min-w-0 flex-1">
-          <div dir="ltr" className="font-en text-left text-lg font-extrabold text-slate-700">
-            Teacher's Area — Lesson 27
-          </div>
-          <div className="text-sm font-bold text-slate-500">
-            <Rich text="منطقة المعلم — الدرس 27 · دليل التدريس وحلول الأنشطة" />
-          </div>
-        </div>
-        <span className="rounded-full bg-emerald-600 px-3 py-1 text-sm font-bold text-white shadow-sm">✓ Unlocked</span>
-      </div>
-
-      <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
-        <h3 className="font-head text-xl font-bold text-slate-900">
-          <Rich text={TEACHER_27_OVERVIEW.title} />
-        </h3>
-        <div className="mt-2 text-sm font-black text-violet-800"><Rich text="الأهداف التعليمية" /></div>
-        <ul className="mt-1 space-y-1">
-          {TEACHER_27_OVERVIEW.objectives.map((o, i) => (
-            <li key={i} className="rounded-xl bg-slate-50 px-3 py-1.5 text-sm font-bold text-slate-700"><Rich text={o} /></li>
-          ))}
-        </ul>
-        <div className="mt-3 text-sm font-black text-violet-800"><Rich text="المتطلبات القبلية" /></div>
-        <ul className="mt-1 space-y-1">
-          {TEACHER_27_OVERVIEW.prerequisites.map((o, i) => (
-            <li key={i} className="rounded-xl bg-slate-50 px-3 py-1.5 text-sm font-bold text-slate-700"><Rich text={o} /></li>
-          ))}
-        </ul>
-        <div className="mt-3 text-sm font-black text-violet-800"><Rich text="المفاهيم الجوهرية" /></div>
-        <ul className="mt-1 space-y-1">
-          {TEACHER_27_OVERVIEW.core.map((o, i) => (
-            <li key={i} className="rounded-xl bg-violet-50 px-3 py-1.5 text-sm font-bold text-violet-900"><Rich text={o} /></li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
-        <h3 className="font-head text-xl font-bold text-slate-900">
-          <Rich text="Teaching Notes — ملاحظات التدريس" />
-        </h3>
-        <div className="mt-2 grid gap-2">
-          {TEACHER_27_NOTES.map((n, i) => (
-            <div key={i} className="rounded-2xl border-2 border-slate-100 bg-slate-50/60 p-3">
-              <div className="text-sm font-black text-slate-900"><Rich text={n.head} /></div>
-              <ul className="mt-1 space-y-0.5">
-                {n.lines.map((l, j) => (
-                  <li key={j} className="text-sm font-semibold text-slate-600"><Rich text={`• ${l}`} /></li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
-        <h3 className="font-head text-xl font-bold text-slate-900">
-          <Rich text="Activity Solutions — حلول الأنشطة" />
-        </h3>
-        <div className="mt-2 grid gap-2">
-          {TEACHER_27_SOLUTIONS.map((s, i) => (
-            <div key={i} data-teacher-solution={i} className="rounded-2xl border-2 border-emerald-100 bg-emerald-50/50 p-3">
-              <div className="text-sm font-black text-emerald-900"><Rich text={s.head} /></div>
-              <ul className="mt-1 space-y-0.5">
-                {s.lines.map((l, j) => (
-                  <li key={j} className="text-sm font-semibold text-slate-700"><Rich text={`• ${l}`} /></li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="rounded-3xl border-2 border-amber-200 bg-amber-50/60 p-4">
-        <h3 className="font-head text-xl font-bold text-slate-900">
-          <Rich text={TEACHER_27_RUBRIC.head} />
-        </h3>
-        <ul className="mt-2 space-y-1">
-          {TEACHER_27_RUBRIC.lines.map((l, i) => (
-            <li key={i} className="rounded-xl bg-white px-3 py-1.5 text-sm font-bold text-slate-700"><Rich text={l} /></li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
-        <h3 className="font-head text-xl font-bold text-slate-900">
-          <Rich text="Common Mistakes — الأخطاء الشائعة" />
-        </h3>
-        <div className="mt-2 grid gap-2">
-          {TEACHER_27_MISTAKES.map((m, i) => (
-            <div key={i} className="rounded-2xl border-2 border-rose-100 bg-rose-50/50 p-3">
-              <div className="text-sm font-black text-rose-900"><Rich text={m.head} /></div>
-              <ul className="mt-1 space-y-0.5">
-                {m.lines.map((l, j) => (
-                  <li key={j} className="text-sm font-semibold text-slate-700"><Rich text={`• ${l}`} /></li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {onGoSolutions && (
-        <div className="flex flex-wrap items-center gap-3 rounded-3xl border-2 border-emerald-200 bg-emerald-50/60 p-4">
-          <span className="text-2xl">📖</span>
-          <div className="min-w-0 flex-1 text-sm font-bold text-slate-700">
-            <Rich text="حلول الاختبار العشرون المفصلة في منطقة مستقلة — مفتوحة لك الآن." />
-          </div>
-          <button type="button" onClick={onGoSolutions} className="rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white shadow transition hover:bg-emerald-700">
-            <Rich text="← فتح حلول الاختبارات" />
-          </button>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ============================================================
-// ExerciseView + Lab dispatch + BlockView
-// ============================================================
-function ExerciseView({ exercise }: { exercise: Exercise27 }) {
-  switch (exercise.type) {
-    case "v3":
-      return <ExV3 />;
-    case "hadhave":
-      return <ExHadHave />;
-    case "simplePerfect":
-      return <ExSimplePerfect />;
-    case "noah":
-      return <ExNoah />;
-    case "errors":
-      return <ExErrors />;
-    case "transform":
-      return <ExTransform />;
-    case "museum":
-      return <ExMuseum />;
-    case "orderChal":
-      return <ExOrderChal />;
-    case "boss":
-      return <ExBoss />;
-    case "final10":
-      return <ExFinal10 />;
-    case "story":
-      return <ExStory />;
-  }
-}
-
-const LABS: Record<Lab27, (props: { lines: string[] }) => ReactNode> = {
-  timeline: (p) => <TimelineLab {...p} />,
-  orderQuiz: (p) => <OrderQuizLab {...p} />,
-  saraDiagram: (p) => <SaraDiagramLab {...p} />,
-  hadGrid: (p) => <HadGridLab {...p} />,
-  verbRegular: (p) => <VerbRegularLab {...p} />,
-  verbIrregular: (p) => <VerbIrregularLab {...p} />,
-  v2v3: (p) => <V2V3Lab {...p} />,
-  teacherSwitch: (p) => <TeacherSwitchLab {...p} />,
-  aliOrder: (p) => <AliOrderLab {...p} />,
-  pairsA: (p) => (
-    <PairsLab
-      {...p}
-      seq="l27-pairs-a"
-      verbs={[
-        ["eat → ate → eaten", "I ate breakfast.", "I had eaten breakfast before school started."],
-        ["go → went → gone", "She went home.", "She had gone home before I called."],
-        ["see → saw → seen", "We saw the painting.", "We had seen the painting before."],
-      ]}
-    />
-  ),
-  pairsB: (p) => (
-    <PairsLab
-      {...p}
-      seq="l27-pairs-b"
-      verbs={[
-        ["take → took → taken", "He took the book.", "He had taken the book before the lesson started."],
-        ["write → wrote → written", "Maya wrote the message.", "Maya had written the message before she lost her phone."],
-        ["break → broke → broken", "Tom broke the window.", "The window had broken before we arrived."],
-      ]}
-    />
-  ),
-  shortFlip: (p) => <ShortFlipLab {...p} />,
-  sideBySide: (p) => <SideBySideLab {...p} />,
-  linaSwitch: (p) => <LinaSwitchLab {...p} />,
-  beforeLab: (p) => (
-    <WordOrderLab
-      {...p}
-      seq="l27-before"
-      emoji="⏱️"
-      label="BEFORE"
-      pairs={[
-        { sentence: "The students had left before the teacher arrived.", first: "students left", second: "teacher arrived" },
-        { sentence: "I had locked the door before I went to bed.", first: "locked the door", second: "went to bed" },
-      ]}
-    />
-  ),
-  afterLab: (p) => (
-    <WordOrderLab
-      {...p}
-      seq="l27-after"
-      emoji="🔄"
-      label="AFTER"
-      pairs={[
-        { sentence: "After I had finished my project, I watched a movie.", first: "finished project", second: "watched movie" },
-        { sentence: "After she had eaten dinner, she went for a walk.", first: "eaten dinner", second: "went for a walk" },
-      ]}
-    />
-  ),
-  bytimeLab: (p) => (
-    <WordOrderLab
-      {...p}
-      seq="l27-bytime"
-      emoji="⏳"
-      label="BY THE TIME"
-      pairs={[
-        { sentence: "By the time we arrived, the concert had started.", first: "concert started", second: "we arrived" },
-        { sentence: "By the time the doctor arrived, the patient had fallen asleep.", first: "patient fell asleep", second: "doctor arrived" },
-      ]}
-    />
-  ),
-  emmaDetective: (p) => <EmmaDetectiveLab {...p} />,
-  needToggle: (p) => <NeedToggleLab {...p} />,
-  iqStepper: (p) => <IqStepperLab {...p} />,
-  emmaCinema: (p) => <EmmaCinemaLab {...p} />,
-  liamScene: (p) => <LiamSceneLab {...p} />,
-  johnSwitch: (p) => <JohnSwitchLab {...p} />,
-  dancePrecision: (p) => <DancePrecisionLab {...p} />,
-};
-
-function BlockView({ block, sectionIndex }: { block: Block27; sectionIndex?: number }) {
-  const units = sectionIndex === undefined ? [] : SOURCE_SECTIONS[sectionIndex].units;
-  switch (block.t) {
-    case "units": {
-      const lines = units.slice(block.from, block.to ?? units.length);
-      return <Lines lines={lines} tone={block.tone} />;
-    }
-    case "lab": {
-      const [from, to] = block.covers ?? [0, units.length];
-      const Lab = LABS[block.lab];
-      return <>{Lab({ lines: units.slice(from, to) })}</>;
-    }
-    case "note":
-      return <Note emoji={block.emoji} text={block.text} />;
-    case "strip":
-      return <FormulaStrip items={block.items} tone="violet" />;
-  }
-}
-
-function sourceHeadingFor(slide: Slide27): string | undefined {
-  return slide.sourceIndex === undefined ? undefined : SOURCE_SECTIONS[slide.sourceIndex].title;
-}
-
-// ============================================================
-// الغلاف + الأهداف + الخاتمة
-// ============================================================
-function Cover() {
-  return (
-    <div
-      dir="rtl"
-      data-source-section={SOURCE_SECTIONS[SEC.cover].title}
-      data-en-seq="l27-cover"
-      className="overflow-hidden rounded-[2rem] border-2 border-violet-200 bg-gradient-to-br from-violet-50 via-white to-indigo-50 p-6 shadow-xl md:p-10"
-    >
-      <div className="text-center text-6xl anim-float">⏪</div>
-      <h2 className="font-head mt-3 text-center text-2xl font-bold text-slate-900 md:text-3xl">
-        <Rich text={LESSON_TITLE_27} />
-      </h2>
-      <div className="mt-2 text-center">
-        <En className="text-sm font-black uppercase tracking-[0.2em] text-violet-700">⏪ {LAB_NAME_27}</En>
-      </div>
-      <div dir="ltr" className="ltr-row mt-3 rounded-2xl bg-slate-900 p-3 text-center">
-        <En className="text-sm font-black text-white md:text-base">{LAB_MOTTO_27}</En>
-      </div>
-      <div className="mt-3">
-        <FormulaStrip items={["Subject + had + V3", "Subject + had not + V3", "Had + Subject + V3?"]} tone="violet" />
-      </div>
-      <div className="mt-3 flex flex-wrap justify-center gap-2">
-        <TenseChip tense="event" />
-        <TenseChip tense="progress" />
-        <TenseChip tense="flashback" />
-      </div>
-      <div className="mt-3 text-center text-xs font-bold text-slate-500">
-        <Rich text={`${SOURCE_NUMBERED_COUNT} قسمًا مرقّمًا · ${SOURCE_LEDGER_COUNT} قسمًا في السجل · ${SLIDES.length} شريحة · اختبار من 20 سؤالًا`} />
-      </div>
-    </div>
-  );
-}
-
-function Objectives() {
-  const lines = SOURCE_SECTIONS[SEC.objectives].units;
-  return (
-    <Frame mascot="🎯" sourceHeading={SOURCE_SECTIONS[SEC.objectives].title} title="أهداف الدرس — 10 أهداف">
-      <div className="rounded-2xl bg-violet-50 px-3 py-2 text-center text-sm font-black text-violet-900">
-        <Rich text={lines[0]} />
-      </div>
-      <div className="grid gap-2">
-        {lines.slice(1, 9).map((line, i) => (
-          <div key={i} className="flex items-start gap-3 rounded-2xl border-2 border-violet-100 bg-white p-3">
-            <span className="font-head grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-violet-700 text-sm font-bold text-white">
-              {line.slice(0, 1)}
-            </span>
-            <Rich text={line.slice(1).trim()} className="pt-1 text-base font-bold text-slate-800 md:text-lg" />
-          </div>
-        ))}
-      </div>
-      <FormulaStrip items={lines.slice(9, 15)} tone="violet" />
-      <div className="grid gap-2">
-        {lines.slice(15).map((line, i) => (
-          <div key={i} className="flex items-start gap-3 rounded-2xl border-2 border-violet-100 bg-white p-3">
-            <span className="font-head grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-violet-700 text-sm font-bold text-white">
-              {line.slice(0, 1)}
-            </span>
-            <Rich text={line.slice(1).trim()} className="pt-1 text-base font-bold text-slate-800 md:text-lg" />
-          </div>
-        ))}
-      </div>
-    </Frame>
-  );
-}
-
-function Closing({ onExit, onGoTest }: { onExit: () => void; onGoTest: () => void }) {
-  const unitText = SOURCE_SECTIONS[SEC.closing].units[0];
-  return (
-    <div
-      dir="rtl"
-      data-source-section={SOURCE_SECTIONS[SEC.closing].title}
-      data-en-seq="l27-closing"
-      className="overflow-hidden rounded-[2rem] border-2 border-violet-200 bg-gradient-to-br from-violet-50 via-white to-indigo-50 p-6 shadow-xl md:p-10"
-    >
-      <div className="text-center text-6xl anim-float">🏆</div>
-      <h2 className="font-head mt-3 text-center text-2xl font-bold text-slate-900 md:text-3xl">
-        <Rich text="أحسنت! — LESSON 27 COMPLETE" />
-      </h2>
-      <div className="mt-4 rounded-3xl border-2 border-white bg-white p-4 text-center text-lg font-black leading-relaxed text-violet-900 md:text-xl">
-        <Rich text={unitText} />
-      </div>
-      <div className="mt-4 grid gap-2 sm:grid-cols-3">
-        <div className="rounded-2xl border-2 border-orange-200 bg-orange-50 p-3 text-center text-sm font-black text-orange-900">
-          <En>📸 What happened? → Past Simple</En>
-        </div>
-        <div className="rounded-2xl border-2 border-teal-200 bg-teal-50 p-3 text-center text-sm font-black text-teal-900">
-          <En>🎥 What was happening? → Past Continuous</En>
-        </div>
-        <div className="rounded-2xl border-2 border-violet-200 bg-violet-50 p-3 text-center text-sm font-black text-violet-900">
-          <En>⏪ What had happened? → Past Perfect</En>
-        </div>
-      </div>
-      <div className="mt-5 flex flex-wrap justify-center gap-3">
-        <button onClick={onGoTest} className="rounded-xl bg-violet-700 px-5 py-3 font-bold text-white transition hover:bg-violet-800">
-          <Rich text="📝 إلى منطقة الاختبارات (20 سؤالًا)" />
-        </button>
-        <button onClick={onExit} className="rounded-xl bg-slate-100 px-5 py-3 font-bold text-slate-700 transition hover:bg-slate-200">
-          ← جميع الدروس
-        </button>
-      </div>
-      <Signature />
-    </div>
-  );
-}
-
-export function SlideView27({ s, onExit, onGoTest }: { s: Slide27; onExit: () => void; onGoTest?: () => void }) {
-  switch (s.kind) {
-    case "cover":
-      return <Cover />;
-    case "objectives":
-      return <Objectives />;
-    case "lesson":
-      return (
-        <Frame
-          mascot={s.mascot}
-          step={s.step}
-          sourceHeading={sourceHeadingFor(s)}
-          title={<Rich text={s.title} />}
-          lead={s.lead}
-          tip={s.tip}
-        >
-          {s.blocks.map((block, i) => (
-            <div key={i} className={`pop pop-${Math.min(i + 1, 6)}`}>
-              <BlockView block={block} sectionIndex={s.sourceIndex} />
-            </div>
-          ))}
-        </Frame>
-      );
-    case "ex":
-      return (
-        <Frame
-          mascot={s.mascot}
-          badge={s.badge}
-          sourceHeading={sourceHeadingFor(s)}
-          title={<Rich text={s.title} />}
-          lead={s.subtitle}
-        >
-          <ExerciseView exercise={s.ex} />
-        </Frame>
-      );
-    case "closing":
-      return <Closing onExit={onExit} onGoTest={onGoTest ?? onExit} />;
-  }
-}
-
-function slideTitle(slide: Slide27): string {
-  if (slide.kind === "cover") return "الغلاف";
-  return slide.title;
-}
-
-export type Area27 = "lesson" | "test" | "solutions" | "teacher";
-
-const AREAS: { id: Area27; emoji: string; ar: string }[] = [
-  { id: "lesson", emoji: "📚", ar: "الدرس" },
-  { id: "test", emoji: "📝", ar: "منطقة الاختبارات" },
-  { id: "solutions", emoji: "📖", ar: "حلول الاختبارات" },
-  { id: "teacher", emoji: "🧑‍🏫", ar: "منطقة المعلم" },
-];
-
-const SECTION_COLORS: Record<string, string> = {
-  البداية: "text-slate-500",
-  "الزمن والخط الزمني": "text-violet-700",
-  "التكوين: had + V3": "text-indigo-700",
-  "لماذا نحتاجه؟": "text-amber-700",
-  المثبت: "text-emerald-700",
-  "النفي والأسئلة": "text-sky-700",
-  "المقارنة الحاسمة": "text-orange-700",
-  "كلمات الترتيب": "text-teal-700",
-  "القصص والمحقق": "text-cyan-700",
-  "مفاهيم خاطئة وقاعدة IQ200": "text-rose-700",
-  التدريبات: "text-fuchsia-700",
-  "المستوى المتقدم": "text-purple-700",
-  "التحديات النهائية": "text-red-700",
-  الخاتمة: "text-slate-500",
-};
-
-function Rail({
-  index, setIndex, onExit, onClose, area, setArea,
-}: {
-  index: number;
-  setIndex: (i: number) => void;
-  onExit: () => void;
-  onClose?: () => void;
-  area: Area27;
-  setArea: (a: Area27) => void;
-}) {
-  const groups = useMemo(() => {
-    const map = new Map<string, number[]>();
-    SLIDES.forEach((s, i) => {
-      const list = map.get(s.section) ?? [];
-      list.push(i);
-      map.set(s.section, list);
-    });
-    return [...map.entries()].map(([section, indexes]) => ({ section, indexes }));
-  }, []);
-  return (
-    <aside className="flex h-full flex-col bg-white/90">
-      <div className="border-b border-violet-100 p-4">
-        <button onClick={onExit} className="w-full rounded-xl bg-slate-900 px-3 py-2 text-sm font-bold text-white transition hover:bg-slate-700">
-          ← جميع الدروس
-        </button>
-        <div className="mt-2 grid grid-cols-2 gap-1.5">
-          {AREAS.map((a) => (
-            <button
-              key={a.id}
-              type="button"
-              onClick={() => { setArea(a.id); onClose?.(); }}
-              aria-pressed={area === a.id}
-              className={`rounded-xl border-2 px-2 py-2 text-xs font-black transition ${area === a.id ? "border-violet-600 bg-violet-700 text-white shadow" : "border-slate-200 bg-white text-slate-600 hover:border-violet-300"}`}
-            >
-              {a.emoji} {a.ar}
-            </button>
-          ))}
-        </div>
-        <En className="mt-2 block text-center text-xs font-semibold text-violet-700">⏪ {LAB_NAME_27}</En>
-        <div className="mt-2 rounded-lg bg-violet-50 px-2 py-1 text-center text-[11px] font-bold text-violet-800">
-          {SOURCE_NUMBERED_COUNT} قسمًا مرقّمًا · {SOURCE_LEDGER_COUNT} قسمًا في السجل · {SLIDES.length} شريحة
-        </div>
-      </div>
-      <nav className="flex-1 overflow-y-auto p-3" aria-label="lesson slides">
-        {groups.map((group) => (
-          <div key={group.section} className="mb-3">
-            <div className={`px-3 py-1 text-xs font-bold ${SECTION_COLORS[group.section] ?? "text-slate-400"}`}>
-              <Rich text={group.section} />
-            </div>
-            {group.indexes.map((i) => {
-              const active = index === i && area === "lesson";
-              return (
+            <div className="mt-3 space-y-1">
+              {slides.map((s, idx) => (
                 <button
-                  key={i}
+                  key={s.id}
+                  type="button"
                   onClick={() => {
-                    setArea("lesson");
-                    setIndex(i);
-                    onClose?.();
+                    setSlideIdx(idx);
+                    setDrawer(false);
                   }}
-                  className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${
-                    active ? "bg-violet-700 text-white shadow" : "text-slate-600 hover:bg-violet-50"
+                  className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-right text-xs font-bold transition ${
+                    slideIdx === idx ? "bg-violet-700 text-white" : "text-slate-700 hover:bg-slate-100"
                   }`}
                 >
-                  <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/25" : "bg-slate-100"}`}>
-                    {i + 1}
-                  </span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[i])}</span>
-                  <span className="mr-auto text-base">{SLIDES[i].mascot}</span>
+                  <span className="text-base">{s.mascot}</span>
+                  <span className="truncate">{s.title}</span>
                 </button>
-              );
-            })}
-          </div>
-        ))}
-      </nav>
-      <div className="border-t border-violet-100 p-4 text-xs text-slate-400">التنقل: الأسهم ← → أو مفتاح المسافة</div>
-    </aside>
-  );
-}
-
-export default function Lesson27({ onExit }: { onExit: () => void }) {
-  const [area, setArea] = useState<Area27>("lesson");
-  const [index, setIndex] = useState(0);
-  const [menu, setMenu] = useState(false);
-  const [testChecked, setTestChecked] = useState(false);
-  const [teacherOk, setTeacherOk] = useState(false);
-  const total = SLIDES.length;
-  const navigation = useMemo(
-    () => ({
-      next: () => setIndex((value) => Math.min(value + 1, total - 1)),
-      prev: () => setIndex((value) => Math.max(value - 1, 0)),
-    }),
-    [total]
-  );
-
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (menu || area !== "lesson") return;
-      const target = event.target as HTMLElement | null;
-      if (target && ["INPUT", "SELECT", "TEXTAREA", "BUTTON"].includes(target.tagName)) return;
-      if (event.key === "ArrowLeft") navigation.next();
-      if (event.key === "ArrowRight") navigation.prev();
-      if (event.key === " ") {
-        event.preventDefault();
-        navigation.next();
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [navigation, menu, area]);
-
-  useEffect(() => {
-    document.getElementById("l27-main")?.scrollTo({ top: 0 });
-  }, [index, area]);
-
-  const slide = SLIDES[index];
-  const progress = ((index + 1) / total) * 100;
-  const solutionsUnlocked = testChecked || teacherOk;
-  return (
-    <div dir="rtl" className="font-body relative flex h-screen flex-col overflow-hidden bg-[#f6f3ff] text-slate-800">
-      <Signature />
-      <div className="relative flex min-h-0 flex-1">
-        <SignatureGhost />
-        <div className="relative z-10 hidden w-72 shrink-0 border-l border-violet-100 bg-white/85 backdrop-blur lg:block">
-          <Rail index={index} setIndex={setIndex} onExit={onExit} area={area} setArea={setArea} />
-        </div>
-        <div className="relative z-10 flex min-w-0 flex-1 flex-col">
-          <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
-            <button
-              onClick={() => setMenu(true)}
-              className="grid h-10 w-10 place-items-center rounded-xl border-2 border-violet-100 bg-white text-lg shadow-sm lg:hidden"
-              aria-label="فهرس"
-            >
-              ☰
-            </button>
-            <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-center gap-1.5">
-                {AREAS.map((a) => (
-                  <button
-                    key={a.id}
-                    type="button"
-                    onClick={() => setArea(a.id)}
-                    aria-pressed={area === a.id}
-                    className={`rounded-full px-3 py-1.5 text-xs font-black transition md:text-sm ${area === a.id ? "bg-violet-700 text-white shadow" : "bg-white text-slate-500 shadow-sm hover:bg-violet-50"}`}
-                  >
-                    {a.emoji} {a.ar}
-                  </button>
-                ))}
-              </div>
-              {area === "lesson" && (
-                <>
-                  <div className="mt-1.5 truncate text-sm font-bold text-slate-500">
-                    <Rich text={`${slide.section} · `} />
-                    <span className="text-slate-800">
-                      <Rich text={slideTitle(slide)} />
-                    </span>
-                  </div>
-                  <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-violet-100/70">
-                    <div
-                      className="h-full rounded-full bg-gradient-to-l from-violet-700 via-indigo-500 to-amber-400 transition-all duration-500"
-                      style={{ width: `${progress}%` }}
-                    />
-                  </div>
-                </>
-              )}
+              ))}
             </div>
-            {area === "lesson" && (
-              <span data-slide-counter className="rounded-lg bg-white px-3 py-1 text-sm font-bold text-slate-500 shadow-sm">
-                {index + 1} / {total}
-              </span>
-            )}
-          </header>
-          <main id="l27-main" className="flex-1 overflow-y-auto px-3 pb-32 pt-4 md:px-6 lg:px-10">
-            <div className="pop mx-auto max-w-4xl" hidden={area !== "lesson"}>
-              <SlideView27 key={index} s={slide} onExit={onExit} onGoTest={() => setArea("test")} />
-            </div>
-            <div className="mx-auto max-w-4xl" hidden={area !== "test"}>
-              <TestArea27 onCheckedChange={setTestChecked} onShowSolutions={() => setArea("solutions")} />
-            </div>
-            <div className="mx-auto max-w-4xl" hidden={area !== "solutions"}>
-              <Solutions27 unlocked={solutionsUnlocked} onGoTest={() => setArea("test")} onGoTeacher={() => setArea("teacher")} />
-            </div>
-            <div className="mx-auto max-w-4xl" hidden={area !== "teacher"}>
-              <TeacherArea27 unlocked={teacherOk} onUnlockChange={setTeacherOk} onGoSolutions={() => setArea("solutions")} />
-            </div>
-          </main>
-          {area === "lesson" && (
-            <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center px-3">
-              <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border-2 border-violet-900/[0.06] bg-white/95 p-1.5 shadow-xl backdrop-blur">
-                <button
-                  onClick={navigation.prev}
-                  disabled={index === 0}
-                  className="rounded-full px-4 py-2 text-sm font-bold text-slate-700 transition enabled:hover:bg-slate-100 disabled:opacity-30"
-                >
-                  → السابق
-                </button>
-                <span className="h-6 w-px bg-slate-200" />
-                <button
-                  onClick={navigation.next}
-                  disabled={index === total - 1}
-                  className="rounded-full bg-violet-700 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-violet-800 disabled:opacity-30"
-                >
-                  التالي ←
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-      {menu && (
-        <div className="fixed inset-0 z-50 flex lg:hidden" onClick={() => setMenu(false)}>
-          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" />
-          <div className="relative z-10 h-full w-80 max-w-[85vw] bg-white shadow-2xl" onClick={(event) => event.stopPropagation()}>
-            <Rail index={index} setIndex={setIndex} onExit={onExit} onClose={() => setMenu(false)} area={area} setArea={setArea} />
           </div>
         </div>
       )}
+
+      {/* التوقيع */}
+      <footer className="mt-12 border-t border-slate-200 bg-white py-6 text-center">
+        <Signature />
+      </footer>
     </div>
   );
 }

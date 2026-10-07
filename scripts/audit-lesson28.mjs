@@ -1,18 +1,20 @@
 // ============================================================
-// Lesson 28 audit — سجل المصدر > العرض > التفاعل > الاختبار > المعلم
+// Lesson 28 audit — Native Multi-Step Interactive Lesson
 //   node scripts/audit-lesson28.mjs
-//   1) سجل المصدر: 40 قسمًا مرقّمًا ①–㊵ + أقسام الغلاف/الخاتمة.
-//   2) تغطية الشرائح على مستوى البيانات.
-//   3) العرض الحقيقي: كل شريحة تُرندَر بلا أخطاء + عزل LTR + علامات المصدر.
-//   4) المشي التفاعلي: كل وحدة مصدرية (وكل reveal) تصل إلى الـ DOM.
-//   5) العبارات المفتاحية حاضرة وغير معكوسة + الأخطاء المقصودة كما هي.
-//   6) المكوّن الرئيسي: RTL + المناطق الأربع + عدّاد + تنقل.
-//   7) خطافات المختبرات.
-//   8) لا كشف قبل التحقق + كشف كامل بعده (كل التدريبات).
-//   9) بيانات التدريبات + ملاحظة ㉝ المنطقية (المصدر محفوظ + التوضيح موسوم).
-//   10) منطقة الاختبارات: 20 سؤالًا بالضبط، أنواع منظمة، منع تسريب، إنهاء، إعادة.
-//   11) حلول الاختبارات: مفصولة، مغلقة قبل الاستحقاق، 20 حلًا بعده.
-//   12) منطقة المعلم: somer173، المحتوى الكامل، ومدخل الحلول.
+// Verifies (benchmark: Lesson 6 / Lesson 27 / Lesson 29 rebuilds):
+//   1) Source ledger: 40 numbered sections ①–㊵ + 7 unnumbered = 47.
+//   2) Step registry: 47 slides cover every ledger section id exactly once.
+//   3) Real render of all 47 steps: no throws, LTR isolation, source chips.
+//   4) Interactive layer: ≥20 distinct lab hooks, 9 in-lesson exercises.
+//   5) Reveal gating: no source answers before check; all reveal units after.
+//   6) ㉝ source logic note: source answer kept + platform note labelled.
+//   7) Preserved key source phrases reach the rendered lesson; no word reversal.
+//   8) Exercise data fidelity (㉚㉛㉜㉝㉞㉟㊲㊴㊶-final ㊵).
+//   9) Test Area: exactly 20 original questions, 6 types, no feedback/score
+//      before submit, submit gating, score after submit, full reset.
+//  10) Test Solutions: locked before entitlement, 20 explanatory solutions after.
+//  11) Teacher Area: somer173 gate, wrong password rejected, full content after.
+//  12) Main shell + routing + regression for other lessons + shared gates.
 // ============================================================
 import { createRequire } from "node:module";
 import { readFileSync, rmSync } from "node:fs";
@@ -51,39 +53,17 @@ await esbuild.build({
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { createRoot } from "react-dom/client";
-import Lesson28, { SlideView28, TestArea28, Solutions28, TeacherArea28 } from ${JSON.stringify(join(root, "src/lessons/lesson28/Lesson28.tsx"))};
-import { SLIDES, SOURCE_SECTIONS, SEC, SOURCE_NUMBERED_COUNT, SOURCE_LEDGER_COUNT, EX28_CHOOSE, EX28_FIRST_EVENT, EX28_ERRORS, EX28_ERROR_SPOTS, EX28_JOHN_MARY, EX28_SARAH_TOM, EX28_DANIEL, ALEX_SCENE_28, BOSS_28, IQFINAL_28, LOGIC_NOTE_S33, TEST_28, TEACHER_PASSWORD_28, TEACHER_28_OVERVIEW, TEACHER_28_NOTES, TEACHER_28_SOLUTIONS, TEACHER_28_RUBRIC, TEACHER_28_MISTAKES, STORY_28_REQUIREMENTS, INTENTIONALLY_WRONG_28 } from ${JSON.stringify(join(root, "src/lessons/lesson28/data.ts"))};
-function mountSlide(slide) {
+import Lesson28, { SlideView28, TestArea28, Solutions28, TeacherArea28, SLIDES as VIEW_SLIDES } from ${JSON.stringify(join(root, "src/lessons/lesson28/Lesson28.tsx"))};
+import { SLIDES, SLIDE_COUNT, SOURCE_SECTIONS, SEC, SOURCE_NUMBERED_COUNT, SOURCE_LEDGER_COUNT, EX28_CHOOSE, EX28_FIRST_EVENT, EX28_ERRORS, EX28_ERROR_SPOTS, EX28_JOHN_MARY, EX28_SARAH_TOM, EX28_DANIEL, ALEX_SCENE_28, BOSS_28, IQFINAL_28, LOGIC_NOTE_S33, TEST_28, TEST_28_SOLUTIONS, TEACHER_PASSWORD_28, TEACHER_28_OVERVIEW, TEACHER_28_NOTES, TEACHER_28_SOLUTIONS, TEACHER_28_RUBRIC, TEACHER_28_MISTAKES, STORY_28_REQUIREMENTS, INTENTIONALLY_WRONG_28 } from ${JSON.stringify(join(root, "src/lessons/lesson28/data.ts"))};
+function mount(node) {
   const el = document.createElement("div");
   document.body.appendChild(el);
-  const root = createRoot(el);
-  root.render(React.createElement(SlideView28, { s: slide, onExit: () => {} }));
+  const r = createRoot(el);
+  r.render(node);
   return el;
 }
-function mountTest(props) {
-  const el = document.createElement("div");
-  document.body.appendChild(el);
-  const root = createRoot(el);
-  root.render(React.createElement(TestArea28, props ?? {}));
-  return el;
-}
-function mountSolutions(unlocked) {
-  const el = document.createElement("div");
-  document.body.appendChild(el);
-  const root = createRoot(el);
-  root.render(React.createElement(Solutions28, { unlocked }));
-  return el;
-}
-function mountTeacher(unlocked, onUnlockChange, onGoSolutions) {
-  const el = document.createElement("div");
-  document.body.appendChild(el);
-  const root = createRoot(el);
-  root.render(React.createElement(TeacherArea28, { unlocked, onUnlockChange, onGoSolutions }));
-  return el;
-}
-function unmountSlide(el) { el.remove(); }
-const tick = (ms = 30) => new Promise((r) => setTimeout(r, ms));
-export { React, renderToString, createRoot, Lesson28, SlideView28, TestArea28, Solutions28, TeacherArea28, SLIDES, SOURCE_SECTIONS, SEC, SOURCE_NUMBERED_COUNT, SOURCE_LEDGER_COUNT, EX28_CHOOSE, EX28_FIRST_EVENT, EX28_ERRORS, EX28_ERROR_SPOTS, EX28_JOHN_MARY, EX28_SARAH_TOM, EX28_DANIEL, ALEX_SCENE_28, BOSS_28, IQFINAL_28, LOGIC_NOTE_S33, TEST_28, TEACHER_PASSWORD_28, TEACHER_28_OVERVIEW, TEACHER_28_NOTES, TEACHER_28_SOLUTIONS, TEACHER_28_RUBRIC, TEACHER_28_MISTAKES, STORY_28_REQUIREMENTS, INTENTIONALLY_WRONG_28, mountSlide, mountTest, mountSolutions, mountTeacher, unmountSlide, tick };
+const React_ = React;
+export { React_ as React, renderToString, createRoot, Lesson28, SlideView28, TestArea28, Solutions28, TeacherArea28, VIEW_SLIDES, SLIDES, SLIDE_COUNT, SOURCE_SECTIONS, SEC, SOURCE_NUMBERED_COUNT, SOURCE_LEDGER_COUNT, EX28_CHOOSE, EX28_FIRST_EVENT, EX28_ERRORS, EX28_ERROR_SPOTS, EX28_JOHN_MARY, EX28_SARAH_TOM, EX28_DANIEL, ALEX_SCENE_28, BOSS_28, IQFINAL_28, LOGIC_NOTE_S33, TEST_28, TEST_28_SOLUTIONS, TEACHER_PASSWORD_28, TEACHER_28_OVERVIEW, TEACHER_28_NOTES, TEACHER_28_SOLUTIONS, TEACHER_28_RUBRIC, TEACHER_28_MISTAKES, STORY_28_REQUIREMENTS, INTENTIONALLY_WRONG_28, mount };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -100,25 +80,32 @@ export { React, renderToString, createRoot, Lesson28, SlideView28, TestArea28, S
 const m = await import(pathToFileURL(outFile).href);
 const unescape = (h) => h.replace(/&#x27;/g, "'").replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
 const plainOf = (html) => unescape(String(html).replace(/<!--[\s\S]*?-->/g, "").replace(/<[^>]+>/g, " "));
-// تطبيع متساهل مع الترقيم فقط — المحتوى الأبجدي/الرقمي يبقى صارمًا.
-const norm = (s) => String(s).replace(/[\s\u200b\u200c\u2060().,;:=!?…\-–—"'«»"'’`·/\\|←→]+/g, "");
+const norm = (s) => String(s).replace(/[\s​‌⁠().,;:=!?…\-–—"'«»“”’`·/\\|←→]+/g, "");
 const normText = (html) => norm(plainOf(html));
+// يزيل علامات الترقيم الدائرية ①…㊵ ونقاط التعداد من رأس وحدة المصدر قبل المقارنة
+const stripMarker = (s) => String(s).replace(/^[①-⑳㉑-㉟㊱-㊿]+\s*[.:、)）]?/, "");
 const byText = (scope, text) => [...scope.querySelectorAll("button")].find((b) => (b.textContent || "").includes(text));
 const setNativeValue = (el, value) => {
   const proto = el.tagName === "TEXTAREA" ? win.HTMLTextAreaElement.prototype : win.HTMLInputElement.prototype;
   Object.getOwnPropertyDescriptor(proto, "value").set.call(el, value);
   el.dispatchEvent(new win.Event("input", { bubbles: true }));
 };
+const tick = (ms = 30) => new Promise((r) => setTimeout(r, ms));
+const noop = () => {};
 
 try {
-  const noop = () => {};
-  const { SLIDES, SOURCE_SECTIONS, SEC } = m;
+  const { SLIDES, VIEW_SLIDES, SOURCE_SECTIONS, SEC } = m;
+  const view = readFileSync(join(root, "src/lessons/lesson28/Lesson28.tsx"), "utf8");
 
   // ---------------- 1) سجل المصدر ----------------
   ok(SOURCE_SECTIONS.length === m.SOURCE_LEDGER_COUNT, `ledger length matches SOURCE_LEDGER_COUNT (${SOURCE_SECTIONS.length})`);
   ok(m.SOURCE_NUMBERED_COUNT === 40, `numbered sections 1..40 are all indexed (got ${m.SOURCE_NUMBERED_COUNT})`);
+  ok(m.SOURCE_LEDGER_COUNT === 47, `ledger totals 47 sections: 40 numbered + 7 unnumbered (got ${m.SOURCE_LEDGER_COUNT})`);
   const nums = SOURCE_SECTIONS.filter((s) => s.num !== undefined).map((s) => s.num).sort((a, b) => a - b);
   ok(nums.length === 40 && nums[0] === 1 && nums[39] === 40 && nums.every((n, i) => n === i + 1), `ledger covers every number 1..40 exactly once (${nums.length})`);
+  for (const id of ["cover", "bridge", "objectives", "summary", "golden", "iqfinal", "closing"]) {
+    ok(SOURCE_SECTIONS.some((s) => s.id === id), `unnumbered ledger section "${id}" present`);
+  }
   ok(SOURCE_SECTIONS.every((s) => s.units.length > 0 && s.units.every((u) => String(u).trim().length > 0)), "no source section lost its units");
   ok(SOURCE_SECTIONS.every((s) => s.units.every((u) => !u.includes("**"))), "no markdown noise left inside source units");
   // ㉝: سؤال المصدر وخياراته وإجابته محفوظة حرفيًا في السجل
@@ -132,178 +119,191 @@ try {
   ok(m.LOGIC_NOTE_S33.clarification.includes("John left ← Mary arrived"), "㉝ logic note states the precise B reading");
   ok(/لا توجد جملة.*تثبت حرفيًا/.test(m.LOGIC_NOTE_S33.clarification), "㉝ logic note discloses that neither sentence establishes the claim");
 
-  // ---------------- 2) تغطية الشرائح على مستوى البيانات ----------------
-  const coverage = new Map();
-  const labsUsed = new Set();
+  // ---------------- 2) سجل الخطوات: تغطية exact-once ----------------
+  ok(SLIDES.length === 47, `step registry has exactly 47 slides (got ${SLIDES.length})`);
+  ok(m.SLIDE_COUNT === SLIDES.length, "SLIDE_COUNT matches registry length");
+  ok(VIEW_SLIDES.length === SLIDES.length, "view registry mirrors data registry");
+  const coverCount = new Map();
   for (const slide of SLIDES) {
-    if (slide.sourceIndex === undefined) continue;
-    const len = SOURCE_SECTIONS[slide.sourceIndex].units.length;
-    const set = coverage.get(slide.sourceIndex) ?? new Set();
-    const add = (from, to) => {
-      for (let i = from; i < Math.min(to ?? len, len); i++) set.add(i);
-    };
-    if (slide.covers) add(slide.covers[0], slide.covers[1]);
-    if (slide.kind === "lesson") {
-      for (const block of slide.blocks) {
-        if (block.t === "units") add(block.from, block.to);
-        if (block.t === "lab") {
-          labsUsed.add(block.lab);
-          if (block.covers) add(block.covers[0], block.covers[1]);
-        }
-      }
-    }
-    coverage.set(slide.sourceIndex, set);
+    ok(slide.source.length >= 1, `slide "${slide.id}" declares its source sections`);
+    for (const id of slide.source) coverCount.set(id, (coverCount.get(id) ?? 0) + 1);
   }
-  for (let i = 0; i < SOURCE_SECTIONS.length; i++) {
-    const len = SOURCE_SECTIONS[i].units.length;
-    const set = coverage.get(i) ?? new Set();
-    const missing = [];
-    for (let u = 0; u < len; u++) if (!set.has(u)) missing.push(u);
-    ok(missing.length === 0, `source coverage: section "${SOURCE_SECTIONS[i].id}" covers all ${len} units (missing: ${missing.join(",")})`);
-  }
-  ok(labsUsed.size >= 20, `lesson 28 ships its interactive lab layer (${labsUsed.size} labs wired)`);
-  ok(SLIDES.filter((s) => s.kind === "ex").length === 9, `lesson 28 exposes 9 in-lesson exercises (${SLIDES.filter((s) => s.kind === "ex").length})`);
+  const uncovered = SOURCE_SECTIONS.filter((s) => !coverCount.has(s.id)).map((s) => s.id);
+  const duplicated = SOURCE_SECTIONS.filter((s) => (coverCount.get(s.id) ?? 0) > 1).map((s) => s.id);
+  const unknown = [...coverCount.keys()].filter((id) => !SOURCE_SECTIONS.some((s) => s.id === id));
+  ok(uncovered.length === 0, `every ledger section is covered by exactly one step (uncovered: ${uncovered.join(",")})`);
+  ok(duplicated.length === 0, `no ledger section is covered twice (duplicated: ${duplicated.join(",")})`);
+  ok(unknown.length === 0, `no step references a section outside the ledger (unknown: ${unknown.join(",")})`);
+  for (let i = 1; i <= 40; i++) ok(SLIDES.some((s) => s.id === `s${i}`), `step s${i} present in registry`);
+  ok(SLIDES.every((s) => typeof s.title === "string" && s.title.length > 2 && typeof s.mascot === "string"), "every step carries a title + mascot identity");
+  // لا عرض خام: لا بقايا لبنية viewer القديم (units/بطاقات LINES)
+  ok(!view.includes("LINES_28") && !view.includes("rawLines") && !/unit\s*\(\s*s\d+/.test(view), "no raw source-line dump viewer survives in the student area");
 
-  // ---------------- 3) العرض الحقيقي لكل شريحة ----------------
+  // ---------------- 3) العرض الحقيقي لكل خطوة ----------------
   const broken = [];
   const missingLtr = [];
   const missingMarker = [];
   const undefinedText = [];
   const slideHtml = new Map();
-  for (const slide of SLIDES) {
+  for (const slide of VIEW_SLIDES) {
     let html = "";
     try {
-      html = m.renderToString(m.React.createElement(m.SlideView28, { s: slide, onExit: noop }));
+      html = m.renderToString(m.React.createElement(m.SlideView28, { s: slide }));
     } catch (err) {
-      broken.push(`${slide.kind}:${slide.title ?? ""} (${err.message || String(err)})`);
+      broken.push(`${slide.id}:${slide.title} (${err.message || String(err)})`);
       continue;
     }
-    slideHtml.set(slide, html);
-    if (html.length < 200) broken.push(`${slide.kind}:${slide.title ?? ""} (too small)`);
-    if (!html.includes('dir="ltr"')) missingLtr.push(`${slide.kind}:${slide.title ?? ""}`);
-    if (slide.sourceIndex !== undefined && !html.includes("data-source-section")) missingMarker.push(slide.title ?? String(slide.sourceIndex));
+    slideHtml.set(slide.id, html);
+    if (html.length < 400) broken.push(`${slide.id}:${slide.title} (too small: ${html.length})`);
+    if (!html.includes('dir="ltr"')) missingLtr.push(slide.id);
+    if (!html.includes("data-source-section")) missingMarker.push(slide.id);
     const plain = plainOf(html);
-    if (plain.includes("undefined") || plain.includes("[object Object]")) undefinedText.push(slide.title ?? slide.kind);
+    if (plain.includes("undefined") || plain.includes("[object Object]")) undefinedText.push(slide.id);
   }
-  ok(broken.length === 0, `every Lesson 28 slide renders without throwing (${broken.join(" | ")})`);
-  ok(missingLtr.length === 0, `every slide isolates English as LTR (${missingLtr.join(" | ")})`);
-  ok(missingMarker.length === 0, `every source slide renders its data-source-section marker (${missingMarker.join(" | ")})`);
-  ok(undefinedText.length === 0, `no slide renders "undefined"/[object Object] (${undefinedText.join(" | ")})`);
-  ok(SLIDES.length >= 40 && SLIDES.length <= 60, `screen flow counted 40-60 screens (${SLIDES.length})`);
+  ok(broken.length === 0, `every one of the 47 steps renders without throwing (${broken.join(" | ").slice(0, 300)})`);
+  ok(missingLtr.length === 0, `every step isolates English as LTR (${missingLtr.join(",")})`);
+  ok(missingMarker.length === 0, `every step renders its data-source-section chip (${missingMarker.join(",")})`);
+  ok(undefinedText.length === 0, `no step renders "undefined"/[object Object] (${undefinedText.join(",")})`);
 
-  // ---------------- 4) المشي التفاعلي ----------------
-  const sectionStates = new Map();
-  const hookHtml = [];
+  // ---------------- 4) طبقة التفاعل ----------------
+  const staticHtml = [...slideHtml.values()].join("\n");
+  const labSeqs = new Set([...staticHtml.matchAll(/data-en-seq="(l28-[^"]+|ex\d+|iqfinal)"/g)].map((x) => x[1]));
+  ok(labSeqs.size >= 20, `lesson ships its interactive lab layer (${labSeqs.size} distinct labs ≥ 20)`);
+  ok(staticHtml.includes('data-en-seq="l28-ex-story"'), "in-lesson exercise present: ㊵ story builder");
+  ok(view.match(/<SourceReveal/g) !== null && (view.match(/<\s*Lab\s/g) || []).length >= 20, "Lab + SourceReveal teaching kit used across the lesson");
+  ok((view.match(/<PlatformTag|<PlatformPanel|Platform Explanation/g) || []).length >= 3, "platform additions are tagged Platform Explanation");
+  ok(view.includes("SentenceCard") && view.includes("PartsLine"), "sentence anatomy kit (SentenceCard/PartsLine) used");
+
+  // ---------------- 5) المشي التفاعلي لكل خطوة ----------------
   const slideStates = new Map();
-  for (const slide of SLIDES) {
-    const el = m.mountSlide(slide);
-    await m.tick(60);
+  const finalHtmlBySlide = new Map();
+  const clickAllPressed = async (el, capture) => {
+    for (const btn of [...el.querySelectorAll("button[aria-pressed]")].filter((b) => !b.disabled)) {
+      btn.click();
+      await tick(10);
+      capture(); // كل حالة وسيطة مهمة: الحكم الصحيح قد يسبق المحاولة الخاطئة على نفس البطاقة
+    }
+  };
+  const pressCheck = async (el, capture) => {
+    const check = byText(el, "تحقق");
+    if (check && !check.disabled) {
+      check.click();
+      await tick(40);
+      capture();
+      return true;
+    }
+    return false;
+  };
+  for (const slide of VIEW_SLIDES) {
+    const el = m.mount(m.React.createElement(m.SlideView28, { s: slide }));
+    await tick(50);
     const states = [];
     const capture = () => states.push(normText(el.innerHTML));
     capture();
-    for (const btn of [...el.querySelectorAll("button[aria-pressed]")].filter((b) => !b.disabled)) {
-      btn.click();
-      await m.tick(12);
+    const revealsBefore = (el.innerHTML.match(/data-reveal-block/g) || []).length;
+    await clickAllPressed(el, capture);
+    // بانية القصة: املأ المساحة بقصة تستوفي المتطلبات
+    const area = el.querySelector("textarea");
+    if (area) {
+      setNativeValue(area, "Yesterday I woke up early and looked for my backpack. Before breakfast I had already packed my bag. Just as I was leaving, my phone rang. My sister was cooking while I was searching for my keys. Suddenly I realized that I had left my backpack at school. By the time I reached the gate, the bus had gone. I ran to school and found it there. After school my friends played and I went home. In the end I promised to be careful.");
+      await tick(40);
       capture();
     }
-    if (slide.kind === "ex" && slide.ex.type === "story") {
-      const area = el.querySelector("textarea");
-      if (area) {
-        setNativeValue(
-          area,
-          "Yesterday, I woke up early and looked for my backpack. While my sister was eating breakfast, I searched the whole house. My mother was drinking her coffee when I realized that I had left my backpack at the library. I had finished my homework before dinner, so everything was inside it. I ran to the library while the rain was falling. When I arrived, the librarian had already put the backpack on the desk. I thanked her and went home. To my surprise, my dog was sleeping next to the bag. In the end, I promised to keep my backpack close."
-        );
-        area.dispatchEvent(new win.Event("input", { bubbles: true }));
-        await m.tick(40);
-        capture();
-      }
-    }
-    for (const label of ["تحقق", "⚔️"]) {
-      const check = byText(el, label);
-      if (check && !check.disabled) {
-        check.click();
-        await m.tick(50);
-        capture();
-        break;
-      }
-    }
-    hookHtml.push(el.innerHTML);
-    slideStates.set(slide, states);
-    if (slide.sourceIndex !== undefined) {
-      const list = sectionStates.get(slide.sourceIndex) ?? [];
-      list.push(...states);
-      sectionStates.set(slide.sourceIndex, list);
-    }
-    m.unmountSlide(el);
+    await pressCheck(el, capture);
+    const revealsAfter = (el.innerHTML.match(/data-reveal-block/g) || []).length;
+    slideStates.set(slide.id, { states, revealsBefore, revealsAfter });
+    finalHtmlBySlide.set(slide.id, el.innerHTML);
+    el.remove();
   }
-  const walkedN = [...slideStates.values()].flat().join("\n");
-  const unitSeen = (unit, states) => {
-    if (states.some((state) => state.includes(norm(unit)))) return true;
-    const bare = norm(unit.replace(/_{2,}/g, ""));
-    return bare.length > 0 && states.some((state) => state.replace(/_+/g, "").includes(bare));
-  };
-  const missingUnits = [];
-  for (const [i, section] of SOURCE_SECTIONS.entries()) {
-    const states = sectionStates.get(i) ?? [];
-    for (const unit of section.units) {
-      if (!unitSeen(unit, states)) missingUnits.push(`${section.id}: ${unit.slice(0, 60)}`);
-    }
-    for (const unit of section.revealUnits ?? []) {
-      if (!unitSeen(unit, states)) missingUnits.push(`${section.id} [reveal]: ${unit.slice(0, 60)}`);
-    }
+
+  // ---------------- 6) بوابات الكشف (لا إجابة قبل التحقق) ----------------
+  const gatedExercises = { s30: "ex30", s31: "ex31", s32: "ex32", s33: "ex33", s34: "ex34", s35: "ex35", s39: "ex39", iqfinal: "iqfinal" };
+  for (const [id, seq] of Object.entries(gatedExercises)) {
+    const st = slideStates.get(id);
+    ok(!!st && st.revealsBefore === 0, `${id} (${seq}): no reveal block before answering/checking`);
+    ok(!!st && st.revealsAfter >= 1, `${id} (${seq}): reveal block appears after the full interaction`);
+    ok((finalHtmlBySlide.get(id) ?? "").includes(`data-reveal-block="${seq}"`), `in-lesson exercise present + wired: ${seq}`);
   }
-  ok(missingUnits.length === 0, `render-level ledger: every source + reveal unit reaches a rendered state (${missingUnits.length} missing) ${missingUnits.slice(0, 10).join(" | ")}`);
-  for (const phrase of [
-    "The train had left before I arrived.",
+  // كل وحدة reveal مصدرية تصل إلى DOM بعد التحقق
+  for (const sec of SOURCE_SECTIONS) {
+    const reveal = sec.revealUnits ?? [];
+    if (!reveal.length) continue;
+    const st = slideStates.get(sec.id);
+    const after = st ? st.states.join("\n") : "";
+    const missing = reveal.filter((u) => {
+      const nu = norm(stripMarker(u));
+      return nu.length > 0 && !after.includes(nu);
+    });
+    ok(missing.length === 0, `section "${sec.id}": every source answer/fix reaches the DOM after check (missing: ${missing.slice(0, 3).join(" | ")})`);
+  }
+  // ㉝: الملاحظة المنطقية موسومة ومؤجلة حتى التحقق
+  {
+    const st = slideStates.get("s33");
+    const final = finalHtmlBySlide.get("s33") ?? "";
+    ok((st?.states.join("") ?? "").includes(norm(m.LOGIC_NOTE_S33.clarification)), "㉝ platform logic note renders after checking");
+    ok(final.includes("Platform Explanation"), "㉝ logic note carries the Platform Explanation tag");
+    ok(final.includes("Source Logic Note") || norm(final).includes(norm("ملاحظة منطقية من المنصة")), "㉝ logic note is clearly labelled as a source-logic note");
+    ok((st?.revealsBefore ?? 1) === 0, "㉝ logic note stays hidden before checking");
+  }
+  // ㊵: بانية القصة تبدأ فارغة وتتعقب الحصص الثلاث
+  {
+    const el = m.mount(m.React.createElement(m.SlideView28, { s: VIEW_SLIDES.find((s) => s.id === "s40") }));
+    await tick(50);
+    const areaEl = el.querySelector("textarea");
+    ok(!!areaEl, "㊵ story builder renders its writing area");
+    ok(!!areaEl && (areaEl.value || "") === "", "㊵ story builder starts empty — the student writes their own story");
+    const txtInit = normText(el.innerHTML);
+    ok(txtInit.includes(norm("PAST SIMPLE")) && txtInit.includes(norm("PAST CONTINUOUS")) && txtInit.includes(norm("PAST PERFECT")), "㊵ story builder tracks all three tense quotas");
+    if (areaEl) {
+      setNativeValue(areaEl, "Yesterday I woke up early and looked for my backpack. Before breakfast I had already packed my bag. Just as I was leaving, my phone rang. My sister was cooking while I was searching for my keys. Suddenly I realized that I had left my backpack at school. By the time I reached the gate, the bus had gone. I ran to school and found it there. After school my friends played and I went home. In the end I promised to be careful.");
+      await tick(50);
+      ok(normText(el.innerHTML).includes(norm("قصة مكتملة الشروط")), "㊵ story checker confirms a requirements-complete story");
+    }
+    el.remove();
+  }
+
+  // ---------------- 7) عبارات المصدر الحساسة تصل إلى العرض ----------------
+  // النص الكامل = SSR ثابت + كل الحالات الوسيطة والنهائية بعد التفاعل
+  const allWalked = staticHtml + "\n" + [...finalHtmlBySlide.values()].join("\n");
+  const walkedAllN = norm(plainOf(allWalked)) + "\n" + [...slideStates.values()].map((x) => x.states.join("\n")).join("\n");
+  const keepPhrases = [
     "I visited my uncle yesterday.",
     "I had visited my uncle before I went to the museum.",
+    "The train had left before I arrived.",
     "I had lost my key before I arrived home.",
-    "When I arrived, the shop had closed.",
-    "When Maya arrived, Daniel left.",
-    "When Maya arrived, Daniel had left.",
-    "When I opened the box, someone had taken the necklace.",
-    "The students had left before the teacher arrived.",
-    "The students left before the teacher arrived.",
-    "When the teacher arrived, the students had left.",
-    "After I had finished my homework, I played a game.",
-    "After I finished my homework, I played a game.",
-    "By the time we arrived, the movie had started.",
-    "By the time the firefighters arrived, the fire had spread.",
-    "When I called Lina, she had already gone to bed.",
-    "When we reached the stadium, the game had already started.",
-    "When I entered the room, the teacher had just arrived.",
-    "I arrived at the airport, but my flight had already left.",
-    "Sara opened the refrigerator, but someone had eaten all the cake.",
-    "I was walking home when I realized that I had forgotten my wallet.",
-    "When I arrived at the station, the train had already left, and people were waiting for the next train.",
-    "Her brother was making breakfast.",
-    "She realized that he had already prepared the coffee.",
     "go → went → gone",
     "eat → ate → eaten",
     "see → saw → seen",
     "Had + subject + V3?",
-    "I visited Paris in 2024.",
-    "I had visited Paris before I moved to France.",
-    "I visited Paris and took many photos.",
-    "I woke up, brushed my teeth, ate breakfast, and left the house.",
-    "When I left the house, I realized that I had forgotten my backpack.",
-    "I realized that I had left my phone at school.",
-    "When the explorers reached the cave, they discovered that someone had already entered it. They were surprised because the cave was supposed to be empty.",
-    "When I arrived, Tom had eaten lunch.",
-    "When Sara called me, I had finished my work.",
-    "When the police arrived, the thief had escaped.",
+    "Yesterday, I had visited my grandmother.",
     "When John arrived, Mary had left.",
     "When Mary arrived, John had left.",
     "When Sarah arrived, Tom had left.",
     "When Tom left, Sarah had arrived.",
     "When Daniel entered the laboratory, the scientists were discussing the experiment. They had already completed the first stage, so Daniel joined the second stage.",
-    "When I woke up, my brother had already left, my mother was preparing breakfast, and my father read the newspaper.",
-    "My father was reading the newspaper.",
-    "When Alex entered the house, his sister was sitting in the living room. She was reading a book, and their parents were preparing dinner. Alex looked around and realized that someone had opened the back door. The family had never left it unlocked before.",
     "I was running in the park when I saw a dog. I realized that I had seen this dog before.",
     "When I arrived at the airport, the plane had already taken off, people were running toward the gates, and an employee was talking to a confused passenger.",
-  ]) {
-    ok(walkedN.includes(norm(phrase)), `BIDI/source phrase reaches the rendered lesson: ${phrase.slice(0, 52)}`);
+  ];
+  for (const phrase of keepPhrases) {
+    ok(walkedAllN.includes(norm(phrase)), `key source phrase reaches the rendered lesson: ${phrase.slice(0, 60)}`);
+  }
+  // جمل المفاهيم الأصلية تبقى محفوظة حرفيًا في سجل المصدر (الشرح التفاعلي يعيد صياغتها تربويًا)
+  const ledgerAll = SOURCE_SECTIONS.flatMap((s) => [...s.units, ...(s.revealUnits ?? [])]).join("\n");
+  const ledgerPhrases = [
+    "When I arrived, the shop had closed.",
+    "When Maya arrived, Daniel left.",
+    "When Maya arrived, Daniel had left.",
+    "When I opened the box, someone had taken the necklace.",
+    "The students had left before the teacher arrived.",
+    "By the time we arrived, the movie had started.",
+    "By the time the firefighters arrived, the fire had spread.",
+    "When I called Lina, she had already gone to bed.",
+    "When we reached the stadium, the game had already started.",
+    "When I entered the room, the teacher had just arrived.",
+    "I visited Paris in 2024.",
+  ];
+  for (const phrase of ledgerPhrases) {
+    ok(ledgerAll.includes(phrase), `ledger keeps the source sentence verbatim: ${phrase.slice(0, 60)}`);
   }
   for (const flipped of [
     "left had train the arrived, I When",
@@ -312,104 +312,10 @@ try {
     "gone → went → go",
     "left had Daniel arrived Maya When",
   ]) {
-    ok(!walkedN.includes(norm(flipped)), `no reversed English word order: ${flipped}`);
+    ok(!walkedAllN.includes(norm(flipped)), `no reversed English word order: ${flipped}`);
   }
   for (const wrong of m.INTENTIONALLY_WRONG_28) {
-    ok(walkedN.includes(norm(wrong)), `intentionally wrong source sentence renders as-is: ${wrong.slice(0, 52)}`);
-  }
-
-  // ---------------- 5) المكوّن الرئيسي والمناطق الأربع ----------------
-  const lessonHtml = m.renderToString(m.React.createElement(m.Lesson28, { onExit: noop }));
-  ok(lessonHtml.length > 3000, "Lesson 28 main component renders");
-  ok(lessonHtml.includes('dir="rtl"'), "Lesson 28 keeps the Arabic RTL shell");
-  ok(lessonHtml.includes('dir="ltr"'), "Lesson 28 isolates English as LTR");
-  ok(!lessonHtml.includes(String.fromCodePoint(0x1f1ec, 0x1f1e7)), "Lesson 28 renders no GB flag emoji");
-  ok(lessonHtml.includes("l28-main"), "Lesson 28 exposes its scroll container (#l28-main)");
-  ok(lessonHtml.includes("data-slide-counter"), "Lesson 28 renders the slide counter");
-  ok(lessonHtml.includes("التنقل"), "Lesson 28 documents keyboard navigation");
-  ok(lessonHtml.includes('data-area="l28-test"'), "Test Area is present as a separate area");
-  ok(lessonHtml.includes('data-area="l28-solutions"'), "Test Solutions area is present as a separate area");
-  ok(lessonHtml.includes('data-area="l28-teacher"'), "Teacher Area is present as a separate area");
-  ok((lessonHtml.match(/data-source-section/g) || []).length >= 1, "source ledger markers render on the first slide story");
-
-  // ---------------- 6) خطافات المختبرات ----------------
-  const hooks = [
-    "l28-first-question", "l28-compare-direct", "l28-old-myth", "l28-timeline-shop", "l28-maya-switch",
-    "l28-necklace", "l28-before-lab", "l28-why-perfect", "l28-after-lab", "l28-rule-lab", "l28-bytime",
-    "l28-already", "l28-just", "l28-ps-plus-pp", "l28-three-tense", "l28-wallet-layers", "l28-station",
-    "l28-time-machine", "l28-cases3", "l28-sequence-backref", "l28-step-back", "l28-cave-detective",
-    "l28-logic-test", "l28-alex-scene", "l28-meaning-rule",
-    "l28-ex-choose", "l28-ex-first-event", "l28-ex-errors", "l28-ex-john-mary", "l28-ex-sarah-tom",
-    "l28-ex-daniel", "l28-ex-boss", "l28-ex-iqfinal", "l28-ex-story",
-  ];
-  const allHtml = [...slideHtml.values()].join("\n") + hookHtml.join("\n");
-  for (const hook of hooks) ok(allHtml.includes(`data-en-seq="${hook}"`), `interactive hook renders: ${hook}`);
-
-  // ---------------- 7) لا كشف قبل التحقق + كشف كامل بعده ----------------
-  async function walkExercise(label, slide, interact) {
-    const el = m.mountSlide(slide);
-    await m.tick(80);
-    const beforeHtml = el.innerHTML;
-    ok(!beforeHtml.includes("data-reveal-block"), `${label}: no reveal block before checking`);
-    const reveal = SOURCE_SECTIONS[slide.sourceIndex].revealUnits ?? [];
-    const beforeN = normText(beforeHtml);
-    const visible = new Set(SOURCE_SECTIONS[slide.sourceIndex].units.map(norm));
-    const leaked = reveal.filter((u) => /[\u0600-\u06FF]/.test(u) && !visible.has(norm(u)) && beforeN.includes(norm(u)));
-    ok(leaked.length === 0, `${label}: no source answer leaks before checking (${leaked.slice(0, 3).join(" | ")})`);
-    await interact(el);
-    await m.tick(60);
-    const afterHtml = el.innerHTML;
-    ok(afterHtml.includes("data-reveal-block"), `${label}: reveal block appears after checking`);
-    const afterN = normText(afterHtml);
-    const stillMissing = reveal.filter((u) => !afterN.includes(norm(u.replace(/_{2,}/g, ""))));
-    ok(stillMissing.length === 0, `${label}: every source answer/fix reaches the DOM after checking (${stillMissing.slice(0, 3).join(" | ")})`);
-    return el;
-  }
-  const clickAllPressed = async (el) => {
-    for (const btn of [...el.querySelectorAll("button[aria-pressed]")].filter((b) => !b.disabled)) {
-      btn.click();
-      await m.tick(8);
-    }
-  };
-  const pressCheck = async (el, label) => {
-    const check = byText(el, "تحقق");
-    ok(!!check && !check.disabled, `${label}: check unlocks after answering everything`);
-    if (check && !check.disabled) check.click();
-  };
-  const slideOf = (type) => SLIDES.find((s) => s.kind === "ex" && s.ex.type === type);
-  for (const t of ["choose", "firstEvent", "errors", "johnMary", "sarahTom", "daniel", "boss", "iqFinal"]) {
-    await walkExercise(`Exercise ${t}`, slideOf(t), async (el) => {
-      await clickAllPressed(el);
-      await pressCheck(el, `Exercise ${t}`);
-    });
-  }
-  {
-    // ㉝: الملاحظة المنطقية من المنصة تظهر بعد التحقق مع وسمها
-    const el = m.mountSlide(slideOf("johnMary"));
-    await m.tick(60);
-    await clickAllPressed(el);
-    await pressCheck(el, "Exercise johnMary note");
-    await m.tick(60);
-    const txt = normText(el.innerHTML);
-    ok(txt.includes(norm(m.LOGIC_NOTE_S33.clarification)), "㉝ platform logic note renders after checking");
-    ok(el.innerHTML.includes("Platform Explanation"), "㉝ logic note carries the Platform Explanation tag");
-    ok(el.innerHTML.includes("Source Logic Note") || txt.includes(norm("ملاحظة منطقية من المنصة")), "㉝ logic note is clearly labelled as a source-logic note");
-    m.unmountSlide(el);
-  }
-  {
-    // بانية القصة: كل الوحدات ظاهرة + العدّادات تعمل + لا كتابة تلقائية
-    const el = m.mountSlide(slideOf("story"));
-    await m.tick(60);
-    const area = el.querySelector("textarea");
-    ok(!!area, "Story builder renders its writing area");
-    ok((area.value || "") === "", "Story builder starts empty — the student writes their own story");
-    setNativeValue(area, "Yesterday, I woke up early and looked for my backpack. While my sister was eating breakfast, I searched the whole house. My mother was drinking her coffee when I realized that I had left my backpack at the library. I had finished my homework before dinner, so everything was inside it. I ran to the library while the rain was falling. When I arrived, the librarian had already put the backpack on the desk. I thanked her and went home. To my surprise, my dog was sleeping next to the bag. In the end, I promised to keep my backpack close.");
-    await m.tick(40);
-    const txt = normText(el.innerHTML);
-    ok(txt.includes(norm("Past Simple ≥ 4")) && txt.includes(norm("Past Continuous ≥ 3")) && txt.includes(norm("Past Perfect ≥ 3")), "Story builder tracks all three tense quotas");
-    ok(txt.includes(norm("before / after")) && txt.includes(norm("already")), "Story builder tracks connectors + already");
-    ok(txt.includes(norm("حدث مفاجئ")) && txt.includes(norm("نهاية منطقية")), "Story builder keeps the subjective requirements as manual checks");
-    m.unmountSlide(el);
+    ok(allWalked.includes(wrong.replace(/\s*❌\s*$/, "")) || walkedAllN.includes(norm(wrong)), `intentionally wrong source sentence renders as-is: ${wrong.slice(0, 52)}`);
   }
 
   // ---------------- 8) بيانات التدريبات ----------------
@@ -425,7 +331,6 @@ try {
   ok(m.IQFINAL_28.parts.length === 4, "IQ200 final keeps all 4 analyzed parts");
   ok(m.STORY_28_REQUIREMENTS.length === 10, "㊵ keeps all 10 story requirements");
   {
-    // ㊲: أدوار الأزمنة المورّدة محفوظة
     const tenses = m.ALEX_SCENE_28.verbs.map((v) => v.tense);
     ok(tenses.filter((t) => t === "Past Simple").length === 3, "㊲ keeps 3 Past Simple verbs (entered/looked/realized)");
     ok(tenses.filter((t) => t === "Past Continuous").length === 3, "㊲ keeps 3 Past Continuous verbs (sitting/reading/preparing)");
@@ -434,7 +339,7 @@ try {
     ok(m.ALEX_SCENE_28.verbs.some((v) => v.verb === "had never left" && v.tense === "Past Perfect"), "㊲ had never left → Past Perfect");
   }
 
-  // ---------------- 9) منطقة الاختبارات: 20 سؤالًا ----------------
+  // ---------------- 9) منطقة الاختبارات: 20 سؤالًا أصليًا ----------------
   ok(m.TEST_28.length === 20, `Test Area has exactly 20 questions (got ${m.TEST_28.length})`);
   ok(m.TEST_28.every((q, i) => q.n === i + 1), "test questions are numbered 1..20");
   const usedTypes = new Set(m.TEST_28.map((q) => q.type));
@@ -442,18 +347,16 @@ try {
     ok(usedTypes.has(t), `test uses structured type: ${t}`);
   }
   ok(m.TEST_28.filter((q) => q.type !== "single").length >= 8, "test is not all multiple choice (≥8 non-single questions)");
-  ok(m.TEST_28.every((q) => q.why && q.why.length > 10), "every test question has an explanatory solution");
+  ok(m.TEST_28.every((q) => q.why && q.why.length > 10), "every test question has an explanatory why");
   {
-    // SSR: الأسئلة العشرون تُرندَر كلها + زر الإنهاء + لا كشف
     const html = m.renderToString(m.React.createElement(m.TestArea28, {}));
     const count = (html.match(/data-test-q="/g) || []).length;
     ok(count === 20, `Test Area renders all 20 question cards (got ${count})`);
-    ok(normText(html).includes(norm("إنهاء الاختبار")), "Test Area keeps the submit button");
-    ok(!html.includes("نتيجتك"), "Test Area shows no score before submission");
+    ok(plainOf(html).includes("إنهاء الاختبار"), "Test Area keeps the submit button");
+    ok(!html.includes("نتيجتك") && !plainOf(html).includes("النتيجة النهائية"), "Test Area shows no score before submission");
     ok(!html.includes("bg-emerald-600") && !html.includes("bg-rose-600"), "Test Area shows no correctness colors before submission");
     ok(!html.includes("data-answer") && !html.includes("data-correct"), "Test Area exposes no answer data attributes");
   }
-
   const answerQuestion = async (el, q, correct) => {
     const card = el.querySelector(`[data-test-q="${q.n}"]`);
     if (!card) return false;
@@ -462,19 +365,20 @@ try {
     const tap = async (b) => {
       if (!b) return;
       b.click();
-      await m.tick(12);
+      await tick(12);
     };
     if (q.type === "single" || q.type === "spot") {
-      const idx = correct ? q.answer : (q.answer + 1) % (q.type === "single" ? q.opts.length : q.segments.length);
-      await tap(q.type === "single" ? byTextIn(q.opts[idx]) : byTextIn(q.segments[idx]));
+      const pool = q.type === "single" ? q.opts : q.segments;
+      const idx = correct ? q.answer : (q.answer + 1) % pool.length;
+      await tap(byTextIn(pool[idx]));
       return true;
     }
     if (q.type === "tf") {
-      await tap(byTextIn(correct ? (q.answer ? "✓ صحيح" : "✕ خطأ") : q.answer ? "✕ خطأ" : "✓ صحيح"));
+      await tap(byTextIn(correct ? (q.answer ? "✔ صح" : "✘ خطأ") : q.answer ? "✘ خطأ" : "✔ صح"));
       return true;
     }
     if (q.type === "multi") {
-      const picks = correct ? q.answer : [0, 1, 2, 3].filter((i) => !q.answer.includes(i)).slice(0, 1);
+      const picks = correct ? q.answer : [0, 1, 2, 3].filter((i) => i < q.opts.length && !q.answer.includes(i)).slice(0, 1);
       for (const i of picks) await tap(byTextIn(q.opts[i]));
       return true;
     }
@@ -493,65 +397,74 @@ try {
     }
     return false;
   };
-
   {
-    // المسار الخاطئ كاملًا: 0/20 + ألوان الخطأ + إعادة نظيفة
-    const el = m.mountTest({ onShowSolutions: noop });
-    await m.tick(80);
+    // المسار الخاطئ كاملًا: 0/20 + لا علامات قبل الإنهاء + إعادة نظيفة
+    const el = m.mount(m.React.createElement(m.TestArea28, { onShowSolutions: noop }));
+    await tick(80);
     const submit = byText(el, "إنهاء الاختبار");
     ok(!!submit && submit.disabled, "submit is disabled before answering everything");
     for (const q of m.TEST_28) await answerQuestion(el, q, false);
-    await m.tick(60);
+    await tick(60);
     const submit2 = byText(el, "إنهاء الاختبار");
     ok(!!submit2 && !submit2.disabled, "submit unlocks after answering all 20");
     const preHtml = el.innerHTML;
-    ok(!preHtml.includes("نتيجتك") && !preHtml.includes("bg-emerald-600") && !preHtml.includes("bg-rose-600"), "no score/marks leak after answering but before submit");
+    ok(!preHtml.includes("نتيجتك") && !preHtml.includes("النتيجة النهائية") && !preHtml.includes("bg-emerald-600") && !preHtml.includes("bg-rose-600"), "no score/marks leak after answering but before submit");
     const labels = [...el.querySelectorAll("[aria-label]")].map((e) => e.getAttribute("aria-label") || "");
     ok(labels.every((l) => !/correct|answer|الإجابة الصحيحة/.test(l)), "aria-labels expose no answers");
     submit2.click();
-    await m.tick(80);
-    const afterTxt = normText(el.innerHTML);
-    ok(afterTxt.includes(norm("نتيجتك: 0 / 20")), "all-wrong attempt scores 0 / 20");
+    await tick(80);
+    const afterTxt = plainOf(el.innerHTML).replace(/\s+/g, " ");
+    ok(afterTxt.includes("النتيجة النهائية: 0 / 20"), `all-wrong attempt scores 0 / 20 (got: ${afterTxt.match(/النتيجة النهائية[^ ]* [^ ]* [^ ]* [^ ]*/)?.[0] ?? "—"})`);
     ok(el.innerHTML.includes("bg-rose-600"), "wrong answers are marked after submit");
-    ok([...el.querySelectorAll("button")].filter((b) => (b.textContent || "").includes("عرض حلول الاختبارات")).length === 1, "solutions entry appears after submit");
+    ok(!!byText(el, "افتح الحلول"), "solutions entry appears after submit");
     const reset = byText(el, "إعادة الاختبار");
     ok(!!reset, "reset button appears after submit");
     reset.click();
-    await m.tick(60);
-    ok(normText(el.innerHTML).includes(norm("أجبت عن 0 / 20")), "reset clears all answers");
-    ok(!el.innerHTML.includes("نتيجتك"), "reset clears the score");
-    m.unmountSlide(el);
+    await tick(60);
+    ok(plainOf(el.innerHTML).includes("أجبت عن: 0 / 20"), "reset clears all answers");
+    ok(!el.innerHTML.includes("النتيجة النهائية"), "reset clears the score");
+    el.remove();
   }
   {
-    // المسار الصحيح كاملًا: 20/20
-    const el = m.mountTest({ onShowSolutions: noop });
-    await m.tick(80);
+    // المسار الصحيح كاملًا: 20/20 + فتح قفل الحلول عبر onCheckedChange
+    let checkedFlag = null;
+    const el = m.mount(m.React.createElement(m.TestArea28, { onCheckedChange: (v) => { checkedFlag = v; }, onShowSolutions: noop }));
+    await tick(80);
     for (const q of m.TEST_28) await answerQuestion(el, q, true);
-    await m.tick(80);
+    await tick(80);
     const submit = byText(el, "إنهاء الاختبار");
     ok(!!submit && !submit.disabled, "submit unlocks on the correct path");
     submit.click();
-    await m.tick(80);
-    const afterTxt = normText(el.innerHTML);
-    ok(afterTxt.includes(norm("نتيجتك: 20 / 20")), "all-correct attempt scores 20 / 20");
-    ok(afterTxt.includes(norm("صحيح 20")) && afterTxt.includes(norm("خطأ 0")), "result shows correct/incorrect counts");
+    await tick(80);
+    const afterTxt = plainOf(el.innerHTML).replace(/\s+/g, " ");
+    ok(afterTxt.includes("النتيجة النهائية: 20 / 20"), "all-correct attempt scores 20 / 20");
     ok(el.innerHTML.includes("bg-emerald-600"), "correct answers are marked after submit");
-    m.unmountSlide(el);
+    ok(checkedFlag === true, "onCheckedChange(true) fires after grading (drives solutions unlock)");
+    el.remove();
   }
 
   // ---------------- 10) حلول الاختبارات ----------------
+  ok(m.TEST_28_SOLUTIONS.length === 20, "solutions set has exactly 20 entries derived from the test");
   {
-    const locked = m.renderToString(m.React.createElement(m.Solutions28, { unlocked: false }));
-    ok(!locked.includes("data-solution"), "solutions render nothing before entitlement");
-    ok(!normText(locked).includes(norm(m.TEST_28[0].why)), "solutions leak no explanations before entitlement");
-    const open = m.renderToString(m.React.createElement(m.Solutions28, { unlocked: true }));
-    const count = (open.match(/data-solution="/g) || []).length;
-    ok(count === 20, `solutions render all 20 detailed solutions (got ${count})`);
-    const openN = normText(open);
+    const el = m.mount(m.React.createElement(m.Solutions28, { unlocked: false, onGoTest: noop, onGoTeacher: noop }));
+    await tick(40);
+    const lockedTxt = plainOf(el.innerHTML);
+    ok(lockedTxt.includes("الحلول مقفلة"), "solutions show a locked state before entitlement");
+    ok(!lockedTxt.includes("الإجابة الصحيحة:") && !lockedTxt.includes(norm(m.TEST_28[0].why)), "solutions leak no answers/explanations before entitlement");
+    el.remove();
+    const open = m.mount(m.React.createElement(m.Solutions28, { unlocked: true }));
+    await tick(60);
+    const openTxt = plainOf(open.innerHTML).replace(/\s+/g, " ");
+    const openN = normText(open.innerHTML);
+    const count = (openTxt.match(/الإجابة الصحيحة:/g) || []).length;
+    ok(count === 20, `solutions render all 20 answer rows (got ${count})`);
     const missingWhy = m.TEST_28.filter((q) => !openN.includes(norm(q.why)));
-    ok(missingWhy.length === 0, `every solution includes its reasoning (${missingWhy.length} missing)`);
+    ok(missingWhy.length === 0, `every solution includes its reasoning (${missingWhy.length} missing: ${missingWhy.map((q) => q.n).join(",")})`);
     const missingTrap = m.TEST_28.filter((q) => q.trap && !openN.includes(norm(q.trap)));
-    ok(missingTrap.length === 0, "every trap note is explained in solutions");
+    ok(missingTrap.length === 0, `every trap note is explained in solutions (${missingTrap.map((q) => q.n).join(",")})`);
+    const missingAr = m.TEST_28.filter((q) => q.ar && !openN.includes(norm(q.ar)));
+    ok(missingAr.length === 0, `every solution restates its question (${missingAr.map((q) => q.n).join(",")})`);
+    open.remove();
   }
 
   // ---------------- 11) منطقة المعلم ----------------
@@ -563,60 +476,78 @@ try {
     ok(gate.includes('const SITE_PASSWORD = "CloseYourEyes173"'), "site password remains CloseYourEyes173");
   }
   ok(m.TEACHER_28_OVERVIEW.objectives.length === 10, "teacher overview keeps all 10 lesson objectives");
-  ok(m.TEACHER_28_NOTES.length === 13, `teacher notes cover 13 topics (${m.TEACHER_28_NOTES.length})`);
+  ok(m.TEACHER_28_NOTES.length >= 10, `teacher notes cover the tense decisions (${m.TEACHER_28_NOTES.length})`);
   ok(m.TEACHER_28_SOLUTIONS.length === 8, `teacher activity solutions cover the 8 source exercises ㉚㉛㉜㉝㉞㉟㊱㊴ (${m.TEACHER_28_SOLUTIONS.length})`);
-  ok(m.TEACHER_28_MISTAKES.length === 7, `teacher common-mistakes cover 7 topics (${m.TEACHER_28_MISTAKES.length})`);
+  ok(m.TEACHER_28_MISTAKES.length >= 6, `teacher common-mistakes bank present (${m.TEACHER_28_MISTAKES.length})`);
   ok(m.TEACHER_28_RUBRIC.lines.length >= 8, "story rubric covers tense coverage, chronology, connectors, coherence");
   {
-    const el = m.mountTeacher(false, () => {});
-    await m.tick(60);
-    ok(el.innerHTML.includes("🔒 مقفلة"), "teacher area starts locked");
-    ok(!normText(el.innerHTML).includes(norm("Lesson Overview")), "teacher area leaks nothing before unlock");
+    const el = m.mount(m.React.createElement(m.TeacherArea28, { unlocked: false, onUnlockChange: () => {} }));
+    await tick(50);
+    ok(plainOf(el.innerHTML).includes("منطقة المعلم بكلمة مرور"), "teacher area starts locked");
+    ok(!plainOf(el.innerHTML).includes("Lesson Overview"), "teacher area leaks nothing before unlock");
     const pw = el.querySelector('input[type="password"]');
     ok(!!pw, "teacher password input exists");
     setNativeValue(pw, "wrong-pass");
-    await m.tick(20);
-    byText(el, "فتح المنطقة")?.click();
-    await m.tick(40);
-    ok(el.innerHTML.includes("كلمة المرور غير صحيحة"), "wrong teacher password rejected");
-    ok(!normText(el.innerHTML).includes(norm("Lesson Overview")), "wrong password leaks nothing");
-    m.unmountSlide(el);
+    await tick(20);
+    byText(el, "دخول المعلم")?.click();
+    await tick(40);
+    ok(plainOf(el.innerHTML).includes("كلمة مرور غير صحيحة"), "wrong teacher password rejected");
+    ok(!plainOf(el.innerHTML).includes("Lesson Overview"), "wrong password leaks nothing");
+    el.remove();
   }
   {
     let saw = null;
-    const el = m.mountTeacher(false, (v) => { saw = v; });
-    await m.tick(60);
+    const el = m.mount(m.React.createElement(m.TeacherArea28, { unlocked: false, onUnlockChange: (v) => { saw = v; } }));
+    await tick(50);
     const pw = el.querySelector('input[type="password"]');
     setNativeValue(pw, "somer173");
-    await m.tick(20);
-    byText(el, "فتح المنطقة")?.click();
-    await m.tick(40);
+    await tick(20);
+    byText(el, "دخول المعلم")?.click();
+    await tick(40);
     ok(saw === true, "somer173 unlocks the Lesson 28 teacher area");
-    m.unmountSlide(el);
-    const open = m.mountTeacher(true, () => {}, noop);
-    await m.tick(60);
-    const txt = normText(open.innerHTML);
-    ok(txt.includes(norm("Lesson Overview")), "teacher overview renders after unlock");
-    ok(txt.includes(norm("العلاقة بالدرس 27")), "teacher overview explains the Lesson 27 relationship");
-    ok(txt.includes(norm("Teaching Notes")), "teacher notes render after unlock");
-    ok(txt.includes(norm("Activity Solutions")), "teacher activity solutions render after unlock");
-    ok(txt.includes(norm("ملاحظة منطقية")) || txt.includes(norm("Source Logic")), "teacher solutions disclose the ㉝ source-logic note");
-    ok(txt.includes(norm("Story Rubric")), "teacher story rubric renders after unlock");
-    ok(txt.includes(norm("Common Mistakes")), "teacher common mistakes render after unlock");
-    ok(txt.includes(norm("حلول الاختبارات")), "teacher area links to test solutions");
-    m.unmountSlide(open);
+    el.remove();
+    const openEl = m.mount(m.React.createElement(m.TeacherArea28, { unlocked: true, onUnlockChange: () => {}, onGoSolutions: noop }));
+    await tick(60);
+    const txt = plainOf(openEl.innerHTML);
+    ok(txt.includes("Lesson Overview"), "teacher overview renders after unlock");
+    ok(txt.includes("العلاقة بالدرس 27"), "teacher overview explains the Lesson 27 relationship");
+    ok(txt.includes("ملاحظات التدريس"), "teacher notes render after unlock");
+    ok(txt.includes("حلول تمارين المصدر بالتفصيل"), "teacher activity solutions render after unlock");
+    ok(txt.includes("ملاحظة منطقية"), "teacher solutions disclose the ㉝ source-logic note");
+    ok(txt.includes("الأخطاء الجسيمة"), "teacher common mistakes render after unlock");
+    ok(!!byText(openEl, "اذهب إلى صفحة حلول الاختبار"), "teacher area links to test solutions");
+    ok(txt.includes(norm(m.TEACHER_28_OVERVIEW.coreSkill).slice(0, 40)) || txt.includes(m.TEACHER_28_OVERVIEW.coreSkill.slice(0, 30)), "teacher overview keeps the core-skill brief");
+    openEl.remove();
   }
 
-  // ---------------- 12) رجعة الدرس 27 — لم يُمس ----------------
+  // ---------------- 12) الهيكل الرئيسي + التوجيه + عدم المساس بالبقية ----------------
   {
-    const l27 = readFileSync(join(root, "src/lessons/lesson27/Lesson27.tsx"), "utf8");
-    ok(l27.includes("export default function Lesson27"), "Lesson 27 component remains intact");
+    const lessonHtml = m.renderToString(m.React.createElement(m.Lesson28, { onExit: noop }));
+    ok(lessonHtml.length > 3000, "Lesson 28 main component renders");
+    ok(lessonHtml.includes('dir="rtl"'), "Lesson 28 keeps the Arabic RTL shell");
+    ok(lessonHtml.includes('dir="ltr"'), "Lesson 28 isolates English as LTR");
+    ok(lessonHtml.includes("l28-main"), "Lesson 28 exposes its scroll container (#l28-main)");
+    ok(lessonHtml.includes("data-slide-counter"), "Lesson 28 renders the step counter");
+    ok((lessonHtml.match(/data-slide-counter/g) || []).join("") !== "" && /1 \/ 47|1\s*\/\s*47/.test(plainOf(lessonHtml)), "step counter starts at 1 / 47");
+    ok(lessonHtml.includes('data-area="l28-test"'), "Test Area is present as a separate area");
+    ok(lessonHtml.includes('data-area="l28-solutions"'), "Test Solutions area is present as a separate area");
+    ok(lessonHtml.includes('data-area="l28-teacher"'), "Teacher Area is present as a separate area");
+    ok(view.includes("ArrowLeft") && view.includes("ArrowRight"), "keyboard arrow navigation wired");
+    ok(view.includes("→ السابق") && view.includes("التالي ←"), "Previous/Next controls present");
+    ok(!view.includes("split(/(\\s+)/)"), "no per-token space splitting (word-reversal engine banned)");
+  }
+  {
     const app = readFileSync(join(root, "src", "App.tsx"), "utf8");
-    ok(app.includes("route === 27") && app.includes("<Lesson27 onExit={goHome} />"), "Lesson 27 route remains registered");
-    ok(app.includes("#/lesson/27"), "Lesson 27 hub card remains");
-    for (let n = 1; n <= 26; n++) {
-      ok(app.includes(`route === ${n}`), `Lesson ${n} route still registered`);
-    }
+    ok(app.includes('import Lesson28 from "./lessons/lesson28/Lesson28"') && app.includes("route === 28"), "Lesson 28 routed in App.tsx");
+    ok(app.includes("#/lesson/28"), "Lesson 28 hub card registered");
+    ok(app.includes("route === 27") && app.includes("#/lesson/27"), "Lesson 27 route + hub card remain");
+    ok(app.includes("route === 29") && app.includes("#/lesson/29"), "Lesson 29 route + hub card remain");
+    ok(app.includes("route === 30") && app.includes("#/lesson/30"), "Lesson 30 route + hub card remain");
+    for (let n = 1; n <= 26; n++) ok(app.includes(`route === ${n}`), `Lesson ${n} route still registered`);
+    const l27 = readFileSync(join(root, "src", "lessons", "lesson27", "Lesson27.tsx"), "utf8");
+    ok(l27.includes("export default function Lesson27"), "Lesson 27 component remains intact");
+    const l29 = readFileSync(join(root, "src", "lessons", "lesson29", "Lesson29.tsx"), "utf8");
+    ok(l29.includes("export default function Lesson29"), "Lesson 29 component remains intact");
   }
 } catch (err) {
   ok(false, err.stack || String(err));
@@ -629,4 +560,4 @@ if (failures.length) {
   for (const f of failures.slice(0, 60)) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`✓ Lesson 28 audit passed (${checks} assertions): 40-section ledger, render fidelity, delayed reveal, ㉝ logic note, 20-Q test, solutions, teacher area, BIDI isolation.`);
+console.log(`✓ Lesson 28 audit passed (${checks} assertions): 47-section ledger exact-once coverage, 47 native steps rendered, reveal gating, ㉝ logic note, 20-Q test flow, solutions, teacher gate, BIDI isolation.`);

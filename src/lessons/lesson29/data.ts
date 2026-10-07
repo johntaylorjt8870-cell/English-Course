@@ -55,28 +55,297 @@ export const SOURCE_SECTIONS:SourceSection29[]=[
 ];
 export const SOURCE_NUMBERED_COUNT=44;
 export const SOURCE_LEDGER_COUNT=SOURCE_SECTIONS.length;
-export const TEST_29=[
-['single','Which sentence foregrounds duration before a past event?',['I studied.','I was studying.','I had been studying for three hours when Ali called.'],2],
-['tf','In Past Perfect Continuous, had changes with the subject.',['True','False'],1],
-['multi','Select the valid parts of the affirmative form.',['had','been','verb-ing','did'],[0,1,2]],
-['single','Choose the correct connector: ___ twenty minutes.',['for','since'],0],
-['single','Choose the correct connector: ___ Monday.',['for','since'],1],
-['order','Order the timeline.',['past point / call','started studying','continued for three hours'],[1,2,0]],
-['single','Which sentence emphasizes completion?',['I had repaired the bicycle.','I had been repairing the bicycle for two hours.'],0],
-['tf','Past Perfect Continuous must still be happening at the later point.',['True','False'],1],
-['single','Choose the stative-verb sentence.',['I had known him for years.','I had been knowing him for years.'],0],
-['single','Which is the correct negative?',["I hadn't been sleeping.","I hadn't been sleep.",'I had not sleeping.'],0],
-['single','Which is the correct question?',['Had you been waiting long?','Had you waiting been long?','Did you had been waiting?'],0],
-['single','Which short answer is correct to Had she been studying?',['Yes, she been.','Yes, she had.','Yes, she did.'],1],
-['match','Match the form to the viewpoint.',['Past Simple → event','Past Continuous → activity at a past moment','Past Perfect → completed before past event','Past Perfect Continuous → duration/activity before past point'],[0,1,2,3]],
-['single','Her clothes were wet because she ___.',['had been walking in the rain','had been knowing the rain','was walk'],0],
-['tf','For asks about a starting point such as Monday.',['True','False'],1],
-['single','Which -ing form is correct?',['make → makeing','make → making','make → makking'],1],
-['multi','Which details support Past Perfect Continuous?',['earlier past point','duration','ongoing or repeated activity','only a single finished result'],[0,1,2]],
-['single','Choose the best sentence for “قرأ منذ ساعتين قبل وصولي”.',['He was reading when I arrived.','He had read the book when I arrived.','He had been reading the book for two hours when I arrived.'],2],
-['single','In the Daniel sentence, arrived is ___.',['Past Simple','Past Continuous','Past Perfect Continuous'],0],
-['order','Order the rescue-team ideas from earlier to main event.',['rescue team arrived','river had already flooded','villagers had been waiting for hours','rain was still falling'],[1,2,3,0]],
+
+// ============================================================
+// فهرس سجل المصدر — id ← index (المرجع الوحيد للوحدات الحرفية)
+// ============================================================
+export const SEC29: Record<string, number> = Object.fromEntries(SOURCE_SECTIONS.map((s, i) => [s.id, i]));
+
+/** وحدات قسم مصدري بالمعرّف — تُستهلك داخل المكوّنات المصممة، لا كـ dump. */
+export function U29(id: string): string[] {
+  return SOURCE_SECTIONS[SEC29[id]].units;
+}
+
+// ============================================================
+// بيانات التدريبات التفاعلية — المحتوى من المصدر حرفيًا،
+// و«السبب» العربي بعد كل إجابة شرح منصة (Platform Explanation).
+// الإجابات الواردة في المصدر (Answers: …) لا تُعرض إلا بعد المحاولة.
+// ============================================================
+
+export type Mcq29 = { stem: string; ar?: string; opts: string[]; answer: number; why: string };
+
+// ㊱ تمرين 1 — اختر الصيغة الصحيحة (الجمل والخيارات من المصدر حرفيًا)
+export const EX29_FILL: Mcq29[] = [
+  {
+    stem: "I ______ for two hours when my friend called.",
+    opts: ["studied", "was studying", "had been studying"],
+    answer: 2,
+    why: "مدة (for two hours) + نقطة ماضية لاحقة (when my friend called) ← had been studying.",
+  },
+  {
+    stem: "She was tired because she ______ all morning.",
+    opts: ["had been running", "ran", "was run"],
+    answer: 0,
+    why: "نشاط مستمر سابق يفسّر الأثر الظاهر (التعب) ← had been running.",
+  },
+  {
+    stem: "They ______ the project before the manager arrived.",
+    opts: ["had completed", "had been completing", "were complete"],
+    answer: 0,
+    why: "التركيز هنا على الاكتمال قبل حدث ماضٍ ← Past Perfect: had completed.",
+  },
+  {
+    stem: "We ______ for thirty minutes when the bus finally arrived.",
+    opts: ["had been waiting", "waited", "had wait"],
+    answer: 0,
+    why: "انتظار استمر مدة (for thirty minutes) قبل وصول الباص ← had been waiting.",
+  },
+  {
+    stem: "His clothes were wet because he ______ in the rain.",
+    opts: ["had been walking", "had walked", "was walk"],
+    answer: 0,
+    why: "نشاط مستمر سابق ترك أثرًا ظاهرًا (الملابس المبللة) ← had been walking.",
+  },
 ];
-export const TEST_29_SOLUTIONS=TEST_29.map((q,i)=>({answer:Array.isArray(q[3])?String((q[3] as number[]).map(n=>n+1).join(', ')):String((q[3] as number)+1),explanation:`Question ${i+1}: choose by meaning, timeline, and form—not by a trigger word. The tense must match the viewpoint and chronology.`,trap:'Common trap: confusing a past moment, a completed earlier event, and duration/activity.'}));
-export const OBJECTIVES_29=SOURCE_SECTIONS[1].units;
-export const TEACHER_PASSWORD_29='somer173';
+
+// ㊲ تمرين 2 — for أم since؟ (الجمل من المصدر حرفيًا)
+export const EX29_FORSINCE: Mcq29[] = [
+  { stem: "She had been studying ______ three hours.", opts: ["for", "since"], answer: 0, why: "three hours مدة ← for." },
+  { stem: "They had been living there ______ 2019.", opts: ["for", "since"], answer: 1, why: "2019 نقطة بداية ← since." },
+  { stem: "I had been waiting ______ twenty minutes.", opts: ["for", "since"], answer: 0, why: "twenty minutes مدة ← for." },
+  { stem: "He had been working there ______ Monday.", opts: ["for", "since"], answer: 1, why: "Monday نقطة بداية ← since." },
+  { stem: "We had been traveling ______ two weeks.", opts: ["for", "since"], answer: 0, why: "two weeks مدة ← for." },
+];
+
+// ㊳ تمرين 3 — المس الجزء الخاطئ ثم اكشف التصحيح (من المصدر حرفيًا)
+export type Fix29 = { segs: string[]; bad: number; correct: string; why: string };
+export const EX29_FIX: Fix29[] = [
+  { segs: ["She had been", "study", "for two hours."], bad: 1, correct: "She had been studying for two hours.", why: "بعد been يأتي الفعل بصيغة verb-ing." },
+  { segs: ["They had been", "waited", "for the bus."], bad: 1, correct: "They had been waiting for the bus.", why: "بعد been نستخدم verb-ing وليس V2." },
+  { segs: ["He", "had been knowing", "her for years."], bad: 1, correct: "He had known her for years.", why: "know فعل حالة — لا يُستخدم عادةً في الصيغ المستمرة." },
+  { segs: ["Had you", "been wait", "long?"], bad: 1, correct: "Had you been waiting long?", why: "السؤال أيضًا يحتاج verb-ing بعد been." },
+  { segs: ["I hadn't been", "sleep", "well."], bad: 1, correct: "I hadn't been sleeping well.", why: "النفي لا يغيّر القاعدة: hadn't been + verb-ing." },
+];
+
+// ㊴ IQ200 — اختر الجملة من المعنى العربي (المعاني والجمل من المصدر)
+export const EX29_MEANING: { ar: string; answer: number; why: string }[] = [
+  { ar: "عندما وصلت، كان سامر يقرأ.", answer: 0, why: "نشاط جارٍ في لحظة ماضية ← Past Continuous." },
+  { ar: "عندما وصلت، كان سامر قد قرأ الكتاب.", answer: 1, why: "اكتمال قبل حدث ماضٍ ← Past Perfect." },
+  { ar: "عندما وصلت، كان سامر يقرأ الكتاب منذ ساعتين.", answer: 2, why: "مدة + نشاط مستمر قبل نقطة ماضية ← Past Perfect Continuous." },
+];
+export const EX29_MEANING_OPTS = [
+  "He was reading when I arrived.",
+  "He had read the book when I arrived.",
+  "He had been reading the book for two hours when I arrived.",
+];
+
+// ㉝ / ㉞ / ㉟ — أسئلة IQ200 (الجمل من المصدر؛ حكم المصدر يُكشف بعد المحاولة)
+export type Iq29 = { title: string; lead: string; opts: string[]; answer: number; why: string; sourceVerdict: string };
+export const IQ29_33: Iq29 = {
+  title: "سؤال IQ200 — العيون الحمراء",
+  lead: "أي جملة تُبرز النشاط الذي أدى إلى الأثر الظاهر؟",
+  opts: ["Her eyes were red because she had cried.", "Her eyes were red because she had been crying."],
+  answer: 1,
+  why: "الجملة B تُبرز نشاط البكاء المستمر الذي أدى إلى الأثر الظاهر — وA ليست مستحيلة نحويًا.",
+  sourceVerdict: "Source answer: B. B better foregrounds the activity leading to the visible effect; A is not grammatically impossible.",
+};
+export const IQ29_34: Iq29 = {
+  title: "سؤال أصعب — إصلاح السيارة",
+  lead: "أي جملة تُبرز عملية الإصلاح نفسها (النشاط وربما المدة)؟",
+  opts: ["I had repaired the car before my father arrived.", "I had been repairing the car before my father arrived."],
+  answer: 1,
+  why: "A تركّز على الاكتمال/النتيجة، وB على النشاط والعملية — وكلتاهما ممكنة بحسب المقصود.",
+  sourceVerdict: "Both can be possible. A focuses on completion/result; B focuses on repair activity/process, possibly duration.",
+};
+export const IQ29_35: Iq29 = {
+  title: "لا تستخدمه فقط لأن هناك for",
+  lead: "اختر الجملة الطبيعية:",
+  opts: ["I had known Sarah for ten years before we moved.", "I had been knowing Sarah for ten years."],
+  answer: 0,
+  why: "know فعل حالة — وجود for لا يفرض الصيغة المستمرة. المعنى أولًا ثم القاعدة.",
+  sourceVerdict: "for does not automatically require Past Perfect Continuous. Meaning first, then rule.",
+};
+
+// ㊸ Boss Battle — ثلاث معارك (الجمل وحكم المصدر Preferred حرفيًا)
+export type Boss29 = { a: string; b: string; preferred: 0 | 1; why: string; source: string };
+export const BOSS29: Boss29[] = [
+  {
+    a: "The ground was wet because it had rained.",
+    b: "The ground was wet because it had been raining.",
+    preferred: 1,
+    why: "النشاط المستمر (المطر) يفسّر الأثر الظاهر (الأرض المبللة) بشكل أوضح — وA ليست خطأً نحويًا.",
+    source: "Preferred: B.",
+  },
+  {
+    a: "I had finished the report before the meeting.",
+    b: "I had been finishing the report before the meeting.",
+    preferred: 0,
+    why: "المعنى هنا اكتمال قبل حدث ماضٍ — finish بالصيغة المستمرة غير طبيعية في هذا السياق.",
+    source: "Preferred: A.",
+  },
+  {
+    a: "I had finished the report for four hours.",
+    b: "I had been working on the report for four hours before the meeting.",
+    preferred: 1,
+    why: "for مدة تحتاج نشاطًا مستمرًا — الجملة A غير منطقية لأن finish لحظة لا مدة.",
+    source: "Preferred: B.",
+  },
+];
+
+// ㊶ قصة Mia — الأفعال السبعة وتحليل المصدر لكل فعل
+export type TenseId29 = "ps" | "pc" | "pp" | "ppc";
+export type StoryVerb29 = { v: string; t: TenseId29; srcWhy: string };
+export const MIA29_VERBS: StoryVerb29[] = [
+  { v: "had been working", t: "ppc", srcWhy: "had been working → activity continued before Mia's arrival" },
+  { v: "were testing", t: "pc", srcWhy: "were testing / were writing → ongoing at that moment" },
+  { v: "were writing", t: "pc", srcWhy: "were testing / were writing → ongoing at that moment" },
+  { v: "had already checked", t: "pp", srcWhy: "had already checked → completed earlier event" },
+  { v: "were still preparing", t: "pc", srcWhy: "were still preparing → ongoing activity" },
+  { v: "was tired", t: "ps", srcWhy: "was tired → past state" },
+  { v: "had been walking", t: "ppc", srcWhy: "had been walking → earlier continuous activity contributing to tiredness" },
+];
+
+// ㉛ المحقق — جملة Daniel
+export const DANIEL29_VERBS: StoryVerb29[] = [
+  { v: "arrived", t: "ps", srcWhy: "arrived → Past Simple" },
+  { v: "had already been training", t: "ppc", srcWhy: "had already been training → Past Perfect Continuous" },
+];
+
+// 🚀 التحدي النهائي — جملة فريق الإنقاذ
+export const RESCUE29_VERBS: StoryVerb29[] = [
+  { v: "arrived", t: "ps", srcWhy: "arrived → Past Simple → rescue team arrival" },
+  { v: "had been waiting", t: "ppc", srcWhy: "had been waiting → Past Perfect Continuous → began before arrival and continued for several hours" },
+  { v: "was falling", t: "pc", srcWhy: "was falling → Past Continuous → ongoing at that point" },
+  { v: "had already flooded", t: "pp", srcWhy: "had already flooded → Past Perfect → flooding happened before arrival" },
+];
+
+// ============================================================
+// منطقة الاختبارات — 20 سؤالًا جديدة من خارج أمثلة الشرح قدر الإمكان،
+// مع شرح وفخ شائع لكل سؤال (تظهر في «حلول الاختبارات» فقط).
+// لا تصحيح قبل Submit — الاختيار ≠ التصحيح.
+// ============================================================
+export type TestQ29 =
+  | ["single", string, string[], number, string, string]
+  | ["tf", string, string[], number, string, string]
+  | ["multi", string, string[], number[], string, string]
+  | ["order", string, string[], number[], string, string]
+  | ["match", string, { l: string[]; r: string[] }, number[], string, string];
+
+export const TEST_29=[
+  ['single', "أي جملة تُبرز المدة قبل حدثٍ ماضٍ آخر؟",
+    ["I cooked dinner.", "I was cooking dinner.", "I had been cooking for an hour when the guests arrived."], 2,
+    "الجملة الثالثة وحدها تجمع المدة (for an hour) مع نقطة ماضية لاحقة (when the guests arrived) — وهذا جوهر Past Perfect Continuous.",
+    "الاكتفاء بوجود فعل ماضٍ دون البحث عن المدة والنقطة الماضية اللاحقة."],
+  ['tf', "في Past Perfect Continuous تتغيّر had حسب الفاعل.",
+    ["صحيح", "خطأ"], 1,
+    "had ثابتة مع كل الضمائر: I had been / She had been / They had been.",
+    "القياس على has/have في المضارع التام — هنا لا يوجد إلا had."],
+  ['multi', "اختر مكوّنات الصيغة المثبتة لـ Past Perfect Continuous.",
+    ["had", "been", "verb-ing", "did"], [0, 1, 2],
+    "الصيغة: Subject + had + been + verb-ing — ولا مكان لـ did فيها.",
+    "إقحام did من أسئلة الماضي البسيط."],
+  ['single', "أكمل: They had been driving ______ six hours.",
+    ["for", "since"], 0,
+    "six hours مدة — والمدة تأخذ for.",
+    "الخلط بين المدة ونقطة البداية."],
+  ['single', "أكمل: She had been teaching here ______ 2015.",
+    ["for", "since"], 1,
+    "2015 نقطة بداية — ونقطة البداية تأخذ since.",
+    "اعتبار كل ما بعد الفراغ مدة تلقائيًا."],
+  ['order', "رتّب أحداث الجملة من الأقدم إلى الأحدث: I had been studying for three hours when my friend called.",
+    ["اتصل صديقي", "بدأت الدراسة", "استمرت الدراسة ثلاث ساعات"], [1, 2, 0],
+    "النشاط بدأ، ثم استمر ثلاث ساعات، ثم جاءت النقطة الماضية (الاتصال).",
+    "البدء بالحدث المذكور آخرًا في الجملة بدل الأقدم زمنيًا."],
+  ['single', "أي جملة تركّز على الاكتمال والنتيجة؟",
+    ["I had painted the wall.", "I had been painting the wall for two hours."], 0,
+    "Past Perfect يبرز الاكتمال/النتيجة، والمستمر يبرز النشاط والمدة — فرق دلالي مفيد وليس قاعدة آلية.",
+    "الظن أن إحدى الجملتين «خطأ» — كلتاهما صحيحة والفرق في التركيز."],
+  ['tf', "يجب أن يكون النشاط مستمرًا حتى لحظة الحدث الثاني نفسها.",
+    ["صحيح", "خطأ"], 1,
+    "قد يتوقف النشاط قبل الحدث الثاني ويبقى أثره: He had been working all morning, so he was exhausted.",
+    "تحويل الفكرة الدلالية إلى شرط إلزامي."],
+  ['single', "اختر الجملة الطبيعية مع فعل الحالة believe:",
+    ["She had believed his story for years.", "She had been believing his story for years."], 0,
+    "أفعال الحالة (know / believe / want…) لا تُستخدم عادةً في الصيغ المستمرة.",
+    "اعتبار for دليلًا إلزاميًا على الصيغة المستمرة."],
+  ['single', "ما النفي الصحيح؟",
+    ["They hadn't been listening.", "They hadn't been listen.", "They had not listening."], 0,
+    "النفي: hadn't been + verb-ing — القاعدة لا تتغير مع النفي.",
+    "إسقاط been أو ترك الفعل بلا -ing."],
+  ['single', "ما السؤال الصحيح؟",
+    ["Had she been practicing before the concert?", "Had she practicing been before the concert?", "Did she had been practicing?"], 0,
+    "السؤال بتقديم Had فقط: Had + Subject + been + verb-ing?",
+    "إقحام Did مع had في سؤال واحد."],
+  ['single', "الإجابة القصيرة الصحيحة عن: Had they been traveling?",
+    ["Yes, they been.", "Yes, they had.", "Yes, they did."], 1,
+    "الإجابة القصيرة تكون بـ had لا بـ been ولا بـ did.",
+    "استخدام been في الإجابة القصيرة."],
+  ['match', "طابق كل زمن مع سؤاله.",
+    { l: ["Past Simple", "Past Continuous", "Past Perfect", "Past Perfect Continuous"],
+      r: ["What had happened before another past event?", "What happened?", "What had been happening for a period?", "What was happening at that moment?"] },
+    [1, 3, 0, 2],
+    "📸 حدث ماضٍ ← Past Simple · 🎥 نشاط في لحظة ماضية ← Past Continuous · ⏪ اكتمال قبل حدث ماضٍ ← Past Perfect · ⏳ مدة/نشاط قبل نقطة ماضية ← Past Perfect Continuous.",
+    "الخلط بين سؤالي Past Perfect و Past Perfect Continuous."],
+  ['single', "The road was muddy because it ______ all night.",
+    ["had been raining", "had been rain", "was rain"], 0,
+    "نشاط مستمر سابق فسّر الأثر الظاهر (الطين) — had been + verb-ing.",
+    "نسيان صيغة -ing بعد been."],
+  ['tf', "since تأتي قبل المدة مثل: since two hours.",
+    ["صحيح", "خطأ"], 1,
+    "since لنقطة البداية (since Monday / since 2020)، أما المدة فتأخذ for: for two hours.",
+    "ترجمة «منذ ساعتين» حرفيًا إلى since two hours."],
+  ['single', "ما صيغة -ing الصحيحة؟",
+    ["swim → swiming", "swim → swimming", "swim → swimeing"], 1,
+    "فعل قصير بساكن بعد حرف علة ← نضاعف الساكن: swim → swimming.",
+    "نسيان مضاعفة الساكن في الأفعال القصيرة."],
+  ['multi', "أي الأدلة تدعم اختيار Past Perfect Continuous؟",
+    ["نقطة ماضية لاحقة", "مدة أو نشاط متكرر", "نشاط كان جاريًا قبل تلك النقطة", "نتيجة واحدة منتهية فقط"], [0, 1, 2],
+    "نحتاج: نشاطًا بدأ قبل نقطة ماضية + استمر لفترة — أما «نتيجة واحدة منتهية فقط» فتشير إلى Past Perfect.",
+    "اختيار الزمن من كلمة واحدة بدل تجميع الأدلة."],
+  ['single', "اختر الجملة المناسبة لمعنى: «عندما وصلتُ، كانت ليلى تطبخ منذ الصباح».",
+    ["Layla was cooking when I arrived.", "Layla had cooked when I arrived.", "Layla had been cooking since morning when I arrived."], 2,
+    "المعنى يحمل نقطة بداية (منذ الصباح) ونشاطًا مستمرًا قبل الوصول ← had been cooking since morning.",
+    "اختيار Past Continuous لأن المشهد «أثناء» — مع إهمال المدة."],
+  ['single', "في جملة: When Daniel arrived at the gym, his friends had already been training for two hours. — الفعل arrived زمنه:",
+    ["Past Simple", "Past Continuous", "Past Perfect Continuous"], 0,
+    "arrived هو الحدث الماضي الرئيسي (النقطة المرجعية) ← Past Simple.",
+    "افتراض أن كل الأفعال في جملة PPC تصبح مستمرة."],
+  ['order', "رتّب أفكار جملة فريق الإنقاذ من الأقدم إلى الحدث الرئيسي.",
+    ["وصل فريق الإنقاذ", "كان النهر قد غمر الطريق", "كان القرويون ينتظرون منذ ساعات", "كان المطر لا يزال يهطل"], [1, 2, 3, 0],
+    "الفيضان اكتمل قبل الوصول (had already flooded)، والانتظار بدأ قبله واستمر (had been waiting)، والمطر كان جاريًا لحظة الوصول (was falling)، ثم الحدث الرئيسي: وصول الفريق.",
+    "ترتيب الأفكار حسب ظهورها في الجملة بدل ترتيبها الزمني."],
+] satisfies TestQ29[] as TestQ29[];
+
+/** نص الإجابة الصحيحة بصيغة قابلة للعرض في الحلول. */
+export function answerLabel29(q: TestQ29): string {
+  const type = q[0];
+  if (type === "multi") return (q[3] as number[]).map((n) => (q[2] as string[])[n]).join("  +  ");
+  if (type === "order") return (q[3] as number[]).map((n) => (q[2] as string[])[n]).join(" ثم ");
+  if (type === "match") {
+    const m = q[2] as { l: string[]; r: string[] };
+    return m.l.map((left, i) => `${left} → ${m.r[(q[3] as number[])[i]]}`).join(" · ");
+  }
+  return (q[2] as string[])[q[3] as number];
+}
+
+export const TEST_29_SOLUTIONS=TEST_29.map((q) => ({ answer: answerLabel29(q), explanation: q[4], trap: q[5] }));
+
+export const OBJECTIVES_29 = SOURCE_SECTIONS[1].units;
+export const TEACHER_PASSWORD_29 = "somer173";
+
+// ============================================================
+// منطقة المعلم — محتوى عربي كامل
+// ============================================================
+export const TEACHER_29_OVERVIEW: string[] = [
+  "الدرس 29 يوسّع نظام الماضي من «الحدث» إلى «النشاط والمدة» قبل نقطة ماضية: Past Perfect Continuous = had been + verb-ing.",
+  "البنية: 48 خطوة تغطي الأقسام ①–㊹ بالترتيب، ثم الملخص والمقارنة الرباعية والتحدي النهائي، ثم اختبار من 20 سؤالًا بحلول مفصلة.",
+  "كل خطوة فكرة واحدة + تفاعل يشرحها — والتدريبات تعطي تصحيحًا فوريًا مع السبب، بينما الاختبار النهائي لا يصحّح قبل التسليم.",
+];
+export const TEACHER_29_NOTES: string[] = [
+  "راجع Past Simple و Past Continuous و Past Perfect قبل تقديم وجهة النظر الجديدة (القسمان ㉙ و㉚).",
+  "لا تُدرّس أن Past Perfect Continuous يجب أن يستمر حتى الحدث الثاني — قد يتوقف ويبقى أثره (القسم ⑱).",
+  "لا تُدرّس أن for تعني دائمًا Past Perfect Continuous؛ أفعال الحالة تستخدم Past Perfect: I had known him for years. (القسمان ⑲ و㉟).",
+  "فرّق «نتيجة مقابل مدة» فرقٌ دلالي مفيد وليس قاعدة آلية مطلقة (الأقسام ⑥ و⑯ و㉞).",
+  "القرار دائمًا من المعنى: الترتيب الزمني، الأثر الظاهر، النشاط، المدة، for/since، ثم المقارنة الرباعية (القسم ㊹).",
+  "وظّف التدريبات ㊱–㊳ وقصة Mia ㊶ وخريطتها ㊷ وBoss Battle ㊸ والتحدي النهائي في التقييم التكويني قبل فتح الاختبار.",
+];

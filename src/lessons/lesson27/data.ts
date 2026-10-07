@@ -1522,6 +1522,27 @@ export const TEST_27: TestQ27[] = [
   },
 ];
 
+export function answerLabel27(q: TestQ27): string {
+  if (q.type === "single") return q.opts[q.answer];
+  if (q.type === "tf") return q.answer ? "✓ صحيح" : "✕ خطأ";
+  if (q.type === "multi") return q.answer.map((i) => q.opts[i]).join("  +  ");
+  if (q.type === "order") return q.answer.join(" ← ");
+  if (q.type === "match") return q.left.map((l, i) => `${l} → ${q.right[q.answer[i]]}`).join(" · ");
+  if (q.type === "spot") return `الخطأ في: "${q.segments[q.answer]}" ← الصواب: ${q.fix}`;
+  return "";
+}
+
+export const TEST_27_SOLUTIONS = TEST_27.map((q) => ({
+  n: q.n,
+  ar: q.ar,
+  en: q.en,
+  answer: answerLabel27(q),
+  why: q.why,
+  trap: q.trap,
+}));
+
+export const OBJECTIVES_27 = SOURCE_SECTIONS[2].units;
+
 // ============================================================
 // منطقة المعلم — الدرس 27 (محتوى تعليمي للمعلم، خلف كلمة المرور)
 // ============================================================

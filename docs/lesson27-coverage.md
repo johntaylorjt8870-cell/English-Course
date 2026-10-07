@@ -2,85 +2,84 @@
 
 ## Scope and fidelity contract
 
-Lesson 27 (`الدرس 27: Past Perfect — الماضي التام`) is added to the existing
-course. Nothing in Lessons 1–26 was rewritten, restyled, or shortened: the
-only shared-file changes are the lesson card + route registration in
-`src/App.tsx`, the teacher-gate password rotation in
-`src/shared/TeachersSpace.tsx` (`63971` → `somer173`), and validation-script
-registration. The site password (`CloseYourEyes173`) is unchanged.
+Lesson 27 (`الدرس 27: Past Perfect — الماضي التام`) has been rebuilt as a native
+multi-step interactive lesson adhering to the Lesson 6 and Lesson 29 benchmark.
+`SOURCE_SECTIONS` serves as the authoritative fidelity/coverage ledger and is
+never rendered as a raw text dump. Every pedagogical concept is delivered
+through interactive explanation, sentence anatomy, and immediate feedback.
 
 | Ledger item | Result |
 | --- | --- |
 | Authoritative source sections | **53** (`SOURCE_SECTIONS`: 44 numbered ①–㊹ in source order + 9 unnumbered: cover, bridge, objectives, golden, words, rule, map, finalrule, closing) |
-| Source headings rendered on-slide | **53** — every source-mapped slide renders its own heading box carrying the `data-source-section="N"` marker |
-| Slides | **56**: cover + objectives + 42 lesson slides + 11 in-lesson exercises + closing |
-| Interactive lab visualizations | **37** `data-en-seq` boards: 24 lesson labs (`l27-timeline`, `l27-order-quiz`, `l27-sara`, `l27-had-grid`, `l27-verbs-regular`, `l27-verbs-irregular`, `l27-v2v3`, `l27-teacher-switch`, `l27-ali`, `l27-pairs-a`, `l27-pairs-b`, `l27-short-flip`, `l27-side-by-side`, `l27-lina-switch`, `l27-before`, `l27-after`, `l27-bytime`, `l27-emma-detective`, `l27-need-toggle`, `l27-iq-stepper`, `l27-emma-cinema`, `l27-liam`, `l27-john-switch`, `l27-dance`) + 11 exercise boards (`l27-ex-v3`, `l27-ex-hadhave`, `l27-ex-simple-perfect`, `l27-ex-noah`, `l27-ex-errors`, `l27-ex-transform`, `l27-ex-museum`, `l27-ex-order`, `l27-ex-boss`, `l27-ex-final10`, `l27-ex-story`) + cover/closing |
-| Nine required interactive experiences | **9**: Timeline (`l27-timeline`), V1/V2/V3 table (`l27-verbs-regular`/`l27-verbs-irregular`/`l27-v2v3`), tense switch (`l27-teacher-switch`/`l27-lina-switch`/`l27-john-switch`), event ordering (`l27-order-quiz`/`l27-ali`), 3-tense cinema (`l27-emma-cinema`), detective (`l27-emma-detective` + `l27-ex-museum`), error hunt (`l27-ex-errors`), boss battle (`l27-ex-boss`), story builder (`l27-ex-story`) |
-| In-lesson exercises | **11** (`v3`, `hadhave`, `simplePerfect`, `noah`, `errors`, `transform`, `museum`, `orderChal`, `boss`, `final10`, `story`) |
-| Test Area questions | **20** newly authored (`TEST_27`, numbered 1–20): 15 single + 1 tf + 1 multi + 1 order + 1 match + 1 spot — Lesson 27 does **not** use the shared 12-question `FinalQuiz` |
-| Test solutions | **20** detailed solutions (`Solutions27`), gated until submit or teacher unlock |
-| Teacher area | `somer173`-gated: overview + 16 teaching notes + 10 activity solutions + 8 story-rubric requirements + 8 common mistakes + solutions entry |
-| Intentional source errors preserved verbatim | **10** (`INTENTIONALLY_WRONG_27`) |
+| Source headings mapped to steps | **53** — every source-mapped step renders its own semantic frame carrying the `sourceTag` / `data-source-section` marker |
+| Native Steps | **53** focused steps with multi-step rail navigation, step counter (`data-slide-counter`), progress bar, and keyboard navigation |
+| Interactive lab visualizations | **32+** `data-en-seq` boards across concepts, comparisons, drills, and story studio |
+| Key interactive teaching experiences | Interactive Timeline (`l27-timeline`), Sara Cinema Simulator (`l27-sara`), Had Formula Grid (`l27-had-grid`), 14 Source Verbs Library (`l27-verbs-regular`), V2 vs V3 Trap Sorter (`l27-v2v3`), Teacher Meaning Switcher (`l27-teacher-switch`), Ali Restaurant Scenario (`l27-ali`), Irregular Pairs Explorer (`l27-pairs-a`), Short Answers Flip Cards (`l27-short-flip`), Side-by-Side Comparison (`l27-side-by-side`), Lina Departure Switcher (`l27-lina-switch`), Clause-Order Labs (`l27-before`, `l27-after`, `l27-bytime`), Emma Detective (`l27-emma-detective`), Clear Sequence Toggle (`l27-need-toggle`), IQ200 Stepper (`l27-iq-stepper`), Drills 1–3 (`l27-ex-v3`, `l27-ex-hadhave`, `l27-ex-simple-perfect`), Noah Ordering (`l27-ex-noah`), Error Hunter (`l27-ex-errors`), Sentence Transformation (`l27-ex-transform`), Museum Advanced Detective (`l27-ex-museum`), Emma 3-Camera Cinema (`l27-emma-cinema`), Liam 3-Lens Scene (`l27-liam`), Classroom Event Ordering (`l27-ex-order`), John Arrival/Departure Switch (`l27-john-switch`), Dance Precision Lab (`l27-dance`), Boss Battle (`l27-ex-boss`), In-Lesson Final 10-Q Drill (`l27-ex-final10`), and Story Studio (`l27-ex-story`) |
+| Practice drills | Real-time immediate feedback with explanation and source answer reveal |
+| Test Area questions | **20** newly authored questions (`TEST_27`, numbered 1–20) across structured types (single, tf, multi, order, match, spot) with strict anti-leak gating and full reset |
+| Test solutions | **20** detailed solutions (`Solutions27`), gated until submit or teacher unlock, explaining why the answer is right and warning against common traps |
+| Teacher area | `somer173`-gated: overview + 16 teaching notes + 10 activity solutions + story rubric + 8 common mistakes + test solutions access |
+| Intentional source errors preserved verbatim | **10** (`INTENTIONALLY_WRONG_27`) for pedagogical error-detection drills |
 | New runtime dependencies | **None** |
-| Branding | `EnglishwithSomeR` only; no country-flag branding added |
+| Direction & BIDI | RTL Arabic shell with strictly isolated LTR English strings via `LatinRuns` and `En` |
 
 ## Source-section to implementation map
 
-| # | id | Authoritative source heading | Slide implementation | Presentation or interaction |
+| # | id | Authoritative source heading | Step implementation | Presentation or interaction |
 | ---: | --- | --- | --- | --- |
-| 0 | cover | الغلاف — الدرس 27 | `Cover27` | Lesson identity: THE FLASHBACK DIRECTOR. |
-| 1 | bridge | الافتتاح — 🧠 IQ200 | `BlockView` units 0–7 | Bridge from Past Simple / Past Continuous / when–while; visual question 📸🎥⏪. |
-| 2 | objectives | 🎯 أهداف الدرس | `Objectives27` | All 10 objectives ①–⑩. |
-| 3 | s1 | ① 🧠 ما هو Past Perfect؟ | `TimelineLab` + `OrderQuizLab` | Interactive timeline (event vs flashback) + train-arrival order quiz. |
-| 4 | s2 | ② 🔥 الفكرة الذهبية | `BlockView` units 0–14 | «كان قد فعل» — the golden idea, then quiz. |
-| 5 | s3 | ③ 🕰️ خط الزمن | `SaraDiagramLab` | Sara/cinema timeline diagram. |
-| 6 | s4 | ④ ⭐ كيف نكوّن Past Perfect؟ | `HadGridLab` | had + V3 grid: had never changes. |
-| 7 | s5 | ⑤ 🧱 ما هو V3؟ | `VerbRegularLab` + `VerbIrregularLab` | V1→V2→V3 table: 14 source verbs, regular vs irregular. |
-| 8 | s6 | ⑥ 🚨 لا تخلط بين V2 و V3 | `V2V3Lab` | V2-vs-V3 sorter. |
-| 9 | s7 | ⑦ 🧠 لماذا نحتاج Past Perfect أصلًا؟ | `TeacherSwitchLab` | Teacher-arrived switch: with/without had. |
-| 10 | s8 | ⑧ 🎯 مثال ذكي جدًا | `AliOrderLab` | Ali/restaurant event ordering. |
-| 11 | s9 | ⑨ 🟢 الجملة المثبتة | `BlockView` | Subject + had + V3 affirmative board. |
-| 12 | s10 | ⑩ 🔥 مع الأفعال غير المنتظمة | `PairsLab` ×2 (`pairsA`/`pairsB`) | eat/go/see + take/write/break pairs. |
-| 13 | s11 | ⑪ ❌ النفي | `BlockView` | hadn't + V3. |
-| 14 | s12 | ⑫ 🚨 انتبه! | `BlockView` | V3 after hadn't too. |
-| 15 | s13 | ⑬ ❓ الأسئلة | `BlockView` | Had + Subject + V3? |
-| 16 | s14 | ⑭ 🗣️ الإجابات القصيرة | `ShortFlipLab` | Yes, I had. / No, I hadn't. flip cards. |
-| 17 | s15 | ⑮ 🧠 الفرق بين Past Simple و Past Perfect | `SideBySideLab` | Side-by-side scene comparison. |
-| 18 | s16 | ⑯ 🔥 المقارنة الأهم | `LinaSwitchLab` | Lina left vs Lina had left switch. |
-| 19 | s17 | ⑰ ⏱️ before | `WordOrderLab` (`beforeLab`) | before clause-order lab. |
-| 20 | s18 | ⑱ 🔄 after | `WordOrderLab` (`afterLab`) | after clause-order lab. |
-| 21 | s19 | ⑲ ⏳ by the time | `WordOrderLab` (`bytimeLab`) | by the time lab. |
-| 22 | s20 | ⑳ ⭐ already | `BlockView` | already board. |
-| 23 | s21 | ㉑ ⚡ just | `BlockView` | just board. |
-| 24 | s22 | ㉒ 🧠 never | `BlockView` | never board. |
-| 25 | s23 | ㉓ 🏆 المثال الأسطوري | `BlockView` | Daniel/airport legendary example. |
-| 26 | s24 | ㉔ 🕵️ Grammar Detective | `EmmaDetectiveLab` | Emma/dinner tense detective. |
-| 27 | s25 | ㉕ 🔥 هل يعني دائمًا «كان قد»؟ | `BlockView` | Meaning nuance board. |
-| 28 | s26 | ㉖ 🧠 لا يعني «حدث منذ زمن طويل» | `BlockView` | Myth-busting board. |
-| 29 | s27 | ㉗ 🚨 ليس مطلوبًا دائمًا | `BlockView` | When Simple suffices. |
-| 30 | s28 | ㉘ 🧩 الترتيب واضح أصلًا | `NeedToggleLab` | Need-it / skip-it toggle. |
-| 31 | s29 | ㉙ 🧠 قاعدة IQ200 | `IqStepperLab` | Four-step IQ rule stepper. |
-| 32 | s30 | ㉚ 🧪 تدريب 1 — اختر الفعل الصحيح | `ExV3` (`McqDrill`, `EX27_V3`) | 5 source questions; source answers started/eaten/gone/written/seen. |
-| 33 | s31 | ㉛ 🧪 تدريب 2 — had أو have؟ | `ExHadHave` (`McqDrill`, `EX27_HADHAVE`) | 4 prompts; answers derived from the source rule (platform-tagged). |
-| 34 | s32 | ㉜ 🧪 تدريب 3 — Simple أم Perfect؟ | `ExSimplePerfect` (`McqDrill`, `EX27_SIMPLE_PERFECT`) | 5 questions; platform-tagged contexts disambiguate meaning. |
-| 35 | s33 | ㉝ 🧠 تدريب IQ200 — رتّب الأحداث | `ExNoah` (`EX27_NOAH`) | Noah order: B first, then A. |
-| 36 | s34 | ㉞ 🧠 تدريب IQ200 — اكتشف الخطأ | `ExErrors` (`EX27_ERRORS` + `EX27_ERROR_SPOTS`) | Tap the wrong segment, then fix: 5 source errors. |
-| 37 | s35 | ㉟ 🔥 تحدي التحويل | `ExTransform` (`EX27_TRANSFORM`) | Merge two events into a Past Perfect sentence (2 challenges + worked example). |
-| 38 | s36 | ㊱ 🕵️ Grammar Detective — المستوى المتقدم | `ExMuseum` (`DETECTIVE_27`) | Classify all 6 museum verbs by tense + role. |
-| 39 | s37 | ㊲ 🎬 القصة السينمائية | `EmmaCinemaLab` | Emma/key: 🎥 background · 📸 event · ⏪ flashback. |
-| 40 | s38 | ㊳ 🧠 الفرق بين الأزمنة الثلاثة | `LiamSceneLab` | Liam 8:00 three-tense scene. |
-| 41 | s39 | ㊴ 🏆 تحدي IQ200 الحقيقي | `ExOrderChal` (`ORDER_27_CHALLENGE`) | Order A–D; both context-compatible orders accepted (see nuance below). |
-| 42 | s40 | ㊵ 🧠 سؤال صعب جدًا | `JohnSwitchLab` | John left vs had left meaning switch. |
-| 43 | s41 | ㊶ 🚀 IQ200 — اكتشف المشكلة؟ | `DancePrecisionLab` | had danced vs was dancing precision lab. |
-| 44 | s42 | ㊷ ⚔️ Boss Battle | `ExBoss` (`BOSS_27`) | Both supplied battles (sleeping / had left). |
-| 45 | s43 | ㊸ 🧪 الاختبار النهائي | `ExFinal10` (`McqDrill`, `EX27_FINAL`) | 10 source questions; Q2 typo corrected (see below). |
-| 46 | s44 | ㊹ 🏆 المهمة النهائية — Build the Story | `ExStory` | Learner writes ≥10 sentences: 3 tenses, when/while/before-after, chronology; starter sentence display-only. |
-| 47 | golden | 🧠 الملخص الذهبي | `BlockView` | Golden summary board. |
-| 48 | words | ⭐ الكلمات المهمة | `BlockView` | Key-words board. |
-| 49 | rule | 🧠 القاعدة التي يجب ألا تنساها | `BlockView` | had ← V3 rule board. |
-| 50 | map | 🗺️ خطة الأزمنة التي وصلنا إليها | `BlockView` | Tense-map board. |
-| 51 | finalrule | 🧠 IQ200 FINAL RULE | `BlockView` | Final-rule board. |
-| 52 | closing | الخاتمة — LESSON 27 COMPLETE | `Closing27` | Lesson closing + entry to the Test Area. |
+| 0 | cover | الغلاف — الدرس 27 | `CoverStep` | Lesson identity: THE FLASHBACK DIRECTOR + 3-Camera Preview. |
+| 1 | bridge | الافتتاح — 🧠 IQ200 | `BridgeStep` | Bridge from Past Simple / Past Continuous / when–while to Past Perfect. |
+| 2 | objectives | 🎯 أهداف الدرس | `ObjectivesStep` | All 10 objectives with interactive checklist. |
+| 3 | s1 | ① 🧠 ما هو Past Perfect؟ | `S1Timeline` | Interactive timeline (event 1 vs event 2) + train arrival. |
+| 4 | s2 | ② 🔥 الفكرة الذهبية | `S2GoldenIdea` | «كان قد فعل» — interactive sentence player with Arabic translations. |
+| 5 | s3 | ③ 🕰️ خط الزمن | `S3SaraDiagram` | Sara / cinema timeline simulator. |
+| 6 | s4 | ④ ⭐ كيف نكوّن Past Perfect؟ | `S4HadGrid` | Subject + had + V3: pronoun selector showing `had` remains identical. |
+| 7 | s5 | ⑤ 🧱 ما هو V3؟ | `S5VerbTable` | 14 source verbs library: regular vs irregular. |
+| 8 | s6 | ⑥ 🚨 لا تخلط بين V2 و V3 | `S6V2V3Trap` | V2 vs V3 trap analyzer (`had gone` ✅ vs `had went` ❌). |
+| 9 | s7 | ⑦ 🧠 لماذا نحتاج Past Perfect أصلًا؟ | `S7TeacherSwitch` | Teacher arrival switcher: with/without `had` flips the timeline. |
+| 10 | s8 | ⑧ 🎯 مثال ذكي جدًا | `S8AliOrder` | Ali & restaurant scenario. |
+| 11 | s9 | ⑨ 🟢 الجملة المثبتة | `S9Affirmative` | Affirmative sentence builder & dissected sentence cards with anatomy. |
+| 12 | s10 | ⑩ 🔥 مع الأفعال غير المنتظمة | `S10IrregularPairs` | Irregular verb pairs: eat, go, see, take, write, break. |
+| 13 | s11 | ⑪ ❌ النفي | `S11Negative` | hadn't + V3 with full/contracted toggle. |
+| 14 | s12 | ⑫ 🚨 انتبه! | `S12NegativeV3Trap` | V3 after hadn't too (`hadn't seen` ✅ vs `hadn't saw` ❌). |
+| 15 | s13 | ⑬ ❓ الأسئلة | `S13Questions` | Had + Subject + V3? question cards with anatomy. |
+| 16 | s14 | ⑭ 🗣️ الإجابات القصيرة | `S14ShortAnswers` | Yes, I had. / No, I hadn't. flip cards. |
+| 17 | s15 | ⑮ 🧠 الفرق بين Past Simple و Past Perfect | `S15SideBySide` | Side-by-side comparison: finished vs had finished. |
+| 18 | s16 | ⑯ 🔥 المقارنة الأهم | `S16LinaSwitch` | Lina left vs Lina had left interactive switcher. |
+| 19 | s17 | ⑰ ⏱️ before | `S17BeforeLab` | `before` rule: [Past Perfect] + before + [Past Simple]. |
+| 20 | s18 | ⑱ 🔄 after | `S18AfterLab` | `after` rule: After + [Past Perfect] → [Past Simple]. |
+| 21 | s19 | ⑲ ⏳ by the time | `S19ByTimeLab` | `by the time` rule + concert/doctor examples. |
+| 22 | s20 | ⑳ ⭐ already | `S20Already` | `already` placement between had and V3. |
+| 23 | s21 | ㉑ ⚡ just | `S21Just` | `just` for immediate preceding events. |
+| 24 | s22 | ㉒ 🧠 never | `S22Never` | `never` for experiences absent up to a past moment. |
+| 25 | s23 | ㉓ 🏆 المثال الأسطوري | `S23DanielLegend` | Daniel & airport legendary example. |
+| 26 | s24 | ㉔ 🕵️ Grammar Detective | `S24EmmaDetective` | Emma & dinner detective question. |
+| 27 | s25 | ㉕ 🔥 هل يعني دائمًا «كان قد»؟ | `S25Nuance` | Meaning nuance and sequence focus. |
+| 28 | s26 | ㉖ 🧠 لا يعني «حدث منذ زمن طويل» | `S26MythBuster` | Myth buster: relative sequence, not time distance. |
+| 29 | s27 | ㉗ 🚨 ليس مطلوبًا دائمًا | `S27NotAlwaysNeeded` | When Past Simple is enough (single past event). |
+| 30 | s28 | ㉘ 🧩 الترتيب واضح أصلًا | `S28OrderClear` | `and then` vs `after` toggle. |
+| 31 | s29 | ㉙ 🧠 قاعدة IQ200 | `S29IqStepper` | 4-step decision flowchart. |
+| 32 | s30 | ㉚ 🧪 تدريب 1 — اختر الفعل الصحيح | `S30PracticeV3` | 5 source questions with immediate feedback + reason. |
+| 33 | s31 | ㉛ 🧪 تدريب 2 — had أو have؟ | `S31PracticeHadHave` | 4 prompts with immediate feedback + platform tag. |
+| 34 | s32 | ㉜ 🧪 تدريب 3 — Simple أم Perfect؟ | `S32PracticeSimplePerfect` | 5 questions with contextual disambiguation + platform tag. |
+| 35 | s33 | ㉝ 🧠 تدريب IQ200 — رتّب الأحداث | `S33Noah` | Noah station ordering: B then A. |
+| 36 | s34 | ㉞ 🧠 تدريب IQ200 — اكتشف الخطأ | `S34ErrorHunter` | Tap the wrong word in 5 sentences + live fix reveals. |
+| 37 | s35 | ㉟ 🔥 تحدي التحويل | `S35Transform` | Sentence merger & transformer (2 exercises + worked example). |
+| 38 | s36 | ㊱ 🕵️ Grammar Detective — المستوى المتقدم | `S36MuseumDetective` | Classify 6 verbs from museum heist into 3 tenses. |
+| 39 | s37 | ㊲ 🎬 القصة السينمائية | `S37EmmaCinema` | Emma & mysterious key: 🎥 background · 📸 event · ⏪ flashback. |
+| 40 | s38 | ㊳ 🧠 الفرق بين الأزمنة الثلاثة | `S38LiamScene` | Liam 8:00 three-tense scene. |
+| 41 | s39 | ㊴ 🏆 تحدي IQ200 الحقيقي | `S39OrderChallenge` | Order classroom events A–D (accepts B,C,A,D & C,B,A,D). |
+| 42 | s40 | ㊵ 🧠 سؤال صعب جدًا | `S40JohnSwitch` | John left vs had left micro-switch. |
+| 43 | s41 | ㊶ 🚀 IQ200 — اكتشف المشكلة؟ | `S41DancePrecision` | had danced vs was dancing precision lab. |
+| 44 | s42 | ㊷ ⚔️ Boss Battle | `S42BossBattle` | Two Boss Battles (sleeping / train left). |
+| 45 | s43 | ㊸ 🧪 الاختبار النهائي | `S43Final10` | 10 source questions with immediate feedback & typo fix note. |
+| 46 | s44 | ㊹ 🏆 المهمة النهائية — Build the Story | `S44StoryStudio` | Story Studio with live requirements validator for "The Mysterious Door". |
+| 47 | golden | 🧠 الملخص الذهبي | `GoldenSummary` | Golden summary of affirmative, negative, question, short answers. |
+| 48 | words | ⭐ الكلمات المهمة | `WordsSummary` | Key time words and conjunctions cards. |
+| 49 | rule | 🧠 القاعدة التي يجب ألا تنساها | `KeyRule` | `had → V3` rule and core verb triplets. |
+| 50 | map | 🗺️ خريطة الأزمنة التي وصلنا إليها | `TenseMap` | Full course roadmap from Present Simple to Past Perfect. |
+| 51 | finalrule | 🧠 IQ200 FINAL RULE | `FinalRule` | Three-camera thinking: 📸 🎥 ⏪. |
+| 52 | closing | الخاتمة — LESSON 27 COMPLETE | `ClosingStep` | Lesson completion + entry button to Test Area. |
 
 ## Source typo correction — Section ㊸ Question ②
 
@@ -89,55 +88,13 @@ The supplied source prints the same option twice for question ②
 
 - Original (kept verbatim in the ledger, `SOURCE_SECTIONS`, and in this doc):
   A) find · **B) found · C) found**
-- Minimal correction (exercise data `EX27_FINAL` + student UI only):
+- Minimal correction (exercise data `EX27_FINAL` + student UI):
   A) find · B) found · **C) founded** — exactly one correct answer (`found`).
 
-The correction is recorded in `TYPO_S43_Q2` (`original: [find, found, found]`,
-`corrected: [find, found, founded]`, `answer: 1`), disclosed to learners in a
-platform-tagged note on the drill
-(`Source typo correction — Section ㊸ Question ②: …`), and enforced by
-`scripts/audit-lesson27.mjs` (ledger keeps the typo · drill has exactly one
-correct option · record round-trips). The teacher area repeats the disclosure
-in the ㊸ activity solution.
+The correction is recorded in `TYPO_S43_Q2`, disclosed to learners in a
+platform-tagged note on the drill, and enforced by `scripts/audit-lesson27.mjs`.
 
 ## Section ㊴ — context-dependent ordering nuance
 
-The source note (kept verbatim in the ledger, the student reveal, and the
-teacher area) states that events ① and ② may precede or surround the entry
-moment depending on context, so meaning — not trigger words alone — decides.
-The challenge therefore accepts **both** context-compatible orders
-(`ORDER_27_CHALLENGE.accept`: `[B, C, A, D]` and `[C, B, A, D]`), shows the
-nuance note after checking either way, and the audit asserts both acceptance
-paths plus nuance rendering.
-
-## Delayed-reveal contract (audited)
-
-- Selection is neutral (`bg-slate-900`) everywhere; checking is disabled until
-  every prompt is answered.
-- No score, no correctness colors, no explanations, no answer data attributes,
-  and no answer-bearing ARIA labels exist anywhere (including hidden DOM)
-  before the check/submit action; solutions render zero answers before
-  entitlement (submit or teacher unlock).
-- After checking, each drill reveals its verbatim source answer block inside
-  `data-reveal-block`; the Test Area reveals per-question marking +
-  explanations; reset restores the fully neutral state.
-- In-lesson drills keep platform-derived answers/contexts behind a
-  `Platform Explanation` tag so supplied source content stays distinguishable.
-
-## Validation log (2026-10-06, branch `arena/179148f7-english-course`)
-
-| Gate | Result |
-| --- | --- |
-| `npm run build` | ✓ built in ~5s |
-| `npm run check:english-direction` | ✓ 1394 assertions, 27 lessons |
-| `node scripts/audit-render-direction.mjs` | ✓ 1449 assertions |
-| `node scripts/audit-lesson24.mjs` | ✓ 165 assertions |
-| `node scripts/audit-lesson26.mjs` | ✓ 164 assertions |
-| `node scripts/audit-lesson27.mjs` | ✓ 274 assertions |
-| `node scripts/interaction-test.mjs` | ✓ 558 passed, 0 failed |
-
-No existing audit was weakened: Lesson 27 additions to shared scripts extend
-inventories (27 folders, routes 1–27, `somer173`) while Lessons 1–26 keep the
-shared 12-question quiz path; the Lesson 27 leak detector matches the Lesson
-26 precedent (Arabic-answer reveals), documented here because English verb
-labels and tense names are themselves the question buttons.
+The challenge accepts both context-compatible orders (`[B, C, A, D]` and `[C, B, A, D]`),
+shows the nuance note after checking either way, and explains why meaning takes precedence over rigid formulas.

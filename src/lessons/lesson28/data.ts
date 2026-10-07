@@ -14,7 +14,6 @@ export const LAB_NAME_28 = "THE TIMELINE MASTER";
 export const LAB_MOTTO_28 =
   "📸 What happened? · 🎥 What was happening? · ⏪ What had happened before that?";
 
-export type Tone28 = "neutral" | "en" | "good" | "bad" | "warn" | "head" | "subhead";
 
 // ============================================================
 // سجل المصدر (Source Ledger)
@@ -1502,59 +1501,20 @@ export const STORY_28_REQUIREMENTS = [
 export const STORY_28_TITLE = "The Missing Backpack";
 
 // ============================================================
-// الشرائح والمختبرات والتدريبات
+// سجل الخطوات (Step Registry) — درس متعدد الخطوات أصيل
+// كل خطوة = فكرة واحدة واضحة، وتحمل معرفات مقاطع المصدر التي تغطيها
+// (SOURCE_SECTIONS[].id) في الحقل source — لا يوجد أي عرض نصيّ خام للمصدر.
 // ============================================================
-export type Lab28 =
-  | "firstQuestion"
-  | "timelineShop"
-  | "mayaSwitch"
-  | "necklaceOrder"
-  | "compareDirect"
-  | "oldMyth"
-  | "beforeOptional"
-  | "whyPerfect"
-  | "afterLab"
-  | "ruleLab"
-  | "bytimeLab"
-  | "alreadyLab"
-  | "justLab"
-  | "psPlusPp"
-  | "threeTenseIntro"
-  | "walletLayers"
-  | "stationThree"
-  | "timeMachine"
-  | "cases3"
-  | "sequenceBackref"
-  | "stepBack"
-  | "caveDetective"
-  | "logicTest"
-  | "alexScene"
-  | "meaningRule";
-
-export type Block28 =
-  | { t: "units"; from: number; to?: number; tone?: Tone28 }
-  | { t: "lab"; lab: Lab28; covers?: [number, number] }
-  | { t: "note"; emoji: string; text: string; platform?: boolean }
-  | { t: "strip"; items: string[]; tone?: Tone28 };
-
-export type Exercise28 =
-  | { type: "choose" }
-  | { type: "firstEvent" }
-  | { type: "errors" }
-  | { type: "johnMary" }
-  | { type: "sarahTom" }
-  | { type: "daniel" }
-  | { type: "boss" }
-  | { type: "iqFinal" }
-  | { type: "story" };
-
-export type Slide28 = { section: string; mascot: string; sourceIndex?: number; covers?: [number, number] } & (
-  | { kind: "cover"; title: string }
-  | { kind: "objectives"; title: string }
-  | { kind: "lesson"; step?: string; title: string; lead?: string; blocks: Block28[]; tip?: string }
-  | { kind: "ex"; badge: string; title: string; subtitle?: string; ex: Exercise28 }
-  | { kind: "closing"; title: string }
-);
+export type Slide28 = {
+  id: string;
+  section: string;
+  mascot: string;
+  title: string;
+  step?: string;
+  lead?: string;
+  tip?: string;
+  source: string[]; // معرفات مقاطع SOURCE_SECTIONS التي تغطيها هذه الخطوة
+};
 
 const START = "البداية";
 const DECIDE = "القرار: بسيط أم تام؟";
@@ -1570,210 +1530,103 @@ const END = "الخاتمة";
 export const SECTIONS_28 = [START, DECIDE, ORDER, THREE, ERR, REASON, PRACTICE, ADV, BOSS, END] as const;
 
 export const SLIDES: Slide28[] = [
-  { kind: "cover", section: START, mascot: "🧭", title: LESSON_TITLE_28, sourceIndex: SEC.cover, covers: [0, 2] },
-  {
-    kind: "lesson", section: START, mascot: "🧠", sourceIndex: SEC.bridge, step: "0",
-    title: "IQ200 — ترتيب الأحداث في الماضي باحتراف",
-    lead: "الدرس 27 بنى الآلة… والدرس 28 يعلّمك متى تستخدمها.",
-    blocks: [{ t: "units", from: 0, to: 12, }],
-    tip: "الأسئلة الخمسة الحاكمة: ماذا حدث أولًا؟ ماذا بعده؟ هل أحتاج الماضي التام؟ هل يكفي البسيط؟ هل يوجد حدث مستمر؟",
-  },
-  { kind: "objectives", section: START, mascot: "🎯", sourceIndex: SEC.objectives, covers: [0, 11], title: "أهداف الدرس — 10 أهداف" },
+  { id: "cover", section: START, mascot: "🧭", title: "الغلاف — الدرس 28: Past Perfect vs Past Simple", source: ["cover"] },
+  { id: "bridge", section: START, mascot: "🧠", title: "الافتتاح — IQ200 ترتيب الأحداث في الماضي باحتراف", lead: "الدرس 27 بنى الآلة… والدرس 28 يعلّمك متى تستخدمها.", tip: "الأسئلة الخمسة الحاكمة: ماذا حدث أولًا؟ ماذا بعده؟ هل أحتاج الماضي التام؟ هل يكفي البسيط؟ هل يوجد حدث مستمر؟", source: ["bridge"] },
+  { id: "objectives", section: START, mascot: "🎯", title: "أهداف الدرس العشرة", source: ["objectives"] },
 
-  {
-    kind: "lesson", section: DECIDE, mascot: "🧠", sourceIndex: SEC.s1, step: "1",
-    title: "أول سؤال: ماذا حدث أولًا؟",
-    lead: "أهم قاعدة في الدرس كله.",
-    blocks: [{ t: "lab", lab: "firstQuestion", covers: [0, 15] }],
-  },
-  {
-    kind: "lesson", section: DECIDE, mascot: "📸", sourceIndex: SEC.s2, step: "2",
-    title: "Past Simple — حدث واحد كافٍ",
-    blocks: [{ t: "units", from: 0, to: 6, }],
-  },
-  {
-    kind: "lesson", section: DECIDE, mascot: "⏪", sourceIndex: SEC.s3, step: "3",
-    title: "Past Perfect — حدث قبل حدث",
-    blocks: [{ t: "units", from: 0, to: 10, }],
-  },
-  {
-    kind: "lesson", section: DECIDE, mascot: "🔥", sourceIndex: SEC.s4, step: "4",
-    title: "المقارنة المباشرة — المفتاح الضائع",
-    blocks: [{ t: "lab", lab: "compareDirect", covers: [0, 11] }],
-  },
-  {
-    kind: "lesson", section: DECIDE, mascot: "🧠", sourceIndex: SEC.s5, step: "5",
-    title: "لا تستخدم الماضي التام لمجرد أن الحدث قديم",
-    blocks: [{ t: "lab", lab: "oldMyth", covers: [0, 9] }],
-    tip: "الماضي التام ليس معناه «قديم جدًا» — بل «قبل حدث ماضٍ آخر».",
-  },
-  {
-    kind: "lesson", section: DECIDE, mascot: "🕰️", sourceIndex: SEC.s6, step: "6",
-    title: "خط الزمن — المتجر المغلق",
-    blocks: [{ t: "lab", lab: "timelineShop", covers: [0, 7] }],
-  },
-  {
-    kind: "lesson", section: DECIDE, mascot: "🎯", sourceIndex: SEC.s7, step: "7",
-    title: "متى يكون الماضي التام مفيدًا جدًا؟",
-    lead: "كلمة واحدة تغيّر ترتيب الأحداث.",
-    blocks: [{ t: "lab", lab: "mayaSwitch", covers: [0, 12] }],
-  },
-  {
-    kind: "lesson", section: DECIDE, mascot: "⚡", sourceIndex: SEC.s8, step: "8",
-    title: "اختبار سريع للعقل — القلادة",
-    blocks: [{ t: "lab", lab: "necklaceOrder", covers: [0, 10] }],
-  },
+  { id: "s1", section: DECIDE, mascot: "🧠", title: "أول سؤال: ماذا حدث أولًا؟", step: "1", lead: "أهم سؤال في الدرس كله.", tip: "رتّب الحدثين بنفسك قبل أن ترى الحكم.", source: ["s1"] },
+  { id: "s2", section: DECIDE, mascot: "📸", title: "Past Simple — حدث واحد كافٍ", step: "2", lead: "إذا حدثَ شيءٌ واحد فقط… فالبسيط يكفي.", source: ["s2"] },
+  { id: "s3", section: DECIDE, mascot: "⏪", title: "Past Perfect — حدث قبل حدث", step: "3", lead: "الحدث الأقدم يأخذ had + V3 — والأحدث يبقى بسيطًا.", source: ["s3"] },
+  { id: "s4", section: DECIDE, mascot: "🔥", title: "المقارنة المباشرة — المفتاح الضائع", step: "4", lead: "نفس الفعل… ومعنيان مختلفان تمامًا.", tip: "اسأل دائمًا: هل يوجد حدث ماضٍ ثانٍ؟", source: ["s4"] },
+  { id: "s5", section: DECIDE, mascot: "🧠", title: "الخرافة — «لأنه قديم جدًا»", step: "5", tip: "Past Perfect لا يعني «قديم جدًا» — بل «أقدم من حدث ماضٍ آخر».", source: ["s5"] },
+  { id: "s6", section: DECIDE, mascot: "🕰️", title: "خط الزمن — المتجر المغلق", step: "6", lead: "اضبط بوصلتك الزمنية: أقدم ← أول ← ثانٍ ← الآن.", source: ["s6"] },
+  { id: "s7", section: DECIDE, mascot: "🎯", title: "مفتاح Maya الصغير — كلمة had واحدة", step: "7", lead: "كلمة واحدة تغيّر ترتيب الأحداث بالكامل.", source: ["s7"] },
+  { id: "s8", section: DECIDE, mascot: "💎", title: "اختبار سريع للعقل — القلادة", step: "8", lead: "قبل أن تشرح… أجب بنفسك: أي حدث حدث أولًا؟", source: ["s8"] },
 
-  {
-    kind: "lesson", section: ORDER, mascot: "⭐", sourceIndex: SEC.s9, step: "9",
-    title: "before — ليست إلزامًا",
-    blocks: [{ t: "lab", lab: "beforeOptional", covers: [0, 14] }],
-  },
-  {
-    kind: "lesson", section: ORDER, mascot: "🧠", sourceIndex: SEC.s10, step: "10",
-    title: "لماذا نستخدم الماضي التام إذن؟",
-    blocks: [{ t: "lab", lab: "whyPerfect", covers: [0, 8] }],
-  },
-  {
-    kind: "lesson", section: ORDER, mascot: "🔄", sourceIndex: SEC.s11, step: "11",
-    title: "after — الترتيب واضح أصلًا",
-    blocks: [{ t: "lab", lab: "afterLab", covers: [0, 11] }],
-  },
-  {
-    kind: "lesson", section: ORDER, mascot: "🧠", sourceIndex: SEC.s12, step: "12",
-    title: "قاعدة مهمة جدًا — لا تحفظ كلمات",
-    blocks: [{ t: "lab", lab: "ruleLab", covers: [0, 8] }],
-  },
-  {
-    kind: "lesson", section: ORDER, mascot: "⏳", sourceIndex: SEC.s13, step: "13",
-    title: "by the time — بحلول الوقت الذي",
-    blocks: [{ t: "lab", lab: "bytimeLab", covers: [0, 13] }],
-  },
-  {
-    kind: "lesson", section: ORDER, mascot: "🔥", sourceIndex: SEC.s14, step: "14",
-    title: "already — بالفعل",
-    blocks: [{ t: "lab", lab: "alreadyLab", covers: [0, 10] }],
-  },
-  {
-    kind: "lesson", section: ORDER, mascot: "⚡", sourceIndex: SEC.s15, step: "15",
-    title: "just — للتوّ",
-    blocks: [{ t: "lab", lab: "justLab", covers: [0, 7] }],
-  },
+  { id: "s9", section: ORDER, mascot: "⭐", title: "before — ليست إلزامًا", step: "9", lead: "before توضّح الترتيب بنفسها… لكن Past Perfect يضيف التركيز.", source: ["s9"] },
+  { id: "s10", section: ORDER, mascot: "🧠", title: "لماذا نستخدم الماضي التام إذن؟", step: "10", lead: "لإبراز الحدث الأقدم من أول كلمة تقريبًا.", source: ["s10"] },
+  { id: "s11", section: ORDER, mascot: "🔄", title: "after — الترتيب واضح أصلًا", step: "11", lead: "After + الحدث الأقدم → ثم يتبعه الحدث الجديد.", source: ["s11"] },
+  { id: "s12", section: ORDER, mascot: "🧠", title: "قاعدة مهمة جدًا — لا توجد كلمة سحرية", step: "12", tip: "لا تقل: before = لازم Past Perfect. اسأل: ما العلاقة الزمنية؟", source: ["s12"] },
+  { id: "s13", section: ORDER, mascot: "⏳", title: "by the time — بحلول الوقت الذي", step: "13", lead: "أقوى إشارة للماضي التام: حدث اكتمل قبل نقطة ماضية.", source: ["s13"] },
+  { id: "s14", section: ORDER, mascot: "🔥", title: "already — بالفعل", step: "14", lead: "تقع بين had و V3: had already + V3.", source: ["s14"] },
+  { id: "s15", section: ORDER, mascot: "⚡", title: "just — للتوّ", step: "15", lead: "الحدثان قريبان جدًا… لكن الترتيب ثابت.", source: ["s15"] },
 
-  {
-    kind: "lesson", section: THREE, mascot: "🧠", sourceIndex: SEC.s16, step: "16",
-    title: "Past Simple + Past Perfect في القصص",
-    blocks: [{ t: "lab", lab: "psPlusPp", covers: [0, 18] }],
-  },
-  {
-    kind: "lesson", section: THREE, mascot: "🎥", sourceIndex: SEC.s17, step: "17",
-    title: "أضف Past Continuous — ثلاثة أزمنة",
-    blocks: [{ t: "lab", lab: "threeTenseIntro", covers: [0, 17] }],
-  },
-  {
-    kind: "lesson", section: THREE, mascot: "🧠", sourceIndex: SEC.s18, step: "18",
-    title: "تحليل جملة المحفظة — ثلاث طبقات",
-    blocks: [{ t: "lab", lab: "walletLayers", covers: [0, 18] }],
-  },
-  {
-    kind: "lesson", section: THREE, mascot: "🔥", sourceIndex: SEC.s19, step: "19",
-    title: "ثلاثة أحداث في المحطة",
-    blocks: [{ t: "lab", lab: "stationThree", covers: [0, 13] }],
-  },
-  {
-    kind: "lesson", section: THREE, mascot: "🧩", sourceIndex: SEC.s20, step: "20",
-    title: "قاعدة «آلة الزمن» — Emma والمطبخ",
-    blocks: [{ t: "lab", lab: "timeMachine", covers: [0, 15] }],
-  },
+  { id: "s16", section: THREE, mascot: "🧠", title: "Past Simple + Past Perfect في القصص", step: "16", lead: "قصة واحدة بكاميرتين: حدث في نقطة التاريخ، وحدث قبله.", source: ["s16"] },
+  { id: "s17", section: THREE, mascot: "🎥", title: "أضف Past Continuous — ثلاثة أزمنة", step: "17", lead: "حدث · شيء كان يحدث · شيء كان قد حدث.", source: ["s17"] },
+  { id: "s18", section: THREE, mascot: "👛", title: "مختبر المحفظة — ثلاث طبقات للوقت", step: "18", lead: "I was walking home when I realized that I had forgotten my wallet.", source: ["s18"] },
+  { id: "s19", section: THREE, mascot: "🚉", title: "ثلاثة أحداث في المحطة", step: "19", lead: "صنّف كل فعل وستظهر الصورة كاملة.", source: ["s19"] },
+  { id: "s20", section: THREE, mascot: "🧩", title: "آلة الزمن — Emma والمطبخ", step: "20", lead: "أقدم؟ كان يحدث؟ حدثان نقطيان؟", source: ["s20"] },
 
-  {
-    kind: "lesson", section: ERR, mascot: "🚨", sourceIndex: SEC.s21, step: "21",
-    title: "الخطأ الشائع الأول — had went",
-    blocks: [{ t: "units", from: 0, to: 6, }],
-  },
-  {
-    kind: "lesson", section: ERR, mascot: "🚨", sourceIndex: SEC.s22, step: "22",
-    title: "الخطأ الشائع الثاني — had ate",
-    blocks: [{ t: "units", from: 0, to: 5, }],
-  },
-  {
-    kind: "lesson", section: ERR, mascot: "🚨", sourceIndex: SEC.s23, step: "23",
-    title: "الخطأ الشائع الثالث — had saw",
-    blocks: [{ t: "units", from: 0, to: 5, }],
-  },
-  {
-    kind: "lesson", section: ERR, mascot: "🚨", sourceIndex: SEC.s24, step: "24",
-    title: "الخطأ الشائع الرابع — Did you had…؟",
-    blocks: [{ t: "units", from: 0, to: 7, }],
-  },
-  {
-    kind: "lesson", section: ERR, mascot: "🚨", sourceIndex: SEC.s25, step: "25",
-    title: "الخطأ الشائع الخامس — didn't had…",
-    blocks: [{ t: "units", from: 0, to: 6, }],
-  },
+  { id: "s21", section: ERR, mascot: "🚨", title: "الخطأ الشائع الأول — had went", step: "21", tip: "go → went → gone", source: ["s21"] },
+  { id: "s22", section: ERR, mascot: "🚨", title: "الخطأ الشائع الثاني — had ate", step: "22", tip: "eat → ate → eaten", source: ["s22"] },
+  { id: "s23", section: ERR, mascot: "🚨", title: "الخطأ الشائع الثالث — had saw", step: "23", tip: "see → saw → seen", source: ["s23"] },
+  { id: "s24", section: ERR, mascot: "🚨", title: "الخطأ الشائع الرابع — Did you had…؟", step: "24", tip: "Had + subject + V3؟", source: ["s24"] },
+  { id: "s25", section: ERR, mascot: "🚨", title: "الخطأ الشائع الخامس — didn't had…", step: "25", tip: "hadn't + V3 أو had not + V3 — لا did أبدًا.", source: ["s25"] },
 
-  {
-    kind: "lesson", section: REASON, mascot: "🧠", sourceIndex: SEC.s26, step: "26",
-    title: "Past Simple أم Past Perfect؟ — ثلاث حالات",
-    blocks: [{ t: "lab", lab: "cases3", covers: [0, 18] }],
-  },
-  {
-    kind: "lesson", section: REASON, mascot: "🔥", sourceIndex: SEC.s27, step: "27",
-    title: "sequence vs back reference",
-    lead: "هل أتقدم بالقصة أم أرجع إلى الوراء؟",
-    blocks: [{ t: "lab", lab: "sequenceBackref", covers: [0, 9] }],
-  },
-  {
-    kind: "lesson", section: REASON, mascot: "🧠", sourceIndex: SEC.s28, step: "28",
-    title: "الماضي التام = الرجوع خطوة إلى الوراء",
-    blocks: [{ t: "lab", lab: "stepBack", covers: [0, 11] }],
-  },
-  {
-    kind: "lesson", section: REASON, mascot: "🕵️", sourceIndex: SEC.s29, step: "29",
-    title: "Grammar Detective — الكهف",
-    blocks: [{ t: "lab", lab: "caveDetective", covers: [0, 15] }],
-  },
+  { id: "s26", section: REASON, mascot: "🧠", title: "ثلاث حالات — بسيط أم تام؟", step: "26", lead: "يوم عادي · سبق حدثًا آخر · تسلسل واضح.", source: ["s26"] },
+  { id: "s27", section: REASON, mascot: "🔥", title: "sequence vs back reference", step: "27", lead: "هل أتقدم بالقصة… أم أرجع خطوة إلى الوراء؟", source: ["s27"] },
+  { id: "s28", section: REASON, mascot: "🧠", title: "الرجوع خطوة — الهاتف المنسي", step: "28", lead: "وصلت البيت… ثم أخذت القارئ إلى ما قبل المغادرة.", source: ["s28"] },
+  { id: "s29", section: REASON, mascot: "🕵️", title: "Grammar Detective — الكهف", step: "29", lead: "خمسة أفعال… واحد منها أقدم من البقية.", source: ["s29"] },
 
-  { kind: "ex", section: PRACTICE, mascot: "🧪", sourceIndex: SEC.s30, covers: [0, 17], badge: "EXERCISE ㉚", title: "تمرين 1 — اختر", subtitle: "حدد الترتيب أولًا ثم اختر الزمن.", ex: { type: "choose" } },
-  { kind: "ex", section: PRACTICE, mascot: "🧪", sourceIndex: SEC.s31, covers: [0, 19], badge: "EXERCISE ㉛", title: "تمرين 2 — حدد الحدث الأول", subtitle: "أي حدث وقع قبل الآخر؟", ex: { type: "firstEvent" } },
-  { kind: "ex", section: PRACTICE, mascot: "🧪", sourceIndex: SEC.s32, covers: [0, 6], badge: "EXERCISE ㉜", title: "تمرين 3 — صحح الأخطاء", subtitle: "المس الجزء الخاطئ ثم صحح.", ex: { type: "errors" } },
+  { id: "s30", section: PRACTICE, mascot: "🧪", title: "تمرين ㉚ — اختر الزمن المناسب", source: ["s30"] },
+  { id: "s31", section: PRACTICE, mascot: "🧪", title: "تمرين ㉛ — حدد الحدث الأول", source: ["s31"] },
+  { id: "s32", section: PRACTICE, mascot: "🧪", title: "تمرين ㉜ — صحح الخطأ", source: ["s32"] },
 
-  { kind: "ex", section: ADV, mascot: "🚀", sourceIndex: SEC.s33, covers: [0, 5], badge: "IQ200 ㉝", title: "IQ200 Challenge — John و Mary", subtitle: "فكر جيدًا — مع ملاحظة منطقية من المنصة.", ex: { type: "johnMary" } },
-  { kind: "ex", section: ADV, mascot: "🧠", sourceIndex: SEC.s34, covers: [0, 3], badge: "IQ200 ㉞", title: "تحدي أصعب — Sarah و Tom", subtitle: "أي جملة تعني أن سارة وصلت أولًا؟", ex: { type: "sarahTom" } },
-  { kind: "ex", section: ADV, mascot: "🔥", sourceIndex: SEC.s35, covers: [0, 13], badge: "IQ200 ㉟", title: "ثلاثة أحداث — مختبر Daniel", subtitle: "الأقدم، المستمر، واللاحق.", ex: { type: "daniel" } },
-  {
-    kind: "lesson", section: ADV, mascot: "🧠", sourceIndex: SEC.s36, step: "36",
-    title: "اختبار المنطق الزمني — read أم was reading؟",
-    blocks: [{ t: "lab", lab: "logicTest", covers: [0, 16] }],
-  },
-  {
-    kind: "lesson", section: ADV, mascot: "🎬", sourceIndex: SEC.s37, step: "37",
-    title: "بناء مشهد كامل — بيت Alex",
-    blocks: [{ t: "lab", lab: "alexScene", covers: [0, 20] }],
-  },
-  {
-    kind: "lesson", section: ADV, mascot: "🧠", sourceIndex: SEC.s38, step: "38",
-    title: "قاعدة متقدمة جدًا — المعنى أولًا",
-    blocks: [{ t: "lab", lab: "meaningRule", covers: [0, 16] }],
-  },
+  { id: "s33", section: ADV, mascot: "🚀", title: "تحدي IQ200 ㉝ — John و Mary", tip: "فكر جيدًا — مع ملاحظة منطقية من المنصة.", source: ["s33"] },
+  { id: "s34", section: ADV, mascot: "🧠", title: "تحدي أصعب ㉞ — Sarah و Tom", source: ["s34"] },
+  { id: "s35", section: ADV, mascot: "🔬", title: "ثلاثة أحداث ㉟ — مختبر Daniel", source: ["s35"] },
+  { id: "s36", section: ADV, mascot: "🧠", title: "اختبار المنطق ㊱ — read أم was reading؟", source: ["s36"] },
+  { id: "s37", section: ADV, mascot: "🎬", title: "مشهد كامل ㊲ — بيت Alex", source: ["s37"] },
+  { id: "s38", section: ADV, mascot: "🧠", title: "قاعدة متقدمة جدًا ㊳ — المعنى أولًا", source: ["s38"] },
 
-  { kind: "ex", section: BOSS, mascot: "⚔️", sourceIndex: SEC.s39, covers: [0, 10], badge: "BOSS ㊴", title: "Boss Battle — الحديقة والكلب", subtitle: "اختر الجملة التي تناسب المعنى.", ex: { type: "boss" } },
-  { kind: "ex", section: BOSS, mascot: "🏆", sourceIndex: SEC.s40, covers: [0, 14], badge: "STORY ㊵", title: "التحدي النهائي — The Missing Backpack", subtitle: "ابنِ قصتك بنفسك — 10 متطلبات.", ex: { type: "story" } },
-  {
-    kind: "lesson", section: END, mascot: "🧠", sourceIndex: SEC.summary,
-    title: "ملخص الدرس — الأزمنة الثلاثة",
-    blocks: [{ t: "units", from: 0, to: 9, }],
-  },
-  {
-    kind: "lesson", section: END, mascot: "🏆", sourceIndex: SEC.golden,
-    title: "القاعدة الذهبية — اسأل عن الترتيب",
-    blocks: [{ t: "units", from: 0, to: 12, }],
-  },
-  { kind: "ex", section: END, mascot: "🧠", sourceIndex: SEC.iqfinal, covers: [0, 7], badge: "IQ200 FINAL", title: "IQ200 FINAL CHALLENGE — المطار", subtitle: "حلل الجملة دون ترجمة حرفية.", ex: { type: "iqFinal" } },
-  { kind: "closing", section: END, mascot: "🏆", sourceIndex: SEC.closing, covers: [0, 1], title: "أحسنت! — LESSON 28 COMPLETE" },
+  { id: "s39", section: BOSS, mascot: "⚔️", title: "Boss Battle ㊴ — الحديقة والكلب", source: ["s39"] },
+  { id: "s40", section: BOSS, mascot: "🏆", title: "التحدي النهائي ㊵ — ابنِ القصة: The Missing Backpack", source: ["s40"] },
+
+  { id: "summary", section: END, mascot: "🧠", title: "ملخص الدرس — الأزمنة الثلاثة", source: ["summary"] },
+  { id: "golden", section: END, mascot: "🏆", title: "القاعدة الذهبية — اسأل عن الترتيب", source: ["golden"] },
+  { id: "iqfinal", section: END, mascot: "🧠", title: "IQ200 FINAL CHALLENGE — المطار", source: ["iqfinal"] },
+  { id: "closing", section: END, mascot: "🏆", title: "الخاتمة — LESSON 28 COMPLETE", source: ["closing"] },
 ];
 
 export const SLIDE_COUNT = SLIDES.length;
+
+// ============================================================
+// حلول الاختبار — تُشتق من TEST_28 نفسه (لا تكرار يدوي)
+// ============================================================
+export function answerLabel28(q: TestQ28): string {
+  switch (q.type) {
+    case "single":
+      return q.opts[q.answer];
+    case "tf":
+      return q.answer ? "✓ صحيح" : "✕ خطأ";
+    case "multi":
+      return q.answer.map((i) => q.opts[i]).join(" + ");
+    case "order":
+      return q.answer.join(" → ");
+    case "match":
+      return q.answer.map((r, l) => `${q.left[l]} ←→ ${q.right[r]}`).join(" · ");
+    case "spot":
+      return `«${q.segments[q.answer]}» ← الصحيح: ${q.fix}`;
+  }
+}
+
+export type TestSolution28 = {
+  n: number;
+  ar: string;
+  en?: string;
+  answer: string;
+  explanation: string;
+  trap?: string;
+};
+
+export const TEST_28_SOLUTIONS: TestSolution28[] = TEST_28.map((q) => ({
+  n: q.n,
+  ar: q.type === "spot" ? `${q.ar} — «${q.segments.join(" / ")}»` : q.ar,
+  en: "en" in q ? q.en : undefined,
+  answer: answerLabel28(q),
+  explanation: q.why,
+  trap: "trap" in q ? q.trap : undefined,
+}));
 
 // أخطاء مقصودة (للفحص): يجب أن تظهر في الدرس كما وردت في المصدر — لا تُصحَّح بصمت.
 export const INTENTIONALLY_WRONG_28: string[] = [

@@ -1,92 +1,100 @@
-# Lesson 29 coverage ledger — native corrective implementation
+# Lesson 29 coverage ledger — interactive rebuild (Lesson-6 quality bar)
 
 ## Architecture
 
-Lesson 29 now uses the same native full-screen lesson pattern as Lessons 27 and
-28: one step at a time, a persistent progress bar and counter, desktop step rail,
-mobile drawer, Previous/Next controls, keyboard arrows/space navigation, and four
-separate areas (Student Lesson, Test, Solutions, Teacher).
+Lesson 29 was rebuilt as a fully interactive lesson following the Lesson 6
+benchmark: one idea per step, the interaction itself carries the explanation
+(no raw text dumps with a widget bolted on), role-colored sentence dissection,
+a semantic four-tense visual system, and instant practice feedback with the
+reason — while the final test keeps the neutral no-feedback-until-submit rule.
 
-The implementation intentionally keeps the existing site-password infrastructure
-and does not change Lessons 1–28 or shared routing. Teacher access remains
-`somer173`; the global site password remains `CloseYourEyes173` in the existing
-site gate.
+The shell keeps the native full-screen lesson pattern: persistent progress bar
+and counter, desktop step rail grouped by section, mobile drawer, Previous/Next
+controls, RTL keyboard navigation, and four separate areas (Student Lesson,
+Test, Solutions, Teacher). Teacher access remains `somer173`; the global site
+password remains `CloseYourEyes173` in the existing site gate. Lessons 1–28 and
+30 are untouched; the only shared addition is a small teaching kit in
+`src/shared/lessonKit.tsx` (Frame, SentenceCard, PartsLine, Note, Verdict,
+platform-explanation tag) reused verbatim-style from the Lesson 6 patterns.
 
 There are exactly **48 navigable steps**:
 
 - opening cover and objectives: steps 1–2
-- numbered source sections ①–㊹: steps 3–46
-- final summary plus four-tense recap: step 47
-- final IQ200 rescue-team challenge: step 48
+- numbered source sections ①–㊹: steps 3–45 (sections ㉗+㉘ — `for`/`since`
+  on the timeline — are taught together in one interactive timeline step)
+- final summary, four-tense recap, and the final IQ200 rescue-team challenge:
+  steps 46–48
 
-The source ledger in `src/lessons/lesson29/data.ts` remains authoritative and all
-44 numbered sections are rendered in source order. The final summary, four-tense
-comparison, and final challenge are also rendered. English content is passed
-through `LatinRuns` and explicit LTR containers; Arabic UI remains RTL.
+## Source fidelity
 
-## Source coverage map
+The source ledger in `src/lessons/lesson29/data.ts` (`SOURCE_SECTIONS`) remains
+the authoritative, unmodified fidelity reference. It is **never rendered as a
+raw dump**: every source sentence, rule, and example is embedded inside the
+step widget that teaches it. Each step shows a small "📜 from the source" chip
+naming the source section(s) it covers (`SLIDE_SOURCE` mapping). Anything the
+platform adds beyond the source is wrapped in a clearly labeled
+"Platform Explanation" panel. Exercise answers that the source prints inline
+(sections ㊱–㊳) are no longer leaked: the source answer line is revealed only
+after the learner has attempted every item (`SourceReveal`).
 
-| Source | Coverage |
-| --- | --- |
-| ①–⑤ | definition, timeline, golden formula, invariant `had`, and role of `been` |
-| ⑥–⑦ | Past Perfect versus Past Perfect Continuous |
-| ⑧–⑪ | `for`, `since`, contrast, and IQ200 distinction |
-| ⑫–⑭ | examples and Past Continuous versus Past Perfect Continuous |
-| ⑮–⑱ | completion/activity, visible effect, and non-continuation nuance |
-| ⑲–㉑ | stative verbs and regular `-ing` spelling |
-| ㉒–㉘ | negative, questions, short answers, Wh questions, `how long`, `for`, `since` |
-| ㉙–㉟ | four-tense comparison, study comparison, detective, IQ200, and meaning rules |
-| ㊱–㊵ | source exercises, error correction, tense selection, and Smart Tense Challenge |
-| ㊶–㊷ | complete Mia story and story timeline |
-| ㊸–㊹ | Boss Battle and final IQ200 rule |
-| Final material | summary, four-tense recap, and rescue-team final challenge |
+## Semantic four-tense visual system
 
-## Interactive learning
+A single `TENSES` design record drives colors, icons and metaphors everywhere:
 
-The student steps include genuine stateful interactions for:
+| Tense | Color | Metaphor |
+| --- | --- | --- |
+| Past Simple | orange 📸 | a single snapshot |
+| Past Continuous | sky 🎥 | a scene filmed at that moment |
+| Past Perfect | violet ⏪ | a finished result before the moment |
+| Past Perfect Continuous | teal ⏳ | a running duration up to the moment |
 
-1. Four-Tense Timeline Lab
-2. Formula Builder
-3. FOR vs SINCE Lab
-4. Four-Tense Comparator
-5. Result vs Duration Lab
-6. Stative Verb Trap
-7. interactive source-exercise correction and selection
-8. Mia Story Timeline
-9. Boss Battle
-10. Final IQ200 Challenge
+Role colors in sentence dissection: subject = sky, `had` = violet,
+`been` = fuchsia, verb-ing = teal, duration = amber, past event = orange.
 
-Platform additions are explicitly labelled **Platform Explanation**. The notes
-preserve the source nuances: Past Perfect Continuous need not continue until the
-later event, `for` does not automatically force PPC, and stative `know` uses
-`I had known him for years`.
+## Step → source coverage map
 
-## Test, solutions, and teacher areas
+| Steps | Source sections | Experience |
+| --- | --- | --- |
+| cover, objectives | cover, objectives | cover + goals (with transparency note) |
+| s1–s2 | ①–② | concept + interactive three-marker timeline |
+| s3 | ③ | **Formula Builder** — click-assemble `S + had + been + V-ing`, then 5 dissected examples |
+| s4–s5 | ④–⑤ | `had` never changes (all pronouns) · why `been` (three-piece anatomy) |
+| s6–s7 | ⑥–⑦ | result-vs-activity **FlipPair** comparisons |
+| s8–s9 | ⑧–⑨ | **Duration Lab** — swap `for`/`since` duration chips inside live sentences |
+| s10 | ⑩ | **FOR vs SINCE Lab** — sorting game with instant feedback |
+| s11–s12 | ⑪–⑫ | IQ200 question-method + dissected example gallery |
+| s13–s18 | ⑬–⑱ | tense-pair comparators (PC vs PPC, PP vs PPC, visible effect, nuances) |
+| s19 | ⑲ | **Stative Verb Trap** — floating stative verbs + the `had known` fix |
+| s20–s21 | ⑳–㉑ | regular verbs · `-ing` spelling rules (tabbed) |
+| s22–s26 | ㉒–㉖ | negative, questions, short answers, Wh-, How long — formula strips + dissection |
+| s2728 | ㉗+㉘ | timeline step with `for`/`since` toggle |
+| s29–s30 | ㉙–㉚ | **Four-Tense Comparator** grid + **Four-Tense Timeline Lab** (one example, four lenses) |
+| s31–s32 | ㉛–㉜ | **Grammar Detective** — classify each verb in Daniel/scientists sentences |
+| s33–s35 | ㉝–㉟ | IQ200 cards (red eyes, both-possible, "don't use it just because of `for`") |
+| s36–s38 | ㊱–㊳ | real exercises: MCQ with instant why, for/since set, **tap-the-wrong-segment** error fixing — source answers revealed only after attempting |
+| s39–s40 | ㊴–㊵ | choose-tense-from-meaning + smart-tense decision stepper |
+| s41–s42 | ㊶–㊷ | **Mia Story Timeline** — detective pass + dual story map |
+| s43–s44 | ㊸–㊹ | **Boss Battle** duels + final IQ200 rule checklist |
+| summary, fourtense, final | summary, four-tense, final | final summary · four-tense recap · **Final IQ200 Challenge** (rescue team) |
 
-- Test Area contains exactly 20 newly authored questions from the existing
-  Lesson 29 data, including single choice, true/false, multi-select, ordering,
-  matching, error analysis, chronology, and meaning-based selection.
-- No score or correctness feedback is shown before Submit. Submit reveals the
-  score; Reset clears answers, submission, score, and state.
-- Test Solutions is separate and gated until test submission or teacher unlock;
-  it contains 20 detailed solution records with explanations and traps.
-- Teacher Area is separate and password-protected with `somer173`. It includes
-  overview, objectives, prerequisites, grammar notes, exercise support, story
-  analysis, Boss Battle guidance, misconceptions, and test-solution access.
+## Test, solutions, teacher
 
-## Validation
+- The Test Area has the dedicated 20-question `TEST_29` (single choice,
+  true/false, multi-select, ordering, matching). Answers stay neutral —
+  no correctness styling or feedback — until the single Submit action;
+  then score, per-question review, and reset are available.
+- The Solutions Area (`TEST_29_SOLUTIONS`, one unique explanation per
+  question) unlocks after finishing the test or via teacher access.
+- The Teacher Area remains locked behind `somer173`.
 
-- `npm run build` — passed; Vite emitted only the existing large-bundle warning.
-- `npm run check:english-direction` — passed (1,470 assertions).
-- `node scripts/audit-lesson29.mjs` — passed (72 checks).
-- `node scripts/audit-lesson27.mjs` — passed (274 assertions).
-- `node scripts/audit-lesson28.mjs` — passed (330 assertions).
-- `node scripts/interaction-test.mjs` — passed (558 tests).
-- `git diff --check` — passed.
-- Browser visual verification — not performed; no visual browser claim is made.
+## Verification
 
-## Corrective files
-
-- `src/lessons/lesson29/Lesson29.tsx`
-- `scripts/audit-lesson29.mjs`
-- this coverage ledger
+- `node scripts/audit-lesson29.mjs` — 75 checks pass (ledger integrity,
+  verbatim source phrases, widget labels, 4 areas, 20-question test,
+  solutions mapping, 48-step counter, progress bar, platform-explanation
+  labeling).
+- `npm run check:english-direction` and `npm run audit:english-direction`
+  pass for all 30 lessons (regression on 24/26/27/28/30 included).
+- `node scripts/interaction-test.mjs` — 558 passed.
+- `npm run build` succeeds; standalone `tsc --strict` on
+  `Lesson29.tsx` + `lessonKit.tsx` is clean.

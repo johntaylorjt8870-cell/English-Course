@@ -1486,3 +1486,132 @@ export const TEACHER_30_MISTAKES: TeacherNote30[] = [
   { head: "إجبار Past Perfect", lines: ["سلسلة أحداث متتابعة تبقى Past Simple (③ ⑧) — لا نحتاج had إلا عند الرجوع خطوة للوراء."] },
   { head: "خلط النتيجة بالنشاط", lines: ["had painted (نتيجة) مقابل had been painting for three hours (نشاط + مدة) — القسمان ⑯ و㉟."] },
 ];
+
+// ============================================================
+// سجل الشرائح الدلالي (Semantic Slide Registry) — الدرس الأصلي 46 خطوة
+// كل شريحة تُغطي قسمًا واحدًا من SOURCE_SECTIONS (تغطية دقيقة مرة واحدة).
+// العرض الفعلي يُبنى من مكوّنات دلالية في Lesson30.tsx، وهذا السجل + SOURCE_SECTIONS
+// هما دفتر الأستاذ للتدقيق فقط — لا يُعرض المصدر كنص خام.
+// ============================================================
+export type Slide30 = {
+  id: string;
+  section: string;
+  mascot: string;
+  title: string;
+  step?: string;
+  lead?: string;
+  tip?: string;
+  /** معرّفات أقسام المصدر التي تغطيها هذه الشريحة (مرة واحدة بالضبط عبر السجل كله) */
+  source: string[];
+};
+
+export const SECTIONS_30: { id: string; label: string }[] = [
+  { id: "START", label: "🎛️ البداية" },
+  { id: "SYS", label: "🧠 النظام الكامل" },
+  { id: "TENSES", label: "📸 الأزمنة الأربعة" },
+  { id: "LAYERS", label: "🧱 طبقات القصة" },
+  { id: "CLASH", label: "⚔️ المقارنات الحاسمة" },
+  { id: "WORDS", label: "🔗 كلمات لا تحسم الزمن" },
+  { id: "DETECT", label: "🕵️ المحقق والتدريبات" },
+  { id: "IQ", label: "🧠 مستوى IQ200" },
+  { id: "FIX", label: "🩺 التصحيح والخداع" },
+  { id: "STORY", label: "🎬 القصة السينمائية" },
+  { id: "BOSS", label: "🏆 التحديات النهائية" },
+  { id: "END", label: "🏁 الخاتمة" },
+];
+
+export const SLIDES: Slide30[] = [
+  { id: "cover", section: "START", mascot: "🎛️", title: "غرفة التحكم بالماضي", step: "الغلاف", lead: "أربعة أزمنة… نظام تحكم واحد يختار الزمن من المعنى.", tip: "بدّل بين العدسات الأربع لتشاهد فكرة الدرس كاملة.", source: ["cover"] },
+  { id: "opening", section: "START", mascot: "🧭", title: "وصلنا إلى نقطة مهمة جدًا", step: "الافتتاح", lead: "لا زمن جديد — سنبني نظام تحكم يختار الزمن من المعنى.", tip: "المس كل زمن لتتذكر سؤاله قبل أن نبدأ.", source: ["opening"] },
+  { id: "objectives", section: "START", mascot: "🎯", title: "أهداف الدرس", step: "الأهداف", lead: "عشر قدرات ستتقنها بنهاية الدرس — علّم عليها بنفسك.", tip: "اضغط على كل هدف بعد قراءته لتتابع تقدمك.", source: ["objectives"] },
+  { id: "s1", section: "SYS", mascot: "🧠", title: "النظام الكامل", step: "① النظام الكامل", lead: "أربع جمل… أربعة أسئلة… أربعة أزمنة. صنّفها بنفسك.", tip: "لكل جملة سؤال واحد فقط يناسبها — جرّب واكتشف.", source: ["s1"] },
+  { id: "s2", section: "SYS", mascot: "⚙️", title: "آلة اختيار الزمن", step: "② أربعة أسئلة", lead: "لا تحفظ الزمن — أجب عن الأسئلة الأربعة وستصل إليه.", tip: "أجب بنعم/لا وشاهد الآلة وهي تحسم الزمن فورًا.", source: ["s2"] },
+  { id: "s3", section: "TENSES", mascot: "📸", title: "Past Simple — سلسلة الأحداث", step: "③ الماضي البسيط", lead: "قصة Leo: أربعة أحداث متتابعة تدفع القصة للأمام.", tip: "رتّب الأحداث بالترتيب ثم اسأل: لماذا لا نحتاج had هنا؟", source: ["s3"] },
+  { id: "s4", section: "TENSES", mascot: "🎥", title: "Past Continuous — المشهد الخلفي", step: "④ الماضي المستمر", lead: "الطيور تغني والريح تهب — مشهد حي خلف الأحداث.", tip: "فرّق بين ما يحرّك القصة وما يرسم خلفيتها.", source: ["s4"] },
+  { id: "s5", section: "TENSES", mascot: "⏪", title: "Past Perfect — الفلاش باك", step: "⑤ الماضي التام", lead: "النافذة كانت مكسورة قبل وصولي — حدث أقدم من حدث.", tip: "المس الفعل الذي وقع أولًا في الزمن.", source: ["s5"] },
+  { id: "s6", section: "TENSES", mascot: "⏪🎥", title: "Past Perfect Continuous — النشاط الممتد", step: "⑥ التام المستمر", lead: "عمل طوال الليل فكان متعبًا — نشاط استمر ثم ظهر أثره.", tip: "ابحث عن جزأين: المدة… والنتيجة.", source: ["s6"] },
+  { id: "s7", section: "LAYERS", mascot: "🕰️", title: "الخط الزمني الكامل — محطة Maya", step: "⑦ الخط الزمني", lead: "القطار سبقنا… والشمس غربت ونحن ننتظر — من الأقدم؟", tip: "اكتشف الترتيب حدثًا حدثًا — بعض الأنشطة تتداخل.", source: ["s7"] },
+  { id: "s8", section: "LAYERS", mascot: "🦴", title: "لماذا Past Simple مهم جدًا؟", step: "⑧ العمود الفقري", lead: "خمسة أحداث تبني صباحًا كاملًا — هذا هو العمود الفقري للقصة.", tip: "ابنِ السلسلة بنفسك بالترتيب الصحيح.", source: ["s8"] },
+  { id: "s9", section: "LAYERS", mascot: "🎥", title: "أضف الخلفية", step: "⑨ الخلفية", lead: "بينما كنت أمشي… سمعت صوتًا — خلفية + حدث يقطعها.", tip: "أي الفعلين خلفية؟ وأيهما الحدث القاطع؟", source: ["s9"] },
+  { id: "s10", section: "LAYERS", mascot: "⏪", title: "أضف Past Perfect", step: "⑩ الطبقة الثالثة", lead: "أدركت أن الحافلة غادرت قبلي — فلاش باك داخل القصة.", tip: "المس الفعل الذي حدث قبل بقية القصة.", source: ["s10"] },
+  { id: "s11", section: "LAYERS", mascot: "⏪🎥", title: "أضف Past Perfect Continuous", step: "⑪ الطبقة الرابعة", lead: "ستة أفعال في قصة واحدة — حدّد زمن كل فعل.", tip: "كل فعل له زمن ودور — اكتشفها واحدًا واحدًا.", source: ["s11"] },
+  { id: "s12", section: "LAYERS", mascot: "🔥", title: "أربع عدسات زمنية", step: "⑫ العدسات الأربع", lead: "صورة… فيديو… فلاش باك… فلاش باك مستمر — أربع كاميرات.", tip: "اختر العدسة ثم صنّف الجمل الأربع.", source: ["s12"] },
+  { id: "s13", section: "CLASH", mascot: "🔀", title: "Past Simple vs Past Perfect", step: "⑬ المواجهة الأولى", lead: "Sara left أم Sara had left؟ كلمة had واحدة تقلب الترتيب.", tip: "أضف had وأزلها وشاهد الخط الزمني ينقلب.", source: ["s13"] },
+  { id: "s14", section: "CLASH", mascot: "🔀", title: "Past Continuous vs Past Perfect Continuous", step: "⑭ المواجهة الثانية", lead: "ماذا كنت تفعل؟ أم منذ متى وأنت تفعل؟ سؤالان مختلفان.", tip: "طابِق كل سؤال مع الجملة التي تجيب عنه.", source: ["s14"] },
+  { id: "s15", section: "CLASH", mascot: "🔀", title: "Past Perfect vs Past Perfect Continuous", step: "⑮ المواجهة الثالثة", lead: "المطبخ نظيف… لكن هل انتهى التنظيف أم ما زال جاريًا؟", tip: "النتيجة المكتملة شيء، والنشاط المستمر شيء آخر.", source: ["s15"] },
+  { id: "s16", section: "CLASH", mascot: "⭐", title: "النتيجة أم النشاط؟", step: "⑯ القاعدة الذهبية", lead: "الحائط مطلي… لكن هل يهمك الإنجاز أم العملية والمدة؟", tip: "حدّد تركيزك أولًا ثم اختر الزمن.", source: ["s16"] },
+  { id: "s17", section: "WORDS", mascot: "🚨", title: "لا تعتمد على كلمة واحدة", step: "⑰ تحذير", lead: "yesterday ظهرت مع ثلاثة أزمنة مختلفة — المعنى هو الحكم.", tip: "صنّف الجمل الثلاث ثم اكتشف القاعدة.", source: ["s17"] },
+  { id: "s18", section: "WORDS", mascot: "🧠", title: "when لا يعني زمنًا واحدًا", step: "⑱ when", lead: "Tom فعل أربعة أشياء عند الاتصال — وكلها مع when!", tip: "حدّد زمن فعل Tom في كل جملة.", source: ["s18"] },
+  { id: "s19", section: "WORDS", mascot: "🧠", title: "while — نشاطان معًا", step: "⑲ while", lead: "نشاطان مستمران بالتوازي… أو نشاط مستمر وحدث يقطعه.", tip: "لكل جملة: هل النشاطان متوازيان أم قاطع ومقطوع؟", source: ["s19"] },
+  { id: "s20", section: "WORDS", mascot: "🧠", title: "before و after", step: "⑳ before / after", lead: "الصيغتان صحيحتان — والخط الزمني واحد. جرّب بنفسك.", tip: "بدّل بين الصيغتين وشاهد أن الترتيب لا يتغير.", source: ["s20"] },
+  { id: "s21", section: "WORDS", mascot: "⏳", title: "by the time — الموعد النهائي", step: "㉑ by the time", lead: "بحلول وقت وصولنا… كان كل شيء قد اكتمل.", tip: "المس الجزء المكتمل قبل الموعد في كل جملة.", source: ["s21"] },
+  { id: "s22", section: "WORDS", mascot: "🧠", title: "already — الاكتمال المبكر", step: "㉒ already", lead: "غادرت قبلي… بالفعل! أين تقف already في الجملة؟", tip: "المس الموضع الصحيح لكلمة already.", source: ["s22"] },
+  { id: "s23", section: "WORDS", mascot: "🧠", title: "still — ما زال مستمرًا", step: "㉓ still", lead: "القرار لم يُتخذ… والعمل ما زال جاريًا — still روح الاستمرار.", tip: "اكتشف ما تخبرنا به still في كل جملة.", source: ["s23"] },
+  { id: "s24", section: "DETECT", mascot: "🕵️", title: "المحقق — فريق الإنقاذ", step: "㉔ المحقق", lead: "أربعة أفعال في قصة إنقاذ — حدّد زمن كل فعل.", tip: "فكّر بالدور القصصي لكل فعل قبل الاختيار.", source: ["s24"] },
+  { id: "s25", section: "DETECT", mascot: "🧪", title: "اختبار 1 — اختر الزمن", step: "㉕ اختبار 1", lead: "خمسة أسئلة فورية — اختر الزمن وشاهد التفسير لحظيًا.", tip: "كل إجابة تكشف تفسيرها فورًا — لا تنتظر النهاية.", source: ["s25"] },
+  { id: "s26", section: "DETECT", mascot: "🧪", title: "اختبار 2 — اختر حسب المعنى", step: "㉖ اختبار 2", lead: "ثلاث جمل عربية متشابهة… وثلاثة أزمنة مختلفة!", tip: "ركّز على الفرق: كان ينام / كان قد نام / نائم منذ ساعتين.", source: ["s26"] },
+  { id: "s27", section: "IQ", mascot: "🧠", title: "لا يوجد زمن واحد صحيح دائمًا", step: "㉗ IQ200", lead: "أكلوا… كانوا يأكلون… كانوا قد أكلوا — كلها صحيحة بمعنى مختلف!", tip: "اختر المعنى المقصود وشاهد الزمن المناسب له.", source: ["s27"] },
+  { id: "s28", section: "IQ", mascot: "🔥", title: "ثلاثة أحداث — قصة Nora", step: "㉘ IQ200", lead: "دخلت… كانت تطبخ… كانت قد غسلت… وكانت تحضّر — أربعة أفعال!", tip: "رتّب الأحداث زمنيًا ثم حدّد زمن كل فعل.", source: ["s28"] },
+  { id: "s29", section: "IQ", mascot: "⚡", title: "اختر الزمن خلال ثانيتين", step: "㉙ الخوارزمية", lead: "أربع خطوات بالترتيب — من الحدث إلى المدة.", tip: "امشِ على الخطوات الأربع مع كل مثال.", source: ["s29"] },
+  { id: "s30", section: "IQ", mascot: "⚔️", title: "Boss Battle — قصة Sam", step: "㉚ المعركة", lead: "كان يقود… كان قد أنهى… وكان يعمل — خمسة أفعال للتحليل.", tip: "انتبه: was وحدها ماضٍ بسيط من verb to be!", source: ["s30"] },
+  { id: "s31", section: "IQ", mascot: "🧠", title: "خط الزمن — قصة Sam مرسومة", step: "㉛ خط الزمن", lead: "بدأ العمل… استمر… انتهى… قاد… رن الهاتف — ارسمها بعقلك.", tip: "المس كل عقدة لتكتشف زمنها.", source: ["s31"] },
+  { id: "s32", section: "FIX", mascot: "🩺", title: "صحح الأخطاء الستة", step: "㉜ اختبار 3", lead: "ست جمل مكسورة — المس الخطأ ثم اختر الإصلاح.", tip: "خطوتان لكل جملة: أين الخطأ؟ وما الإصلاح؟", source: ["s32"] },
+  { id: "s33", section: "FIX", mascot: "🚀", title: "السؤال الخادع", step: "㉝ IQ200", lead: "Salma درست… لكن for an hour تغيّر كل شيء!", tip: "أضف المدة وأزلها وشاهد الإجابة تتغير.", source: ["s33"] },
+  { id: "s34", section: "FIX", mascot: "🧠", title: "سؤال أصعب — Sarah والتقرير", step: "㉞ المعنى يحسم", lead: "ثلاثة معانٍ… ثلاثة أزمنة — لا تسأل ما الإجابة بل ما المعنى؟", tip: "اختر المعنى المقصود أولًا ثم الزمن.", source: ["s34"] },
+  { id: "s35", section: "FIX", mascot: "🎯", title: "مستوى متقدم: focus", step: "㉟ التركيز", lead: "المنزل… أربع زوايا نظر مختلفة لنفس الحدث.", tip: "حدّد زاوية النظر ثم اختر الجملة المطابقة.", source: ["s35"] },
+  { id: "s36", section: "STORY", mascot: "🎬", title: "القصة السينمائية — Lina", step: "㊱ القصة", lead: "ستة أفعال في مشهد سينمائي — حلّلها فعلًا فعلًا.", tip: "لكل فعل: زمنه ودوره في المشهد.", source: ["s36"] },
+  { id: "s37", section: "STORY", mascot: "🧠", title: "لماذا هذه القصة قوية؟", step: "㊲ التشريح", lead: "كل زمن له وظيفة: يحرّك… يصف… يشرح ما قبل… يشرح الممتد.", tip: "المس كل زمن لتكتشف وظيفته ومثاله من القصة.", source: ["s37"] },
+  { id: "s38", section: "BOSS", mascot: "🏆", title: "FINAL BOSS — الإطفائيون", step: "㊳ الزعيم", lead: "أكمل قصة الإطفائيين بالأزمنة الأربعة — المحلل يراقب كتابتك حيًا.", tip: "ابدأ بالبداية الإلزامية واجمع الأزمنة الأربعة.", source: ["s38"] },
+  { id: "s39", section: "BOSS", mascot: "🏆", title: "الاختبار النهائي — 8 أسئلة", step: "㊴ النهائي", lead: "ثمانية أسئلة فورية التفسير — أثبت سيطرتك على النظام.", tip: "كل سؤال يعلّمك شيئًا فور الإجابة.", source: ["s39"] },
+  { id: "s40", section: "BOSS", mascot: "🌙", title: "التحدي الأكبر — يوم غامض", step: "㊵ التحدي", lead: "اكتب 12 جملة بالتوزيع الإلزامي والكلمات الثماني — حيًا.", tip: "راقب العدادات وهي تمتلئ أثناء كتابتك.", source: ["s40"] },
+  { id: "summary", section: "END", mascot: "🧠", title: "الملخص النهائي", step: "الملخص", lead: "الأزمنة الأربعة في بطاقة واحدة — راجعها بعدسة.", tip: "بدّل العدسة لتراجع كل زمن ومثاله.", source: ["summary"] },
+  { id: "golden", section: "END", mascot: "🏆", title: "القاعدة الذهبية الكبرى", step: "القاعدة الذهبية", lead: "المعنى هو الذي يختار الزمن — أربع عدسات… أربع وظائف… نظام واحد.", tip: "المس كل سؤال لتتذكر زمنه.", source: ["golden"] },
+  { id: "final", section: "END", mascot: "🚀", title: "التحدي النهائي — المختبر", step: "🚀 FINAL Challenge", lead: "خمسة أفعال في قصة مختبر — ثم الخلاصة الكبرى للنظام.", tip: "حلّل الأفعال الخمسة ثم اقرأ الخلاصة.", source: ["final"] },
+];
+
+export const SLIDE_COUNT = SLIDES.length;
+
+// ============================================================
+// حلول الاختبار النهائي (20) — مشتقة من TEST_30، تُعرض بعد التسليم فقط
+// ============================================================
+export function answerLabel30(q: TestQ30): string {
+  switch (q.type) {
+    case "single":
+      return q.opts[q.answer];
+    case "tf":
+      return q.answer ? "True — صحيح" : "False — خطأ";
+    case "multi":
+      return q.answer.map((i) => q.opts[i]).join(" + ");
+    case "order":
+      return q.answer.join(" → ");
+    case "match":
+      return q.left.map((l, i) => `${l} = ${q.right[q.answer[i]]}`).join(" · ");
+    case "spot":
+      return `الخطأ: ${q.segments[q.answer]} ← ${q.fix}`;
+  }
+}
+
+export type TestSolution30 = { n: number; type: TestQ30["type"]; answer: string; why: string; trap?: string };
+
+export const TEST_30_SOLUTIONS: TestSolution30[] = TEST_30.map((q) => ({
+  n: q.n,
+  type: q.type,
+  answer: answerLabel30(q),
+  why: q.why,
+  trap: q.trap,
+}));
+
+// ============================================================
+// جمل خاطئة مقصودة — محفوظة حرفيًا من المصدر لأغراض التدريب
+// (تُعرض دائمًا موسومة بأنها خاطئة مع تصحيحها — ليست تسريبًا)
+// ============================================================
+export type IntentionallyWrong30 = { id: string; wrong: string; right: string; note: string };
+
+export const INTENTIONALLY_WRONG_30: IntentionallyWrong30[] = [
+  { id: "s32-1", wrong: "I had been studied for three hours.", right: "I had been studying for three hours.", note: "بعد had been يأتي verb-ing — القسم ㉜-①." },
+  { id: "s32-2", wrong: "She was waiting for two hours when he arrived.", right: "I had been waiting for two hours when he arrived.", note: "المدة (ساعتين) تستدعي had been waiting؛ ولاحظ انتقال المصدر من She إلى I — القسم ㉜-②." },
+  { id: "s32-3", wrong: "When we arrived, the movie had started already.", right: "When we arrived, the movie had already started.", note: "موضع already بين had والفعل — القسم ㉜-③." },
+  { id: "s32-4", wrong: "He had went home before I called.", right: "He had gone home before I called.", note: "V3 بعد had — القسم ㉜-④." },
+  { id: "s32-5", wrong: "They had been knowing each other for ten years.", right: "They had known each other for ten years.", note: "know فعل حالة لا يقبل الاستمرارية — القسم ㉜-⑤." },
+  { id: "s32-6", wrong: "Did you had finished your work?", right: "Had you finished your work?", note: "مساعد واحد فقط — القسم ㉜-⑥." },
+];

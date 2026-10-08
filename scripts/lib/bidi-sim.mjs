@@ -191,6 +191,12 @@ function analyzeParagraph(p) {
     let sepSeen = false;
     while (q >= 0 && s[q] === " ") q--;
     if (q >= 0 && SEP.has(s[q])) {
+      // A "(" only joins English to Arabic when the Arabic run is closed by ")"
+      // right away — «Past Perfect (الماضي المثالي)». Otherwise the paren opens a
+      // whole Arabic clause («when / while (الدرسان 25 و26)») that belongs to the
+      // RTL flow, and LatinRuns leaves the English isolated on its own. Mirrors
+      // the rule in src/shared/bidi.tsx (splitMixedText).
+      if (s[q] === "(" && s[ae + 1] !== ")") continue;
       sawSep = true;
       q--;
       while (q >= 0 && s[q] === " ") q--;
@@ -207,6 +213,42 @@ function analyzeParagraph(p) {
     const apos = []; for (let k = as; k <= ae; k++) apos.push(vis[k]);
     const okOrder = Math.max(...lpos) < Math.min(...apos);
     if (!okOrder) violations.push({ latin: s.slice(ls, q + 1).trim(), arabic: s.slice(as, ae + 1), sig: "para:" + hostSig });
+  }
+  // Alternative oracle: «English A أم English B؟» — the Arabic connector (أم/أو)
+  // must stay visually between the two English alternatives, and both
+  // alternatives keep their written (left→right) order inside the group.
+  const ALT_CONNECTORS = new Set(["أم", "أو"]);
+  for (const [as, ae] of arRuns) {
+    const connector = s.slice(as, ae + 1).trim();
+    if (!ALT_CONNECTORS.has(connector)) continue;
+    // Latin run right before the connector (spaces only in between).
+    let q = as - 1;
+    while (q >= 0 && s[q] === " ") q--;
+    const le = q;
+    while (q >= 0 && !AR.test(s[q]) && /[A-Za-z0-9 '’.&+\/#-]/.test(s[q])) q--;
+    const ls = q + 1;
+    if (le < ls || !/[A-Za-z]/.test(s.slice(ls, le + 1))) continue;
+    // Latin run right after the connector (spaces only in between).
+    let r = ae + 1;
+    while (r < s.length && s[r] === " ") r++;
+    let re = r;
+    while (re < s.length && !AR.test(s[re]) && /[A-Za-z0-9 '’.&+\/#-]/.test(s[re])) re++;
+    if (re <= r || !/[A-Za-z]/.test(s.slice(r, re))) continue;
+    // Visual positions of the run, boundary spaces excluded: at an isolate edge
+    // the UBA parks a separating space at the far side of the line, so counting
+    // it would report a reversal even when both alternatives are correctly
+    // ordered (e.g. «✓ before أو after مرة واحدة على الأقل.»).
+    const posOf = (a, b) => {
+      const out = [];
+      for (let k = a; k < b; k++) if (s[k] !== " ") out.push(vis[k]);
+      return out;
+    };
+    const before = posOf(ls, le + 1);
+    const mid = posOf(as, ae + 1);
+    const after = posOf(r, re);
+    if (!before.length || !mid.length || !after.length) continue;
+    const okOrder = Math.max(...before) < Math.min(...mid) && Math.max(...mid) < Math.min(...after);
+    if (!okOrder) violations.push({ latin: s.slice(ls, re).trim(), arabic: connector, sig: "alts:" + hostSig });
   }
   return { logical: s.replace(/\s+/g, " ").trim(), visual: visual.replace(/\s+/g, " ").trim(), pairs, violations };
 }

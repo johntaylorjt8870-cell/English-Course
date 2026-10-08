@@ -12,6 +12,8 @@ import {
   TEACHER_32_REMEDIATION, TEACHER_32_SOURCE_NOTE,
 } from "./teacherData";
 import { FOCUS32 } from "./kit32";
+import { FinalTestAnswerKey } from "../../shared/finalTest";
+import { FINAL_TESTS } from "../../shared/finalTestBank";
 
 export default function TeacherArea32({ unlocked, onUnlockChange, onGoSolutions }: { unlocked: boolean; onUnlockChange: (v: boolean) => void; onGoSolutions: () => void }) {
   const [pw, setPw] = useState("");
@@ -54,6 +56,8 @@ export default function TeacherArea32({ unlocked, onUnlockChange, onGoSolutions 
 
   return (
     <div className="space-y-4" data-area="l32-teacher-body">
+      {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
+      <FinalTestAnswerKey lesson={32} questions={FINAL_TESTS[32]} accent="bg-emerald-700" />
       <header className="flex flex-wrap items-center justify-between gap-2 rounded-3xl border-2 border-slate-200 bg-white p-4">
         <h2 className="font-head text-xl font-black text-slate-900"><Rich text="👩‍🏫 منطقة المعلم — الدرس 32" /></h2>
         <div className="flex flex-wrap gap-2">

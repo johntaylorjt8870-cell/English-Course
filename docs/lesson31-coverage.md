@@ -34,6 +34,7 @@ Arabic shell stays RTL. Platform-added explanations are always tagged
 | Signature interactive experiences | **10** (see below) |
 | In-lesson practice | **Immediate feedback + why everywhere** — no solve-all-then-check in the student area; gated source summaries appear only after completing each interaction |
 | Test Area questions | **20** newly authored (`TEST_31`, numbered 1–20): 9 single + 2 tf + 3 multi + 2 order + 2 match + 2 spot — real tap/spot UI, neutral until submit |
+| Final Test (end of lesson) | **15** platform-authored questions (`finalTestBank.ts` → `LESSON_31`) spanning all seven types — no correctness, score, or explanation while answering; the single «تصحيح الاختبار» action reveals score + review + explanations, with a full reset. Separate from the 20-question Test Area; answer key lives in the Teacher Area |
 | Test difficulty mix | **6 Basic · 7 Medium · 4 Advanced · 3 Thinking** (`TEST_31_LEVEL_COUNTS`, audited) |
 | Test solutions | **20** explanatory solutions (answer + why + trap), grouped by level, locked until test submit or teacher unlock |
 | Teacher area | `somer173`-gated: overview (9 objectives + 4 prerequisites + 3 core briefs) + 14 teaching notes + 9 source-activity solution blocks + 2 rubrics + 10 common mistakes + the 19-entry intentionally-wrong inventory + the 50-section source index + solutions entry |

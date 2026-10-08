@@ -5,15 +5,21 @@
 // lesson's steps, and inspects every unique rendered snapshot with the
 // Unicode Bidirectional Algorithm (bidi-js). It flags an English run that
 // is paired with Arabic by a separator (e.g. "already = بالفعل") when the
-// visual order puts the Arabic before the English.
+// visual order puts the Arabic before the English, and — since the alternatives
+// repair — an «English A أم English B؟» heading whose visual order reverses the
+// two English alternatives (see the alternatives oracle in lib/bidi-sim.mjs).
 //
 //   node scripts/audit-bidi-mixed.mjs                 # check vs baseline
 //   node scripts/audit-bidi-mixed.mjs --write-baseline
 //   ONLY=6,27 node scripts/audit-bidi-mixed.mjs       # subset (no ratchet)
 //
 // Rules:
-//   - Lessons 6, 27–32: zero violations (minus ALLOWLIST below).
-//   - Lessons 1–26: per-lesson count must not exceed scripts/bidi-baseline.json.
+//   - Lessons 6, 27–32: zero violations (minus ALLOWLIST below) — both oracles.
+//   - Lessons 1–26: per-lesson count must not exceed scripts/bidi-baseline.json
+//     (classic oracle), and the «English A أم/أو English B» oracle is ratcheted
+//     under the file's `alts` key (the shared fix in src/shared/bidi.tsx turned
+//     the alternative groups into one LTR unit; the remaining legacy counts are
+//     render sites that do not go through LatinRuns and are recorded as debt).
 // Limitations: the crawler clicks "التالي" only and never answers quizzes,
 // so answer feedback is not measured here; it is covered by the lesson audits.
 // ============================================================
@@ -131,20 +137,39 @@ async function main() {
   const failures = [];
   const allowed = [];
   const current = {};
-  for (const n of LESSONS) current[`L${n}`] = 0;
+  // العدّاد الكلاسيكي (زوج English = Arabic + صفوف الشرح) يبقى كما هو.
+  // عدّاد «البدائل» (English A أم/أو English B) فئة مخزونة في ملف الحدود
+  // بمفتاح alts: الدرس يتوقف عند صفر في الدروس المرجعية، ولا يزيد أبدًا
+  // عن حدّه المسجّل في الدروس الأقدم. تفاصيل الفئة في scripts/lib/bidi-sim.mjs.
+  const currentAlts = {};
+  for (const n of LESSONS) { current[`L${n}`] = 0; currentAlts[`L${n}`] = 0; }
   for (const u of uniq) {
     const { kind, latin, arabic } = u;
     const id = `L${u.lesson}|${latin}|${arabic}`;
+    const isAlts = (u.sig || "").startsWith("alts:");
     if (ALLOWLIST.has(id)) { allowed.push(id); continue; }
+    if (isAlts) {
+      currentAlts[`L${u.lesson}`]++;
+      if (STRICT.has(u.lesson)) failures.push(`alts ${id}  [${u.sig}]`);
+      continue;
+    }
     current[`L${u.lesson}`]++;
     if (STRICT.has(u.lesson)) failures.push(`${kind} ${id}  [${u.sig}]`);
   }
   console.log(JSON.stringify(current));
+  console.log(JSON.stringify({ alts: currentAlts }));
   console.log(`unique violations: ${total - allowed.length} (allowlisted: ${allowed.length})`);
 
   if (WRITE) {
     const base = {};
     for (const n of LESSONS) if (!STRICT.has(n)) base[`L${n}`] = current[`L${n}`];
+    const alts = {};
+    for (const n of LESSONS) if (!STRICT.has(n)) alts[`L${n}`] = currentAlts[`L${n}`];
+    if (existsSync(BASELINE_FILE)) {
+      const prev = JSON.parse(readFileSync(BASELINE_FILE, "utf8"));
+      if (prev.alts) base.alts = prev.alts;
+    }
+    base.alts = { ...(base.alts || {}), ...alts };
     writeFileSync(BASELINE_FILE, JSON.stringify(base, null, 2) + "\n");
     console.log(`wrote ${BASELINE_FILE}`);
     return;
@@ -152,10 +177,13 @@ async function main() {
   const ratchet = [];
   if (existsSync(BASELINE_FILE) && !process.env.ONLY) {
     const base = JSON.parse(readFileSync(BASELINE_FILE, "utf8"));
+    const altsBase = base.alts || {};
     for (const n of LESSONS) {
       if (STRICT.has(n)) continue;
       const b = base[`L${n}`] ?? 0;
       if (current[`L${n}`] > b) ratchet.push(`L${n}: ${current[`L${n}`]} > baseline ${b}`);
+      const ba = altsBase[`L${n}`] ?? 0;
+      if (currentAlts[`L${n}`] > ba) ratchet.push(`L${n} (alts): ${currentAlts[`L${n}`]} > baseline ${ba}`);
     }
   }
   for (const f of failures) console.error(`✕ ${f}`);

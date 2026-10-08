@@ -64,6 +64,8 @@ import {
   type RoleStyle,
   type FrameAccent,
 } from "../../shared/lessonKit";
+import FinalTest, { FinalTestAnswerKey } from "../../shared/finalTest";
+import { FINAL_TESTS } from "../../shared/finalTestBank";
 
 const ACCENT30: FrameAccent = {
   step: "bg-teal-700",
@@ -2420,6 +2422,8 @@ export function TeacherArea30({ unlocked, onUnlockChange, onGoSolutions }: { unl
       <TeacherGate ok={unlocked} setOk={(v) => onUnlockChange?.(v)} />
       {unlocked && (
         <div className="space-y-3.5">
+          {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
+          <FinalTestAnswerKey lesson={30} questions={FINAL_TESTS[30]} accent="bg-teal-700" />
           <div className="rounded-3xl border-2 border-teal-200 bg-gradient-to-br from-teal-50 to-sky-50 p-4">
             <h3 className="font-head text-lg font-black text-teal-900"><Rich text={TEACHER_30_OVERVIEW.title} /></h3>
             <div className="mt-3 space-y-2.5">
@@ -2640,6 +2644,17 @@ export default function Lesson30({ onExit }: { onExit: () => void }) {
           {area === "lesson" && (
             <div data-area="l30-lesson">
               <SlideView30 key={index} s={slide} onGoTest={() => setArea("test")} />
+              {/* 🏁 الاختبار النهائي — طبقة نهاية الدرس (تظهر مع الخطوة الأخيرة فقط) */}
+              {index === SLIDE_COUNT - 1 && (
+                <div className="mt-4">
+                  <FinalTest
+                    lesson={30}
+                    questions={FINAL_TESTS[30]}
+                    accent="bg-teal-700"
+                    onGoTeacher={() => setArea("teacher")}
+                  />
+                </div>
+              )}
               <div className="flex items-center gap-2">
                 <button type="button" disabled={index === 0} onClick={() => setIndex((i) => Math.max(0, i - 1))}
                   className="flex-1 rounded-2xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-black text-slate-700 transition enabled:hover:border-teal-300 disabled:opacity-30">

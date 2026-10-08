@@ -45,6 +45,8 @@ import {
   type RoleStyle,
   type FrameAccent,
 } from "../../shared/lessonKit";
+import FinalTest, { FinalTestAnswerKey } from "../../shared/finalTest";
+import { FINAL_TESTS } from "../../shared/finalTestBank";
 
 // ============================================================
 // ⏪ الدرس 27 — Past Perfect — الماضي التام
@@ -1959,7 +1961,7 @@ function S44StoryStudio() {
                 req.ok ? "border-emerald-300 bg-emerald-50 text-emerald-950" : "border-slate-100 bg-slate-50 text-slate-600"
               }`}
             >
-              <span>{req.label}</span>
+              <span><LatinRuns text={req.label} /></span>
               <span className={`font-mono font-black ${req.ok ? "text-emerald-700" : "text-slate-400"}`}>{req.val}</span>
             </div>
           ))}
@@ -2355,7 +2357,7 @@ export function TestArea27({ onShowSolutions }: { onShowSolutions?: () => void }
               <h2 className="font-head text-2xl font-black text-slate-900">اختبار الدرس 27 — 20 سؤالًا</h2>
             </div>
             <p className="mt-1 text-sm font-bold text-slate-500">
-              أسئلة تطبيقية جديدة تقيس فهمك العميق لـ Past Perfect · لا تظهر النتيجة إلا بعد إنهاء الاختبار بالكامل.
+              أسئلة تطبيقية جديدة تقيس فهمك العميق للماضي التام (<En>Past Perfect</En>) ولا تظهر النتيجة إلا بعد إنهاء الاختبار بالكامل.
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -2561,7 +2563,7 @@ export function TestArea27({ onShowSolutions }: { onShowSolutions?: () => void }
                                         : "border-slate-200 bg-white text-slate-700"
                                     }`}
                                   >
-                                    {r}
+                                    <Rich text={r} />
                                   </button>
                                 );
                               })}
@@ -2752,6 +2754,8 @@ export function TeacherArea27({
 
   return (
     <div data-area="l27-teacher" className="space-y-6">
+      {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
+      <FinalTestAnswerKey lesson={27} questions={FINAL_TESTS[27]} accent="bg-violet-700" />
       <div className="rounded-3xl border-2 border-emerald-200 bg-emerald-50/80 p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
@@ -2775,18 +2779,18 @@ export function TeacherArea27({
 
       {/* 1) Overview */}
       <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
-        <h3 className="font-head text-lg font-black text-slate-900">Lesson Overview — نظرة عامة</h3>
+        <h3 className="font-head text-lg font-black text-slate-900"><Rich text="Lesson Overview — نظرة عامة" /></h3>
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="rounded-2xl bg-slate-50 p-3 text-xs space-y-1">
             <span className="font-black text-slate-800">الأهداف التدريسية:</span>
             {TEACHER_27_OVERVIEW.objectives.map((o, i) => (
-              <div key={i}>• {o}</div>
+              <div key={i}>• <Rich text={o} /></div>
             ))}
           </div>
           <div className="rounded-2xl bg-slate-50 p-3 text-xs space-y-1">
             <span className="font-black text-slate-800">المتطلبات السابقة:</span>
             {TEACHER_27_OVERVIEW.prerequisites.map((p, i) => (
-              <div key={i}>• {p}</div>
+              <div key={i}>• <Rich text={p} /></div>
             ))}
           </div>
         </div>
@@ -2794,14 +2798,14 @@ export function TeacherArea27({
 
       {/* 2) Teaching Notes */}
       <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
-        <h3 className="font-head text-lg font-black text-slate-900">Teaching Notes — ملاحظات تعليمية (16 بندًا)</h3>
+        <h3 className="font-head text-lg font-black text-slate-900"><Rich text="Teaching Notes — ملاحظات تعليمية (16 بندًا)" /></h3>
         <div className="grid gap-2.5 sm:grid-cols-2">
           {TEACHER_27_NOTES.map((note, i) => (
             <div key={i} className="rounded-2xl border border-slate-100 bg-slate-50/60 p-3 text-xs">
-              <div className="font-black text-violet-900">{note.head}</div>
+              <div className="font-black text-violet-900"><Rich text={note.head} /></div>
               <div className="mt-1 space-y-0.5 text-slate-700">
                 {note.lines.map((l, li) => (
-                  <div key={li}>• {l}</div>
+                  <div key={li}>• <Rich text={l} /></div>
                 ))}
               </div>
             </div>
@@ -2811,14 +2815,14 @@ export function TeacherArea27({
 
       {/* 3) Activity Solutions */}
       <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
-        <h3 className="font-head text-lg font-black text-slate-900">Activity Solutions — حلول الأنشطة والتدريبات (10 أقسام)</h3>
+        <h3 className="font-head text-lg font-black text-slate-900"><Rich text="Activity Solutions — حلول الأنشطة والتدريبات (10 أقسام)" /></h3>
         <div className="space-y-2">
           {TEACHER_27_SOLUTIONS.map((sol, i) => (
             <div key={i} className="rounded-2xl border border-slate-100 bg-slate-50 p-3 text-xs">
-              <div className="font-black text-slate-900">{sol.head}</div>
+              <div className="font-black text-slate-900"><Rich text={sol.head} /></div>
               <div className="mt-1 space-y-0.5 text-slate-700">
                 {sol.lines.map((l, li) => (
-                  <div key={li}>• {l}</div>
+                  <div key={li}>• <Rich text={l} /></div>
                 ))}
               </div>
             </div>
@@ -2828,24 +2832,24 @@ export function TeacherArea27({
 
       {/* 4) Story Rubric */}
       <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-2">
-        <h3 className="font-head text-lg font-black text-slate-900">Story Rubric — سلّم قصة «The Mysterious Door»</h3>
+        <h3 className="font-head text-lg font-black text-slate-900"><Rich text="Story Rubric — سلّم قصة «The Mysterious Door»" /></h3>
         <div className="rounded-2xl bg-violet-50 p-3.5 text-xs font-semibold text-violet-950 space-y-1">
           {TEACHER_27_RUBRIC.lines.map((l, i) => (
-            <div key={i}>✓ {l}</div>
+            <div key={i}>✓ <Rich text={l} /></div>
           ))}
         </div>
       </div>
 
       {/* 5) Common Mistakes */}
       <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
-        <h3 className="font-head text-lg font-black text-slate-900">Common Mistakes — الأخطاء الشائعة (8 محاور)</h3>
+        <h3 className="font-head text-lg font-black text-slate-900"><Rich text="Common Mistakes — الأخطاء الشائعة (8 محاور)" /></h3>
         <div className="grid gap-2 sm:grid-cols-2">
           {TEACHER_27_MISTAKES.map((m, i) => (
             <div key={i} className="rounded-2xl border border-rose-100 bg-rose-50/50 p-3 text-xs">
-              <div className="font-black text-rose-900">{m.head}</div>
+              <div className="font-black text-rose-900"><Rich text={m.head} /></div>
               <div className="mt-1 space-y-0.5 text-slate-700">
                 {m.lines.map((l, li) => (
-                  <div key={li}>• {l}</div>
+                  <div key={li}>• <Rich text={l} /></div>
                 ))}
               </div>
             </div>
@@ -3033,6 +3037,16 @@ export default function Lesson27({ onExit }: { onExit?: () => void }) {
               >
                 <SlideBody id={curSlide.id} onGoTest={() => setTab("test")} />
               </Frame>
+
+              {/* 🏁 الاختبار النهائي — طبقة نهاية الدرس (تظهر مع الخطوة الأخيرة فقط) */}
+              {slideIdx === total - 1 && (
+                <FinalTest
+                  lesson={27}
+                  questions={FINAL_TESTS[27]}
+                  accent="bg-violet-700"
+                  onGoTeacher={() => setTab("teacher")}
+                />
+              )}
 
               {/* أزرار التنقل السفلية */}
               <div className="flex items-center justify-between pt-2">

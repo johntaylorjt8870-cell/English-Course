@@ -7,7 +7,6 @@
 import { useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 import { En, PlatformTag, Rich, type FrameAccent, type RoleStyle } from "../../shared/lessonKit";
 import { LatinRuns } from "../../shared/bidi";
-import { SOURCE_SECTIONS, SEC_32 } from "./ledger32";
 import { normalizeTyped32 } from "./testData";
 
 export const ACCENT32: FrameAccent = {
@@ -73,29 +72,6 @@ export function Verdict32({ ok, text, why }: { ok: boolean; text?: string; why?:
           <span className="ms-1 inline-block"><PlatformTag /></span> <Rich text={why} />
         </span>
       )}
-    </div>
-  );
-}
-
-/** مكان المصدر: يظهر بعد إتمام التفاعل (أو فورًا للخطوات الشارحة) */
-export function SourceReveal32({ id, show, alwaysOpen = false }: { id: string; show: boolean; alwaysOpen?: boolean }) {
-  if (!show) return null;
-  const sec = SOURCE_SECTIONS[SEC_32[id]];
-  if (!sec) return null;
-  return (
-    <div data-reveal-block={id} className="space-y-2 rounded-3xl border-2 border-emerald-200 bg-emerald-50/60 p-3">
-      <details open={alwaysOpen}>
-        <summary className="cursor-pointer rounded-xl px-2 py-1.5 text-sm font-black text-emerald-900 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-400">
-          📜 <Rich text="نص المصدر الحرفي — اضغط للعرض" />
-        </summary>
-        <ul className="mt-2 space-y-1 rounded-2xl bg-white p-3">
-          {sec.units.map((u, i) => (
-            <li key={i} className="text-sm font-semibold leading-relaxed text-slate-700">
-              <Rich text={u} />
-            </li>
-          ))}
-        </ul>
-      </details>
     </div>
   );
 }

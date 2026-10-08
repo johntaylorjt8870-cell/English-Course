@@ -5,7 +5,8 @@
 //   1) Source ledger: 40 verbatim units = cover + objectives + 36 numbered + summary + closing.
 //   2) Step registry: 40 slides, each source unit exactly once, in ledger order.
 //   3) Real render (SSR) of all 40 steps: no throws, source badge, no answer leak.
-//   4) Completion-gated source reveal: hidden before the attempt, shown after it (DOM-driven).
+//   4) No student-facing source reveal: no click-to-open literal source text anywhere
+//      (the raw source lives in the ledger + the teacher index only).
 //   5) Interaction walk: sorting, slots, rows, fixes, typed, boss, verbs, rail, gates, evidence.
 //   6) Test Area: 20 original questions, 6/7/4/3, 7 types, neutral until submit, score, full reset.
 //   7) Test Solutions: locked before submit, 20 solutions in 4 groups of 5.
@@ -129,7 +130,7 @@ ok(SLIDES.every((s) => s.tip && s.lead && s.title), "steps: every slide has titl
 // ============================================================
 // 3) SSR render of all 40 steps
 // ============================================================
-const STATIC = new Set(["cover", "objectives", "summary", "closing"]);
+const REVEAL_BANNED = /data-reveal-block|اضغط للعرض|نص المصدر الحرفي/;
 for (const s of SLIDES) {
   let html = "";
   try {
@@ -140,9 +141,7 @@ for (const s of SLIDES) {
   }
   ok(html.includes(`data-lesson-step="${s.id}"`), `render: step ${s.id} renders its body`);
   ok(html.includes("data-source-section"), `render: step ${s.id} shows its source-section badge`);
-  const hasReveal = html.includes("data-reveal-block");
-  if (STATIC.has(s.id)) ok(hasReveal, `render: static step ${s.id} shows its source reveal`);
-  else ok(!hasReveal, `render: interactive step ${s.id} hides its source before the attempt`);
+  ok(!REVEAL_BANNED.test(html), `render: step ${s.id} shows no student-facing source reveal`);
   ok(!/✓ صحيح|✕ غير صحيح|الدرجة:/.test(html), `render: step ${s.id} shows no correctness state before attempt`);
 }
 
@@ -154,6 +153,7 @@ const mountStep = async (s) => {
   return mountNode(node);
 };
 const revealed = (el, id) => !!q(el, `[data-reveal-block="${id}"]`);
+const gateDone32 = (el, id) => !!q(el, `[data-gate-done="${id}"]`);
 
 // s1 — BlockBuilder: tap tokens in order, round by round
 {
@@ -171,7 +171,7 @@ const revealed = (el, id) => !!q(el, `[data-reveal-block="${id}"]`);
     clickEl(btnWith(el, r + 1 < D.BLOCKS_S1.length ? "الجملة التالية" : "إنهاء التمرين"));
     await tick(10);
   }
-  ok(revealed(el, "s1"), "gate s1: source revealed after completing the build");
+  ok(gateDone32(el, "s1") && !revealed(el, "s1"), `gate s1: completion confirmed with no source text revealed`);
 }
 
 // s3 — sort into buckets (click item → click bucket)
@@ -187,7 +187,7 @@ const revealed = (el, id) => !!q(el, `[data-reveal-block="${id}"]`);
     await tick(5);
   }
   await tick(10);
-  ok(revealed(el, "s3"), "gate s3: source revealed after sorting every subject");
+  ok(gateDone32(el, "s3") && !revealed(el, "s3"), `gate s3: completion confirmed with no source text revealed`);
 }
 
 // s5 — slot pick (correct option per round)
@@ -199,7 +199,7 @@ const revealed = (el, id) => !!q(el, `[data-reveal-block="${id}"]`);
     clickEl(btnWith(el, r + 1 < D.FOR_ROUNDS_S5.length ? "الجولة التالية" : "إنهاء التمرين"));
     await tick(5);
   }
-  ok(revealed(el, "s5"), "gate s5: source revealed after the for-rounds");
+  ok(gateDone32(el, "s5") && !revealed(el, "s5"), `gate s5: completion confirmed with no source text revealed`);
 }
 
 // s11 — per-row choices
@@ -207,7 +207,7 @@ const revealed = (el, id) => !!q(el, `[data-reveal-block="${id}"]`);
   const el = await mountStep(SLIDES.find((x) => x.id === "s11"));
   for (let ri = 0; ri < D.SHORT_ROWS_S11.length; ri++) { clickEl(q(el, `[data-row="${ri}"][data-row-opt="${D.SHORT_ROWS_S11[ri].answer}"]`)); await tick(15); }
   await tick(10);
-  ok(revealed(el, "s11"), "gate s11: source revealed after all short-answer rows");
+  ok(gateDone32(el, "s11") && !revealed(el, "s11"), `gate s11: completion confirmed with no source text revealed`);
 }
 
 // s27 — grammar detective: tap wrong segment, pick fix
@@ -221,7 +221,7 @@ const revealed = (el, id) => !!q(el, `[data-reveal-block="${id}"]`);
     await tick(15);
   }
   await tick(10);
-  ok(revealed(el, "s27"), "gate s27: source revealed after fixing all eight sentences");
+  ok(gateDone32(el, "s27") && !revealed(el, "s27"), `gate s27: completion confirmed with no source text revealed`);
 }
 
 // s28 — typed fill
@@ -235,7 +235,7 @@ const revealed = (el, id) => !!q(el, `[data-reveal-block="${id}"]`);
     await tick(5);
   }
   await tick(10);
-  ok(revealed(el, "s28"), "gate s28: source revealed after typing every answer");
+  ok(gateDone32(el, "s28") && !revealed(el, "s28"), `gate s28: completion confirmed with no source text revealed`);
 }
 
 // s23 — stative gate
@@ -243,7 +243,7 @@ const revealed = (el, id) => !!q(el, `[data-reveal-block="${id}"]`);
   const el = await mountStep(SLIDES.find((x) => x.id === "s23"));
   for (let i = 0; i < D.STATIVE_S23.length; i++) { clickEl(q(el, `[data-gate="${i}"]`)); await tick(15); }
   await tick(10);
-  ok(revealed(el, "s23"), "gate s23: source revealed after testing all stative verbs");
+  ok(gateDone32(el, "s23") && !revealed(el, "s23"), `gate s23: completion confirmed with no source text revealed`);
 }
 
 // s24–s26 — reference rail (click every snap)
@@ -251,7 +251,7 @@ for (const [id, rows] of [["s24", D.RAIL_S24], ["s25", D.RAIL_S25], ["s26", D.RA
   const el = await mountStep(SLIDES.find((x) => x.id === id));
   for (const snap of rows) { clickEl(q(el, `[data-snap="${snap.key}"]`)); await tick(15); }
   await tick(10);
-  ok(revealed(el, id), `gate ${id}: source revealed after every reference point`);
+  ok(gateDone32(el, id) && !revealed(el, id), `gate ${id}: completion confirmed with no source text revealed`);
 }
 
 // s13 — evidence cases
@@ -267,7 +267,7 @@ for (const [id, rows] of [["s24", D.RAIL_S24], ["s25", D.RAIL_S25], ["s26", D.RA
     await tick(5);
   }
   await tick(10);
-  ok(revealed(el, "s13"), "gate s13: source revealed after explaining every evidence scene");
+  ok(gateDone32(el, "s13") && !revealed(el, "s13"), `gate s13: completion confirmed with no source text revealed`);
 }
 
 // s36 — gear map (activate all)
@@ -277,7 +277,7 @@ for (const [id, rows] of [["s24", D.RAIL_S24], ["s25", D.RAIL_S25], ["s26", D.RA
   ok(gears.length === 4, `s36: four gears (got ${gears.length})`);
   for (const g of gears) { clickEl(g); await tick(15); }
   await tick(10);
-  ok(revealed(el, "s36"), "gate s36: source revealed after every gear");
+  ok(gateDone32(el, "s36") && !revealed(el, "s36"), `gate s36: completion confirmed with no source text revealed`);
 }
 
 // s32 — boss: correct gear per strike
@@ -289,7 +289,7 @@ for (const [id, rows] of [["s24", D.RAIL_S24], ["s25", D.RAIL_S25], ["s26", D.RA
     await tick(15);
   }
   await tick(10);
-  ok(revealed(el, "s32"), "gate s32: source revealed after defeating the boss");
+  ok(gateDone32(el, "s32") && !revealed(el, "s32"), `gate s32: completion confirmed with no source text revealed`);
   ok(textOf(el).includes("هُزم الزعيم"), "s32: boss defeat message shown");
 }
 
@@ -305,7 +305,7 @@ for (const [id, rows] of [["s24", D.RAIL_S24], ["s25", D.RAIL_S25], ["s26", D.RA
     await tick(5);
   }
   await tick(10);
-  ok(revealed(el, "s33"), "gate s33: source revealed after tagging all four verb phrases");
+  ok(gateDone32(el, "s33") && !revealed(el, "s33"), `gate s33: completion confirmed with no source text revealed`);
 }
 
 // s14 — canvas: lens switch then two rows
@@ -321,7 +321,7 @@ for (const [id, rows] of [["s24", D.RAIL_S24], ["s25", D.RAIL_S25], ["s26", D.RA
   clickEl(q(el, '[data-row="1"][data-row-opt="1"]'));
   await tick(15);
   await tick(10);
-  ok(revealed(el, "s14"), "gate s14: source revealed after both lenses and rows");
+  ok(gateDone32(el, "s14") && !revealed(el, "s14"), `gate s14: completion confirmed with no source text revealed`);
 }
 
 // s18 — still running: both states
@@ -331,7 +331,7 @@ for (const [id, rows] of [["s24", D.RAIL_S24], ["s25", D.RAIL_S25], ["s26", D.RA
   await tick(15);
   clickEl(btnWith(el, "ما زال يركض"));
   await tick(15);
-  ok(revealed(el, "s18"), "gate s18: source revealed after both states");
+  ok(gateDone32(el, "s18") && !revealed(el, "s18"), `gate s18: completion confirmed with no source text revealed`);
 }
 
 // s4 — ribbon: slider + activity + still toggle
@@ -344,7 +344,7 @@ for (const [id, rows] of [["s24", D.RAIL_S24], ["s25", D.RAIL_S25], ["s26", D.RA
   await tick(5);
   clickEl(btnWith(el, "ما زال مستمرًا"));
   await tick(10);
-  ok(revealed(el, "s4"), "gate s4: source revealed after the three ribbon controls");
+  ok(gateDone32(el, "s4") && !revealed(el, "s4"), `gate s4: completion confirmed with no source text revealed`);
 }
 
 // s19 — keywords (open every card)
@@ -352,7 +352,7 @@ for (const [id, rows] of [["s24", D.RAIL_S24], ["s25", D.RAIL_S25], ["s26", D.RA
   const el = await mountStep(SLIDES.find((x) => x.id === "s19"));
   for (let i = 0; i < D.KEYWORDS_S19.length; i++) { clickEl(q(el, `[data-explore="${i}"]`)); await tick(15); }
   await tick(10);
-  ok(revealed(el, "s19"), "gate s19: source revealed after all keywords");
+  ok(gateDone32(el, "s19") && !revealed(el, "s19"), `gate s19: completion confirmed with no source text revealed`);
 }
 
 // s20–s22 & s29 & s31 & s34 & s35 — per-row / typed / bucket walks (smoke: reveal after completion)
@@ -367,7 +367,7 @@ for (const [id, rows] of [["s24", D.RAIL_S24], ["s25", D.RAIL_S25], ["s26", D.RA
     await tick(5);
   }
   await tick(10);
-  ok(revealed(el, "s35"), "gate s35: source revealed after the golden sort");
+  ok(gateDone32(el, "s35") && !revealed(el, "s35"), `gate s35: completion confirmed with no source text revealed`);
 }
 
 // ---------------- generic drivers for the remaining steps ----------------
@@ -455,7 +455,7 @@ for (const [id, drive, data] of [
   ok(!revealed(el, id), `gate ${id}: source hidden before the attempt`);
   await drive(el);
   await tick(15);
-  ok(revealed(el, id), `gate ${id}: source revealed after completing the activity`);
+  ok(gateDone32(el, id) && !revealed(el, id), `gate ${id}: completion confirmed with no source text revealed`);
 }
 
 // ============================================================
@@ -589,7 +589,9 @@ ok(Object.values(src).every((s) => !/onMouseEnter|onMouseOver|onHover/.test(s)),
 ok(!Object.values(src).some((s) => s.includes("split(/(\\s+)/)")), "bidi: no per-token space splitting (word-reversal engine banned)");
 const kit = src["kit32.tsx"];
 ok(kit.includes("focus-visible:ring-4") && kit.includes("FOCUS32"), "a11y: visible focus ring contract (FOCUS32)");
-ok(/if \(!show\) return null;/.test(kit), "gate: SourceReveal32 renders nothing unless shown");
+ok(!kit.includes("SourceReveal32") && !src["Steps32.tsx"].includes("SourceReveal32"), "reveal: source-reveal component fully removed");
+ok(!Object.values(src).some((t) => t.includes("اضغط للعرض")), "reveal: no click-to-open source text in lesson 32");
+ok(!Object.values(src).some((t) => t.includes("data-reveal-block")), "reveal: no reveal blocks left in lesson 32");
 const btnTotal = files.reduce((n, f) => n + (src[f.split("/").pop()].match(/<button\b/g) || []).length, 0);
 const btnTyped = files.reduce((n, f) => n + (src[f.split("/").pop()].match(/<button\b[^>]*?type=/g) || []).length, 0);
 ok(btnTotal > 0 && btnTyped >= btnTotal * 0.9, `a11y: buttons declare type (${btnTyped}/${btnTotal} on one line)`);

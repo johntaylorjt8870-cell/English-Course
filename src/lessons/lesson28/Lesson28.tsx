@@ -50,6 +50,8 @@ import {
   type RoleStyle,
   type FrameAccent,
 } from "../../shared/lessonKit";
+import FinalTest, { FinalTestAnswerKey } from "../../shared/finalTest";
+import { FINAL_TESTS } from "../../shared/finalTestBank";
 
 // ============================================================
 // 🧭 الدرس 28 — Past Perfect vs Past Simple
@@ -3184,6 +3186,8 @@ export function TeacherArea28({ unlocked, onUnlockChange, onGoSolutions }: { unl
   if (!ok) return <TeacherGate ok={ok} setOk={setOk} />;
   return (
     <div data-area="l28-teacher" className="space-y-3">
+      {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
+      <FinalTestAnswerKey lesson={28} questions={FINAL_TESTS[28]} accent="bg-indigo-700" />
       <div className="rounded-3xl border-2 border-sky-200 bg-gradient-to-l from-sky-50 to-indigo-50 p-4">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-2xl">🧑‍🏫</span>
@@ -3480,6 +3484,17 @@ export default function Lesson28({ onExit }: { onExit: () => void }) {
           <main id="l28-main" className="flex-1 overflow-y-auto px-3 pb-32 pt-4 md:px-6 lg:px-10">
             <div className="pop mx-auto max-w-4xl" hidden={area !== "lesson"}>
               <SlideView28 key={index} s={slide} onGoTest={() => setArea("test")} />
+              {/* 🏁 الاختبار النهائي — طبقة نهاية الدرس (تظهر مع الخطوة الأخيرة فقط) */}
+              {index === total - 1 && (
+                <div className="mt-4">
+                  <FinalTest
+                    lesson={28}
+                    questions={FINAL_TESTS[28]}
+                    accent="bg-indigo-700"
+                    onGoTeacher={() => setArea("teacher")}
+                  />
+                </div>
+              )}
             </div>
             <div className="mx-auto max-w-4xl" hidden={area !== "test"}>
               <TestArea28 onCheckedChange={setTestChecked} onShowSolutions={() => setArea("solutions")} />

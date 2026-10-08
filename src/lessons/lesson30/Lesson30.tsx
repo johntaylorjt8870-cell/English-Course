@@ -49,7 +49,7 @@ import {
   type Tense30,
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
-import { LatinRuns } from "../../shared/bidi";
+import { EnAr, LatinRuns } from "../../shared/bidi";
 import {
   En,
   Rich,
@@ -152,8 +152,7 @@ function Lab({ emoji, label, ar, children, seq }: { emoji: string; label: string
     <div data-en-seq={seq} className="rounded-3xl border-2 border-teal-200 bg-gradient-to-br from-teal-50 via-sky-50 to-amber-50/70 p-3.5 sm:p-4">
       <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-teal-100 bg-white px-3 py-2">
         <span className="text-xl" aria-hidden>{emoji}</span>
-        <En className="text-[11px] font-black uppercase tracking-[0.16em] text-teal-700">{label}</En>
-        {ar && <Rich text={ar} className="text-sm font-bold text-slate-600" />}
+        <EnAr en={label} ar={ar} enClassName="text-[11px] font-black uppercase tracking-[0.16em] text-teal-700" arClassName="text-sm font-bold text-slate-600" />
       </div>
       {children}
     </div>
@@ -164,10 +163,10 @@ function Lab({ emoji, label, ar, children, seq }: { emoji: string; label: string
 function PlatformPanel({ title, children }: { title?: string; children: ReactNode }) {
   return (
     <div className="space-y-1.5 rounded-3xl border-2 border-amber-300 bg-amber-50 p-3.5">
-      <div className="flex flex-wrap items-center gap-2">
+      <div dir="ltr" className="ltr-pair flex flex-wrap items-center gap-2">
         <PlatformTag />
         {title && (
-          <div className="text-sm font-black text-slate-800">
+          <div dir="rtl" className="text-sm font-black text-slate-800">
             <Rich text={title} />
           </div>
         )}
@@ -271,7 +270,7 @@ function McqRow({ n, stem, stemAr, opts, answer, why, context, onFirstAnswer, ac
       {pick !== undefined && (
         <div className={`mt-2 pr-10 text-sm font-bold ${right ? "text-emerald-700" : "text-rose-600"}`}>
           {right ? <span className="tada inline-block">✓ <Rich text={why} /></span>
-            : <span>✕ الصحيح: <En className="font-extrabold">{opts[answer]}</En> — <Rich text={why} /></span>}
+            : <span>✕ الصحيح: <EnAr en={opts[answer]} sep="—" ar={why} enClassName="font-extrabold" /></span>}
         </div>
       )}
     </div>
@@ -544,7 +543,7 @@ function Req({ label, met }: { label: ReactNode; met: boolean }) {
   return (
     <div className={`flex items-center gap-2 rounded-xl border-2 px-3 py-1.5 text-sm font-bold ${met ? "border-emerald-300 bg-emerald-50 text-emerald-900" : "border-slate-200 bg-white text-slate-500"}`}>
       <span aria-hidden>{met ? "✓" : "○"}</span>
-      <span className="min-w-0">{label}</span>
+      <span className="min-w-0">{typeof label === "string" ? <LatinRuns text={label} /> : label}</span>
     </div>
   );
 }
@@ -557,17 +556,17 @@ function StoryLive({ seq, mode }: { seq: string; mode: "boss" | "challenge" }) {
   const reqs: { label: ReactNode; met: boolean }[] = isBoss
     ? [
         { label: <>تبدأ بـ <En>When the firefighters arrived</En></>, met: text.trim().toLowerCase().startsWith("when the firefighters arrived") },
-        { label: <>① <En>Past Simple</En> — فعل ماضٍ واحد على الأقل</>, met: stats.ps >= 1 },
+        { label: <Rich text="① Past Simple — فعل ماضٍ واحد على الأقل" />, met: stats.ps >= 1 },
         { label: <>② <En>Past Continuous</En> — <En>was/were + verb-ing</En></>, met: stats.pc >= 1 },
         { label: <>③ <En>Past Perfect</En> — <En>had + V3</En></>, met: stats.pp >= 1 },
         { label: <>④ <En>Past Perfect Continuous</En> — <En>had been + verb-ing</En></>, met: stats.ppc >= 1 },
       ]
     : [
         { label: <>12 جملة على الأقل (الآن: {stats.sentences})</>, met: stats.sentences >= 12 },
-        { label: <>4 × <En>Past Simple</En> (الآن: {stats.ps})</>, met: stats.ps >= 4 },
-        { label: <>3 × <En>Past Continuous</En> (الآن: {stats.pc})</>, met: stats.pc >= 3 },
-        { label: <>3 × <En>Past Perfect</En> (الآن: {stats.pp})</>, met: stats.pp >= 3 },
-        { label: <>2 × <En>Past Perfect Continuous</En> (الآن: {stats.ppc})</>, met: stats.ppc >= 2 },
+        { label: <span dir="ltr" className="ltr-pair">4 × <En>Past Simple</En> <span dir="rtl">(الآن: {stats.ps})</span></span>, met: stats.ps >= 4 },
+        { label: <span dir="ltr" className="ltr-pair">3 × <En>Past Continuous</En> <span dir="rtl">(الآن: {stats.pc})</span></span>, met: stats.pc >= 3 },
+        { label: <span dir="ltr" className="ltr-pair">3 × <En>Past Perfect</En> <span dir="rtl">(الآن: {stats.pp})</span></span>, met: stats.pp >= 3 },
+        { label: <span dir="ltr" className="ltr-pair">2 × <En>Past Perfect Continuous</En> <span dir="rtl">(الآن: {stats.ppc})</span></span>, met: stats.ppc >= 2 },
         ...CHALLENGE_WORDS_30.map((w) => ({ label: <>تتضمن <En>{w}</En></>, met: stats.words[w] })),
       ];
   const metCount = reqs.filter((r) => r.met).length;
@@ -633,7 +632,7 @@ function CoverStep() {
           <div className="text-3xl">{LENS_META[lens].emoji}</div>
           <En className={`mt-1 block text-xl font-black ${LENS_META[lens].text}`}>{examples[lens].en}</En>
           <Rich text={examples[lens].ar} className="mt-1 block text-sm font-bold text-slate-600" />
-          <div className="mt-2 text-sm font-black text-slate-700"><En className="font-black">{LENS_META[lens].qEn}</En> — {LENS_META[lens].q}</div>
+          <div className="mt-2 text-sm font-black text-slate-700"><EnAr en={LENS_META[lens].qEn} sep="—" ar={LENS_META[lens].q} enClassName="font-black" /></div>
         </div>
       </Lab>
       <SignatureGhost />
@@ -660,7 +659,7 @@ function OpeningStep() {
               <div className="text-sm font-black text-slate-400">{c.num}</div>
               <div className="mt-1 flex justify-center"><LensChip lens={c.lens} size="sm" /></div>
               <div className={`mt-2 text-sm font-black ${open === c.lens ? LENS_META[c.lens].text : "text-slate-400"}`}>
-                {open === c.lens ? <><En>{LENS_META[c.lens].qEn}</En> — {c.ar}</> : "؟؟؟"}
+                {open === c.lens ? <><EnAr en={LENS_META[c.lens].qEn} sep="—" ar={c.ar} /></> : "؟؟؟"}
               </div>
             </button>
           ))}
@@ -871,7 +870,7 @@ function S5_PPStep() {
         {pick !== null && (
           <div className={`mt-3 rounded-2xl border-2 p-3 text-center text-sm font-bold ${verbs.find((v) => v.v === pick)?.ok ? "border-emerald-300 bg-emerald-50 text-emerald-900" : "border-rose-300 bg-rose-50 text-rose-700"}`}>
             {verbs.find((v) => v.v === pick)?.ok
-              ? <span className="tada inline-block">✓ <En>had broken</En> — <Rich text="حدث وقع قبل لحظة الإدراك. إذن Past Perfect يعمل مثل فلاش باك." /></span>
+              ? <span className="tada inline-block">✓ <EnAr en="had broken" sep="—" ar="حدث وقع قبل لحظة الإدراك. إذن Past Perfect يعمل مثل فلاش باك." /></span>
               : <span>✕ <Rich text="هذا حدث رئيسي في زمن القصة — ابحث عن الفعل الذي وقع قبل لحظة الإدراك." /></span>}
           </div>
         )}
@@ -1888,7 +1887,7 @@ function SummaryStep() {
           <div className="text-3xl">{LENS_META[lens].emoji}</div>
           <Rich text={cards[lens].def} className={`mt-1 block text-base font-black ${LENS_META[lens].text}`} />
           <div className="mx-auto mt-2 max-w-xl rounded-xl bg-slate-900 p-3" dir="ltr"><En className="text-base font-black text-white md:text-lg">{cards[lens].en}</En></div>
-          <div className="mt-2 text-sm font-bold text-slate-600"><En className="font-black">{LENS_META[lens].qEn}</En> — {LENS_META[lens].q}</div>
+          <div className="mt-2 text-sm font-bold text-slate-600"><EnAr en={LENS_META[lens].qEn} sep="—" ar={LENS_META[lens].q} enClassName="font-black" /></div>
         </div>
       </Lab>
     </div>
@@ -2596,7 +2595,7 @@ export default function Lesson30({ onExit }: { onExit: () => void }) {
         </button>
         <div className="min-w-0 flex-1">
           <h1 className="font-head truncate text-lg font-black text-slate-900 md:text-xl">{LESSON_TITLE_30}</h1>
-          <p className="truncate text-xs font-bold text-slate-500">{LESSON_SUBTITLE_30}</p>
+          <p className="truncate text-xs font-bold text-slate-500"><LatinRuns text={LESSON_SUBTITLE_30} /></p>
         </div>
       </div>
 

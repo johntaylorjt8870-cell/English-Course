@@ -27,6 +27,7 @@ import {
   type TestQ29,
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
+import { EnAr, LatinRuns } from "../../shared/bidi";
 import {
   En,
   Rich,
@@ -140,8 +141,7 @@ function Lab({ emoji, label, ar, children }: { emoji: string; label: string; ar?
     <div className="rounded-3xl border-2 border-teal-100 bg-gradient-to-br from-teal-50/80 via-white to-emerald-50/60 p-3.5 sm:p-4">
       <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-teal-100 bg-white px-3 py-2">
         <span className="text-xl">{emoji}</span>
-        <En className="text-[11px] font-black uppercase tracking-[0.16em] text-teal-700">{label}</En>
-        {ar && <Rich text={ar} className="text-sm font-bold text-slate-600" />}
+        <EnAr en={label} ar={ar} enClassName="text-[11px] font-black uppercase tracking-[0.16em] text-teal-700" arClassName="text-sm font-bold text-slate-600" />
       </div>
       <div className="space-y-3">{children}</div>
     </div>
@@ -256,7 +256,7 @@ function McqRow({
             <span className="tada inline-block">✓ <Rich text={why} /></span>
           ) : (
             <span>
-              ✕ الصحيح: <En className="font-extrabold">{opts[answer]}</En> — <Rich text={why} />
+              ✕ الصحيح: <EnAr en={opts[answer]} sep="—" ar={why} enClassName="font-extrabold" />
             </span>
           )}
         </div>
@@ -1182,7 +1182,7 @@ function S22Negative() {
             </div>
           ))}
         </div>
-        <div className="text-center text-xs font-bold text-teal-700">النفي: hadn't + been + verb-ing — لا تلمس been ولا -ing</div>
+        <div className="text-center text-xs font-bold text-teal-700"><LatinRuns text="النفي: hadn't + been + verb-ing — لا تلمس been ولا -ing" /></div>
       </Lab>
     </>
   );
@@ -1781,8 +1781,7 @@ function S44FinalRule() {
               <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-xl text-sm font-bold text-white ${i < n ? "bg-teal-600" : "bg-slate-300"}`}>{i + 1}</span>
               {i < n ? (
                 <div className="pop min-w-0">
-                  <En className="block text-base font-extrabold text-slate-900">{s}</En>
-                  <span className="text-sm font-bold text-slate-500">{stepsAr[i]}</span>
+                  <EnAr en={s} ar={stepsAr[i]} enClassName="block text-base font-extrabold text-slate-900" arClassName="text-sm font-bold text-slate-500" />
                 </div>
               ) : (
                 <span className="pt-1 text-sm font-bold text-slate-400">؟</span>
@@ -2524,7 +2523,7 @@ export default function Lesson29({ onExit }: { onExit: () => void }) {
               {area === "lesson" ? (
                 <>
                   <div className="truncate text-sm font-bold text-slate-500">
-                    {slide.section} · <Rich text={slide.title} className="text-slate-800" />
+                    <span dir="ltr" className="ltr-pair"><span dir="ltr" className="font-en">{slide.section}</span> · <span dir="rtl"><Rich text={slide.title} className="text-slate-800" /></span></span>
                   </div>
                   <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
                     <div className="h-full rounded-full bg-gradient-to-l from-teal-500 via-amber-400 to-orange-400 transition-all duration-500" style={{ width: `${progress}%` }} />

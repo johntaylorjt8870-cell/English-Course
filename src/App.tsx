@@ -30,6 +30,7 @@ import Lesson28 from "./lessons/lesson28/Lesson28";
 import Lesson29 from "./lessons/lesson29/Lesson29";
 import Lesson30 from "./lessons/lesson30/Lesson30";
 import Lesson31 from "./lessons/lesson31/Lesson31";
+import Lesson32 from "./lessons/lesson32/Lesson32";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -375,6 +376,15 @@ const CARDS: Card[] = [
     href: "#/lesson/31",
     grad: "from-teal-500 to-sky-600",
   },
+  {
+    n: 32,
+    title: "الدرس 32: Present Perfect Continuous — المضارع التام المستمر",
+    en: "Present Perfect Continuous — The Activity Ribbon",
+    emoji: "🌿",
+    stats: "36 قسمًا مرقّمًا · 40 خطوة · شريط النشاط ونقطة المرجع · اختبار 20 سؤالًا · IQ200",
+    href: "#/lesson/32",
+    grad: "from-emerald-600 to-amber-500",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -487,6 +497,7 @@ export default function App() {
   else if (route === 29) page = <Lesson29 onExit={goHome} />;
   else if (route === 30) page = <Lesson30 onExit={goHome} />;
   else if (route === 31) page = <Lesson31 onExit={goHome} />;
+  else if (route === 32) page = <Lesson32 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

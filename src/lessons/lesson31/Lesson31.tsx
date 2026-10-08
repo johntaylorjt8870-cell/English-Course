@@ -97,7 +97,7 @@ import {
   type Starter31,
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
-import { LatinRuns } from "../../shared/bidi";
+import { EnAr, LatinRuns } from "../../shared/bidi";
 import {
   En,
   Rich,
@@ -195,8 +195,7 @@ function Lab({ emoji, label, ar, children, seq }: { emoji: string; label: string
     <div data-en-seq={seq} className="rounded-3xl border-2 border-sky-200 bg-gradient-to-br from-sky-50 via-teal-50 to-amber-50/70 p-3.5 sm:p-4">
       <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-sky-100 bg-white px-3 py-2">
         <span className="text-xl" aria-hidden>{emoji}</span>
-        <En className="text-[11px] font-black uppercase tracking-[0.16em] text-sky-700">{label}</En>
-        {ar && <Rich text={ar} className="text-sm font-bold text-slate-600" />}
+        <EnAr en={label} ar={ar} enClassName="text-[11px] font-black uppercase tracking-[0.16em] text-sky-700" arClassName="text-sm font-bold text-slate-600" />
       </div>
       {children}
     </div>
@@ -207,10 +206,10 @@ function Lab({ emoji, label, ar, children, seq }: { emoji: string; label: string
 function PlatformPanel({ title, children }: { title?: string; children: ReactNode }) {
   return (
     <div className="space-y-1.5 rounded-3xl border-2 border-amber-300 bg-amber-50 p-3.5">
-      <div className="flex flex-wrap items-center gap-2">
+      <div dir="ltr" className="ltr-pair flex flex-wrap items-center gap-2">
         <PlatformTag />
         {title && (
-          <div className="text-sm font-black text-slate-800">
+          <div dir="rtl" className="text-sm font-black text-slate-800">
             <Rich text={title} />
           </div>
         )}
@@ -319,14 +318,14 @@ function McqRow({ n, stem, stemAr, opts, answer, why, context, onFirstAnswer, ac
                 : "border-slate-200 bg-white text-slate-700 hover:border-sky-300"
             }`}
           >
-            {o}
+            <LatinRuns text={o} />
           </button>
         ))}
       </div>
       {pick !== undefined && (
         <div className={`mt-2 pr-10 text-sm font-bold ${right ? "text-emerald-700" : "text-rose-600"}`}>
           {right ? <span className="tada inline-block">✓ <Rich text={why} /></span>
-            : <span>✕ الصحيح: <En className="font-extrabold">{opts[answer]}</En> — <Rich text={why} /></span>}
+            : <span>✕ الصحيح: <EnAr en={opts[answer]} sep="—" ar={why} enClassName="font-extrabold" /></span>}
         </div>
       )}
     </div>
@@ -449,7 +448,7 @@ function TwoStepFix({ n, segments, bad, fixOpts, fixAnswer, why, note, fixed, on
                     : "border-slate-200 bg-white text-slate-700 hover:border-emerald-300"
                 }`}
               >
-                {o}
+                <LatinRuns text={o} />
               </button>
             ))}
           </div>
@@ -678,8 +677,10 @@ function CueSwitch({ seq, cues, sentence, tenseLabel, why, onCue, allowNone = tr
           <En className="text-lg font-black text-slate-900 md:text-xl">{sentence(cue)}</En>
         </div>
         <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
-          <span className={`rounded-xl px-3 py-1 text-xs font-black text-white ${active?.tone ?? "bg-sky-700"}`}><Rich text={tenseLabel(cue)} /></span>
-          <Rich text={why(cue)} className="text-sm font-bold text-slate-600" />
+          <span dir="ltr" className="ltr-pair inline-flex flex-wrap items-center justify-center gap-2">
+            <span className={`rounded-xl px-3 py-1 text-xs font-black text-white ${active?.tone ?? "bg-sky-700"}`}><Rich text={tenseLabel(cue)} /></span>
+            <span dir="rtl"><Rich text={why(cue)} className="text-sm font-bold text-slate-600" /></span>
+          </span>
         </div>
       </div>
       {children}
@@ -746,8 +747,8 @@ function CoverStep() {
       <div className="rounded-3xl border-2 border-sky-100 bg-gradient-to-br from-sky-700 via-cyan-700 to-teal-700 p-6 text-center text-white shadow-lg md:p-10">
         <div className="text-5xl anim-drift md:text-6xl">🌉</div>
         <En className="mt-3 block text-2xl font-black uppercase tracking-widest text-sky-200 md:text-3xl">{LAB_NAME_31}</En>
-        <h1 className="font-head mt-2 text-2xl font-black md:text-4xl">{LESSON_TITLE_31}</h1>
-        <p className="mt-3 text-base font-semibold text-sky-100 md:text-xl">{LESSON_SUBTITLE_31}</p>
+        <h1 className="font-head mt-2 text-2xl font-black md:text-4xl"><LatinRuns text={LESSON_TITLE_31} /></h1>
+        <p className="mt-3 text-base font-semibold text-sky-100 md:text-xl"><LatinRuns text={LESSON_SUBTITLE_31} /></p>
         <div dir="ltr" className="ltr-row mx-auto mt-4 max-w-2xl rounded-2xl bg-white/10 p-3">
           <En className="text-sm font-bold text-white md:text-base">{LAB_MOTTO_31}</En>
         </div>
@@ -910,10 +911,10 @@ function S1_WhatStep() {
       </Lab>
       <PlatformPanel title="تشريح الصيغة: كلمة كلمة">
         <ul className="space-y-1.5 text-sm font-semibold leading-relaxed text-slate-700">
-          <li>• <En>Subject</En> = الفاعل (I · you · she · the dog) — من قام بالفعل.</li>
-          <li>• <En>have / has</En> = المساعد، وهو وحده الذي يحمل الزمن: have مع I/You/We/They · has مع He/She/It.</li>
-          <li>• <En>V3</En> = التصريف الثالث: finished · gone · eaten · written — لا يتغير أبدًا بعد المساعد، مهما كان الفاعل.</li>
-          <li>• ترتيب الجملة ثابت: <En>Subject + have/has + V3 + (rest)</En> — ولا ندخل did أو do في هذا التركيب.</li>
+          <li>• <Rich text="Subject = الفاعل (I · you · she · the dog) — من قام بالفعل." /></li>
+          <li>• <Rich text="have / has = المساعد، وهو وحده الذي يحمل الزمن: have مع I/You/We/They · has مع He/She/It." /></li>
+          <li>• <Rich text="V3 = التصريف الثالث: finished · gone · eaten · written — لا يتغير أبدًا بعد المساعد، مهما كان الفاعل." /></li>
+          <li><Rich text="• ترتيب الجملة ثابت: Subject + have/has + V3 + (rest) — ولا ندخل did أو do في هذا التركيب." /></li>
         </ul>
       </PlatformPanel>
       {done >= 2 && (
@@ -1011,8 +1012,7 @@ function S3_HaveHasStep() {
               </div>
               {seen[i] && (
                 <div className="mt-1.5">
-                  <En className="block text-base font-black text-slate-800">{row.example}</En>
-                  <Rich text={row.ar} className="block text-xs font-bold text-slate-500" />
+                  <EnAr en={row.example} ar={row.ar} enClassName="block text-base font-black text-slate-800" arClassName="block text-xs font-bold text-slate-500" />
                 </div>
               )}
             </button>
@@ -1094,8 +1094,7 @@ function S4_V3Step() {
         <div className="grid gap-2 sm:grid-cols-2">
           {V3_SENTENCES_31.map((s) => (
             <div key={s.en} className="rounded-2xl border-2 border-emerald-100 bg-emerald-50/50 p-2.5">
-              <En className="block text-base font-black text-slate-800">{s.en}</En>
-              <Rich text={s.ar} className="text-xs font-bold text-slate-500" />
+              <EnAr en={s.en} ar={s.ar} enClassName="block text-base font-black text-slate-800" arClassName="text-xs font-bold text-slate-500" />
             </div>
           ))}
         </div>
@@ -1198,8 +1197,7 @@ function S6_ExperienceStep() {
         <div className="grid gap-2 sm:grid-cols-2">
           {EXPERIENCE_31.map((e) => (
             <div key={e.en} className="rounded-2xl border-2 border-sky-100 bg-sky-50/40 p-2.5">
-              <En className="block text-base font-black text-slate-800">{e.en}</En>
-              <Rich text={e.ar} className="text-xs font-bold text-slate-500" />
+              <EnAr en={e.en} ar={e.ar} enClassName="block text-base font-black text-slate-800" arClassName="text-xs font-bold text-slate-500" />
             </div>
           ))}
         </div>
@@ -1234,11 +1232,9 @@ function S7_ContrastStep() {
       <div className="grid gap-2 sm:grid-cols-2">
         {CONTRAST_31.map((c) => (
           <div key={c.en} className={`rounded-3xl border-2 p-3 ${c.tense === "Past Simple" ? "border-orange-200 bg-orange-50" : "border-sky-200 bg-sky-50"}`}>
-            <En className="block text-base font-black text-slate-800">{c.en}</En>
-            <Rich text={c.ar} className="mt-0.5 block text-xs font-bold text-slate-500" />
+            <EnAr en={c.en} ar={c.ar} enClassName="block text-base font-black text-slate-800" arClassName="mt-0.5 block text-xs font-bold text-slate-500" />
             <div className="mt-1.5 flex flex-wrap items-center gap-2">
-              <span className={`rounded-xl px-2.5 py-0.5 text-[11px] font-black text-white ${c.tense === "Past Simple" ? "bg-orange-500" : "bg-sky-700"}`}><En>{c.tense}</En></span>
-              <span className="rounded-full bg-white px-2.5 py-0.5 text-[11px] font-bold text-slate-600"><Rich text={c.tense === "Past Simple" ? "السبب: in 2023" : "السبب: لا يوجد وقت محدد"} /></span>
+              <span dir="ltr" className="ltr-pair inline-flex flex-wrap items-center gap-2"><span className={`rounded-xl px-2.5 py-0.5 text-[11px] font-black text-white ${c.tense === "Past Simple" ? "bg-orange-500" : "bg-sky-700"}`}><En>{c.tense}</En></span><span dir="rtl"><span className="rounded-full bg-white px-2.5 py-0.5 text-[11px] font-bold text-slate-600"><Rich text={c.tense === "Past Simple" ? "السبب: in 2023" : "السبب: لا يوجد وقت محدد"} /></span></span></span>
             </div>
           </div>
         ))}
@@ -1469,11 +1465,9 @@ function S_PsPpStep() {
       <div className="grid gap-2 sm:grid-cols-2">
         {PAIR_WALLET_31.map((p) => (
           <div key={p.en} className={`rounded-3xl border-2 p-3 ${p.tense === "Past Simple" ? "border-orange-200 bg-orange-50" : "border-sky-200 bg-sky-50"}`}>
-            <En className="block text-base font-black text-slate-800">{p.en}</En>
-            <Rich text={p.ar} className="mt-0.5 block text-xs font-bold text-slate-500" />
+            <EnAr en={p.en} ar={p.ar} enClassName="block text-base font-black text-slate-800" arClassName="mt-0.5 block text-xs font-bold text-slate-500" />
             <div className="mt-1.5 flex flex-wrap items-center gap-2">
-              <span className={`rounded-xl px-2.5 py-0.5 text-[11px] font-black text-white ${p.tense === "Past Simple" ? "bg-orange-500" : "bg-sky-700"}`}><En>{p.tense}</En></span>
-              <span className="rounded-full bg-white px-2.5 py-0.5 text-[11px] font-bold text-slate-600"><Rich text={p.cue} /></span>
+              <span dir="ltr" className="ltr-pair inline-flex flex-wrap items-center gap-2"><span className={`rounded-xl px-2.5 py-0.5 text-[11px] font-black text-white ${p.tense === "Past Simple" ? "bg-orange-500" : "bg-sky-700"}`}><En>{p.tense}</En></span><span dir="rtl"><span className="rounded-full bg-white px-2.5 py-0.5 text-[11px] font-bold text-slate-600"><Rich text={p.cue} /></span></span></span>
             </div>
           </div>
         ))}
@@ -1674,8 +1668,7 @@ function S15_YetStep() {
         />
       </Lab>
       <div className="rounded-3xl border-2 border-sky-100 bg-white p-4">
-        <En className="block text-base font-black text-slate-800">{YET_QUESTION_31.en}</En>
-        <Rich text={YET_QUESTION_31.ar} className="mt-0.5 block text-sm font-bold text-slate-600" />
+        <EnAr en={YET_QUESTION_31.en} ar={YET_QUESTION_31.ar} enClassName="block text-base font-black text-slate-800" arClassName="mt-0.5 block text-sm font-bold text-slate-600" />
         <div className="mt-2 flex flex-wrap gap-2">
           <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-black text-emerald-800"><En>{YET_QUESTION_31.yes}</En></span>
           <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-xs font-black text-rose-800"><En>{YET_QUESTION_31.no}</En></span>
@@ -1801,14 +1794,12 @@ function S17_PeriodStep() {
         <div className="mt-3 grid gap-2 sm:grid-cols-2">
           {PERIOD_EXAMPLES_31.map((p) => (
             <div key={p.en} className="rounded-2xl border-2 border-sky-100 bg-sky-50/40 p-2.5">
-              <En className="block text-base font-black text-slate-800">{p.en}</En>
-              <Rich text={p.ar} className="block text-xs font-bold text-slate-500" />
+              <EnAr en={p.en} ar={p.ar} enClassName="block text-base font-black text-slate-800" arClassName="block text-xs font-bold text-slate-500" />
               <span className="mt-1 inline-block rounded-full bg-white px-2.5 py-0.5 text-[11px] font-black text-sky-700"><Rich text={p.note} /></span>
             </div>
           ))}
           <div className="rounded-2xl border-2 border-orange-200 bg-orange-50/50 p-2.5">
-            <En className="block text-base font-black text-slate-800">{PERIODS_CLOSED_31.en}</En>
-            <Rich text={PERIODS_CLOSED_31.ar} className="block text-xs font-bold text-slate-500" />
+            <EnAr en={PERIODS_CLOSED_31.en} ar={PERIODS_CLOSED_31.ar} enClassName="block text-base font-black text-slate-800" arClassName="block text-xs font-bold text-slate-500" />
             <span className="mt-1 inline-block rounded-full bg-white px-2.5 py-0.5 text-[11px] font-black text-orange-700"><Rich text={PERIODS_CLOSED_31.note} /></span>
           </div>
         </div>
@@ -1853,7 +1844,7 @@ function S18_TodayStep() {
       <PlatformPanel title="كيف تحكم على جملة فيها كلمة زمنية؟">
         <ul className="space-y-1.5 text-sm font-semibold leading-relaxed text-slate-700">
           <li>1) اقرأ المعنى المقصود: هل نركز على النتيجة/الخبرة/الاستمرار، أم على حدث منتهٍ بتوقيت محدد؟</li>
-          <li>2) ابحث عن وقت ماضٍ محدد ومنتهٍ (yesterday · last year · in 2021 · at 9:00 · two days ago) — وجوده يمنع Present Perfect الأساسي.</li>
+          <li><Rich text="2) ابحث عن وقت ماضٍ محدد ومنتهٍ (yesterday · last year · in 2021 · at 9:00 · two days ago) — وجوده يمنع Present Perfect الأساسي." /></li>
           <li>3) تحقق من الصيغة: <En>have/has + V3</En> بلا did وبلا not مع never.</li>
         </ul>
       </PlatformPanel>
@@ -2214,12 +2205,10 @@ function S27_HowLongStep() {
       </Lab>
       <div className="grid gap-2 sm:grid-cols-2">
         <div className="rounded-3xl border-2 border-emerald-200 bg-emerald-50 p-3">
-          <En className="block text-base font-black text-slate-800">{HOWLONG_31.forAnswer}</En>
-          <Rich text="for six years — مدة." className="text-xs font-bold text-slate-600" />
+          <EnAr en={HOWLONG_31.forAnswer} ar="for six years — مدة." enClassName="block text-base font-black text-slate-800" arClassName="text-xs font-bold text-slate-600" />
         </div>
         <div className="rounded-3xl border-2 border-violet-200 bg-violet-50 p-3">
-          <En className="block text-base font-black text-slate-800">{HOWLONG_31.sinceAnswer}</En>
-          <Rich text="since 2020 — نقطة بداية." className="text-xs font-bold text-slate-600" />
+          <EnAr en={HOWLONG_31.sinceAnswer} ar="since 2020 — نقطة بداية." enClassName="block text-base font-black text-slate-800" arClassName="text-xs font-bold text-slate-600" />
         </div>
       </div>
       <Lab emoji="🧪" label="How Long Check" ar="سؤالان عن الإجابة" seq="l31-s27-quiz">
@@ -2262,8 +2251,7 @@ function S28_BigCompareStep() {
         {COMPARE_31.map((c) => (
           <div key={c.tense} className={`rounded-3xl border-2 p-3 ${c.tense === "Past Simple" ? "border-orange-200 bg-orange-50" : "border-sky-200 bg-sky-50"}`}>
             <span className={`rounded-xl px-2.5 py-0.5 text-[11px] font-black text-white ${c.tense === "Past Simple" ? "bg-orange-500" : "bg-sky-700"}`}><En>{c.tense}</En></span>
-            <En className="mt-2 block text-base font-black text-slate-800">{c.en}</En>
-            <Rich text={c.ar} className="mt-0.5 block text-xs font-bold text-slate-500" />
+            <EnAr en={c.en} ar={c.ar} enClassName="mt-2 block text-base font-black text-slate-800" arClassName="mt-0.5 block text-xs font-bold text-slate-500" />
             <div className="mt-1.5 space-y-1">
               <Rich text={`يركز على: ${c.focus}`} className="block text-xs font-black text-slate-700" />
               {c.extra && <Rich text={c.extra} className="block text-xs font-bold text-slate-500" />}
@@ -2323,8 +2311,7 @@ function S29_TripleStep() {
       <div className="grid gap-2 sm:grid-cols-3">
         {TRIPLE_RULES_31.map((r) => (
           <div key={r.tense} className="rounded-2xl border-2 border-slate-200 bg-white p-3 text-center">
-            <En className="block text-sm font-black text-slate-800">{r.tense}</En>
-            <Rich text={r.rule} className="mt-1 block text-xs font-bold text-slate-600" />
+            <EnAr en={r.tense} ar={r.rule} enClassName="block text-sm font-black text-slate-800" arClassName="mt-1 block text-xs font-bold text-slate-600" />
           </div>
         ))}
       </div>
@@ -2366,8 +2353,7 @@ function S30_TimelineStep() {
               <En className="block text-base font-black text-slate-800">{n.en}</En>
               {seen[n.key] && (
                 <div className="mt-1.5 space-y-1">
-                  <span className="inline-block rounded-xl bg-violet-700 px-2.5 py-0.5 text-xs font-black text-white"><En>{n.tense}</En></span>
-                  <Rich text={n.ar} className="block text-xs font-bold text-slate-600" />
+                  <span dir="ltr" className="ltr-pair inline-flex flex-wrap items-center gap-2"><span className="inline-block rounded-xl bg-violet-700 px-2.5 py-0.5 text-xs font-black text-white"><En>{n.tense}</En></span><span dir="rtl"><Rich text={n.ar} className="block text-xs font-bold text-slate-600" /></span></span>
                 </div>
               )}
             </button>
@@ -2675,8 +2661,7 @@ function S39_BossLinaStep() {
       <div className="grid gap-2 sm:grid-cols-2">
         {BOSS_LINA_REASON_31.map((r) => (
           <div key={r.cue} className="rounded-2xl border-2 border-slate-200 bg-white p-3">
-            <En className="block text-sm font-black text-slate-800">{r.cue}</En>
-            <Rich text={r.note} className="block text-xs font-bold text-slate-600" />
+            <EnAr en={r.cue} ar={r.note} enClassName="block text-sm font-black text-slate-800" arClassName="block text-xs font-bold text-slate-600" />
           </div>
         ))}
       </div>
@@ -2710,13 +2695,13 @@ function BossVerbPicker({ item, index, onPick }: { item: { verb: string; tense: 
               pick === o ? (o === item.tense ? "border-transparent bg-emerald-600 text-white" : "border-transparent bg-rose-600 text-white") : "border-slate-200 bg-white text-slate-700 hover:border-sky-300"
             }`}
           >
-            {o}
+            <LatinRuns text={o} />
           </button>
         ))}
       </div>
       {pick !== null && (
         <div className={`mt-1.5 text-sm font-bold ${right ? "text-emerald-700" : "text-rose-600"}`}>
-          {right ? <span className="tada inline-block">✓ <Rich text={item.ar} /></span> : <span>✕ الزمن الصحيح: <En>{item.tense}</En> — <Rich text={item.ar} /></span>}
+          {right ? <span className="tada inline-block">✓ <Rich text={item.ar} /></span> : <span>✕ الزمن الصحيح: <EnAr en={item.tense} sep="—" ar={item.ar} /></span>}
         </div>
       )}
     </div>
@@ -2844,7 +2829,7 @@ function S41_ForSinceStep() {
               </div>
               {attempted[it.n] && (
                 <div className={`mt-1.5 text-sm font-bold ${correct[it.n] ? "text-emerald-700" : "text-rose-600"}`}>
-                  {correct[it.n] ? <span className="tada inline-block">✓ <Rich text={it.why} /></span> : <span>✕ الصحيح: <En className="font-black">{it.answer}</En> — <Rich text={it.why} /></span>}
+                  {correct[it.n] ? <span className="tada inline-block">✓ <Rich text={it.why} /></span> : <span>✕ الصحيح: <EnAr en={it.answer} sep="—" ar={it.why} enClassName="font-black" /></span>}
                 </div>
               )}
             </div>
@@ -2905,8 +2890,7 @@ function S43_FinalBossStep() {
           <div key={f.en} className="rounded-2xl border-2 border-slate-200 bg-white p-3">
             <En className="block text-base font-black text-slate-800">{f.en}</En>
             <div className="mt-1 flex flex-wrap items-center gap-2">
-              <span className="rounded-xl bg-slate-900 px-2.5 py-0.5 text-[11px] font-black text-white"><En>{f.tense}</En></span>
-              <Rich text={f.ar} className="text-xs font-bold text-slate-600" />
+              <span dir="ltr" className="ltr-pair inline-flex flex-wrap items-center gap-2"><span className="rounded-xl bg-slate-900 px-2.5 py-0.5 text-[11px] font-black text-white"><En>{f.tense}</En></span><span dir="rtl"><Rich text={f.ar} className="text-xs font-bold text-slate-600" /></span></span>
             </div>
           </div>
         ))}
@@ -3006,8 +2990,7 @@ function S45_SummaryStep() {
         <div className="grid gap-1.5 sm:grid-cols-2">
           {SUMMARY_WORDS_31.map((w) => (
             <div key={w.en} className="flex items-center gap-2 rounded-xl border-2 border-slate-100 bg-slate-50/60 px-3 py-1.5">
-              <En className="rounded-lg bg-slate-900 px-2 py-0.5 text-xs font-black text-white">{w.en}</En>
-              <Rich text={w.ar} className="text-xs font-bold text-slate-600" />
+              <EnAr en={w.en} ar={w.ar} enClassName="rounded-lg bg-slate-900 px-2 py-0.5 text-xs font-black text-white" arClassName="text-xs font-bold text-slate-600" />
             </div>
           ))}
         </div>
@@ -3852,8 +3835,8 @@ export default function Lesson31({ onExit }: { onExit: () => void }) {
           ☰ الخطوات
         </button>
         <div className="min-w-0 flex-1">
-          <h1 className="font-head truncate text-lg font-black text-slate-900 md:text-xl">{LESSON_TITLE_31}</h1>
-          <p className="truncate text-xs font-bold text-slate-500">{LESSON_SUBTITLE_31}</p>
+          <h1 className="font-head truncate text-lg font-black text-slate-900 md:text-xl"><LatinRuns text={LESSON_TITLE_31} /></h1>
+          <p className="truncate text-xs font-bold text-slate-500"><LatinRuns text={LESSON_SUBTITLE_31} /></p>
         </div>
       </div>
 

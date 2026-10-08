@@ -1618,7 +1618,9 @@ for (const [l, fn] of LTR_SPOTS) {
   // الخطوات الأصلية: كل خطوة معرّفة صراحةً في SlideBody + تغطية exact-once
   const slidesBlock = (d31.split("export const SLIDES: Slide31[] = [")[1] || "").split("export const SLIDE_COUNT")[0];
   ok((slidesBlock.match(/\n  \{\n    id: /g) || []).length === 50, `lesson31: step registry keeps 50 slides (${(slidesBlock.match(/\n  \{\n    id: /g) || []).length})`);
-  ok((t31.match(/<En\b/g) || []).length >= 100, `lesson31: English rendered through the LTR-isolated <En> unit (${(t31.match(/<En\b/g) || []).length})`);
+  // <EnAr> is an LTR-isolated English unit too (English + Arabic gloss in one LTR group).
+  const en31 = (t31.match(/<En(?:Ar)?\b/g) || []).length;
+  ok(en31 >= 100, `lesson31: English rendered through the LTR-isolated <En>/<EnAr> units (${en31})`);
   ok(t31.includes("LatinRuns"), "lesson31: mixed English runs isolated through LatinRuns");
   ok(d31.includes('id: "pspp"') && d31.includes('id: "map"'), "lesson31: unnumbered panel + map steps kept");
   ok(t31.includes('case "cover"') && t31.includes('case "s45"') && t31.includes('case "map"'), "lesson31: SlideBody enumerates every step explicitly");

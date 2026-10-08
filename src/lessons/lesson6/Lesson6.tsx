@@ -20,7 +20,7 @@ import {
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
 import FinalQuiz from "../../shared/FinalQuiz";
-import { LatinRuns } from "../../shared/bidi";
+import { EnAr, LatinRuns } from "../../shared/bidi";
 
 // ============================================================
 // النمط E — تركواز: الفاعل سماوي، الفعل تركوازي، التكرار فوشيا، المفعول كهرماني
@@ -44,7 +44,7 @@ function Rich({ text, className = "" }: { text: string; className?: string }) {
         const m = x.match(/^\[\[(.+)\]\]$/);
         if (m) {
           return (
-            <span key={i} className="ltr font-en mx-1 rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
+            <span key={i} dir="ltr" className="ltr font-en mx-1 rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
               {m[1]}
             </span>
           );
@@ -80,7 +80,7 @@ function SentenceCard({ parts, ar, note, q }: { parts: Part6[]; ar: string; note
     <div className="rounded-3xl border-2 border-slate-100 bg-white p-4">
       <PartsLine parts={parts} q={q} />
       <div className="mt-2 flex flex-wrap items-center gap-2">
-        <span className="text-lg text-slate-500">{ar}</span>
+        <span className="text-lg text-slate-500"><LatinRuns text={ar} /></span>
         {note && (
           <span className="rounded-full bg-teal-50 px-3 py-1 text-sm font-bold text-teal-700">
             📌 <Mixed text={note} />
@@ -99,10 +99,10 @@ function Frame({ mascot, step, badge, title, lead, children, tip }: { mascot: st
       </div>
       <div className="flex items-center gap-2.5">
         {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-teal-600 text-lg font-bold text-white">{step}</span>}
-        {badge && <span className="rounded-full bg-teal-100 px-3.5 py-1.5 text-sm font-bold text-teal-800">{badge}</span>}
+        {badge && <span className="rounded-full bg-teal-100 px-3.5 py-1.5 text-sm font-bold text-teal-800"><LatinRuns text={badge} /></span>}
       </div>
-      <h2 className="font-head mt-3 max-w-[88%] text-3xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{title}</h2>
-      {lead && <p className="mt-2 max-w-[88%] text-lg text-slate-500 md:text-xl">{lead}</p>}
+      <h2 className="font-head mt-3 max-w-[88%] text-3xl font-bold leading-snug text-slate-900 md:text-[2.05rem]"><LatinRuns text={title} /></h2>
+      {lead && <p className="mt-2 max-w-[88%] text-lg text-slate-500 md:text-xl"><LatinRuns text={lead} /></p>}
       <div className="mt-6 space-y-3.5">{children}</div>
       {tip && (
         <div className="mt-6 flex items-center gap-3 rounded-2xl bg-gradient-to-l from-teal-700 to-emerald-700 p-4 text-white">
@@ -127,9 +127,8 @@ function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; wh
   return (
     <div className={`flex flex-wrap items-center gap-3 rounded-3xl border-2 p-4 ${ok ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`}>
       <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-base font-bold text-white ${ok ? "bg-emerald-500" : "bg-rose-500"}`}>{ok ? "✓" : "✕"}</span>
-      <En className={`text-xl font-bold ${ok ? "text-emerald-900" : "text-rose-800 line-through decoration-rose-300"}`}>{en}</En>
-      {ar && <span className="text-base text-slate-500">{ar}</span>}
-      {why && <span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}>{why}</span>}
+      <EnAr en={en} ar={ar} enClassName={`text-xl font-bold ${ok ? "text-emerald-900" : "text-rose-800 line-through decoration-rose-300"}`} arClassName="text-base text-slate-500" />
+      {why && <span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}><LatinRuns text={why} /></span>}
     </div>
   );
 }
@@ -177,8 +176,7 @@ function Ladder() {
       <div className="grid gap-2">
         {ADVS.map((x, xi) => (
           <button key={x.en} onClick={() => setI(xi)} className={`flex items-center gap-3 rounded-2xl border-2 p-2.5 text-right transition ${xi === i ? "border-fuchsia-300 bg-white shadow" : "border-transparent bg-white/60 hover:bg-white"}`}>
-            <En className={`w-24 shrink-0 text-lg font-extrabold ${xi === i ? "text-fuchsia-700" : "text-slate-600"}`}>{x.en}</En>
-            <span className="w-16 shrink-0 text-sm font-bold text-slate-500">{x.ar}</span>
+            <EnAr en={x.en} ar={x.ar} className="w-full" enClassName={`w-24 shrink-0 text-lg font-extrabold ${xi === i ? "text-fuchsia-700" : "text-slate-600"}`} arClassName="w-16 shrink-0 text-sm font-bold text-slate-500" />
             <span className="h-3 flex-1 overflow-hidden rounded-full bg-slate-200">
               <span className="block h-full rounded-full bg-gradient-to-l from-fuchsia-500 to-teal-500 transition-all duration-500" style={{ width: `${x.pct}%` }} />
             </span>
@@ -199,8 +197,7 @@ function EveryWords() {
     <div className="flex flex-wrap gap-2 rounded-3xl border-2 border-slate-100 bg-slate-50/70 p-5">
       {EVERY_WORDS.map((w, i) => (
         <span key={w.en} className="rounded-2xl border-2 border-teal-200 bg-white px-3.5 py-2 shadow-sm anim-float" style={{ animationDelay: `${(i % 5) * 0.3}s` }}>
-          <En className="text-lg font-extrabold text-teal-700">{w.en}</En>
-          <span className="mr-2 text-sm text-slate-500">{w.ar}</span>
+          <EnAr en={w.en} ar={w.ar} enClassName="text-lg font-extrabold text-teal-700" arClassName="mr-2 text-sm text-slate-500" />
         </span>
       ))}
     </div>
@@ -278,7 +275,7 @@ function PronounTabs() {
         ))}
       </div>
       <div className="mt-3 text-center text-sm font-bold text-teal-700">
-        {s.third ? `${s.en} ← نضيف s / es / ies إلى الفعل` : `${s.en} ← الفعل بدون إضافة`}
+        <LatinRuns text={s.third ? `${s.en} ← نضيف s / es / ies إلى الفعل` : `${s.en} ← الفعل بدون إضافة`} />
       </div>
     </div>
   );
@@ -341,7 +338,7 @@ function RuleTabs() {
             </div>
           ))}
         </div>
-        <div className="mt-3 rounded-2xl bg-teal-50 p-2.5 text-center text-sm font-bold text-teal-800">{data.note}</div>
+        <div className="mt-3 rounded-2xl bg-teal-50 p-2.5 text-center text-sm font-bold text-teal-800"><LatinRuns text={data.note} /></div>
       </div>
     </div>
   );
@@ -386,10 +383,10 @@ function Conj() {
         <div className="mt-3 flex flex-wrap justify-center gap-2">
           {s.third ? (
             <span className="rounded-full bg-teal-100 px-3 py-1 text-xs font-bold text-teal-800">
-              {v.base} → {c.form} · {c.why}
+              <LatinRuns text={`${v.base} → ${c.form} · ${c.why}`} />
             </span>
           ) : (
-            <span className="rounded-full bg-sky-100 px-3 py-1 text-xs font-bold text-sky-800">{s.en} من المجموعة الأولى ← الفعل بدون إضافة</span>
+            <span className="rounded-full bg-sky-100 px-3 py-1 text-xs font-bold text-sky-800"><LatinRuns text={`${s.en} من المجموعة الأولى ← الفعل بدون إضافة`} /></span>
           )}
         </div>
       </div>
@@ -415,12 +412,12 @@ function VsNow() {
   return (
     <div className="grid gap-3 md:grid-cols-2">
       <div className="rounded-3xl border-2 border-teal-200 bg-teal-50 p-5">
-        <div className="mb-2 text-sm font-bold text-teal-700">Present Simple · عادة / بشكل عام</div>
+        <div className="mb-2 text-sm font-bold text-teal-700"><LatinRuns text="Present Simple · عادة / بشكل عام" /></div>
         <En className="text-2xl font-extrabold text-slate-800">I play football.</En>
         <div className="mt-1 text-slate-600">أنا ألعب كرة القدم (بشكل عام).</div>
       </div>
       <div className="rounded-3xl border-2 border-slate-200 bg-slate-50 p-5">
-        <div className="mb-2 text-sm font-bold text-slate-500">ليس Present Simple · يحدث الآن</div>
+        <div className="mb-2 text-sm font-bold text-slate-500"><LatinRuns text="ليس Present Simple · يحدث الآن" /></div>
         <En className="text-2xl font-extrabold text-slate-500">I am playing football.</En>
         <div className="mt-1 text-slate-500">أنا ألعب كرة القدم الآن.</div>
       </div>
@@ -563,7 +560,7 @@ function AdvEx({ ex }: { ex: Extract<Exercise6, { type: "adv" }> }) {
             <div className="flex flex-wrap items-center gap-3">
               <Nub n={i + 1} />
               <En className="text-lg font-bold text-slate-800">{it.stem}</En>
-              <span className="rounded-full bg-fuchsia-50 px-3 py-1 text-xs font-bold text-fuchsia-700">💭 {it.ar}</span>
+              <span className="rounded-full bg-fuchsia-50 px-3 py-1 text-xs font-bold text-fuchsia-700">💭 <LatinRuns text={it.ar} /></span>
             </div>
             <div className="mt-2.5 flex gap-2 pr-11">
               {it.opts.map((o, oi) => (
@@ -594,7 +591,7 @@ function FixEx({ ex }: { ex: Extract<Exercise6, { type: "fix" }> }) {
           {show[i] ? (
             <div className="tada flex flex-wrap items-center gap-2">
               <En className="text-xl font-extrabold text-emerald-700">→ {it.correct}</En>
-              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">{it.why}</span>
+              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700"><LatinRuns text={it.why} /></span>
             </div>
           ) : (
             <button onClick={() => setShow((s) => ({ ...s, [i]: true }))} className="mr-auto rounded-xl bg-emerald-600 px-4 py-1.5 text-sm font-bold text-white transition hover:bg-emerald-700">
@@ -696,8 +693,7 @@ function WhyEx({ ex }: { ex: Extract<Exercise6, { type: "why" }> }) {
           <div key={i} className={`rounded-3xl border-2 p-4 transition ${c ? (right ? "border-emerald-300 bg-emerald-50/50" : "border-rose-300 bg-rose-50/50") : "border-slate-200 bg-white"}`}>
             <div className="flex flex-wrap items-center gap-3">
               <Nub n={i + 1} />
-              <En className="text-lg font-bold text-slate-800">{it.en}</En>
-              <span className="text-sm text-slate-400">{it.ar}</span>
+              <EnAr en={it.en} ar={it.ar} enClassName="text-lg font-bold text-slate-800" arClassName="text-sm text-slate-400" />
             </div>
             <div className="mt-2.5 flex gap-2 pr-11">
               {opts.map((o) => (
@@ -734,7 +730,7 @@ function IQ() {
             {show[i] ? (
               <div className="tada flex flex-wrap items-center gap-2">
                 <En className="text-xl font-extrabold text-emerald-700">→ {it.correct}</En>
-                <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">💡 {it.why}</span>
+                <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">💡 <LatinRuns text={it.why} /></span>
               </div>
             ) : (
               <button onClick={() => setShow((s) => ({ ...s, [i]: true }))} className="mr-auto rounded-xl bg-slate-900 px-4 py-1.5 text-sm font-bold text-white transition hover:bg-slate-700">
@@ -801,7 +797,7 @@ function Builder() {
         <div className="mt-2 text-lg text-slate-500">
           أنا {a.ar} {arVerb(v.ar, "I")} {o.ar}.
         </div>
-        <div className="mt-2 text-xs font-bold text-teal-700">مع I الفعل يبقى بدون s ✅ · كلمة التكرار قبل الفعل ✅</div>
+        <div className="mt-2 text-xs font-bold text-teal-700"><LatinRuns text="مع I الفعل يبقى بدون s ✅ · كلمة التكرار قبل الفعل ✅" /></div>
       </div>
     </Frame>
   );
@@ -832,7 +828,7 @@ function Cover() {
         <div className="pop pop-5 mt-6 flex flex-wrap justify-center gap-2">
           {ADVS.map((a) => (
             <span key={a.en} className="rounded-full bg-fuchsia-50 px-3 py-1 text-sm font-bold text-fuchsia-700">
-              <En>{a.en}</En> · {a.ar}
+              <EnAr en={a.en} sep="·" ar={a.ar} />
             </span>
           ))}
         </div>
@@ -1078,7 +1074,7 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
                   className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${on ? "bg-teal-600 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}
                 >
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${on ? "bg-white/25" : "bg-slate-100"}`}>{idx + 1}</span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[idx])}</span>
+                  <span className="truncate font-semibold"><LatinRuns text={slideTitle(SLIDES[idx])} /></span>
                   <span className="mr-auto text-base">{SLIDES[idx].mascot}</span>
                 </button>
               );
@@ -1142,7 +1138,7 @@ export default function Lesson6({ onExit }: { onExit: () => void }) {
             </button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500">
-                {slide.section} · <span className="text-slate-800">{slideTitle(slide)}</span>
+                {slide.section} · <span className="text-slate-800"><LatinRuns text={slideTitle(slide)} /></span>
               </div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
                 <div className="h-full rounded-full bg-gradient-to-l from-teal-500 via-fuchsia-400 to-sky-500 transition-all duration-500" style={{ width: `${progress}%` }} />

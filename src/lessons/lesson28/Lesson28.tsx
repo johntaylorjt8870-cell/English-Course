@@ -36,7 +36,7 @@ import {
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
 // LatinRuns يُستخدم عبر مكوّن Rich في shared/lessonKit لتفكيك النص المختلط عربي/لاتيني — نورده هنا للتنسيق الموحّد للجمل المختلطة
-import { LatinRuns } from "../../shared/bidi";
+import { EnAr, LatinRuns } from "../../shared/bidi";
 import {
   En,
   Rich,
@@ -222,8 +222,7 @@ function Lab({
     >
       <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-indigo-100 bg-white px-3 py-2">
         <span className="text-xl">{emoji}</span>
-        <En className="text-[11px] font-black uppercase tracking-[0.16em] text-indigo-700">{label}</En>
-        {ar && <Rich text={ar} className="text-sm font-bold text-slate-600" />}
+        <EnAr en={label} ar={ar} enClassName="text-[11px] font-black uppercase tracking-[0.16em] text-indigo-700" arClassName="text-sm font-bold text-slate-600" />
       </div>
       {children}
     </div>
@@ -234,10 +233,10 @@ function Lab({
 function PlatformPanel({ title, children }: { title?: string; children: ReactNode }) {
   return (
     <div className="space-y-1.5 rounded-3xl border-2 border-amber-300 bg-amber-50 p-3.5">
-      <div className="flex flex-wrap items-center gap-2">
+      <div dir="ltr" className="ltr-pair flex flex-wrap items-center gap-2">
         <PlatformTag />
         {title && (
-          <div className="text-sm font-black text-slate-800">
+          <div dir="rtl" className="text-sm font-black text-slate-800">
             <Rich text={title} />
           </div>
         )}
@@ -2236,18 +2235,15 @@ function S37_AlexScene() {
         <div className="grid gap-1.5 text-xs font-bold text-amber-900">
           <div className="rounded-xl bg-white/70 px-3 py-1.5">
             <Rich text="📸 Past Simple (3): " />
-            <En>{ALEX_SCENE_28.verbs.filter((v) => v.tense === "Past Simple").map((v) => v.verb).join(" · ")}</En>
-            <Rich text=" — محرّكات القصة النقطية." />
+            <EnAr en={ALEX_SCENE_28.verbs.filter((v) => v.tense === "Past Simple").map((v) => v.verb).join(" · ")} ar=" — محرّكات القصة النقطية." />
           </div>
           <div className="rounded-xl bg-white/70 px-3 py-1.5">
             <Rich text="🎥 Past Continuous (3): " />
-            <En>{ALEX_SCENE_28.verbs.filter((v) => v.tense === "Past Continuous").map((v) => v.verb).join(" · ")}</En>
-            <Rich text=" — الخلفية الحيّة لحظة الدخول." />
+            <EnAr en={ALEX_SCENE_28.verbs.filter((v) => v.tense === "Past Continuous").map((v) => v.verb).join(" · ")} ar=" — الخلفية الحيّة لحظة الدخول." />
           </div>
           <div className="rounded-xl bg-white/70 px-3 py-1.5">
             <Rich text="⏪ Past Perfect (2): " />
-            <En>{ALEX_SCENE_28.verbs.filter((v) => v.tense === "Past Perfect").map((v) => v.verb).join(" · ")}</En>
-            <Rich text=" — ما سبق لحظة الإدراك: الباب فُتح قبل أن يدرك Alex ذلك، والعائلة لم تتركه مفتوحًا قط قبلها." />
+            <EnAr en={ALEX_SCENE_28.verbs.filter((v) => v.tense === "Past Perfect").map((v) => v.verb).join(" · ")} ar=" — ما سبق لحظة الإدراك: الباب فُتح قبل أن يدرك Alex ذلك، والعائلة لم تتركه مفتوحًا قط قبلها." />
           </div>
         </div>
       </PlatformPanel>
@@ -2454,8 +2450,7 @@ function SummaryStep() {
       {rows.map((r) => (
         <div key={r.en} className={`rounded-2xl border-2 p-3 ${r.tone.soft}`}>
           <div className="flex flex-wrap items-center gap-2">
-            <span className={`rounded-xl px-2.5 py-1 text-xs font-black ${r.tone.chip}`}><En>{r.chip}</En></span>
-            <span className="font-black text-slate-800"><Rich text={r.q} /></span>
+            <span dir="ltr" className="ltr-pair inline-flex flex-wrap items-center gap-2"><span className={`rounded-xl px-2.5 py-1 text-xs font-black ${r.tone.chip}`}><En>{r.chip}</En></span><span dir="rtl"><span className="font-black text-slate-800"><Rich text={r.q} /></span></span></span>
           </div>
           <En className="mt-1.5 block text-sm font-black text-slate-800">{r.en}</En>
           <div className="text-xs font-bold text-slate-500"><Rich text={r.ar} /></div>
@@ -3377,7 +3372,7 @@ function Rail({
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/25" : "bg-slate-100"}`}>
                     {i + 1}
                   </span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[i])}</span>
+                  <span className="truncate font-semibold"><LatinRuns text={slideTitle(SLIDES[i])} /></span>
                   <span className="mr-auto text-base">{SLIDES[i].mascot}</span>
                 </button>
               );

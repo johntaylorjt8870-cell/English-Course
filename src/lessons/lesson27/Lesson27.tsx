@@ -30,7 +30,7 @@ import {
   type Mcq27,
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
-import { LatinRuns } from "../../shared/bidi";
+import { EnAr, LatinRuns } from "../../shared/bidi";
 import {
   En,
   Rich,
@@ -138,8 +138,7 @@ function Lab({ emoji, label, ar, children }: { emoji: string; label: string; ar?
     <div className="rounded-3xl border-2 border-violet-100 bg-gradient-to-br from-violet-50/80 via-white to-indigo-50/60 p-3.5 sm:p-5">
       <div className="mb-3.5 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-violet-100 bg-white px-3 py-2 shadow-sm">
         <span className="text-xl">{emoji}</span>
-        <En className="text-xs font-black uppercase tracking-[0.16em] text-violet-700">{label}</En>
-        {ar && <Rich text={ar} className="text-sm font-bold text-slate-600" />}
+        <EnAr en={label} ar={ar} enClassName="text-xs font-black uppercase tracking-[0.16em] text-violet-700" arClassName="text-sm font-bold text-slate-600" />
       </div>
       <div className="space-y-3.5">{children}</div>
     </div>
@@ -211,8 +210,7 @@ function DualPastTimeline({
           <div className="flex items-center gap-1.5 text-xs font-black text-violet-700">
             <span>⏪ الحدث ① (Past Perfect)</span>
           </div>
-          <En className="mt-1 block text-lg font-extrabold text-violet-900">{firstEn}</En>
-          <Rich text={firstAr} className="mt-0.5 block text-xs font-bold text-slate-600" />
+          <EnAr en={firstEn} ar={firstAr} enClassName="mt-1 block text-lg font-extrabold text-violet-900" arClassName="mt-0.5 block text-xs font-bold text-slate-600" />
         </div>
 
         <div className="hidden text-xl font-black text-slate-300 md:block">→</div>
@@ -228,8 +226,7 @@ function DualPastTimeline({
           <div className="flex items-center gap-1.5 text-xs font-black text-orange-700">
             <span>📸 الحدث ② (Past Simple)</span>
           </div>
-          <En className="mt-1 block text-lg font-extrabold text-orange-900">{secondEn}</En>
-          <Rich text={secondAr} className="mt-0.5 block text-xs font-bold text-slate-600" />
+          <EnAr en={secondEn} ar={secondAr} enClassName="mt-1 block text-lg font-extrabold text-orange-900" arClassName="mt-0.5 block text-xs font-bold text-slate-600" />
         </div>
 
         <div className="hidden text-xl font-black text-slate-300 md:block">→</div>
@@ -317,7 +314,7 @@ function McqRow({
             <span className="tada inline-block">✓ <Rich text={why} /></span>
           ) : (
             <span>
-              ✕ الصحيح: <En className="font-extrabold">{opts[answer]}</En> — <Rich text={why} />
+              ✕ الصحيح: <EnAr en={opts[answer]} sep="—" ar={why} enClassName="font-extrabold" />
             </span>
           )}
         </div>
@@ -339,7 +336,7 @@ function CoverStep() {
         <En className="mt-3 block text-2xl font-black uppercase tracking-widest text-violet-200 md:text-3xl">
           THE FLASHBACK DIRECTOR
         </En>
-        <h1 className="font-head mt-2 text-2xl font-black md:text-4xl">الدرس 27: Past Perfect — الماضي التام</h1>
+        <h1 className="font-head mt-2 text-2xl font-black md:text-4xl"><LatinRuns text="الدرس 27: Past Perfect — الماضي التام" /></h1>
         <p className="mt-3 text-base font-semibold text-violet-100 md:text-xl">
           الماضي التام — أي حدث وقع أولًا في الماضي؟ المخرج الذي يرتّب حدثين في الماضي بدقة.
         </p>
@@ -355,7 +352,7 @@ function CoverStep() {
           <div className="text-3xl">{TENSES27[lens].emoji}</div>
           <En className="mt-1 block text-xl font-black">{TENSES27[lens].en}</En>
           <div className="mt-1 text-sm font-bold text-slate-700">
-            <En className="font-black text-slate-900">{TENSES27[lens].qEn}</En> — {TENSES27[lens].qAr}
+            <EnAr en={TENSES27[lens].qEn} sep="—" ar={TENSES27[lens].qAr} enClassName="font-black text-slate-900" />
           </div>
         </div>
       </Lab>
@@ -675,14 +672,14 @@ function S7TeacherSwitch() {
             onClick={() => setWithHad(false)}
             className={`rounded-2xl px-4 py-2.5 font-bold transition ${!withHad ? "bg-orange-500 text-white shadow-md" : "border bg-white text-slate-700"}`}
           >
-            بدون had (الماضي البسيط)
+            <LatinRuns text="بدون had (الماضي البسيط)" />
           </button>
           <button
             type="button"
             onClick={() => setWithHad(true)}
             className={`rounded-2xl px-4 py-2.5 font-bold transition ${withHad ? "bg-violet-700 text-white shadow-md" : "border bg-white text-slate-700"}`}
           >
-            مع had (الماضي التام)
+            <LatinRuns text="مع had (الماضي التام)" />
           </button>
         </div>
 
@@ -844,8 +841,7 @@ function S11Negative() {
       <div className="grid gap-2.5 sm:grid-cols-2">
         {examples.map((ex, i) => (
           <div key={i} className="rounded-2xl border-2 border-slate-100 bg-white p-3.5">
-            <En className="text-lg font-bold text-slate-800">{shortForm ? ex.short : ex.long}</En>
-            <Rich text={ex.ar} className="mt-1 block text-sm font-semibold text-slate-500" />
+            <EnAr en={shortForm ? ex.short : ex.long} ar={ex.ar} enClassName="text-lg font-bold text-slate-800" arClassName="mt-1 block text-sm font-semibold text-slate-500" />
           </div>
         ))}
       </div>
@@ -959,26 +955,26 @@ function S16LinaSwitch() {
             onClick={() => setHad(false)}
             className={`rounded-xl px-4 py-2 font-bold transition ${!had ? "bg-orange-500 text-white" : "border bg-white text-slate-700"}`}
           >
-            Lina left (بسيط)
+            <LatinRuns text="Lina left (بسيط)" />
           </button>
           <button
             type="button"
             onClick={() => setHad(true)}
             className={`rounded-xl px-4 py-2 font-bold transition ${had ? "bg-violet-700 text-white" : "border bg-white text-slate-700"}`}
           >
-            Lina had left (تام)
+            <LatinRuns text="Lina had left (تام)" />
           </button>
         </div>
 
         {!had ? (
           <div className="rounded-2xl border-2 border-orange-200 bg-orange-50 p-4 text-center">
             <En className="text-xl font-black text-orange-950">When I arrived, Lina left.</En>
-            <div className="mt-2 text-sm font-bold text-slate-700">الترتيب الطبيعي: <En className="font-black">I arrived → Lina left.</En> (وصلتُ ثم غادرت هي)</div>
+            <div className="mt-2 text-sm font-bold text-slate-700">الترتيب الطبيعي: <EnAr en="I arrived → Lina left." enClassName="font-black" ar="(وصلتُ ثم غادرت هي)" /></div>
           </div>
         ) : (
           <div className="rounded-2xl border-2 border-violet-200 bg-violet-50 p-4 text-center">
             <En className="text-xl font-black text-violet-950">When I arrived, Lina had left.</En>
-            <div className="mt-2 text-sm font-bold text-violet-900">الترتيب المعكوس: <En className="font-black">Lina left → I arrived.</En> (كانت قد غادرت قبل وصولي)</div>
+            <div className="mt-2 text-sm font-bold text-violet-900">الترتيب المعكوس: <EnAr en="Lina left → I arrived." enClassName="font-black" ar="(كانت قد غادرت قبل وصولي)" /></div>
           </div>
         )}
       </Lab>
@@ -1189,7 +1185,7 @@ function S26MythBuster() {
     <div className="space-y-4">
       <div className="rounded-3xl border-2 border-rose-200 bg-rose-50/70 p-5">
         <div className="text-xs font-black uppercase text-rose-700">❌ خرافة شائعة</div>
-        <div className="mt-1 text-lg font-black text-rose-950">Past Perfect = حدث منذ زمن طويل جدًا؟</div>
+        <div className="mt-1 text-lg font-black text-rose-950"><LatinRuns text="Past Perfect = حدث منذ زمن طويل جدًا؟" /></div>
         <p className="mt-2 text-sm font-semibold text-slate-700">
           خطأ! قد يفصل بين الحدثين ثانية واحدة فقط. المهم ليس بُعد الحدث عن الحاضر، بل <span className="font-black text-violet-800">أسبقية حدث على حدث آخر</span>.
         </p>
@@ -1368,14 +1364,14 @@ function S33Noah() {
             onClick={() => setPick("A")}
             className={`flex-1 rounded-2xl border-2 p-3 font-bold transition ${pick === "A" ? "border-rose-400 bg-rose-50 text-rose-950" : "border-slate-200 bg-white"}`}
           >
-            A = Noah arrived (نوح وصل أولًا)
+            <LatinRuns text="A = Noah arrived (نوح وصل أولًا)" />
           </button>
           <button
             type="button"
             onClick={() => setPick("B")}
             className={`flex-1 rounded-2xl border-2 p-3 font-bold transition ${pick === "B" ? "border-emerald-400 bg-emerald-50 text-emerald-950" : "border-slate-200 bg-white"}`}
           >
-            B = The train disappeared (القطار اختفى أولًا)
+            <LatinRuns text="B = The train disappeared (القطار اختفى أولًا)" />
           </button>
         </div>
 
@@ -1603,17 +1599,17 @@ function S37EmmaCinema() {
         <div className="space-y-2 text-sm font-bold">
           {(lens === "all" || lens === "bg") && (
             <div className="rounded-xl border border-sky-300 bg-sky-50 p-3 text-sky-950">
-              🎥 <En className="font-black">was walking</En> → خلفية مستمرة (Past Continuous)
+              🎥 <EnAr en="was walking" enClassName="font-black" sep="→" ar="خلفية مستمرة (Past Continuous)" />
             </div>
           )}
           {(lens === "all" || lens === "evt") && (
             <div className="rounded-xl border border-orange-300 bg-orange-50 p-3 text-orange-950">
-              📸 <En className="font-black">found · looked · realized</En> → أحداث متتابعة (Past Simple)
+              📸 <EnAr en="found · looked · realized" enClassName="font-black" sep="→" ar="أحداث متتابعة (Past Simple)" />
             </div>
           )}
           {(lens === "all" || lens === "flash") && (
             <div className="rounded-xl border border-violet-300 bg-violet-50 p-3 text-violet-950">
-              ⏪ <En className="font-black">had seen</En> → شيء حدث قبل لحظة إدراكها (Past Perfect)
+              ⏪ <EnAr en="had seen" enClassName="font-black" sep="→" ar="شيء حدث قبل لحظة إدراكها (Past Perfect)" />
             </div>
           )}
         </div>
@@ -1766,7 +1762,7 @@ function S40JohnSwitch() {
         {!had ? (
           <div className="rounded-2xl border-2 border-orange-200 bg-orange-50 p-4">
             <En className="text-xl font-black text-orange-950">When I arrived, John left.</En>
-            <p className="mt-1 text-sm font-bold text-slate-700">الأولى: <En>I arrived → John left.</En> (وصلتُ ثم غادر جون)</p>
+            <p className="mt-1 text-sm font-bold text-slate-700">الأولى: <EnAr en="I arrived → John left." ar="(وصلتُ ثم غادر جون)" /></p>
           </div>
         ) : (
           <div className="rounded-2xl border-2 border-violet-200 bg-violet-50 p-4">
@@ -1930,7 +1926,7 @@ function S44StoryStudio() {
     <div className="space-y-4" data-en-seq="l27-ex-story">
       <div className="rounded-3xl border-2 border-violet-100 bg-white p-4">
         <div className="flex items-center justify-between">
-          <span className="font-head text-lg font-black text-violet-950">«The Mysterious Door» — الباب الغامض</span>
+          <span className="font-head text-lg font-black text-violet-950"><LatinRuns text="«The Mysterious Door» — الباب الغامض" /></span>
           <button
             type="button"
             onClick={insertStarter}
@@ -2020,8 +2016,7 @@ function WordsSummary() {
     <div className="grid gap-2.5 sm:grid-cols-2 md:grid-cols-3">
       {words.map((w) => (
         <div key={w.en} className="rounded-2xl border-2 border-violet-100 bg-white p-4 text-center">
-          <En className="text-xl font-black text-violet-900">{w.en}</En>
-          <Rich text={w.ar} className="mt-1 block text-sm font-bold text-slate-600" />
+          <EnAr en={w.en} ar={w.ar} enClassName="text-xl font-black text-violet-900" arClassName="mt-1 block text-sm font-bold text-slate-600" />
         </div>
       ))}
     </div>
@@ -2106,7 +2101,7 @@ function ClosingStep({ onGoTest }: { onGoTest: () => void }) {
         <div className="text-5xl anim-drift">🏆</div>
         <h3 className="font-head mt-3 text-2xl font-black md:text-3xl">أحسنت! — LESSON 27 COMPLETE</h3>
         <p className="mt-2 text-base font-semibold text-violet-100 md:text-lg">
-          أكملت الدرس 27: Past Perfect — الماضي التام. الآن أنت جاهز لاختبار فهمك عبر 20 سؤالًا شاملة!
+          <LatinRuns text="أكملت الدرس 27: Past Perfect — الماضي التام. الآن أنت جاهز لاختبار فهمك عبر 20 سؤالًا شاملة!" />
         </p>
       </div>
 
@@ -2909,10 +2904,10 @@ export default function Lesson27({ onExit }: { onExit?: () => void }) {
             <div>
               <div className="flex items-center gap-2">
                 <span className="rounded-lg bg-violet-700 px-2 py-0.5 text-xs font-black text-white">الدرس 27</span>
-                <span className="font-head text-base font-black text-slate-900 md:text-lg">Past Perfect — الماضي التام</span>
+                <span className="font-head text-base font-black text-slate-900 md:text-lg"><LatinRuns text="Past Perfect — الماضي التام" /></span>
               </div>
               <div className="hidden text-xs font-bold text-slate-500 sm:block">
-                THE FLASHBACK DIRECTOR · المخرج الذي يرتّب حدثين في الماضي
+                <LatinRuns text="THE FLASHBACK DIRECTOR · المخرج الذي يرتّب حدثين في الماضي" />
               </div>
             </div>
           </div>
@@ -2973,7 +2968,7 @@ export default function Lesson27({ onExit }: { onExit?: () => void }) {
                       }`}
                     >
                       <span className="text-base shrink-0">{s.mascot}</span>
-                      <span className="truncate">{s.title}</span>
+                      <span className="truncate"><LatinRuns text={s.title} /></span>
                     </button>
                   ))}
                 </div>
@@ -3115,7 +3110,7 @@ export default function Lesson27({ onExit }: { onExit?: () => void }) {
                   }`}
                 >
                   <span className="text-base">{s.mascot}</span>
-                  <span className="truncate">{s.title}</span>
+                  <span className="truncate"><LatinRuns text={s.title} /></span>
                 </button>
               ))}
             </div>

@@ -148,6 +148,11 @@ const DEFAULT_ACCENT: FrameAccent = {
   shadow: "shadow-[0_14px_44px_-20px_rgba(13,148,136,0.3)]",
 };
 
+/** النصوص الخام تمرّ عبر LatinRuns حتى لا يُعكس ترتيب «English · عربي»؛ العناصر الأخرى تبقى كما هي. */
+function mixedText(value: ReactNode): ReactNode {
+  return typeof value === "string" ? <LatinRuns text={value} /> : value;
+}
+
 export function Frame({
   mascot,
   step,
@@ -184,8 +189,8 @@ export function Frame({
         {step && <span className={`font-head grid h-10 w-10 place-items-center rounded-2xl text-lg font-bold text-white ${accent.step}`}>{step}</span>}
         {badge && <span className={`rounded-full px-3.5 py-1.5 text-sm font-bold ${accent.badge}`}>{badge}</span>}
       </div>
-      <h2 className="font-head mt-3 max-w-[88%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{title}</h2>
-      {lead && <p className="mt-2 max-w-[88%] text-base text-slate-500 md:text-xl">{lead}</p>}
+      <h2 className="font-head mt-3 max-w-[88%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{mixedText(title)}</h2>
+      {lead && <p className="mt-2 max-w-[88%] text-base text-slate-500 md:text-xl">{mixedText(lead)}</p>}
       <div className="mt-5 space-y-3.5 md:mt-6">{children}</div>
       {tip && (
         <div className={`mt-6 flex items-center gap-3 rounded-2xl bg-gradient-to-l p-4 text-white ${accent.tip}`}>
@@ -219,9 +224,11 @@ export function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: str
       <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-base font-bold text-white ${ok ? "bg-emerald-500" : "bg-rose-500"}`}>
         {ok ? "✓" : "✕"}
       </span>
-      <En className={`text-lg font-bold md:text-xl ${ok ? "text-emerald-900" : "text-rose-800 line-through decoration-rose-300"}`}>{en}</En>
-      {ar && <Rich text={ar} className="text-base text-slate-500" />}
-      {why && <span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}>{why}</span>}
+      <span dir="ltr" className="ltr-pair inline-flex flex-wrap items-center gap-3">
+        <En className={`text-lg font-bold md:text-xl ${ok ? "text-emerald-900" : "text-rose-800 line-through decoration-rose-300"}`}>{en}</En>
+        {ar && <span dir="rtl"><Rich text={ar} className="text-base text-slate-500" /></span>}
+      </span>
+      {why && <span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}><LatinRuns text={why} /></span>}
     </div>
   );
 }

@@ -19,7 +19,7 @@ function ok(cond, msg) {
 function src(lesson, file) {
   return readFileSync(join(ROOT, lesson, file), "utf8");
 }
-ok(lessons.length === 30, `full-course regression inventory contains 30 lessons (got ${lessons.length})`);
+ok(lessons.length === 31, `full-course regression inventory contains 31 lessons (got ${lessons.length})`);
 // يقتطع جسم دالة بالاسم: من تعريفها حتى بداية الدالة التالية
 function fnBody(code, name) {
   const start = code.search(new RegExp(`function ${name}\\s*\\(`));
@@ -139,6 +139,12 @@ const LTR_SPOTS = [
   ["lesson23", "GoldenSummary"],
   ["lesson23", "Drill"],
   ["lesson23", "FinalBossEx"],
+  ["lesson31", "BridgeTrack"],
+  ["lesson31", "TapOrder"],
+  ["lesson31", "CueSwitch"],
+  ["lesson31", "TestCard31"],
+  ["lesson31", "S40_TransformStep"],
+  ["lesson31", "S44_BigMapStep"],
 ];
 for (const [l, fn] of LTR_SPOTS) {
   const body = fnBody(src(l, tsxName(l)), fn);
@@ -1595,6 +1601,65 @@ for (const [l, fn] of LTR_SPOTS) {
   ok(!d28.includes(OLD28) && !t28.includes(OLD28), "lesson28: keeps the EnglishwithSomeR branding");
   ok(app.includes("Lesson28 onExit={goHome}") && app.includes("route === 28"), "lesson28: routed in App.tsx");
   ok(app.includes("الدرس 28: Past Perfect vs Past Simple") && app.includes("#/lesson/28"), "lesson28: hub card present");
+}
+
+// ---------- الدرس 31: Present Perfect — أمانة المصدر + الخطوات الدلالية ----------
+{
+  const d31 = src("lesson31", "data.ts");
+  const t31 = src("lesson31", "Lesson31.tsx");
+  const app = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "App.tsx"), "utf8");
+  // السجل مرجع تغطية فقط — لا عرض خام داخل واجهة الطالب
+  ok(d31.includes("export const SOURCE_SECTIONS"), "lesson31: source ledger present");
+  ok(d31.includes("export const SOURCE_NUMBERED_COUNT = 45"), "lesson31: ledger keeps 45 numbered sections");
+  ok(d31.includes("export const SLIDES: Slide31[]"), "lesson31: native step registry present");
+  ok(!t31.includes("unitsOf") && !t31.includes(".units"), "lesson31: student area never renders raw source units");
+  ok(!t31.includes("split(/(\\s+)/)"), "lesson31: no per-token space splitting (word-reversal engine banned)");
+  ok(!t31.includes("عرض النص المصدري") && !t31.includes("SOURCE_LINES"), "lesson31: no raw source-line viewer");
+  // الخطوات الأصلية: كل خطوة معرّفة صراحةً في SlideBody + تغطية exact-once
+  const slidesBlock = (d31.split("export const SLIDES: Slide31[] = [")[1] || "").split("export const SLIDE_COUNT")[0];
+  ok((slidesBlock.match(/\n  \{\n    id: /g) || []).length === 50, `lesson31: step registry keeps 50 slides (${(slidesBlock.match(/\n  \{\n    id: /g) || []).length})`);
+  ok((t31.match(/<En\b/g) || []).length >= 100, `lesson31: English rendered through the LTR-isolated <En> unit (${(t31.match(/<En\b/g) || []).length})`);
+  ok(t31.includes("LatinRuns"), "lesson31: mixed English runs isolated through LatinRuns");
+  ok(d31.includes('id: "pspp"') && d31.includes('id: "map"'), "lesson31: unnumbered panel + map steps kept");
+  ok(t31.includes('case "cover"') && t31.includes('case "s45"') && t31.includes('case "map"'), "lesson31: SlideBody enumerates every step explicitly");
+  // المواد المتكررة عُوملت بلا حذف: كل مجموعة بيانات مصدرية باقية باسمها
+  for (const name of [
+    "BRIDGE_STEPS_31", "HAVE_HAS_31", "V3_CHART_31", "V3_WRONG_31", "POSITIVE_31", "EXPERIENCE_31", "CONTRAST_31",
+    "EVER_31", "EVER_EXTRA_31", "NEVER_31", "NEVER_TRAP_31", "RESULT_31", "PAIR_LOST_31", "PAIR_WALLET_31",
+    "RECENT_WORDS_31", "RECENT_31", "ALREADY_31", "JUST_31", "YET_QUESTION_31", "YET_NEGATIVE_31", "ALREADY_VS_YET_31",
+    "PERIODS_31", "PERIOD_EXAMPLES_31", "PERIODS_CLOSED_31", "TODAY_PAIR_31", "FOR_LIST_31", "SINCE_LIST_31",
+    "FORSINCE_CLASSIFY_31", "FOR_SENTENCES_31", "SINCE_SENTENCES_31", "CONTINUATION_31", "NEGATIVE_31", "YESNO_31",
+    "SHORT_ANSWERS_31", "WH_31", "HOWLONG_31", "COMPARE_31", "TRIPLE_31", "TRIPLE_RULES_31", "DIAGRAMS_31",
+    "TIMELINE_NODES_31", "FAMOUS_ERRORS_31", "DETECTIVE_31", "SMART_31", "IQ_PAIRS_31", "DEEPER_31",
+    "BOSS_LINA_TEXT_31", "BOSS_LINA_VERBS_31", "BOSS_LINA_REASON_31", "TRANSFORM_31", "FORSINCE_ITEMS_31",
+    "STARTERS_31", "FINAL_BOSS_31", "BIG_MAP_31", "SUMMARY_USES_31", "SUMMARY_WORDS_31", "GOLDEN_31",
+    "CURRICULUM_31", "INTENTIONALLY_WRONG_31", "TEST_31", "TEST_31_SOLUTIONS", "TEACHER_31_OVERVIEW",
+    "TEACHER_31_NOTES", "TEACHER_31_SOLUTIONS", "TEACHER_31_RUBRICS", "TEACHER_31_MISTAKES",
+  ]) {
+    ok(d31.includes(`export const ${name}`) || d31.includes(`export type ${name}`), `lesson31: source data group ${name} kept`);
+  }
+  // الجمل الخاطئة المقصودة محفوظة حرفيًا داخل الواجهة (لا تُصحَّح بصمت)
+  for (const wrong of ["I have went.", "She has ate.", "They have saw.", "He has wrote.", "I haven't never seen it.", "She has went to school.", "Did you have eaten breakfast?", "He hasn't never visited Paris.", "They has finished the project.", "Have she arrived?", "I have lived here since five years.", "She has worked here for 2022.", "I have seen him yesterday.", "She has went home.", "Did you have finished your homework?", "He doesn't have finished.", "I have visited London in 2022.", "He has forgot...", "I have visited London."]) {
+    ok(d31.includes(wrong), `lesson31: intentionally-wrong/preserved source line kept verbatim: ${wrong}`);
+  }
+  // الرسوم المصدرية محفوظة كمرجع، لا مُعاد رسمها
+  ok(d31.includes("See textbook/reference"), "lesson31: source diagrams kept as See textbook/reference");
+  ok(t31.includes("DIAGRAMS_31") && !t31.includes("نُعيد رسم"), "lesson31: diagram step references the preserved art");
+  // الاختبار: 20 سؤالًا أصليًا بتوزيع 6/7/4/3 وأنواع واجهة حقيقية
+  ok(d31.includes("export const TEST_31"), "lesson31: test area ships its own 20-question bank");
+  for (const level of ['"basic"', '"medium"', '"advanced"', '"thinking"']) ok(d31.includes(level), `lesson31: test level ${level} present`);
+  ok(t31.includes("data-test-q") && t31.includes("data-order-pool") && t31.includes("data-match-opt") && t31.includes("data-multi") && t31.includes("data-spot-seg"), "lesson31: test area uses real UI (order pool / match / multi / spot)");
+  ok(t31.includes("إنهاء الاختبار") && t31.includes("إعادة الاختبار"), "lesson31: submit + full reset controls present");
+  ok(t31.includes("منطقة الاختبارات") && t31.includes("حلول الاختبارات") && t31.includes("منطقة المعلم"), "lesson31: four-area shell present");
+  ok(t31.includes('TEACHER_PASSWORD_31'), "lesson31: teacher gate wired to the shared password constant");
+  // التوجيه + بطاقة المركز
+  ok(app.includes("lesson31/Lesson31") && app.includes("route === 31"), "lesson31: routed in App.tsx");
+  ok(app.includes('"الدرس 31: Present Perfect — المضارع التام"') && app.includes("#/lesson/31"), "lesson31: hub card registered with its title");
+  // عدم المساس بالدروس المرجعية
+  for (const l of ["lesson6", "lesson27", "lesson28", "lesson29", "lesson30"]) {
+    const t = src(l, `Lesson${l.replace("lesson", "")}.tsx`);
+    ok(t.includes(`export default function Lesson${l.replace("lesson", "")}`), `lesson31: ${l} kept intact`);
+  }
 }
 
 // ---------- النتيجة ----------

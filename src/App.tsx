@@ -29,6 +29,7 @@ import Lesson27 from "./lessons/lesson27/Lesson27";
 import Lesson28 from "./lessons/lesson28/Lesson28";
 import Lesson29 from "./lessons/lesson29/Lesson29";
 import Lesson30 from "./lessons/lesson30/Lesson30";
+import Lesson31 from "./lessons/lesson31/Lesson31";
 import ArenaClean from "./shared/ArenaClean";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
@@ -364,6 +365,15 @@ const CARDS: Card[] = [
     href: "#/lesson/30",
     grad: "from-indigo-600 to-sky-600",
   },
+  {
+    n: 31,
+    title: "الدرس 31: Present Perfect — المضارع التام",
+    en: "Present Perfect — The Present Bridge",
+    emoji: "🌉",
+    stats: "45 قسمًا مرقّمًا · 50 خطوة · مختبرات تفاعلية · اختبار 20 سؤالًا · IQ200",
+    href: "#/lesson/31",
+    grad: "from-teal-500 to-sky-600",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -471,6 +481,7 @@ export default function App() {
   else if (route === 28) page = <Lesson28 onExit={goHome} />;
   else if (route === 29) page = <Lesson29 onExit={goHome} />;
   else if (route === 30) page = <Lesson30 onExit={goHome} />;
+  else if (route === 31) page = <Lesson31 onExit={goHome} />;
   else page = <Hub />;
   return (
     <SitePasswordGate>

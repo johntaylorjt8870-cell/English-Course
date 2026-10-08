@@ -185,8 +185,9 @@ export function Frame({
           📜 <Rich text={sourceTag} />
         </div>
       )}
-      <div className="flex items-center gap-2.5">
-        {step && <span className={`font-head grid h-10 w-10 place-items-center rounded-2xl text-lg font-bold text-white ${accent.step}`}>{step}</span>}
+      {/* الشريحة تتّسع مع نص الخطوة (min-w-10 يُبقي الأرقام والرموز مربعة)، وshrink-0 يمنع ضغطها فيُقصّ النص */}
+      <div className="flex flex-wrap items-center gap-2.5">
+        {step && <span className={`font-head grid h-10 min-w-10 shrink-0 place-items-center whitespace-nowrap rounded-2xl px-2 text-lg font-bold text-white ${accent.step}`}>{step}</span>}
         {badge && <span className={`rounded-full px-3.5 py-1.5 text-sm font-bold ${accent.badge}`}>{badge}</span>}
       </div>
       <h2 className="font-head mt-3 max-w-[88%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{mixedText(title)}</h2>

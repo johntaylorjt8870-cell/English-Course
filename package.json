@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "check:english-direction": "node scripts/check-english-direction.mjs && node scripts/test-bidi-rendering.mjs",
-    "audit:english-direction": "node scripts/audit-render-direction.mjs && node scripts/audit-lesson24.mjs && node scripts/audit-lesson26.mjs && node scripts/audit-lesson27.mjs && node scripts/audit-lesson28.mjs && node scripts/audit-lesson29.mjs && node scripts/audit-lesson30.mjs && node scripts/audit-lesson31.mjs && node scripts/audit-bidi-mixed.mjs",
+    "audit:english-direction": "node scripts/audit-render-direction.mjs && node scripts/audit-lesson24.mjs && node scripts/audit-lesson26.mjs && node scripts/audit-lesson27.mjs && node scripts/audit-lesson28.mjs && node scripts/audit-lesson29.mjs && node scripts/audit-lesson30.mjs && node scripts/audit-lesson31.mjs && node scripts/audit-lesson32.mjs && node scripts/audit-bidi-mixed.mjs",
     "audit:lesson-navigation": "node scripts/audit-lesson-navigation.mjs"
   },
   "dependencies": {

@@ -31,6 +31,7 @@ import Lesson29 from "./lessons/lesson29/Lesson29";
 import Lesson30 from "./lessons/lesson30/Lesson30";
 import Lesson31 from "./lessons/lesson31/Lesson31";
 import ArenaClean from "./shared/ArenaClean";
+import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
 import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
 import { SLIDES as L3_SLIDES } from "./lessons/lesson3/data";
@@ -412,7 +413,7 @@ function LessonCard({ c, i }: { c: Card; i: number }) {
   );
 }
 
-function Hub() {
+function Hub({ currentLesson }: { currentLesson: number | null }) {
   return (
     <div className="font-body relative min-h-screen bg-[#f4f6fb] text-slate-800">
       <SignatureGhost />
@@ -427,15 +428,13 @@ function Hub() {
           <p className="pop pop-3 mt-3 text-lg text-slate-500">المستوى الأساسي · اختر الدرس لبدء الشرح</p>
         </header>
 
-        {/* مسار التسلسل */}
-        <div className="pop pop-3 mx-auto mt-10 flex max-w-md items-center justify-center gap-2 text-sm font-bold text-slate-400">
-          {CARDS.map((ci, idx) => (
-            <span key={ci.n} className="flex flex-1 items-center gap-2 last:flex-none">
-              <span className={`grid h-8 w-8 place-items-center rounded-full shadow-sm ${ci.locked ? "bg-white text-slate-400" : "bg-slate-900 text-white"}`}>{ci.n}</span>
-              {idx < CARDS.length - 1 && <span className="h-px flex-1 bg-slate-300" />}
-            </span>
-          ))}
-        </div>
+        {/* شريط أرقام الدروس — نافذة منزلقة تعرض 10 أرقام كحد أقصى، والسهمان يحرّكانها رقمًا واحدًا */}
+        <LessonNumberNav
+          items={CARDS}
+          current={currentLesson}
+          currentLabel="آخر درس فتحته"
+          className="pop pop-3 mt-10"
+        />
 
         <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {CARDS.map((c, i) => (
@@ -450,6 +449,12 @@ function Hub() {
 
 export default function App() {
   const route = useRoute();
+  // آخر درس تم فتحه في هذه الجلسة — يبقي نافذة أرقام الدروس على الدرس
+  // الذي كان الطالب فيه عند عودته إلى الصفحة الرئيسية (يبدأ من 1–10 دائمًا).
+  const [lastLesson, setLastLesson] = useState(() => route);
+  useEffect(() => {
+    if (route > 0) setLastLesson(route);
+  }, [route]);
   let page: React.ReactNode;
   if (route === 1) page = <Lesson1 onExit={goHome} />;
   else if (route === 2) page = <Lesson2 onExit={goHome} />;
@@ -482,7 +487,7 @@ export default function App() {
   else if (route === 29) page = <Lesson29 onExit={goHome} />;
   else if (route === 30) page = <Lesson30 onExit={goHome} />;
   else if (route === 31) page = <Lesson31 onExit={goHome} />;
-  else page = <Hub />;
+  else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>
       <ArenaClean />

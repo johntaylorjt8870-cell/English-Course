@@ -1,0 +1,365 @@
+{
+  "scope": "Whole course, Lessons 1–32 source census reconciled to initial-state runtime observation. Verified = behavioral contract exercised in a real lesson shell. Not a claim of exhaustive student-state coverage.",
+  "sourceFiles": {
+    "census": "docs/audits/activity-inventory.json",
+    "observations": "docs/audits/activity-observations.json",
+    "behavior": "docs/audits/lesson2-behavior.json"
+  },
+  "totals": {
+    "censusTemplates": 875,
+    "censusSourceSites": 1681,
+    "observedGroups": 1346,
+    "observedControlOccurrences": 7861,
+    "observedSites": 859,
+    "unobservedSourceSites": 822,
+    "unaccountedSourceSites": 0,
+    "verifiedInstances": 5,
+    "verifiedQuestions": 29,
+    "excludedWithReason": 0,
+    "unresolvedSourceSites": 822,
+    "runtimeActivityInstancesDiscovered": "not established"
+  },
+  "perLesson": {
+    "0": {
+      "templates": 12,
+      "sourceSites": 70,
+      "observedSites": 16,
+      "unobservedSites": 54,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "1": {
+      "templates": 11,
+      "sourceSites": 29,
+      "observedSites": 12,
+      "unobservedSites": 17,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "2": {
+      "templates": 6,
+      "sourceSites": 21,
+      "observedSites": 10,
+      "unobservedSites": 11,
+      "verifiedInstances": 5,
+      "verifiedQuestions": 29
+    },
+    "3": {
+      "templates": 16,
+      "sourceSites": 35,
+      "observedSites": 19,
+      "unobservedSites": 16,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "4": {
+      "templates": 16,
+      "sourceSites": 31,
+      "observedSites": 19,
+      "unobservedSites": 12,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "5": {
+      "templates": 19,
+      "sourceSites": 35,
+      "observedSites": 23,
+      "unobservedSites": 12,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "6": {
+      "templates": 18,
+      "sourceSites": 33,
+      "observedSites": 21,
+      "unobservedSites": 12,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "7": {
+      "templates": 13,
+      "sourceSites": 24,
+      "observedSites": 12,
+      "unobservedSites": 12,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "8": {
+      "templates": 22,
+      "sourceSites": 40,
+      "observedSites": 27,
+      "unobservedSites": 13,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "9": {
+      "templates": 15,
+      "sourceSites": 28,
+      "observedSites": 16,
+      "unobservedSites": 12,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "10": {
+      "templates": 20,
+      "sourceSites": 35,
+      "observedSites": 22,
+      "unobservedSites": 13,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "11": {
+      "templates": 24,
+      "sourceSites": 44,
+      "observedSites": 33,
+      "unobservedSites": 11,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "12": {
+      "templates": 25,
+      "sourceSites": 44,
+      "observedSites": 33,
+      "unobservedSites": 11,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "13": {
+      "templates": 29,
+      "sourceSites": 49,
+      "observedSites": 24,
+      "unobservedSites": 25,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "14": {
+      "templates": 22,
+      "sourceSites": 32,
+      "observedSites": 12,
+      "unobservedSites": 20,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "15": {
+      "templates": 22,
+      "sourceSites": 32,
+      "observedSites": 19,
+      "unobservedSites": 13,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "16": {
+      "templates": 17,
+      "sourceSites": 28,
+      "observedSites": 17,
+      "unobservedSites": 11,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "17": {
+      "templates": 30,
+      "sourceSites": 48,
+      "observedSites": 18,
+      "unobservedSites": 30,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "18": {
+      "templates": 29,
+      "sourceSites": 54,
+      "observedSites": 43,
+      "unobservedSites": 11,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "19": {
+      "templates": 22,
+      "sourceSites": 41,
+      "observedSites": 27,
+      "unobservedSites": 14,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "20": {
+      "templates": 31,
+      "sourceSites": 61,
+      "observedSites": 49,
+      "unobservedSites": 12,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "21": {
+      "templates": 27,
+      "sourceSites": 52,
+      "observedSites": 41,
+      "unobservedSites": 11,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "22": {
+      "templates": 19,
+      "sourceSites": 33,
+      "observedSites": 22,
+      "unobservedSites": 11,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "23": {
+      "templates": 19,
+      "sourceSites": 52,
+      "observedSites": 35,
+      "unobservedSites": 17,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "24": {
+      "templates": 9,
+      "sourceSites": 23,
+      "observedSites": 17,
+      "unobservedSites": 6,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "25": {
+      "templates": 36,
+      "sourceSites": 86,
+      "observedSites": 27,
+      "unobservedSites": 59,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "26": {
+      "templates": 47,
+      "sourceSites": 83,
+      "observedSites": 63,
+      "unobservedSites": 20,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "27": {
+      "templates": 36,
+      "sourceSites": 86,
+      "observedSites": 52,
+      "unobservedSites": 34,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "28": {
+      "templates": 53,
+      "sourceSites": 91,
+      "observedSites": 49,
+      "unobservedSites": 42,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "29": {
+      "templates": 46,
+      "sourceSites": 76,
+      "observedSites": 31,
+      "unobservedSites": 45,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "30": {
+      "templates": 39,
+      "sourceSites": 66,
+      "observedSites": 22,
+      "unobservedSites": 44,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "31": {
+      "templates": 63,
+      "sourceSites": 110,
+      "observedSites": 25,
+      "unobservedSites": 85,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    },
+    "32": {
+      "templates": 62,
+      "sourceSites": 109,
+      "observedSites": 3,
+      "unobservedSites": 106,
+      "verifiedInstances": 0,
+      "verifiedQuestions": 0
+    }
+  },
+  "gaps": {
+    "unresolvedLessons": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+    ],
+    "lessonsWithoutVerifiedInstance": [
+      1,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+    ]
+  },
+  "gate": {
+    "passes": false,
+    "failureReasons": [
+      "822 source sites unobserved/unresolved",
+      "31 lessons have no verified behavioral instance"
+    ]
+  }
+}

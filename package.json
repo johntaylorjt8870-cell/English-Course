@@ -17,7 +17,8 @@
     "audit:teacher-source": "node scripts/audit-teacher-source.mjs",
     "audit:lesson2-activities": "node scripts/audit-lesson2-activities.mjs",
     "audit:bidi-scenes": "npm run build && node scripts/audit-bidi-scenes.mjs && node scripts/report-bidi-scenes.mjs",
-    "audit:teacher-provenance": "node scripts/audit-teacher-provenance.mjs"
+    "audit:teacher-provenance": "node scripts/audit-teacher-provenance.mjs",
+    "audit:activity-denominator": "node scripts/audit-activity-denominator.mjs"
   },
   "dependencies": {
     "clsx": "2.1.1",

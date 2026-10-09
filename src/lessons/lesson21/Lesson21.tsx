@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   SLIDES,
@@ -87,12 +88,7 @@ function En({ children, className = "" }: { children: ReactNode; className?: str
 
 /** نص عربي مختلط: LatinRuns يعزل كل مقطع إنجليزي متصل باتجاه LTR. */
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const clean = text.replace(/\*\*/g, "");
-  return (
-    <span className={className}>
-      <LatinRuns text={clean} />
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function TextBlock({ text, className = "" }: { text: string; className?: string }) {
@@ -180,7 +176,7 @@ function Frame({
       <div className="flex flex-wrap items-center gap-2.5">
         {step && (
           <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-emerald-700 text-lg font-bold text-white shadow-sm">
-            {step}
+            {mixedText(step)}
           </span>
         )}
         {badge && (
@@ -199,7 +195,7 @@ function Frame({
         </div>
       )}
       <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">
-        {title}
+        {mixedText(title)}
       </h2>
       {lead && (
         <div className="mt-2 max-w-[92%] text-lg text-slate-500 md:text-xl">
@@ -672,13 +668,13 @@ function LocationLab() {
             className={`ltr-row rounded-2xl border-2 p-2 text-center transition ${active === i ? "border-teal-500 bg-white shadow" : "border-slate-200 bg-white/70"}`}
           >
             <En className="block text-base font-black text-slate-900">{item.en}</En>
-            <span className="mt-1 block text-sm font-bold text-teal-700">{item.ar}</span>
+            <span className="mt-1 block text-sm font-bold text-teal-700"><LatinRuns text={item.ar ?? ""} /></span>
           </button>
         ))}
       </div>
       <div className="mt-3 rounded-2xl border-2 border-teal-200 bg-white p-3 text-center">
         <En className="text-2xl font-black text-teal-800">{prep.en}</En>
-        <span className="text-base font-bold text-slate-600"> = {prep.ar}</span>
+        <span className="text-base font-bold text-slate-600"> = <LatinRuns text={prep.ar ?? ""} /></span>
       </div>
       <div className="mt-3 text-center text-sm font-bold text-slate-500">
         <Rich text={PLACE_21.examplesLabel} />
@@ -1364,7 +1360,7 @@ function SceneDescription() {
             className={`rounded-2xl border-2 p-3 text-center transition ${active === i ? "border-teal-500 bg-white shadow" : "border-slate-200 bg-white/70"}`}
           >
             <div className="text-3xl">{item.emoji}</div>
-            <div className="mt-1 text-sm font-bold text-slate-700">{item.ar}</div>
+            <div className="mt-1 text-sm font-bold text-slate-700"><LatinRuns text={item.ar ?? ""} /></div>
           </button>
         ))}
       </div>

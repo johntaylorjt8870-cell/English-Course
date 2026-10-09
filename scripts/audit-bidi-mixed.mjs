@@ -133,6 +133,7 @@ async function main() {
     counts[`L${n}`] = seen.size;
     for (const v of seen.values()) uniq.push({ lesson: n, ...v });
   }
+  if (process.argv.includes("--details")) console.log(JSON.stringify({ violations: uniq }, null, 2));
   const total = uniq.length;
   const failures = [];
   const allowed = [];

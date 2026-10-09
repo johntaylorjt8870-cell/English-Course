@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -47,22 +48,7 @@ function En({ children, className = "" }: { children: React.ReactNode; className
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const parts = text.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((x, i) => {
-        const m = x.match(/^\[\[(.+)\]\]$/);
-        if (m) {
-          return (
-            <span key={i} className="ltr font-en mx-1 rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
-              {m[1]}
-            </span>
-          );
-        }
-        return <LatinRuns key={i} text={x} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function PartsLine({ parts, q, size = "md", label = true }: { parts: Part12[]; q?: boolean; size?: "sm" | "md" | "lg"; label?: boolean }) {
@@ -103,16 +89,16 @@ function Frame({ mascot, step, badge, title, lead, children, tip }: { mascot: st
         {mascot}
       </div>
       <div className="flex items-center gap-2.5">
-        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-orange-600 text-lg font-bold text-white">{step}</span>}
-        {badge && <span className="rounded-full bg-orange-100 px-3.5 py-1.5 text-sm font-bold text-orange-800">{badge}</span>}
+        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-orange-600 text-lg font-bold text-white">{mixedText(step)}</span>}
+        {badge && <span className="rounded-full bg-orange-100 px-3.5 py-1.5 text-sm font-bold text-orange-800">{mixedText(badge)}</span>}
       </div>
-      <h2 className="font-head mt-3 max-w-[88%] text-3xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{title}</h2>
-      {lead && <p className="mt-2 max-w-[88%] text-lg text-slate-500 md:text-xl">{lead}</p>}
+      <h2 className="font-head mt-3 max-w-[88%] text-3xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{mixedText(title)}</h2>
+      {lead && <p className="mt-2 max-w-[88%] text-lg text-slate-500 md:text-xl">{mixedText(lead)}</p>}
       <div className="mt-6 space-y-3.5">{children}</div>
       {tip && (
         <div className="mt-6 flex items-center gap-3 rounded-2xl bg-gradient-to-l from-orange-600 to-rose-600 p-4 text-white">
           <span className="text-2xl">🦉</span>
-          <span className="text-base font-semibold md:text-lg">{tip}</span>
+          <span className="text-base font-semibold md:text-lg">{mixedText(tip)}</span>
         </div>
       )}
     </section>
@@ -204,7 +190,7 @@ function SignalWall() {
       {PAST_SIGNALS.map((w, i) => (
         <span key={w.en} className="rounded-2xl border-2 border-violet-200 bg-white px-3.5 py-2 shadow-sm anim-float" style={{ animationDelay: `${(i % 5) * 0.3}s` }}>
           <En className="text-lg font-extrabold text-violet-700">{w.en}</En>
-          <span className="mr-2 text-sm text-slate-500">{w.ar}</span>
+          <span className="mr-2 text-sm text-slate-500"><LatinRuns text={w.ar ?? ""} /></span>
         </span>
       ))}
     </div>
@@ -221,7 +207,7 @@ function AgoMachine() {
       <div className="flex flex-wrap justify-center gap-2">
         {AGO_PHRASES.map((p, i) => (
           <button key={p.en} onClick={() => setIdx(i)} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold transition ${i === idx ? "border-transparent bg-violet-600 text-white" : "border-violet-200 bg-white text-violet-700"}`}>
-            {p.ar}
+            <LatinRuns text={p.ar ?? ""} />
           </button>
         ))}
       </div>
@@ -366,7 +352,7 @@ function EdPairs({ rule }: { rule: EdRuleKey }) {
                 {v.past.slice(0, n)}
                 <span className="rounded bg-orange-200/70 px-0.5 text-orange-900">{v.past.slice(n)}</span>
               </En>
-              {v.ar && <div className="mt-0.5 text-xs font-bold text-slate-400">{v.ar}</div>}
+              {v.ar && <div className="mt-0.5 text-xs font-bold text-slate-400"><LatinRuns text={v.ar ?? ""} /></div>}
             </div>
           );
         })}
@@ -382,7 +368,7 @@ function EdMachine() {
   const n = commonPrefixLen(item.base, item.past);
   return (
     <div className="rounded-3xl border-2 border-orange-200 bg-orange-50 p-5">
-      <div className="text-center font-bold text-orange-800">🛠️ آلة قواعد -ed — اضغط أي فعل لترى القاعدة</div>
+      <div className="text-center font-bold text-orange-800"><LatinRuns text={"🛠️ آلة قواعد -ed — اضغط أي فعل لترى القاعدة"} /></div>
       <div className="mt-3 flex flex-wrap justify-center gap-1.5">
         {ED_MACHINE.map((v, i) => (
           <button key={v.base} onClick={() => setIdx(i)} className={`rounded-xl border-2 px-2.5 py-1 font-en text-sm font-bold transition ${i === idx ? "border-transparent bg-orange-600 text-white" : "border-slate-200 bg-white text-slate-600 hover:border-orange-300"}`}>
@@ -401,7 +387,7 @@ function EdMachine() {
         </div>
         <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
           <span dir="ltr" className="ltr font-en rounded-full bg-orange-100 px-3 py-1 text-xs font-black text-orange-800">{ED_RULES[item.rule].name}</span>
-          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">{item.ar}</span>
+          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600"><LatinRuns text={item.ar ?? ""} /></span>
           <span className="text-xs font-bold text-slate-500"><LatinRuns text={ED_RULES[item.rule].ar} /></span>
         </div>
       </div>
@@ -467,7 +453,7 @@ function PlaysCompare() {
         {mode === "present" ? (
           <>
             <En className="text-2xl font-extrabold text-slate-800">He plays football every Saturday.</En>
-            <div className="mt-1 text-slate-500">هو يلعب كرة القدم كل يوم سبت — Present Simple</div>
+            <div className="mt-1 text-slate-500"><LatinRuns text={"هو يلعب كرة القدم كل يوم سبت — Present Simple"} /></div>
             <div className="mt-3 inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700">
               لاحظ: <En>plays</En> (s مع He)
             </div>
@@ -475,7 +461,7 @@ function PlaysCompare() {
         ) : (
           <>
             <En className="text-2xl font-extrabold text-orange-900">He played football last Saturday.</En>
-            <div className="mt-1 text-slate-500">هو لعب كرة القدم السبت الماضي — Past Simple</div>
+            <div className="mt-1 text-slate-500"><LatinRuns text={"هو لعب كرة القدم السبت الماضي — Past Simple"} /></div>
             <div className="mt-3 inline-block rounded-full bg-orange-100 px-3 py-1 text-xs font-bold text-orange-700">
               لاحظ: <En>played</En> وليس <En className="line-through">playeds</En>
             </div>
@@ -609,12 +595,12 @@ function TimelineVis() {
         {mode === "yesterday" ? (
           <>
             <En className="text-2xl font-extrabold text-orange-900">Yesterday → I watched a movie.</En>
-            <div className="mt-1 text-slate-500">حدث في الماضي وانتهى → Past Simple</div>
+            <div className="mt-1 text-slate-500"><LatinRuns text={"حدث في الماضي وانتهى → Past Simple"} /></div>
           </>
         ) : (
           <>
             <En className="text-2xl font-extrabold text-cyan-900">Now → I am watching a movie.</En>
-            <div className="mt-1 text-slate-500">يحدث الآن → Present Continuous</div>
+            <div className="mt-1 text-slate-500"><LatinRuns text={"يحدث الآن → Present Continuous"} /></div>
           </>
         )}
       </div>
@@ -698,7 +684,7 @@ function FillEx({ ex }: { ex: Extract<Exercise12, { type: "fill" }> }) {
           <Nub n={i + 1} />
           <En className="text-lg font-bold text-slate-800">{it.stem}</En>
           <span className="rounded-full bg-slate-100 px-2 py-1 font-en text-xs font-bold text-slate-500">({it.hint})</span>
-          {it.ar && <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700">{it.ar}</span>}
+          {it.ar && <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700"><LatinRuns text={it.ar ?? ""} /></span>}
           {show[i] ? (
             <En className="tada mr-auto text-lg font-extrabold text-emerald-700">{it.answer}</En>
           ) : (
@@ -723,7 +709,7 @@ function ChooseEx({ ex }: { ex: Extract<Exercise12, { type: "choose" }> }) {
             <div className="flex flex-wrap items-center gap-3">
               <Nub n={i + 1} />
               <En className="text-lg font-bold text-slate-800">{it.stem}</En>
-              {it.ar && <span className="rounded-full bg-violet-50 px-3 py-1 text-xs font-bold text-violet-700">{it.ar}</span>}
+              {it.ar && <span className="rounded-full bg-violet-50 px-3 py-1 text-xs font-bold text-violet-700"><LatinRuns text={it.ar ?? ""} /></span>}
             </div>
             <div className="mt-2.5 flex flex-wrap gap-2 pr-11">
               {it.opts.map((o, oi) => (
@@ -732,7 +718,7 @@ function ChooseEx({ ex }: { ex: Extract<Exercise12, { type: "choose" }> }) {
                 </button>
               ))}
             </div>
-            {c !== undefined && <div className={`mt-2 pr-11 text-sm font-bold ${right ? "text-emerald-700" : "text-rose-700"}`}>💡 {it.why}</div>}
+            {c !== undefined && <div className={`mt-2 pr-11 text-sm font-bold ${right ? "text-emerald-700" : "text-rose-700"}`}>💡 <LatinRuns text={it.why ?? ""} /></div>}
           </div>
         );
       })}
@@ -752,7 +738,7 @@ function FixEx({ ex }: { ex: Extract<Exercise12, { type: "fix" }> }) {
           {show[i] ? (
             <div className="tada flex flex-wrap items-center gap-2">
               <En className="text-lg font-extrabold text-emerald-700">→ {it.correct}</En>
-              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">{it.why}</span>
+              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700"><LatinRuns text={it.why ?? ""} /></span>
             </div>
           ) : (
             <button onClick={() => setShow((s) => ({ ...s, [i]: true }))} className="mr-auto rounded-xl bg-emerald-600 px-4 py-1.5 text-sm font-bold text-white">الحل 💡</button>
@@ -820,7 +806,7 @@ function IQEx({ ex }: { ex: Extract<Exercise12, { type: "iq" }> }) {
                       </button>
                     ))}
                   </div>
-                  {c !== undefined && <div className={`mt-2 text-sm font-bold ${right ? "text-emerald-700" : "text-rose-700"}`}>💡 {it.why}</div>}
+                  {c !== undefined && <div className={`mt-2 text-sm font-bold ${right ? "text-emerald-700" : "text-rose-700"}`}>💡 <LatinRuns text={it.why ?? ""} /></div>}
                 </div>
               </div>
             </div>
@@ -855,7 +841,7 @@ function IQEx({ ex }: { ex: Extract<Exercise12, { type: "iq" }> }) {
                 {showText[i] ? (
                   <div className="tada mt-2 rounded-2xl bg-emerald-50 p-3 border-2 border-emerald-200">
                     <En className="font-bold text-emerald-800">{it.correct}</En>
-                    <div className="mt-1 text-sm font-bold text-emerald-700">{it.why}</div>
+                    <div className="mt-1 text-sm font-bold text-emerald-700"><LatinRuns text={it.why ?? ""} /></div>
                   </div>
                 ) : (
                   <button onClick={() => setShowText((s) => ({ ...s, [i]: true }))} className="mt-3 rounded-xl bg-emerald-600 px-4 py-1.5 text-sm font-bold text-white">أظهر التصحيح 💡</button>
@@ -1062,7 +1048,7 @@ function Cover() {
         </p>
         <div className="pop pop-4 mt-3 inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-2 border-2 border-amber-200">
           <span>🔥</span>
-          <span className="text-sm font-bold text-amber-800">IQ200 — كيف نتحدث عن شيء حدث وانتهى؟</span>
+          <span className="text-sm font-bold text-amber-800"><LatinRuns text={"IQ200 — كيف نتحدث عن شيء حدث وانتهى؟"} /></span>
         </div>
         <div className="pop pop-5 mt-6 max-w-xl mx-auto space-y-3 rounded-3xl border-2 border-slate-100 bg-slate-50 p-5 text-right">
           <div className="text-sm font-bold text-slate-600">ممتاز جدًا! 👏 وصلنا الآن إلى مرحلة جديدة في رحلة الأزمنة.</div>
@@ -1148,25 +1134,25 @@ function Summary() {
           <div className="mt-2 grid gap-1.5">
             {SUMMARY12.regular.map((v) => <PairRow key={v.base} base={v.base} past={v.past} />)}
           </div>
-          <div className="mt-3 text-sm font-bold text-emerald-800">الفعل المنتهي بـ e — نضيف d:</div>
+          <div className="mt-3 text-sm font-bold text-emerald-800"><LatinRuns text={"الفعل المنتهي بـ e — نضيف d:"} /></div>
           <div className="mt-1.5 grid gap-1.5">
             {SUMMARY12.endE.map((v) => <PairRow key={v.base} base={v.base} past={v.past} />)}
           </div>
         </div>
         <div className="rounded-3xl border-2 border-amber-200 bg-amber-50 p-5">
-          <div className="font-head text-lg font-bold text-amber-800">قواعد y</div>
+          <div className="font-head text-lg font-bold text-amber-800"><LatinRuns text={"قواعد y"} /></div>
           <div className="mt-1 text-sm font-bold text-amber-700"><En>consonant + y</En> → <En>y → ied</En>:</div>
           <div className="mt-1.5 grid gap-1.5">
             {SUMMARY12.consonantY.map((v) => <PairRow key={v.base} base={v.base} past={v.past} />)}
           </div>
-          <div className="mt-3 text-sm font-bold text-amber-700"><En>vowel + y</En> — نحتفظ بـ y:</div>
+          <div className="mt-3 text-sm font-bold text-amber-700"><En>vowel + y</En><LatinRuns text={" — نحتفظ بـ y:"} /></div>
           <div className="mt-1.5 grid gap-1.5">
             {SUMMARY12.vowelY.map((v) => <PairRow key={v.base} base={v.base} past={v.past} />)}
           </div>
         </div>
       </div>
       <div className="rounded-3xl border-2 border-orange-200 bg-orange-50 p-5">
-        <div className="font-head text-lg font-bold text-orange-800">الأفعال غير المنتظمة — لا تتبع قاعدة ed</div>
+        <div className="font-head text-lg font-bold text-orange-800"><LatinRuns text={"الأفعال غير المنتظمة — لا تتبع قاعدة ed"} /></div>
         <div className="mt-2 grid grid-cols-2 gap-1.5 sm:grid-cols-4">
           {SUMMARY12.irregular.map((v) => (
             <div key={v.base} dir="ltr" style={{ direction: "ltr" }} className="flex items-center justify-center gap-1.5 rounded-xl border-2 border-orange-200 bg-white px-2 py-2">
@@ -1186,7 +1172,7 @@ function KeyRule() {
     <Frame mascot="⭐" step="⭐" title="أهم قاعدة في الدرس" lead="لا نضيف s إلى الفعل الماضي.">
       <div className="grid gap-3 md:grid-cols-2">
         <div className="rounded-3xl border-2 border-slate-200 bg-slate-50 p-5">
-          <div className="font-head text-lg font-bold text-slate-700">في Present Simple:</div>
+          <div className="font-head text-lg font-bold text-slate-700"><LatinRuns text={"في Present Simple:"} /></div>
           <div className="mt-3 space-y-2">
             {KEY_RULE.present.map((s) => (
               <div key={s} dir="ltr" className="rounded-xl border-2 border-slate-200 bg-white px-3 py-2 text-center">
@@ -1196,7 +1182,7 @@ function KeyRule() {
           </div>
         </div>
         <div className="rounded-3xl border-2 border-orange-200 bg-orange-50 p-5">
-          <div className="font-head text-lg font-bold text-orange-800">لكن في Past Simple:</div>
+          <div className="font-head text-lg font-bold text-orange-800"><LatinRuns text={"لكن في Past Simple:"} /></div>
           <div className="mt-3 space-y-2">
             {KEY_RULE.past.map((s) => (
               <div key={s} dir="ltr" className="rounded-xl border-2 border-orange-200 bg-white px-3 py-2 text-center">
@@ -1211,7 +1197,7 @@ function KeyRule() {
         <span dir="ltr" className="ltr font-en rounded-2xl border-2 border-rose-300 bg-rose-50 px-5 py-2 text-xl font-black text-rose-700 line-through decoration-rose-400">{KEY_RULE.bad} ❌</span>
       </div>
       <div className="rounded-3xl border-2 border-violet-200 bg-violet-50 p-5">
-        <div className="font-head text-lg font-bold text-violet-800">🧠 قاعدة IQ200</div>
+        <div className="font-head text-lg font-bold text-violet-800"><LatinRuns text={"🧠 قاعدة IQ200"} /></div>
         <p className="mt-1 text-sm font-bold text-slate-600">عندما ترى جملة، لا تنظر إلى الفعل وحده. ابحث أولًا عن الزمن.</p>
         <div className="mt-3 grid gap-2 sm:grid-cols-2">
           {KEY_RULE.iq.map((x) => (

@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   SLIDES,
@@ -75,12 +76,7 @@ function En({ children, className = "" }: { children: ReactNode; className?: str
 
 /** نص عربي مختلط: LatinRuns يعزل كل مقطع إنجليزي متصل باتجاه LTR. */
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const clean = text.replace(/\*\*/g, "");
-  return (
-    <span className={className}>
-      <LatinRuns text={clean} />
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function TextBlock({ text, className = "" }: { text: string; className?: string }) {
@@ -168,7 +164,7 @@ function Frame({
       <div className="flex flex-wrap items-center gap-2.5">
         {step && (
           <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-cyan-700 text-lg font-bold text-white shadow-sm">
-            {step}
+            {mixedText(step)}
           </span>
         )}
         {badge && (
@@ -187,7 +183,7 @@ function Frame({
         </div>
       )}
       <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">
-        {title}
+        {mixedText(title)}
       </h2>
       {lead && (
         <div className="mt-2 max-w-[92%] text-lg text-slate-500 md:text-xl">
@@ -339,7 +335,7 @@ function MagicSystemBoard() {
             >
               <div className="flex items-center justify-between gap-2">
                 <En className={`rounded-xl px-3 py-1.5 text-xl font-black ${color.chip}`}>{item.word}</En>
-                <span dir="rtl" className="text-sm font-bold text-slate-600">{item.ar}</span>
+                <span dir="rtl" className="text-sm font-bold text-slate-600"><LatinRuns text={item.ar ?? ""} /></span>
               </div>
               <div className="mt-3 flex flex-wrap gap-1.5">
                 <En className="rounded-lg bg-white px-2 py-1 text-xs font-black text-slate-700">{item.number}</En>
@@ -354,7 +350,7 @@ function MagicSystemBoard() {
         <div dir="ltr" className="mt-2 flex flex-wrap items-center justify-center gap-2">
           <En className={`rounded-xl px-4 py-2 text-xl font-black ${c.chip}`}>{cur.word}</En>
           <En className="text-lg font-black text-slate-400">=</En>
-          <span dir="rtl" className={`font-bold ${c.text}`}>{cur.ar}</span>
+          <span dir="rtl" className={`font-bold ${c.text}`}><LatinRuns text={cur.ar ?? ""} /></span>
         </div>
       </div>
     </LabPanel>
@@ -1359,7 +1355,7 @@ function Cover() {
         {MAGIC_SYSTEM_20.map((item, i) => (
           <div key={item.word} className="ltr-row flex items-center justify-between gap-2 rounded-2xl bg-white/10 px-4 py-3">
             <En className={`rounded-lg px-3 py-1 text-lg font-black ${i === 0 ? "bg-emerald-400 text-emerald-950" : i === 1 ? "bg-sky-300 text-sky-950" : i === 2 ? "bg-amber-300 text-amber-950" : "bg-rose-300 text-rose-950"}`}>{item.word}</En>
-            <span dir="rtl" className="text-sm font-bold text-cyan-50">{item.ar}</span>
+            <span dir="rtl" className="text-sm font-bold text-cyan-50"><LatinRuns text={item.ar ?? ""} /></span>
           </div>
         ))}
       </div>

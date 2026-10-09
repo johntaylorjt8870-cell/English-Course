@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -69,23 +70,7 @@ function En({ children, className = "" }: { children: React.ReactNode; className
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const clean = text.replace(/\*\*/g, "");
-  const parts = clean.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((part, i) => {
-        const marked = part.match(/^\[\[(.+)\]\]$/);
-        if (marked) {
-          return (
-            <span key={i} dir="ltr" style={{ direction: "ltr" }} className="ltr font-en rounded-lg bg-amber-500/10 px-1.5 py-0.5 font-bold text-slate-800">
-              {marked[1]}
-            </span>
-          );
-        }
-        return <LatinRuns key={i} text={part} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function TextBlock({ text, className = "" }: { text: string; className?: string }) {
@@ -174,7 +159,7 @@ function Frame({
       <div className="flex flex-wrap items-center gap-2.5">
         {step && (
           <span className={`font-head grid h-10 w-10 place-items-center rounded-2xl text-lg font-bold text-white ${step === "★" ? "bg-gradient-to-br from-amber-500 to-rose-600" : "bg-amber-600"}`}>
-            {step}
+            {mixedText(step)}
           </span>
         )}
         {badge && (
@@ -189,7 +174,7 @@ function Frame({
         </div>
       )}
       <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">
-        {title}
+        {mixedText(title)}
       </h2>
       {lead && (
         <div className="mt-2 max-w-[92%] text-lg text-slate-500 md:text-xl">

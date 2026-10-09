@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -64,7 +65,7 @@ function Badge({ emoji, badge, t }: { emoji: string; badge: string; t: ReturnTyp
       <div className={`grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${t.ring} text-3xl shadow-lg anim-bob`}>
         {emoji}
       </div>
-      <span className={`rounded-full px-4 py-1.5 text-sm font-bold ${t.chip}`}>{badge}</span>
+      <span className={`rounded-full px-4 py-1.5 text-sm font-bold ${t.chip}`}>{mixedText(badge)}</span>
     </div>
   );
 }
@@ -90,7 +91,7 @@ function Block({ b, t }: { b: ContentBlock; t: ReturnType<typeof theme> }) {
           </div>
           <div className="mt-2 flex items-center gap-2 pr-1 text-lg text-slate-600">
             <span className="opacity-60">↩</span>
-            <span>{b.ex.ar}</span>
+            <span><LatinRuns text={b.ex.ar ?? ""} /></span>
           </div>
           {b.ex.note && (
             <div className={`mt-2 inline-flex items-center gap-1 rounded-full ${t.chip} px-3 py-1 text-sm font-semibold`}>
@@ -206,7 +207,7 @@ function ContentSlide({ s, idx }: { s: Extract<Slide, { kind: "content" }>; idx:
     <div className="relative">
       <Stickers seed={idx} />
       <Badge emoji={s.emoji} badge={s.badge} t={t} />
-      <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">{s.title}</h2>
+      <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">{mixedText(s.title)}</h2>
       {s.intro && <p className="mt-2 text-xl text-slate-500">{s.intro}</p>}
       <div className="mt-6 space-y-4">
         {s.blocks.map((b, i) => (
@@ -226,7 +227,7 @@ function PronounGrid({ idx }: { idx: number }) {
       <Stickers seed={idx} />
       <Badge emoji="🎴" badge="القائمة" t={t} />
       <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">الضمائر الأساسية السبعة</h2>
-      <p className="mt-2 text-xl text-slate-500">كل بطاقة تحمل الضمير ومعناه والـ Verb to be الخاص به</p>
+      <p className="mt-2 text-xl text-slate-500"><LatinRuns text={"كل بطاقة تحمل الضمير ومعناه والـ Verb to be الخاص به"} /></p>
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {PRONOUNS.map((p, i) => {
           const ct = theme(i);
@@ -239,7 +240,7 @@ function PronounGrid({ idx }: { idx: number }) {
                 <span className="ltr font-en text-4xl font-extrabold text-slate-800">{p.en}</span>
                 <span className="text-4xl transition group-hover:scale-125">{p.emoji}</span>
               </div>
-              <div className="mt-2 text-2xl font-bold text-slate-600">{p.ar}</div>
+              <div className="mt-2 text-2xl font-bold text-slate-600"><LatinRuns text={p.ar ?? ""} /></div>
               <div className="mt-3 flex items-center justify-between">
                 <span className="text-sm text-slate-400">{p.hint}</span>
                 <span className={`ltr font-en rounded-full px-3 py-1 text-sm font-bold ${ct.chip}`}>{p.be}</span>
@@ -278,7 +279,7 @@ function VerbTable({ idx }: { idx: number }) {
                 <div key={it.en} className="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-2">
                   <span className="text-2xl">{it.emoji}</span>
                   <span className="ltr font-en text-xl font-bold text-slate-800">{it.en}</span>
-                  <span className="mr-auto text-slate-500">{it.ar}</span>
+                  <span className="mr-auto text-slate-500"><LatinRuns text={it.ar ?? ""} /></span>
                 </div>
               ))}
             </div>
@@ -305,8 +306,8 @@ function ExerciseSlide({ ex, idx }: { ex: Exercise; idx: number }) {
     <div className="relative">
       <Stickers seed={idx} />
       <Badge emoji={ex.emoji} badge={ex.badge} t={t} />
-      <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">{ex.title}</h2>
-      <p className="mt-2 text-xl text-slate-500">{ex.subtitle}</p>
+      <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">{mixedText(ex.title)}</h2>
+      <p className="mt-2 text-xl text-slate-500">{mixedText(ex.subtitle)}</p>
       <div className="mt-6">
         {ex.type === "mc" && <MC ex={ex} t={t} />}
         {ex.type === "fill" && <Fill ex={ex} t={t} />}
@@ -385,7 +386,7 @@ function Fill({ ex, t }: { ex: Extract<Exercise, { type: "fill" }>; t: ReturnTyp
                 {q.after}
               </span>
             </div>
-            <div className="mt-2 pr-9 text-sm text-slate-400">{q.ar}</div>
+            <div className="mt-2 pr-9 text-sm text-slate-400"><LatinRuns text={q.ar ?? ""} /></div>
             <div className="mt-3 flex flex-wrap gap-2 pr-9">
               {ex.options.map((opt) => {
                 const isChosen = chosen === opt;
@@ -503,7 +504,7 @@ function Summary() {
               { ar: "هم طلاب", wrong: "They students.", right: "They are students." },
             ].map((r, i) => (
               <div key={i} className="rounded-xl bg-white p-3 shadow-sm">
-                <div className="mb-1 font-semibold text-slate-600">{r.ar}</div>
+                <div className="mb-1 font-semibold text-slate-600"><LatinRuns text={r.ar ?? ""} /></div>
                 <div className="ltr font-en font-bold text-rose-500 line-through decoration-rose-300">{r.wrong} ✕</div>
                 <div className="ltr font-en font-bold text-emerald-600">{r.right} ✓</div>
               </div>
@@ -528,7 +529,7 @@ function QuizSlide() {
       <Stickers seed={2} />
       <Badge emoji="📝" badge="الاختبار النهائي" t={theme(3)} />
       <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">الاختبار النهائي</h2>
-      <p className="mt-2 text-xl text-slate-500">12 سؤالًا جديدًا من خارج أمثلة الدرس — أثبت أنك أتقنت الضمائر و Verb to be.</p>
+      <p className="mt-2 text-xl text-slate-500"><LatinRuns text={"12 سؤالًا جديدًا من خارج أمثلة الدرس — أثبت أنك أتقنت الضمائر و Verb to be."} /></p>
       <div className="mt-6">
         <FinalQuiz lesson={2} accent="bg-indigo-600" />
       </div>

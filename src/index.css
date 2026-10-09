@@ -204,3 +204,19 @@ body {
 [dir="rtl"] .font-en {
   white-space: pre-wrap;
 }
+
+/* Explicit Arabic direction wins over an inherited English font utility. */
+[dir="rtl"] {
+  direction: rtl !important;
+  unicode-bidi: isolate;
+}
+.ltr-pair {
+  overflow-wrap: anywhere;
+}
+[data-teacher-workspace] {
+  overflow-wrap: anywhere;
+}
+[data-teacher-workspace] :is(button, a, select, summary):focus-visible {
+  outline: 3px solid #0f766e;
+  outline-offset: 3px;
+}

@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   SLIDES,
@@ -341,12 +342,7 @@ function En({ children, className = "" }: { children: ReactNode; className?: str
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const clean = text.replace(/\*\*/g, "");
-  return (
-    <span className={className}>
-      <LatinRuns text={clean} />
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function TextBlock({ text, className = "" }: { text: string; className?: string }) {
@@ -426,7 +422,7 @@ function Frame({
       <div className="flex flex-wrap items-center gap-2.5">
         {step && (
           <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-indigo-700 text-lg font-bold text-white shadow-sm">
-            {step}
+            {mixedText(step)}
           </span>
         )}
         {badge && (
@@ -444,7 +440,7 @@ function Frame({
           <Rich text={sourceHeading} />
         </div>
       )}
-      <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{title}</h2>
+      <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{mixedText(title)}</h2>
       {lead && (
         <div className="mt-2 max-w-[92%] text-lg text-slate-500 md:text-xl">
           <Rich text={lead} />
@@ -805,7 +801,7 @@ function GoldenMapLab() {
       {pick && (
         <div className="mt-3 rounded-2xl border-2 border-indigo-300 bg-white p-3 text-center">
           <En className="text-2xl font-black text-indigo-900">{pick} → {isWas(pick) ? "was" : "were"}</En>
-          <div className="mt-1 text-sm font-bold text-slate-600">ثم أضف verb-ing: <En className="font-black text-indigo-900">{pick} {isWas(pick) ? "was" : "were"} reading</En></div>
+          <div className="mt-1 text-sm font-bold text-slate-600"><LatinRuns text={"ثم أضف verb-ing: "} /><En className="font-black text-indigo-900">{pick} {isWas(pick) ? "was" : "were"} reading</En></div>
         </div>
       )}
       <div className="mt-3 grid gap-2 sm:grid-cols-2">
@@ -1352,7 +1348,7 @@ function SignalWordsLab() {
         {SIGNAL_WORDS.map((row) => (
           <div key={row.en} className="flex items-center justify-between rounded-2xl border-2 border-white bg-white p-3">
             <En className="rounded-lg bg-indigo-700 px-2.5 py-1 text-sm font-black text-white">{row.en}</En>
-            <span className="text-sm font-bold text-slate-600">= {row.ar}</span>
+            <span className="text-sm font-bold text-slate-600">= <LatinRuns text={row.ar ?? ""} /></span>
           </div>
         ))}
       </div>

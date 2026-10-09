@@ -1,3 +1,5 @@
+import { TeachingDetails } from "../../shared/TeacherWorkspace";
+import TeacherWorkspace, { TeacherSection } from "../../shared/TeacherWorkspace";
 // ============================================================
 // 🌉 الدرس 31 — Present Perfect · المضارع التام (Native Multi-Step)
 // 🌉 THE PRESENT BRIDGE — جسر الحاضر
@@ -797,13 +799,13 @@ function OpeningStep() {
   const cards = [
     {
       id: "l27",
-      head: <En className="text-base font-black text-slate-800">V3 — Past Participle (الدرس 27)</En>,
+      head: <En className="text-base font-black text-slate-800"><LatinRuns text={"V3 — Past Participle (الدرس 27)"} /></En>,
       body: "go → went → gone · eat → ate → eaten — العمود الثالث الذي سنحتاجه بعد have/has في كل جملة اليوم.",
       tone: "border-violet-300 bg-violet-50",
     },
     {
       id: "l30",
-      head: <En className="text-base font-black text-slate-800">The Past System (الدرس 30)</En>,
+      head: <En className="text-base font-black text-slate-800"><LatinRuns text={"The Past System (الدرس 30)"} /></En>,
       body: "أكملنا نظام الماضي: Past Simple · Past Continuous · Past Perfect · Past Perfect Continuous — ولن نعيد شرحه من الصفر.",
       tone: "border-teal-300 bg-teal-50",
     },
@@ -1082,7 +1084,7 @@ function S4_V3Step() {
               </div>
               <div className="mt-1.5 flex items-center gap-2">
                 <Rich text={row.ar} className="text-xs font-bold text-slate-500" />
-                {open[i] && <span className="rounded-full bg-teal-50 px-2 py-0.5 text-[11px] font-black text-teal-700">✔ <En>{row.v3}</En> هي المستخدمة بعد have/has</span>}
+                {open[i] && <span className="rounded-full bg-teal-50 px-2 py-0.5 text-[11px] font-black text-teal-700">✔ <En>{row.v3}</En><LatinRuns text={" هي المستخدمة بعد have/has"} /></span>}
               </div>
             </button>
           ))}
@@ -1847,7 +1849,7 @@ function S18_TodayStep() {
         <ul className="space-y-1.5 text-sm font-semibold leading-relaxed text-slate-700">
           <li>1) اقرأ المعنى المقصود: هل نركز على النتيجة/الخبرة/الاستمرار، أم على حدث منتهٍ بتوقيت محدد؟</li>
           <li><Rich text="2) ابحث عن وقت ماضٍ محدد ومنتهٍ (yesterday · last year · in 2021 · at 9:00 · two days ago) — وجوده يمنع Present Perfect الأساسي." /></li>
-          <li>3) تحقق من الصيغة: <En>have/has + V3</En> بلا did وبلا not مع never.</li>
+          <li>3) تحقق من الصيغة: <En>have/has + V3</En><LatinRuns text={" بلا did وبلا not مع never."} /></li>
         </ul>
       </PlatformPanel>
       {done >= 2 && (
@@ -2861,9 +2863,9 @@ function S42_FinalChallengeStep() {
       <PlatformPanel title="كيف تراجع جملتك بنفسك؟">
         <ul className="space-y-1.5 text-sm font-semibold leading-relaxed text-slate-700">
           <li>1) هل المساعد مناسب للفاعل؟ (<En>I have</En> — <En>she has</En>)</li>
-          <li>2) هل الفعل بصيغة V3 بعد المساعد؟ (finished · gone · eaten)</li>
+          <li><LatinRuns text={"2) هل الفعل بصيغة V3 بعد المساعد؟ (finished · gone · eaten)"} /></li>
           <li>3) هل موضع الكلمة الرابطة صحيح؟ (<En>have + already/just + V3</En> · <En>yet</En> في النهاية)</li>
-          <li>4) هل تجنّبت وقتًا ماضيًا محددًا ومنتهيًا (yesterday · last year · in 2021)؟</li>
+          <li><LatinRuns text={"4) هل تجنّبت وقتًا ماضيًا محددًا ومنتهيًا (yesterday · last year · in 2021)؟"} /></li>
         </ul>
       </PlatformPanel>
     </div>
@@ -3434,7 +3436,7 @@ export function TestArea31({ onCheckedChange, onShowSolutions }: { onCheckedChan
           <>
             <button type="button" onClick={submit} disabled={!allAnswered} title={allAnswered ? undefined : "أجب عن جميع الأسئلة العشرين أولًا"}
               className="rounded-xl bg-sky-700 px-5 py-2.5 text-sm font-black text-white transition enabled:hover:bg-sky-800 disabled:opacity-30">
-              <Rich text={`إنهاء الاختبار (${answered}/${TEST_31.length})`} />
+              <Rich text={`تصحيح الاختبار — إنهاء الاختبار (${answered}/${TEST_31.length})`} />
             </button>
             <span className="text-xs font-bold text-slate-500"><Rich text="لن تظهر أي نتيجة أو تصحيح قبل الإنهاء." /></span>
           </>
@@ -3514,7 +3516,7 @@ export function Solutions31({ unlocked, onGoTest, onGoTeacher }: { unlocked: boo
                 <div className="mt-2 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-2.5">
                   <span className="text-sm font-black text-emerald-900">✓ <LatinRuns text={s.answer} /></span>
                 </div>
-                <div className="mt-2 text-sm font-bold leading-relaxed text-slate-700"><Rich text={s.why} /></div>
+                <TeachingDetails><div className="mt-2 text-sm font-bold leading-relaxed text-slate-700"><Rich text={s.why} /></div></TeachingDetails>
                 {s.trap && (
                   <div className="mt-1.5 rounded-2xl border-2 border-amber-200 bg-amber-50 p-2.5 text-sm font-bold text-amber-900">
                     🪤 <Rich text={s.trap} />
@@ -3589,9 +3591,14 @@ export function TeacherArea31({ unlocked, onUnlockChange, onGoSolutions }: { unl
       <TeacherGate ok={unlocked} setOk={(v) => onUnlockChange?.(v)} />
       {unlocked && (
         <div className="space-y-3.5">
+
+<TeacherWorkspace lesson={31}>
           {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
-          <FinalTestAnswerKey lesson={31} questions={FINAL_TESTS[31]} accent="bg-sky-700" />
-          <div className="rounded-3xl border-2 border-sky-200 bg-gradient-to-br from-sky-50 to-teal-50 p-4">
+          <TeacherSection title="مفتاح الاختبار النهائي" category="assessment">
+<FinalTestAnswerKey lesson={31} questions={FINAL_TESTS[31]} accent="bg-sky-700" />
+</TeacherSection>
+          <TeacherSection title="نظرة عامة" category="teaching">
+<div className="rounded-3xl border-2 border-sky-200 bg-gradient-to-br from-sky-50 to-teal-50 p-4">
             <h3 className="font-head text-lg font-black text-sky-900"><Rich text={TEACHER_31_OVERVIEW.title} /></h3>
             <div className="mt-3 space-y-2.5">
               <div>
@@ -3620,8 +3627,10 @@ export function TeacherArea31({ unlocked, onUnlockChange, onGoSolutions }: { unl
               </div>
             </div>
           </div>
+</TeacherSection>
 
-          <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
+          <TeacherSection title="تسلسل التدريس" category="teaching">
+<div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <h3 className="font-head text-lg font-black text-slate-800">🧭 تسلسل التدريس ({SLIDE_COUNT} خطوة)</h3>
             <div className="mt-3 grid gap-2 sm:grid-cols-2">
               {sequence.map((g) => (
@@ -3634,8 +3643,10 @@ export function TeacherArea31({ unlocked, onUnlockChange, onGoSolutions }: { unl
               ))}
             </div>
           </div>
+</TeacherSection>
 
-          <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
+          <TeacherSection title="المفاهيم الصعبة" category="teaching">
+<div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <h3 className="font-head text-lg font-black text-slate-800">🧩 المفاهيم الصعبة وكيف تُدرَّس</h3>
             <div className="mt-3 space-y-2.5">
               {TEACHING_PITFALLS_31.map((n, i) => (
@@ -3650,8 +3661,10 @@ export function TeacherArea31({ unlocked, onUnlockChange, onGoSolutions }: { unl
               ))}
             </div>
           </div>
+</TeacherSection>
 
-          <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
+          <TeacherSection title="مذكرات التدريس" category="teaching">
+<div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <h3 className="font-head text-lg font-black text-slate-800">📝 مذكرات تدريسية ({TEACHER_31_NOTES.length})</h3>
             <div className="mt-3 space-y-2.5">
               {TEACHER_31_NOTES.map((n, i) => (
@@ -3666,8 +3679,10 @@ export function TeacherArea31({ unlocked, onUnlockChange, onGoSolutions }: { unl
               ))}
             </div>
           </div>
+</TeacherSection>
 
-          <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
+          <TeacherSection title="حلول تمارين المصدر" category="source">
+<div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <h3 className="font-head text-lg font-black text-slate-800">📚 حلول تمارين المصدر وأنشطته ({TEACHER_31_SOLUTIONS.length})</h3>
             <div className="mt-3 space-y-2.5">
               {TEACHER_31_SOLUTIONS.map((n, i) => (
@@ -3682,8 +3697,10 @@ export function TeacherArea31({ unlocked, onUnlockChange, onGoSolutions }: { unl
               ))}
             </div>
           </div>
+</TeacherSection>
 
-          <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
+          <TeacherSection title="سلالم التقييم" category="teaching">
+<div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <h3 className="font-head text-lg font-black text-slate-800">📊 سلالم التقييم ({TEACHER_31_RUBRICS.length})</h3>
             <div className="mt-3 space-y-2.5">
               {TEACHER_31_RUBRICS.map((n, i) => (
@@ -3698,8 +3715,10 @@ export function TeacherArea31({ unlocked, onUnlockChange, onGoSolutions }: { unl
               ))}
             </div>
           </div>
+</TeacherSection>
 
-          <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
+          <TeacherSection title="الأخطاء الشائعة" category="teaching">
+<div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <h3 className="font-head text-lg font-black text-slate-800">⚠️ الأخطاء الشائعة والمفاهيم المغلوطة ({TEACHER_31_MISTAKES.length})</h3>
             <div className="mt-3 grid gap-2 sm:grid-cols-2">
               {TEACHER_31_MISTAKES.map((n, i) => (
@@ -3714,8 +3733,10 @@ export function TeacherArea31({ unlocked, onUnlockChange, onGoSolutions }: { unl
               ))}
             </div>
           </div>
+</TeacherSection>
 
-          <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
+          <TeacherSection title="تصحيح الأخطاء المتعمدة" category="teaching">
+<div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <h3 className="font-head text-lg font-black text-slate-800">🎯 جمل خاطئة مقصودة محفوظة حرفيًا ({INTENTIONALLY_WRONG_31.length})</h3>
             <p className="mt-1 text-xs font-bold text-slate-500"><Rich text="تُعرض داخل الدرس دائمًا موسومة بأنها خاطئة مع تصحيحها — وهذا السجل للمراجعة السريعة وسلالم التقييم." /></p>
             <div className="mt-3 grid gap-2 sm:grid-cols-2">
@@ -3728,8 +3749,10 @@ export function TeacherArea31({ unlocked, onUnlockChange, onGoSolutions }: { unl
               ))}
             </div>
           </div>
+</TeacherSection>
 
-          <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
+          <TeacherSection title="مراجع الأقسام المصدرية" category="source">
+<div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <h3 className="font-head text-lg font-black text-slate-800">🗂️ مراجع الأقسام المصدرية ({SOURCE_LEDGER_COUNT})</h3>
             <p className="mt-1 text-xs font-bold text-slate-500"><Rich text={`السجل يشمل ${SOURCE_NUMBERED_COUNT} قسمًا مرقّمًا ①–㊺ + ${SOURCE_LEDGER_COUNT - SOURCE_NUMBERED_COUNT} أقسام غير مرقّمة (الغلاف · الافتتاح · الأهداف · لوحة Past Simple vs Present Perfect · خريطة المنهج).`} /></p>
             <div className="mt-3 grid gap-1.5 sm:grid-cols-2">
@@ -3741,13 +3764,16 @@ export function TeacherArea31({ unlocked, onUnlockChange, onGoSolutions }: { unl
               ))}
             </div>
           </div>
+</TeacherSection>
 
           {onGoSolutions && (
             <button type="button" onClick={onGoSolutions} className="w-full rounded-2xl bg-amber-100 px-6 py-3.5 text-base font-black text-amber-900 transition hover:bg-amber-200">
               🔑 عرض حلول منطقة الاختبارات
             </button>
           )}
-        </div>
+        <TeacherSection title="مفتاح منطقة الاختبارات — 20 سؤالًا" category="assessment"><Solutions31 unlocked={true} /></TeacherSection>
+</TeacherWorkspace>
+</div>
       )}
     </div>
   );
@@ -3855,7 +3881,7 @@ export default function Lesson31({ onExit }: { onExit: () => void }) {
               area === a.id ? "border-sky-600 bg-sky-700 text-white shadow" : "border-slate-200 bg-white text-slate-600 hover:border-sky-300"
             }`}
           >
-            {a.emoji} {a.ar}
+            {a.emoji} <LatinRuns text={a.ar ?? ""} />
             {a.id === "solutions" && !solutionsUnlocked && " 🔒"}
           </button>
         ))}

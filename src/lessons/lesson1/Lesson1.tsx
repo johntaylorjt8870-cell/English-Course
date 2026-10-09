@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -31,22 +32,7 @@ const NEUTRAL = "bg-white border-slate-200 text-slate-800";
 
 /** نص عربي يحتوي على مقاطع إنجليزية بين [[ ]] تُعرض بشكل معزول وصحيح */
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const parts = text.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((p, i) => {
-        const m = p.match(/^\[\[(.+)\]\]$/);
-        if (m) {
-          return (
-            <span key={i} dir="ltr" className="font-en mx-1 rounded-md bg-slate-100 px-1.5 py-0.5 font-semibold text-slate-800">
-              {m[1]}
-            </span>
-          );
-        }
-        return <LatinRuns key={i} text={p} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -89,7 +75,7 @@ function WordBlock({
             {ROLE_INFO[role].en}
           </span>
           {" · "}
-          {ROLE_INFO[role].ar}
+          <LatinRuns text={ROLE_INFO[role].ar ?? ""} />
         </span>
       )}
     </span>
@@ -106,7 +92,7 @@ function SentenceBlocks({ s, reveal = true, size = "md", label = true }: { s: Se
         ))}
         <span className="font-en pt-1 text-3xl font-bold text-slate-300">.</span>
       </div>
-      <div className="mt-2 text-lg text-slate-500">{s.ar}</div>
+      <div className="mt-2 text-lg text-slate-500"><LatinRuns text={s.ar ?? ""} /></div>
     </div>
   );
 }
@@ -141,7 +127,7 @@ function Formula({ roles, example, big }: { roles: Role[]; example?: string[]; b
               <span dir="ltr" className={`font-en font-extrabold ${big ? "text-3xl md:text-4xl" : "text-2xl"}`}>
                 {ROLE_INFO[r].en}
               </span>
-              <span className={`font-semibold opacity-90 ${big ? "text-base" : "text-sm"}`}>{ROLE_INFO[r].ar}</span>
+              <span className={`font-semibold opacity-90 ${big ? "text-base" : "text-sm"}`}><LatinRuns text={ROLE_INFO[r].ar ?? ""} /></span>
             </div>
           </Fragment>
         ))}
@@ -170,7 +156,7 @@ function RolesRow({ roles, withQ }: { roles: Role[]; withQ?: boolean }) {
             <En className={`text-2xl font-extrabold ${ROLE_STYLE[r].text}`}>{ROLE_INFO[r].en}</En>
             <span className="text-2xl">{ROLE_INFO[r].emoji}</span>
           </div>
-          <div className="mt-1 text-xl font-bold text-slate-700">= {ROLE_INFO[r].ar}</div>
+          <div className="mt-1 text-xl font-bold text-slate-700">= <LatinRuns text={ROLE_INFO[r].ar ?? ""} /></div>
           {withQ && <div className="mt-1 text-sm text-slate-500">{ROLE_INFO[r].q}</div>}
         </div>
       ))}
@@ -185,7 +171,7 @@ function Term({ en, ar, desc, role }: { en: string; ar: string; desc?: string; r
       <En className={`text-4xl font-extrabold ${st ? st.text : "text-violet-700"}`}>{en}</En>
       <span className="text-3xl font-bold text-slate-300">=</span>
       <span className="font-head text-3xl font-bold text-slate-800">{ar}</span>
-      {desc && <span className="basis-full text-lg text-slate-600">{desc}</span>}
+      {desc && <span className="basis-full text-lg text-slate-600">{mixedText(desc)}</span>}
     </div>
   );
 }
@@ -213,7 +199,7 @@ function QA({ sentence, q, a, role }: { sentence: string; q: string; a: string; 
             <span className="text-slate-400">=</span>
             <En className={`text-sm font-bold ${st.text}`}>{ROLE_INFO[role].en}</En>
             <span dir="rtl" className="text-sm text-slate-500">
-              ({ROLE_INFO[role].ar})
+              (<LatinRuns text={ROLE_INFO[role].ar ?? ""} />)
             </span>
           </span>
         ) : (
@@ -312,7 +298,7 @@ function Build({ rows }: { rows: { s: string; v: string; o: string; ar: string }
             <En className="text-2xl font-extrabold text-slate-800">
               {row.s} {row.v} {row.o}.
             </En>
-            <div className="text-slate-500">{row.ar}</div>
+            <div className="text-slate-500"><LatinRuns text={row.ar ?? ""} /></div>
           </div>
         </div>
       ))}
@@ -379,9 +365,9 @@ function SlideFrame({
       </div>
       <div className="flex items-center gap-3">
         {step !== undefined && (
-          <span className="font-head grid h-12 w-12 place-items-center rounded-2xl bg-slate-900 text-xl font-bold text-white shadow">{step}</span>
+          <span className="font-head grid h-12 w-12 place-items-center rounded-2xl bg-slate-900 text-xl font-bold text-white shadow">{mixedText(step)}</span>
         )}
-        {badge && <span className="rounded-full bg-violet-100 px-4 py-1.5 text-sm font-bold text-violet-700">{badge}</span>}
+        {badge && <span className="rounded-full bg-violet-100 px-4 py-1.5 text-sm font-bold text-violet-700">{mixedText(badge)}</span>}
       </div>
       <h2 className="font-head mt-4 max-w-[85%] text-3xl font-bold leading-snug text-slate-900 md:text-4xl">
         {typeof title === "string" ? <Mixed text={title} /> : title}
@@ -560,7 +546,7 @@ function PronounsSlide({ mascot, title }: { mascot: string; title: string }) {
             <span className="text-3xl">{p.emoji}</span>
             <div>
               <En className="text-2xl font-extrabold text-sky-800">{p.en}</En>
-              <div className="text-sm font-semibold text-slate-600">{p.ar}</div>
+              <div className="text-sm font-semibold text-slate-600"><LatinRuns text={p.ar ?? ""} /></div>
             </div>
           </div>
         ))}
@@ -598,7 +584,7 @@ function Closing({ mascot, title, onExit }: { mascot: string; title: string; onE
       <div className="pointer-events-none absolute -bottom-16 -right-16 h-64 w-64 rounded-full bg-orange-500/20 blur-3xl" />
       <div className="relative">
         <div className="pop text-7xl anim-drift">{mascot}</div>
-        <div className="pop pop-1 mt-3 text-sm font-bold text-slate-400">⭐ {title}</div>
+        <div className="pop pop-1 mt-3 text-sm font-bold text-slate-400">⭐ {mixedText(title)}</div>
         <h2 className="pop pop-2 font-head mt-2 text-3xl font-bold md:text-5xl">لا تحفظ الإنجليزية ككلمات منفردة</h2>
         <p className="pop pop-3 mt-3 text-xl text-slate-300">تعلّم كيف تبني الجملة:</p>
         <div dir="ltr" className="pop pop-4 mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -609,7 +595,7 @@ function Closing({ mascot, title, onExit }: { mascot: string; title: string; onE
                 <div dir="ltr" className="font-en text-2xl font-extrabold md:text-3xl">
                   {ROLE_INFO[r].en}
                 </div>
-                <div className="text-sm opacity-90">{ROLE_INFO[r].ar}</div>
+                <div className="text-sm opacity-90"><LatinRuns text={ROLE_INFO[r].ar ?? ""} /></div>
               </div>
             </Fragment>
           ))}
@@ -732,7 +718,7 @@ function TagItem({ n, s, roles }: { n: number; s: Sentence; roles: Role[] }) {
       </div>
       {allRight && (
         <div className="tada mt-3 flex items-center gap-2 font-bold text-emerald-700">
-          <span className="text-xl">🎉</span> ممتاز! <span className="font-normal text-slate-500">{s.ar}</span>
+          <span className="text-xl">🎉</span> ممتاز! <span className="font-normal text-slate-500"><LatinRuns text={s.ar ?? ""} /></span>
         </div>
       )}
     </div>
@@ -806,7 +792,7 @@ function OrderItem({ n, item }: { n: number; item: { scrambled: string[]; correc
         <div className="tada mt-2 flex flex-wrap items-center gap-3 font-bold text-emerald-700">
           <span className="text-xl">🎉</span>
           <En>{item.correct.join(" ")}.</En>
-          <span className="font-normal text-slate-500">{item.ar}</span>
+          <span className="font-normal text-slate-500"><LatinRuns text={item.ar ?? ""} /></span>
         </div>
       )}
       {wrong && <div className="mt-2 font-bold text-rose-600">✕ الترتيب غير صحيح — اضغط على كلمة لإرجاعها وحاول مجددًا</div>}
@@ -890,7 +876,7 @@ function ExerciseSlide({ s }: { s: Extract<Slide, { kind: "exercise" }> }) {
             {ex.roles.map((r) => (
               <span key={r} className={`flex items-center gap-1.5 rounded-full border ${ROLE_STYLE[r].border} ${ROLE_STYLE[r].soft} px-2.5 py-0.5 font-semibold`}>
                 <span className={`h-2.5 w-2.5 rounded-full ${ROLE_STYLE[r].dot}`} />
-                <En>{ROLE_INFO[r].en}</En> = {ROLE_INFO[r].ar}
+                <En>{ROLE_INFO[r].en}</En> = <LatinRuns text={ROLE_INFO[r].ar ?? ""} />
               </span>
             ))}
           </div>

@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -71,23 +72,7 @@ function En({ children, className = "" }: { children: React.ReactNode; className
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const clean = text.replace(/\*\*/g, "");
-  const parts = clean.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((part, i) => {
-        const marked = part.match(/^\[\[(.+)\]\]$/);
-        if (marked) {
-          return (
-            <span key={i} dir="ltr" style={{ direction: "ltr" }} className="ltr font-en rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
-              {marked[1]}
-            </span>
-          );
-        }
-        return <LatinRuns key={i} text={part} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function TextBlock({ text, className = "" }: { text: string; className?: string }) {
@@ -176,7 +161,7 @@ function Frame({
       <div className="flex flex-wrap items-center gap-2.5">
         {step && (
           <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-teal-600 text-lg font-bold text-white">
-            {step}
+            {mixedText(step)}
           </span>
         )}
         {badge && (
@@ -191,7 +176,7 @@ function Frame({
         </div>
       )}
       <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">
-        {title}
+        {mixedText(title)}
       </h2>
       {lead && (
         <div className="mt-2 max-w-[92%] text-lg text-slate-500 md:text-xl">
@@ -297,7 +282,7 @@ function SingPluralBoard() {
                     {w.en}
                   </span>
                   <span dir="rtl" className="text-sm font-bold text-slate-500">
-                    {w.ar}
+                    <LatinRuns text={w.ar ?? ""} />
                   </span>
                 </div>
               ))}
@@ -919,7 +904,7 @@ function FeCautionLab() {
     <LabPanel emoji="⚠️" label="F / FE CAUTION LAB" ar="انتبه: ليست كل f/fe تصبح ves" seq="l18-fe">
       <div className="grid gap-3 md:grid-cols-2">
         <div className="rounded-3xl border-2 border-violet-200 bg-white p-3">
-          <div className="mb-2 text-center text-sm font-bold text-violet-700">✅ من تتحول: f / fe → ves</div>
+          <div className="mb-2 text-center text-sm font-bold text-violet-700"><LatinRuns text={"✅ من تتحول: f / fe → ves"} /></div>
           <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row grid gap-1.5">
             {FE_CAUTION_18.ves.map((e) => (
               <Row key={`v-${e.sing}`} sing={e.sing} plural={e.plural} cls="border-violet-100 bg-violet-50/50" />
@@ -927,7 +912,7 @@ function FeCautionLab() {
           </div>
         </div>
         <div className="rounded-3xl border-2 border-amber-300 bg-white p-3">
-          <div className="mb-2 text-center text-sm font-bold text-amber-700"> من تكتفي بـ S</div>
+          <div className="mb-2 text-center text-sm font-bold text-amber-700"><LatinRuns text={" من تكتفي بـ S"} /></div>
           <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row grid gap-1.5">
             {FE_CAUTION_18.s.map((e) => (
               <Row key={`s-${e.sing}`} sing={e.sing} plural={e.plural} cls="border-amber-200 bg-amber-50/50" />
@@ -2087,7 +2072,7 @@ function FinalBossEx() {
   return (
     <div className="space-y-4" data-en-seq="l18-boss">
       <div className="rounded-3xl border-2 border-amber-300 bg-gradient-to-br from-amber-50 to-orange-50 p-4">
-        <div className="text-center text-sm font-bold text-amber-700">🏆 FINAL BOSS — تحدي المرحلة</div>
+        <div className="text-center text-sm font-bold text-amber-700"><LatinRuns text={"🏆 FINAL BOSS — تحدي المرحلة"} /></div>
         <div className="mt-2 text-center text-sm font-bold text-slate-600">
           <Rich text={FINAL_BOSS_18.readLabel} />
         </div>

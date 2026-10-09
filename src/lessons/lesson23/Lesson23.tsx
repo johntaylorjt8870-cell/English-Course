@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   SLIDES,
@@ -364,12 +365,7 @@ function En({ children, className = "" }: { children: ReactNode; className?: str
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const clean = text.replace(/\*\*/g, "");
-  return (
-    <span className={className}>
-      <LatinRuns text={clean} />
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function TextBlock({ text, className = "" }: { text: string; className?: string }) {
@@ -451,7 +447,7 @@ function Frame({
       <div className="flex flex-wrap items-center gap-2.5">
         {step && (
           <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-indigo-700 text-lg font-bold text-white shadow-sm">
-            {step}
+            {mixedText(step)}
           </span>
         )}
         {badge && (
@@ -470,7 +466,7 @@ function Frame({
         </div>
       )}
       <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">
-        {title}
+        {mixedText(title)}
       </h2>
       {lead && (
         <div className="mt-2 max-w-[92%] text-lg text-slate-500 md:text-xl">
@@ -725,7 +721,7 @@ function CountingMachine() {
       </div>
       <div className="mt-2 flex flex-wrap items-center justify-center gap-2 rounded-2xl bg-white p-2.5">
         <En className="rounded-xl bg-emerald-700 px-3 py-1.5 text-base font-black text-white">{COUNTABLE_MEANING.en}</En>
-        <span className="text-sm font-bold text-slate-600">= {COUNTABLE_MEANING.ar}</span>
+        <span className="text-sm font-bold text-slate-600">= <LatinRuns text={COUNTABLE_MEANING.ar ?? ""} /></span>
       </div>
     </LabPanel>
   );
@@ -946,7 +942,7 @@ function UncountableIntro() {
       <En className="mt-1 block text-center text-2xl font-black text-violet-800">{SURPRISE_LABEL}</En>
       <div className="mt-2 flex flex-wrap items-center justify-center gap-2 rounded-2xl bg-white p-2.5">
         <En className="rounded-xl bg-violet-700 px-3 py-1.5 text-base font-black text-white">{UNCOUNTABLE_MEANING.en}</En>
-        <span className="text-sm font-bold text-slate-600">= {UNCOUNTABLE_MEANING.ar}</span>
+        <span className="text-sm font-bold text-slate-600">= <LatinRuns text={UNCOUNTABLE_MEANING.ar ?? ""} /></span>
       </div>
       <div className="mt-2 rounded-2xl border-2 border-white bg-white p-3 text-center text-base font-semibold leading-relaxed text-slate-700">
         <Rich text={UNCOUNTABLE_DEF} />

@@ -9,7 +9,10 @@
     "preview": "vite preview",
     "check:english-direction": "node scripts/check-english-direction.mjs && node scripts/test-bidi-rendering.mjs",
     "audit:english-direction": "node scripts/audit-render-direction.mjs && node scripts/audit-lesson24.mjs && node scripts/audit-lesson26.mjs && node scripts/audit-lesson27.mjs && node scripts/audit-lesson28.mjs && node scripts/audit-lesson29.mjs && node scripts/audit-lesson30.mjs && node scripts/audit-lesson31.mjs && node scripts/audit-lesson32.mjs && node scripts/audit-final-test.mjs && node scripts/audit-final-test-coverage.mjs && node scripts/audit-source-reveal.mjs && node scripts/audit-bidi-mixed.mjs",
-    "audit:lesson-navigation": "node scripts/audit-lesson-navigation.mjs"
+    "audit:lesson-navigation": "node scripts/audit-lesson-navigation.mjs",
+    "test:bidi-browser": "npm run build && node scripts/test-bidi-browser.mjs",
+    "audit:assessments": "node scripts/interaction-test.mjs && node scripts/audit-final-test.mjs && node scripts/audit-assessment-browser.mjs",
+    "audit:browser": "npm run build && node scripts/test-bidi-browser.mjs && node scripts/audit-assessment-browser.mjs"
   },
   "dependencies": {
     "clsx": "2.1.1",
@@ -18,6 +21,7 @@
     "tailwind-merge": "3.4.0"
   },
   "devDependencies": {
+    "@sparticuz/chromium": "153.0.0",
     "@tailwindcss/vite": "4.1.17",
     "@types/node": "22.19.17",
     "@types/react": "19.2.7",
@@ -25,6 +29,7 @@
     "@vitejs/plugin-react": "5.1.1",
     "bidi-js": "^1.1.0",
     "jsdom": "^30.1.0",
+    "playwright-core": "1.64.0",
     "tailwindcss": "4.1.17",
     "typescript": "5.9.3",
     "vite": "7.3.2",

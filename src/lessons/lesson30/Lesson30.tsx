@@ -1,3 +1,5 @@
+import { TeachingDetails } from "../../shared/TeacherWorkspace";
+import TeacherWorkspace, { TeacherSection } from "../../shared/TeacherWorkspace";
 // ============================================================
 // 🧭 الدرس 30 — مراجعة شاملة لنظام الماضي (Native Multi-Step)
 // 🎛️ THE PAST CONTROL ROOM — غرفة التحكم بنظام الماضي الكامل
@@ -2302,7 +2304,7 @@ export function TestArea30({ onCheckedChange, onShowSolutions }: { onCheckedChan
           <>
             <button type="button" onClick={submit} disabled={!allAnswered} title={allAnswered ? undefined : "أجب عن جميع الأسئلة العشرين أولًا"}
               className="rounded-xl bg-teal-700 px-5 py-2.5 text-sm font-black text-white transition enabled:hover:bg-teal-800 disabled:opacity-30">
-              <Rich text={`إنهاء الاختبار (${answered}/${TEST_30.length})`} />
+              <Rich text={`تصحيح الاختبار — إنهاء الاختبار (${answered}/${TEST_30.length})`} />
             </button>
             <span className="text-xs font-bold text-slate-500"><Rich text="لن تظهر أي نتيجة أو تصحيح قبل الإنهاء." /></span>
           </>
@@ -2367,7 +2369,7 @@ export function Solutions30({ unlocked, onGoTest, onGoTeacher }: { unlocked: boo
             <div className="mt-2 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-2.5">
               <span className="text-sm font-black text-emerald-900">✓ <LatinRuns text={s.answer} /></span>
             </div>
-            <div className="mt-2 text-sm font-bold leading-relaxed text-slate-700"><Rich text={s.why} /></div>
+            <TeachingDetails><div className="mt-2 text-sm font-bold leading-relaxed text-slate-700"><Rich text={s.why} /></div></TeachingDetails>
             {s.trap && (
               <div className="mt-1.5 rounded-2xl border-2 border-amber-200 bg-amber-50 p-2.5 text-sm font-bold text-amber-900">
                 🪤 <Rich text={s.trap} />
@@ -2422,9 +2424,14 @@ export function TeacherArea30({ unlocked, onUnlockChange, onGoSolutions }: { unl
       <TeacherGate ok={unlocked} setOk={(v) => onUnlockChange?.(v)} />
       {unlocked && (
         <div className="space-y-3.5">
+
+<TeacherWorkspace lesson={30}>
           {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
-          <FinalTestAnswerKey lesson={30} questions={FINAL_TESTS[30]} accent="bg-teal-700" />
-          <div className="rounded-3xl border-2 border-teal-200 bg-gradient-to-br from-teal-50 to-sky-50 p-4">
+          <TeacherSection title="مفتاح الاختبار النهائي" category="assessment">
+<FinalTestAnswerKey lesson={30} questions={FINAL_TESTS[30]} accent="bg-teal-700" />
+</TeacherSection>
+          <TeacherSection title="نظرة عامة" category="teaching">
+<div className="rounded-3xl border-2 border-teal-200 bg-gradient-to-br from-teal-50 to-sky-50 p-4">
             <h3 className="font-head text-lg font-black text-teal-900"><Rich text={TEACHER_30_OVERVIEW.title} /></h3>
             <div className="mt-3 space-y-2.5">
               <div>
@@ -2453,7 +2460,9 @@ export function TeacherArea30({ unlocked, onUnlockChange, onGoSolutions }: { unl
               </div>
             </div>
           </div>
-          <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
+</TeacherSection>
+          <TeacherSection title="مذكرات التدريس" category="teaching">
+<div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <h3 className="font-head text-lg font-black text-slate-800">📝 مذكرات تدريسية ({TEACHER_30_NOTES.length})</h3>
             <div className="mt-3 space-y-2.5">
               {TEACHER_30_NOTES.map((n, i) => (
@@ -2468,7 +2477,9 @@ export function TeacherArea30({ unlocked, onUnlockChange, onGoSolutions }: { unl
               ))}
             </div>
           </div>
-          <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
+</TeacherSection>
+          <TeacherSection title="حلول أنشطة المصدر" category="source">
+<div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <h3 className="font-head text-lg font-black text-slate-800">✅ حلول أنشطة المصدر ({TEACHER_30_SOLUTIONS.length})</h3>
             <div className="mt-3 space-y-2.5">
               {TEACHER_30_SOLUTIONS.map((n, i) => (
@@ -2483,7 +2494,9 @@ export function TeacherArea30({ unlocked, onUnlockChange, onGoSolutions }: { unl
               ))}
             </div>
           </div>
-          <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
+</TeacherSection>
+          <TeacherSection title="سلالم التقييم" category="teaching">
+<div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <h3 className="font-head text-lg font-black text-slate-800">📊 سلالم التقييم ({TEACHER_30_RUBRICS.length})</h3>
             <div className="mt-3 space-y-2.5">
               {TEACHER_30_RUBRICS.map((n, i) => (
@@ -2498,7 +2511,9 @@ export function TeacherArea30({ unlocked, onUnlockChange, onGoSolutions }: { unl
               ))}
             </div>
           </div>
-          <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
+</TeacherSection>
+          <TeacherSection title="الأخطاء الشائعة" category="teaching">
+<div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <h3 className="font-head text-lg font-black text-slate-800">⚠️ الأخطاء الشائعة ({TEACHER_30_MISTAKES.length})</h3>
             <div className="mt-3 grid gap-2 sm:grid-cols-2">
               {TEACHER_30_MISTAKES.map((n, i) => (
@@ -2513,12 +2528,15 @@ export function TeacherArea30({ unlocked, onUnlockChange, onGoSolutions }: { unl
               ))}
             </div>
           </div>
+</TeacherSection>
           {onGoSolutions && (
             <button type="button" onClick={onGoSolutions} className="w-full rounded-2xl bg-amber-100 px-6 py-3.5 text-base font-black text-amber-900 transition hover:bg-amber-200">
               🔑 عرض حلول الاختبار النهائي
             </button>
           )}
-        </div>
+        <TeacherSection title="مفتاح منطقة الاختبارات — 20 سؤالًا" category="assessment"><Solutions30 unlocked={true} /></TeacherSection>
+</TeacherWorkspace>
+</div>
       )}
     </div>
   );
@@ -2614,7 +2632,7 @@ export default function Lesson30({ onExit }: { onExit: () => void }) {
               area === a.id ? "border-teal-600 bg-teal-700 text-white shadow" : "border-slate-200 bg-white text-slate-600 hover:border-teal-300"
             }`}
           >
-            {a.emoji} {a.ar}
+            {a.emoji} <LatinRuns text={a.ar ?? ""} />
             {a.id === "solutions" && !solutionsUnlocked && " 🔒"}
           </button>
         ))}

@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -81,23 +82,7 @@ function En({ children, className = "" }: { children: React.ReactNode; className
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const clean = text.replace(/\*\*/g, "");
-  const parts = clean.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((part, i) => {
-        const marked = part.match(/^\[\[(.+)\]\]$/);
-        if (marked) {
-          return (
-            <span key={i} dir="ltr" style={{ direction: "ltr" }} className="ltr font-en rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
-              {marked[1]}
-            </span>
-          );
-        }
-        return <LatinRuns key={i} text={part} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function TextBlock({ text, className = "" }: { text: string; className?: string }) {
@@ -186,7 +171,7 @@ function Frame({
       <div className="flex flex-wrap items-center gap-2.5">
         {step && (
           <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-indigo-600 text-lg font-bold text-white">
-            {step}
+            {mixedText(step)}
           </span>
         )}
         {badge && (
@@ -201,7 +186,7 @@ function Frame({
         </div>
       )}
       <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">
-        {title}
+        {mixedText(title)}
       </h2>
       {lead && (
         <div className="mt-2 max-w-[92%] text-lg text-slate-500 md:text-xl">
@@ -582,7 +567,7 @@ function AdjPronPairs({ pairs }: { pairs: { before: string; after: string; ar?: 
             </div>
             {p.ar && (
               <div dir="rtl" className="mt-1 text-center text-sm font-bold text-slate-500">
-                {p.ar}
+                <LatinRuns text={p.ar ?? ""} />
               </div>
             )}
             {isOn && (
@@ -656,7 +641,7 @@ function DialogueView({ lines }: { lines: { speaker: string; en: string; ar?: st
             <En className="block text-base font-bold text-slate-900">{line.en}</En>
             {line.ar && (
               <div dir="rtl" className="mt-1 text-sm font-bold text-slate-500">
-                {line.ar}
+                <LatinRuns text={line.ar ?? ""} />
               </div>
             )}
           </div>
@@ -683,7 +668,7 @@ function ThreeSystems() {
             </div>
             <En className="mt-1 block text-lg font-black text-slate-900">{s.en}</En>
             <div dir="rtl" className="mt-0.5 text-sm font-bold text-slate-500">
-              {s.ar}
+              <LatinRuns text={s.ar ?? ""} />
             </div>
           </div>
         </div>
@@ -859,7 +844,7 @@ function TripleCompare() {
           <En className="block text-xl font-black text-indigo-800">{t.word}</En>
           <En className="mt-2 block rounded-xl bg-slate-50 px-2 py-2 text-sm font-bold text-slate-900">{t.en}</En>
           <div dir="rtl" className="mt-1 text-sm font-bold text-slate-500">
-            {t.ar}
+            <LatinRuns text={t.ar ?? ""} />
           </div>
         </div>
       ))}
@@ -2005,7 +1990,7 @@ function IQ200Ex() {
       </div>
 
       <div className="rounded-3xl border-2 border-fuchsia-100 bg-white p-4">
-        <div className="mb-2 text-center text-sm font-bold text-fuchsia-700">⚙️ آلة تحويل Alex's laptop</div>
+        <div className="mb-2 text-center text-sm font-bold text-fuchsia-700"><LatinRuns text={"⚙️ آلة تحويل Alex's laptop"} /></div>
         <div dir="ltr" style={{ direction: "ltr" }} data-en-seq="l17-iq200chain" className="ltr-row flex flex-wrap items-center justify-center gap-2">
           {["Alex's laptop", "his laptop", "This laptop is his", "Whose laptop is this?"].map((seg, i) => (
             <button
@@ -2638,7 +2623,7 @@ function Roadmap() {
               <div dir="ltr" className={`font-en text-sm font-bold ${it.here ? "text-indigo-900" : "text-slate-700"}`}>
                 {it.en}
               </div>
-              <div className="text-xs font-bold text-slate-500">{it.ar}</div>
+              <div className="text-xs font-bold text-slate-500"><LatinRuns text={it.ar ?? ""} /></div>
             </div>
           </div>
         ))}

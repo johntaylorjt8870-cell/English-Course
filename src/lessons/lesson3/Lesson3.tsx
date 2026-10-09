@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -48,23 +49,7 @@ function En({ children, className = "" }: { children: React.ReactNode; className
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const parts = text.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((p, i) => {
-        const m = p.match(/^\[\[(.+)\]\]$/);
-        if (m) {
-          return (
-            <span key={i} className="ltr font-en mx-1 rounded-md bg-slate-100 px-1.5 py-0.5 font-semibold text-slate-800">
-              {m[1]}
-            </span>
-          );
-        }
-        // عزل تلقائي للمقاطع اللاتينية خارج الأقواس — على مستوى المقطع لا الكلمة
-        return <LatinRuns key={i} text={p} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 /** عرض جملة بتلوين أجزائها (S أزرق / verb to be amber / rest slate) */
@@ -103,17 +88,17 @@ function Frame({
       </div>
       <div className="flex items-center gap-3">
         {step !== undefined && (
-          <span className="font-head grid h-12 w-12 place-items-center rounded-2xl bg-slate-900 text-xl font-bold text-white shadow">{step}</span>
+          <span className="font-head grid h-12 w-12 place-items-center rounded-2xl bg-slate-900 text-xl font-bold text-white shadow">{mixedText(step)}</span>
         )}
-        {badge && <span className="rounded-full bg-violet-100 px-4 py-1.5 text-sm font-bold text-violet-700">{badge}</span>}
+        {badge && <span className="rounded-full bg-violet-100 px-4 py-1.5 text-sm font-bold text-violet-700">{mixedText(badge)}</span>}
       </div>
-      <h2 className="font-head mt-4 max-w-[85%] text-3xl font-bold leading-snug text-slate-900 md:text-4xl">{title}</h2>
-      {lead && <p className="mt-2 max-w-[85%] text-xl text-slate-500">{lead}</p>}
+      <h2 className="font-head mt-4 max-w-[85%] text-3xl font-bold leading-snug text-slate-900 md:text-4xl">{mixedText(title)}</h2>
+      {lead && <p className="mt-2 max-w-[85%] text-xl text-slate-500">{mixedText(lead)}</p>}
       <div className="mt-7 space-y-4">{children}</div>
       {tip && (
         <div className="mt-6 flex items-center gap-3 rounded-2xl bg-slate-900 p-4 text-white">
           <span className="text-3xl">🦉</span>
-          <span className="text-lg font-semibold">{tip}</span>
+          <span className="text-lg font-semibold">{mixedText(tip)}</span>
         </div>
       )}
     </section>
@@ -143,7 +128,7 @@ function Cover() {
               <div className="pop pop-5 text-4xl" style={{ animationDelay: `${0.1 + i * 0.08}s` }}>{MODE_STYLE[m].emoji}</div>
               <div className="font-head mt-2 text-2xl font-bold text-slate-800">{MODE_STYLE[m].label}</div>
               <En className="text-sm font-semibold text-slate-400">{MODE_STYLE[m].en}</En>
-              <div className="mt-2 text-sm text-slate-500">{MODE_STYLE[m].desc}</div>
+              <div className="mt-2 text-sm text-slate-500">{mixedText(MODE_STYLE[m].desc)}</div>
             </div>
           ))}
         </div>
@@ -182,7 +167,7 @@ function Review() {
       <p className="text-xl text-slate-500">تذكرنا في الدرس السابق:</p>
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="mb-3 font-head text-xl font-bold text-slate-700">قاعدة الضمائر مع Verb to be:</div>
+          <div className="mb-3 font-head text-xl font-bold text-slate-700"><LatinRuns text={"قاعدة الضمائر مع Verb to be:"} /></div>
           <div className="space-y-2">
             {PRONOUNS.map((p) => (
               <div key={p.en} dir="ltr" style={{ direction: "ltr" }} className="ltr-row flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2">
@@ -222,7 +207,7 @@ function AffirmSlide({ examples, title, mascot, lead, step }: { examples: Jamla[
         {examples.map((e, i) => (
           <div key={i} className={`pop pop-${Math.min(i + 1, 6)} rounded-3xl border border-slate-200 bg-white p-4 shadow-sm`}>
             <JamlaEn {...e} />
-            <div className="mt-2 text-lg text-slate-500 pr-1">{e.ar}</div>
+            <div className="mt-2 text-lg text-slate-500 pr-1"><LatinRuns text={e.ar ?? ""} /></div>
           </div>
         ))}
       </div>
@@ -258,7 +243,7 @@ function NegRule() {
         <div className="mt-2 flex items-center gap-2 text-rose-700 font-bold">
           <span className="text-xl">↓</span>
           <En className="text-2xl">I am <span className="rounded-lg bg-rose-200 px-1 italic">not</span> happy.</En>
-          <span className="text-slate-400">← أضفنا not فقط</span>
+          <span className="text-slate-400"><LatinRuns text={"← أضفنا not فقط"} /></span>
         </div>
       </div>
     </Frame>
@@ -316,7 +301,7 @@ function PronounFlipRow({ p, affWord, negWord, mode, delay }: { p: Pronoun; affW
       <button onClick={() => setOpen((v) => !v)} className="flex w-full flex-wrap items-center gap-3 text-right">
         <WordChip size="sm" text={p.en} role="S" />
         <span className="text-xl text-slate-400">=</span>
-        <span className="text-lg font-bold text-slate-700">{p.ar}</span>
+        <span className="text-lg font-bold text-slate-700"><LatinRuns text={p.ar ?? ""} /></span>
         <span className="mr-auto rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-500">{open ? "إخفاء" : "كيف تصبح؟"}</span>
       </button>
       <div className={`overflow-hidden transition-all duration-300 ${open ? "max-h-32 opacity-100" : "max-h-0 opacity-0"}`}>
@@ -445,7 +430,7 @@ function SAExampleCard({ ex, delay }: { ex: Trio; delay: number }) {
           <div className="rounded-xl bg-white p-3">
             <div className="mb-1 text-sm font-bold text-emerald-600">✅ نعم</div>
             <En className="text-xl font-bold text-slate-900">{yes}</En>
-            {special && <div className="mt-1 text-xs font-bold text-indigo-600">✍️ لاحظ: نجيب بـ I وليس You!</div>}
+            {special && <div className="mt-1 text-xs font-bold text-indigo-600"><LatinRuns text={"✍️ لاحظ: نجيب بـ I وليس You!"} /></div>}
           </div>
           <div className="rounded-xl bg-white p-3">
             <div className="mb-1 text-sm font-bold text-rose-600">🚫 لا</div>
@@ -494,7 +479,7 @@ function ShortAnswerSlide({ examples }: { examples: Trio[] }) {
       <div className="rounded-2xl border-2 border-amber-200 bg-amber-50 p-4">
         <div className="flex items-center gap-2">
           <span className="text-2xl">⭐</span>
-          <span className="text-lg font-bold text-slate-800">ملاحظة مهمة للـ You:</span>
+          <span className="text-lg font-bold text-slate-800"><LatinRuns text={"ملاحظة مهمة للـ You:"} /></span>
         </div>
         <p className="mt-1 text-lg">
           السؤال: <En>Are you...?</En> لكن الإجابة دائمًا <En>Yes, I am.</En> (وليس <En className="text-rose-600 line-through">Yes, you are.</En> ❌) لأنك عندما تتكلم عن نفسك تستخدم <En>I</En>.
@@ -573,7 +558,7 @@ function Machine() {
       <div key={`${pi}-${wi}-${mode}`} className="pop rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-sm">
         <div className="flex flex-wrap items-center gap-2">
           <span className={`rounded-full px-3 py-1 text-sm font-bold text-white ${MODE_STYLE[mode].solid}`}>{MODE_STYLE[mode].label}</span>
-          <span className="text-lg font-bold text-slate-800">{p.ar} :</span>
+          <span className="text-lg font-bold text-slate-800"><LatinRuns text={p.ar ?? ""} /> :</span>
         </div>
         {mode === "q" ? (
           <div className="mt-4">
@@ -601,11 +586,11 @@ function Machine() {
               <span className="font-en rounded-2xl bg-slate-100 px-4 py-2 text-slate-700">{w.en}.</span>
             </div>
             <div className={`mt-3 text-center text-2xl font-bold ${mode === "aff" ? "text-slate-700" : "text-rose-700"}`}>
-              {jam!.ar}
+              <LatinRuns text={jam!.ar ?? ""} />
             </div>
             {mode === "neg" && (
               <div className="mt-4 rounded-2xl bg-slate-50 p-3 text-center">
-                <span className="text-sm font-bold text-rose-600">أضفنا not بعد {p.be} مباشرة</span>
+                <span className="text-sm font-bold text-rose-600"><LatinRuns text={"أضفنا not بعد "} />{p.be} مباشرة</span>
               </div>
             )}
           </div>
@@ -658,7 +643,7 @@ function BigTable() {
                   <En className="text-xl font-extrabold text-slate-800">{r.s}</En>
                   <span className="text-slate-300">←</span>
                   <En className={`text-lg font-bold ${Col[p.be]}`}>{p.be}</En>
-                  <span className="text-xs text-slate-400">({p.ar})</span>
+                  <span className="text-xs text-slate-400">(<LatinRuns text={p.ar ?? ""} />)</span>
                 </div>
                 <button onClick={() => toggle(i)} className="text-left font-en text-lg font-bold text-slate-700 transition hover:text-slate-900" dir="ltr">
                   {r.s} {r.b} {r.rest}.
@@ -725,7 +710,7 @@ function DrillItem({ ex, idx }: { ex: Trio; idx: number }) {
           <div className="h-2 w-24 rounded-full bg-slate-100">
             <div className="h-full rounded-full bg-emerald-500 transition-all" style={{ width: `${progress * 100}%` }} />
           </div>
-          <span className="text-xs font-bold text-slate-400">{step}/3</span>
+          <span className="text-xs font-bold text-slate-400">{mixedText(step)}/3</span>
         </div>
       </div>
 
@@ -787,7 +772,7 @@ function FillEx({ ex }: { ex: Extract<Exercise, { type: "fill" }> }) {
                 {b.after}
               </span>
             </div>
-            <div className="mt-1 pr-11 text-sm text-slate-400">{b.ar}</div>
+            <div className="mt-1 pr-11 text-sm text-slate-400"><LatinRuns text={b.ar ?? ""} /></div>
             <div className="mt-3 flex gap-2 pr-11">
               {["am", "is", "are"].map((be) => (
                 <button
@@ -825,7 +810,7 @@ function NegativeEx({ ex }: { ex: Extract<Exercise, { type: "negative" }> }) {
               <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-slate-900 text-sm font-bold text-white">{i + 1}</span>
               <div>
                 <En className="text-xl font-bold text-slate-800">{it.aff.s} {it.aff.b} {it.aff.rest}.</En>
-                <span className="text-sm text-slate-500">{it.aff.ar}</span>
+                <span className="text-sm text-slate-500"><LatinRuns text={it.aff.ar ?? ""} /></span>
               </div>
               <div className="mr-auto flex gap-2">
                 {!typed && (
@@ -1052,7 +1037,7 @@ function Closing({ onExit }: { onExit: () => void }) {
           <span className="text-3xl text-slate-500">→</span>
           <div className="rounded-2xl bg-rose-500 px-5 py-3 shadow-lg">
             <div className="font-en text-xl font-extrabold">He is not happy.</div>
-            <div className="text-sm opacity-90">النفي (+ not)</div>
+            <div className="text-sm opacity-90"><LatinRuns text={"النفي (+ not)"} /></div>
           </div>
           <span className="text-3xl text-slate-500">→</span>
           <div className="rounded-2xl bg-indigo-500 px-5 py-3 shadow-lg">

@@ -1,3 +1,4 @@
+import { TeachingDetails } from "../../shared/TeacherWorkspace";
 // ============================================================
 // منطقة الاختبار والحلول — الدرس 32
 // • 20 سؤالًا جديدًا: 6 Basic · 7 Medium · 4 Advanced · 3 Thinking
@@ -126,7 +127,7 @@ export default function TestArea32({ onCheckedChange, onShowSolutions }: { onChe
           <span className="rounded-xl bg-slate-100 px-3 py-1.5 text-xs font-black text-slate-700"><Rich text={`أجبت: ${answeredCount}/20`} /></span>
           {!submitted ? (
             <button type="button" onClick={submit} className={`rounded-xl bg-emerald-700 px-4 py-2 text-sm font-black text-white hover:bg-emerald-800 ${FOCUS32}`}>
-              📤 <Rich text="إرسال الاختبار" />
+              📤 <Rich text="تحقق من الإجابات — إرسال الاختبار" />
             </button>
           ) : (
             <span className="rounded-xl bg-emerald-600 px-3 py-1.5 text-sm font-black text-white"><Rich text={`✓ أُرسل — الدرجة ${score}/20`} /></span>
@@ -179,9 +180,9 @@ export default function TestArea32({ onCheckedChange, onShowSolutions }: { onChe
 
       <div className="flex flex-wrap items-center gap-2 rounded-3xl border-2 border-slate-200 bg-white p-4">
         {!submitted ? (
-          <button type="button" onClick={submit} className={`rounded-xl bg-emerald-700 px-4 py-2 text-sm font-black text-white hover:bg-emerald-800 ${FOCUS32}`}>📤 <Rich text="إرسال الاختبار" /></button>
+          <button type="button" onClick={submit} className={`rounded-xl bg-emerald-700 px-4 py-2 text-sm font-black text-white hover:bg-emerald-800 ${FOCUS32}`}>📤 <Rich text="تحقق من الإجابات — إرسال الاختبار" /></button>
         ) : (
-          <span className="text-sm font-black text-emerald-800"><Rich text="✓ تم الإرسال." /></span>
+          <div role="status" className="text-sm font-black text-emerald-800"><Rich text={`✓ تم الإرسال — الدرجة ${score}/20`} /><button type="button" onClick={reset} className={`ms-3 rounded-xl border-2 p-2 ${FOCUS32}`}>إعادة الاختبار</button></div>
         )}
         <span className="text-xs font-bold text-slate-500"><Rich text="«إعادة الاختبار كاملًا» تمسح الإجابات والدرجة وتقفل الحلول من جديد." /></span>
       </div>
@@ -366,7 +367,7 @@ export function Solutions32({ unlocked, onGoTest, onGoTeacher }: { unlocked: boo
                 <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-black text-slate-700"><Rich text={TYPE_LABEL[s.type]} /></span>
               </div>
               <p className="mt-2 text-sm font-bold text-slate-900"><Rich text={`الإجابة: ${s.answer}`} /></p>
-              <p className="mt-1 text-sm font-semibold text-slate-700"><PlatformTag /> <Rich text={s.why} /></p>
+              <TeachingDetails><p className="mt-1 text-sm font-semibold text-slate-700"><PlatformTag /> <Rich text={s.why} /></p></TeachingDetails>
               {s.trap && <p className="mt-1 text-xs font-semibold text-rose-800"><Rich text={`⚠️ الفخ: ${s.trap}`} /></p>}
             </article>
           ))}

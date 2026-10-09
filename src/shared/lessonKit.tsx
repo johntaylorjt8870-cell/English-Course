@@ -30,7 +30,7 @@ export function En({ children, className = "" }: { children: ReactNode; classNam
 export function Rich({ text, className = "" }: { text: string; className?: string }) {
   return (
     <span className={className}>
-      <LatinRuns text={text} />
+      <LatinRuns text={text} marked />
     </span>
   );
 }
@@ -149,7 +149,7 @@ const DEFAULT_ACCENT: FrameAccent = {
 };
 
 /** النصوص الخام تمرّ عبر LatinRuns حتى لا يُعكس ترتيب «English · عربي»؛ العناصر الأخرى تبقى كما هي. */
-function mixedText(value: ReactNode): ReactNode {
+export function mixedText(value: ReactNode): ReactNode {
   return typeof value === "string" ? <LatinRuns text={value} /> : value;
 }
 

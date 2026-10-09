@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -89,23 +90,7 @@ function En({ children, className = "" }: { children: React.ReactNode; className
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const clean = text.replace(/\*\*/g, "");
-  const parts = clean.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((part, i) => {
-        const marked = part.match(/^\[\[(.+)\]\]$/);
-        if (marked) {
-          return (
-            <span key={i} dir="ltr" style={{ direction: "ltr" }} className="ltr font-en rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
-              {marked[1]}
-            </span>
-          );
-        }
-        return <LatinRuns key={i} text={part} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function TextBlock({ text, className = "" }: { text: string; className?: string }) {
@@ -182,11 +167,11 @@ function Frame({ mascot, step, badge, title, lead, children, tip, sourceHeading 
     <section dir="rtl" className="relative rounded-[1.75rem] border-2 border-slate-900/[0.05] bg-white p-6 shadow-[0_14px_44px_-20px_rgba(245,158,11,0.28)] md:p-9">
       <div className="pointer-events-none absolute -left-2 top-4 select-none text-4xl anim-drift md:text-5xl" aria-hidden>{mascot}</div>
       <div className="flex flex-wrap items-center gap-2.5">
-        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-amber-600 text-lg font-bold text-white">{step}</span>}
+        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-amber-600 text-lg font-bold text-white">{mixedText(step)}</span>}
         {badge && <span className="rounded-full bg-amber-100 px-3.5 py-1.5 text-sm font-bold text-amber-800"><Rich text={badge} /></span>}
       </div>
       {sourceHeading && <div className="mt-3 rounded-xl bg-slate-50 px-3 py-2 text-xs font-bold text-slate-500"><Rich text={sourceHeading} /></div>}
-      <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{title}</h2>
+      <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{mixedText(title)}</h2>
       {lead && <div className="mt-2 max-w-[92%] text-lg text-slate-500 md:text-xl"><Rich text={lead} /></div>}
       <div className="mt-6 space-y-3.5">{children}</div>
       {tip && <div className="mt-6 flex items-center gap-3 rounded-2xl bg-gradient-to-l from-amber-600 to-orange-600 p-4 text-white"><span className="text-2xl">🦉</span><span className="text-base font-semibold md:text-lg"><Rich text={tip} /></span></div>}
@@ -292,7 +277,7 @@ function DidGate() {
   const correct = (cur.answer === "was" || cur.answer === "were" ? "was/were" : "did") === choice;
   return (
     <div className="rounded-3xl border-2 border-violet-300 bg-gradient-to-br from-violet-50 to-fuchsia-50 p-5">
-      <div className="mb-3 text-center font-bold text-violet-900">🚦 THE DID OR WAS/WERE GATE — بوابة القرار</div>
+      <div className="mb-3 text-center font-bold text-violet-900"><LatinRuns text={"🚦 THE DID OR WAS/WERE GATE — بوابة القرار"} /></div>
       <div className="mb-3 flex flex-wrap justify-center gap-2">
         {examples.map((_, i) => (
           <button key={i} onClick={() => { setIdx(i); setChoice(null); }} className={`h-8 w-8 rounded-full text-sm font-bold ${i === idx ? "bg-violet-600 text-white" : "bg-white text-violet-700 border-2 border-violet-200"}`}>{i + 1}</button>
@@ -309,7 +294,7 @@ function DidGate() {
         </div>
         {choice && (
           <div className={`pop mt-3 rounded-xl p-3 text-sm font-bold ${correct ? "bg-emerald-50 text-emerald-800 border-2 border-emerald-200" : "bg-rose-50 text-rose-800 border-2 border-rose-200"}`}>
-            {correct ? "✓ صحيح! " : "✕ "}{cur.why}
+            {correct ? "✓ صحيح! " : "✕ "}<LatinRuns text={cur.why ?? ""} />
             <div className="mt-1"><En>{cur.en.replace("___", cur.answer)}</En></div>
           </div>
         )}
@@ -383,7 +368,7 @@ function TimeMachine() {
   const cur = pairs[active];
   return (
     <div className="rounded-3xl border-2 border-cyan-200 bg-cyan-50 p-5">
-      <div className="mb-3 text-center font-bold text-cyan-800">🕰️ TIME MACHINE — آلة الزمن</div>
+      <div className="mb-3 text-center font-bold text-cyan-800"><LatinRuns text={"🕰️ TIME MACHINE — آلة الزمن"} /></div>
       <div className="flex flex-wrap justify-center gap-2">
         {pairs.map((_, i) => <button key={i} onClick={() => setActive(i)} className={`h-8 w-8 rounded-full text-sm font-bold ${i === active ? "bg-cyan-600 text-white" : "bg-white border-2 border-cyan-200 text-cyan-700"}`}>{i + 1}</button>)}
       </div>
@@ -416,7 +401,7 @@ function Detector() {
   const [open, setOpen] = useState<number | null>(null);
   return (
     <div className="rounded-3xl border-2 border-teal-200 bg-teal-50 p-5">
-      <div className="mb-3 text-center font-bold text-teal-800">🔍 WAS/WERE DETECTOR — كاشف النظام</div>
+      <div className="mb-3 text-center font-bold text-teal-800"><LatinRuns text={"🔍 WAS/WERE DETECTOR — كاشف النظام"} /></div>
       <div className="grid gap-2">
         {items.map((it, i) => (
           <div key={it.en} className={`rounded-2xl border-2 p-3 ${open === i ? (it.type === "be" ? "border-amber-300 bg-amber-50" : "border-violet-300 bg-violet-50") : "border-white bg-white"}`}>
@@ -427,7 +412,7 @@ function Detector() {
             {open === i && (
               <div className="tada mt-2 rounded-xl bg-white p-2 text-center">
                 <En className={`rounded-full px-3 py-1 text-sm font-black ${it.type === "be" ? "bg-amber-600 text-white" : "bg-violet-600 text-white"}`}>{it.type === "be" ? "Verb to be" : "ordinary verb"}</En>
-                <div className="mt-1 text-xs font-bold text-slate-600">{it.why}</div>
+                <div className="mt-1 text-xs font-bold text-slate-600"><LatinRuns text={it.why ?? ""} /></div>
               </div>
             )}
           </div>
@@ -449,7 +434,7 @@ function WhLab() {
   const cur = allWh[active];
   return (
     <div className="rounded-3xl border-2 border-indigo-200 bg-indigo-50 p-5">
-      <div className="mb-3 text-center font-bold text-indigo-800">🧪 WH QUESTION LAB — مختبر أسئلة Wh</div>
+      <div className="mb-3 text-center font-bold text-indigo-800"><LatinRuns text={"🧪 WH QUESTION LAB — مختبر أسئلة Wh"} /></div>
       <div className="flex flex-wrap justify-center gap-2">
         {allWh.map((w, i) => <button key={w.wh} onClick={() => setActive(i)} className={`rounded-xl border-2 px-3 py-2 font-en font-black ${i === active ? "bg-indigo-600 border-transparent text-white" : "bg-white border-indigo-200 text-indigo-700"}`}>{w.wh}</button>)}
       </div>
@@ -474,10 +459,10 @@ function WhBoard() {
     <div className="rounded-3xl border-2 border-fuchsia-200 bg-fuchsia-50 p-5">
       <div className="mb-3 text-center font-bold text-fuchsia-800">🗂️ WHO / WHAT / WHERE... VISUAL QUESTION BOARD</div>
       <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row flex flex-wrap justify-center gap-2">
-        {boards.map((b, i) => <button key={b.wh} onClick={() => setSel(i)} className={`rounded-xl border-2 px-3 py-2 font-en font-bold ${i === sel ? "bg-fuchsia-600 text-white border-transparent" : "bg-white border-fuchsia-200 text-fuchsia-700"}`}>{b.wh} = {b.ar}</button>)}
+        {boards.map((b, i) => <button key={b.wh} onClick={() => setSel(i)} className={`rounded-xl border-2 px-3 py-2 font-en font-bold ${i === sel ? "bg-fuchsia-600 text-white border-transparent" : "bg-white border-fuchsia-200 text-fuchsia-700"}`}>{b.wh} = <LatinRuns text={b.ar ?? ""} /></button>)}
       </div>
       <div key={sel} className="pop mt-4 grid gap-2">
-        {cur.items.map((it) => <div key={it.en} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-white bg-white p-3"><En className="font-black text-slate-800">{it.en}</En><span dir="rtl" className="text-sm font-bold text-slate-500">{it.ar}</span></div>)}
+        {cur.items.map((it) => <div key={it.en} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-white bg-white p-3"><En className="font-black text-slate-800">{it.en}</En><span dir="rtl" className="text-sm font-bold text-slate-500"><LatinRuns text={it.ar ?? ""} /></span></div>)}
       </div>
     </div>
   );
@@ -487,9 +472,9 @@ function TimelineView() {
   return (
     <div className="rounded-3xl border-2 border-slate-200 bg-slate-50 p-5">
       <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row flex items-center justify-center gap-4">
-        <span className="rounded-xl bg-slate-800 px-3 py-1 font-en font-bold text-white">PAST ← الماضي</span>
+        <span className="rounded-xl bg-slate-800 px-3 py-1 font-en font-bold text-white"><LatinRuns text={"PAST ← الماضي"} /></span>
         <span className="text-2xl">|</span>
-        <span className="rounded-xl bg-emerald-600 px-3 py-1 font-en font-bold text-white">NOW ← الحاضر</span>
+        <span className="rounded-xl bg-emerald-600 px-3 py-1 font-en font-bold text-white"><LatinRuns text={"NOW ← الحاضر"} /></span>
       </div>
       <div className="mt-3 grid gap-2 md:grid-cols-2">
         {TIMELINE_15.presentPast.map((p) => <div key={p.now} className="rounded-2xl border-2 border-white bg-white p-3 text-center"><En className="block font-bold text-slate-600">{p.now} → {p.past}</En></div>)}
@@ -547,11 +532,11 @@ function WhenYoung() {
   return (
     <div className="rounded-3xl border-2 border-amber-200 bg-amber-50 p-5 text-center">
       <En className="text-xl font-black text-amber-900">{WHEN_YOUNG_15.phrase}</En>
-      <div className="mt-1 font-bold text-slate-600">{WHEN_YOUNG_15.ar}</div>
+      <div className="mt-1 font-bold text-slate-600"><LatinRuns text={WHEN_YOUNG_15.ar ?? ""} /></div>
       <div className="mt-3 rounded-2xl border-2 border-white bg-white p-3">
         <En className="font-black text-slate-800">{WHEN_YOUNG_15.example.en}</En>
-        <div className="mt-1 text-sm font-bold text-slate-500">{WHEN_YOUNG_15.example.ar}</div>
-        <div className="mt-2 text-xs font-bold text-amber-700">{WHEN_YOUNG_15.example.note}</div>
+        <div className="mt-1 text-sm font-bold text-slate-500"><LatinRuns text={WHEN_YOUNG_15.example.ar ?? ""} /></div>
+        <div className="mt-2 text-xs font-bold text-amber-700"><LatinRuns text={WHEN_YOUNG_15.example.note ?? ""} /></div>
       </div>
     </div>
   );
@@ -562,12 +547,12 @@ function DidVsWas() {
     <div className="grid gap-3 md:grid-cols-2">
       <div className="rounded-3xl border-2 border-violet-200 bg-violet-50 p-4 text-center">
         <En className="text-lg font-black text-violet-800">{DID_VS_WAS_15.didExample.q}</En>
-        <div className="mt-1 text-sm font-bold text-slate-500">{DID_VS_WAS_15.didExample.ar}</div>
+        <div className="mt-1 text-sm font-bold text-slate-500"><LatinRuns text={DID_VS_WAS_15.didExample.ar ?? ""} /></div>
         <div className="mt-2 rounded-xl bg-white p-2"><En className="font-bold text-violet-800">{DID_VS_WAS_15.didExample.note}</En></div>
       </div>
       <div className="rounded-3xl border-2 border-amber-200 bg-amber-50 p-4 text-center">
         <En className="text-lg font-black text-amber-800">{DID_VS_WAS_15.wasExample.q}</En>
-        <div className="mt-1 text-sm font-bold text-slate-500">{DID_VS_WAS_15.wasExample.ar}</div>
+        <div className="mt-1 text-sm font-bold text-slate-500"><LatinRuns text={DID_VS_WAS_15.wasExample.ar ?? ""} /></div>
         <div className="mt-2 rounded-xl bg-white p-2"><En className="font-bold text-amber-800">{DID_VS_WAS_15.wasExample.note}</En></div>
       </div>
     </div>
@@ -594,7 +579,7 @@ function GeniusComparison() {
 function WhatExamples() {
   return (
     <div className="grid gap-2">
-      {WHAT_WITH_BE_15.map((w) => <div key={w.en} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-slate-100 bg-white p-3"><En className="font-black text-slate-800">{w.en}</En><span className="text-sm font-bold text-slate-500">{w.ar}</span></div>)}
+      {WHAT_WITH_BE_15.map((w) => <div key={w.en} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-slate-100 bg-white p-3"><En className="font-black text-slate-800">{w.en}</En><span className="text-sm font-bold text-slate-500"><LatinRuns text={w.ar ?? ""} /></span></div>)}
       <div className="rounded-2xl border-2 border-amber-200 bg-amber-50 p-3 text-center"><En className="font-black text-amber-800">{WHAT_NOTE_15}</En></div>
     </div>
   );
@@ -687,7 +672,7 @@ function Level4Ex() {
                 {it.options.map((opt) => (
                   <button key={opt} onClick={() => setPicked((s) => ({ ...s, [i]: opt }))} dir="ltr" className={`rounded-xl border-2 px-4 py-2 font-en font-bold ${p === opt ? (ok ? "bg-emerald-600 text-white border-transparent" : "bg-rose-600 text-white border-transparent") : "bg-white border-slate-200 text-slate-700"}`}>{opt}</button>
                 ))}
-                {p && <span className={`rounded-xl px-3 py-2 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-800"}`}>{it.why}</span>}
+                {p && <span className={`rounded-xl px-3 py-2 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-800"}`}><LatinRuns text={it.why ?? ""} /></span>}
               </div>
             </div>
           );
@@ -709,7 +694,7 @@ function Level5Ex() {
             <En className="font-extrabold text-rose-800 line-through decoration-rose-300">{it.wrong}</En>
             {!open[i] ? <button onClick={() => setOpen((s) => ({ ...s, [i]: true }))} className="mr-auto rounded-xl bg-emerald-600 px-3 py-1 text-sm font-bold text-white">صحح</button> : <span className="tada mr-auto flex items-center gap-2"><span className="text-slate-400">→</span><En className="font-black text-emerald-800">{it.correct}</En></span>}
           </div>
-          {open[i] && it.note && <div className="mt-2 rounded-xl bg-white p-2 text-center text-xs font-bold text-slate-600">{it.note}</div>}
+          {open[i] && it.note && <div className="mt-2 rounded-xl bg-white p-2 text-center text-xs font-bold text-slate-600"><LatinRuns text={it.note ?? ""} /></div>}
         </div>
       ))}
     </div>
@@ -738,7 +723,7 @@ function Level6Ex() {
           </div>
         );
       })}
-      <div className="mt-2 rounded-2xl border-2 border-slate-100 bg-slate-50 p-3 text-sm font-bold text-slate-600">الإجابات: ① Was ② Did ③ Were ④ Did ⑤ Was</div>
+      <div className="mt-2 rounded-2xl border-2 border-slate-100 bg-slate-50 p-3 text-sm font-bold text-slate-600"><LatinRuns text={"الإجابات: ① Was ② Did ③ Were ④ Did ⑤ Was"} /></div>
     </div>
   );
 }
@@ -763,7 +748,7 @@ function DetectiveEx() {
             {open === i && (
               <div className="tada mt-3 rounded-2xl border-2 border-emerald-200 bg-white p-3 text-center">
                 <En className="font-black text-emerald-800">{it.answer}</En>
-                {it.note && <div className="mt-2 text-xs font-bold text-amber-700">{it.note}</div>}
+                {it.note && <div className="mt-2 text-xs font-bold text-amber-700"><LatinRuns text={it.note ?? ""} /></div>}
               </div>
             )}
           </div>
@@ -965,7 +950,7 @@ function Summary() {
               {SUMMARY_15.golden.ordinary.map((o) => <En key={o} className="block font-bold text-white">{o}</En>)}
             </div>
             <div className="rounded-xl bg-amber-500/20 p-3">
-              <div className="text-xs text-amber-200">لكن مع Verb to be:</div>
+              <div className="text-xs text-amber-200"><LatinRuns text={"لكن مع Verb to be:"} /></div>
               {SUMMARY_15.golden.be.map((o) => <En key={o} className="block font-bold text-amber-100">{o}</En>)}
             </div>
           </div>
@@ -1018,7 +1003,7 @@ function Roadmap() {
             <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-xl text-sm font-bold text-white ${it.here ? "bg-amber-600" : "bg-slate-500"}`}>{it.n}</span>
             <div>
               <Rich text={it.en} className={`font-bold ${it.here ? "text-amber-900" : "text-slate-700"}`} />
-              {it.ar && <div className="text-xs font-bold text-slate-500">{it.ar}</div>}
+              {it.ar && <div className="text-xs font-bold text-slate-500"><LatinRuns text={it.ar ?? ""} /></div>}
             </div>
           </div>
         ))}
@@ -1049,7 +1034,7 @@ function BlockView({ block }: { block: Block15 }) {
     case "english": return <SourceLine en={block.en} ar={block.ar} tone={block.tone} />;
     case "list": return <div className="grid gap-2">{block.items.map((it, i) => <div key={`${it}-${i}`} className="rounded-2xl border-2 border-slate-100 bg-slate-50 p-3"><Rich text={it} className="font-bold text-slate-700" /></div>)}</div>;
     case "formula": return <FormulaRowView formula={FORMULAS_15.find((f) => f.key === block.key)!} emphasis />;
-    case "sentence": return <div className="rounded-3xl border-2 border-slate-100 bg-white p-4"><En className="block text-center text-lg font-extrabold text-slate-900 md:text-xl">{block.en}</En>{block.ar && <div dir="rtl" className="mt-1 text-center text-sm font-bold text-slate-500">{block.ar}</div>}{block.note && <div className="mt-2 rounded-xl bg-amber-50 p-2 text-center text-sm font-bold text-amber-800"><Rich text={block.note} /></div>}</div>;
+    case "sentence": return <div className="rounded-3xl border-2 border-slate-100 bg-white p-4"><En className="block text-center text-lg font-extrabold text-slate-900 md:text-xl">{block.en}</En>{block.ar && <div dir="rtl" className="mt-1 text-center text-sm font-bold text-slate-500"><LatinRuns text={block.ar ?? ""} /></div>}{block.note && <div className="mt-2 rounded-xl bg-amber-50 p-2 text-center text-sm font-bold text-amber-800"><Rich text={block.note} /></div>}</div>;
     case "note": return <Note emoji={block.emoji} text={block.text} />;
     case "wasWereBoard": return <WasWereBoard />;
     case "commandCenter": return <CommandCenter />;

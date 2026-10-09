@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   SLIDES,
@@ -96,11 +97,7 @@ function En({ children, className = "" }: { children: ReactNode; className?: str
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  return (
-    <span className={className}>
-      <LatinRuns text={text} />
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function Note({ emoji, text }: { emoji: string; text: string }) {
@@ -142,7 +139,7 @@ function Frame({
       <div className="flex flex-wrap items-center gap-2.5">
         {step && (
           <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-teal-700 text-lg font-bold text-white shadow-sm">
-            {step}
+            {mixedText(step)}
           </span>
         )}
         {badge && (
@@ -160,7 +157,7 @@ function Frame({
           <Rich text={sourceHeading} />
         </div>
       )}
-      <h2 className="font-head mt-3 max-w-[92%] text-2xl font-bold leading-snug text-slate-900 md:text-[2rem]">{title}</h2>
+      <h2 className="font-head mt-3 max-w-[92%] text-2xl font-bold leading-snug text-slate-900 md:text-[2rem]">{mixedText(title)}</h2>
       {lead && (
         <div className="mt-2 max-w-[94%] text-base text-slate-500 md:text-lg">
           <Rich text={lead} />

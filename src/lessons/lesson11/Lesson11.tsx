@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -42,22 +43,7 @@ function En({ children, className = "" }: { children: React.ReactNode; className
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const parts = text.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((x, i) => {
-        const m = x.match(/^\[\[(.+)\]\]$/);
-        if (m) {
-          return (
-            <span key={i} className="ltr font-en mx-1 rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
-              {m[1]}
-            </span>
-          );
-        }
-        return <LatinRuns key={i} text={x} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function PartsLine({ parts, q, size = "md", label = true }: { parts: Part11[]; q?: boolean; size?: "sm" | "md" | "lg"; label?: boolean }) {
@@ -102,16 +88,16 @@ function Frame({ mascot, step, badge, title, lead, children, tip }: { mascot: st
         {mascot}
       </div>
       <div className="flex items-center gap-2.5">
-        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-cyan-600 text-lg font-bold text-white">{step}</span>}
-        {badge && <span className="rounded-full bg-cyan-100 px-3.5 py-1.5 text-sm font-bold text-cyan-800">{badge}</span>}
+        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-cyan-600 text-lg font-bold text-white">{mixedText(step)}</span>}
+        {badge && <span className="rounded-full bg-cyan-100 px-3.5 py-1.5 text-sm font-bold text-cyan-800">{mixedText(badge)}</span>}
       </div>
-      <h2 className="font-head mt-3 max-w-[88%] text-3xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{title}</h2>
-      {lead && <p className="mt-2 max-w-[88%] text-lg text-slate-500 md:text-xl">{lead}</p>}
+      <h2 className="font-head mt-3 max-w-[88%] text-3xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{mixedText(title)}</h2>
+      {lead && <p className="mt-2 max-w-[88%] text-lg text-slate-500 md:text-xl">{mixedText(lead)}</p>}
       <div className="mt-6 space-y-3.5">{children}</div>
       {tip && (
         <div className="mt-6 flex items-center gap-3 rounded-2xl bg-gradient-to-l from-cyan-700 to-violet-700 p-4 text-white">
           <span className="text-2xl">🦉</span>
-          <span className="text-base font-semibold md:text-lg">{tip}</span>
+          <span className="text-base font-semibold md:text-lg">{mixedText(tip)}</span>
         </div>
       )}
     </section>
@@ -160,7 +146,7 @@ function BigMap() {
           </div>
           <div className="mt-3 space-y-1">
             <En className="block font-bold text-slate-700">Nora walks to school every day.</En>
-            <span className="text-sm text-slate-500">روتين → Simple</span>
+            <span className="text-sm text-slate-500"><LatinRuns text={"روتين → Simple"} /></span>
           </div>
         </div>
         <div className={`rounded-3xl border-2 p-5 ${mode === "cont" ? "border-cyan-300 bg-cyan-50 shadow" : "border-slate-200 bg-white/60"}`}>
@@ -172,7 +158,7 @@ function BigMap() {
           </div>
           <div className="mt-3 space-y-1">
             <En className="block font-bold text-cyan-800">Nora is walking to school now.</En>
-            <span className="text-sm text-cyan-700">الآن → Continuous</span>
+            <span className="text-sm text-cyan-700"><LatinRuns text={"الآن → Continuous"} /></span>
           </div>
         </div>
       </div>
@@ -193,13 +179,13 @@ function CompareCook() {
           <>
             <En className="text-2xl font-extrabold text-slate-800">Lara cooks dinner every evening.</En>
             <div className="mt-1 text-slate-500">لَارا تطبخ العشاء كل مساء — روتين</div>
-            <div className="mt-3 inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700">cooks → عادة</div>
+            <div className="mt-3 inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700"><LatinRuns text={"cooks → عادة"} /></div>
           </>
         ) : (
           <>
             <En className="text-2xl font-extrabold text-cyan-800">Lara is cooking dinner now.</En>
             <div className="mt-1 text-slate-500">لَارا تطبخ العشاء الآن — يحدث الآن</div>
-            <div className="mt-3 inline-block rounded-full bg-cyan-100 px-3 py-1 text-xs font-bold text-cyan-700">is cooking → الآن</div>
+            <div className="mt-3 inline-block rounded-full bg-cyan-100 px-3 py-1 text-xs font-bold text-cyan-700"><LatinRuns text={"is cooking → الآن"} /></div>
           </>
         )}
       </div>
@@ -238,14 +224,14 @@ function NowWithoutNow() {
       <div className="grid gap-3 md:grid-cols-2">
         <div className="rounded-2xl bg-white p-4 border-2 border-cyan-200">
           <En className="font-bold text-cyan-800">Look! The dog is chasing the ball.</En>
-          <div className="text-sm text-slate-500">واضح أنه يحدث الآن — مع Look!</div>
+          <div className="text-sm text-slate-500"><LatinRuns text={"واضح أنه يحدث الآن — مع Look!"} /></div>
         </div>
         <div className="rounded-2xl bg-white p-4 border-2 border-slate-200">
           <En className="font-bold text-slate-800">The dog is chasing the ball.</En>
-          <div className="text-sm text-slate-500">بدون now — السياق واضح، يظل Continuous</div>
+          <div className="text-sm text-slate-500"><LatinRuns text={"بدون now — السياق واضح، يظل Continuous"} /></div>
         </div>
       </div>
-      <div className="mt-3 text-center text-xs font-bold text-slate-500">غياب now لا يعني أن الجملة ليست Present Continuous</div>
+      <div className="mt-3 text-center text-xs font-bold text-slate-500"><LatinRuns text={"غياب now لا يعني أن الجملة ليست Present Continuous"} /></div>
     </div>
   );
 }
@@ -256,11 +242,11 @@ function SimpleWithoutEveryDay() {
       <div className="grid gap-3 md:grid-cols-2">
         <div className="rounded-2xl bg-white p-4 border-2 border-slate-200">
           <En className="font-bold text-slate-800">Birds have feathers.</En>
-          <div className="text-sm text-slate-500">الطيور لديها ريش — حقيقة عامة، لا يوجد every day</div>
+          <div className="text-sm text-slate-500"><LatinRuns text={"الطيور لديها ريش — حقيقة عامة، لا يوجد every day"} /></div>
         </div>
         <div className="rounded-2xl bg-white p-4 border-2 border-slate-200">
           <En className="font-bold text-slate-800">Water freezes at 0°C.</En>
-          <div className="text-sm text-slate-500">الماء يتجمد عند 0° — حقيقة → Simple</div>
+          <div className="text-sm text-slate-500"><LatinRuns text={"الماء يتجمد عند 0° — حقيقة → Simple"} /></div>
         </div>
       </div>
     </div>
@@ -273,7 +259,7 @@ function SignalSimple() {
       {SIMPLE_SIGNALS.map((w, i) => (
         <span key={w.en} className="rounded-2xl border-2 border-slate-200 bg-white px-3.5 py-2 shadow-sm anim-float" style={{ animationDelay: `${(i % 5) * 0.3}s` }}>
           <En className="text-lg font-extrabold text-slate-700">{w.en}</En>
-          <span className="mr-2 text-sm text-slate-500">{w.ar}</span>
+          <span className="mr-2 text-sm text-slate-500"><LatinRuns text={w.ar ?? ""} /></span>
         </span>
       ))}
     </div>
@@ -286,7 +272,7 @@ function SignalContinuous() {
       {CONT_SIGNALS.map((w, i) => (
         <span key={w.en} className="rounded-2xl border-2 border-cyan-200 bg-white px-3.5 py-2 shadow-sm anim-float" style={{ animationDelay: `${(i % 5) * 0.3}s` }}>
           <En className="text-lg font-extrabold text-cyan-700">{w.en}</En>
-          <span className="mr-2 text-sm text-slate-500">{w.ar}</span>
+          <span className="mr-2 text-sm text-slate-500"><LatinRuns text={w.ar ?? ""} /></span>
         </span>
       ))}
     </div>
@@ -299,16 +285,16 @@ function TemporaryCompare() {
     <div className="rounded-3xl border-2 border-slate-100 bg-slate-50/70 p-5">
       <div className="mb-4 flex justify-center gap-2">
         <button onClick={() => setMode("stable")} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold ${mode === "stable" ? "border-transparent bg-slate-700 text-white" : "border-slate-200 bg-white text-slate-600"}`}>وضع مستقر</button>
-        <button onClick={() => setMode("temp")} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold ${mode === "temp" ? "border-transparent bg-cyan-600 text-white" : "border-slate-200 bg-white text-slate-600"}`}>مؤقت this summer</button>
+        <button onClick={() => setMode("temp")} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold ${mode === "temp" ? "border-transparent bg-cyan-600 text-white" : "border-slate-200 bg-white text-slate-600"}`}><LatinRuns text={"مؤقت this summer"} /></button>
       </div>
       <div key={mode} className="pop grid gap-3 md:grid-cols-2">
         <div className={`rounded-2xl border-2 p-4 ${mode === "stable" ? "border-slate-800 bg-white shadow" : "border-slate-200 bg-white/60"}`}>
           <En className="block text-lg font-extrabold text-slate-800">Adam works at a bakery.</En>
-          <div className="text-sm text-slate-500">هذا عمله — وضع عام ومستقر → Simple</div>
+          <div className="text-sm text-slate-500"><LatinRuns text={"هذا عمله — وضع عام ومستقر → Simple"} /></div>
         </div>
         <div className={`rounded-2xl border-2 p-4 ${mode === "temp" ? "border-cyan-300 bg-cyan-50 shadow" : "border-slate-200 bg-white/60"}`}>
           <En className="block text-lg font-extrabold text-cyan-800">Adam is working at a bakery this summer.</En>
-          <div className="text-sm text-cyan-700">هذا الصيف — مؤقت → Continuous</div>
+          <div className="text-sm text-cyan-700"><LatinRuns text={"هذا الصيف — مؤقت → Continuous"} /></div>
         </div>
       </div>
     </div>
@@ -321,11 +307,11 @@ function LivingCompare() {
       <div className="grid gap-3 md:grid-cols-2">
         <div className="rounded-2xl bg-white p-4 border-2 border-slate-200">
           <En className="font-bold text-slate-800">My sister lives in London.</En>
-          <div className="text-sm text-slate-500">وضع مستقر → Simple</div>
+          <div className="text-sm text-slate-500"><LatinRuns text={"وضع مستقر → Simple"} /></div>
         </div>
         <div className="rounded-2xl bg-white p-4 border-2 border-cyan-200">
           <En className="font-bold text-cyan-800">My sister is living with her friend this month.</En>
-          <div className="text-sm text-cyan-700">وضع مؤقت this month — المعنى تغير → Continuous</div>
+          <div className="text-sm text-cyan-700"><LatinRuns text={"وضع مؤقت this month — المعنى تغير → Continuous"} /></div>
         </div>
       </div>
     </div>
@@ -339,7 +325,7 @@ function TheseDays() {
         <En className="text-xl font-extrabold text-cyan-800">I am learning Spanish these days.</En>
         <div className="mt-1 text-slate-600">أنا أتعلم الإسبانية هذه الأيام — ليس كل ثانية، بل نشاط خلال هذه الفترة</div>
       </div>
-      <div className="mt-3 text-center text-xs font-bold text-cyan-700">these days → فترة حالية → Present Continuous</div>
+      <div className="mt-3 text-center text-xs font-bold text-cyan-700"><LatinRuns text={"these days → فترة حالية → Present Continuous"} /></div>
     </div>
   );
 }
@@ -350,20 +336,20 @@ function FrequencyPlace() {
     <div className="rounded-3xl border-2 border-slate-100 bg-slate-50/70 p-5">
       <div className="mb-4 flex justify-center gap-2">
         <button onClick={() => setMode("normal")} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold ${mode === "normal" ? "bg-slate-800 text-white border-transparent" : "bg-white border-slate-200 text-slate-600"}`}>مع فعل عادي</button>
-        <button onClick={() => setMode("be")} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold ${mode === "be" ? "bg-violet-600 text-white border-transparent" : "bg-white border-slate-200 text-slate-600"}`}>مع be</button>
+        <button onClick={() => setMode("be")} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold ${mode === "be" ? "bg-violet-600 text-white border-transparent" : "bg-white border-slate-200 text-slate-600"}`}><LatinRuns text={"مع be"} /></button>
       </div>
       <div key={mode} className="pop grid gap-2">
         {mode === "normal" ? (
           <>
-            <div className="rounded-2xl bg-white p-3 border-2 border-slate-100 flex flex-wrap items-center gap-2"><En className="font-bold">I usually read before bed.</En><span className="text-sm text-slate-500">usually قبل الفعل</span></div>
-            <div className="rounded-2xl bg-white p-3 border-2 border-slate-100 flex flex-wrap items-center gap-2"><En className="font-bold">She often visits her aunt.</En><span className="text-sm text-slate-500">often قبل الفعل</span></div>
-            <div className="rounded-2xl bg-white p-3 border-2 border-slate-100 flex flex-wrap items-center gap-2"><En className="font-bold">He never eats spicy food.</En><span className="text-sm text-slate-500">never قبل الفعل</span></div>
+            <div className="rounded-2xl bg-white p-3 border-2 border-slate-100 flex flex-wrap items-center gap-2"><En className="font-bold">I usually read before bed.</En><span className="text-sm text-slate-500"><LatinRuns text={"usually قبل الفعل"} /></span></div>
+            <div className="rounded-2xl bg-white p-3 border-2 border-slate-100 flex flex-wrap items-center gap-2"><En className="font-bold">She often visits her aunt.</En><span className="text-sm text-slate-500"><LatinRuns text={"often قبل الفعل"} /></span></div>
+            <div className="rounded-2xl bg-white p-3 border-2 border-slate-100 flex flex-wrap items-center gap-2"><En className="font-bold">He never eats spicy food.</En><span className="text-sm text-slate-500"><LatinRuns text={"never قبل الفعل"} /></span></div>
           </>
         ) : (
           <>
-            <div className="rounded-2xl bg-white p-3 border-2 border-violet-200 flex flex-wrap items-center gap-2"><En className="font-bold text-violet-800">She is usually quiet.</En><span className="text-sm text-violet-600">usually بعد am/is/are</span></div>
-            <div className="rounded-2xl bg-white p-3 border-2 border-violet-200 flex flex-wrap items-center gap-2"><En className="font-bold text-violet-800">They are often late.</En><span className="text-sm text-violet-600">often بعد are</span></div>
-            <div className="rounded-2xl bg-white p-3 border-2 border-violet-200 flex flex-wrap items-center gap-2"><En className="font-bold text-violet-800">He is never rude.</En><span className="text-sm text-violet-600">never بعد is</span></div>
+            <div className="rounded-2xl bg-white p-3 border-2 border-violet-200 flex flex-wrap items-center gap-2"><En className="font-bold text-violet-800">She is usually quiet.</En><span className="text-sm text-violet-600"><LatinRuns text={"usually بعد am/is/are"} /></span></div>
+            <div className="rounded-2xl bg-white p-3 border-2 border-violet-200 flex flex-wrap items-center gap-2"><En className="font-bold text-violet-800">They are often late.</En><span className="text-sm text-violet-600"><LatinRuns text={"often بعد are"} /></span></div>
+            <div className="rounded-2xl bg-white p-3 border-2 border-violet-200 flex flex-wrap items-center gap-2"><En className="font-bold text-violet-800">He is never rude.</En><span className="text-sm text-violet-600"><LatinRuns text={"never بعد is"} /></span></div>
           </>
         )}
       </div>
@@ -375,15 +361,15 @@ function BeVsDo() {
   return (
     <div className="grid gap-3 md:grid-cols-2">
       <div className="rounded-3xl border-2 border-slate-200 bg-slate-50 p-5">
-        <div className="text-sm font-bold text-slate-600">Present Simple — فعل عادي</div>
+        <div className="text-sm font-bold text-slate-600"><LatinRuns text={"Present Simple — فعل عادي"} /></div>
         <En className="mt-2 block text-xl font-extrabold text-slate-800">Does he play tennis?</En>
-        <div className="text-sm text-slate-500">play = فعل عادي → Does</div>
+        <div className="text-sm text-slate-500"><LatinRuns text={"play = فعل عادي → Does"} /></div>
         <div className="mt-3 rounded-xl bg-white p-2 border-2 border-slate-200"><En className="text-sm font-bold text-rose-700 line-through">Does he playing tennis? ❌</En></div>
       </div>
       <div className="rounded-3xl border-2 border-cyan-200 bg-cyan-50 p-5">
         <div className="text-sm font-bold text-cyan-700">Present Continuous — ing</div>
         <En className="mt-2 block text-xl font-extrabold text-cyan-800">Is he playing tennis?</En>
-        <div className="text-sm text-cyan-700">playing = مستمر → Is</div>
+        <div className="text-sm text-cyan-700"><LatinRuns text={"playing = مستمر → Is"} /></div>
         <div className="mt-3 rounded-xl bg-white p-2 border-2 border-cyan-200"><En className="text-sm font-bold text-rose-700 line-through">Is he play tennis? ❌</En></div>
       </div>
     </div>
@@ -425,7 +411,7 @@ function DangerousError() {
         <En className="rounded-xl bg-white px-3 py-2 font-bold border-2 border-emerald-300 text-emerald-800">He plays football. ✅</En>
         <En className="rounded-xl bg-white px-3 py-2 font-bold border-2 border-emerald-300 text-emerald-800">He is playing football. ✅</En>
       </div>
-      <div className="mt-3 text-sm font-bold text-rose-700">لا نخلط: is + plays ❌ — ولا does + playing ❌</div>
+      <div className="mt-3 text-sm font-bold text-rose-700"><LatinRuns text={"لا نخلط: is + plays ❌ — ولا does + playing ❌"} /></div>
     </div>
   );
 }
@@ -438,8 +424,8 @@ function StativeGrid() {
         {STATIVE_VERBS.map((v, i) => (
           <button key={v.en} onClick={() => setPicked(i)} className={`rounded-2xl border-2 p-3 text-center transition ${picked === i ? "border-amber-300 bg-amber-50" : "border-slate-200 bg-white hover:border-amber-200"}`}>
             <En className="text-lg font-extrabold text-slate-800">{v.en}</En>
-            <div className="text-xs font-bold text-slate-500">{v.ar}</div>
-            <div className="mt-1 text-[11px] font-bold text-amber-700">غالبًا Simple</div>
+            <div className="text-xs font-bold text-slate-500"><LatinRuns text={v.ar ?? ""} /></div>
+            <div className="mt-1 text-[11px] font-bold text-amber-700"><LatinRuns text={"غالبًا Simple"} /></div>
           </button>
         ))}
       </div>
@@ -451,7 +437,7 @@ function StativeGrid() {
         <div className="rounded-2xl bg-white p-3 border-2 border-rose-200 flex flex-wrap items-center gap-2">
           <span className="grid h-7 w-7 place-items-center rounded-full bg-rose-500 text-white text-sm">✕</span>
           <En className="font-bold text-rose-700 line-through decoration-rose-300">I am knowing the answer.</En>
-          <span className="rounded-full bg-rose-100 px-2 py-0.5 text-xs font-bold text-rose-700">لا نستخدم know مع Continuous</span>
+          <span className="rounded-full bg-rose-100 px-2 py-0.5 text-xs font-bold text-rose-700"><LatinRuns text={"لا نستخدم know مع Continuous"} /></span>
         </div>
       </div>
     </div>
@@ -463,19 +449,19 @@ function ThinkCompare() {
   return (
     <div className="rounded-3xl border-2 border-slate-100 bg-slate-50/70 p-5">
       <div className="mb-4 flex justify-center gap-2">
-        <button onClick={() => setMode("opinion")} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold ${mode === "opinion" ? "bg-indigo-600 text-white border-transparent" : "bg-white border-slate-200 text-slate-600"}`}>رأي — think</button>
-        <button onClick={() => setMode("process")} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold ${mode === "process" ? "bg-cyan-600 text-white border-transparent" : "bg-white border-slate-200 text-slate-600"}`}>عملية — thinking</button>
+        <button onClick={() => setMode("opinion")} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold ${mode === "opinion" ? "bg-indigo-600 text-white border-transparent" : "bg-white border-slate-200 text-slate-600"}`}><LatinRuns text={"رأي — think"} /></button>
+        <button onClick={() => setMode("process")} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold ${mode === "process" ? "bg-cyan-600 text-white border-transparent" : "bg-white border-slate-200 text-slate-600"}`}><LatinRuns text={"عملية — thinking"} /></button>
       </div>
       <div key={mode} className="pop rounded-3xl bg-white p-6 text-center border-2 border-slate-100">
         {mode === "opinion" ? (
           <>
             <En className="text-2xl font-extrabold text-slate-800">I think this movie is great.</En>
-            <div className="mt-1 text-slate-500">أنا أعتقد أن هذا الفيلم رائع — رأي → Simple</div>
+            <div className="mt-1 text-slate-500"><LatinRuns text={"أنا أعتقد أن هذا الفيلم رائع — رأي → Simple"} /></div>
           </>
         ) : (
           <>
             <En className="text-2xl font-extrabold text-cyan-800">I am thinking about my future.</En>
-            <div className="mt-1 text-slate-500">أنا أفكر في مستقبلي — عملية الآن → Continuous</div>
+            <div className="mt-1 text-slate-500"><LatinRuns text={"أنا أفكر في مستقبلي — عملية الآن → Continuous"} /></div>
           </>
         )}
       </div>
@@ -488,19 +474,19 @@ function HaveCompare() {
   return (
     <div className="rounded-3xl border-2 border-slate-100 bg-slate-50/70 p-5">
       <div className="mb-4 flex justify-center gap-2">
-        <button onClick={() => setMode("own")} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold ${mode === "own" ? "bg-slate-800 text-white border-transparent" : "bg-white border-slate-200 text-slate-600"}`}>امتلاك — have</button>
-        <button onClick={() => setMode("activity")} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold ${mode === "activity" ? "bg-cyan-600 text-white border-transparent" : "bg-white border-slate-200 text-slate-600"}`}>نشاط — having</button>
+        <button onClick={() => setMode("own")} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold ${mode === "own" ? "bg-slate-800 text-white border-transparent" : "bg-white border-slate-200 text-slate-600"}`}><LatinRuns text={"امتلاك — have"} /></button>
+        <button onClick={() => setMode("activity")} className={`rounded-xl border-2 px-4 py-2 text-sm font-bold ${mode === "activity" ? "bg-cyan-600 text-white border-transparent" : "bg-white border-slate-200 text-slate-600"}`}><LatinRuns text={"نشاط — having"} /></button>
       </div>
       <div key={mode} className="pop rounded-3xl bg-white p-6 text-center border-2 border-slate-100">
         {mode === "own" ? (
           <>
             <En className="text-2xl font-extrabold text-slate-800">I have a car.</En>
-            <div className="mt-1 text-slate-500">لدي سيارة — have = امتلاك → Simple</div>
+            <div className="mt-1 text-slate-500"><LatinRuns text={"لدي سيارة — have = امتلاك → Simple"} /></div>
           </>
         ) : (
           <>
             <En className="text-2xl font-extrabold text-cyan-800">I am having lunch.</En>
-            <div className="mt-1 text-slate-500">أنا أتناول الغداء — have = نشاط → Continuous</div>
+            <div className="mt-1 text-slate-500"><LatinRuns text={"أنا أتناول الغداء — have = نشاط → Continuous"} /></div>
           </>
         )}
       </div>
@@ -529,7 +515,7 @@ function ChooseTenseEx({ ex }: { ex: Extract<Exercise11, { type: "chooseTense" }
             <div className="flex flex-wrap items-center gap-3">
               <Nub n={i + 1} />
               <En className="text-lg font-bold text-slate-800">{it.stem}</En>
-              <span className="rounded-full bg-violet-50 px-3 py-1 text-xs font-bold text-violet-700">💭 {it.ar}</span>
+              <span className="rounded-full bg-violet-50 px-3 py-1 text-xs font-bold text-violet-700">💭 <LatinRuns text={it.ar ?? ""} /></span>
             </div>
             <div className="mt-2.5 flex gap-2 pr-11">
               {it.opts.map((o, oi) => (
@@ -557,7 +543,7 @@ function ChooseFormEx({ ex }: { ex: Extract<Exercise11, { type: "chooseForm" }> 
             <div className="flex flex-wrap items-center gap-3">
               <Nub n={i + 1} />
               <En className="text-lg font-bold text-slate-800">{it.stem}</En>
-              <span className="rounded-full bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700">{it.ar}</span>
+              <span className="rounded-full bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700"><LatinRuns text={it.ar ?? ""} /></span>
             </div>
             <div className="mt-2.5 flex gap-2 pr-11">
               {it.opts.map((o, oi) => (
@@ -582,7 +568,7 @@ function FillEx({ ex }: { ex: Extract<Exercise11, { type: "fill" }> }) {
           <Nub n={i + 1} />
           <En className="text-lg font-bold text-slate-800">{it.stem}</En>
           <span className="rounded-full bg-slate-100 px-2 py-1 text-xs font-bold text-slate-500">({it.hint})</span>
-          <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700">{it.ar}</span>
+          <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700"><LatinRuns text={it.ar ?? ""} /></span>
           {show[i] ? (
             <En className="tada mr-auto text-lg font-extrabold text-emerald-700">{it.answer}</En>
           ) : (
@@ -638,7 +624,7 @@ function TenseExplainEx({ ex }: { ex: Extract<Exercise11, { type: "tenseExplain"
             <div className="flex flex-wrap items-center gap-3">
               <Nub n={i + 1} />
               <En className="text-lg font-bold text-slate-800">{it.en}</En>
-              <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700">{it.ar}</span>
+              <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700"><LatinRuns text={it.ar ?? ""} /></span>
             </div>
             <div className="mt-2.5 flex gap-2 pr-11">
               {it.opts.map((o, oi) => (
@@ -666,7 +652,7 @@ function FixEx({ ex }: { ex: Extract<Exercise11, { type: "fix" }> }) {
           {show[i] ? (
             <div className="tada flex flex-wrap items-center gap-2">
               <En className="text-xl font-extrabold text-emerald-700">→ {it.correct}</En>
-              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">{it.why}</span>
+              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700"><LatinRuns text={it.why ?? ""} /></span>
             </div>
           ) : (
             <button onClick={() => setShow((s) => ({ ...s, [i]: true }))} className="mr-auto rounded-xl bg-emerald-600 px-4 py-1.5 text-sm font-bold text-white">الحل 💡</button>
@@ -699,7 +685,7 @@ function IQEx({ ex }: { ex: Extract<Exercise11, { type: "iq" }> }) {
                       </button>
                     ))}
                   </div>
-                  {c !== undefined && <div className={`mt-2 text-sm font-bold ${right ? "text-emerald-700" : "text-rose-700"}`}>💡 {it.why}</div>}
+                  {c !== undefined && <div className={`mt-2 text-sm font-bold ${right ? "text-emerald-700" : "text-rose-700"}`}>💡 <LatinRuns text={it.why ?? ""} /></div>}
                 </div>
               </div>
             </div>
@@ -735,7 +721,7 @@ function IQEx({ ex }: { ex: Extract<Exercise11, { type: "iq" }> }) {
                 {showText[i] ? (
                   <div className="tada mt-2 rounded-2xl bg-emerald-50 p-3 border-2 border-emerald-200">
                     <En className="font-bold text-emerald-800">{it.correct}</En>
-                    <div className="mt-1 text-sm font-bold text-emerald-700">{it.why}</div>
+                    <div className="mt-1 text-sm font-bold text-emerald-700"><LatinRuns text={it.why ?? ""} /></div>
                   </div>
                 ) : (
                   <button onClick={() => setShowText((s) => ({ ...s, [i]: true }))} className="mt-3 rounded-xl bg-emerald-600 px-4 py-1.5 text-sm font-bold text-white">أظهر التصحيح 💡</button>
@@ -755,7 +741,7 @@ function Detective() {
     <Frame mascot="🕵️" badge="المستوى 9" title="Grammar Detective" lead="اقرأ النص ثم حلل:">
       <div className="rounded-3xl border-2 border-slate-200 bg-slate-50 p-5">
         <En className="block text-lg font-bold leading-relaxed text-slate-800">{GRAMMAR_DETECTIVE_PASSAGE}</En>
-        <div className="mt-3 text-sm font-bold text-slate-500">Emma usually spends her weekends at home, but this weekend she is visiting her cousins... — نص يجمع Simple و Continuous</div>
+        <div className="mt-3 text-sm font-bold text-slate-500"><LatinRuns text={"Emma usually spends her weekends at home, but this weekend she is visiting her cousins... — نص يجمع Simple و Continuous"} /></div>
       </div>
       <div className="grid gap-2.5">
         {GRAMMAR_DETECTIVE_Q.map((it, i) => (
@@ -788,14 +774,14 @@ function TransformChallenge() {
         </div>
         <div key={step} className="pop mt-4 rounded-3xl bg-white p-5 border-2 border-amber-200 text-center">
           <En className="text-xl font-extrabold text-slate-800">{FINAL_CHALLENGE_TOM.steps[step].en}</En>
-          <div className="mt-2 text-sm font-bold text-slate-500">{FINAL_CHALLENGE_TOM.steps[step].ar}</div>
+          <div className="mt-2 text-sm font-bold text-slate-500"><LatinRuns text={FINAL_CHALLENGE_TOM.steps[step].ar ?? ""} /></div>
         </div>
         <div className="mt-4 grid gap-2">
           {FINAL_CHALLENGE_TOM.steps.map((s, i) => (
             <div key={i} className={`flex items-center gap-3 rounded-2xl px-4 py-2.5 border-2 ${i === step ? "border-amber-300 bg-white" : "border-transparent bg-white/60"}`}>
               <span className={`grid h-6 w-6 place-items-center rounded-full text-xs font-bold ${i === step ? "bg-amber-600 text-white" : "bg-slate-200 text-slate-600"}`}>{i + 1}</span>
               <En className="font-bold text-slate-700">{s.en}</En>
-              <span className="mr-auto text-xs font-bold text-slate-400">{s.ar}</span>
+              <span className="mr-auto text-xs font-bold text-slate-400"><LatinRuns text={s.ar ?? ""} /></span>
             </div>
           ))}
         </div>
@@ -838,14 +824,14 @@ function Comprehensive() {
     <Frame mascot="🧪" badge="الاختبار الشامل للدرس 11" title="بدون النظر إلى القواعد، حاول الحل" lead="القسم A اختيار، القسم B تصحيح، القسم C كتابة، القسم D تحدي IQ200">
       <div className="space-y-6">
         <div>
-          <div className="font-head text-lg font-bold text-slate-800">القسم A — اختر</div>
+          <div className="font-head text-lg font-bold text-slate-800"><LatinRuns text={"القسم A — اختر"} /></div>
           <div className="mt-3 grid gap-2.5">
             {COMPREHENSIVE.A.map((it, i) => (
               <div key={i} className="rounded-3xl border-2 border-slate-200 bg-white p-4">
                 <div className="flex items-center gap-3">
                   <Nub n={i + 1} />
                   <En className="font-bold text-slate-800">{it.en}</En>
-                  <span className="rounded-full bg-slate-100 px-2 py-1 text-xs font-bold text-slate-500">{it.ar}</span>
+                  <span className="rounded-full bg-slate-100 px-2 py-1 text-xs font-bold text-slate-500"><LatinRuns text={it.ar ?? ""} /></span>
                 </div>
                 <div className="mt-2 flex gap-2 pr-11">
                   {it.opts.map((o) => (
@@ -857,7 +843,7 @@ function Comprehensive() {
           </div>
         </div>
         <div>
-          <div className="font-head text-lg font-bold text-slate-800">القسم B — صحح</div>
+          <div className="font-head text-lg font-bold text-slate-800"><LatinRuns text={"القسم B — صحح"} /></div>
           <div className="mt-3 grid gap-2.5">
             {COMPREHENSIVE.B.map((it, i) => (
               <div key={i} className="flex flex-wrap items-center gap-3 rounded-3xl border-2 border-slate-200 bg-white p-4">
@@ -866,7 +852,7 @@ function Comprehensive() {
                 {showB[i] ? (
                   <div className="tada flex flex-wrap items-center gap-2">
                     <En className="font-extrabold text-emerald-700">→ {it.correct}</En>
-                    <span className="rounded-full bg-emerald-100 px-2 py-1 text-xs font-bold text-emerald-700">{it.why}</span>
+                    <span className="rounded-full bg-emerald-100 px-2 py-1 text-xs font-bold text-emerald-700"><LatinRuns text={it.why ?? ""} /></span>
                   </div>
                 ) : (
                   <button onClick={() => setShowB((s) => ({ ...s, [i]: true }))} className="mr-auto rounded-xl bg-emerald-600 px-3 py-1.5 text-sm font-bold text-white">الحل</button>
@@ -876,7 +862,7 @@ function Comprehensive() {
           </div>
         </div>
         <div>
-          <div className="font-head text-lg font-bold text-slate-800">القسم C — اكتب جملة من عندك باستخدام:</div>
+          <div className="font-head text-lg font-bold text-slate-800"><LatinRuns text={"القسم C — اكتب جملة من عندك باستخدام:"} /></div>
           <div className="mt-3 flex flex-wrap gap-2">
             {COMPREHENSIVE.C.map((c) => (
               <span key={c.word} className="rounded-2xl border-2 border-cyan-200 bg-cyan-50 px-4 py-2">
@@ -888,7 +874,7 @@ function Comprehensive() {
           <textarea placeholder="I usually... / I am ... now..." rows={4} className="mt-3 w-full rounded-2xl border-2 border-slate-200 p-3 font-en text-sm focus:border-cyan-400 focus:outline-none" dir="ltr" />
         </div>
         <div>
-          <div className="font-head text-lg font-bold text-slate-800">القسم D — IQ200</div>
+          <div className="font-head text-lg font-bold text-slate-800"><LatinRuns text={"القسم D — IQ200"} /></div>
           <div className="mt-3 rounded-3xl border-2 border-violet-200 bg-violet-50 p-5">
             <div className="font-bold text-violet-800">{COMPREHENSIVE.D.instruction}</div>
             <div className="mt-3 rounded-2xl bg-white p-4 border-2 border-violet-100">
@@ -898,8 +884,8 @@ function Comprehensive() {
             <button onClick={() => setShowC(!showC)} className="mt-3 rounded-xl bg-violet-600 px-4 py-2 text-sm font-bold text-white">{showC ? "إخفاء النموذج" : "أظهر نموذج مقترح"}</button>
             {showC && (
               <div className="tada mt-3 rounded-2xl bg-white p-4 border-2 border-violet-200 space-y-1 font-en text-sm font-bold" dir="ltr">
-                <div>My father usually drives to work. (Simple — usually عادة)</div>
-                <div>Today he is taking the train because his car is broken. (Continuous — today مؤقت)</div>
+                <div><LatinRuns text={"My father usually drives to work. (Simple — usually عادة)"} /></div>
+                <div><LatinRuns text={"Today he is taking the train because his car is broken. (Continuous — today مؤقت)"} /></div>
               </div>
             )}
           </div>
@@ -927,10 +913,10 @@ function Cover() {
         </p>
         <div className="pop pop-4 mt-3 inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-2 border-2 border-amber-200">
           <span>🔥</span>
-          <span className="text-sm font-bold text-amber-800">IQ200 — لا تعتمد على كلمة now وحدها</span>
+          <span className="text-sm font-bold text-amber-800"><LatinRuns text={"IQ200 — لا تعتمد على كلمة now وحدها"} /></span>
         </div>
         <div className="pop pop-5 mt-6 rounded-3xl border-2 border-slate-100 bg-slate-50 p-5 max-w-xl mx-auto text-right">
-          <div className="text-sm font-bold text-slate-500">ممتاز جدًا. بما أننا أنهينا أساس Present Simple وPresent Continuous، فالآن سنجمعهما معًا بشكل أوسع وأعمق.</div>
+          <div className="text-sm font-bold text-slate-500"><LatinRuns text={"ممتاز جدًا. بما أننا أنهينا أساس Present Simple وPresent Continuous، فالآن سنجمعهما معًا بشكل أوسع وأعمق."} /></div>
           <div className="mt-2 text-sm font-bold text-slate-700">هذا الدرس مهم جدًا لأنه لن يعلمك قاعدة جديدة فقط، بل سيعلمك كيف "تفكر" عند اختيار الزمن.</div>
           <div className="mt-3 text-sm font-bold text-slate-600">سنتعلم كيف نعرف من معنى الجملة:</div>
           <div className="mt-2 grid grid-cols-2 gap-2 text-xs font-bold">
@@ -942,7 +928,7 @@ function Cover() {
         <div className="pop pop-6 mt-6 flex justify-center">
           <div className="rounded-3xl border-2 border-slate-100 bg-slate-50 p-4">
             <PartsLine parts={[{ text: "Nora", role: "s" }, { text: "walks", role: "v" }, { text: "every day", role: "adv" }]} size="lg" />
-            <div className="mt-1 text-center text-slate-500">روتين → Simple — مقابل — is walking now → Continuous</div>
+            <div className="mt-1 text-center text-slate-500"><LatinRuns text={"روتين → Simple — مقابل — is walking now → Continuous"} /></div>
           </div>
         </div>
         <p className="pop mt-7 text-sm text-slate-400">للتنقل: الأسهم ← → أو مفتاح المسافة</p>
@@ -1198,7 +1184,7 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
         <button onClick={onExit} className="text-sm font-semibold text-slate-400 transition hover:text-slate-800">
           → جميع الدروس
         </button>
-        <div className="font-head mt-2 text-lg font-bold text-slate-900">الدرس 11 · Simple vs Continuous</div>
+        <div className="font-head mt-2 text-lg font-bold text-slate-900"><LatinRuns text={"الدرس 11 · Simple vs Continuous"} /></div>
         <En className="text-xs font-semibold text-slate-400">Present Simple vs Continuous</En>
       </div>
       <nav className="flex-1 overflow-y-auto p-3">

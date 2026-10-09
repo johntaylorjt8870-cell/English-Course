@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -79,23 +80,7 @@ function En({ children, className = "" }: { children: React.ReactNode; className
  * [[...]] تُستخدم عندما نريد إبراز عبارة إنجليزية كاملة داخل السطر العربي.
  */
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const clean = text.replace(/\*\*/g, "");
-  const parts = clean.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((part, i) => {
-        const marked = part.match(/^\[\[(.+)\]\]$/);
-        if (marked) {
-          return (
-            <span key={i} dir="ltr" style={{ direction: "ltr" }} className="ltr font-en rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
-              {marked[1]}
-            </span>
-          );
-        }
-        return <LatinRuns key={i} text={part} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function TextBlock({ text, className = "" }: { text: string; className?: string }) {
@@ -186,11 +171,11 @@ function Frame({ mascot, step, badge, title, lead, children, tip, sourceHeading 
     <section dir="rtl" className="relative rounded-[1.75rem] border-2 border-slate-900/[0.05] bg-white p-6 shadow-[0_14px_44px_-20px_rgba(124,58,237,0.28)] md:p-9">
       <div className="pointer-events-none absolute -left-2 top-4 select-none text-4xl anim-drift md:text-5xl" aria-hidden>{mascot}</div>
       <div className="flex flex-wrap items-center gap-2.5">
-        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-violet-600 text-lg font-bold text-white">{step}</span>}
+        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-violet-600 text-lg font-bold text-white">{mixedText(step)}</span>}
         {badge && <span className="rounded-full bg-violet-100 px-3.5 py-1.5 text-sm font-bold text-violet-800"><Rich text={badge} /></span>}
       </div>
       {sourceHeading && <div className="mt-3 rounded-xl bg-slate-50 px-3 py-2 text-xs font-bold text-slate-500"><Rich text={sourceHeading} /></div>}
-      <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{title}</h2>
+      <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{mixedText(title)}</h2>
       {lead && <div className="mt-2 max-w-[92%] text-lg text-slate-500 md:text-xl"><Rich text={lead} /></div>}
       <div className="mt-6 space-y-3.5">{children}</div>
       {tip && <div className="mt-6 flex items-center gap-3 rounded-2xl bg-gradient-to-l from-violet-600 to-fuchsia-600 p-4 text-white"><span className="text-2xl">🦉</span><span className="text-base font-semibold md:text-lg"><Rich text={tip} /></span></div>}
@@ -234,7 +219,7 @@ function WhMeanings() {
       </div>
       <div key={active} className="pop mt-4 rounded-3xl border-2 border-white bg-white p-4">
         <div className="flex flex-wrap items-center justify-center gap-2"><En className="text-xl font-black text-fuchsia-800">{current.word}</En><span className="text-slate-400">=</span><En className="text-lg font-bold text-slate-700">{current.function}</En></div>
-        <div className="mt-3 grid gap-2">{current.examples.map((example) => <div key={example.en} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-slate-100 bg-slate-50 p-3"><En className="font-extrabold text-slate-800">{example.en}</En><span dir="rtl" className="text-sm font-bold text-slate-500">{example.ar}</span></div>)}</div>
+        <div className="mt-3 grid gap-2">{current.examples.map((example) => <div key={example.en} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-slate-100 bg-slate-50 p-3"><En className="font-extrabold text-slate-800">{example.en}</En><span dir="rtl" className="text-sm font-bold text-slate-500"><LatinRuns text={example.ar ?? ""} /></span></div>)}</div>
       </div>
     </div>
   );
@@ -252,7 +237,7 @@ function WhoCard() {
 function DanielBuilder() {
   const [active, setActive] = useState(0);
   const question = DANIEL_SENTENCE_14.questions[active];
-  return <div className="rounded-3xl border-2 border-indigo-200 bg-indigo-50 p-5"><div className="rounded-2xl border-2 border-white bg-white p-4 text-center"><En className="text-lg font-extrabold text-slate-800">{DANIEL_SENTENCE_14.sentence}</En></div><div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-5">{DANIEL_SENTENCE_14.parts.map((part) => <div key={part.en} className={`rounded-2xl border-2 p-3 text-center ${ROLE_STYLE[part.role as Role14]}`}><En className="block text-sm font-black">{part.en}</En><span className="mt-1 block text-xs font-bold">{part.ar}</span></div>)}</div><div className="mt-4 flex flex-wrap justify-center gap-2">{DANIEL_SENTENCE_14.questions.map((q, i) => <TabButton key={q.en} active={i === active} onClick={() => setActive(i)}><En>{q.kind}</En></TabButton>)}</div><div key={question.en} className="pop mt-4 rounded-2xl border-2 border-emerald-200 bg-white p-4 text-center"><En className="text-xl font-black text-emerald-800">{question.en}</En><div className="mt-1 text-sm font-bold text-slate-500">{question.ar}</div><div className="mt-3 rounded-xl bg-emerald-50 p-2"><En className="font-bold text-emerald-800">Answer: {question.answer}</En></div></div></div>;
+  return <div className="rounded-3xl border-2 border-indigo-200 bg-indigo-50 p-5"><div className="rounded-2xl border-2 border-white bg-white p-4 text-center"><En className="text-lg font-extrabold text-slate-800">{DANIEL_SENTENCE_14.sentence}</En></div><div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-5">{DANIEL_SENTENCE_14.parts.map((part) => <div key={part.en} className={`rounded-2xl border-2 p-3 text-center ${ROLE_STYLE[part.role as Role14]}`}><En className="block text-sm font-black">{part.en}</En><span className="mt-1 block text-xs font-bold"><LatinRuns text={part.ar ?? ""} /></span></div>)}</div><div className="mt-4 flex flex-wrap justify-center gap-2">{DANIEL_SENTENCE_14.questions.map((q, i) => <TabButton key={q.en} active={i === active} onClick={() => setActive(i)}><En>{q.kind}</En></TabButton>)}</div><div key={question.en} className="pop mt-4 rounded-2xl border-2 border-emerald-200 bg-white p-4 text-center"><En className="text-xl font-black text-emerald-800">{question.en}</En><div className="mt-1 text-sm font-bold text-slate-500"><LatinRuns text={question.ar ?? ""} /></div><div className="mt-3 rounded-xl bg-emerald-50 p-2"><En className="font-bold text-emerald-800">Answer: {question.answer}</En></div></div></div>;
 }
 
 function EmmaQuestions() {
@@ -331,7 +316,7 @@ function Level3Ex() {
 
 function Level4Ex() {
   const [show, setShow] = useState(false);
-  return <div className="rounded-3xl border-2 border-indigo-200 bg-indigo-50 p-5"><SourceLine en={LEVEL4_14.sentence} /><div className="mt-4 text-center font-bold text-slate-700">{LEVEL4_14.lead}</div><div className="mt-3 grid gap-2">{LEVEL4_14.prompts.map((item) => <div key={item.n} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-white bg-white p-3"><span className="grid h-8 w-8 place-items-center rounded-xl bg-indigo-600 text-sm font-bold text-white">{item.n}</span><span className="font-bold text-slate-700">{item.ar}</span>{show && <span className="tada"><En className="font-black text-emerald-800">{item.answer}</En></span>}</div>)}</div><button onClick={() => setShow((value) => !value)} className="mt-4 rounded-xl bg-indigo-600 px-5 py-2 font-bold text-white">{show ? "إخفاء الحل الممكن" : LEVEL4_14.answerLead}</button></div>;
+  return <div className="rounded-3xl border-2 border-indigo-200 bg-indigo-50 p-5"><SourceLine en={LEVEL4_14.sentence} /><div className="mt-4 text-center font-bold text-slate-700">{mixedText(LEVEL4_14.lead)}</div><div className="mt-3 grid gap-2">{LEVEL4_14.prompts.map((item) => <div key={item.n} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-white bg-white p-3"><span className="grid h-8 w-8 place-items-center rounded-xl bg-indigo-600 text-sm font-bold text-white">{item.n}</span><span className="font-bold text-slate-700"><LatinRuns text={item.ar ?? ""} /></span>{show && <span className="tada"><En className="font-black text-emerald-800">{item.answer}</En></span>}</div>)}</div><button onClick={() => setShow((value) => !value)} className="mt-4 rounded-xl bg-indigo-600 px-5 py-2 font-bold text-white">{show ? "إخفاء الحل الممكن" : LEVEL4_14.answerLead}</button></div>;
 }
 
 function DetectiveEx() {
@@ -341,7 +326,7 @@ function DetectiveEx() {
 
 function IQ200Ex() {
   const [show, setShow] = useState(false);
-  return <div className="space-y-4"><div className="rounded-3xl border-2 border-orange-200 bg-orange-50 p-5"><SourceLine en={IQ200_14.sentence} /><div className="mt-4 grid gap-2"><TextBlock text={IQ200_14.instruction} className="text-lg font-bold text-slate-800" /><div className="flex flex-wrap items-center gap-2"><TextBlock text="مثلاً:" className="font-bold" />{IQ200_14.examples.map((example) => <En key={example} className="rounded-xl bg-white px-3 py-1 font-black text-orange-800">{example}</En>)}</div><TextBlock text="ثم انتبه:" className="font-bold text-orange-800" /><TextBlock text={IQ200_14.warning} className="font-bold text-rose-700" /><TextBlock text={IQ200_14.requirement} className="font-bold text-rose-700" /><div className="rounded-2xl border-2 border-white bg-white p-3 text-center"><TextBlock text="وتذكر:" className="font-bold text-slate-600" /><En className="text-xl font-black text-emerald-800">{IQ200_14.reminder}</En></div></div></div><button onClick={() => setShow((value) => !value)} className="rounded-xl bg-orange-600 px-5 py-2 font-bold text-white">{show ? "إخفاء حلول ممكنة إضافية" : "اعرض حلولاً ممكنة إضافية"}</button>{show && <div className="tada grid gap-2 rounded-3xl border-2 border-emerald-200 bg-emerald-50 p-4"><div className="text-sm font-bold text-emerald-800">حلول ممكنة إضافية — enhancement</div>{IQ200_14.modelQuestions.map((item) => <div key={item.en} className="rounded-2xl border-2 border-white bg-white p-3"><En className="block font-black text-slate-800">{item.en}</En><div className="mt-1 text-xs font-bold text-slate-500">{item.note}</div></div>)}</div>}</div>;
+  return <div className="space-y-4"><div className="rounded-3xl border-2 border-orange-200 bg-orange-50 p-5"><SourceLine en={IQ200_14.sentence} /><div className="mt-4 grid gap-2"><TextBlock text={IQ200_14.instruction} className="text-lg font-bold text-slate-800" /><div className="flex flex-wrap items-center gap-2"><TextBlock text="مثلاً:" className="font-bold" />{IQ200_14.examples.map((example) => <En key={example} className="rounded-xl bg-white px-3 py-1 font-black text-orange-800">{example}</En>)}</div><TextBlock text="ثم انتبه:" className="font-bold text-orange-800" /><TextBlock text={IQ200_14.warning} className="font-bold text-rose-700" /><TextBlock text={IQ200_14.requirement} className="font-bold text-rose-700" /><div className="rounded-2xl border-2 border-white bg-white p-3 text-center"><TextBlock text="وتذكر:" className="font-bold text-slate-600" /><En className="text-xl font-black text-emerald-800">{IQ200_14.reminder}</En></div></div></div><button onClick={() => setShow((value) => !value)} className="rounded-xl bg-orange-600 px-5 py-2 font-bold text-white">{show ? "إخفاء حلول ممكنة إضافية" : "اعرض حلولاً ممكنة إضافية"}</button>{show && <div className="tada grid gap-2 rounded-3xl border-2 border-emerald-200 bg-emerald-50 p-4"><div className="text-sm font-bold text-emerald-800"><LatinRuns text={"حلول ممكنة إضافية — enhancement"} /></div>{IQ200_14.modelQuestions.map((item) => <div key={item.en} className="rounded-2xl border-2 border-white bg-white p-3"><En className="block font-black text-slate-800">{item.en}</En><div className="mt-1 text-xs font-bold text-slate-500"><LatinRuns text={item.note ?? ""} /></div></div>)}</div>}</div>;
 }
 
 function HardChallengeEx() {

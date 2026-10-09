@@ -821,6 +821,8 @@ export function FinalTestAnswerKey({
                   {expectedAnswerText(q)}
                 </span>
               </div>
+              <details>
+                <summary className="cursor-pointer font-black">التفسير والمفهوم والفخ · <span dir="ltr">Platform Explanation</span></summary>
               <div>
                 <span className="font-black">السبب: </span>
                 <Localized text={q.why} />
@@ -835,6 +837,7 @@ export function FinalTestAnswerKey({
                   <Localized text={q.trap} />
                 </div>
               )}
+              </details>
             </div>
           </li>
         ))}

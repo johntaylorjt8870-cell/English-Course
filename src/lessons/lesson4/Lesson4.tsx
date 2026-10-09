@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -37,23 +38,7 @@ function En({ children, className = "" }: { children: React.ReactNode; className
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const parts = text.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((p, i) => {
-        const m = p.match(/^\[\[(.+)\]\]$/);
-        if (m) {
-          return (
-            <span key={i} className="ltr font-en mx-1 rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
-              {m[1]}
-            </span>
-          );
-        }
-        // عزل تلقائي لأي مقطع لاتيني خارج الأقواس — على مستوى المقطع لا الكلمة
-        return <LatinRuns key={i} text={p} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function Frame({
@@ -79,16 +64,16 @@ function Frame({
         {mascot}
       </div>
       <div className="flex items-center gap-2.5">
-        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-slate-900 text-lg font-bold text-white">{step}</span>}
-        {badge && <span className="rounded-full bg-amber-100 px-3.5 py-1.5 text-sm font-bold text-amber-800">{badge}</span>}
+        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-slate-900 text-lg font-bold text-white">{mixedText(step)}</span>}
+        {badge && <span className="rounded-full bg-amber-100 px-3.5 py-1.5 text-sm font-bold text-amber-800">{mixedText(badge)}</span>}
       </div>
-      <h2 className="font-head mt-3 max-w-[88%] text-3xl font-bold leading-snug text-slate-900 md:text-[2.1rem]">{title}</h2>
-      {lead && <p className="mt-2 max-w-[88%] text-lg text-slate-500 md:text-xl">{lead}</p>}
+      <h2 className="font-head mt-3 max-w-[88%] text-3xl font-bold leading-snug text-slate-900 md:text-[2.1rem]">{mixedText(title)}</h2>
+      {lead && <p className="mt-2 max-w-[88%] text-lg text-slate-500 md:text-xl">{mixedText(lead)}</p>}
       <div className="mt-6 space-y-3.5">{children}</div>
       {tip && (
         <div className="mt-6 flex items-center gap-3 rounded-2xl bg-gradient-to-l from-slate-900 to-slate-700 p-4 text-white">
           <span className="text-2xl">🦉</span>
-          <span className="text-base font-semibold md:text-lg">{tip}</span>
+          <span className="text-base font-semibold md:text-lg">{mixedText(tip)}</span>
         </div>
       )}
     </section>
@@ -102,7 +87,7 @@ function Legend() {
       {(Object.keys(PART_STYLE) as Part["role"][]).map((r) => (
         <span key={r} className={`flex items-center gap-1.5 rounded-full border ${PART_STYLE[r].chip} px-2.5 py-1 text-xs font-bold`}>
           <span className={`h-2.5 w-2.5 rounded-full ${PART_STYLE[r].solid}`} />
-          {PART_STYLE[r].ar}
+          <LatinRuns text={PART_STYLE[r].ar ?? ""} />
         </span>
       ))}
     </div>
@@ -121,7 +106,7 @@ function PartsSentence({ parts, en, ar, note }: { parts?: Part[]; en: string; ar
               className={`inline-flex flex-col items-center rounded-2xl border-2 px-3.5 py-2 font-en text-xl font-extrabold md:text-2xl ${PART_STYLE[p.role].chip}`}
             >
               {p.text}
-              <span className="mt-0.5 text-[10px] font-bold opacity-70">{PART_STYLE[p.role].ar}</span>
+              <span className="mt-0.5 text-[10px] font-bold opacity-70"><LatinRuns text={PART_STYLE[p.role].ar ?? ""} /></span>
             </span>
           ))}
         </div>
@@ -161,7 +146,7 @@ function Cover() {
               <div className={`mx-auto grid h-16 w-16 place-items-center rounded-2xl ${ART_INFO[a].solid} font-en text-3xl font-extrabold text-white shadow anim-bob`} style={{ animationDelay: `${i * 0.3}s` }}>
                 {a}
               </div>
-              <div className="mt-3 text-sm font-bold text-slate-600">{ART_INFO[a].ar}</div>
+              <div className="mt-3 text-sm font-bold text-slate-600"><LatinRuns text={ART_INFO[a].ar ?? ""} /></div>
             </div>
           ))}
         </div>
@@ -225,7 +210,7 @@ function CatsSlide({ title }: { title: string }) {
               className={`rounded-3xl border-2 p-4 text-center transition active:scale-95 ${on ? `${CAT_INFO[c].border} ${CAT_INFO[c].soft} shadow-md` : "border-slate-200 bg-white hover:border-slate-300"}`}
             >
               <div className="text-4xl">{CAT_INFO[c].emoji}</div>
-              <div className={`mt-1.5 font-bold ${on ? CAT_INFO[c].text : "text-slate-600"}`}>{CAT_INFO[c].ar}</div>
+              <div className={`mt-1.5 font-bold ${on ? CAT_INFO[c].text : "text-slate-600"}`}><LatinRuns text={CAT_INFO[c].ar ?? ""} /></div>
               <div className="mt-0.5 text-xs text-slate-400">{NOUNS.filter((n) => n.cat === c).length} كلمات</div>
             </button>
           );
@@ -235,13 +220,13 @@ function CatsSlide({ title }: { title: string }) {
       <div key={cat} className="pop rounded-3xl border-2 border-slate-100 bg-slate-50/60 p-5">
         <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">{CAT_INFO[cat].emoji}</span>
-          <span className={`font-head text-xl font-bold ${CAT_INFO[cat].text}`}>{CAT_INFO[cat].ar}</span>
+          <span className={`font-head text-xl font-bold ${CAT_INFO[cat].text}`}><LatinRuns text={CAT_INFO[cat].ar ?? ""} /></span>
         </div>
         <div className="grid gap-2 sm:grid-cols-3">
           {list.map((n) => (
             <div key={n.en} className="flex items-center justify-between rounded-2xl bg-white px-3 py-2 shadow-sm">
               <En className="text-xl font-bold text-slate-800">{n.en}</En>
-              <span className="text-sm font-semibold text-slate-500">{n.ar}</span>
+              <span className="text-sm font-semibold text-slate-500"><LatinRuns text={n.ar ?? ""} /></span>
             </div>
           ))}
         </div>
@@ -285,19 +270,19 @@ function PluralToggle() {
           className="relative flex h-12 w-64 items-center rounded-full border-2 border-slate-300 bg-white p-1 shadow-sm transition"
         >
           <span className={`absolute top-1 h-8 w-1/2 rounded-full bg-slate-900 transition-all duration-300 ${pl ? "right-1" : "right-[calc(50%-0.25rem)]"}`} />
-          <span className={`relative z-10 flex-1 text-center text-xs font-bold transition ${!pl ? "text-white" : "text-slate-500"}`}>Singular · مفرد</span>
-          <span className={`relative z-10 flex-1 text-center text-xs font-bold transition ${pl ? "text-white" : "text-slate-500"}`}>Plural · جمع</span>
+          <span className={`relative z-10 flex-1 text-center text-xs font-bold transition ${!pl ? "text-white" : "text-slate-500"}`}><LatinRuns text={"Singular · مفرد"} /></span>
+          <span className={`relative z-10 flex-1 text-center text-xs font-bold transition ${pl ? "text-white" : "text-slate-500"}`}><LatinRuns text={"Plural · جمع"} /></span>
         </button>
       </div>
 
       <div key={`${idx}-${pl}`} className="pop grid gap-3 sm:grid-cols-2">
         <div className="rounded-3xl border-2 border-emerald-200 bg-emerald-50 p-5 text-center">
-          <div className="text-xs font-bold text-emerald-600">Singular = مفرد (واحد فقط)</div>
+          <div className="text-xs font-bold text-emerald-600"><LatinRuns text={"Singular = مفرد (واحد فقط)"} /></div>
           <En className="mt-2 block text-3xl font-extrabold text-emerald-800">{pickAn(n.en)} {n.en}</En>
-          <div className="text-slate-600">{n.ar} واحد</div>
+          <div className="text-slate-600"><LatinRuns text={n.ar ?? ""} /> واحد</div>
         </div>
         <div className="rounded-3xl border-2 border-sky-200 bg-sky-50 p-5 text-center">
-          <div className="text-xs font-bold text-sky-600">Plural = جمع (أكثر من واحد)</div>
+          <div className="text-xs font-bold text-sky-600"><LatinRuns text={"Plural = جمع (أكثر من واحد)"} /></div>
           <En className="mt-2 block text-3xl font-extrabold text-sky-800">{n.plural}</En>
           <div className="text-slate-600">{n.pluralAr}</div>
         </div>
@@ -359,7 +344,7 @@ function VowelLab() {
             <span className={`font-en rounded-2xl ${isVowel ? "bg-sky-500" : "bg-violet-500"} px-4 py-2.5 text-3xl font-extrabold text-white shadow tada`}>{art}</span>
             <span className="font-en rounded-2xl border-2 border-slate-200 bg-white px-4 py-2.5 text-3xl font-extrabold text-slate-800">{clean}</span>
           </div>
-          {fromList && <div className="mt-2 text-center text-lg text-slate-500">{fromList.ar}</div>}
+          {fromList && <div className="mt-2 text-center text-lg text-slate-500"><LatinRuns text={fromList.ar ?? ""} /></div>}
         </div>
       )}
     </div>
@@ -398,12 +383,12 @@ function AThenThe({ noun, ar, adj, adjAr }: { noun: string; ar: string; adj: str
             ✓ {art} ← ثم ← the
           </button>
         ) : (
-          <span className="text-sm text-slate-400">اضغط لمشاهدة كيف ننتقل من a إلى the</span>
+          <span className="text-sm text-slate-400"><LatinRuns text={"اضغط لمشاهدة كيف ننتقل من a إلى the"} /></span>
         )}
       </div>
       {step === 2 && (
         <div className="tada mt-3 rounded-2xl bg-amber-50 p-3 text-center text-sm font-bold text-amber-800">
-          أول ذكر ← {art} {noun} · ثم عند الحديث عنه مرة أخرى ← the {noun}
+          أول ذكر ← {art} {noun}<LatinRuns text={" · ثم عند الحديث عنه مرة أخرى ← the "} />{noun}
         </div>
       )}
     </div>
@@ -477,7 +462,7 @@ function Machine() {
           </div>
         </div>
         <div className="rounded-2xl border-2 border-emerald-200 bg-white p-4 lg:col-span-2">
-          <div className="mb-2 text-sm font-bold text-emerald-700">② الاسم (Noun)</div>
+          <div className="mb-2 text-sm font-bold text-emerald-700"><LatinRuns text={"② الاسم (Noun)"} /></div>
           <div className="flex flex-wrap gap-1.5">
             {NOUNS.map((x, i) => (
               <button key={x.en} onClick={() => setNi(i)} className={`rounded-lg border-2 px-2.5 py-1 font-en text-base font-bold transition active:scale-95 ${i === ni ? "border-transparent bg-emerald-600 text-white" : "border-slate-200 bg-white text-slate-700 hover:border-slate-400"}`}>
@@ -520,7 +505,7 @@ function Machine() {
           {pieces.map((p, i) => (
             <span key={i} className={`inline-flex flex-col items-center rounded-2xl border-2 px-4 py-2.5 font-en text-2xl font-extrabold md:text-3xl ${PART_STYLE[p.role].chip}`}>
               {p.text}
-              <span className="mt-0.5 text-[10px] font-bold opacity-70">{PART_STYLE[p.role].ar}</span>
+              <span className="mt-0.5 text-[10px] font-bold opacity-70"><LatinRuns text={PART_STYLE[p.role].ar ?? ""} /></span>
             </span>
           ))}
           <span className="font-en pb-2 text-3xl font-bold text-slate-300">{ending}</span>
@@ -529,13 +514,13 @@ function Machine() {
         <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
           <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-500">
             {plural ? (
-              <>{n.plural} ← جمع {n.en} — بدون a / an</>
+              <>{n.plural} ← جمع {n.en}<LatinRuns text={" — بدون a / an"} /></>
             ) : (
               <>{n.en} تبدأ بصوت {n.vowel ? "علة" : "ساكن"} ← {art}</>
             )}
           </span>
           {mode === "q" && <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-bold text-indigo-700">قلبنا الترتيب كما في الدرس 3</span>}
-          {mode === "neg" && <span className="rounded-full bg-rose-100 px-3 py-1 text-xs font-bold text-rose-700">أضفنا not بعد {s.be}</span>}
+          {mode === "neg" && <span className="rounded-full bg-rose-100 px-3 py-1 text-xs font-bold text-rose-700"><LatinRuns text={"أضفنا not بعد "} />{s.be}</span>}
         </div>
       </div>
     </div>
@@ -565,7 +550,7 @@ function Term({ en, ar, desc }: { en: string; ar: string; desc?: string }) {
       <En className="text-4xl font-extrabold text-emerald-700">{en}</En>
       <span className="text-3xl font-bold text-slate-300">=</span>
       <span className="font-head text-3xl font-bold text-slate-800">{ar}</span>
-      {desc && <span className="basis-full text-lg text-slate-600">{desc}</span>}
+      {desc && <span className="basis-full text-lg text-slate-600">{mixedText(desc)}</span>}
     </div>
   );
 }
@@ -577,8 +562,8 @@ function ArtBlock({ a, examples }: { a: Art; examples?: string[] }) {
       <div className="flex flex-wrap items-center gap-4">
         <span className={`grid h-20 w-20 place-items-center rounded-3xl ${info.solid} font-en text-4xl font-extrabold text-white shadow anim-bob`}>{a}</span>
         <div>
-          <div className="font-head text-xl font-bold text-slate-800">{info.ar}</div>
-          <div className="text-sm font-semibold text-slate-500">{info.emoji} {info.desc}</div>
+          <div className="font-head text-xl font-bold text-slate-800"><LatinRuns text={info.ar ?? ""} /></div>
+          <div className="text-sm font-semibold text-slate-500">{info.emoji} {mixedText(info.desc)}</div>
         </div>
       </div>
       {examples && (
@@ -603,7 +588,7 @@ function WordList({ words, note }: { words: { en: string; ar: string }[]; note?:
         {words.map((w) => (
           <div key={w.en} className="flex items-center justify-between rounded-2xl bg-white px-3 py-2 shadow-sm">
             <En className="text-lg font-bold text-slate-800">{w.en}</En>
-            <span className="text-sm font-semibold text-slate-500">{w.ar}</span>
+            <span className="text-sm font-semibold text-slate-500"><LatinRuns text={w.ar ?? ""} /></span>
           </div>
         ))}
       </div>
@@ -659,7 +644,7 @@ function Pieces() {
           <div key={p.en} className="flex items-center gap-2 rounded-2xl bg-white/10 px-3 py-2">
             <span className={`h-3 w-3 rounded-full ${p.c}`} />
             <En className="font-bold">{p.en}</En>
-            <span className="mr-auto text-sm text-slate-300">{p.ar}</span>
+            <span className="mr-auto text-sm text-slate-300"><LatinRuns text={p.ar ?? ""} /></span>
           </div>
         ))}
       </div>
@@ -740,7 +725,7 @@ function TableSlide({ title }: { title: string }) {
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="rounded-3xl border-2 border-slate-200 bg-white p-5">
-            <div className="text-xs font-bold text-slate-400">Singular = مفرد</div>
+            <div className="text-xs font-bold text-slate-400"><LatinRuns text={"Singular = مفرد"} /></div>
             <div className="mt-2 space-y-1">
               {["book", "student", "car"].map((w) => (
                 <En key={w} className="block text-lg font-bold text-slate-700">{w}</En>
@@ -748,7 +733,7 @@ function TableSlide({ title }: { title: string }) {
             </div>
           </div>
           <div className="rounded-3xl border-2 border-slate-200 bg-white p-5">
-            <div className="text-xs font-bold text-slate-400">Plural = جمع</div>
+            <div className="text-xs font-bold text-slate-400"><LatinRuns text={"Plural = جمع"} /></div>
             <div className="mt-2 space-y-1">
               {["books", "students", "cars"].map((w) => (
                 <En key={w} className="block text-lg font-bold text-slate-700">{w}</En>
@@ -760,7 +745,7 @@ function TableSlide({ title }: { title: string }) {
           {(["a", "an", "the"] as Art[]).map((a) => (
             <div key={a} className={`rounded-3xl border-2 ${ART_INFO[a].border} ${ART_INFO[a].soft} p-4`}>
               <div className={`mx-auto grid h-12 w-12 place-items-center rounded-2xl ${ART_INFO[a].solid} font-en text-2xl font-extrabold text-white`}>{a}</div>
-              <div className="mt-2 text-center text-sm font-bold text-slate-600">{ART_INFO[a].ar}</div>
+              <div className="mt-2 text-center text-sm font-bold text-slate-600"><LatinRuns text={ART_INFO[a].ar ?? ""} /></div>
               <div className="mt-2 space-y-1 text-center">
                 {(a === "a" ? ["a book", "a student"] : a === "an" ? ["an apple", "an engineer"] : ["a dog → the dog", "a car → the car"]).map((e) => (
                   <En key={e} className={`block text-sm font-bold ${ART_INFO[a].text}`}>{e}</En>
@@ -857,7 +842,7 @@ function NounSort({ ex }: { ex: Extract<Exercise, { type: "nounSort" }> }) {
             {shown && (
               <div className={`mt-2 pr-11 text-sm font-bold ${right ? "text-emerald-700" : "text-rose-700"}`}>
                 {right ? "✓ صحيح — " : "✕ الصحيح: "}
-                {it.isNoun ? "Noun" : `Not Noun (${it.kindAr})`} · {it.ar}
+                {it.isNoun ? "Noun" : `Not Noun (${it.kindAr})`} · <LatinRuns text={it.ar ?? ""} />
               </div>
             )}
           </div>
@@ -889,7 +874,7 @@ function AAnEx({ ex }: { ex: Extract<Exercise, { type: "aAn" }> }) {
               <En className="text-xl font-bold text-slate-800">{it.word}</En>
               </span>
             </div>
-            <div className="mt-1.5 text-xs text-slate-400">{it.ar}</div>
+            <div className="mt-1.5 text-xs text-slate-400"><LatinRuns text={it.ar ?? ""} /></div>
             <div className="mt-2 flex justify-center gap-1.5">
               {["a", "an"].map((a) => (
                 <button
@@ -922,7 +907,7 @@ function FixEx({ ex }: { ex: Extract<Exercise, { type: "fix" }> }) {
           {show[i] ? (
             <div className="tada flex flex-wrap items-center gap-2">
               <En className="text-xl font-extrabold text-emerald-700">→ {it.correct}</En>
-              {it.why && <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">{it.why}</span>}
+              {it.why && <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700"><LatinRuns text={it.why ?? ""} /></span>}
             </div>
           ) : (
             <button onClick={() => setShow((s) => ({ ...s, [i]: true }))} className="mr-auto rounded-xl bg-emerald-600 px-4 py-1.5 text-sm font-bold text-white transition hover:bg-emerald-700">
@@ -985,7 +970,7 @@ function ATheEx({ ex }: { ex: Extract<Exercise, { type: "aThe" }> }) {
               <Nub n={i + 1} />
               <div>
                 <En className="text-xl font-bold leading-relaxed text-slate-800">{it.story}</En>
-                <div className="text-sm text-slate-500">{it.ar}</div>
+                <div className="text-sm text-slate-500"><LatinRuns text={it.ar ?? ""} /></div>
               </div>
             </div>
             <div className="mt-3 grid gap-2 pr-11 sm:grid-cols-3">
@@ -1004,7 +989,7 @@ function ATheEx({ ex }: { ex: Extract<Exercise, { type: "aThe" }> }) {
                 );
               })}
             </div>
-            {c !== undefined && right && <div className="tada mt-2 pr-11 text-sm font-bold text-emerald-700">✓ أحسنت! أول ذكر ← a · ثم ← the</div>}
+            {c !== undefined && right && <div className="tada mt-2 pr-11 text-sm font-bold text-emerald-700"><LatinRuns text={"✓ أحسنت! أول ذكر ← a · ثم ← the"} /></div>}
           </div>
         );
       })}
@@ -1152,10 +1137,10 @@ function Challenge() {
                 className="mt-2 w-full rounded-lg border-2 border-slate-200 bg-slate-50 px-2 py-1 text-sm font-bold text-slate-700 outline-none focus:border-indigo-400"
               >
                 <option value="">اختر…</option>
-                <option value="s">Subject · الفاعل</option>
+                <option value="s" dir="ltr">Subject · الفاعل</option>
                 <option value="be">Verb to be</option>
-                <option value="art">Article · الأداة</option>
-                <option value="noun">Noun · الاسم</option>
+                <option value="art" dir="ltr">Article · الأداة</option>
+                <option value="noun" dir="ltr">Noun · الاسم</option>
               </select>
               {labels[i] && (
                 <div className={`mt-1.5 text-xs font-bold ${labels[i] === p.role ? "text-emerald-600" : "text-rose-600"}`}>
@@ -1178,8 +1163,8 @@ function Closing({ onExit }: { onExit: () => void }) {
       <div className="relative">
         <div className="pop text-7xl anim-drift">🏆</div>
         <div className="pop pop-1 mt-3 text-sm font-bold text-slate-400">⭐ قاعدة اليوم</div>
-        <h2 className="pop pop-2 font-head mt-2 text-3xl font-bold md:text-4xl">عندما يأتي اسم مفرد بعد Verb to be</h2>
-        <p className="pop pop-3 mt-3 text-lg text-slate-300">تذكّر دائمًا: a / an + Noun</p>
+        <h2 className="pop pop-2 font-head mt-2 text-3xl font-bold md:text-4xl"><LatinRuns text={"عندما يأتي اسم مفرد بعد Verb to be"} /></h2>
+        <p className="pop pop-3 mt-3 text-lg text-slate-300"><LatinRuns text={"تذكّر دائمًا: a / an + Noun"} /></p>
         <div className="pop pop-4 mt-8 grid gap-3 sm:grid-cols-3">
           {[
             { be: "I am", art: "a", noun: "student" },

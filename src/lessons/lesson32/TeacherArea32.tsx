@@ -1,3 +1,5 @@
+import { Solutions32 } from "./TestArea32";
+import TeacherWorkspace, { TeacherSection } from "../../shared/TeacherWorkspace";
 // ============================================================
 // منطقة المعلم — الدرس 32 (محمية بكلمة مرور المعلم)
 // ============================================================
@@ -56,17 +58,22 @@ export default function TeacherArea32({ unlocked, onUnlockChange, onGoSolutions 
 
   return (
     <div className="space-y-4" data-area="l32-teacher-body">
-      {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
-      <FinalTestAnswerKey lesson={32} questions={FINAL_TESTS[32]} accent="bg-emerald-700" />
-      <header className="flex flex-wrap items-center justify-between gap-2 rounded-3xl border-2 border-slate-200 bg-white p-4">
+<header className="flex flex-wrap items-center justify-between gap-2 rounded-3xl border-2 border-slate-200 bg-white p-4">
         <h2 className="font-head text-xl font-black text-slate-900"><Rich text="👩‍🏫 منطقة المعلم — الدرس 32" /></h2>
         <div className="flex flex-wrap gap-2">
           <button type="button" onClick={onGoSolutions} className={`rounded-xl border-2 border-slate-300 bg-white px-3 py-1.5 text-xs font-black text-slate-700 ${FOCUS32}`}><Rich text="🔑 حلول الاختبار" /></button>
           <button type="button" onClick={() => onUnlockChange(false)} className={`rounded-xl bg-slate-100 px-3 py-1.5 text-xs font-black text-slate-700 ${FOCUS32}`}><Rich text="🔒 قفل منطقة المعلم" /></button>
         </div>
       </header>
+<TeacherWorkspace lesson={32}>
+      {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
+      <TeacherSection title="مفتاح الاختبار النهائي" category="assessment">
+<FinalTestAnswerKey lesson={32} questions={FINAL_TESTS[32]} accent="bg-emerald-700" />
+</TeacherSection>
 
-      <Card title={TEACHER_32_OVERVIEW.title}>
+
+      <TeacherSection title="نظرة عامة" category="teaching">
+<Card title={TEACHER_32_OVERVIEW.title}>
         <Sub head="أهداف الدرس">
           <ul className="list-disc space-y-1 ps-5 text-sm font-bold text-slate-800">{TEACHER_32_OVERVIEW.objectives.map((t, i) => <li key={i}><Rich text={t} /></li>)}</ul>
         </Sub>
@@ -77,12 +84,16 @@ export default function TeacherArea32({ unlocked, onUnlockChange, onGoSolutions 
           <ul className="list-disc space-y-1 ps-5 text-sm font-bold text-slate-700">{TEACHER_32_OVERVIEW.core.map((t, i) => <li key={i}><Rich text={t} /></li>)}</ul>
         </Sub>
       </Card>
+</TeacherSection>
 
-      <Card title="⏱️ توزيع الحصة (تقريبي)">
+      <TeacherSection title="توزيع الحصة" category="teaching">
+<Card title="⏱️ توزيع الحصة (تقريبي)">
         <ol className="list-decimal space-y-1 ps-5 text-sm font-bold text-slate-700">{TEACHER_32_TIMING.map((t, i) => <li key={i}><Rich text={t} /></li>)}</ol>
       </Card>
+</TeacherSection>
 
-      <Card title="🧭 ملاحظات التدريس">
+      <TeacherSection title="ملاحظات التدريس" category="teaching">
+<Card title="🧭 ملاحظات التدريس">
         <p className="text-xs font-black text-amber-900"><PlatformTag /> <Rich text="كل شرح في هذه المنطقة من كتابة المنصة، إلا الاقتباس الموسوم «المصدر»." /></p>
         {TEACHER_32_NOTES.map((n, i) => (
           <Sub key={i} head={n.head}>
@@ -90,8 +101,10 @@ export default function TeacherArea32({ unlocked, onUnlockChange, onGoSolutions 
           </Sub>
         ))}
       </Card>
+</TeacherSection>
 
-      <Card title="🔑 حلول تمارين المصدر (مرجع المعلم)">
+      <TeacherSection title="حلول تمارين المصدر" category="source">
+<Card title="🔑 حلول تمارين المصدر (مرجع المعلم)">
         <p className="text-xs font-bold text-slate-600"><Rich text="الإجابات المعتمدة هي إجابات المصدر. الأخطاء المتعمدة تُدرَّس كتصحيح، ولا تُغيَّر صيغها." /></p>
         {TEACHER_32_SOLUTIONS.map((s, i) => (
           <Sub key={i} head={s.head}>
@@ -99,8 +112,10 @@ export default function TeacherArea32({ unlocked, onUnlockChange, onGoSolutions 
           </Sub>
         ))}
       </Card>
+</TeacherSection>
 
-      <Card title="📊 rubrics للتقييم">
+      <TeacherSection title="سلالم التقييم" category="teaching">
+<Card title="📊 rubrics للتقييم">
         {TEACHER_32_RUBRICS.map((r, i) => (
           <Sub key={i} head={r.head}>
             <table className="w-full border-collapse text-sm">
@@ -116,16 +131,20 @@ export default function TeacherArea32({ unlocked, onUnlockChange, onGoSolutions 
           </Sub>
         ))}
       </Card>
+</TeacherSection>
 
-      <Card title="⚠️ الأخطاء الشائعة وعلاجها">
+      <TeacherSection title="الأخطاء الشائعة" category="teaching">
+<Card title="⚠️ الأخطاء الشائعة وعلاجها">
         {TEACHER_32_MISTAKES.map((m, i) => (
           <Sub key={i} head={m.head}>
             <ul className="list-disc space-y-1 ps-5 text-sm font-semibold text-slate-700">{m.lines.map((l, j) => <li key={j}><Rich text={l} /></li>)}</ul>
           </Sub>
         ))}
       </Card>
+</TeacherSection>
 
-      <Card title="🪤 الأخطاء المتعمدة في المصدر (12) — تُدرَّس كتصحيح">
+      <TeacherSection title="تصحيح أخطاء المصدر" category="source">
+<Card title="🪤 الأخطاء المتعمدة في المصدر (12) — تُدرَّس كتصحيح">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[32rem] border-collapse text-sm">
             <caption className="sr-only">الأخطاء المتعمدة في المصدر مع التصحيح</caption>
@@ -150,8 +169,10 @@ export default function TeacherArea32({ unlocked, onUnlockChange, onGoSolutions 
           </table>
         </div>
       </Card>
+</TeacherSection>
 
-      <Card title="🧪 دليل الاختبار للمعلم">
+      <TeacherSection title="دليل الاختبار" category="teaching">
+<Card title="🧪 دليل الاختبار للمعلم">
         {TEACHER_32_TEST_GUIDE.map((t, i) => (
           <Sub key={i} head={t.head}>
             <ul className="list-disc space-y-1 ps-5 text-sm font-semibold text-slate-700">{t.lines.map((l, j) => <li key={j}><Rich text={l} /></li>)}</ul>
@@ -159,16 +180,20 @@ export default function TeacherArea32({ unlocked, onUnlockChange, onGoSolutions 
         ))}
         <p className="text-xs font-bold text-slate-600"><Rich text="توزيع الأسئلة: 6 Basic · 7 Medium · 4 Advanced · 3 Thinking، كلها جديدة وليست نسخًا من أسئلة المصدر." /></p>
       </Card>
+</TeacherSection>
 
-      <Card title="🛠️ خطة المعالجة">
+      <TeacherSection title="خطة المعالجة" category="teaching">
+<Card title="🛠️ خطة المعالجة">
         {TEACHER_32_REMEDIATION.map((t, i) => (
           <Sub key={i} head={t.head}>
             <ul className="list-disc space-y-1 ps-5 text-sm font-semibold text-slate-700">{t.lines.map((l, j) => <li key={j}><Rich text={l} /></li>)}</ul>
           </Sub>
         ))}
       </Card>
+</TeacherSection>
 
-      <Card title="📜 فهرس المصدر الحرفي للمعلم">
+      <TeacherSection title="فهرس المصدر" category="source">
+<Card title="📜 فهرس المصدر الحرفي للمعلم">
         <p className="text-sm font-bold text-slate-700"><Rich text={TEACHER_32_SOURCE_NOTE} /></p>
         <p className="text-xs font-bold text-slate-500"><Rich text={`${SOURCE_NUMBERED_COUNT_32} قسمًا مرقّمًا · ${SOURCE_LEDGER_COUNT_32} وحدة في السجل.`} /></p>
         <ol className="space-y-1">
@@ -186,7 +211,10 @@ export default function TeacherArea32({ unlocked, onUnlockChange, onGoSolutions 
           ))}
         </ol>
       </Card>
-    </div>
+</TeacherSection>
+    <TeacherSection title="مفتاح منطقة الاختبارات — 20 سؤالًا" category="assessment"><Solutions32 unlocked={true} onGoTest={onGoSolutions} onGoTeacher={onGoSolutions} /></TeacherSection>
+</TeacherWorkspace>
+</div>
   );
 }
 

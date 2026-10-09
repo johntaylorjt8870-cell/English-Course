@@ -169,7 +169,7 @@ ok(view.includes("data-test-q="), "question cards rendered with data-test-q mark
 // ---------- 9) حلول الاختبارات ----------
 ok(view.includes("export function Solutions27"), "Solutions27 component exported");
 ok(view.includes("data-solution="), "solution cards rendered with data-solution markers");
-ok(view.includes("sol.explanation") && view.includes("sol.trap"), "solutions explain reasoning and trap misconceptions");
+ok(view.includes("sol.why") && view.includes("sol.trap"), "solutions explain reasoning and trap misconceptions");
 ok(view.includes("unlocked: boolean") && view.includes("unlocked={testUnlocked || teacherUnlocked}"), "solutions gated until test submission or teacher unlock");
 
 // ---------- 10) منطقة المعلم ----------

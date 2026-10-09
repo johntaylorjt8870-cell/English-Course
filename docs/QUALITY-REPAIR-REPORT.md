@@ -6,7 +6,7 @@
 
 - Base: `1f879216d96edea741e4b28db8b58449bb98adaf`, the merge of PR #40. `origin/main` was fetched and matched this base.
 - Session branch: `arena/8744e70e-english-course` (Arena fixes the session branch).
-- One new draft PR; do not merge or delete the branch.
+- Draft PR: https://github.com/johntaylorjt8870-cell/English-Course/pull/41 — do not merge or delete the branch.
 - No lesson data bank, source ledger, source mapping, or textbook answer was changed.
 
 ## Diagnosis before implementation

@@ -132,6 +132,9 @@ for (const n of LESSON_IDS) {
     } else if (q.type === "typed") {
       ok(Array.isArray(q.accept) && q.accept.length >= 1 && q.accept.every((a) => a.trim().length > 0), `${tag}: إجابات مقبولة موجودة`);
       ok(typeof q.before === "string" && typeof q.after === "string" && (q.before.trim() || q.after.trim()), `${tag}: سياق الإجابة المكتوبة موجود`);
+      // قاعدة دائمة: الفراغ المكتوب يجب أن يسمّي الفعل/الصيغة المطلوبة بين قوسين،
+      // وإلا صار السؤال تخمينًا للمفردة لا قياسًا للصيغة (عيب تحقّق في بنك 27–32).
+      ok(/\([^)]{2,}\)/.test(q.ar), `${tag}: سؤال الإجابة المكتوبة يسمّي الفعل المطلوب بين قوسين`);
     } else {
       ok(false, `${tag}: نوع سؤال غير معروف (${q.type})`);
     }

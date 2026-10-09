@@ -1,5 +1,5 @@
 {
-  "sourceDataFingerprint": "d13ae4747159f21481d0cd7845fd1972a0a3510a96be6323ab04cc7d091501cb",
+  "sourceDataFingerprint": "867245b9d81f9632a8f09ebcdc7bf96359d1ae2dbefb702a910857925ad55c54",
   "scope": "All JSX interactive control definitions in src/**/*.tsx, including delegated props and source bindings. A template is NOT every runtime data-bound activity instance. No behavioral claim follows from discovery.",
   "records": [
     {
@@ -6187,7 +6187,7 @@
           "id": "src/lessons/lesson13/Lesson13.tsx#Closing/1",
           "tag": "button",
           "type": null,
-          "line": 1431,
+          "line": 1429,
           "column": 11,
           "handlers": [
             {
@@ -6221,7 +6221,7 @@
           "id": "src/lessons/lesson13/Lesson13.tsx#SlideView/1",
           "tag": "Closing",
           "type": null,
-          "line": 1615,
+          "line": 1613,
           "column": 14,
           "handlers": [
             {
@@ -6255,7 +6255,7 @@
           "id": "src/lessons/lesson13/Lesson13.tsx#Rail/1",
           "tag": "button",
           "type": null,
-          "line": 1659,
+          "line": 1657,
           "column": 9,
           "handlers": [
             {
@@ -6276,7 +6276,7 @@
           "id": "src/lessons/lesson13/Lesson13.tsx#Rail/2",
           "tag": "button",
           "type": null,
-          "line": 1672,
+          "line": 1670,
           "column": 17,
           "handlers": [
             {
@@ -6313,7 +6313,7 @@
           "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/1",
           "tag": "Rail",
           "type": null,
-          "line": 1736,
+          "line": 1734,
           "column": 11,
           "handlers": [
             {
@@ -6334,7 +6334,7 @@
           "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/2",
           "tag": "button",
           "type": null,
-          "line": 1740,
+          "line": 1738,
           "column": 13,
           "handlers": [
             {
@@ -6355,7 +6355,7 @@
           "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/3",
           "tag": "SlideView",
           "type": null,
-          "line": 1757,
+          "line": 1755,
           "column": 15,
           "handlers": [
             {
@@ -6376,7 +6376,7 @@
           "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/4",
           "tag": "button",
           "type": null,
-          "line": 1762,
+          "line": 1760,
           "column": 15,
           "handlers": [
             {
@@ -6397,7 +6397,7 @@
           "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/5",
           "tag": "button",
           "type": null,
-          "line": 1766,
+          "line": 1764,
           "column": 15,
           "handlers": [
             {
@@ -6418,7 +6418,7 @@
           "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/6",
           "tag": "div",
           "type": null,
-          "line": 1774,
+          "line": 1772,
           "column": 9,
           "handlers": [
             {
@@ -6439,7 +6439,7 @@
           "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/7",
           "tag": "div",
           "type": null,
-          "line": 1776,
+          "line": 1774,
           "column": 11,
           "handlers": [
             {
@@ -6460,7 +6460,7 @@
           "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/8",
           "tag": "Rail",
           "type": null,
-          "line": 1777,
+          "line": 1775,
           "column": 13,
           "handlers": [
             {
@@ -13584,26 +13584,68 @@
         {
           "id": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "button",
-          "type": null,
-          "line": 339,
+          "type": "\"button\"",
+          "line": 342,
           "column": 19,
           "handlers": [
             {
               "event": "onClick",
-              "expression": "{() => setPicked((p) => ({ ...p, [qi]: oi }))}"
+              "expression": "{() => { if (!checked) setPicked((p) => ({ ...p, [qi]: oi })); }}"
             }
           ],
-          "labelEvidence": "{opt} {chosen !== undefined && isCorrect && \" ✓\"} {chosen !== undefined && isChosen && !isCorrect && \" ✕\"}",
-          "ariaLabel": null,
+          "labelEvidence": "{opt} {checked && chosen !== undefined && isCorrect && \" ✓\"} {checked && chosen !== undefined && isChosen && !isCorrect && \" ✕\"}",
+          "ariaLabel": "{`${qi + 1}: ${opt}`}",
           "dataBindings": [
             "q.options",
             "ex.questions"
           ],
           "nativeKeyboard": true,
           "keyboardHandler": false,
-          "checkEvidence": false,
+          "checkEvidence": true,
           "resetEvidence": false,
-          "fingerprint": "e588cbb86272cbd9"
+          "fingerprint": "0e2fa48aea67b2df"
+        },
+        {
+          "id": "src/lessons/lesson2/Lesson2.tsx#MC/2",
+          "tag": "button",
+          "type": "\"button\"",
+          "line": 359,
+          "column": 9,
+          "handlers": [
+            {
+              "event": "onClick",
+              "expression": "{() => { if (complete && !checked) setChecked(true); }}"
+            }
+          ],
+          "labelEvidence": "تحقق من الإجابات",
+          "ariaLabel": null,
+          "dataBindings": [],
+          "nativeKeyboard": true,
+          "keyboardHandler": false,
+          "checkEvidence": true,
+          "resetEvidence": false,
+          "fingerprint": "b488a20f5c76bb97"
+        },
+        {
+          "id": "src/lessons/lesson2/Lesson2.tsx#MC/3",
+          "tag": "button",
+          "type": "\"button\"",
+          "line": 360,
+          "column": 9,
+          "handlers": [
+            {
+              "event": "onClick",
+              "expression": "{() => { setPicked({}); setChecked(false); }}"
+            }
+          ],
+          "labelEvidence": "إعادة التمرين",
+          "ariaLabel": null,
+          "dataBindings": [],
+          "nativeKeyboard": true,
+          "keyboardHandler": false,
+          "checkEvidence": true,
+          "resetEvidence": true,
+          "fingerprint": "e75d8ddac377f87b"
         }
       ],
       "feedbackTiming": "UNVERIFIED",
@@ -13621,26 +13663,68 @@
         {
           "id": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "button",
-          "type": null,
-          "line": 393,
+          "type": "\"button\"",
+          "line": 404,
           "column": 19,
           "handlers": [
             {
               "event": "onClick",
-              "expression": "{() => setPicked((p) => ({ ...p, [qi]: opt }))}"
+              "expression": "{() => { if (!checked) setPicked((p) => ({ ...p, [qi]: opt })); }}"
             }
           ],
           "labelEvidence": "{opt}",
-          "ariaLabel": null,
+          "ariaLabel": "{`${qi + 1}: ${opt}`}",
           "dataBindings": [
             "ex.options",
             "ex.questions"
           ],
           "nativeKeyboard": true,
           "keyboardHandler": false,
-          "checkEvidence": false,
+          "checkEvidence": true,
           "resetEvidence": false,
-          "fingerprint": "f0330e69183e391a"
+          "fingerprint": "639f0457aa4e5735"
+        },
+        {
+          "id": "src/lessons/lesson2/Lesson2.tsx#Fill/2",
+          "tag": "button",
+          "type": "\"button\"",
+          "line": 419,
+          "column": 9,
+          "handlers": [
+            {
+              "event": "onClick",
+              "expression": "{() => { if (complete && !checked) setChecked(true); }}"
+            }
+          ],
+          "labelEvidence": "تحقق من الإجابات",
+          "ariaLabel": null,
+          "dataBindings": [],
+          "nativeKeyboard": true,
+          "keyboardHandler": false,
+          "checkEvidence": true,
+          "resetEvidence": false,
+          "fingerprint": "b488a20f5c76bb97"
+        },
+        {
+          "id": "src/lessons/lesson2/Lesson2.tsx#Fill/3",
+          "tag": "button",
+          "type": "\"button\"",
+          "line": 420,
+          "column": 9,
+          "handlers": [
+            {
+              "event": "onClick",
+              "expression": "{() => { setPicked({}); setChecked(false); }}"
+            }
+          ],
+          "labelEvidence": "إعادة التمرين",
+          "ariaLabel": null,
+          "dataBindings": [],
+          "nativeKeyboard": true,
+          "keyboardHandler": false,
+          "checkEvidence": true,
+          "resetEvidence": true,
+          "fingerprint": "e75d8ddac377f87b"
         }
       ],
       "feedbackTiming": "UNVERIFIED",
@@ -13658,8 +13742,8 @@
         {
           "id": "src/lessons/lesson2/Lesson2.tsx#Fix/1",
           "tag": "button",
-          "type": null,
-          "line": 423,
+          "type": "\"button\"",
+          "line": 440,
           "column": 15,
           "handlers": [
             {
@@ -13668,7 +13752,7 @@
             }
           ],
           "labelEvidence": "أظهر التصحيح",
-          "ariaLabel": null,
+          "ariaLabel": "{`كشف إجابة البند ${qi + 1}`}",
           "dataBindings": [
             "ex.questions"
           ],
@@ -13676,7 +13760,28 @@
           "keyboardHandler": false,
           "checkEvidence": true,
           "resetEvidence": false,
-          "fingerprint": "4a324e40bae14377"
+          "fingerprint": "5c4557574118c8ff"
+        },
+        {
+          "id": "src/lessons/lesson2/Lesson2.tsx#Fix/2",
+          "tag": "button",
+          "type": "\"button\"",
+          "line": 450,
+          "column": 7,
+          "handlers": [
+            {
+              "event": "onClick",
+              "expression": "{() => setShown({})}"
+            }
+          ],
+          "labelEvidence": "إعادة التمرين",
+          "ariaLabel": null,
+          "dataBindings": [],
+          "nativeKeyboard": true,
+          "keyboardHandler": false,
+          "checkEvidence": false,
+          "resetEvidence": true,
+          "fingerprint": "7d43c6ec3dc35e36"
         }
       ],
       "feedbackTiming": "UNVERIFIED",
@@ -13694,8 +13799,8 @@
         {
           "id": "src/lessons/lesson2/Lesson2.tsx#Transform/1",
           "tag": "button",
-          "type": null,
-          "line": 454,
+          "type": "\"button\"",
+          "line": 472,
           "column": 17,
           "handlers": [
             {
@@ -13704,7 +13809,7 @@
             }
           ],
           "labelEvidence": "اكشف الإجابة",
-          "ariaLabel": null,
+          "ariaLabel": "{`كشف إجابة البند ${qi + 1}`}",
           "dataBindings": [
             "ex.questions"
           ],
@@ -13712,7 +13817,28 @@
           "keyboardHandler": false,
           "checkEvidence": false,
           "resetEvidence": false,
-          "fingerprint": "19188cf62059c0bd"
+          "fingerprint": "a1fe03d59c4bf5b8"
+        },
+        {
+          "id": "src/lessons/lesson2/Lesson2.tsx#Transform/2",
+          "tag": "button",
+          "type": "\"button\"",
+          "line": 483,
+          "column": 7,
+          "handlers": [
+            {
+              "event": "onClick",
+              "expression": "{() => setShown({})}"
+            }
+          ],
+          "labelEvidence": "إعادة التمرين",
+          "ariaLabel": null,
+          "dataBindings": [],
+          "nativeKeyboard": true,
+          "keyboardHandler": false,
+          "checkEvidence": false,
+          "resetEvidence": true,
+          "fingerprint": "7d43c6ec3dc35e36"
         }
       ],
       "feedbackTiming": "UNVERIFIED",
@@ -13731,7 +13857,7 @@
           "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/1",
           "tag": "button",
           "type": null,
-          "line": 641,
+          "line": 660,
           "column": 9,
           "handlers": [
             {
@@ -13752,7 +13878,7 @@
           "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/2",
           "tag": "button",
           "type": null,
-          "line": 655,
+          "line": 674,
           "column": 9,
           "handlers": [
             {
@@ -13773,7 +13899,7 @@
           "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/3",
           "tag": "button",
           "type": null,
-          "line": 677,
+          "line": 696,
           "column": 9,
           "handlers": [
             {
@@ -13794,7 +13920,7 @@
           "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/4",
           "tag": "button",
           "type": null,
-          "line": 687,
+          "line": 706,
           "column": 13,
           "handlers": [
             {
@@ -13817,7 +13943,7 @@
           "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/5",
           "tag": "button",
           "type": null,
-          "line": 700,
+          "line": 719,
           "column": 11,
           "handlers": [
             {
@@ -13838,7 +13964,7 @@
           "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/6",
           "tag": "div",
           "type": null,
-          "line": 714,
+          "line": 733,
           "column": 9,
           "handlers": [
             {
@@ -13859,7 +13985,7 @@
           "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/7",
           "tag": "div",
           "type": null,
-          "line": 716,
+          "line": 735,
           "column": 11,
           "handlers": [
             {
@@ -13880,7 +14006,7 @@
           "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/8",
           "tag": "button",
           "type": null,
-          "line": 722,
+          "line": 741,
           "column": 15,
           "handlers": [
             {
@@ -13901,7 +14027,7 @@
           "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/9",
           "tag": "button",
           "type": null,
-          "line": 729,
+          "line": 748,
           "column": 19,
           "handlers": [
             {
@@ -13919,6 +14045,56 @@
           "checkEvidence": false,
           "resetEvidence": false,
           "fingerprint": "c734e0bd5d1c43cc"
+        }
+      ],
+      "feedbackTiming": "UNVERIFIED",
+      "resetBehavior": "UNVERIFIED",
+      "behavioralCoverage": "UNVERIFIED",
+      "reviewStatus": "open"
+    },
+    {
+      "id": "src/lessons/lesson2/TeacherArea2.tsx#TeacherArea2",
+      "lesson": 2,
+      "component": "TeacherArea2",
+      "source": "src/lessons/lesson2/TeacherArea2.tsx",
+      "kind": "lesson-control-template",
+      "sites": [
+        {
+          "id": "src/lessons/lesson2/TeacherArea2.tsx#TeacherArea2/1",
+          "tag": "select",
+          "type": null,
+          "line": 11,
+          "column": 7,
+          "handlers": [
+            {
+              "event": "onChange",
+              "expression": "{e => setSelected(e.target.value)}"
+            }
+          ],
+          "labelEvidence": "{LESSON2_REFERENCES.map(q => <option key={q.id} value={q.id}>{q.reference} — البند {q.localOrdinal}</option>)}",
+          "ariaLabel": "\"التمرين والبند\"",
+          "dataBindings": [],
+          "nativeKeyboard": true,
+          "keyboardHandler": false,
+          "checkEvidence": false,
+          "resetEvidence": false,
+          "fingerprint": "516783417ae8f6c6"
+        },
+        {
+          "id": "src/lessons/lesson2/TeacherArea2.tsx#TeacherArea2/2",
+          "tag": "details",
+          "type": null,
+          "line": 20,
+          "column": 7,
+          "handlers": [],
+          "labelEvidence": "<summary className=\"cursor-pointer font-bold\">خطوات الحل وبيانات السؤال الأصلية</summary> {q.originalHint && <p className=\"my-2\"><LatinRuns text={q.originalHint} /></p>} <p className=\"my-2\"><span dir=\"ltr\">Platform Explanation</span></p> <p><LatinRuns text={q.platformExplanation} /></p> <p className=\"my-2\"><LatinRuns text={q.completed} /></p> <dl>{Object.entries(q.original).map(([name, value]) => <div key={name} className=\"my-2\"> <dt dir=\"ltr\" cl",
+          "ariaLabel": null,
+          "dataBindings": [],
+          "nativeKeyboard": true,
+          "keyboardHandler": false,
+          "checkEvidence": false,
+          "resetEvidence": false,
+          "fingerprint": "b3792dc5ce973bf3"
         }
       ],
       "feedbackTiming": "UNVERIFIED",
@@ -19717,7 +19893,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#MeaningDetector/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 906,
+          "line": 905,
           "column": 11,
           "handlers": [
             {
@@ -19753,7 +19929,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#Drill/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 993,
+          "line": 991,
           "column": 21,
           "handlers": [
             {
@@ -19777,7 +19953,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#Drill/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1019,
+          "line": 1017,
           "column": 9,
           "handlers": [
             {
@@ -19798,7 +19974,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#Drill/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1035,
+          "line": 1033,
           "column": 13,
           "handlers": [
             {
@@ -19832,7 +20008,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#CaseBoard/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1110,
+          "line": 1108,
           "column": 13,
           "handlers": [
             {
@@ -19855,7 +20031,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#CaseBoard/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1144,
+          "line": 1142,
           "column": 9,
           "handlers": [
             {
@@ -19876,7 +20052,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#CaseBoard/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1154,
+          "line": 1152,
           "column": 11,
           "handlers": [
             {
@@ -19910,7 +20086,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#MeaningChallenge/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1204,
+          "line": 1202,
           "column": 21,
           "handlers": [
             {
@@ -19934,7 +20110,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#MeaningChallenge/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1230,
+          "line": 1228,
           "column": 9,
           "handlers": [
             {
@@ -19955,7 +20131,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#MeaningChallenge/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1237,
+          "line": 1235,
           "column": 13,
           "handlers": [
             {
@@ -19989,7 +20165,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#MiniTest/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1275,
+          "line": 1273,
           "column": 21,
           "handlers": [
             {
@@ -20013,7 +20189,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#MiniTest/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1300,
+          "line": 1298,
           "column": 9,
           "handlers": [
             {
@@ -20034,7 +20210,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#MiniTest/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1312,
+          "line": 1310,
           "column": 13,
           "handlers": [
             {
@@ -20068,7 +20244,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#MissionDeck/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1345,
+          "line": 1343,
           "column": 15,
           "handlers": [
             {
@@ -20091,7 +20267,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#MissionDeck/2",
           "tag": "textarea",
           "type": null,
-          "line": 1375,
+          "line": 1373,
           "column": 11,
           "handlers": [
             {
@@ -20112,7 +20288,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#MissionDeck/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1385,
+          "line": 1383,
           "column": 13,
           "handlers": [
             {
@@ -20146,7 +20322,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#Lesson24/1",
           "tag": "Hero",
           "type": null,
-          "line": 1525,
+          "line": 1523,
           "column": 11,
           "handlers": [
             {
@@ -20167,7 +20343,7 @@
           "id": "src/lessons/lesson24/Lesson24.tsx#Lesson24/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1804,
+          "line": 1802,
           "column": 13,
           "handlers": [
             {
@@ -41821,7 +41997,7 @@
           "keyboardHandler": false,
           "checkEvidence": false,
           "resetEvidence": false,
-          "fingerprint": "e9dbdb11338d7d6f"
+          "fingerprint": "41470867b4f374fb"
         }
       ],
       "feedbackTiming": "UNVERIFIED",
@@ -41840,7 +42016,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#AThenThe/1",
           "tag": "button",
           "type": null,
-          "line": 380,
+          "line": 377,
           "column": 9,
           "handlers": [
             {
@@ -41861,7 +42037,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#AThenThe/2",
           "tag": "button",
           "type": null,
-          "line": 384,
+          "line": 381,
           "column": 11,
           "handlers": [
             {
@@ -41895,7 +42071,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Machine/1",
           "tag": "button",
           "type": null,
-          "line": 460,
+          "line": 457,
           "column": 15,
           "handlers": [
             {
@@ -41918,7 +42094,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Machine/2",
           "tag": "button",
           "type": null,
-          "line": 470,
+          "line": 467,
           "column": 15,
           "handlers": [
             {
@@ -41941,7 +42117,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Machine/3",
           "tag": "button",
           "type": null,
-          "line": 485,
+          "line": 482,
           "column": 11,
           "handlers": [
             {
@@ -41964,7 +42140,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Machine/4",
           "tag": "button",
           "type": null,
-          "line": 493,
+          "line": 490,
           "column": 9,
           "handlers": [
             {
@@ -41998,7 +42174,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#NounSort/1",
           "tag": "button",
           "type": null,
-          "line": 817,
+          "line": 813,
           "column": 19,
           "handlers": [
             {
@@ -42035,7 +42211,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#AAnEx/1",
           "tag": "button",
           "type": null,
-          "line": 870,
+          "line": 866,
           "column": 17,
           "handlers": [
             {
@@ -42072,7 +42248,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#FixEx/1",
           "tag": "button",
           "type": null,
-          "line": 903,
+          "line": 899,
           "column": 13,
           "handlers": [
             {
@@ -42108,7 +42284,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#BestEx/1",
           "tag": "button",
           "type": null,
-          "line": 935,
+          "line": 931,
           "column": 19,
           "handlers": [
             {
@@ -42145,7 +42321,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#ATheEx/1",
           "tag": "button",
           "type": null,
-          "line": 976,
+          "line": 972,
           "column": 19,
           "handlers": [
             {
@@ -42182,7 +42358,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#BuildEx/1",
           "tag": "button",
           "type": null,
-          "line": 1016,
+          "line": 1012,
           "column": 19,
           "handlers": [
             {
@@ -42219,7 +42395,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Challenge/1",
           "tag": "button",
           "type": null,
-          "line": 1084,
+          "line": 1080,
           "column": 21,
           "handlers": [
             {
@@ -42243,7 +42419,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Challenge/2",
           "tag": "select",
           "type": null,
-          "line": 1124,
+          "line": 1120,
           "column": 15,
           "handlers": [
             {
@@ -42279,7 +42455,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Closing/1",
           "tag": "button",
           "type": null,
-          "line": 1174,
+          "line": 1170,
           "column": 11,
           "handlers": [
             {
@@ -42313,7 +42489,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#SlideView/1",
           "tag": "Closing",
           "type": null,
-          "line": 1218,
+          "line": 1214,
           "column": 14,
           "handlers": [
             {
@@ -42347,7 +42523,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Rail/1",
           "tag": "button",
           "type": null,
-          "line": 1275,
+          "line": 1271,
           "column": 9,
           "handlers": [
             {
@@ -42368,7 +42544,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Rail/2",
           "tag": "button",
           "type": null,
-          "line": 1288,
+          "line": 1284,
           "column": 17,
           "handlers": [
             {
@@ -42405,7 +42581,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/1",
           "tag": "Rail",
           "type": null,
-          "line": 1358,
+          "line": 1354,
           "column": 11,
           "handlers": [
             {
@@ -42426,7 +42602,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/2",
           "tag": "button",
           "type": null,
-          "line": 1363,
+          "line": 1359,
           "column": 13,
           "handlers": [
             {
@@ -42447,7 +42623,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/3",
           "tag": "SlideView",
           "type": null,
-          "line": 1381,
+          "line": 1377,
           "column": 15,
           "handlers": [
             {
@@ -42468,7 +42644,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/4",
           "tag": "button",
           "type": null,
-          "line": 1387,
+          "line": 1383,
           "column": 15,
           "handlers": [
             {
@@ -42489,7 +42665,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/5",
           "tag": "button",
           "type": null,
-          "line": 1391,
+          "line": 1387,
           "column": 15,
           "handlers": [
             {
@@ -42510,7 +42686,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/6",
           "tag": "div",
           "type": null,
-          "line": 1400,
+          "line": 1396,
           "column": 9,
           "handlers": [
             {
@@ -42531,7 +42707,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/7",
           "tag": "div",
           "type": null,
-          "line": 1402,
+          "line": 1398,
           "column": 11,
           "handlers": [
             {
@@ -42552,7 +42728,7 @@
           "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/8",
           "tag": "Rail",
           "type": null,
-          "line": 1403,
+          "line": 1399,
           "column": 13,
           "handlers": [
             {
@@ -47287,7 +47463,7 @@
           "id": "src/shared/FinalQuiz.tsx#FinalQuiz/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 104,
+          "line": 105,
           "column": 21,
           "handlers": [
             {
@@ -47311,7 +47487,7 @@
           "id": "src/shared/FinalQuiz.tsx#FinalQuiz/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 136,
+          "line": 137,
           "column": 15,
           "handlers": [
             {
@@ -47332,7 +47508,7 @@
           "id": "src/shared/FinalQuiz.tsx#FinalQuiz/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 145,
+          "line": 146,
           "column": 15,
           "handlers": [
             {
@@ -47353,7 +47529,7 @@
           "id": "src/shared/FinalQuiz.tsx#FinalQuiz/4",
           "tag": "button",
           "type": "\"button\"",
-          "line": 164,
+          "line": 165,
           "column": 15,
           "handlers": [
             {
@@ -47809,7 +47985,7 @@
           "id": "src/shared/TeachersSpace.tsx#TeachersSpace/1",
           "tag": "form",
           "type": null,
-          "line": 74,
+          "line": 76,
           "column": 9,
           "handlers": [
             {
@@ -47830,7 +48006,7 @@
           "id": "src/shared/TeachersSpace.tsx#TeachersSpace/2",
           "tag": "input",
           "type": "\"password\"",
-          "line": 81,
+          "line": 83,
           "column": 11,
           "handlers": [
             {
@@ -47851,7 +48027,7 @@
           "id": "src/shared/TeachersSpace.tsx#TeachersSpace/3",
           "tag": "button",
           "type": "\"submit\"",
-          "line": 94,
+          "line": 96,
           "column": 11,
           "handlers": [],
           "labelEvidence": "🔓 فتح المساحة",
@@ -47867,7 +48043,7 @@
           "id": "src/shared/TeachersSpace.tsx#TeachersSpace/4",
           "tag": "details",
           "type": null,
-          "line": 158,
+          "line": 161,
           "column": 13,
           "handlers": [],
           "labelEvidence": "<summary className=\"cursor-pointer font-bold\">السؤال والخيارات والتفسير · <span dir=\"ltr\">Platform Explanation</span></summary> {/* كل الخيارات كما هي — الإجابة الصحيحة موضحة بعلامة ✓ فقط هنا في فضاء المعلم */} <div className=\"mt-3 grid gap-2 pr-11 sm:grid-cols-2\"> {q.opts.map((o, oi) => { const isA = oi === q.answer; return ( <div key={oi} dir=\"ltr\" className={`rounded-xl border-2 px-3 py-2 text-left font-en text-base font-bold ${ isA ? \"border-",

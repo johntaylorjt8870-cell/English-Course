@@ -2532,10 +2532,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "He",
+          "type": "button",
+          "text": "1: He",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "1: He",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2543,10 +2543,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "She",
+          "type": "button",
+          "text": "1: She",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "1: She",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2554,10 +2554,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "They",
+          "type": "button",
+          "text": "1: They",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "1: They",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2565,10 +2565,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "He",
+          "type": "button",
+          "text": "2: He",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "2: He",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2576,10 +2576,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "She",
+          "type": "button",
+          "text": "2: She",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "2: She",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2587,10 +2587,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "It",
+          "type": "button",
+          "text": "2: It",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "2: It",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2598,10 +2598,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "He",
+          "type": "button",
+          "text": "3: He",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "3: He",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2609,10 +2609,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "We",
+          "type": "button",
+          "text": "3: We",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "3: We",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2620,10 +2620,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "They",
+          "type": "button",
+          "text": "3: They",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "3: They",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2631,10 +2631,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "They",
+          "type": "button",
+          "text": "4: They",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "4: They",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2642,10 +2642,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "We",
+          "type": "button",
+          "text": "4: We",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "4: We",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2653,10 +2653,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "She",
+          "type": "button",
+          "text": "4: She",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "4: She",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2664,10 +2664,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "It",
+          "type": "button",
+          "text": "5: It",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "5: It",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2675,10 +2675,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "He",
+          "type": "button",
+          "text": "5: He",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "5: He",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2686,13 +2686,35 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#MC/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "They",
+          "type": "button",
+          "text": "5: They",
+          "disabled": false,
+          "ariaLabel": "5: They",
+          "role": null,
+          "checkAction": false,
+          "resetAction": false
+        },
+        {
+          "site": "src/lessons/lesson2/Lesson2.tsx#MC/2",
+          "tag": "BUTTON",
+          "type": "button",
+          "text": "تحقق من الإجابات",
+          "disabled": true,
+          "ariaLabel": null,
+          "role": null,
+          "checkAction": true,
+          "resetAction": false
+        },
+        {
+          "site": "src/lessons/lesson2/Lesson2.tsx#MC/3",
+          "tag": "BUTTON",
+          "type": "button",
+          "text": "إعادة التمرين",
           "disabled": false,
           "ariaLabel": null,
           "role": null,
           "checkAction": false,
-          "resetAction": false
+          "resetAction": true
         }
       ],
       "feedbackTiming": "not certified by initial-state crawl",
@@ -2711,10 +2733,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "am",
+          "type": "button",
+          "text": "1: am",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "1: am",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2722,10 +2744,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "is",
+          "type": "button",
+          "text": "1: is",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "1: is",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2733,10 +2755,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "are",
+          "type": "button",
+          "text": "1: are",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "1: are",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2744,10 +2766,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "am",
+          "type": "button",
+          "text": "2: am",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "2: am",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2755,10 +2777,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "is",
+          "type": "button",
+          "text": "2: is",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "2: is",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2766,10 +2788,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "are",
+          "type": "button",
+          "text": "2: are",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "2: are",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2777,10 +2799,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "am",
+          "type": "button",
+          "text": "3: am",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "3: am",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2788,10 +2810,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "is",
+          "type": "button",
+          "text": "3: is",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "3: is",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2799,10 +2821,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "are",
+          "type": "button",
+          "text": "3: are",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "3: are",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2810,10 +2832,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "am",
+          "type": "button",
+          "text": "4: am",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "4: am",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2821,10 +2843,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "is",
+          "type": "button",
+          "text": "4: is",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "4: is",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2832,10 +2854,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "are",
+          "type": "button",
+          "text": "4: are",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "4: are",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2843,10 +2865,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "am",
+          "type": "button",
+          "text": "5: am",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "5: am",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2854,10 +2876,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "is",
+          "type": "button",
+          "text": "5: is",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "5: is",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2865,10 +2887,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "are",
+          "type": "button",
+          "text": "5: are",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "5: are",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2876,10 +2898,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "am",
+          "type": "button",
+          "text": "6: am",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "6: am",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2887,10 +2909,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "is",
+          "type": "button",
+          "text": "6: is",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "6: is",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2898,10 +2920,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "are",
+          "type": "button",
+          "text": "6: are",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "6: are",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2909,10 +2931,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "am",
+          "type": "button",
+          "text": "7: am",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "7: am",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2920,10 +2942,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "is",
+          "type": "button",
+          "text": "7: is",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "7: is",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -2931,13 +2953,35 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "are",
+          "type": "button",
+          "text": "7: are",
+          "disabled": false,
+          "ariaLabel": "7: are",
+          "role": null,
+          "checkAction": false,
+          "resetAction": false
+        },
+        {
+          "site": "src/lessons/lesson2/Lesson2.tsx#Fill/2",
+          "tag": "BUTTON",
+          "type": "button",
+          "text": "تحقق من الإجابات",
+          "disabled": true,
+          "ariaLabel": null,
+          "role": null,
+          "checkAction": true,
+          "resetAction": false
+        },
+        {
+          "site": "src/lessons/lesson2/Lesson2.tsx#Fill/3",
+          "tag": "BUTTON",
+          "type": "button",
+          "text": "إعادة التمرين",
           "disabled": false,
           "ariaLabel": null,
           "role": null,
           "checkAction": false,
-          "resetAction": false
+          "resetAction": true
         }
       ],
       "feedbackTiming": "not certified by initial-state crawl",
@@ -2956,57 +3000,68 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fix/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "أظهر التصحيح",
+          "type": "button",
+          "text": "كشف إجابة البند 1",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "كشف إجابة البند 1",
           "role": null,
-          "checkAction": true,
+          "checkAction": false,
           "resetAction": false
         },
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fix/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "أظهر التصحيح",
+          "type": "button",
+          "text": "كشف إجابة البند 2",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "كشف إجابة البند 2",
           "role": null,
-          "checkAction": true,
+          "checkAction": false,
           "resetAction": false
         },
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fix/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "أظهر التصحيح",
+          "type": "button",
+          "text": "كشف إجابة البند 3",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "كشف إجابة البند 3",
           "role": null,
-          "checkAction": true,
+          "checkAction": false,
           "resetAction": false
         },
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fix/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "أظهر التصحيح",
+          "type": "button",
+          "text": "كشف إجابة البند 4",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "كشف إجابة البند 4",
           "role": null,
-          "checkAction": true,
+          "checkAction": false,
           "resetAction": false
         },
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fix/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "أظهر التصحيح",
+          "type": "button",
+          "text": "كشف إجابة البند 5",
+          "disabled": false,
+          "ariaLabel": "كشف إجابة البند 5",
+          "role": null,
+          "checkAction": false,
+          "resetAction": false
+        },
+        {
+          "site": "src/lessons/lesson2/Lesson2.tsx#Fix/2",
+          "tag": "BUTTON",
+          "type": "button",
+          "text": "إعادة التمرين",
           "disabled": false,
           "ariaLabel": null,
           "role": null,
-          "checkAction": true,
-          "resetAction": false
+          "checkAction": false,
+          "resetAction": true
         }
       ],
       "feedbackTiming": "not certified by initial-state crawl",
@@ -3025,10 +3080,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "am",
+          "type": "button",
+          "text": "1: am",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "1: am",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3036,10 +3091,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "is",
+          "type": "button",
+          "text": "1: is",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "1: is",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3047,10 +3102,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "are",
+          "type": "button",
+          "text": "1: are",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "1: are",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3058,10 +3113,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "am",
+          "type": "button",
+          "text": "2: am",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "2: am",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3069,10 +3124,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "is",
+          "type": "button",
+          "text": "2: is",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "2: is",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3080,10 +3135,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "are",
+          "type": "button",
+          "text": "2: are",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "2: are",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3091,10 +3146,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "am",
+          "type": "button",
+          "text": "3: am",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "3: am",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3102,10 +3157,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "is",
+          "type": "button",
+          "text": "3: is",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "3: is",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3113,10 +3168,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "are",
+          "type": "button",
+          "text": "3: are",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "3: are",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3124,10 +3179,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "am",
+          "type": "button",
+          "text": "4: am",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "4: am",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3135,10 +3190,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "is",
+          "type": "button",
+          "text": "4: is",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "4: is",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3146,10 +3201,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "are",
+          "type": "button",
+          "text": "4: are",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "4: are",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3157,10 +3212,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "am",
+          "type": "button",
+          "text": "5: am",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "5: am",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3168,10 +3223,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "is",
+          "type": "button",
+          "text": "5: is",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "5: is",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3179,10 +3234,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "are",
+          "type": "button",
+          "text": "5: are",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "5: are",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3190,10 +3245,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "am",
+          "type": "button",
+          "text": "6: am",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "6: am",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3201,10 +3256,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "is",
+          "type": "button",
+          "text": "6: is",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "6: is",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3212,10 +3267,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "are",
+          "type": "button",
+          "text": "6: are",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "6: are",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3223,10 +3278,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "am",
+          "type": "button",
+          "text": "7: am",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "7: am",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3234,10 +3289,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "is",
+          "type": "button",
+          "text": "7: is",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "7: is",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3245,13 +3300,35 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Fill/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "are",
+          "type": "button",
+          "text": "7: are",
+          "disabled": false,
+          "ariaLabel": "7: are",
+          "role": null,
+          "checkAction": false,
+          "resetAction": false
+        },
+        {
+          "site": "src/lessons/lesson2/Lesson2.tsx#Fill/2",
+          "tag": "BUTTON",
+          "type": "button",
+          "text": "تحقق من الإجابات",
+          "disabled": true,
+          "ariaLabel": null,
+          "role": null,
+          "checkAction": true,
+          "resetAction": false
+        },
+        {
+          "site": "src/lessons/lesson2/Lesson2.tsx#Fill/3",
+          "tag": "BUTTON",
+          "type": "button",
+          "text": "إعادة التمرين",
           "disabled": false,
           "ariaLabel": null,
           "role": null,
           "checkAction": false,
-          "resetAction": false
+          "resetAction": true
         }
       ],
       "feedbackTiming": "not certified by initial-state crawl",
@@ -3270,10 +3347,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Transform/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "اكشف الإجابة",
+          "type": "button",
+          "text": "كشف إجابة البند 1",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "كشف إجابة البند 1",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3281,10 +3358,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Transform/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "اكشف الإجابة",
+          "type": "button",
+          "text": "كشف إجابة البند 2",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "كشف إجابة البند 2",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3292,10 +3369,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Transform/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "اكشف الإجابة",
+          "type": "button",
+          "text": "كشف إجابة البند 3",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "كشف إجابة البند 3",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3303,10 +3380,10 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Transform/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "اكشف الإجابة",
+          "type": "button",
+          "text": "كشف إجابة البند 4",
           "disabled": false,
-          "ariaLabel": null,
+          "ariaLabel": "كشف إجابة البند 4",
           "role": null,
           "checkAction": false,
           "resetAction": false
@@ -3314,13 +3391,24 @@
         {
           "site": "src/lessons/lesson2/Lesson2.tsx#Transform/1",
           "tag": "BUTTON",
-          "type": null,
-          "text": "اكشف الإجابة",
+          "type": "button",
+          "text": "كشف إجابة البند 5",
+          "disabled": false,
+          "ariaLabel": "كشف إجابة البند 5",
+          "role": null,
+          "checkAction": false,
+          "resetAction": false
+        },
+        {
+          "site": "src/lessons/lesson2/Lesson2.tsx#Transform/2",
+          "tag": "BUTTON",
+          "type": "button",
+          "text": "إعادة التمرين",
           "disabled": false,
           "ariaLabel": null,
           "role": null,
           "checkAction": false,
-          "resetAction": false
+          "resetAction": true
         }
       ],
       "feedbackTiming": "not certified by initial-state crawl",
@@ -105920,77 +106008,77 @@
       "id": "src/lessons/lesson13/Lesson13.tsx#SlideView/1",
       "lesson": 13,
       "source": "src/lessons/lesson13/Lesson13.tsx",
-      "line": 1615,
+      "line": 1613,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson13/Lesson13.tsx#Rail/1",
       "lesson": 13,
       "source": "src/lessons/lesson13/Lesson13.tsx",
-      "line": 1659,
+      "line": 1657,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson13/Lesson13.tsx#Rail/2",
       "lesson": 13,
       "source": "src/lessons/lesson13/Lesson13.tsx",
-      "line": 1672,
+      "line": 1670,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/1",
       "lesson": 13,
       "source": "src/lessons/lesson13/Lesson13.tsx",
-      "line": 1736,
+      "line": 1734,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/2",
       "lesson": 13,
       "source": "src/lessons/lesson13/Lesson13.tsx",
-      "line": 1740,
+      "line": 1738,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/3",
       "lesson": 13,
       "source": "src/lessons/lesson13/Lesson13.tsx",
-      "line": 1757,
+      "line": 1755,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/4",
       "lesson": 13,
       "source": "src/lessons/lesson13/Lesson13.tsx",
-      "line": 1762,
+      "line": 1760,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/5",
       "lesson": 13,
       "source": "src/lessons/lesson13/Lesson13.tsx",
-      "line": 1766,
+      "line": 1764,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/6",
       "lesson": 13,
       "source": "src/lessons/lesson13/Lesson13.tsx",
-      "line": 1774,
+      "line": 1772,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/7",
       "lesson": 13,
       "source": "src/lessons/lesson13/Lesson13.tsx",
-      "line": 1776,
+      "line": 1774,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson13/Lesson13.tsx#Lesson13/8",
       "lesson": 13,
       "source": "src/lessons/lesson13/Lesson13.tsx",
-      "line": 1777,
+      "line": 1775,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
@@ -106690,63 +106778,77 @@
       "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/1",
       "lesson": 2,
       "source": "src/lessons/lesson2/Lesson2.tsx",
-      "line": 641,
+      "line": 660,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/2",
       "lesson": 2,
       "source": "src/lessons/lesson2/Lesson2.tsx",
-      "line": 655,
+      "line": 674,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/3",
       "lesson": 2,
       "source": "src/lessons/lesson2/Lesson2.tsx",
-      "line": 677,
+      "line": 696,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/4",
       "lesson": 2,
       "source": "src/lessons/lesson2/Lesson2.tsx",
-      "line": 687,
+      "line": 706,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/5",
       "lesson": 2,
       "source": "src/lessons/lesson2/Lesson2.tsx",
-      "line": 700,
+      "line": 719,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/6",
       "lesson": 2,
       "source": "src/lessons/lesson2/Lesson2.tsx",
-      "line": 714,
+      "line": 733,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/7",
       "lesson": 2,
       "source": "src/lessons/lesson2/Lesson2.tsx",
-      "line": 716,
+      "line": 735,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/8",
       "lesson": 2,
       "source": "src/lessons/lesson2/Lesson2.tsx",
-      "line": 722,
+      "line": 741,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson2/Lesson2.tsx#Lesson2/9",
       "lesson": 2,
       "source": "src/lessons/lesson2/Lesson2.tsx",
-      "line": 729,
+      "line": 748,
+      "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
+    },
+    {
+      "id": "src/lessons/lesson2/TeacherArea2.tsx#TeacherArea2/1",
+      "lesson": 2,
+      "source": "src/lessons/lesson2/TeacherArea2.tsx",
+      "line": 11,
+      "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
+    },
+    {
+      "id": "src/lessons/lesson2/TeacherArea2.tsx#TeacherArea2/2",
+      "lesson": 2,
+      "source": "src/lessons/lesson2/TeacherArea2.tsx",
+      "line": 20,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
@@ -107117,35 +107219,35 @@
       "id": "src/lessons/lesson24/Lesson24.tsx#Drill/3",
       "lesson": 24,
       "source": "src/lessons/lesson24/Lesson24.tsx",
-      "line": 1035,
+      "line": 1033,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson24/Lesson24.tsx#CaseBoard/3",
       "lesson": 24,
       "source": "src/lessons/lesson24/Lesson24.tsx",
-      "line": 1154,
+      "line": 1152,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson24/Lesson24.tsx#MeaningChallenge/3",
       "lesson": 24,
       "source": "src/lessons/lesson24/Lesson24.tsx",
-      "line": 1237,
+      "line": 1235,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson24/Lesson24.tsx#MiniTest/3",
       "lesson": 24,
       "source": "src/lessons/lesson24/Lesson24.tsx",
-      "line": 1312,
+      "line": 1310,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson24/Lesson24.tsx#Lesson24/1",
       "lesson": 24,
       "source": "src/lessons/lesson24/Lesson24.tsx",
-      "line": 1525,
+      "line": 1523,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
@@ -110309,84 +110411,84 @@
       "id": "src/lessons/lesson4/Lesson4.tsx#AThenThe/2",
       "lesson": 4,
       "source": "src/lessons/lesson4/Lesson4.tsx",
-      "line": 384,
+      "line": 381,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson4/Lesson4.tsx#SlideView/1",
       "lesson": 4,
       "source": "src/lessons/lesson4/Lesson4.tsx",
-      "line": 1218,
+      "line": 1214,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson4/Lesson4.tsx#Rail/1",
       "lesson": 4,
       "source": "src/lessons/lesson4/Lesson4.tsx",
-      "line": 1275,
+      "line": 1271,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson4/Lesson4.tsx#Rail/2",
       "lesson": 4,
       "source": "src/lessons/lesson4/Lesson4.tsx",
-      "line": 1288,
+      "line": 1284,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/1",
       "lesson": 4,
       "source": "src/lessons/lesson4/Lesson4.tsx",
-      "line": 1358,
+      "line": 1354,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/2",
       "lesson": 4,
       "source": "src/lessons/lesson4/Lesson4.tsx",
-      "line": 1363,
+      "line": 1359,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/3",
       "lesson": 4,
       "source": "src/lessons/lesson4/Lesson4.tsx",
-      "line": 1381,
+      "line": 1377,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/4",
       "lesson": 4,
       "source": "src/lessons/lesson4/Lesson4.tsx",
-      "line": 1387,
+      "line": 1383,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/5",
       "lesson": 4,
       "source": "src/lessons/lesson4/Lesson4.tsx",
-      "line": 1391,
+      "line": 1387,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/6",
       "lesson": 4,
       "source": "src/lessons/lesson4/Lesson4.tsx",
-      "line": 1400,
+      "line": 1396,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/7",
       "lesson": 4,
       "source": "src/lessons/lesson4/Lesson4.tsx",
-      "line": 1402,
+      "line": 1398,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
       "id": "src/lessons/lesson4/Lesson4.tsx#Lesson4/8",
       "lesson": 4,
       "source": "src/lessons/lesson4/Lesson4.tsx",
-      "line": 1403,
+      "line": 1399,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
@@ -110820,7 +110922,7 @@
       "id": "src/shared/FinalQuiz.tsx#FinalQuiz/4",
       "lesson": null,
       "source": "src/shared/FinalQuiz.tsx",
-      "line": 164,
+      "line": 165,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {
@@ -110946,7 +111048,7 @@
       "id": "src/shared/TeachersSpace.tsx#TeachersSpace/4",
       "lesson": null,
       "source": "src/shared/TeachersSpace.tsx",
-      "line": 158,
+      "line": 161,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {

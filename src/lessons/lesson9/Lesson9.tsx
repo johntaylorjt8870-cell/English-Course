@@ -659,7 +659,7 @@ function Cover() {
         <div className="pop pop-5 mt-6 flex flex-wrap justify-center gap-2">
           {NOW_WORDS.map((a) => (
             <span key={a.en} className="rounded-full bg-violet-50 px-3 py-1 text-sm font-bold text-violet-700">
-              <En>{a.en}</En> · <LatinRuns text={a.ar ?? ""} />
+              <LatinRuns text={`${a.en} · ${a.ar ?? ""}`} />
             </span>
           ))}
         </div>

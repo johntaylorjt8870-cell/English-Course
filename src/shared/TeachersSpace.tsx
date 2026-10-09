@@ -1,5 +1,5 @@
 import TeacherWorkspace, { TeacherSection } from "./TeacherWorkspace";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import type { QuizQ } from "./quizBank";
 import { LatinRuns } from "./bidi";
 
@@ -27,10 +27,12 @@ const LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H"];
 
 export default function TeachersSpace({
   lesson,
+  sourceReference,
   questions,
   accent = "bg-slate-900",
 }: {
   lesson: number;
+  sourceReference?: ReactNode;
   questions: QuizQ[];
   accent?: string;
 }) {
@@ -129,6 +131,7 @@ export default function TeachersSpace({
       </div>
 
       <TeacherWorkspace lesson={lesson}>
+      {sourceReference && <TeacherSection title="حلول تمارين الدرس" category="source">{sourceReference}</TeacherSection>}
       <TeacherSection title="مفتاح الاختبار النهائي" category="assessment">
       <div className="mt-4 grid gap-3">
         {questions.map((q, i) => (

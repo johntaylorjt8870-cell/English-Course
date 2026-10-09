@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { LatinRuns } from "./bidi";
 import { useMemo, useState } from "react";
 import { QUIZZES } from "./quizBank";
@@ -12,7 +13,7 @@ import TeachersSpace from "./TeachersSpace";
  * كل التغذية الراجعة (صح/خطأ، الإجابة الصحيحة، الشرح، النتيجة)
  * تتوقف على checked وحدها — فلا يظهر أي كشف قبل الضغط على الزر.
  */
-export default function FinalQuiz({ lesson, accent = "bg-slate-900" }: { lesson: number; accent?: string }) {
+export default function FinalQuiz({ lesson, accent = "bg-slate-900", teacherSource }: { lesson: number; accent?: string; teacherSource?: ReactNode }) {
   const questions = QUIZZES[lesson] ?? [];
   const [pick, setPick] = useState<Record<number, number>>({});
   const [checked, setChecked] = useState(false);
@@ -175,7 +176,7 @@ export default function FinalQuiz({ lesson, accent = "bg-slate-900" }: { lesson:
 
       {/* فضاء المعلم (الخطوة 4): مفتاح نفس هذا الاختبار خلف كلمة مرور —
           حالة مستقلة تمامًا عن pick/checked ولا تمسّ سلوك الاختبار */}
-      <TeachersSpace lesson={lesson} questions={questions} accent={accent} />
+      <TeachersSpace lesson={lesson} questions={questions} accent={accent} sourceReference={teacherSource} />
     </div>
   );
 }

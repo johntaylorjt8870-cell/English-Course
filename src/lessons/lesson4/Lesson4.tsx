@@ -337,10 +337,7 @@ function VowelLab() {
         <div key={clean} className="pop mt-4">
           <div className="flex flex-wrap items-center justify-center gap-3 rounded-2xl bg-white p-4">
             <span className="font-head text-lg font-bold text-slate-500">أول حرف:</span>
-            <span className={`grid h-14 w-14 place-items-center rounded-2xl text-3xl font-extrabold text-white ${isVowel ? "bg-sky-500" : "bg-violet-500"}`}>{first}</span>
-            <span className={`rounded-full px-3 py-1 text-sm font-bold ${isVowel ? "bg-sky-100 text-sky-700" : "bg-violet-100 text-violet-700"}`}>
-              {isVowel ? "صوت علة ⟵ نستخدم an" : "صوت ساكن ⟵ نستخدم a"}
-            </span>
+            <EnAr en={<span className={`grid h-14 w-14 place-items-center rounded-2xl text-3xl font-extrabold text-white ${isVowel ? "bg-sky-500" : "bg-violet-500"}`}>{first}</span>} ar={isVowel ? "صوت علة ⟵ نستخدم an" : "صوت ساكن ⟵ نستخدم a"} arClassName={`rounded-full px-3 py-1 text-sm font-bold ${isVowel ? "bg-sky-100 text-sky-700" : "bg-violet-100 text-violet-700"}`} />
           </div>
           <div dir="ltr" className="mt-3 flex items-center justify-center gap-2">
             <span className={`font-en rounded-2xl ${isVowel ? "bg-sky-500" : "bg-violet-500"} px-4 py-2.5 text-3xl font-extrabold text-white shadow tada`}>{art}</span>
@@ -562,11 +559,10 @@ function ArtBlock({ a, examples }: { a: Art; examples?: string[] }) {
   return (
     <div className={`rounded-3xl border-2 ${info.border} ${info.soft} p-5`}>
       <div className="flex flex-wrap items-center gap-4">
-        <span className={`grid h-20 w-20 place-items-center rounded-3xl ${info.solid} font-en text-4xl font-extrabold text-white shadow anim-bob`}>{a}</span>
-        <div>
-          <div className="font-head text-xl font-bold text-slate-800"><LatinRuns text={info.ar ?? ""} /></div>
-          <div className="text-sm font-semibold text-slate-500">{info.emoji} {mixedText(info.desc)}</div>
-        </div>
+        <EnAr en={<span className={`grid h-20 w-20 place-items-center rounded-3xl ${info.solid} font-en text-4xl font-extrabold text-white shadow anim-bob`}>{a}</span>} ar={<span>
+          <span className="block font-head text-xl font-bold text-slate-800"><LatinRuns text={info.ar ?? ""} /></span>
+          <span className="block text-sm font-semibold text-slate-500">{info.emoji} {mixedText(info.desc)}</span>
+        </span>} />
       </div>
       {examples && (
         <div className="mt-4 grid gap-2 sm:grid-cols-3">

@@ -284,7 +284,16 @@ function pushLatin(out: MixedSegment[], s: string) {
     if (HAS_LATIN_LETTER.test(head) && !AR_CHAR.test(head)) out.push({ kind: "en", text: head });
     else out.push({ kind: "text", text: head });
   }
-  if (tail !== "") out.push({ kind: "text", text: tail });
+  if (tail !== "") {
+    // Only the unmatched enclosure belongs to the surrounding RTL context.
+    // English after it must still be segmented: (a أو an) previously left
+    // `a` raw, preventing the alternatives pass from grouping both choices.
+    const boundary = /^(\s*[()[\]{}])([\s\S]*)$/.exec(tail);
+    if (boundary) {
+      out.push({ kind: "text", text: boundary[1] });
+      pushLatin(out, boundary[2]);
+    } else out.push({ kind: "text", text: tail });
+  }
 }
 
 /**

@@ -1,6 +1,7 @@
+import TeacherArea2 from "./TeacherArea2";
 import { EnAr } from "../../shared/bidi";
 import { En as SharedEn } from "../../shared/lessonKit";
-import { mixedText } from "../../shared/lessonKit";
+import { mixedText, isInteractiveKeyTarget } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -205,7 +206,7 @@ function ContentSlide({ s, idx }: { s: Extract<Slide, { kind: "content" }>; idx:
       <Stickers seed={idx} />
       <Badge emoji={s.emoji} badge={s.badge} t={t} />
       <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">{mixedText(s.title)}</h2>
-      {s.intro && <p className="mt-2 text-xl text-slate-500">{s.intro}</p>}
+      {s.intro && <p className="mt-2 text-xl text-slate-500"><LatinRuns text={s.intro} /></p>}
       <div className="mt-6 space-y-4">
         {s.blocks.map((b, i) => (
           <div key={i} className={`pop pop-${Math.min(i + 1, 6)}`}>
@@ -292,10 +293,10 @@ function VerbTable({ idx }: { idx: number }) {
 // شرائح التمارين التفاعلية
 // ============================================================
 
-function ExerciseSlide({ ex, idx }: { ex: Exercise; idx: number }) {
+export function ExerciseSlide({ ex, idx }: { ex: Exercise; idx: number }) {
   const t = theme(idx);
   return (
-    <div className="relative">
+    <div data-activity={ex.id} className="relative">
       <Stickers seed={idx} />
       <Badge emoji={ex.emoji} badge={ex.badge} t={t} />
       <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">{mixedText(ex.title)}</h2>
@@ -312,12 +313,14 @@ function ExerciseSlide({ ex, idx }: { ex: Exercise; idx: number }) {
 
 function MC({ ex, t }: { ex: Extract<Exercise, { type: "mc" }>; t: ReturnType<typeof theme> }) {
   const [picked, setPicked] = useState<Record<number, number>>({});
+  const [checked, setChecked] = useState(false);
+  const complete = Object.keys(picked).length === ex.questions.length;
   return (
     <div className="grid gap-4">
       {ex.questions.map((q, qi) => {
         const chosen = picked[qi];
         return (
-          <div key={qi} className="rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
+          <div key={qi} data-activity-question={qi + 1} className="rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
             <div className="flex flex-wrap items-center gap-3">
               <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg ${t.chip} font-bold`}>{qi + 1}</span>
               <span className="ltr font-en text-xl font-semibold text-slate-800">{q.prompt}</span>
@@ -330,7 +333,7 @@ function MC({ ex, t }: { ex: Extract<Exercise, { type: "mc" }>; t: ReturnType<ty
                 const isChosen = chosen === oi;
                 const isCorrect = oi === q.answer;
                 let cls = "border-slate-200 bg-white text-slate-700 hover:border-slate-300";
-                if (chosen !== undefined) {
+                if (checked && chosen !== undefined) {
                   if (isCorrect) cls = "border-emerald-400 bg-emerald-50 text-emerald-700";
                   else if (isChosen) cls = "border-rose-400 bg-rose-50 text-rose-700";
                   else cls = "border-slate-200 bg-white text-slate-400";
@@ -338,12 +341,13 @@ function MC({ ex, t }: { ex: Extract<Exercise, { type: "mc" }>; t: ReturnType<ty
                 return (
                   <button
                     key={oi}
-                    onClick={() => setPicked((p) => ({ ...p, [qi]: oi }))}
+                    type="button" disabled={checked} aria-pressed={isChosen} aria-label={`${qi + 1}: ${opt}`}
+                    onClick={() => { if (!checked) setPicked((p) => ({ ...p, [qi]: oi })); }}
                     className={`ltr font-en rounded-xl border-2 px-5 py-2 text-lg font-bold transition ${cls}`}
                   >
                     {opt}
-                    {chosen !== undefined && isCorrect && " ✓"}
-                    {chosen !== undefined && isChosen && !isCorrect && " ✕"}
+                    {checked && chosen !== undefined && isCorrect && " ✓"}
+                    {checked && chosen !== undefined && isChosen && !isCorrect && " ✕"}
                   </button>
                 );
               })}
@@ -351,26 +355,33 @@ function MC({ ex, t }: { ex: Extract<Exercise, { type: "mc" }>; t: ReturnType<ty
           </div>
         );
       })}
+      <div className="col-span-full flex flex-wrap items-center gap-3">
+        <button type="button" disabled={!complete || checked} onClick={() => { if (complete && !checked) setChecked(true); }} className="rounded-xl bg-indigo-700 px-4 py-2 font-bold text-white disabled:opacity-40">تحقق من الإجابات</button>
+        <button type="button" onClick={() => { setPicked({}); setChecked(false); }} className="rounded-xl border px-4 py-2 font-bold">إعادة التمرين</button>
+        {checked ? <p role="status">النتيجة: {ex.questions.filter((q, i) => picked[i] === q.answer).length} / {ex.questions.length}</p> : <p className="text-sm">أجب عن جميع الأسئلة ثم تحقق من الإجابات.</p>}
+      </div>
     </div>
   );
 }
 
 function Fill({ ex, t }: { ex: Extract<Exercise, { type: "fill" }>; t: ReturnType<typeof theme> }) {
   const [picked, setPicked] = useState<Record<number, string>>({});
+  const [checked, setChecked] = useState(false);
+  const complete = Object.keys(picked).length === ex.questions.length;
   return (
     <div className="grid gap-3 sm:grid-cols-2">
       {ex.questions.map((q, qi) => {
         const chosen = picked[qi];
         const correct = chosen === q.answer;
         return (
-          <div key={qi} className="rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
+          <div key={qi} data-activity-question={qi + 1} className="rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
             <div className="flex items-center gap-2 text-xl">
               <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg ${t.chip} text-sm font-bold`}>{qi + 1}</span>
               <span className="ltr font-en font-semibold text-slate-800">
                 {q.before}{" "}
                 <span
                   className={`mx-1 inline-block min-w-16 rounded-lg border-2 border-dashed px-2 text-center ${
-                    chosen ? (correct ? "border-emerald-400 bg-emerald-50 text-emerald-700" : "border-rose-400 bg-rose-50 text-rose-700") : "border-slate-300 text-slate-300"
+                    checked && chosen ? (correct ? "border-emerald-400 bg-emerald-50 text-emerald-700" : "border-rose-400 bg-rose-50 text-rose-700") : "border-slate-300 text-slate-300"
                   }`}
                 >
                   {chosen || "…"}
@@ -384,7 +395,7 @@ function Fill({ ex, t }: { ex: Extract<Exercise, { type: "fill" }>; t: ReturnTyp
                 const isChosen = chosen === opt;
                 const isAnswer = opt === q.answer;
                 let cls = "border-slate-200 bg-white text-slate-600 hover:border-slate-300";
-                if (chosen) {
+                if (checked && chosen) {
                   if (isAnswer) cls = "border-emerald-400 bg-emerald-50 text-emerald-700";
                   else if (isChosen) cls = "border-rose-400 bg-rose-50 text-rose-700";
                   else cls = "border-slate-200 bg-white text-slate-300";
@@ -392,7 +403,8 @@ function Fill({ ex, t }: { ex: Extract<Exercise, { type: "fill" }>; t: ReturnTyp
                 return (
                   <button
                     key={opt}
-                    onClick={() => setPicked((p) => ({ ...p, [qi]: opt }))}
+                    type="button" disabled={checked} aria-pressed={isChosen} aria-label={`${qi + 1}: ${opt}`}
+                    onClick={() => { if (!checked) setPicked((p) => ({ ...p, [qi]: opt })); }}
                     className={`ltr font-en rounded-lg border-2 px-4 py-1.5 font-bold transition ${cls}`}
                   >
                     {opt}
@@ -403,6 +415,11 @@ function Fill({ ex, t }: { ex: Extract<Exercise, { type: "fill" }>; t: ReturnTyp
           </div>
         );
       })}
+      <div className="col-span-full flex flex-wrap items-center gap-3">
+        <button type="button" disabled={!complete || checked} onClick={() => { if (complete && !checked) setChecked(true); }} className="rounded-xl bg-indigo-700 px-4 py-2 font-bold text-white disabled:opacity-40">تحقق من الإجابات</button>
+        <button type="button" onClick={() => { setPicked({}); setChecked(false); }} className="rounded-xl border px-4 py-2 font-bold">إعادة التمرين</button>
+        {checked ? <p role="status">النتيجة: {ex.questions.filter((q, i) => picked[i] === q.answer).length} / {ex.questions.length}</p> : <p className="text-sm">أجب عن جميع الأسئلة ثم تحقق من الإجابات.</p>}
+      </div>
     </div>
   );
 }
@@ -414,14 +431,14 @@ function Fix({ ex }: { ex: Extract<Exercise, { type: "fix" }> }) {
       {ex.questions.map((q, qi) => {
         const open = shown[qi];
         return (
-          <div key={qi} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
+          <div key={qi} data-activity-question={qi + 1} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
             <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-rose-100 font-bold text-rose-700">{qi + 1}</span>
             <span className="ltr font-en text-xl font-semibold text-rose-600 line-through decoration-rose-300">{q.wrong}</span>
             {open ? (
               <span className="ltr font-en text-xl font-bold text-emerald-700">→ {q.correct} ✓</span>
             ) : (
               <button
-                onClick={() => setShown((s) => ({ ...s, [qi]: true }))}
+                type="button" aria-label={`كشف إجابة البند ${qi + 1}`} onClick={() => setShown((s) => ({ ...s, [qi]: true }))}
                 className="mr-auto rounded-xl bg-emerald-500 px-4 py-1.5 text-sm font-bold text-white shadow transition hover:bg-emerald-600"
               >
                 أظهر التصحيح
@@ -430,6 +447,7 @@ function Fix({ ex }: { ex: Extract<Exercise, { type: "fix" }> }) {
           </div>
         );
       })}
+      <button type="button" onClick={() => setShown({})} className="rounded-xl border px-4 py-2 font-bold">إعادة التمرين</button>
     </div>
   );
 }
@@ -441,7 +459,7 @@ function Transform({ ex, t }: { ex: Extract<Exercise, { type: "transform" }>; t:
       {ex.questions.map((q, qi) => {
         const open = shown[qi];
         return (
-          <div key={qi} className="rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
+          <div key={qi} data-activity-question={qi + 1} className="rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
             <div className="flex flex-wrap items-center gap-3">
               <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg ${t.chip} font-bold`}>{qi + 1}</span>
               <span className="ltr font-en text-xl font-semibold text-slate-800">{q.given}</span>
@@ -452,7 +470,7 @@ function Transform({ ex, t }: { ex: Extract<Exercise, { type: "transform" }>; t:
                 <span className="ltr font-en text-xl font-bold text-emerald-700">→ {q.answer} ✓</span>
               ) : (
                 <button
-                  onClick={() => setShown((s) => ({ ...s, [qi]: true }))}
+                  type="button" aria-label={`كشف إجابة البند ${qi + 1}`} onClick={() => setShown((s) => ({ ...s, [qi]: true }))}
                   className="rounded-xl bg-indigo-500 px-4 py-1.5 text-sm font-bold text-white shadow transition hover:bg-indigo-600"
                 >
                   اكشف الإجابة
@@ -462,6 +480,7 @@ function Transform({ ex, t }: { ex: Extract<Exercise, { type: "transform" }>; t:
           </div>
         );
       })}
+      <button type="button" onClick={() => setShown({})} className="rounded-xl border px-4 py-2 font-bold">إعادة التمرين</button>
     </div>
   );
 }
@@ -521,7 +540,7 @@ function QuizSlide() {
       <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">الاختبار النهائي</h2>
       <p className="mt-2 text-xl text-slate-500"><LatinRuns text={"12 سؤالًا جديدًا من خارج أمثلة الدرس — أثبت أنك أتقنت الضمائر و Verb to be."} /></p>
       <div className="mt-6">
-        <FinalQuiz lesson={2} accent="bg-indigo-600" />
+        <FinalQuiz lesson={2} accent="bg-indigo-600" teacherSource={<TeacherArea2 />} />
       </div>
     </div>
   );
@@ -613,7 +632,7 @@ export default function Lesson2({ onExit }: { onExit: () => void }) {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (menu) return;
+      if (menu || isInteractiveKeyTarget(e)) return;
       // في العربية السهم الأيسر ينقلنا للأمام بصريًا؛ نجعل الاثنين يعملان بوضوح
       if (e.key === "ArrowLeft") go.next();
       if (e.key === "ArrowRight") go.prev();

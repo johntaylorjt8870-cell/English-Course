@@ -258,11 +258,12 @@ All contracts below remain explicitly open until reviewed and exercised. Native 
 | 19 | `src/lessons/lesson19/Lesson19.tsx#SlideView19` | 1 | not established | not established | OPEN |
 | 19 | `src/lessons/lesson19/Lesson19.tsx#Rail` | 2 | not established | not established | OPEN |
 | 19 | `src/lessons/lesson19/Lesson19.tsx#Lesson19` | 8 | not established | not established | OPEN |
-| 2 | `src/lessons/lesson2/Lesson2.tsx#MC` | 1 | not established | not established | OPEN |
-| 2 | `src/lessons/lesson2/Lesson2.tsx#Fill` | 1 | not established | not established | OPEN |
-| 2 | `src/lessons/lesson2/Lesson2.tsx#Fix` | 1 | present in source | not established | OPEN |
-| 2 | `src/lessons/lesson2/Lesson2.tsx#Transform` | 1 | not established | not established | OPEN |
+| 2 | `src/lessons/lesson2/Lesson2.tsx#MC` | 3 | present in source | present in source | OPEN |
+| 2 | `src/lessons/lesson2/Lesson2.tsx#Fill` | 3 | present in source | present in source | OPEN |
+| 2 | `src/lessons/lesson2/Lesson2.tsx#Fix` | 2 | present in source | present in source | OPEN |
+| 2 | `src/lessons/lesson2/Lesson2.tsx#Transform` | 2 | not established | present in source | OPEN |
 | 2 | `src/lessons/lesson2/Lesson2.tsx#Lesson2` | 9 | not established | not established | OPEN |
+| 2 | `src/lessons/lesson2/TeacherArea2.tsx#TeacherArea2` | 2 | not established | not established | OPEN |
 | 20 | `src/lessons/lesson20/Lesson20.tsx#CoreIdeaBoard` | 4 | not established | not established | OPEN |
 | 20 | `src/lessons/lesson20/Lesson20.tsx#MagicSystemBoard` | 1 | not established | not established | OPEN |
 | 20 | `src/lessons/lesson20/Lesson20.tsx#MemoryCards` | 1 | not established | not established | OPEN |

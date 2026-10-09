@@ -1,6 +1,7 @@
+import { execFileSync } from 'node:child_process';
 import { browser } from './lib/browser.mjs';
 import { build } from 'esbuild';
-import { readFileSync, readdirSync, rmSync } from 'node:fs';
+import { readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 import assert from 'node:assert/strict';
@@ -8,6 +9,9 @@ const file = resolve('node_modules/.bidi-browser.mjs');
 await build({ stdin: { contents: `export {LatinRuns, EnAr, splitMixedText} from './src/shared/bidi'; export {Rich, En} from './src/shared/lessonKit'; export {renderToStaticMarkup as render} from 'react-dom/server'; export {createElement as h} from 'react';`, resolveDir: process.cwd(), loader: 'tsx' }, bundle: true, jsx: 'automatic', packages: 'external', platform: 'node', format: 'esm', outfile: file });
 const { LatinRuns, EnAr, En, Rich, render, h, splitMixedText } = await import(pathToFileURL(file));
 rmSync(file);
+const previousFile=resolve('node_modules/.bidi-before-boundary.mjs');
+await build({stdin:{contents:execFileSync('git',['show','59ba597:src/shared/bidi.tsx'],{encoding:'utf8'}),resolveDir:process.cwd(),loader:'tsx'},bundle:true,jsx:'automatic',packages:'external',platform:'node',format:'esm',outfile:previousFile});
+const {LatinRuns: PreviousLatinRuns}=await import(pathToFileURL(previousFile));rmSync(previousFile);
 const css = readdirSync('dist/assets').filter(f => f.endsWith('.css')).map(f => readFileSync(`dist/assets/${f}`, 'utf8')).join('\n');
 const b = await browser();
 try {
@@ -42,9 +46,27 @@ try {
    const html=render(h(Rich,{text}));const cs=await chars(html);const a=index(cs,text.startsWith('[[')?'have':text.startsWith('IQ')?'had danced':'had');const z=index(cs,text.startsWith('[[')?'has':text.startsWith('IQ')?'was dancing':text.includes('V3')?'V3':'شرح');
    if(z>=0) assert(cs[a].x<cs[z].x,text);
  }
+ const evidence=[];
+ const oldEnclosure=await chars(render(h(PreviousLatinRuns,{text:'اختر (a أو an).'})));
+ const oldA=index(oldEnclosure,'a'),oldAn=index(oldEnclosure,'an');
+ assert(oldEnclosure[oldA].x>oldEnclosure[oldAn].x,'59ba597 negative control reproduces reversed bracketed choices');
+ evidence.push({category:'59ba597 negative control',text:'اختر (a أو an).',first:oldEnclosure[oldA],second:oldEnclosure[oldAn]});
+ // Unmatched opening enclosure previously swallowed the first English choice.
+ // These exact parser-boundary forms exercise quotes/highlights and wrapping.
+ for(const width of [760,280])for(const text of ['اختر (a أو an).','اختر [a أو an].','اختر {a أو an}.','اختر ("a" أو "an").','اختر ([[a]] أو an).']){
+   const cs=await chars(render(h(Rich,{text})),width),a=index(cs,'a'),z=index(cs,'an');
+   assert(a>=0&&z>a);assert.equal(cs[a].y,cs[z].y);assert(cs[a].x<cs[z].x,text);
+   assert(await page.locator('#line').evaluate(el=>el.scrollWidth<=el.clientWidth+1));
+   evidence.push({category:'English after unmatched enclosure',text,width,first:cs[a],second:cs[z]});
+ }
+ for(const [text,en,ar] of [['Subject = الفاعل','Subject','الفاعل'],['now · الآن','now','الآن'],['Present: read = ريد','Present','ريد'],['vowel + y — نحتفظ بـ y:','vowel','نحتفظ'],['الماضي على الفعل: went = الماضي','went','الماضي']]){
+   const cs=await chars(render(h(Rich,{text}))),a=index(cs,en),z=cs.map(c=>c.c).join('').lastIndexOf(ar);
+   assert(cs[a].x<cs[z].x,text);evidence.push({category:'whole semantic phrase instead of split siblings',text,width:760,english:cs[a],arabic:cs[z]});
+ }
+ writeFileSync('docs/audits/bidi-boundary-geometry.json',JSON.stringify({browser:b.version(),evidence},null,2)+'\n');
  // Previously separate flex siblings: labels and source references must
  // remain a single semantic unit, even inside an RTL shell.
- for(const [en,ar] of [['SOURCE SECTION','أهداف الدرس'],['DEMONSTRATIVE RADAR','الرادار يقرأ العدد والمسافة']]){
+ for(const [en,ar] of [['SOURCE SECTION','أهداف الدرس'],['DEMONSTRATIVE RADAR','الرادار يقرأ العدد والمسافة'],['a','قبل اسم مفرد يبدأ بصوت ساكن'],['an','قبل اسم مفرد يبدأ بصوت علة'],['TIME SENSOR','حالة خاصة: كلمة time لها وجهان'],['Countable Plural','كثير من الأشياء المعدودة.']]){
    const cs=await chars(render(h(EnAr,{en,ar})));assert(cs[index(cs,en)].x<cs[index(cs,ar)].x,'label/gloss order: '+en);
  }
  const mixedEn=await chars(render(h(En,{children:'He / She / It → is (المفرد الغائب)'})));

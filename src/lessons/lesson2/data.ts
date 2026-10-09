@@ -51,7 +51,7 @@ export const PRONOUNS: Pronoun[] = [
 ];
 
 // -------------------- التمارين --------------------
-export type Exercise =
+export type Exercise = { id: string } & (
   | {
       type: "mc";
       badge: string;
@@ -84,10 +84,11 @@ export type Exercise =
       title: string;
       subtitle: string;
       questions: { given: string; answer: string; hint: string }[];
-    };
+    });
 
 export const EXERCISES: Exercise[] = [
   {
+    id: "l02-pronoun-choice",
     type: "mc",
     badge: "التمرين 1",
     emoji: "🎯",
@@ -102,6 +103,7 @@ export const EXERCISES: Exercise[] = [
     ],
   },
   {
+    id: "l02-be-choice",
     type: "fill",
     badge: "التمرين 2",
     emoji: "🧩",
@@ -119,6 +121,7 @@ export const EXERCISES: Exercise[] = [
     ],
   },
   {
+    id: "l02-correction-reveal",
     type: "fix",
     badge: "التمرين 3",
     emoji: "🩹",
@@ -133,6 +136,7 @@ export const EXERCISES: Exercise[] = [
     ],
   },
   {
+    id: "l02-be-completion",
     type: "fill",
     badge: "التمرين 4",
     emoji: "✏️",
@@ -150,6 +154,7 @@ export const EXERCISES: Exercise[] = [
     ],
   },
   {
+    id: "l02-pronoun-reveal",
     type: "transform",
     badge: "التحدّي",
     emoji: "🔥",

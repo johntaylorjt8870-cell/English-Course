@@ -532,7 +532,7 @@ function ReadTrick() {
           <span className="text-slate-400">=</span>
           <span className="text-lg font-black text-orange-700">{mode === "present" ? "ريد" : "رِد"}</span>
         </div>
-        <div className="mt-2 text-sm font-bold text-slate-500">{mode === "present" ? "Present: read = ريد" : "Past: read = رِد"}</div>
+        <div className="mt-2 text-sm font-bold text-slate-500"><LatinRuns text={mode === "present" ? "Present: read = ريد" : "Past: read = رِد"} /></div>
       </div>
     </div>
   );
@@ -1118,7 +1118,7 @@ function Summary() {
           <div className="mt-1.5 grid gap-1.5">
             {SUMMARY12.consonantY.map((v) => <PairRow key={v.base} base={v.base} past={v.past} />)}
           </div>
-          <div className="mt-3 text-sm font-bold text-amber-700"><En>vowel + y</En><LatinRuns text={" — نحتفظ بـ y:"} /></div>
+          <div className="mt-3 text-sm font-bold text-amber-700"><LatinRuns text="vowel + y — نحتفظ بـ y:" /></div>
           <div className="mt-1.5 grid gap-1.5">
             {SUMMARY12.vowelY.map((v) => <PairRow key={v.base} base={v.base} past={v.past} />)}
           </div>

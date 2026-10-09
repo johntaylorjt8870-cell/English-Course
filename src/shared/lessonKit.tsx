@@ -242,3 +242,11 @@ export function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: str
 export function Nub({ n, className = "bg-teal-600" }: { n: number; className?: string }) {
   return <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-xl text-sm font-bold text-white ${className}`}>{n}</span>;
 }
+
+/** Lesson shortcuts must not steal native editing/activation keys from controls. */
+export function isInteractiveKeyTarget(event: KeyboardEvent): boolean {
+  if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return true;
+  return event.target instanceof Element && !!event.target.closest(
+    'button, input, select, textarea, a[href], summary, [role="button"], [role="radio"], [role="checkbox"], [role="tab"], [contenteditable]:not([contenteditable="false"])'
+  );
+}

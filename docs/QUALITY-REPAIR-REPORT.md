@@ -7,8 +7,73 @@
 - Base: `1f879216d96edea741e4b28db8b58449bb98adaf`, the merge of PR #40. `origin/main` was fetched and matched this base.
 - Session branch: `arena/8744e70e-english-course` (Arena fixes the session branch).
 - Draft PR: https://github.com/johntaylorjt8870-cell/English-Course/pull/41 — do not merge or delete the branch.
-- No lesson data bank, source ledger, source mapping, or textbook answer was changed.
+- Source wording, answer values and existing ledgers are preserved. This iteration adds stable IDs to Lesson 2 exercise metadata; it does not rewrite its questions or answers.
 - Commit status: the continuation implementation and evidence are recorded together on this branch; its exact SHA is recorded in the PR #41 progress comment. Previously verified commits `b762e4e` and `68595c7` are retained.
+
+## Follow-up to `59ba597` — current status
+
+**Partial implementation, not completion of the three requested blockers.** Current evidence supersedes the earlier continuation snapshot below. The remaining 48 BIDI cases have not all received individual component/severity/geometry review; the whole-course behavioral registry and the 74 teacher provenance gaps are not finished. No merge-readiness claim is made.
+
+### 1. BIDI: 20 of the 68 starting findings repaired; 48 remain
+
+The unchanged full crawl now reports **32 paragraph/pair + 16 row + 0 alternatives = 48 unresolved**, with **zero matching exceptions and zero new findings**. No threshold, oracle, negative control, or allowlist was relaxed. [`bidi-review.json`](audits/bidi-review.json) retains all 68 starting cases under stable IDs: 20 have a repaired root cause/component and evidence; 48 explicitly remain OPEN with incomplete individual review. [`BIDI-REMAINING.md`](audits/BIDI-REMAINING.md) gives every remaining case and per-lesson counts; [`bidi-after.json`](audits/bidi-after.json) retains exact logical/visual evidence.
+
+Repairs:
+
+- **Shared enclosure segmentation:** `pushLatin` previously left *all* text following an unmatched opening bracket outside isolation, so `(a أو an)` could not become one alternatives group. Only the unmatched boundary now stays in the RTL context; subsequent English is segmented normally. No source text changes are involved.
+- **Complete semantic phrases:** Lesson 1 role labels, Lesson 2 introductions, Lesson 9 time-word definitions, Lesson 12 conditional/read and suffix captions, and Lesson 13 equation/objective captions now reach the existing parser as complete units instead of unrelated fragments.
+- **Label/gloss grouping:** Lesson 4 `ArtBlock`/`VowelLab` and Lesson 24 `TimeSensor`/`MeaningDetector` use existing `EnAr`, retaining the original label and explanation.
+
+Chromium Range evidence is persisted in [`bidi-boundary-geometry.json`](audits/bidi-boundary-geometry.json). Tests include brackets/braces/parentheses, quotes, marked and unmarked choices, and 760px/280px layouts, as well as joined label/equation fixtures. The **actual renderer from `59ba597`** is compiled as a negative control and reproduces reversed `a`/`an` character positions. Existing punctuation, `استخدام Had.`, Arabic punctuation, quotation, highlight and wrapping tests remain. This is targeted geometry, not exhaustive geometry for all affected rendered course states.
+
+Reproduce: `node scripts/test-bidi-browser.mjs` after the build; `node scripts/audit-bidi-mixed.mjs --report docs/audits/bidi-after.json`; `node scripts/report-bidi-progress.mjs`.
+
+### 2. Embedded activity behavior: five concrete instances verified
+
+[`lesson2-behavior.json`](audits/lesson2-behavior.json) records **5/5 named Lesson 2 source-exercise instances, covering 29/29 questions**:
+
+| Stable activity ID | Type / policy | Questions | Evidence |
+|---|---|---:|---|
+| `l02-pronoun-choice` | Multiple choice; delayed check | 5 | automated verified |
+| `l02-be-choice` | Completion by choice; delayed check | 7 | automated verified |
+| `l02-correction-reveal` | Source-directed guided correction reveal | 5 | automated verified |
+| `l02-be-completion` | Completion by choice; delayed check | 7 | automated verified |
+| `l02-pronoun-reveal` | Source-directed guided transformation reveal | 5 | automated verified |
+
+The three graded exercises previously disclosed correctness immediately after selection. Each now has one labeled bottom check, disabled until complete, neutral draft selection, locked submitted choices, a result announcement, and a bottom restart that clears drafts/results. Guided exercises preserve their explicit source instruction to reveal an answer rather than pretending they are graded tests; both now have restart controls.
+
+The audit verifies empty/partial/full attempts, correct and all-wrong grading, no pre-submit color/tick/result leakage (including accessibility snapshots), repeated submission, repeated reset, sibling DOM isolation, named controls and keyboard activation. It also traverses the **actual Lesson 2 shell** to each of the five instances and tests Space activation/reset. This caught a real additional bug: global Space navigation swallowed native button activation. The shared `isInteractiveKeyTarget` guard, integrated in Lesson 2, prevents that interference. Other lesson keyboard handlers are **not** certified by this fix.
+
+Three negative controls compile the original `59ba597` Lesson 2 component and reproduce its immediate-feedback leaks. `audit:lesson2-activities` compares discovered source exercise IDs to the explicit tested contract list; an added exercise without a contract fails. Both `audit:assessments` and `audit:browser` include this suite.
+
+**Global denominator limitation:** five verified exercise instances are not five of 875 activities. The current census has **875 control/component templates / 1,681 source sites**; those are not unique student activity instances. The initial crawl has **1,346 owner/task/step group observations / 7,861 control occurrences**, with **822 source sites unobserved**. Global instance identity, policy classification, and complete behavior coverage remain unfinished. The whole-course strict certification gate remains failing; source census records stay OPEN rather than being relabeled from these five tests. Existing 38-primary-assessment tests remain a separate coverage scope.
+
+### 3. Teacher mapping: real question navigation added, provenance still open
+
+Behind the **unchanged existing authentication branch**, Lesson 2's Teacher Area now has a separate source-exercise destination with direct selection of **29/29 canonical question records** from all five exercises. It uses the same canonical objects, not copied question/answer text. Every original question field, option value and answer index is available in the authenticated detail. Final answers are visible at a glance, with expanded completion/reasoning. Added reasoning is explicitly labeled **Platform Explanation**; original hints remain intact.
+
+Question ordinals are explicitly identified as local data order, **not invented printed numbering**. Source pages and printed question numbers remain unknown. The new teacher-only file follows the existing `TeacherArea2.tsx` convention; the source-reveal rule was not modified. Tests verify failed/locked gates mount no reference browser, valid unlock, every question selection, collapsed/keyboard-openable details, and exact preservation of all original fields.
+
+Coverage denominators, deliberately kept separate:
+
+- New Lesson 2 canonical mappings: **29/29 questions**, across **5/5 exercises**, directly navigable and browser-tested.
+- Verified external textbook page/printed-question mappings for those records: **0/29**. Each is listed with its exact prompt/source path and missing provenance in the source coverage artifact.
+- Existing banks: **47/47 groups** losslessly accounted for and **113/113 explicitly numbered reference items** indexed; this still does not establish complete original-question provenance.
+- Original reported mapping gaps: **74/74 remain open at the original gap-record level**. Lesson 2's gap is now partially resolved for canonical retrieval and itemized for its remaining external provenance. The other reported gaps have not all been individually resolved/reviewed in this iteration. No global original-textbook-question denominator is established.
+
+Reproduce: `npm run audit:teacher-source` and `npm run audit:lesson2-activities`. The main artifact is [`teacher-source-coverage.json`](audits/teacher-source-coverage.json).
+
+### Verification and remaining work
+
+Production build, all existing direction/render/lesson/source-reveal/navigation/assessment audits, the new five-instance behavioral audit, teacher checks, and fresh current/base TypeScript comparison are rerun for this iteration. The passing pipeline and exact counts are persisted in [`verification-latest.json`](audits/verification-latest.json), and recorded in the PR progress comment: direction 1,617; render 1,454; BIDI assertions 59; navigation 90; legacy interaction 963; Final Test 854; final coverage 579; source-reveal 60; Chromium primary-assessment scenarios 54, plus the five-instance Lesson 2 suite. TypeScript remains failing at **178 current / 179 baseline diagnostics**, with **0 new normalized diagnostics**; a passing comparison is not a clean typecheck.
+
+A transient Chromium launch SIGSEGV occurred between suites; the affected geometry suite subsequently passed on a fresh launch. An initial source-reveal failure correctly identified the new teacher-only file's nonstandard placement/name; it was corrected to the existing TeacherArea convention with the audit unchanged, and gate/non-mounting tests rerun.
+
+Still required: individual review and resolution of the remaining **48 BIDI findings**, globally enumerated per-instance activity contracts/tests (not merely these five), and confident original-source mapping of the **74 open gap records**. PR #41 remains draft, open and unmerged. The work requested in this follow-up is **not fully complete**.
+
+---
+
+## Earlier continuation snapshot (superseded by the current results above)
 
 ## Continuation verification — 2026-10-09
 

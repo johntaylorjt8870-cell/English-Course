@@ -862,7 +862,7 @@ function ExerciseSlide({ s }: { s: Extract<Slide, { kind: "exercise" }> }) {
             {ex.roles.map((r) => (
               <span key={r} className={`flex items-center gap-1.5 rounded-full border ${ROLE_STYLE[r].border} ${ROLE_STYLE[r].soft} px-2.5 py-0.5 font-semibold`}>
                 <span className={`h-2.5 w-2.5 rounded-full ${ROLE_STYLE[r].dot}`} />
-                <En>{ROLE_INFO[r].en}</En> = <LatinRuns text={ROLE_INFO[r].ar ?? ""} />
+                <LatinRuns text={`${ROLE_INFO[r].en} = ${ROLE_INFO[r].ar ?? ""}`} />
               </span>
             ))}
           </div>

@@ -1,4 +1,657 @@
 {
+  "canonicalLessons": [
+    {
+      "lesson": 2,
+      "questions": [
+        {
+          "id": "l02-pronoun-choice/q1",
+          "activityId": "l02-pronoun-choice",
+          "reference": "التمرين 1",
+          "title": "اختر الضمير الصحيح",
+          "localOrdinal": 1,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[0]",
+          "original": {
+            "prompt": "Khalil is a student.",
+            "sub": "Khalil =",
+            "options": [
+              "He",
+              "She",
+              "They"
+            ],
+            "answer": 0
+          },
+          "prompt": "Khalil is a student.",
+          "answer": "He",
+          "completed": "Khalil = He",
+          "originalHint": "ذكر واحد",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-choice/q2",
+          "activityId": "l02-pronoun-choice",
+          "reference": "التمرين 1",
+          "title": "اختر الضمير الصحيح",
+          "localOrdinal": 2,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[1]",
+          "original": {
+            "prompt": "Sara is happy.",
+            "sub": "Sara =",
+            "options": [
+              "He",
+              "She",
+              "It"
+            ],
+            "answer": 1
+          },
+          "prompt": "Sara is happy.",
+          "answer": "She",
+          "completed": "Sara = She",
+          "originalHint": "أنثى واحدة",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-choice/q3",
+          "activityId": "l02-pronoun-choice",
+          "reference": "التمرين 1",
+          "title": "اختر الضمير الصحيح",
+          "localOrdinal": 3,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[2]",
+          "original": {
+            "prompt": "Khalil and Adam are friends.",
+            "sub": "Khalil and Adam =",
+            "options": [
+              "He",
+              "We",
+              "They"
+            ],
+            "answer": 2
+          },
+          "prompt": "Khalil and Adam are friends.",
+          "answer": "They",
+          "completed": "Khalil and Adam = They",
+          "originalHint": "أكثر من شخص أو شيء",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-choice/q4",
+          "activityId": "l02-pronoun-choice",
+          "reference": "التمرين 1",
+          "title": "اختر الضمير الصحيح",
+          "localOrdinal": 4,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[3]",
+          "original": {
+            "prompt": "Sara and I are students.",
+            "sub": "Sara and I =",
+            "options": [
+              "They",
+              "We",
+              "She"
+            ],
+            "answer": 1
+          },
+          "prompt": "Sara and I are students.",
+          "answer": "We",
+          "completed": "Sara and I = We",
+          "originalHint": "أنا + آخرون",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-choice/q5",
+          "activityId": "l02-pronoun-choice",
+          "reference": "التمرين 1",
+          "title": "اختر الضمير الصحيح",
+          "localOrdinal": 5,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[4]",
+          "original": {
+            "prompt": "The book is new.",
+            "sub": "The book =",
+            "options": [
+              "It",
+              "He",
+              "They"
+            ],
+            "answer": 0
+          },
+          "prompt": "The book is new.",
+          "answer": "It",
+          "completed": "The book = It",
+          "originalHint": "شيء أو حيوان مفرد",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-choice/q1",
+          "activityId": "l02-be-choice",
+          "reference": "التمرين 2",
+          "title": "اختر am أو is أو are",
+          "localOrdinal": 1,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[0]",
+          "original": {
+            "before": "I",
+            "after": "happy.",
+            "answer": "am",
+            "ar": "أنا سعيد."
+          },
+          "prompt": "I … happy.",
+          "answer": "am",
+          "completed": "I am happy.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-choice/q2",
+          "activityId": "l02-be-choice",
+          "reference": "التمرين 2",
+          "title": "اختر am أو is أو are",
+          "localOrdinal": 2,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[1]",
+          "original": {
+            "before": "He",
+            "after": "a teacher.",
+            "answer": "is",
+            "ar": "هو معلّم."
+          },
+          "prompt": "He … a teacher.",
+          "answer": "is",
+          "completed": "He is a teacher.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-choice/q3",
+          "activityId": "l02-be-choice",
+          "reference": "التمرين 2",
+          "title": "اختر am أو is أو are",
+          "localOrdinal": 3,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[2]",
+          "original": {
+            "before": "She",
+            "after": "tired.",
+            "answer": "is",
+            "ar": "هي متعبة."
+          },
+          "prompt": "She … tired.",
+          "answer": "is",
+          "completed": "She is tired.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-choice/q4",
+          "activityId": "l02-be-choice",
+          "reference": "التمرين 2",
+          "title": "اختر am أو is أو are",
+          "localOrdinal": 4,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[3]",
+          "original": {
+            "before": "We",
+            "after": "students.",
+            "answer": "are",
+            "ar": "نحن طلاب."
+          },
+          "prompt": "We … students.",
+          "answer": "are",
+          "completed": "We are students.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-choice/q5",
+          "activityId": "l02-be-choice",
+          "reference": "التمرين 2",
+          "title": "اختر am أو is أو are",
+          "localOrdinal": 5,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[4]",
+          "original": {
+            "before": "They",
+            "after": "friends.",
+            "answer": "are",
+            "ar": "هم أصدقاء."
+          },
+          "prompt": "They … friends.",
+          "answer": "are",
+          "completed": "They are friends.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-choice/q6",
+          "activityId": "l02-be-choice",
+          "reference": "التمرين 2",
+          "title": "اختر am أو is أو are",
+          "localOrdinal": 6,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[5]",
+          "original": {
+            "before": "You",
+            "after": "ready.",
+            "answer": "are",
+            "ar": "أنت جاهز."
+          },
+          "prompt": "You … ready.",
+          "answer": "are",
+          "completed": "You are ready.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-choice/q7",
+          "activityId": "l02-be-choice",
+          "reference": "التمرين 2",
+          "title": "اختر am أو is أو are",
+          "localOrdinal": 7,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[6]",
+          "original": {
+            "before": "It",
+            "after": "small.",
+            "answer": "is",
+            "ar": "إنه صغير."
+          },
+          "prompt": "It … small.",
+          "answer": "is",
+          "completed": "It is small.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-correction-reveal/q1",
+          "activityId": "l02-correction-reveal",
+          "reference": "التمرين 3",
+          "title": "صحّح الخطأ",
+          "localOrdinal": 1,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[0]",
+          "original": {
+            "wrong": "I is happy.",
+            "correct": "I am happy."
+          },
+          "prompt": "I is happy.",
+          "answer": "I am happy.",
+          "completed": "I am happy.",
+          "originalHint": "عندما أتحدث عن نفسي",
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-correction-reveal/q2",
+          "activityId": "l02-correction-reveal",
+          "reference": "التمرين 3",
+          "title": "صحّح الخطأ",
+          "localOrdinal": 2,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[1]",
+          "original": {
+            "wrong": "He are a student.",
+            "correct": "He is a student."
+          },
+          "prompt": "He are a student.",
+          "answer": "He is a student.",
+          "completed": "He is a student.",
+          "originalHint": "ذكر واحد",
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-correction-reveal/q3",
+          "activityId": "l02-correction-reveal",
+          "reference": "التمرين 3",
+          "title": "صحّح الخطأ",
+          "localOrdinal": 3,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[2]",
+          "original": {
+            "wrong": "They is students.",
+            "correct": "They are students."
+          },
+          "prompt": "They is students.",
+          "answer": "They are students.",
+          "completed": "They are students.",
+          "originalHint": "أكثر من شخص أو شيء",
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-correction-reveal/q4",
+          "activityId": "l02-correction-reveal",
+          "reference": "التمرين 3",
+          "title": "صحّح الخطأ",
+          "localOrdinal": 4,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[3]",
+          "original": {
+            "wrong": "She am tired.",
+            "correct": "She is tired."
+          },
+          "prompt": "She am tired.",
+          "answer": "She is tired.",
+          "completed": "She is tired.",
+          "originalHint": "أنثى واحدة",
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-correction-reveal/q5",
+          "activityId": "l02-correction-reveal",
+          "reference": "التمرين 3",
+          "title": "صحّح الخطأ",
+          "localOrdinal": 5,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[4]",
+          "original": {
+            "wrong": "We is friends.",
+            "correct": "We are friends."
+          },
+          "prompt": "We is friends.",
+          "answer": "We are friends.",
+          "completed": "We are friends.",
+          "originalHint": "أنا + آخرون",
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-completion/q1",
+          "activityId": "l02-be-completion",
+          "reference": "التمرين 4",
+          "title": "أكمل الجملة",
+          "localOrdinal": 1,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[0]",
+          "original": {
+            "before": "I",
+            "after": "a student.",
+            "answer": "am",
+            "ar": "أنا طالب."
+          },
+          "prompt": "I … a student.",
+          "answer": "am",
+          "completed": "I am a student.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-completion/q2",
+          "activityId": "l02-be-completion",
+          "reference": "التمرين 4",
+          "title": "أكمل الجملة",
+          "localOrdinal": 2,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[1]",
+          "original": {
+            "before": "Khalil",
+            "after": "happy.",
+            "answer": "is",
+            "ar": "خليل سعيد."
+          },
+          "prompt": "Khalil … happy.",
+          "answer": "is",
+          "completed": "Khalil is happy.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-completion/q3",
+          "activityId": "l02-be-completion",
+          "reference": "التمرين 4",
+          "title": "أكمل الجملة",
+          "localOrdinal": 3,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[2]",
+          "original": {
+            "before": "Sara",
+            "after": "a teacher.",
+            "answer": "is",
+            "ar": "سارة معلّمة."
+          },
+          "prompt": "Sara … a teacher.",
+          "answer": "is",
+          "completed": "Sara is a teacher.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-completion/q4",
+          "activityId": "l02-be-completion",
+          "reference": "التمرين 4",
+          "title": "أكمل الجملة",
+          "localOrdinal": 4,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[3]",
+          "original": {
+            "before": "We",
+            "after": "friends.",
+            "answer": "are",
+            "ar": "نحن أصدقاء."
+          },
+          "prompt": "We … friends.",
+          "answer": "are",
+          "completed": "We are friends.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-completion/q5",
+          "activityId": "l02-be-completion",
+          "reference": "التمرين 4",
+          "title": "أكمل الجملة",
+          "localOrdinal": 5,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[4]",
+          "original": {
+            "before": "They",
+            "after": "ready.",
+            "answer": "are",
+            "ar": "هم جاهزون."
+          },
+          "prompt": "They … ready.",
+          "answer": "are",
+          "completed": "They are ready.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-completion/q6",
+          "activityId": "l02-be-completion",
+          "reference": "التمرين 4",
+          "title": "أكمل الجملة",
+          "localOrdinal": 6,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[5]",
+          "original": {
+            "before": "The car",
+            "after": "fast.",
+            "answer": "is",
+            "ar": "السيارة سريعة."
+          },
+          "prompt": "The car … fast.",
+          "answer": "is",
+          "completed": "The car is fast.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-completion/q7",
+          "activityId": "l02-be-completion",
+          "reference": "التمرين 4",
+          "title": "أكمل الجملة",
+          "localOrdinal": 7,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[6]",
+          "original": {
+            "before": "You",
+            "after": "smart.",
+            "answer": "are",
+            "ar": "أنت ذكي."
+          },
+          "prompt": "You … smart.",
+          "answer": "are",
+          "completed": "You are smart.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-reveal/q1",
+          "activityId": "l02-pronoun-reveal",
+          "reference": "التحدّي",
+          "title": "حوّل الاسم إلى الضمير المناسب",
+          "localOrdinal": 1,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[0]",
+          "original": {
+            "given": "Mahmoud is a student.",
+            "answer": "He is a student.",
+            "hint": "محمود = ذكر مفرد"
+          },
+          "prompt": "Mahmoud is a student.",
+          "answer": "He is a student.",
+          "completed": "He is a student.",
+          "originalHint": "محمود = ذكر مفرد",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-reveal/q2",
+          "activityId": "l02-pronoun-reveal",
+          "reference": "التحدّي",
+          "title": "حوّل الاسم إلى الضمير المناسب",
+          "localOrdinal": 2,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[1]",
+          "original": {
+            "given": "Mia is happy.",
+            "answer": "She is happy.",
+            "hint": "ميا = أنثى مفرد"
+          },
+          "prompt": "Mia is happy.",
+          "answer": "She is happy.",
+          "completed": "She is happy.",
+          "originalHint": "ميا = أنثى مفرد",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-reveal/q3",
+          "activityId": "l02-pronoun-reveal",
+          "reference": "التحدّي",
+          "title": "حوّل الاسم إلى الضمير المناسب",
+          "localOrdinal": 3,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[2]",
+          "original": {
+            "given": "Mahmoud and Khalil are friends.",
+            "answer": "They are friends.",
+            "hint": "شخصان"
+          },
+          "prompt": "Mahmoud and Khalil are friends.",
+          "answer": "They are friends.",
+          "completed": "They are friends.",
+          "originalHint": "شخصان",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-reveal/q4",
+          "activityId": "l02-pronoun-reveal",
+          "reference": "التحدّي",
+          "title": "حوّل الاسم إلى الضمير المناسب",
+          "localOrdinal": 4,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[3]",
+          "original": {
+            "given": "Mia and I are students.",
+            "answer": "We are students.",
+            "hint": "أنا + شخص آخر"
+          },
+          "prompt": "Mia and I are students.",
+          "answer": "We are students.",
+          "completed": "We are students.",
+          "originalHint": "أنا + شخص آخر",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-reveal/q5",
+          "activityId": "l02-pronoun-reveal",
+          "reference": "التحدّي",
+          "title": "حوّل الاسم إلى الضمير المناسب",
+          "localOrdinal": 5,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[4]",
+          "original": {
+            "given": "The dog is small.",
+            "answer": "It is small.",
+            "hint": "حيوان مفرد"
+          },
+          "prompt": "The dog is small.",
+          "answer": "It is small.",
+          "completed": "It is small.",
+          "originalHint": "حيوان مفرد",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        }
+      ],
+      "questionCount": 29,
+      "mappedCanonicalCount": 29,
+      "verifiedExternalTextbookCount": 0
+    }
+  ],
   "scope": "All existing TEACHER_n_SOLUTIONS groups; NOT all textbook source questions",
   "lessons": [
     {
@@ -2296,7 +2949,270 @@
     {
       "lesson": 2,
       "id": "L2-textbook-key",
-      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+      "reason": "All 29 canonical exercise questions are directly navigable behind the teacher gate. External textbook page and printed question provenance remain unavailable.",
+      "items": [
+        {
+          "id": "l02-pronoun-choice/q1",
+          "prompt": "Khalil is a student.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[0]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-choice/q2",
+          "prompt": "Sara is happy.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[1]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-choice/q3",
+          "prompt": "Khalil and Adam are friends.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[2]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-choice/q4",
+          "prompt": "Sara and I are students.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[3]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-choice/q5",
+          "prompt": "The book is new.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[4]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-choice/q1",
+          "prompt": "I … happy.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[0]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-choice/q2",
+          "prompt": "He … a teacher.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[1]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-choice/q3",
+          "prompt": "She … tired.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[2]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-choice/q4",
+          "prompt": "We … students.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[3]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-choice/q5",
+          "prompt": "They … friends.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[4]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-choice/q6",
+          "prompt": "You … ready.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[5]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-choice/q7",
+          "prompt": "It … small.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[6]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-correction-reveal/q1",
+          "prompt": "I is happy.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[0]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-correction-reveal/q2",
+          "prompt": "He are a student.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[1]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-correction-reveal/q3",
+          "prompt": "They is students.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[2]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-correction-reveal/q4",
+          "prompt": "She am tired.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[3]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-correction-reveal/q5",
+          "prompt": "We is friends.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[4]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-completion/q1",
+          "prompt": "I … a student.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[0]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-completion/q2",
+          "prompt": "Khalil … happy.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[1]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-completion/q3",
+          "prompt": "Sara … a teacher.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[2]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-completion/q4",
+          "prompt": "We … friends.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[3]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-completion/q5",
+          "prompt": "They … ready.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[4]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-completion/q6",
+          "prompt": "The car … fast.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[5]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-completion/q7",
+          "prompt": "You … smart.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[6]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-reveal/q1",
+          "prompt": "Mahmoud is a student.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[0]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-reveal/q2",
+          "prompt": "Mia is happy.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[1]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-reveal/q3",
+          "prompt": "Mahmoud and Khalil are friends.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[2]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-reveal/q4",
+          "prompt": "Mia and I are students.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[3]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-reveal/q5",
+          "prompt": "The dog is small.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[4]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        }
+      ]
     },
     {
       "lesson": 3,

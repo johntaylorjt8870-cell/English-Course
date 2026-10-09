@@ -293,7 +293,7 @@ function GoldenMachine() {
         <div className="flex flex-wrap items-center justify-center gap-2">
           {mode === "aff" ? (
             <span className="rounded-full bg-orange-100 px-3 py-1 text-xs font-bold text-orange-800">
-              الماضي على الفعل: <En>{GOLDEN.change.from}</En> = الماضي
+              <LatinRuns text={`الماضي على الفعل: ${GOLDEN.change.from} = الماضي`} />
             </span>
           ) : (
             <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800">
@@ -1321,9 +1321,7 @@ function Objectives() {
           </div>
         ))}
       </div>
-      <div className="rounded-3xl border-2 border-amber-200 bg-amber-50 p-4 text-center text-sm font-bold text-amber-900">
-        🎓 سبعة أهداف — كلها مبنية على فكرة واحدة: <En className="font-black"><LatinRuns text={"DID = الماضي"} /></En>، والفعل بعده يرجع إلى الأساس.
-      </div>
+      <div className="rounded-3xl border-2 border-amber-200 bg-amber-50 p-4 text-center text-sm font-bold text-amber-900"><LatinRuns text={"🎓 سبعة أهداف — كلها مبنية على فكرة واحدة: DID = الماضي، والفعل بعده يرجع إلى الأساس."} /></div>
     </Frame>
   );
 }

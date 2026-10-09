@@ -684,8 +684,7 @@ function TimeSensor() {
     <div dir="rtl" className="rounded-2xl border-2 border-dashed border-amber-400 bg-gradient-to-l from-amber-100/80 via-amber-50 to-orange-50 p-4">
       <div className="flex flex-wrap items-center gap-2">
         <span className="grid h-9 w-9 place-items-center rounded-xl bg-amber-500 text-xl shadow-sm anim-wiggle" aria-hidden>⏱</span>
-        <En className="rounded-lg bg-amber-500 px-2.5 py-1 text-[11px] font-black tracking-[0.22em] text-white">TIME SENSOR</En>
-        <h4 className="font-head text-sm font-black text-amber-950"><LatinRuns text={"حالة خاصة: كلمة time لها وجهان"} /></h4>
+        <h4 className="font-head text-sm font-black text-amber-950"><EnAr en="TIME SENSOR" ar="حالة خاصة: كلمة time لها وجهان" enClassName="rounded-lg bg-amber-500 px-2.5 py-1 text-[11px] font-black tracking-[0.22em] text-white" /></h4>
       </div>
       <div className="mt-3 grid gap-3 md:grid-cols-2">
         <div className="rounded-xl border-2 border-white bg-white/80 p-3">
@@ -918,14 +917,13 @@ function MeaningDetector() {
       </LtrRow>
       <div className="mt-3 flex flex-wrap items-center justify-center gap-3 rounded-2xl border-2 border-slate-200 bg-white px-4 py-3">
         <En className="rounded-xl bg-indigo-700 px-3 py-1 text-base font-black text-white">{tile.en}</En>
-        <En
+        <EnAr en={<En
           className={`rounded-lg px-2.5 py-1 text-[11px] font-black tracking-wider text-white ${
             tile.type === "Countable Plural" ? "bg-emerald-600" : tile.type === "Uncountable" ? "bg-violet-700" : "bg-teal-600"
           }`}
         >
           {tile.type}
-        </En>
-        <p className="min-w-[12rem] flex-1 text-sm font-bold leading-6 text-slate-700"><LatinRuns text={tile.ar ?? ""} /></p>
+        </En>} ar={<span className="min-w-[12rem] flex-1 text-sm font-bold leading-6 text-slate-700"><LatinRuns text={tile.ar ?? ""} /></span>} />
       </div>
     </div>
   );

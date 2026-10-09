@@ -1182,7 +1182,7 @@
       },
       {
         "file": "src/lessons/lesson24/Lesson24.tsx",
-        "line": 801,
+        "line": 800,
         "column": 13,
         "code": "TS2345",
         "message": "Argument of type '{ en: string; ar: string; tone: \"indigo\" | \"violet\" | \"amber\" | \"rose\"; badge: string; examples: string[]; }' is not assignable to parameter of type '{ en: string; ar: string; tone: \"teal\" | \"violet\" | \"sky\" | \"emerald\"; badge: string; examples: string[]; }'.\n  Types of property 'tone' are incompatible.\n    Type '\"indigo\" | \"violet\" | \"amber\" | \"rose\"' is not assignable to type '\"teal\" | \"violet\" | \"sky\" | \"emerald\"'.\n      Type '\"indigo\"' is not assignable to type '\"teal\" | \"violet\" | \"sky\" | \"emerald\"'."

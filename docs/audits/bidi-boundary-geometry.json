@@ -1,0 +1,244 @@
+{
+  "browser": "153.0.8010.0",
+  "evidence": [
+    {
+      "category": "59ba597 negative control",
+      "text": "اختر (a أو an).",
+      "first": {
+        "c": "a",
+        "x": 686.296875,
+        "y": 4
+      },
+      "second": {
+        "c": "a",
+        "x": 630.484375,
+        "y": 4
+      }
+    },
+    {
+      "category": "English after unmatched enclosure",
+      "text": "اختر (a أو an).",
+      "width": 760,
+      "first": {
+        "c": "a",
+        "x": 622.828125,
+        "y": 4
+      },
+      "second": {
+        "c": "a",
+        "x": 671.09375,
+        "y": 4
+      }
+    },
+    {
+      "category": "English after unmatched enclosure",
+      "text": "اختر [a أو an].",
+      "width": 760,
+      "first": {
+        "c": "a",
+        "x": 622.828125,
+        "y": 4
+      },
+      "second": {
+        "c": "a",
+        "x": 671.09375,
+        "y": 4
+      }
+    },
+    {
+      "category": "English after unmatched enclosure",
+      "text": "اختر {a أو an}.",
+      "width": 760,
+      "first": {
+        "c": "a",
+        "x": 616.921875,
+        "y": 4
+      },
+      "second": {
+        "c": "a",
+        "x": 665.1875,
+        "y": 4
+      }
+    },
+    {
+      "category": "English after unmatched enclosure",
+      "text": "اختر (\"a\" أو \"an\").",
+      "width": 760,
+      "first": {
+        "c": "a",
+        "x": 589.703125,
+        "y": 4
+      },
+      "second": {
+        "c": "a",
+        "x": 660.046875,
+        "y": 4
+      }
+    },
+    {
+      "category": "English after unmatched enclosure",
+      "text": "اختر ([[a]] أو an).",
+      "width": 760,
+      "first": {
+        "c": "a",
+        "x": 617.34375,
+        "y": 4
+      },
+      "second": {
+        "c": "a",
+        "x": 671.09375,
+        "y": 4
+      }
+    },
+    {
+      "category": "English after unmatched enclosure",
+      "text": "اختر (a أو an).",
+      "width": 280,
+      "first": {
+        "c": "a",
+        "x": 142.828125,
+        "y": 4
+      },
+      "second": {
+        "c": "a",
+        "x": 191.09375,
+        "y": 4
+      }
+    },
+    {
+      "category": "English after unmatched enclosure",
+      "text": "اختر [a أو an].",
+      "width": 280,
+      "first": {
+        "c": "a",
+        "x": 142.828125,
+        "y": 4
+      },
+      "second": {
+        "c": "a",
+        "x": 191.09375,
+        "y": 4
+      }
+    },
+    {
+      "category": "English after unmatched enclosure",
+      "text": "اختر {a أو an}.",
+      "width": 280,
+      "first": {
+        "c": "a",
+        "x": 136.921875,
+        "y": 4
+      },
+      "second": {
+        "c": "a",
+        "x": 185.1875,
+        "y": 4
+      }
+    },
+    {
+      "category": "English after unmatched enclosure",
+      "text": "اختر (\"a\" أو \"an\").",
+      "width": 280,
+      "first": {
+        "c": "a",
+        "x": 109.703125,
+        "y": 4
+      },
+      "second": {
+        "c": "a",
+        "x": 180.046875,
+        "y": 4
+      }
+    },
+    {
+      "category": "English after unmatched enclosure",
+      "text": "اختر ([[a]] أو an).",
+      "width": 280,
+      "first": {
+        "c": "a",
+        "x": 137.34375,
+        "y": 4
+      },
+      "second": {
+        "c": "a",
+        "x": 191.09375,
+        "y": 4
+      }
+    },
+    {
+      "category": "whole semantic phrase instead of split siblings",
+      "text": "Subject = الفاعل",
+      "width": 760,
+      "english": {
+        "c": "S",
+        "x": 568.96875,
+        "y": 4
+      },
+      "arabic": {
+        "c": "ا",
+        "x": 753.3125,
+        "y": 4
+      }
+    },
+    {
+      "category": "whole semantic phrase instead of split siblings",
+      "text": "now · الآن",
+      "width": 760,
+      "english": {
+        "c": "n",
+        "x": 649.59375,
+        "y": 4
+      },
+      "arabic": {
+        "c": "ا",
+        "x": 753.328125,
+        "y": 4
+      }
+    },
+    {
+      "category": "whole semantic phrase instead of split siblings",
+      "text": "Present: read = ريد",
+      "width": 760,
+      "english": {
+        "c": "P",
+        "x": 533.9375,
+        "y": 4
+      },
+      "arabic": {
+        "c": "ر",
+        "x": 748.390625,
+        "y": 4
+      }
+    },
+    {
+      "category": "whole semantic phrase instead of split siblings",
+      "text": "vowel + y — نحتفظ بـ y:",
+      "width": 760,
+      "english": {
+        "c": "v",
+        "x": 515.515625,
+        "y": 4
+      },
+      "arabic": {
+        "c": "ن",
+        "x": 753.296875,
+        "y": 4
+      }
+    },
+    {
+      "category": "whole semantic phrase instead of split siblings",
+      "text": "الماضي على الفعل: went = الماضي",
+      "width": 760,
+      "english": {
+        "c": "w",
+        "x": 385.375,
+        "y": 4
+      },
+      "arabic": {
+        "c": "ا",
+        "x": 548.640625,
+        "y": 4
+      }
+    }
+  ]
+}

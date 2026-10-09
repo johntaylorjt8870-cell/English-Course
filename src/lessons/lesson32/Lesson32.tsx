@@ -173,7 +173,7 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
             aria-pressed={area === a.id}
             className={`flex-1 rounded-2xl border-2 px-3 py-2.5 text-sm font-black transition active:scale-[0.98] sm:flex-none sm:px-5 ${area === a.id ? "border-emerald-700 bg-emerald-700 text-white shadow" : "border-slate-200 bg-white text-slate-600 hover:border-emerald-300"} ${FOCUS32}`}
           >
-            {a.emoji} {a.ar}
+            {a.emoji} <LatinRuns text={a.ar ?? ""} />
             {a.id === "solutions" && !solutionsUnlocked && <span aria-label="مقفلة"> 🔒</span>}
           </button>
         ))}

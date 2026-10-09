@@ -1,3 +1,5 @@
+import { EnAr } from "../../shared/bidi";
+import { En as SharedEn } from "../../shared/lessonKit";
 /* ============================================================================
    الدرس 24 — QUANTITY LAB · QUANTIFIER COMMAND CENTER
    ----------------------------------------------------------------------------
@@ -45,20 +47,12 @@ const EN_THEN_AR = new RegExp(
   "^([A-Za-z][A-Za-z0-9 .,!?:;'\\u2019\\u201C\\u201D()\\[\\]\\-\\u2014\\u00B7/=]*?[.!\\u2026\\uFF1F])\\s+(?=[\\u0600-\\u06FF])"
 );
 
-function En({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
-      {children}
-    </span>
-  );
+function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  return (
-    <span className={className}>
-      <LatinRuns text={text} />
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function LtrRow({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -343,8 +337,7 @@ function Zone({
           <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl text-2xl shadow-sm ${z.badge}`} aria-hidden>
             {emoji}
           </span>
-          <En className={`rounded-xl px-3 py-1 text-[12px] font-black uppercase tracking-[0.22em] ${z.label}`}>{en}</En>
-          <h2 className={`font-head text-xl font-black leading-7 md:text-2xl ${z.title}`}><LatinRuns text={ar} /></h2>
+          <h2 className={`font-head text-xl font-black leading-7 md:text-2xl ${z.title}`}><EnAr en={en} ar={ar} enClassName={`rounded-xl px-3 py-1 text-[12px] font-black uppercase tracking-[0.22em] ${z.label}`} /></h2>
         </div>
         {blurb && (
           <p className={`mt-2 text-sm font-bold leading-7 md:text-[15px] ${z.blurb}`}>
@@ -583,7 +576,7 @@ function CommandConsole() {
             <span className="text-xl" aria-hidden>{st.emoji}</span>
             <En className="ms-auto rounded-lg bg-slate-900 px-2 py-0.5 text-[10px] font-black tracking-[0.18em] text-white">{st.en}</En>
           </div>
-          <h4 className="font-head mt-3 text-base font-black text-indigo-950">{st.ar}</h4>
+          <h4 className="font-head mt-3 text-base font-black text-indigo-950"><LatinRuns text={st.ar ?? ""} /></h4>
           <LtrRow className="mt-2.5 gap-1.5">
             {st.opts.map((o) => (
               <En key={o} className="rounded-xl border-2 border-indigo-200 bg-white px-2.5 py-1 text-[13px] font-black text-indigo-900 shadow-sm">
@@ -691,25 +684,20 @@ function TimeSensor() {
     <div dir="rtl" className="rounded-2xl border-2 border-dashed border-amber-400 bg-gradient-to-l from-amber-100/80 via-amber-50 to-orange-50 p-4">
       <div className="flex flex-wrap items-center gap-2">
         <span className="grid h-9 w-9 place-items-center rounded-xl bg-amber-500 text-xl shadow-sm anim-wiggle" aria-hidden>⏱</span>
-        <En className="rounded-lg bg-amber-500 px-2.5 py-1 text-[11px] font-black tracking-[0.22em] text-white">TIME SENSOR</En>
-        <h4 className="font-head text-sm font-black text-amber-950">حالة خاصة: كلمة time لها وجهان</h4>
+        <h4 className="font-head text-sm font-black text-amber-950"><EnAr en="TIME SENSOR" ar="حالة خاصة: كلمة time لها وجهان" enClassName="rounded-lg bg-amber-500 px-2.5 py-1 text-[11px] font-black tracking-[0.22em] text-white" /></h4>
       </div>
       <div className="mt-3 grid gap-3 md:grid-cols-2">
         <div className="rounded-xl border-2 border-white bg-white/80 p-3">
           <LtrRow className="justify-center">
             <En className="rounded-xl bg-violet-600 px-3 py-1.5 text-base font-black text-white shadow">How much time?</En>
           </LtrRow>
-          <p className="mt-2 text-center text-[12.5px] font-black text-slate-700">
-            وقت ككمية واحدة <En className="rounded bg-violet-100 px-1.5 py-0.5 text-[11px] font-black text-violet-800">Uncountable</En>
-          </p>
+          <p className="mt-2 text-center text-[12.5px] font-black text-slate-700"><LatinRuns text={"وقت ككمية واحدة [[Uncountable]]"} marked /></p>
         </div>
         <div className="rounded-xl border-2 border-white bg-white/80 p-3">
           <LtrRow className="justify-center">
             <En className="rounded-xl bg-emerald-600 px-3 py-1.5 text-base font-black text-white shadow">three times</En>
           </LtrRow>
-          <p className="mt-2 text-center text-[12.5px] font-black text-slate-700">
-            مرات متكررة تُعَدّ <En className="rounded bg-emerald-100 px-1.5 py-0.5 text-[11px] font-black text-emerald-800">Countable</En>
-          </p>
+          <p className="mt-2 text-center text-[12.5px] font-black text-slate-700"><LatinRuns text={"مرات متكررة تُعَدّ [[Countable]]"} marked /></p>
         </div>
       </div>
       <p className="mt-2.5 text-[12px] font-bold leading-6 text-amber-900">
@@ -795,7 +783,7 @@ function VsBoard({
           <En className={`rounded-xl px-3 py-1 text-lg font-black text-white shadow ${head}`}>{s.en}</En>
           <En className="rounded-lg border-2 border-white bg-white px-2 py-0.5 text-[10px] font-black tracking-[0.14em] text-slate-600">{s.badge}</En>
         </div>
-        <p className="mt-2 text-center text-[13px] font-black text-slate-800">{s.ar}</p>
+        <p className="mt-2 text-center text-[13px] font-black text-slate-800"><LatinRuns text={s.ar ?? ""} /></p>
         <LtrRow className="mt-3 justify-center gap-1.5">
           {s.examples.map((e, i) => (
             <En key={`${e}-${i}`} className="rounded-xl border-2 border-white bg-white px-2.5 py-1 text-[13px] font-black text-slate-900 shadow-sm">
@@ -876,11 +864,11 @@ function QuickRuleScale() {
       </div>
       <div className="grid gap-3">
         <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-emerald-300 bg-emerald-50/80 px-3.5 py-2.5">
-          <span className="text-[12.5px] font-black text-emerald-900">نعم — معدود: استخدم a few</span>
+          <span className="text-[12.5px] font-black text-emerald-900"><LatinRuns text={"نعم — معدود: استخدم a few"} /></span>
           <En className="rounded-xl bg-white px-3 py-1 text-sm font-black text-emerald-900 shadow-sm ring-1 ring-emerald-200">a few books ✅</En>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-violet-300 bg-violet-50/80 px-3.5 py-2.5">
-          <span className="text-[12.5px] font-black text-violet-900">لا — غير معدود: استخدم a little</span>
+          <span className="text-[12.5px] font-black text-violet-900"><LatinRuns text={"لا — غير معدود: استخدم a little"} /></span>
           <En className="rounded-xl bg-white px-3 py-1 text-sm font-black text-violet-900 shadow-sm ring-1 ring-violet-200">a little water ✅</En>
         </div>
       </div>
@@ -910,8 +898,7 @@ function MeaningDetector() {
     <div dir="rtl" className="rounded-2xl border-2 border-slate-300 bg-gradient-to-b from-slate-50 to-white p-4 shadow-sm">
       <div className="flex flex-wrap items-center gap-2">
         <span className="grid h-9 w-9 place-items-center rounded-xl bg-slate-900 text-lg shadow-sm" aria-hidden>{"\uD83D\uDD2C"}</span>
-        <En className="rounded-lg bg-slate-900 px-2.5 py-1 text-[10px] font-black tracking-[0.22em] text-cyan-200">MEANING DETECTOR</En>
-        <span className="text-[12px] font-black text-slate-600">المس أداة — اقرأ نوعها ومعناها قبل الحفظ</span>
+        <EnAr en={<En className="rounded-lg bg-slate-900 px-2.5 py-1 text-[10px] font-black tracking-[0.22em] text-cyan-200">MEANING DETECTOR</En>} ar={<span className="text-[12px] font-black text-slate-600">المس أداة — اقرأ نوعها ومعناها قبل الحفظ</span>} />
       </div>
       <LtrRow className="mt-3 justify-center gap-1.5">
         {DETECTOR_TILES.map((tl, i) => (
@@ -930,14 +917,13 @@ function MeaningDetector() {
       </LtrRow>
       <div className="mt-3 flex flex-wrap items-center justify-center gap-3 rounded-2xl border-2 border-slate-200 bg-white px-4 py-3">
         <En className="rounded-xl bg-indigo-700 px-3 py-1 text-base font-black text-white">{tile.en}</En>
-        <En
+        <EnAr en={<En
           className={`rounded-lg px-2.5 py-1 text-[11px] font-black tracking-wider text-white ${
             tile.type === "Countable Plural" ? "bg-emerald-600" : tile.type === "Uncountable" ? "bg-violet-700" : "bg-teal-600"
           }`}
         >
           {tile.type}
-        </En>
-        <p className="min-w-[12rem] flex-1 text-sm font-bold leading-6 text-slate-700">{tile.ar}</p>
+        </En>} ar={<span className="min-w-[12rem] flex-1 text-sm font-bold leading-6 text-slate-700"><LatinRuns text={tile.ar ?? ""} /></span>} />
       </div>
     </div>
   );
@@ -1477,7 +1463,7 @@ function RoadmapTimeline() {
             {nd.state === "here" && <En className="rounded-full bg-amber-400 px-2 py-0.5 text-[10px] font-black text-amber-950">YOU ARE HERE</En>}
             {nd.state === "done" && <En className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-black text-emerald-800">CLEARED ✓</En>}
           </div>
-          <p className="mt-1.5 text-[12px] font-bold leading-5 text-slate-600">{nd.ar}</p>
+          <p className="mt-1.5 text-[12px] font-bold leading-5 text-slate-600"><LatinRuns text={nd.ar ?? ""} /></p>
         </div>
       ))}
     </div>
@@ -1591,7 +1577,7 @@ export default function Lesson24({ onExit }: Props) {
                   <span className="text-xl" aria-hidden>{"\uD83E\uDDDD"}</span>
                   <En className="rounded-lg bg-emerald-700 px-2.5 py-0.5 text-[10px] font-black tracking-[0.22em] text-white">OFFERS &amp; REQUESTS</En>
                 </LtrRow>
-                <p className="mt-2 text-center text-[12.5px] font-black text-emerald-900">هنا — ومعهما — تعود some إلى الأسئلة</p>
+                <p className="mt-2 text-center text-[12.5px] font-black text-emerald-900"><LatinRuns text={"هنا — ومعهما — تعود some إلى الأسئلة"} /></p>
                 <div className="mt-3 space-y-2">
                   <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row rounded-xl border-2 border-white bg-white px-3 py-2 shadow-sm">
                     <En className="block text-left text-base font-black text-slate-900 md:text-lg">Would you like some water?</En>

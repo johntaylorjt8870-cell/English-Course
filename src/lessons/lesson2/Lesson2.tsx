@@ -1,3 +1,7 @@
+import TeacherArea2 from "./TeacherArea2";
+import { EnAr } from "../../shared/bidi";
+import { En as SharedEn } from "../../shared/lessonKit";
+import { mixedText, isInteractiveKeyTarget } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -27,8 +31,8 @@ function theme(i: number) {
 // عناصر مساعدة
 // ============================================================
 
-function En({ children }: { children: React.ReactNode }) {
-  return <span className="ltr font-en inline-block">{children}</span>;
+function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <SharedEn className={`inline-block ${className}`}>{children}</SharedEn>;
 }
 
 /** يعزل المقاطع الإنجليزية داخل النص العربي تلقائيًا — يمنع انعكاس الترتيب نهائيًا */
@@ -64,7 +68,7 @@ function Badge({ emoji, badge, t }: { emoji: string; badge: string; t: ReturnTyp
       <div className={`grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${t.ring} text-3xl shadow-lg anim-bob`}>
         {emoji}
       </div>
-      <span className={`rounded-full px-4 py-1.5 text-sm font-bold ${t.chip}`}>{badge}</span>
+      <span className={`rounded-full px-4 py-1.5 text-sm font-bold ${t.chip}`}>{mixedText(badge)}</span>
     </div>
   );
 }
@@ -90,7 +94,7 @@ function Block({ b, t }: { b: ContentBlock; t: ReturnType<typeof theme> }) {
           </div>
           <div className="mt-2 flex items-center gap-2 pr-1 text-lg text-slate-600">
             <span className="opacity-60">↩</span>
-            <span>{b.ex.ar}</span>
+            <span><LatinRuns text={b.ex.ar ?? ""} /></span>
           </div>
           {b.ex.note && (
             <div className={`mt-2 inline-flex items-center gap-1 rounded-full ${t.chip} px-3 py-1 text-sm font-semibold`}>
@@ -104,14 +108,14 @@ function Block({ b, t }: { b: ContentBlock; t: ReturnType<typeof theme> }) {
       return (
         <div className="flex items-center gap-3 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-4">
           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-emerald-500 text-lg text-white">✓</span>
-          <span className="ltr font-en text-xl font-semibold text-emerald-800">{b.text}</span>
+          <span className="text-xl font-semibold text-emerald-800"><Mixed text={b.text} /></span>
         </div>
       );
     case "wrong":
       return (
         <div className="flex items-center gap-3 rounded-2xl border-2 border-rose-200 bg-rose-50 p-4">
           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-rose-500 text-lg text-white">✕</span>
-          <span className="ltr font-en text-xl font-semibold text-rose-800">{b.text}</span>
+          <span className="text-xl font-semibold text-rose-800"><Mixed text={b.text} /></span>
         </div>
       );
     case "rule":
@@ -121,8 +125,7 @@ function Block({ b, t }: { b: ContentBlock; t: ReturnType<typeof theme> }) {
         <div className="flex items-center gap-4 rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50/70 p-4">
           <span className="text-3xl anim-wiggle">{b.emoji}</span>
           <span className="font-fun text-xl font-semibold text-slate-800">
-            {/* اسمح للنص أن يعرض أجزاء إنجليزية بشكل صحيح */}
-            {b.text}
+            <Mixed text={b.text} />
           </span>
         </div>
       );
@@ -131,11 +134,7 @@ function Block({ b, t }: { b: ContentBlock; t: ReturnType<typeof theme> }) {
         <div className="flex flex-wrap gap-3">
           {b.pairs.map((p, i) => (
             <div key={i} className="flex items-center gap-2 rounded-full border-2 border-slate-200 bg-white px-4 py-2 shadow-sm">
-              <span className="ltr font-en font-bold text-slate-800">{p.from}</span>
-              <span className={`text-lg ${t.txt}`}>←</span>
-              <span className="font-semibold text-slate-600">
-                <Mixed text={p.to} />
-              </span>
+              <EnAr en={<><En className="font-bold text-slate-800">{p.from}</En><span className={`text-lg ${t.txt}`}>←</span></>} ar={p.to} arClassName="font-semibold text-slate-600" />
             </div>
           ))}
         </div>
@@ -206,8 +205,8 @@ function ContentSlide({ s, idx }: { s: Extract<Slide, { kind: "content" }>; idx:
     <div className="relative">
       <Stickers seed={idx} />
       <Badge emoji={s.emoji} badge={s.badge} t={t} />
-      <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">{s.title}</h2>
-      {s.intro && <p className="mt-2 text-xl text-slate-500">{s.intro}</p>}
+      <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">{mixedText(s.title)}</h2>
+      {s.intro && <p className="mt-2 text-xl text-slate-500"><LatinRuns text={s.intro} /></p>}
       <div className="mt-6 space-y-4">
         {s.blocks.map((b, i) => (
           <div key={i} className={`pop pop-${Math.min(i + 1, 6)}`}>
@@ -226,7 +225,7 @@ function PronounGrid({ idx }: { idx: number }) {
       <Stickers seed={idx} />
       <Badge emoji="🎴" badge="القائمة" t={t} />
       <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">الضمائر الأساسية السبعة</h2>
-      <p className="mt-2 text-xl text-slate-500">كل بطاقة تحمل الضمير ومعناه والـ Verb to be الخاص به</p>
+      <p className="mt-2 text-xl text-slate-500"><LatinRuns text={"كل بطاقة تحمل الضمير ومعناه والـ Verb to be الخاص به"} /></p>
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {PRONOUNS.map((p, i) => {
           const ct = theme(i);
@@ -239,7 +238,7 @@ function PronounGrid({ idx }: { idx: number }) {
                 <span className="ltr font-en text-4xl font-extrabold text-slate-800">{p.en}</span>
                 <span className="text-4xl transition group-hover:scale-125">{p.emoji}</span>
               </div>
-              <div className="mt-2 text-2xl font-bold text-slate-600">{p.ar}</div>
+              <div className="mt-2 text-2xl font-bold text-slate-600"><LatinRuns text={p.ar ?? ""} /></div>
               <div className="mt-3 flex items-center justify-between">
                 <span className="text-sm text-slate-400">{p.hint}</span>
                 <span className={`ltr font-en rounded-full px-3 py-1 text-sm font-bold ${ct.chip}`}>{p.be}</span>
@@ -263,9 +262,7 @@ function VerbTable({ idx }: { idx: number }) {
     <div className="relative">
       <Stickers seed={idx} />
       <Badge emoji="🧠" badge="الأهم" t={t} />
-      <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">
-        <En>Verb to be</En> مع الضمائر
-      </h2>
+      <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800"><LatinRuns text={"[[Verb to be]] مع الضمائر"} marked /></h2>
       <p className="mt-2 text-xl text-slate-500">احفظ هذا الجدول جيدًا — كلمة واحدة لكل مجموعة</p>
       <div className="mt-6 grid gap-4 md:grid-cols-3">
         {groups.map((g, i) => (
@@ -277,8 +274,7 @@ function VerbTable({ idx }: { idx: number }) {
               {g.items.map((it) => (
                 <div key={it.en} className="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-2">
                   <span className="text-2xl">{it.emoji}</span>
-                  <span className="ltr font-en text-xl font-bold text-slate-800">{it.en}</span>
-                  <span className="mr-auto text-slate-500">{it.ar}</span>
+                  <EnAr en={<span className="ltr font-en text-xl font-bold text-slate-800">{it.en}</span>} ar={<span className="mr-auto text-slate-500"><LatinRuns text={it.ar ?? ""} /></span>} />
                 </div>
               ))}
             </div>
@@ -287,9 +283,7 @@ function VerbTable({ idx }: { idx: number }) {
       </div>
       <div className="mt-5 flex items-center gap-4 rounded-2xl border-2 border-dashed border-indigo-300 bg-indigo-50/60 p-4">
         <span className="text-3xl anim-wiggle">🎵</span>
-        <span className="font-fun text-xl font-semibold text-slate-800">
-          كرّرها كأنها نشيد: <En>I am · You are · He is · She is · It is · We are · They are</En>
-        </span>
+        <span className="font-fun text-xl font-semibold text-slate-800"><LatinRuns text={"كرّرها كأنها نشيد: [[I am · You are · He is · She is · It is · We are · They are]]"} marked /></span>
       </div>
     </div>
   );
@@ -299,14 +293,14 @@ function VerbTable({ idx }: { idx: number }) {
 // شرائح التمارين التفاعلية
 // ============================================================
 
-function ExerciseSlide({ ex, idx }: { ex: Exercise; idx: number }) {
+export function ExerciseSlide({ ex, idx }: { ex: Exercise; idx: number }) {
   const t = theme(idx);
   return (
-    <div className="relative">
+    <div data-activity={ex.id} className="relative">
       <Stickers seed={idx} />
       <Badge emoji={ex.emoji} badge={ex.badge} t={t} />
-      <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">{ex.title}</h2>
-      <p className="mt-2 text-xl text-slate-500">{ex.subtitle}</p>
+      <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">{mixedText(ex.title)}</h2>
+      <p className="mt-2 text-xl text-slate-500">{mixedText(ex.subtitle)}</p>
       <div className="mt-6">
         {ex.type === "mc" && <MC ex={ex} t={t} />}
         {ex.type === "fill" && <Fill ex={ex} t={t} />}
@@ -319,12 +313,14 @@ function ExerciseSlide({ ex, idx }: { ex: Exercise; idx: number }) {
 
 function MC({ ex, t }: { ex: Extract<Exercise, { type: "mc" }>; t: ReturnType<typeof theme> }) {
   const [picked, setPicked] = useState<Record<number, number>>({});
+  const [checked, setChecked] = useState(false);
+  const complete = Object.keys(picked).length === ex.questions.length;
   return (
     <div className="grid gap-4">
       {ex.questions.map((q, qi) => {
         const chosen = picked[qi];
         return (
-          <div key={qi} className="rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
+          <div key={qi} data-activity-question={qi + 1} className="rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
             <div className="flex flex-wrap items-center gap-3">
               <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg ${t.chip} font-bold`}>{qi + 1}</span>
               <span className="ltr font-en text-xl font-semibold text-slate-800">{q.prompt}</span>
@@ -337,7 +333,7 @@ function MC({ ex, t }: { ex: Extract<Exercise, { type: "mc" }>; t: ReturnType<ty
                 const isChosen = chosen === oi;
                 const isCorrect = oi === q.answer;
                 let cls = "border-slate-200 bg-white text-slate-700 hover:border-slate-300";
-                if (chosen !== undefined) {
+                if (checked && chosen !== undefined) {
                   if (isCorrect) cls = "border-emerald-400 bg-emerald-50 text-emerald-700";
                   else if (isChosen) cls = "border-rose-400 bg-rose-50 text-rose-700";
                   else cls = "border-slate-200 bg-white text-slate-400";
@@ -345,12 +341,13 @@ function MC({ ex, t }: { ex: Extract<Exercise, { type: "mc" }>; t: ReturnType<ty
                 return (
                   <button
                     key={oi}
-                    onClick={() => setPicked((p) => ({ ...p, [qi]: oi }))}
+                    type="button" disabled={checked} aria-pressed={isChosen} aria-label={`${qi + 1}: ${opt}`}
+                    onClick={() => { if (!checked) setPicked((p) => ({ ...p, [qi]: oi })); }}
                     className={`ltr font-en rounded-xl border-2 px-5 py-2 text-lg font-bold transition ${cls}`}
                   >
                     {opt}
-                    {chosen !== undefined && isCorrect && " ✓"}
-                    {chosen !== undefined && isChosen && !isCorrect && " ✕"}
+                    {checked && chosen !== undefined && isCorrect && " ✓"}
+                    {checked && chosen !== undefined && isChosen && !isCorrect && " ✕"}
                   </button>
                 );
               })}
@@ -358,26 +355,33 @@ function MC({ ex, t }: { ex: Extract<Exercise, { type: "mc" }>; t: ReturnType<ty
           </div>
         );
       })}
+      <div className="col-span-full flex flex-wrap items-center gap-3">
+        <button type="button" disabled={!complete || checked} onClick={() => { if (complete && !checked) setChecked(true); }} className="rounded-xl bg-indigo-700 px-4 py-2 font-bold text-white disabled:opacity-40">تحقق من الإجابات</button>
+        <button type="button" onClick={() => { setPicked({}); setChecked(false); }} className="rounded-xl border px-4 py-2 font-bold">إعادة التمرين</button>
+        {checked ? <p role="status">النتيجة: {ex.questions.filter((q, i) => picked[i] === q.answer).length} / {ex.questions.length}</p> : <p className="text-sm">أجب عن جميع الأسئلة ثم تحقق من الإجابات.</p>}
+      </div>
     </div>
   );
 }
 
 function Fill({ ex, t }: { ex: Extract<Exercise, { type: "fill" }>; t: ReturnType<typeof theme> }) {
   const [picked, setPicked] = useState<Record<number, string>>({});
+  const [checked, setChecked] = useState(false);
+  const complete = Object.keys(picked).length === ex.questions.length;
   return (
     <div className="grid gap-3 sm:grid-cols-2">
       {ex.questions.map((q, qi) => {
         const chosen = picked[qi];
         const correct = chosen === q.answer;
         return (
-          <div key={qi} className="rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
+          <div key={qi} data-activity-question={qi + 1} className="rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
             <div className="flex items-center gap-2 text-xl">
               <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg ${t.chip} text-sm font-bold`}>{qi + 1}</span>
               <span className="ltr font-en font-semibold text-slate-800">
                 {q.before}{" "}
                 <span
                   className={`mx-1 inline-block min-w-16 rounded-lg border-2 border-dashed px-2 text-center ${
-                    chosen ? (correct ? "border-emerald-400 bg-emerald-50 text-emerald-700" : "border-rose-400 bg-rose-50 text-rose-700") : "border-slate-300 text-slate-300"
+                    checked && chosen ? (correct ? "border-emerald-400 bg-emerald-50 text-emerald-700" : "border-rose-400 bg-rose-50 text-rose-700") : "border-slate-300 text-slate-300"
                   }`}
                 >
                   {chosen || "…"}
@@ -385,13 +389,13 @@ function Fill({ ex, t }: { ex: Extract<Exercise, { type: "fill" }>; t: ReturnTyp
                 {q.after}
               </span>
             </div>
-            <div className="mt-2 pr-9 text-sm text-slate-400">{q.ar}</div>
+            <div className="mt-2 pr-9 text-sm text-slate-400"><LatinRuns text={q.ar ?? ""} /></div>
             <div className="mt-3 flex flex-wrap gap-2 pr-9">
               {ex.options.map((opt) => {
                 const isChosen = chosen === opt;
                 const isAnswer = opt === q.answer;
                 let cls = "border-slate-200 bg-white text-slate-600 hover:border-slate-300";
-                if (chosen) {
+                if (checked && chosen) {
                   if (isAnswer) cls = "border-emerald-400 bg-emerald-50 text-emerald-700";
                   else if (isChosen) cls = "border-rose-400 bg-rose-50 text-rose-700";
                   else cls = "border-slate-200 bg-white text-slate-300";
@@ -399,7 +403,8 @@ function Fill({ ex, t }: { ex: Extract<Exercise, { type: "fill" }>; t: ReturnTyp
                 return (
                   <button
                     key={opt}
-                    onClick={() => setPicked((p) => ({ ...p, [qi]: opt }))}
+                    type="button" disabled={checked} aria-pressed={isChosen} aria-label={`${qi + 1}: ${opt}`}
+                    onClick={() => { if (!checked) setPicked((p) => ({ ...p, [qi]: opt })); }}
                     className={`ltr font-en rounded-lg border-2 px-4 py-1.5 font-bold transition ${cls}`}
                   >
                     {opt}
@@ -410,6 +415,11 @@ function Fill({ ex, t }: { ex: Extract<Exercise, { type: "fill" }>; t: ReturnTyp
           </div>
         );
       })}
+      <div className="col-span-full flex flex-wrap items-center gap-3">
+        <button type="button" disabled={!complete || checked} onClick={() => { if (complete && !checked) setChecked(true); }} className="rounded-xl bg-indigo-700 px-4 py-2 font-bold text-white disabled:opacity-40">تحقق من الإجابات</button>
+        <button type="button" onClick={() => { setPicked({}); setChecked(false); }} className="rounded-xl border px-4 py-2 font-bold">إعادة التمرين</button>
+        {checked ? <p role="status">النتيجة: {ex.questions.filter((q, i) => picked[i] === q.answer).length} / {ex.questions.length}</p> : <p className="text-sm">أجب عن جميع الأسئلة ثم تحقق من الإجابات.</p>}
+      </div>
     </div>
   );
 }
@@ -421,14 +431,14 @@ function Fix({ ex }: { ex: Extract<Exercise, { type: "fix" }> }) {
       {ex.questions.map((q, qi) => {
         const open = shown[qi];
         return (
-          <div key={qi} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
+          <div key={qi} data-activity-question={qi + 1} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
             <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-rose-100 font-bold text-rose-700">{qi + 1}</span>
             <span className="ltr font-en text-xl font-semibold text-rose-600 line-through decoration-rose-300">{q.wrong}</span>
             {open ? (
               <span className="ltr font-en text-xl font-bold text-emerald-700">→ {q.correct} ✓</span>
             ) : (
               <button
-                onClick={() => setShown((s) => ({ ...s, [qi]: true }))}
+                type="button" aria-label={`كشف إجابة البند ${qi + 1}`} onClick={() => setShown((s) => ({ ...s, [qi]: true }))}
                 className="mr-auto rounded-xl bg-emerald-500 px-4 py-1.5 text-sm font-bold text-white shadow transition hover:bg-emerald-600"
               >
                 أظهر التصحيح
@@ -437,6 +447,7 @@ function Fix({ ex }: { ex: Extract<Exercise, { type: "fix" }> }) {
           </div>
         );
       })}
+      <button type="button" onClick={() => setShown({})} className="rounded-xl border px-4 py-2 font-bold">إعادة التمرين</button>
     </div>
   );
 }
@@ -448,7 +459,7 @@ function Transform({ ex, t }: { ex: Extract<Exercise, { type: "transform" }>; t:
       {ex.questions.map((q, qi) => {
         const open = shown[qi];
         return (
-          <div key={qi} className="rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
+          <div key={qi} data-activity-question={qi + 1} className="rounded-2xl border-2 border-slate-100 bg-white p-4 shadow-sm">
             <div className="flex flex-wrap items-center gap-3">
               <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg ${t.chip} font-bold`}>{qi + 1}</span>
               <span className="ltr font-en text-xl font-semibold text-slate-800">{q.given}</span>
@@ -459,7 +470,7 @@ function Transform({ ex, t }: { ex: Extract<Exercise, { type: "transform" }>; t:
                 <span className="ltr font-en text-xl font-bold text-emerald-700">→ {q.answer} ✓</span>
               ) : (
                 <button
-                  onClick={() => setShown((s) => ({ ...s, [qi]: true }))}
+                  type="button" aria-label={`كشف إجابة البند ${qi + 1}`} onClick={() => setShown((s) => ({ ...s, [qi]: true }))}
                   className="rounded-xl bg-indigo-500 px-4 py-1.5 text-sm font-bold text-white shadow transition hover:bg-indigo-600"
                 >
                   اكشف الإجابة
@@ -469,6 +480,7 @@ function Transform({ ex, t }: { ex: Extract<Exercise, { type: "transform" }>; t:
           </div>
         );
       })}
+      <button type="button" onClick={() => setShown({})} className="rounded-xl border px-4 py-2 font-bold">إعادة التمرين</button>
     </div>
   );
 }
@@ -503,7 +515,7 @@ function Summary() {
               { ar: "هم طلاب", wrong: "They students.", right: "They are students." },
             ].map((r, i) => (
               <div key={i} className="rounded-xl bg-white p-3 shadow-sm">
-                <div className="mb-1 font-semibold text-slate-600">{r.ar}</div>
+                <div className="mb-1 font-semibold text-slate-600"><LatinRuns text={r.ar ?? ""} /></div>
                 <div className="ltr font-en font-bold text-rose-500 line-through decoration-rose-300">{r.wrong} ✕</div>
                 <div className="ltr font-en font-bold text-emerald-600">{r.right} ✓</div>
               </div>
@@ -514,9 +526,7 @@ function Summary() {
 
       <div className="mt-5 flex items-center gap-4 rounded-2xl bg-gradient-to-l from-indigo-500 to-violet-600 p-5 text-white shadow-lg">
         <span className="text-4xl anim-bob">🏆</span>
-        <span className="font-fun text-2xl font-bold">
-          <En>Verb to be</En> ليس ثانويًا — إنه أساس تكوين الجملة الإنجليزية. أحسنت!
-        </span>
+        <span className="font-fun text-2xl font-bold"><LatinRuns text={"[[Verb to be]] ليس ثانويًا — إنه أساس تكوين الجملة الإنجليزية. أحسنت!"} marked /></span>
       </div>
     </div>
   );
@@ -528,9 +538,9 @@ function QuizSlide() {
       <Stickers seed={2} />
       <Badge emoji="📝" badge="الاختبار النهائي" t={theme(3)} />
       <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">الاختبار النهائي</h2>
-      <p className="mt-2 text-xl text-slate-500">12 سؤالًا جديدًا من خارج أمثلة الدرس — أثبت أنك أتقنت الضمائر و Verb to be.</p>
+      <p className="mt-2 text-xl text-slate-500"><LatinRuns text={"12 سؤالًا جديدًا من خارج أمثلة الدرس — أثبت أنك أتقنت الضمائر و Verb to be."} /></p>
       <div className="mt-6">
-        <FinalQuiz lesson={2} accent="bg-indigo-600" />
+        <FinalQuiz lesson={2} accent="bg-indigo-600" teacherSource={<TeacherArea2 />} />
       </div>
     </div>
   );
@@ -622,7 +632,7 @@ export default function Lesson2({ onExit }: { onExit: () => void }) {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (menu) return;
+      if (menu || isInteractiveKeyTarget(e)) return;
       // في العربية السهم الأيسر ينقلنا للأمام بصريًا؛ نجعل الاثنين يعملان بوضوح
       if (e.key === "ArrowLeft") go.next();
       if (e.key === "ArrowRight") go.prev();
@@ -659,7 +669,7 @@ export default function Lesson2({ onExit }: { onExit: () => void }) {
           <div className="font-fun truncate text-lg font-extrabold text-slate-800 md:text-xl">
             الدرس 2 · الضمائر و <span className="ltr font-en text-indigo-600">Verb to be</span>
           </div>
-          <div className="truncate text-xs text-slate-400">{slideTitle(SLIDES[i])}</div>
+          <div className="truncate text-xs text-slate-400">{mixedText(slideTitle(SLIDES[i]))}</div>
         </div>
         <button
           onClick={() => setMenu(true)}
@@ -747,7 +757,7 @@ export default function Lesson2({ onExit }: { onExit: () => void }) {
                   >
                     <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-slate-100 text-2xl">{slideEmoji(s)}</span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate font-bold text-slate-800">{slideTitle(s)}</span>
+                      <span className="block truncate font-bold text-slate-800">{mixedText(slideTitle(s))}</span>
                       <span className="text-xs text-slate-400">الشريحة {di + 1}</span>
                     </span>
                     {di === i && <span className="text-indigo-500">●</span>}

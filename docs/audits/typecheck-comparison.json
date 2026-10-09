@@ -1,0 +1,2538 @@
+{
+  "base": "1f879216d96edea741e4b28db8b58449bb98adaf",
+  "flags": [
+    "--noEmit",
+    "--jsx",
+    "react-jsx",
+    "--moduleResolution",
+    "bundler",
+    "--module",
+    "esnext",
+    "--target",
+    "es2022",
+    "--lib",
+    "es2022,dom",
+    "--allowSyntheticDefaultImports",
+    "--skipLibCheck"
+  ],
+  "current": {
+    "exitCode": 2,
+    "diagnostics": [
+      {
+        "file": "src/lessons/lesson10/Lesson10.tsx",
+        "line": 191,
+        "column": 30,
+        "code": "TS2304",
+        "message": "Cannot find name 'IngRule'."
+      },
+      {
+        "file": "src/lessons/lesson11/data.ts",
+        "line": 703,
+        "column": 39,
+        "code": "TS2353",
+        "message": "Object literal may only specify known properties, and 'items' does not exist in type '{ type: \"transformChallenge\"; }'."
+      },
+      {
+        "file": "src/lessons/lesson11/data.ts",
+        "line": 713,
+        "column": 35,
+        "code": "TS2353",
+        "message": "Object literal may only specify known properties, and 'items' does not exist in type '{ type: \"finalDetective\"; }'."
+      },
+      {
+        "file": "src/lessons/lesson11/data.ts",
+        "line": 723,
+        "column": 34,
+        "code": "TS2353",
+        "message": "Object literal may only specify known properties, and 'items' does not exist in type '{ type: \"comprehensive\"; }'."
+      },
+      {
+        "file": "src/lessons/lesson14/Lesson14.tsx",
+        "line": 207,
+        "column": 71,
+        "code": "TS2322",
+        "message": "Type 'string | { en: string; ar: string; }' is not assignable to type 'Key'.\n  Type '{ en: string; ar: string; }' is not assignable to type 'Key'."
+      },
+      {
+        "file": "src/lessons/lesson14/Lesson14.tsx",
+        "line": 207,
+        "column": 213,
+        "code": "TS2322",
+        "message": "Type 'string | { en: string; ar: string; }' is not assignable to type 'string'.\n  Type '{ en: string; ar: string; }' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson14/Lesson14.tsx",
+        "line": 207,
+        "column": 254,
+        "code": "TS2339",
+        "message": "Property 'en' does not exist on type 'string | { en: string; ar: string; }'.\n  Property 'en' does not exist on type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson14/Lesson14.tsx",
+        "line": 207,
+        "column": 266,
+        "code": "TS2339",
+        "message": "Property 'ar' does not exist on type 'string | { en: string; ar: string; }'.\n  Property 'ar' does not exist on type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson18/Lesson18.tsx",
+        "line": 1207,
+        "column": 45,
+        "code": "TS2339",
+        "message": "Property 'reveal' does not exist on type '{ en: string; reveal: string; } | { en: string; tag: string; }'.\n  Property 'reveal' does not exist on type '{ en: string; tag: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson18/Lesson18.tsx",
+        "line": 1227,
+        "column": 20,
+        "code": "TS2339",
+        "message": "Property 'tag' does not exist on type '{ en: string; reveal: string; } | { en: string; tag: string; }'.\n  Property 'tag' does not exist on type '{ en: string; reveal: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson18/Lesson18.tsx",
+        "line": 1237,
+        "column": 65,
+        "code": "TS2339",
+        "message": "Property 'reveal' does not exist on type '{ en: string; reveal: string; } | { en: string; tag: string; }'.\n  Property 'reveal' does not exist on type '{ en: string; tag: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson18/Lesson18.tsx",
+        "line": 1437,
+        "column": 31,
+        "code": "TS2339",
+        "message": "Property 'andNot' does not exist on type '{ label: string; sentence: string; because: string; because1: string; so: string; verb: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson18/Lesson18.tsx",
+        "line": 1440,
+        "column": 20,
+        "code": "TS2339",
+        "message": "Property 'notVerb' does not exist on type '{ label: string; sentence: string; because: string; because1: string; so: string; verb: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson21/Lesson21.tsx",
+        "line": 2125,
+        "column": 128,
+        "code": "TS2677",
+        "message": "A type predicate's type must be assignable to its parameter's type.\n  Type 'string' is not assignable to type '\"child\" | \"mouse\" | \"woman\"'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1504,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1505,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1506,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1507,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1508,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1509,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1510,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1511,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1512,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1513,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1514,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1515,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1516,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1517,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1518,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1519,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1520,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1521,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1522,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1523,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1524,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1525,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1526,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1527,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1528,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1529,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1530,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1531,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1532,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1533,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1534,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1535,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1536,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1537,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1538,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1539,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1540,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1541,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1542,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1543,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1544,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1545,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1546,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1547,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1548,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1549,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1550,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1551,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1552,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1553,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1554,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1555,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1556,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1557,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1558,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1559,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1560,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1561,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1562,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1563,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1564,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1565,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1566,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1567,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1568,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1569,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1570,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1571,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1572,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1573,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1574,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1575,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1576,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1577,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1578,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1579,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1580,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1581,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1582,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1583,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1584,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1585,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1586,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1587,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1588,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1589,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1590,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1591,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1592,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1593,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1594,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1595,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1596,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1597,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1598,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1599,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1600,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1601,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1602,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1603,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1604,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1605,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1606,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1607,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1608,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1609,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1610,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1611,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1612,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1613,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1614,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1615,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1616,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1617,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1618,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1619,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1620,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1621,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1622,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1623,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1624,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1625,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1626,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1627,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1628,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1629,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1630,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1631,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1632,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1633,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1634,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1635,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1636,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1637,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1638,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1639,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1640,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1641,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1642,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1643,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1644,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1645,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1646,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1647,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1648,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1649,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1650,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1651,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1652,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1653,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1654,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1655,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson24/Lesson24.tsx",
+        "line": 800,
+        "column": 13,
+        "code": "TS2345",
+        "message": "Argument of type '{ en: string; ar: string; tone: \"indigo\" | \"violet\" | \"amber\" | \"rose\"; badge: string; examples: string[]; }' is not assignable to parameter of type '{ en: string; ar: string; tone: \"teal\" | \"violet\" | \"sky\" | \"emerald\"; badge: string; examples: string[]; }'.\n  Types of property 'tone' are incompatible.\n    Type '\"indigo\" | \"violet\" | \"amber\" | \"rose\"' is not assignable to type '\"teal\" | \"violet\" | \"sky\" | \"emerald\"'.\n      Type '\"indigo\"' is not assignable to type '\"teal\" | \"violet\" | \"sky\" | \"emerald\"'."
+      },
+      {
+        "file": "src/lessons/lesson27/Lesson27.tsx",
+        "line": 2424,
+        "column": 22,
+        "code": "TS2339",
+        "message": "Property 'en' does not exist on type 'TestQ27'.\n  Property 'en' does not exist on type '{ n: number; type: \"spot\"; ar: string; segments: string[]; answer: number; fix: string; why: string; trap?: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson27/Lesson27.tsx",
+        "line": 2424,
+        "column": 93,
+        "code": "TS2339",
+        "message": "Property 'en' does not exist on type 'TestQ27'.\n  Property 'en' does not exist on type '{ n: number; type: \"spot\"; ar: string; segments: string[]; answer: number; fix: string; why: string; trap?: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson27/data.ts",
+        "line": 1538,
+        "column": 9,
+        "code": "TS2339",
+        "message": "Property 'en' does not exist on type 'TestQ27'.\n  Property 'en' does not exist on type '{ n: number; type: \"spot\"; ar: string; segments: string[]; answer: number; fix: string; why: string; trap?: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson28/Lesson28.tsx",
+        "line": 582,
+        "column": 94,
+        "code": "TS2322",
+        "message": "Type '{ roles: Record<string, RoleStyle>; parts: Part[]; title: string; }' is not assignable to type 'IntrinsicAttributes & { parts: Part[]; roles: Record<string, RoleStyle>; q?: boolean; size?: \"sm\" | \"md\" | \"lg\"; label?: boolean; }'.\n  Property 'title' does not exist on type 'IntrinsicAttributes & { parts: Part[]; roles: Record<string, RoleStyle>; q?: boolean; size?: \"sm\" | \"md\" | \"lg\"; label?: boolean; }'."
+      },
+      {
+        "file": "src/lessons/lesson28/Lesson28.tsx",
+        "line": 583,
+        "column": 72,
+        "code": "TS2322",
+        "message": "Type '{ roles: Record<string, RoleStyle>; parts: Part[]; title: string; }' is not assignable to type 'IntrinsicAttributes & { parts: Part[]; roles: Record<string, RoleStyle>; q?: boolean; size?: \"sm\" | \"md\" | \"lg\"; label?: boolean; }'.\n  Property 'title' does not exist on type 'IntrinsicAttributes & { parts: Part[]; roles: Record<string, RoleStyle>; q?: boolean; size?: \"sm\" | \"md\" | \"lg\"; label?: boolean; }'."
+      },
+      {
+        "file": "src/lessons/lesson28/Lesson28.tsx",
+        "line": 941,
+        "column": 35,
+        "code": "TS2345",
+        "message": "Argument of type 'number' is not assignable to parameter of type 'SetStateAction<1 | 2>'."
+      },
+      {
+        "file": "src/lessons/lesson28/Lesson28.tsx",
+        "line": 1781,
+        "column": 47,
+        "code": "TS2769",
+        "message": "No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'number' is not assignable to parameter of type '(substring: string, ...args: any[]) => string'."
+      },
+      {
+        "file": "src/lessons/lesson28/Lesson28.tsx",
+        "line": 2979,
+        "column": 12,
+        "code": "TS2339",
+        "message": "Property 'en' does not exist on type 'TestQ28'.\n  Property 'en' does not exist on type '{ n: number; type: \"spot\"; ar: string; segments: string[]; answer: number; fix: string; why: string; trap?: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson28/Lesson28.tsx",
+        "line": 2979,
+        "column": 73,
+        "code": "TS2339",
+        "message": "Property 'en' does not exist on type 'TestQ28'.\n  Property 'en' does not exist on type '{ n: number; type: \"spot\"; ar: string; segments: string[]; answer: number; fix: string; why: string; trap?: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson6/Lesson6.tsx",
+        "line": 92,
+        "column": 126,
+        "code": "TS2322",
+        "message": "Type 'ReactNode' is not assignable to type 'string'.\n  Type 'number' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson6/Lesson6.tsx",
+        "line": 93,
+        "column": 93,
+        "code": "TS2322",
+        "message": "Type 'string | number | bigint | true | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<...>' is not assignable to type 'string'.\n  Type 'number' is not assignable to type 'string'."
+      }
+    ]
+  },
+  "baseline": {
+    "exitCode": 2,
+    "diagnostics": [
+      {
+        "file": "src/lessons/lesson10/Lesson10.tsx",
+        "line": 211,
+        "column": 30,
+        "code": "TS2304",
+        "message": "Cannot find name 'IngRule'."
+      },
+      {
+        "file": "src/lessons/lesson11/data.ts",
+        "line": 703,
+        "column": 39,
+        "code": "TS2353",
+        "message": "Object literal may only specify known properties, and 'items' does not exist in type '{ type: \"transformChallenge\"; }'."
+      },
+      {
+        "file": "src/lessons/lesson11/data.ts",
+        "line": 713,
+        "column": 35,
+        "code": "TS2353",
+        "message": "Object literal may only specify known properties, and 'items' does not exist in type '{ type: \"finalDetective\"; }'."
+      },
+      {
+        "file": "src/lessons/lesson11/data.ts",
+        "line": 723,
+        "column": 34,
+        "code": "TS2353",
+        "message": "Object literal may only specify known properties, and 'items' does not exist in type '{ type: \"comprehensive\"; }'."
+      },
+      {
+        "file": "src/lessons/lesson14/Lesson14.tsx",
+        "line": 224,
+        "column": 71,
+        "code": "TS2322",
+        "message": "Type 'string | { en: string; ar: string; }' is not assignable to type 'Key'.\n  Type '{ en: string; ar: string; }' is not assignable to type 'Key'."
+      },
+      {
+        "file": "src/lessons/lesson14/Lesson14.tsx",
+        "line": 224,
+        "column": 213,
+        "code": "TS2322",
+        "message": "Type 'string | { en: string; ar: string; }' is not assignable to type 'string'.\n  Type '{ en: string; ar: string; }' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson14/Lesson14.tsx",
+        "line": 224,
+        "column": 254,
+        "code": "TS2339",
+        "message": "Property 'en' does not exist on type 'string | { en: string; ar: string; }'.\n  Property 'en' does not exist on type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson14/Lesson14.tsx",
+        "line": 224,
+        "column": 266,
+        "code": "TS2339",
+        "message": "Property 'ar' does not exist on type 'string | { en: string; ar: string; }'.\n  Property 'ar' does not exist on type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson18/Lesson18.tsx",
+        "line": 1233,
+        "column": 45,
+        "code": "TS2339",
+        "message": "Property 'reveal' does not exist on type '{ en: string; reveal: string; } | { en: string; tag: string; }'.\n  Property 'reveal' does not exist on type '{ en: string; tag: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson18/Lesson18.tsx",
+        "line": 1253,
+        "column": 20,
+        "code": "TS2339",
+        "message": "Property 'tag' does not exist on type '{ en: string; reveal: string; } | { en: string; tag: string; }'.\n  Property 'tag' does not exist on type '{ en: string; reveal: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson18/Lesson18.tsx",
+        "line": 1263,
+        "column": 65,
+        "code": "TS2339",
+        "message": "Property 'reveal' does not exist on type '{ en: string; reveal: string; } | { en: string; tag: string; }'.\n  Property 'reveal' does not exist on type '{ en: string; tag: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson18/Lesson18.tsx",
+        "line": 1463,
+        "column": 31,
+        "code": "TS2339",
+        "message": "Property 'andNot' does not exist on type '{ label: string; sentence: string; because: string; because1: string; so: string; verb: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson18/Lesson18.tsx",
+        "line": 1466,
+        "column": 20,
+        "code": "TS2339",
+        "message": "Property 'notVerb' does not exist on type '{ label: string; sentence: string; because: string; because1: string; so: string; verb: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson21/Lesson21.tsx",
+        "line": 2136,
+        "column": 128,
+        "code": "TS2677",
+        "message": "A type predicate's type must be assignable to its parameter's type.\n  Type 'string' is not assignable to type '\"child\" | \"mouse\" | \"woman\"'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1504,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1505,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1506,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1507,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1508,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1509,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1510,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1511,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1512,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1513,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1514,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1515,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1516,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1517,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1518,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1519,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1520,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1521,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1522,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1523,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1524,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1525,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1526,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1527,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1528,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1529,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1530,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1531,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1532,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1533,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1534,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1535,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1536,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1537,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1538,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1539,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1540,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1541,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1542,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1543,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1544,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1545,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1546,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1547,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1548,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1549,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1550,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1551,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1552,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1553,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1554,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1555,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1556,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1557,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1558,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1559,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1560,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1561,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1562,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1563,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1564,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1565,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1566,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1567,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1568,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1569,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1570,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1571,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1572,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1573,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1574,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1575,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1576,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1577,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1578,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1579,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1580,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1581,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1582,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1583,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1584,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1585,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1586,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1587,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1588,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1589,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1590,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1591,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1592,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1593,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1594,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1595,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1596,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1597,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1598,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1599,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1600,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1601,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1602,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1603,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1604,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1605,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1606,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1607,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1608,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1609,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1610,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1611,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1612,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1613,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1614,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1615,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1616,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1617,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1618,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1619,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1620,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1621,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1622,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1623,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1624,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1625,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1626,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1627,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1628,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1629,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1630,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1631,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1632,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1633,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1634,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1635,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1636,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1637,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1638,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1639,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1640,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1641,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1642,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1643,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1644,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1645,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1646,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1647,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1648,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1649,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1650,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1651,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1652,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1653,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1654,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson21/data.ts",
+        "line": 1655,
+        "column": 3,
+        "code": "TS2322",
+        "message": "Type 'string | string[]' is not assignable to type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson24/Lesson24.tsx",
+        "line": 812,
+        "column": 13,
+        "code": "TS2345",
+        "message": "Argument of type '{ en: string; ar: string; tone: \"indigo\" | \"violet\" | \"amber\" | \"rose\"; badge: string; examples: string[]; }' is not assignable to parameter of type '{ en: string; ar: string; tone: \"teal\" | \"violet\" | \"sky\" | \"emerald\"; badge: string; examples: string[]; }'.\n  Types of property 'tone' are incompatible.\n    Type '\"indigo\" | \"violet\" | \"amber\" | \"rose\"' is not assignable to type '\"teal\" | \"violet\" | \"sky\" | \"emerald\"'.\n      Type '\"indigo\"' is not assignable to type '\"teal\" | \"violet\" | \"sky\" | \"emerald\"'."
+      },
+      {
+        "file": "src/lessons/lesson27/Lesson27.tsx",
+        "line": 2418,
+        "column": 22,
+        "code": "TS2339",
+        "message": "Property 'en' does not exist on type 'TestQ27'.\n  Property 'en' does not exist on type '{ n: number; type: \"spot\"; ar: string; segments: string[]; answer: number; fix: string; why: string; trap?: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson27/Lesson27.tsx",
+        "line": 2418,
+        "column": 93,
+        "code": "TS2339",
+        "message": "Property 'en' does not exist on type 'TestQ27'.\n  Property 'en' does not exist on type '{ n: number; type: \"spot\"; ar: string; segments: string[]; answer: number; fix: string; why: string; trap?: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson27/Lesson27.tsx",
+        "line": 2678,
+        "column": 33,
+        "code": "TS2339",
+        "message": "Property 'explanation' does not exist on type '{ n: number; ar: string; en: any; answer: string; why: string; trap: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson27/data.ts",
+        "line": 1538,
+        "column": 9,
+        "code": "TS2339",
+        "message": "Property 'en' does not exist on type 'TestQ27'.\n  Property 'en' does not exist on type '{ n: number; type: \"spot\"; ar: string; segments: string[]; answer: number; fix: string; why: string; trap?: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson28/Lesson28.tsx",
+        "line": 578,
+        "column": 94,
+        "code": "TS2322",
+        "message": "Type '{ roles: Record<string, RoleStyle>; parts: Part[]; title: string; }' is not assignable to type 'IntrinsicAttributes & { parts: Part[]; roles: Record<string, RoleStyle>; q?: boolean; size?: \"sm\" | \"md\" | \"lg\"; label?: boolean; }'.\n  Property 'title' does not exist on type 'IntrinsicAttributes & { parts: Part[]; roles: Record<string, RoleStyle>; q?: boolean; size?: \"sm\" | \"md\" | \"lg\"; label?: boolean; }'."
+      },
+      {
+        "file": "src/lessons/lesson28/Lesson28.tsx",
+        "line": 579,
+        "column": 72,
+        "code": "TS2322",
+        "message": "Type '{ roles: Record<string, RoleStyle>; parts: Part[]; title: string; }' is not assignable to type 'IntrinsicAttributes & { parts: Part[]; roles: Record<string, RoleStyle>; q?: boolean; size?: \"sm\" | \"md\" | \"lg\"; label?: boolean; }'.\n  Property 'title' does not exist on type 'IntrinsicAttributes & { parts: Part[]; roles: Record<string, RoleStyle>; q?: boolean; size?: \"sm\" | \"md\" | \"lg\"; label?: boolean; }'."
+      },
+      {
+        "file": "src/lessons/lesson28/Lesson28.tsx",
+        "line": 937,
+        "column": 35,
+        "code": "TS2345",
+        "message": "Argument of type 'number' is not assignable to parameter of type 'SetStateAction<1 | 2>'."
+      },
+      {
+        "file": "src/lessons/lesson28/Lesson28.tsx",
+        "line": 1777,
+        "column": 47,
+        "code": "TS2769",
+        "message": "No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'number' is not assignable to parameter of type '(substring: string, ...args: any[]) => string'."
+      },
+      {
+        "file": "src/lessons/lesson28/Lesson28.tsx",
+        "line": 2975,
+        "column": 12,
+        "code": "TS2339",
+        "message": "Property 'en' does not exist on type 'TestQ28'.\n  Property 'en' does not exist on type '{ n: number; type: \"spot\"; ar: string; segments: string[]; answer: number; fix: string; why: string; trap?: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson28/Lesson28.tsx",
+        "line": 2975,
+        "column": 73,
+        "code": "TS2339",
+        "message": "Property 'en' does not exist on type 'TestQ28'.\n  Property 'en' does not exist on type '{ n: number; type: \"spot\"; ar: string; segments: string[]; answer: number; fix: string; why: string; trap?: string; }'."
+      },
+      {
+        "file": "src/lessons/lesson6/Lesson6.tsx",
+        "line": 104,
+        "column": 126,
+        "code": "TS2322",
+        "message": "Type 'ReactNode' is not assignable to type 'string'.\n  Type 'number' is not assignable to type 'string'."
+      },
+      {
+        "file": "src/lessons/lesson6/Lesson6.tsx",
+        "line": 105,
+        "column": 93,
+        "code": "TS2322",
+        "message": "Type 'string | number | bigint | true | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<...>' is not assignable to type 'string'.\n  Type 'number' is not assignable to type 'string'."
+      }
+    ]
+  },
+  "added": [],
+  "removed": [
+    {
+      "file": "src/lessons/lesson27/Lesson27.tsx",
+      "line": 2678,
+      "column": 33,
+      "code": "TS2339",
+      "message": "Property 'explanation' does not exist on type '{ n: number; ar: string; en: any; answer: string; why: string; trap: string; }'."
+    }
+  ],
+  "conclusion": "Typecheck FAILS. A zero added count is a regression comparison, not a clean typecheck."
+}

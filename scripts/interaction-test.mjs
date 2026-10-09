@@ -112,7 +112,7 @@ const setNativeValue = (el, value) => {
 };
 const byText = (scope, text) => [...scope.querySelectorAll("button")].find((b) => b.textContent.includes(text));
 
-const LESSONS = [1, 10, 13, 17, 19, 20, 21, 22, 23, 24, 26];
+const LESSONS = Array.from({ length: 26 }, (_, i) => i + 1);
 // درس 26: الكشف المتأخر داخل الشرح (Error Detective / Meaning First / IQ200)
 
 for (const lesson of LESSONS) {

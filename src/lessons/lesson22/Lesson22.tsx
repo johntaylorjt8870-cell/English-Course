@@ -1,3 +1,6 @@
+import { En as SharedEn } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   SLIDES,
@@ -130,21 +133,12 @@ import { LatinRuns } from "../../shared/bidi";
 // كل وحدة إنجليزية معزولة LTR.
 // ============================================================
 
-function En({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
-      {children}
-    </span>
-  );
+function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const clean = text.replace(/\*\*/g, "");
-  return (
-    <span className={className}>
-      <LatinRuns text={clean} />
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function TextBlock({ text, className = "" }: { text: string; className?: string }) {
@@ -224,7 +218,7 @@ function Frame({
       <div className="flex flex-wrap items-center gap-2.5">
         {step && (
           <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-teal-700 text-lg font-bold text-white shadow-sm">
-            {step}
+            {mixedText(step)}
           </span>
         )}
         {badge && (
@@ -238,12 +232,11 @@ function Frame({
           data-source-section={sourceHeading}
           className="mt-3 flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-500"
         >
-          <span className="rounded-md bg-white px-1.5 py-0.5 text-teal-700">SOURCE SECTION</span>
-          <Rich text={sourceHeading} />
+          <EnAr en="SOURCE SECTION" ar={sourceHeading} enClassName="rounded-md bg-white px-1.5 py-0.5 text-teal-700" />
         </div>
       )}
       <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">
-        {title}
+        {mixedText(title)}
       </h2>
       {lead && (
         <div className="mt-2 max-w-[92%] text-lg text-slate-500 md:text-xl">
@@ -280,8 +273,7 @@ function LabPanel({
     <div data-en-seq={seq} className="rounded-3xl border-2 border-teal-200 bg-gradient-to-br from-teal-50 via-cyan-50 to-sky-50 p-4">
       <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-teal-100 bg-white px-3 py-2">
         <span className="text-xl">{emoji}</span>
-        <En className="text-[11px] font-black uppercase tracking-[0.18em] text-teal-700">{label}</En>
-        {ar && <Rich text={ar} className="text-sm font-bold text-slate-600" />}
+        <EnAr en={label} ar={ar} enClassName="text-[11px] font-black uppercase tracking-[0.18em] text-teal-700" arClassName="text-sm font-bold text-slate-600" />
       </div>
       {children}
     </div>
@@ -540,8 +532,7 @@ function PositionOverview() {
       </div>
       <SourceLine en={PREP_EXAMPLE.en} ar={PREP_EXAMPLE.ar} tone="focus" />
       <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
-        <En className="rounded-xl bg-teal-600 px-4 py-2 text-lg font-black text-white">{PREP_KEY_WORD.en}</En>
-        <Rich text={PREP_KEY_REL} className="text-base font-bold text-slate-700" />
+        <EnAr en={<En className="rounded-xl bg-teal-600 px-4 py-2 text-lg font-black text-white">{PREP_KEY_WORD.en}</En>} ar={<Rich text={PREP_KEY_REL} className="text-base font-bold text-slate-700" />} />
       </div>
       <div className="mt-3">
         <div className="mb-2 text-center text-sm font-bold text-slate-600">
@@ -556,7 +547,7 @@ function PositionOverview() {
               className={`ltr-row rounded-xl border-2 p-2 text-center transition ${active === pos.p ? "border-teal-500 bg-white shadow" : "border-slate-200 bg-white/70 hover:border-teal-300"}`}
             >
               <En className="block text-sm font-black text-slate-900">{pos.label}</En>
-              <span className="mt-1 block text-xs font-bold text-teal-700">{pos.ar}</span>
+              <span className="mt-1 block text-xs font-bold text-teal-700"><LatinRuns text={pos.ar ?? ""} /></span>
             </button>
           ))}
         </div>
@@ -629,7 +620,7 @@ function InOnCompare() {
     <LabPanel emoji="🔥" label="IN vs ON" ar="قارن: داخل أم على السطح؟" seq="l22-in-on">
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="rounded-3xl border-2 border-sky-300 bg-white p-4">
-          <div className="text-center text-sm font-black text-sky-900 mb-2">in = داخل</div>
+          <div className="text-center text-sm font-black text-sky-900 mb-2"><LatinRuns text={"in = داخل"} /></div>
           <PositionDiagram position="in" refLabel="box" objectEmoji="🧸" />
           <En className="mt-2 block text-center text-lg font-black text-sky-900">{IN_ON_COMPARE.inEn}</En>
           <div dir="rtl" className="mt-1 text-center text-sm font-bold text-slate-500">
@@ -637,7 +628,7 @@ function InOnCompare() {
           </div>
         </div>
         <div className="rounded-3xl border-2 border-emerald-300 bg-white p-4">
-          <div className="text-center text-sm font-black text-emerald-900 mb-2">on = على السطح</div>
+          <div className="text-center text-sm font-black text-emerald-900 mb-2"><LatinRuns text={"on = على السطح"} /></div>
           <PositionDiagram position="on" refLabel="box" objectEmoji="🧸" />
           <En className="mt-2 block text-center text-lg font-black text-emerald-900">{IN_ON_COMPARE.onEn}</En>
           <div dir="rtl" className="mt-1 text-center text-sm font-bold text-slate-500">
@@ -760,7 +751,7 @@ function NearLab() {
     <LabPanel emoji="🏫" label="NEAR LAB" ar="قريب من — قد توجد مسافة" seq="l22-near">
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
-          <div className="text-center text-xs font-bold text-teal-800 mb-1">next to = بجانب مباشرة</div>
+          <div className="text-center text-xs font-bold text-teal-800 mb-1"><LatinRuns text={"next to = بجانب مباشرة"} /></div>
           <PositionDiagram position="next to" refLabel="table" objectEmoji="🪑" />
           <En className="mt-2 block text-center text-base font-black text-teal-900">{NEXTTO_NEAR_EXAMPLES.nextto.en}</En>
           <div dir="rtl" className="mt-1 text-center text-xs font-bold text-slate-500">
@@ -768,7 +759,7 @@ function NearLab() {
           </div>
         </div>
         <div>
-          <div className="text-center text-xs font-bold text-sky-800 mb-1">near = قريب من</div>
+          <div className="text-center text-xs font-bold text-sky-800 mb-1"><LatinRuns text={"near = قريب من"} /></div>
           <PositionDiagram position="near" refLabel="table" objectEmoji="🪑" />
           <En className="mt-2 block text-center text-base font-black text-sky-900">{NEXTTO_NEAR_EXAMPLES.near.en}</En>
           <div dir="rtl" className="mt-1 text-center text-xs font-bold text-slate-500">
@@ -832,7 +823,7 @@ function InsideOutsideLab() {
       </div>
       <PositionDiagram position={mode} refLabel="house" objectEmoji="🐶" />
       <div className="mt-2">
-        <div className="mb-2 text-center text-sm font-bold text-slate-600">inside أمثلة:</div>
+        <div className="mb-2 text-center text-sm font-bold text-slate-600"><LatinRuns text={"inside أمثلة:"} /></div>
         <div className="grid gap-2">
           {INSIDE_EXAMPLES.map((ex) => (
             <SourceLine key={ex.en} en={ex.en} ar={ex.ar} />
@@ -840,7 +831,7 @@ function InsideOutsideLab() {
         </div>
       </div>
       <div className="mt-3">
-        <div className="mb-2 text-center text-sm font-bold text-slate-600">outside أمثلة:</div>
+        <div className="mb-2 text-center text-sm font-bold text-slate-600"><LatinRuns text={"outside أمثلة:"} /></div>
         <div className="grid gap-2">
           {OUTSIDE_EXAMPLES.map((ex) => (
             <SourceLine key={ex.en} en={ex.en} ar={ex.ar} />
@@ -867,8 +858,7 @@ function PrepositionMap() {
       <div className="mt-2 grid gap-2 sm:grid-cols-2 md:grid-cols-3">
         {PREP_MAP.map((item) => (
           <div key={item.en} className="flex items-center justify-between gap-2 rounded-2xl border-2 border-teal-100 bg-white p-3">
-            <En className="text-lg font-black text-teal-900">{item.en}</En>
-            <Rich text={item.ar} className="text-base font-bold text-slate-700" />
+            <EnAr en={<En className="text-lg font-black text-teal-900">{item.en}</En>} ar={<Rich text={item.ar} className="text-base font-bold text-slate-700" />} />
           </div>
         ))}
       </div>
@@ -927,8 +917,7 @@ function WhereQuestions() {
       <div className="mt-2 flex flex-wrap justify-center gap-2">
         {WH_WORDS.map((w) => (
           <div key={w.en} className="flex items-center gap-2 rounded-xl bg-slate-100 px-3 py-1.5">
-            <En className="text-base font-black text-slate-700">{w.en}</En>
-            <span className="text-sm font-bold text-slate-600">= {w.ar}</span>
+            <EnAr en={<En className="text-base font-black text-slate-700">{w.en}</En>} ar={<span className="text-sm font-bold text-slate-600">= <LatinRuns text={w.ar ?? ""} /></span>} />
           </div>
         ))}
       </div>
@@ -938,7 +927,7 @@ function WhereQuestions() {
           {WHERE_RULES.map((r) => (
             <div key={r.form} className="rounded-xl bg-white p-3 text-center">
               <En className="text-xl font-black text-teal-900">{r.form}</En>
-              <div className="mt-1 text-sm font-bold text-slate-600">{r.note}</div>
+              <div className="mt-1 text-sm font-bold text-slate-600"><LatinRuns text={r.note ?? ""} /></div>
             </div>
           ))}
         </div>
@@ -1095,7 +1084,7 @@ function MultiPrepBuilder() {
         ))}
       </div>
       <div className="mt-3 rounded-3xl border-2 border-fuchsia-200 bg-fuchsia-50 p-4">
-        <div className="text-center text-base font-black text-fuchsia-900">🚀 IQ200: ارسم العلاقات في رأسك</div>
+        <div className="text-center text-base font-black text-fuchsia-900"><LatinRuns text={"🚀 IQ200: ارسم العلاقات في رأسك"} /></div>
         <En className="mt-2 block text-center text-lg font-black text-fuchsia-950">The ball is under the chair next to the table.</En>
         <div className="mt-2 text-center text-2xl font-black text-fuchsia-900">{MULTI_IQ_VISUAL}</div>
         <div className="mt-2 grid gap-1">
@@ -1822,7 +1811,7 @@ function Summary() {
           {GOLDEN_SUMMARY_22_QUESTIONS.map((q) => (
             <div key={q.form} className="rounded-xl bg-white p-2.5 text-center">
               <En className="text-lg font-black text-sky-900">{q.form}</En>
-              <div className="text-xs font-bold text-slate-600">{q.note}</div>
+              <div className="text-xs font-bold text-slate-600"><LatinRuns text={q.note ?? ""} /></div>
             </div>
           ))}
         </div>
@@ -1987,7 +1976,7 @@ function Rail({
               return (
                 <button key={i} onClick={() => { setIndex(i); onClose?.(); }} className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${active ? "bg-teal-700 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}>
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/25" : "bg-slate-100"}`}>{i + 1}</span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[i])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[i]))}</span>
                   <span className="mr-auto text-base">{SLIDES[i].mascot}</span>
                 </button>
               );
@@ -2036,7 +2025,7 @@ export default function Lesson22({ onExit }: { onExit: () => void }) {
           <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
             <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border-2 border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس">☰</button>
             <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-bold text-slate-500"><Rich text={`${slide.section} · `} /><span className="text-slate-800"><Rich text={slideTitle(slide)} /></span></div>
+              <div className="truncate text-sm font-bold text-slate-500"><Rich text={`${slide.section} · ${slideTitle(slide)}`} /></div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80"><div className="h-full rounded-full bg-gradient-to-l from-teal-700 via-cyan-600 to-sky-500 transition-all duration-500" style={{ width: `${progress}%` }} /></div>
             </div>
             <span data-slide-counter className="rounded-lg bg-white px-3 py-1 text-sm font-bold text-slate-500 shadow-sm">{index + 1} / {total}</span>

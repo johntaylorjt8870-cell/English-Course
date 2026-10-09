@@ -1,0 +1,4088 @@
+{
+  "canonicalLessons": [
+    {
+      "lesson": 2,
+      "questions": [
+        {
+          "id": "l02-pronoun-choice/q1",
+          "activityId": "l02-pronoun-choice",
+          "reference": "التمرين 1",
+          "title": "اختر الضمير الصحيح",
+          "localOrdinal": 1,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[0]",
+          "original": {
+            "prompt": "Khalil is a student.",
+            "sub": "Khalil =",
+            "options": [
+              "He",
+              "She",
+              "They"
+            ],
+            "answer": 0
+          },
+          "prompt": "Khalil is a student.",
+          "answer": "He",
+          "completed": "Khalil = He",
+          "originalHint": "ذكر واحد",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-choice/q2",
+          "activityId": "l02-pronoun-choice",
+          "reference": "التمرين 1",
+          "title": "اختر الضمير الصحيح",
+          "localOrdinal": 2,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[1]",
+          "original": {
+            "prompt": "Sara is happy.",
+            "sub": "Sara =",
+            "options": [
+              "He",
+              "She",
+              "It"
+            ],
+            "answer": 1
+          },
+          "prompt": "Sara is happy.",
+          "answer": "She",
+          "completed": "Sara = She",
+          "originalHint": "أنثى واحدة",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-choice/q3",
+          "activityId": "l02-pronoun-choice",
+          "reference": "التمرين 1",
+          "title": "اختر الضمير الصحيح",
+          "localOrdinal": 3,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[2]",
+          "original": {
+            "prompt": "Khalil and Adam are friends.",
+            "sub": "Khalil and Adam =",
+            "options": [
+              "He",
+              "We",
+              "They"
+            ],
+            "answer": 2
+          },
+          "prompt": "Khalil and Adam are friends.",
+          "answer": "They",
+          "completed": "Khalil and Adam = They",
+          "originalHint": "أكثر من شخص أو شيء",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-choice/q4",
+          "activityId": "l02-pronoun-choice",
+          "reference": "التمرين 1",
+          "title": "اختر الضمير الصحيح",
+          "localOrdinal": 4,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[3]",
+          "original": {
+            "prompt": "Sara and I are students.",
+            "sub": "Sara and I =",
+            "options": [
+              "They",
+              "We",
+              "She"
+            ],
+            "answer": 1
+          },
+          "prompt": "Sara and I are students.",
+          "answer": "We",
+          "completed": "Sara and I = We",
+          "originalHint": "أنا + آخرون",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-choice/q5",
+          "activityId": "l02-pronoun-choice",
+          "reference": "التمرين 1",
+          "title": "اختر الضمير الصحيح",
+          "localOrdinal": 5,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[4]",
+          "original": {
+            "prompt": "The book is new.",
+            "sub": "The book =",
+            "options": [
+              "It",
+              "He",
+              "They"
+            ],
+            "answer": 0
+          },
+          "prompt": "The book is new.",
+          "answer": "It",
+          "completed": "The book = It",
+          "originalHint": "شيء أو حيوان مفرد",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-choice/q1",
+          "activityId": "l02-be-choice",
+          "reference": "التمرين 2",
+          "title": "اختر am أو is أو are",
+          "localOrdinal": 1,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[0]",
+          "original": {
+            "before": "I",
+            "after": "happy.",
+            "answer": "am",
+            "ar": "أنا سعيد."
+          },
+          "prompt": "I … happy.",
+          "answer": "am",
+          "completed": "I am happy.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-choice/q2",
+          "activityId": "l02-be-choice",
+          "reference": "التمرين 2",
+          "title": "اختر am أو is أو are",
+          "localOrdinal": 2,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[1]",
+          "original": {
+            "before": "He",
+            "after": "a teacher.",
+            "answer": "is",
+            "ar": "هو معلّم."
+          },
+          "prompt": "He … a teacher.",
+          "answer": "is",
+          "completed": "He is a teacher.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-choice/q3",
+          "activityId": "l02-be-choice",
+          "reference": "التمرين 2",
+          "title": "اختر am أو is أو are",
+          "localOrdinal": 3,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[2]",
+          "original": {
+            "before": "She",
+            "after": "tired.",
+            "answer": "is",
+            "ar": "هي متعبة."
+          },
+          "prompt": "She … tired.",
+          "answer": "is",
+          "completed": "She is tired.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-choice/q4",
+          "activityId": "l02-be-choice",
+          "reference": "التمرين 2",
+          "title": "اختر am أو is أو are",
+          "localOrdinal": 4,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[3]",
+          "original": {
+            "before": "We",
+            "after": "students.",
+            "answer": "are",
+            "ar": "نحن طلاب."
+          },
+          "prompt": "We … students.",
+          "answer": "are",
+          "completed": "We are students.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-choice/q5",
+          "activityId": "l02-be-choice",
+          "reference": "التمرين 2",
+          "title": "اختر am أو is أو are",
+          "localOrdinal": 5,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[4]",
+          "original": {
+            "before": "They",
+            "after": "friends.",
+            "answer": "are",
+            "ar": "هم أصدقاء."
+          },
+          "prompt": "They … friends.",
+          "answer": "are",
+          "completed": "They are friends.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-choice/q6",
+          "activityId": "l02-be-choice",
+          "reference": "التمرين 2",
+          "title": "اختر am أو is أو are",
+          "localOrdinal": 6,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[5]",
+          "original": {
+            "before": "You",
+            "after": "ready.",
+            "answer": "are",
+            "ar": "أنت جاهز."
+          },
+          "prompt": "You … ready.",
+          "answer": "are",
+          "completed": "You are ready.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-choice/q7",
+          "activityId": "l02-be-choice",
+          "reference": "التمرين 2",
+          "title": "اختر am أو is أو are",
+          "localOrdinal": 7,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[6]",
+          "original": {
+            "before": "It",
+            "after": "small.",
+            "answer": "is",
+            "ar": "إنه صغير."
+          },
+          "prompt": "It … small.",
+          "answer": "is",
+          "completed": "It is small.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-correction-reveal/q1",
+          "activityId": "l02-correction-reveal",
+          "reference": "التمرين 3",
+          "title": "صحّح الخطأ",
+          "localOrdinal": 1,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[0]",
+          "original": {
+            "wrong": "I is happy.",
+            "correct": "I am happy."
+          },
+          "prompt": "I is happy.",
+          "answer": "I am happy.",
+          "completed": "I am happy.",
+          "originalHint": "عندما أتحدث عن نفسي",
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-correction-reveal/q2",
+          "activityId": "l02-correction-reveal",
+          "reference": "التمرين 3",
+          "title": "صحّح الخطأ",
+          "localOrdinal": 2,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[1]",
+          "original": {
+            "wrong": "He are a student.",
+            "correct": "He is a student."
+          },
+          "prompt": "He are a student.",
+          "answer": "He is a student.",
+          "completed": "He is a student.",
+          "originalHint": "ذكر واحد",
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-correction-reveal/q3",
+          "activityId": "l02-correction-reveal",
+          "reference": "التمرين 3",
+          "title": "صحّح الخطأ",
+          "localOrdinal": 3,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[2]",
+          "original": {
+            "wrong": "They is students.",
+            "correct": "They are students."
+          },
+          "prompt": "They is students.",
+          "answer": "They are students.",
+          "completed": "They are students.",
+          "originalHint": "أكثر من شخص أو شيء",
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-correction-reveal/q4",
+          "activityId": "l02-correction-reveal",
+          "reference": "التمرين 3",
+          "title": "صحّح الخطأ",
+          "localOrdinal": 4,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[3]",
+          "original": {
+            "wrong": "She am tired.",
+            "correct": "She is tired."
+          },
+          "prompt": "She am tired.",
+          "answer": "She is tired.",
+          "completed": "She is tired.",
+          "originalHint": "أنثى واحدة",
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-correction-reveal/q5",
+          "activityId": "l02-correction-reveal",
+          "reference": "التمرين 3",
+          "title": "صحّح الخطأ",
+          "localOrdinal": 5,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[4]",
+          "original": {
+            "wrong": "We is friends.",
+            "correct": "We are friends."
+          },
+          "prompt": "We is friends.",
+          "answer": "We are friends.",
+          "completed": "We are friends.",
+          "originalHint": "أنا + آخرون",
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-completion/q1",
+          "activityId": "l02-be-completion",
+          "reference": "التمرين 4",
+          "title": "أكمل الجملة",
+          "localOrdinal": 1,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[0]",
+          "original": {
+            "before": "I",
+            "after": "a student.",
+            "answer": "am",
+            "ar": "أنا طالب."
+          },
+          "prompt": "I … a student.",
+          "answer": "am",
+          "completed": "I am a student.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-completion/q2",
+          "activityId": "l02-be-completion",
+          "reference": "التمرين 4",
+          "title": "أكمل الجملة",
+          "localOrdinal": 2,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[1]",
+          "original": {
+            "before": "Khalil",
+            "after": "happy.",
+            "answer": "is",
+            "ar": "خليل سعيد."
+          },
+          "prompt": "Khalil … happy.",
+          "answer": "is",
+          "completed": "Khalil is happy.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-completion/q3",
+          "activityId": "l02-be-completion",
+          "reference": "التمرين 4",
+          "title": "أكمل الجملة",
+          "localOrdinal": 3,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[2]",
+          "original": {
+            "before": "Sara",
+            "after": "a teacher.",
+            "answer": "is",
+            "ar": "سارة معلّمة."
+          },
+          "prompt": "Sara … a teacher.",
+          "answer": "is",
+          "completed": "Sara is a teacher.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-completion/q4",
+          "activityId": "l02-be-completion",
+          "reference": "التمرين 4",
+          "title": "أكمل الجملة",
+          "localOrdinal": 4,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[3]",
+          "original": {
+            "before": "We",
+            "after": "friends.",
+            "answer": "are",
+            "ar": "نحن أصدقاء."
+          },
+          "prompt": "We … friends.",
+          "answer": "are",
+          "completed": "We are friends.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-completion/q5",
+          "activityId": "l02-be-completion",
+          "reference": "التمرين 4",
+          "title": "أكمل الجملة",
+          "localOrdinal": 5,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[4]",
+          "original": {
+            "before": "They",
+            "after": "ready.",
+            "answer": "are",
+            "ar": "هم جاهزون."
+          },
+          "prompt": "They … ready.",
+          "answer": "are",
+          "completed": "They are ready.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-completion/q6",
+          "activityId": "l02-be-completion",
+          "reference": "التمرين 4",
+          "title": "أكمل الجملة",
+          "localOrdinal": 6,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[5]",
+          "original": {
+            "before": "The car",
+            "after": "fast.",
+            "answer": "is",
+            "ar": "السيارة سريعة."
+          },
+          "prompt": "The car … fast.",
+          "answer": "is",
+          "completed": "The car is fast.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-be-completion/q7",
+          "activityId": "l02-be-completion",
+          "reference": "التمرين 4",
+          "title": "أكمل الجملة",
+          "localOrdinal": 7,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[6]",
+          "original": {
+            "before": "You",
+            "after": "smart.",
+            "answer": "are",
+            "ar": "أنت ذكي."
+          },
+          "prompt": "You … smart.",
+          "answer": "are",
+          "completed": "You are smart.",
+          "originalHint": null,
+          "platformExplanation": "حدد الفاعل أولًا: I يأخذ am؛ He / She / It والاسم المفرد تأخذ is؛ You / We / They والأسماء المجموعة تأخذ are. ضع الصيغة المناسبة في موضع فعل الكينونة، مع إبقاء بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-reveal/q1",
+          "activityId": "l02-pronoun-reveal",
+          "reference": "التحدّي",
+          "title": "حوّل الاسم إلى الضمير المناسب",
+          "localOrdinal": 1,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[0]",
+          "original": {
+            "given": "Mahmoud is a student.",
+            "answer": "He is a student.",
+            "hint": "محمود = ذكر مفرد"
+          },
+          "prompt": "Mahmoud is a student.",
+          "answer": "He is a student.",
+          "completed": "He is a student.",
+          "originalHint": "محمود = ذكر مفرد",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-reveal/q2",
+          "activityId": "l02-pronoun-reveal",
+          "reference": "التحدّي",
+          "title": "حوّل الاسم إلى الضمير المناسب",
+          "localOrdinal": 2,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[1]",
+          "original": {
+            "given": "Mia is happy.",
+            "answer": "She is happy.",
+            "hint": "ميا = أنثى مفرد"
+          },
+          "prompt": "Mia is happy.",
+          "answer": "She is happy.",
+          "completed": "She is happy.",
+          "originalHint": "ميا = أنثى مفرد",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-reveal/q3",
+          "activityId": "l02-pronoun-reveal",
+          "reference": "التحدّي",
+          "title": "حوّل الاسم إلى الضمير المناسب",
+          "localOrdinal": 3,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[2]",
+          "original": {
+            "given": "Mahmoud and Khalil are friends.",
+            "answer": "They are friends.",
+            "hint": "شخصان"
+          },
+          "prompt": "Mahmoud and Khalil are friends.",
+          "answer": "They are friends.",
+          "completed": "They are friends.",
+          "originalHint": "شخصان",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-reveal/q4",
+          "activityId": "l02-pronoun-reveal",
+          "reference": "التحدّي",
+          "title": "حوّل الاسم إلى الضمير المناسب",
+          "localOrdinal": 4,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[3]",
+          "original": {
+            "given": "Mia and I are students.",
+            "answer": "We are students.",
+            "hint": "أنا + شخص آخر"
+          },
+          "prompt": "Mia and I are students.",
+          "answer": "We are students.",
+          "completed": "We are students.",
+          "originalHint": "أنا + شخص آخر",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        },
+        {
+          "id": "l02-pronoun-reveal/q5",
+          "activityId": "l02-pronoun-reveal",
+          "reference": "التحدّي",
+          "title": "حوّل الاسم إلى الضمير المناسب",
+          "localOrdinal": 5,
+          "printedQuestionNumber": null,
+          "sourcePage": null,
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[4]",
+          "original": {
+            "given": "The dog is small.",
+            "answer": "It is small.",
+            "hint": "حيوان مفرد"
+          },
+          "prompt": "The dog is small.",
+          "answer": "It is small.",
+          "completed": "It is small.",
+          "originalHint": "حيوان مفرد",
+          "platformExplanation": "حدد الاسم أو مجموعة الأسماء في السؤال، ثم استبدلها بالضمير المبين في الإجابة. أبقِ بقية الجملة كما وردت.",
+          "provenance": "canonical lesson data; external textbook page/printed question mapping unavailable"
+        }
+      ],
+      "questionCount": 29,
+      "mappedCanonicalCount": 29,
+      "verifiedExternalTextbookCount": 0
+    }
+  ],
+  "scope": "All existing TEACHER_n_SOLUTIONS groups; NOT all textbook source questions",
+  "lessons": [
+    {
+      "lesson": 27,
+      "groups": [
+        {
+          "id": "l27-source-1",
+          "reference": "㉚ تدريب 1 — اختر الفعل الصحيح",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l27-source-1-1",
+              "number": "1",
+              "segments": [
+                "1. started — فعل منتظم: V3 = started."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l27-source-1-2",
+              "number": "2",
+              "segments": [
+                "2. eaten — eat → ate → eaten."
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l27-source-1-3",
+              "number": "3",
+              "segments": [
+                "3. gone — go → went → gone."
+              ],
+              "sourceLineIndexes": [
+                2
+              ]
+            },
+            {
+              "id": "l27-source-1-4",
+              "number": "4",
+              "segments": [
+                "4. written — write → wrote → written."
+              ],
+              "sourceLineIndexes": [
+                3
+              ]
+            },
+            {
+              "id": "l27-source-1-5",
+              "number": "5",
+              "segments": [
+                "5. seen — see → saw → seen."
+              ],
+              "sourceLineIndexes": [
+                4
+              ]
+            }
+          ],
+          "context": [
+            {
+              "text": "القاعدة الجامعة: بعد had يأتي V3 دائمًا.",
+              "line": 5
+            }
+          ],
+          "originalLines": [
+            "1. started — فعل منتظم: V3 = started.",
+            "2. eaten — eat → ate → eaten.",
+            "3. gone — go → went → gone.",
+            "4. written — write → wrote → written.",
+            "5. seen — see → saw → seen.",
+            "القاعدة الجامعة: بعد had يأتي V3 دائمًا."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l27-source-2",
+          "reference": "㉛ تدريب 2 — had أو have؟",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l27-source-2-1",
+              "number": "1",
+              "segments": [
+                "1. had — قبل نقطة ماضية (before I arrived)."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l27-source-2-2",
+              "number": "2",
+              "segments": [
+                "2. have — مرتبطة بالحاضر (now)."
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l27-source-2-3",
+              "number": "3",
+              "segments": [
+                "3. had — قبل نقطة ماضية (before we called)."
+              ],
+              "sourceLineIndexes": [
+                2
+              ]
+            },
+            {
+              "id": "l27-source-2-4",
+              "number": "4",
+              "segments": [
+                "4. have — تجربة مرتبطة بالحاضر."
+              ],
+              "sourceLineIndexes": [
+                3
+              ]
+            }
+          ],
+          "context": [
+            {
+              "text": "ملاحظة للمعلم: المصدر يعطي القاعدة دون مفتاح؛ الإجابات مستنتجة منها ومعروضة للطالب بعد التحقق.",
+              "line": 4
+            }
+          ],
+          "originalLines": [
+            "1. had — قبل نقطة ماضية (before I arrived).",
+            "2. have — مرتبطة بالحاضر (now).",
+            "3. had — قبل نقطة ماضية (before we called).",
+            "4. have — تجربة مرتبطة بالحاضر.",
+            "ملاحظة للمعلم: المصدر يعطي القاعدة دون مفتاح؛ الإجابات مستنتجة منها ومعروضة للطالب بعد التحقق."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l27-source-3",
+          "reference": "㉜ تدريب 3 — Past Simple أم Past Perfect؟",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l27-source-3-1",
+              "number": "1",
+              "segments": [
+                "1. had left — بمعنى: القطار غادر قبل وصولي (السياق معروض للطالب بشارة منصّة)."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l27-source-3-2",
+              "number": "2",
+              "segments": [
+                "2. finished — تتابع مع and then والترتيب واضح."
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l27-source-3-3",
+              "number": "3",
+              "segments": [
+                "3. had closed — by the time تعلن الأسبقية."
+              ],
+              "sourceLineIndexes": [
+                2
+              ]
+            },
+            {
+              "id": "l27-source-3-4",
+              "number": "4",
+              "segments": [
+                "4. visited — حدث واحد بلا مقارنة."
+              ],
+              "sourceLineIndexes": [
+                3
+              ]
+            },
+            {
+              "id": "l27-source-3-5",
+              "number": "5",
+              "segments": [
+                "5. had finished — بمعنى: أنهوا العمل قبل الدخول (السياق معروض للطالب)."
+              ],
+              "sourceLineIndexes": [
+                4
+              ]
+            }
+          ],
+          "context": [
+            {
+              "text": "نبّه الطلاب: بعض الجمل تتغير إجابتها بتغيّر المعنى المقصود — وهذه هي الفكرة لا عيب في السؤال.",
+              "line": 5
+            }
+          ],
+          "originalLines": [
+            "1. had left — بمعنى: القطار غادر قبل وصولي (السياق معروض للطالب بشارة منصّة).",
+            "2. finished — تتابع مع and then والترتيب واضح.",
+            "3. had closed — by the time تعلن الأسبقية.",
+            "4. visited — حدث واحد بلا مقارنة.",
+            "5. had finished — بمعنى: أنهوا العمل قبل الدخول (السياق معروض للطالب).",
+            "نبّه الطلاب: بعض الجمل تتغير إجابتها بتغيّر المعنى المقصود — وهذه هي الفكرة لا عيب في السؤال."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l27-source-4",
+          "reference": "㉝ ترتيب الأحداث — Noah",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "B → A: القطار اختفى أولًا (had disappeared) ثم وصل نوح.",
+              "line": 0
+            },
+            {
+              "text": "درّب الطالب على استخراج الترتيب من الصيغة لا من ترتيب الكلمات.",
+              "line": 1
+            }
+          ],
+          "originalLines": [
+            "B → A: القطار اختفى أولًا (had disappeared) ثم وصل نوح.",
+            "درّب الطالب على استخراج الترتيب من الصيغة لا من ترتيب الكلمات."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l27-source-5",
+          "reference": "㉞ اكتشف الخطأ",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l27-source-5-%E2%91%A0",
+              "number": "①",
+              "segments": [
+                "① had went ← had gone (V3 بعد had)."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l27-source-5-%E2%91%A1",
+              "number": "②",
+              "segments": [
+                "② had ate ← had eaten."
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l27-source-5-%E2%91%A2",
+              "number": "③",
+              "segments": [
+                "③ Did he had finished? ← Had he finished? (مساعد واحد)."
+              ],
+              "sourceLineIndexes": [
+                2
+              ]
+            },
+            {
+              "id": "l27-source-5-%E2%91%A3",
+              "number": "④",
+              "segments": [
+                "④ hadn't saw ← hadn't seen (V3 بعد hadn't)."
+              ],
+              "sourceLineIndexes": [
+                3
+              ]
+            },
+            {
+              "id": "l27-source-5-%E2%91%A4",
+              "number": "⑤",
+              "segments": [
+                "⑤ had left already ← had already left (موضع already)."
+              ],
+              "sourceLineIndexes": [
+                4
+              ]
+            }
+          ],
+          "context": [],
+          "originalLines": [
+            "① had went ← had gone (V3 بعد had).",
+            "② had ate ← had eaten.",
+            "③ Did he had finished? ← Had he finished? (مساعد واحد).",
+            "④ hadn't saw ← hadn't seen (V3 بعد hadn't).",
+            "⑤ had left already ← had already left (موضع already)."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l27-source-6",
+          "reference": "㉟ تحدي التحويل",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "المثال المحلول: The train had left before I arrived.",
+              "line": 0
+            },
+            {
+              "text": "Sara had finished the test before the teacher collected the papers.",
+              "line": 1
+            },
+            {
+              "text": "The children had eaten dinner before their parents came home.",
+              "line": 2
+            },
+            {
+              "text": "ركّز على خطوتين: حدّد الأقدم ← ضعه بصيغة had + V3 مع before.",
+              "line": 3
+            }
+          ],
+          "originalLines": [
+            "المثال المحلول: The train had left before I arrived.",
+            "Sara had finished the test before the teacher collected the papers.",
+            "The children had eaten dinner before their parents came home.",
+            "ركّز على خطوتين: حدّد الأقدم ← ضعه بصيغة had + V3 مع before."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l27-source-7",
+          "reference": "㊱ محقق المتحف (متقدم)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "had disappeared ← Past Perfect (الحدث الأقدم).",
+              "line": 0
+            },
+            {
+              "text": "arrived / searched / couldn't find ← Past Simple (تحريك الأحداث).",
+              "line": 1
+            },
+            {
+              "text": "were looking / were talking ← Past Continuous (الخلفية).",
+              "line": 2
+            },
+            {
+              "text": "ناقش: كل زمن له وظيفة — التحديد المسبق، الخلفية، التقدم.",
+              "line": 3
+            }
+          ],
+          "originalLines": [
+            "had disappeared ← Past Perfect (الحدث الأقدم).",
+            "arrived / searched / couldn't find ← Past Simple (تحريك الأحداث).",
+            "were looking / were talking ← Past Continuous (الخلفية).",
+            "ناقش: كل زمن له وظيفة — التحديد المسبق، الخلفية، التقدم."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l27-source-8",
+          "reference": "㊷ Boss Battle",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l27-source-8-%D8%A7%D9%84%D9%85%D8%B9%D8%B1%D9%83%D8%A9%201",
+              "number": "المعركة 1",
+              "segments": [
+                "المعركة 1: B — was sleeping (النوم مستمر لحظة الدخول)."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l27-source-8-%D8%A7%D9%84%D9%85%D8%B9%D8%B1%D9%83%D8%A9%202",
+              "number": "المعركة 2",
+              "segments": [
+                "المعركة 2: B — had left (المغادرة قبل الوصول)."
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            }
+          ],
+          "context": [
+            {
+              "text": "القرار من المعنى لا من حفظ القالب.",
+              "line": 2
+            }
+          ],
+          "originalLines": [
+            "المعركة 1: B — was sleeping (النوم مستمر لحظة الدخول).",
+            "المعركة 2: B — had left (المغادرة قبل الوصول).",
+            "القرار من المعنى لا من حفظ القالب."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l27-source-9",
+          "reference": "㊸ الاختبار النهائي المورّد (10 أسئلة)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l27-source-9-1",
+              "number": "1",
+              "segments": [
+                "1. had started — البدء سبق الوصول."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l27-source-9-2",
+              "number": "2",
+              "segments": [
+                "2. found — V3 بعد had. (تصحيح typo المصدر: الخيار C أصبح founded بدل found المكررة — موثّق في التغطية.)"
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l27-source-9-3",
+              "number": "3",
+              "segments": [
+                "3. were eating — بمعنى: العشاء مستمر لحظة الاتصال (السياق معروض للطالب)."
+              ],
+              "sourceLineIndexes": [
+                2
+              ]
+            },
+            {
+              "id": "l27-source-9-4",
+              "number": "4",
+              "segments": [
+                "4. had lost — الفقد سبق المنع."
+              ],
+              "sourceLineIndexes": [
+                3
+              ]
+            },
+            {
+              "id": "l27-source-9-5",
+              "number": "5",
+              "segments": [
+                "5. had left — by the time تعلن الأسبقية."
+              ],
+              "sourceLineIndexes": [
+                4
+              ]
+            },
+            {
+              "id": "l27-source-9-6",
+              "number": "6",
+              "segments": [
+                "6. visited — حدث واحد."
+              ],
+              "sourceLineIndexes": [
+                5
+              ]
+            },
+            {
+              "id": "l27-source-9-7",
+              "number": "7",
+              "segments": [
+                "7. read — Had + V3 (تصريف read ثابت)."
+              ],
+              "sourceLineIndexes": [
+                6
+              ]
+            },
+            {
+              "id": "l27-source-9-8",
+              "number": "8",
+              "segments": [
+                "8. seen — V3 بعد hadn't."
+              ],
+              "sourceLineIndexes": [
+                7
+              ]
+            },
+            {
+              "id": "l27-source-9-9",
+              "number": "9",
+              "segments": [
+                "9. was watching — توازٍ مع was cooking."
+              ],
+              "sourceLineIndexes": [
+                8
+              ]
+            },
+            {
+              "id": "l27-source-9-10",
+              "number": "10",
+              "segments": [
+                "10. gone — had already + V3."
+              ],
+              "sourceLineIndexes": [
+                9
+              ]
+            }
+          ],
+          "context": [],
+          "originalLines": [
+            "1. had started — البدء سبق الوصول.",
+            "2. found — V3 بعد had. (تصحيح typo المصدر: الخيار C أصبح founded بدل found المكررة — موثّق في التغطية.)",
+            "3. were eating — بمعنى: العشاء مستمر لحظة الاتصال (السياق معروض للطالب).",
+            "4. had lost — الفقد سبق المنع.",
+            "5. had left — by the time تعلن الأسبقية.",
+            "6. visited — حدث واحد.",
+            "7. read — Had + V3 (تصريف read ثابت).",
+            "8. seen — V3 بعد hadn't.",
+            "9. was watching — توازٍ مع was cooking.",
+            "10. gone — had already + V3."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l27-source-10",
+          "reference": "توجيه المختبرات الكبرى",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "مختبر الخط الزمني: اطلب من الطالب نطق الترتيب قبل كشف الإجابة.",
+              "line": 0
+            },
+            {
+              "text": "مختبر V1/V2/V3: ابدأ بالأفعال العشرة غير المنتظمة ثم المنتظمة للمقارنة.",
+              "line": 1
+            },
+            {
+              "text": "مفتاح Lina: بدّل بين الجملتين واطلب إعادة رسم الترتيب شفهيًا.",
+              "line": 2
+            },
+            {
+              "text": "السينما ثلاثية الأزمنة: اطلب تسمية دور كل فعل (خلفية/حدث/فلاش باك) قبل الكشف.",
+              "line": 3
+            },
+            {
+              "text": "تحدي ㊴: اقبل الترتيبين B,C,A,D و C,B,A,D وناقش ملاحظة السياق — لا تعاقب الفهم.",
+              "line": 4
+            }
+          ],
+          "originalLines": [
+            "مختبر الخط الزمني: اطلب من الطالب نطق الترتيب قبل كشف الإجابة.",
+            "مختبر V1/V2/V3: ابدأ بالأفعال العشرة غير المنتظمة ثم المنتظمة للمقارنة.",
+            "مفتاح Lina: بدّل بين الجملتين واطلب إعادة رسم الترتيب شفهيًا.",
+            "السينما ثلاثية الأزمنة: اطلب تسمية دور كل فعل (خلفية/حدث/فلاش باك) قبل الكشف.",
+            "تحدي ㊴: اقبل الترتيبين B,C,A,D و C,B,A,D وناقش ملاحظة السياق — لا تعاقب الفهم."
+          ],
+          "mappingStatus": "unmapped-group"
+        }
+      ]
+    },
+    {
+      "lesson": 28,
+      "groups": [
+        {
+          "id": "l28-source-1",
+          "reference": "㉚ تمرين 1 — اختر",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l28-source-1-%E2%91%A0",
+              "number": "①",
+              "segments": [
+                "① had started — الاجتماع بدأ قبل الوصول."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l28-source-1-%E2%91%A1",
+              "number": "②",
+              "segments": [
+                "② had finished — إنهاء الواجب سبق الخروج."
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l28-source-1-%E2%91%A2",
+              "number": "③",
+              "segments": [
+                "③ visited — حدث واحد محدد بالأمس بلا مقارنة."
+              ],
+              "sourceLineIndexes": [
+                2
+              ]
+            },
+            {
+              "id": "l28-source-1-%E2%91%A3",
+              "number": "④",
+              "segments": [
+                "④ had gone — by the time تعلن الأسبقية."
+              ],
+              "sourceLineIndexes": [
+                3
+              ]
+            },
+            {
+              "id": "l28-source-1-%E2%91%A4",
+              "number": "⑤",
+              "segments": [
+                "⑤ were playing — اللعب كان مستمرًا لحظة بدء المطر."
+              ],
+              "sourceLineIndexes": [
+                4
+              ]
+            }
+          ],
+          "context": [
+            {
+              "text": "القاعدة الجامعة: حدد الترتيب أولًا ثم اختر الزمن.",
+              "line": 5
+            }
+          ],
+          "originalLines": [
+            "① had started — الاجتماع بدأ قبل الوصول.",
+            "② had finished — إنهاء الواجب سبق الخروج.",
+            "③ visited — حدث واحد محدد بالأمس بلا مقارنة.",
+            "④ had gone — by the time تعلن الأسبقية.",
+            "⑤ were playing — اللعب كان مستمرًا لحظة بدء المطر.",
+            "القاعدة الجامعة: حدد الترتيب أولًا ثم اختر الزمن."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l28-source-2",
+          "reference": "㉛ تمرين 2 — حدد الحدث الأول",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l28-source-2-1",
+              "number": "1",
+              "segments": [
+                "1. Tom ate lunch أقدم، وI arrived أحدث."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l28-source-2-2",
+              "number": "2",
+              "segments": [
+                "2. I finished my work أقدم، وSara called أحدث."
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l28-source-2-3",
+              "number": "3",
+              "segments": [
+                "3. The thief escaped أقدم، وThe police arrived أحدث."
+              ],
+              "sourceLineIndexes": [
+                2
+              ]
+            }
+          ],
+          "context": [
+            {
+              "text": "القاعدة: الفعل مع had هو الحدث الأول مهما كان موقعه في الجملة.",
+              "line": 3
+            }
+          ],
+          "originalLines": [
+            "1. Tom ate lunch أقدم، وI arrived أحدث.",
+            "2. I finished my work أقدم، وSara called أحدث.",
+            "3. The thief escaped أقدم، وThe police arrived أحدث.",
+            "القاعدة: الفعل مع had هو الحدث الأول مهما كان موقعه في الجملة."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l28-source-3",
+          "reference": "㉜ تمرين 3 — صحح الأخطاء",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l28-source-3-%E2%91%A0",
+              "number": "①",
+              "segments": [
+                "① had went ← had gone (go → went → gone)."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l28-source-3-%E2%91%A1",
+              "number": "②",
+              "segments": [
+                "② had ate ← had eaten (eat → ate → eaten)."
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l28-source-3-%E2%91%A2",
+              "number": "③",
+              "segments": [
+                "③ had saw ← had seen (see → saw → seen)."
+              ],
+              "sourceLineIndexes": [
+                2
+              ]
+            },
+            {
+              "id": "l28-source-3-%E2%91%A3",
+              "number": "④",
+              "segments": [
+                "④ Did he had left? ← Had he left? (مساعد واحد: Had + subject + V3?)."
+              ],
+              "sourceLineIndexes": [
+                3
+              ]
+            },
+            {
+              "id": "l28-source-3-%E2%91%A4",
+              "number": "⑤",
+              "segments": [
+                "⑤ didn't had finished ← hadn't finished (أو had not finished)."
+              ],
+              "sourceLineIndexes": [
+                4
+              ]
+            }
+          ],
+          "context": [],
+          "originalLines": [
+            "① had went ← had gone (go → went → gone).",
+            "② had ate ← had eaten (eat → ate → eaten).",
+            "③ had saw ← had seen (see → saw → seen).",
+            "④ Did he had left? ← Had he left? (مساعد واحد: Had + subject + V3?).",
+            "⑤ didn't had finished ← hadn't finished (أو had not finished)."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l28-source-4",
+          "reference": "㉝ IQ200 Challenge — John / Mary (ملاحظة منطقية)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "سؤال المصدر وإجابته محفوظان: الإجابة المورّدة A.",
+              "line": 0
+            },
+            {
+              "text": "القراءة الزمنية الدقيقة: A تعني Mary left ← John arrived، وB تعني John left ← Mary arrived.",
+              "line": 1
+            },
+            {
+              "text": "إذن لا توجد جملة تثبت حرفيًا أن «جون وصل أولًا» دون سياق إضافي — وهذا خلل في صياغة السؤال الأصلي، وقد عرضته المنصة للطالب بوسم «ملاحظة منطقية من المنصة» دون حذف السؤال أو تغيير الإجابة المورّدة.",
+              "line": 2
+            },
+            {
+              "text": "استخدم هذا التمرين لتعليم الدقة: لا نستنتج ترتيبًا لا تثبته الصيغة.",
+              "line": 3
+            }
+          ],
+          "originalLines": [
+            "سؤال المصدر وإجابته محفوظان: الإجابة المورّدة A.",
+            "القراءة الزمنية الدقيقة: A تعني Mary left ← John arrived، وB تعني John left ← Mary arrived.",
+            "إذن لا توجد جملة تثبت حرفيًا أن «جون وصل أولًا» دون سياق إضافي — وهذا خلل في صياغة السؤال الأصلي، وقد عرضته المنصة للطالب بوسم «ملاحظة منطقية من المنصة» دون حذف السؤال أو تغيير الإجابة المورّدة.",
+            "استخدم هذا التمرين لتعليم الدقة: لا نستنتج ترتيبًا لا تثبته الصيغة."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l28-source-5",
+          "reference": "㉞ تحدي أصعب — Sarah / Tom",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "الإجابة: B.",
+              "line": 0
+            },
+            {
+              "text": "A تعني: Tom left ← Sarah arrived (توم غادر أولًا).",
+              "line": 1
+            },
+            {
+              "text": "B تعني: Sarah arrived ← Tom left (سارة وصلت أولًا) — وهي المطلوبة.",
+              "line": 2
+            },
+            {
+              "text": "درّب الطالب على استخراج الترتيب من الصيغة لا من ترتيب الكلمات.",
+              "line": 3
+            }
+          ],
+          "originalLines": [
+            "الإجابة: B.",
+            "A تعني: Tom left ← Sarah arrived (توم غادر أولًا).",
+            "B تعني: Sarah arrived ← Tom left (سارة وصلت أولًا) — وهي المطلوبة.",
+            "درّب الطالب على استخراج الترتيب من الصيغة لا من ترتيب الكلمات."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l28-source-6",
+          "reference": "㉟ ثلاثة أحداث — مختبر Daniel",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "قبل دخول دانيال: had completed (المرحلة الأولى).",
+              "line": 0
+            },
+            {
+              "text": "كان يحدث لحظة الدخول: were discussing.",
+              "line": 1
+            },
+            {
+              "text": "بعد ذلك: joined (المرحلة الثانية).",
+              "line": 2
+            },
+            {
+              "text": "ناقش: لماذا entered ماضٍ بسيط؟ لأنه نقطة القصة التي نقف عندها.",
+              "line": 3
+            }
+          ],
+          "originalLines": [
+            "قبل دخول دانيال: had completed (المرحلة الأولى).",
+            "كان يحدث لحظة الدخول: were discussing.",
+            "بعد ذلك: joined (المرحلة الثانية).",
+            "ناقش: لماذا entered ماضٍ بسيط؟ لأنه نقطة القصة التي نقف عندها."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l28-source-7",
+          "reference": "㊱ اختبار المنطق الزمني — my father read / was reading",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "«my father read the newspaper» لا تعني بالضرورة أنه كان يقرأ في تلك اللحظة — إنها حدث مكتمل.",
+              "line": 0
+            },
+            {
+              "text": "للتعبير عن نشاط مستمر لحظة الاستيقاظ: My father was reading the newspaper.",
+              "line": 1
+            },
+            {
+              "text": "الصورة الكاملة: had left (أقدم) · was preparing (مستمر) · was reading (مستمر) · woke up (الحدث الرئيسي).",
+              "line": 2
+            },
+            {
+              "text": "هذا فرق دلالي حقيقي وليس تحسينًا أسلوبيًا.",
+              "line": 3
+            }
+          ],
+          "originalLines": [
+            "«my father read the newspaper» لا تعني بالضرورة أنه كان يقرأ في تلك اللحظة — إنها حدث مكتمل.",
+            "للتعبير عن نشاط مستمر لحظة الاستيقاظ: My father was reading the newspaper.",
+            "الصورة الكاملة: had left (أقدم) · was preparing (مستمر) · was reading (مستمر) · woke up (الحدث الرئيسي).",
+            "هذا فرق دلالي حقيقي وليس تحسينًا أسلوبيًا."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l28-source-8",
+          "reference": "㊴ Boss Battle",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "الإجابة: B.",
+              "line": 0
+            },
+            {
+              "text": "was running ← النشاط كان مستمرًا.",
+              "line": 1
+            },
+            {
+              "text": "saw ← حدث وقع أثناء ذلك.",
+              "line": 2
+            },
+            {
+              "text": "realized ← حدث ذهني.",
+              "line": 3
+            },
+            {
+              "text": "had seen ← رؤية الكلب حدثت قبل لحظة الإدراك.",
+              "line": 4
+            },
+            {
+              "text": "A تفقد الاستمرار والرجوع إلى الوراء؛ C تستخدم had run و was seeing بشكل خاطئ.",
+              "line": 5
+            }
+          ],
+          "originalLines": [
+            "الإجابة: B.",
+            "was running ← النشاط كان مستمرًا.",
+            "saw ← حدث وقع أثناء ذلك.",
+            "realized ← حدث ذهني.",
+            "had seen ← رؤية الكلب حدثت قبل لحظة الإدراك.",
+            "A تفقد الاستمرار والرجوع إلى الوراء؛ C تستخدم had run و was seeing بشكل خاطئ."
+          ],
+          "mappingStatus": "unmapped-group"
+        }
+      ]
+    },
+    {
+      "lesson": 30,
+      "groups": [
+        {
+          "id": "l30-source-1",
+          "reference": "㉕ اختبار 1 — اختر الزمن",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l30-source-1-%E2%91%A0",
+              "number": "①",
+              "segments": [
+                "① B — was talking: نشاط مستمر لحظة الدخول."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l30-source-1-%E2%91%A1",
+              "number": "②",
+              "segments": [
+                "② A — had left: المغادرة اكتملت قبل الوصول (before I arrived)."
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l30-source-1-%E2%91%A2",
+              "number": "③",
+              "segments": [
+                "③ A — had been running: نشاط ممتد سبّب الإنهاك."
+              ],
+              "sourceLineIndexes": [
+                2
+              ]
+            },
+            {
+              "id": "l30-source-1-%E2%91%A3",
+              "number": "④",
+              "segments": [
+                "④ B — finished: حدث ماضٍ واحد مع yesterday بلا مقارنة."
+              ],
+              "sourceLineIndexes": [
+                3
+              ]
+            },
+            {
+              "id": "l30-source-1-%E2%91%A4",
+              "number": "⑤",
+              "segments": [
+                "⑤ C — was watching: ساعة محددة + نشاط مستمر عندها."
+              ],
+              "sourceLineIndexes": [
+                4
+              ]
+            }
+          ],
+          "context": [],
+          "originalLines": [
+            "① B — was talking: نشاط مستمر لحظة الدخول.",
+            "② A — had left: المغادرة اكتملت قبل الوصول (before I arrived).",
+            "③ A — had been running: نشاط ممتد سبّب الإنهاك.",
+            "④ B — finished: حدث ماضٍ واحد مع yesterday بلا مقارنة.",
+            "⑤ C — was watching: ساعة محددة + نشاط مستمر عندها."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l30-source-2",
+          "reference": "㉖ اختبار 2 — اختر حسب المعنى",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "1 → B (Ahmed was sleeping): نصف ما كان يحدث عند لحظة الوصول.",
+              "line": 0
+            },
+            {
+              "text": "2 → A (Ahmed had slept): التركيز على حدوث النوم قبل وصولي.",
+              "line": 1
+            },
+            {
+              "text": "3 → C (had been sleeping for two hours): التركيز على المدة.",
+              "line": 2
+            },
+            {
+              "text": "وجّه الطالب: الجمل العربية الثلاث متشابهة جدًا — الفرق كله في «كان ينام / كان قد نام / نائم منذ ساعتين».",
+              "line": 3
+            }
+          ],
+          "originalLines": [
+            "1 → B (Ahmed was sleeping): نصف ما كان يحدث عند لحظة الوصول.",
+            "2 → A (Ahmed had slept): التركيز على حدوث النوم قبل وصولي.",
+            "3 → C (had been sleeping for two hours): التركيز على المدة.",
+            "وجّه الطالب: الجمل العربية الثلاث متشابهة جدًا — الفرق كله في «كان ينام / كان قد نام / نائم منذ ساعتين»."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l30-source-3",
+          "reference": "㉜ اختبار 3 — صحح الأخطاء",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l30-source-3-%E2%91%A0",
+              "number": "①",
+              "segments": [
+                "① I had been studying for three hours — بعد had been يأتي verb-ing."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l30-source-3-%E2%91%A1",
+              "number": "②",
+              "segments": [
+                "② I had been waiting for two hours when he arrived — مع ملاحظة المصدر: لو قصدنا «كنت أنتظر عندما وصل» فقط تكفي I was waiting when he arrived؛ المدة تستدعي had been waiting. (المصدر ينتقل من She إلى I في التصحيح — حافظنا عليه حرفيًا.)"
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l30-source-3-%E2%91%A2",
+              "number": "③",
+              "segments": [
+                "③ When we arrived, the movie had already started — موضع already بين had والفعل."
+              ],
+              "sourceLineIndexes": [
+                2
+              ]
+            },
+            {
+              "id": "l30-source-3-%E2%91%A3",
+              "number": "④",
+              "segments": [
+                "④ He had gone home before I called — V3 بعد had."
+              ],
+              "sourceLineIndexes": [
+                3
+              ]
+            },
+            {
+              "id": "l30-source-3-%E2%91%A4",
+              "number": "⑤",
+              "segments": [
+                "⑤ They had known each other for ten years — know فعل حالة."
+              ],
+              "sourceLineIndexes": [
+                4
+              ]
+            },
+            {
+              "id": "l30-source-3-%E2%91%A5",
+              "number": "⑥",
+              "segments": [
+                "⑥ Had you finished your work? — مساعد واحد فقط، لا did مع had."
+              ],
+              "sourceLineIndexes": [
+                5
+              ]
+            }
+          ],
+          "context": [],
+          "originalLines": [
+            "① I had been studying for three hours — بعد had been يأتي verb-ing.",
+            "② I had been waiting for two hours when he arrived — مع ملاحظة المصدر: لو قصدنا «كنت أنتظر عندما وصل» فقط تكفي I was waiting when he arrived؛ المدة تستدعي had been waiting. (المصدر ينتقل من She إلى I في التصحيح — حافظنا عليه حرفيًا.)",
+            "③ When we arrived, the movie had already started — موضع already بين had والفعل.",
+            "④ He had gone home before I called — V3 بعد had.",
+            "⑤ They had known each other for ten years — know فعل حالة.",
+            "⑥ Had you finished your work? — مساعد واحد فقط، لا did مع had."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l30-source-4",
+          "reference": "㉝ السؤال الخادع",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "C — had been studying: for an hour مدة امتدت حتى نقطة ماضية.",
+              "line": 0
+            },
+            {
+              "text": "لكن بدون for an hour تصبح was studying صحيحة إذا كان التركيز على اللحظة — ناقش الحالتين.",
+              "line": 1
+            }
+          ],
+          "originalLines": [
+            "C — had been studying: for an hour مدة امتدت حتى نقطة ماضية.",
+            "لكن بدون for an hour تصبح was studying صحيحة إذا كان التركيز على اللحظة — ناقش الحالتين."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l30-source-5",
+          "reference": "㉞ سؤال أصعب",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "«كانت قد أنهت قبل وصولي» → C (had finished).",
+              "line": 0
+            },
+            {
+              "text": "«كانت في عملية الإنهاء عندما وصلت» → B (was finishing).",
+              "line": 1
+            },
+            {
+              "text": "«كانت تعمل على الإنهاء لفترة قبل وصولي» → D (had been finishing).",
+              "line": 2
+            },
+            {
+              "text": "A (finished) ممكنة في سياق تتابعي: وصلتُ ثم أنهت.",
+              "line": 3
+            },
+            {
+              "text": "الهدف التربوي: لا تسأل «ما الإجابة الصحيحة؟» بل «ما المعنى المقصود؟».",
+              "line": 4
+            }
+          ],
+          "originalLines": [
+            "«كانت قد أنهت قبل وصولي» → C (had finished).",
+            "«كانت في عملية الإنهاء عندما وصلت» → B (was finishing).",
+            "«كانت تعمل على الإنهاء لفترة قبل وصولي» → D (had been finishing).",
+            "A (finished) ممكنة في سياق تتابعي: وصلتُ ثم أنهت.",
+            "الهدف التربوي: لا تسأل «ما الإجابة الصحيحة؟» بل «ما المعنى المقصود؟»."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l30-source-6",
+          "reference": "㉔ المحقق — فريق الإنقاذ",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "arrived → Past Simple · were standing → Past Continuous · had been waiting → Past Perfect Continuous · had reached → Past Perfect.",
+              "line": 0
+            },
+            {
+              "text": "التحليل: وصل الفريق، كان القرويون واقفين، كانوا ينتظرون منذ ساعات، وكانت المياه قد وصلت قبل وصول الفريق.",
+              "line": 1
+            }
+          ],
+          "originalLines": [
+            "arrived → Past Simple · were standing → Past Continuous · had been waiting → Past Perfect Continuous · had reached → Past Perfect.",
+            "التحليل: وصل الفريق، كان القرويون واقفين، كانوا ينتظرون منذ ساعات، وكانت المياه قد وصلت قبل وصول الفريق."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l30-source-7",
+          "reference": "㉚ Boss Battle — قصة Sam",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "was driving → PC · had finished → PP · had been working → PPC · was → PS من verb to be · rang → PS.",
+              "line": 0
+            },
+            {
+              "text": "اربطها بخط الزمن في ㉛: بدأ العمل → استمر → انتهى → بعد ساعة → كان يقود → رن الهاتف → NOW.",
+              "line": 1
+            }
+          ],
+          "originalLines": [
+            "was driving → PC · had finished → PP · had been working → PPC · was → PS من verb to be · rang → PS.",
+            "اربطها بخط الزمن في ㉛: بدأ العمل → استمر → انتهى → بعد ساعة → كان يقود → رن الهاتف → NOW."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l30-source-8",
+          "reference": "㊱ القصة السينمائية — Lina",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "were searching → PC · had already locked → PP · had broken → PP · had been searching → PPC · noticed → PS · came → PS.",
+              "line": 0
+            },
+            {
+              "text": "اربطها بـ ㊲: كل زمن له وظيفة — يحرك القصة / يصف المشهد / يشرح ما قبل النقطة / يشرح نشاطًا ممتدًا.",
+              "line": 1
+            }
+          ],
+          "originalLines": [
+            "were searching → PC · had already locked → PP · had broken → PP · had been searching → PPC · noticed → PS · came → PS.",
+            "اربطها بـ ㊲: كل زمن له وظيفة — يحرك القصة / يصف المشهد / يشرح ما قبل النقطة / يشرح نشاطًا ممتدًا."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l30-source-9",
+          "reference": "🚀 FINAL CHALLENGE — المختبر",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "entered → PS (وصول العالم) · were checking → PC (لحظة وصوله) · had already completed → PP (الاختبار الأول اكتمل قبله) · had been working → PPC (ثلاث ساعات تقريبًا) · stopped → PS (حدث مفاجئ).",
+              "line": 0
+            },
+            {
+              "text": "الخلاصة: 📸 الحدث → 🎥 الخلفية → ⏪ الحدث الأقدم → ⏪🎥 النشاط الأقدم المستمر.",
+              "line": 1
+            }
+          ],
+          "originalLines": [
+            "entered → PS (وصول العالم) · were checking → PC (لحظة وصوله) · had already completed → PP (الاختبار الأول اكتمل قبله) · had been working → PPC (ثلاث ساعات تقريبًا) · stopped → PS (حدث مفاجئ).",
+            "الخلاصة: 📸 الحدث → 🎥 الخلفية → ⏪ الحدث الأقدم → ⏪🎥 النشاط الأقدم المستمر."
+          ],
+          "mappingStatus": "unmapped-group"
+        }
+      ]
+    },
+    {
+      "lesson": 31,
+      "groups": [
+        {
+          "id": "l31-source-1",
+          "reference": "㉟ المحقق — الحلول الثمانية",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l31-source-1-%E2%91%A0",
+              "number": "①",
+              "segments": [
+                "① She has gone to school. (V3 بعد has)"
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l31-source-1-%E2%91%A1",
+              "number": "②",
+              "segments": [
+                "② I saw him yesterday. (وقت ماضٍ محدد ومنتهٍ)"
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l31-source-1-%E2%91%A2",
+              "number": "③",
+              "segments": [
+                "③ Have you eaten breakfast? (لا did مع Present Perfect)"
+              ],
+              "sourceLineIndexes": [
+                2
+              ]
+            },
+            {
+              "id": "l31-source-1-%E2%91%A3",
+              "number": "④",
+              "segments": [
+                "④ He has never visited Paris. (لا نفي مزدوج)"
+              ],
+              "sourceLineIndexes": [
+                3
+              ]
+            },
+            {
+              "id": "l31-source-1-%E2%91%A4",
+              "number": "⑤",
+              "segments": [
+                "⑤ They have finished the project. (They → have)"
+              ],
+              "sourceLineIndexes": [
+                4
+              ]
+            },
+            {
+              "id": "l31-source-1-%E2%91%A5",
+              "number": "⑥",
+              "segments": [
+                "⑥ Has she arrived? (She → Has في السؤال)"
+              ],
+              "sourceLineIndexes": [
+                5
+              ]
+            },
+            {
+              "id": "l31-source-1-%E2%91%A6",
+              "number": "⑦",
+              "segments": [
+                "⑦ I have lived here for five years. (مدة → for)"
+              ],
+              "sourceLineIndexes": [
+                6
+              ]
+            },
+            {
+              "id": "l31-source-1-%E2%91%A7",
+              "number": "⑧",
+              "segments": [
+                "⑧ She has worked here since 2022. (نقطة بداية → since)"
+              ],
+              "sourceLineIndexes": [
+                7
+              ]
+            }
+          ],
+          "context": [],
+          "originalLines": [
+            "① She has gone to school. (V3 بعد has)",
+            "② I saw him yesterday. (وقت ماضٍ محدد ومنتهٍ)",
+            "③ Have you eaten breakfast? (لا did مع Present Perfect)",
+            "④ He has never visited Paris. (لا نفي مزدوج)",
+            "⑤ They have finished the project. (They → have)",
+            "⑥ Has she arrived? (She → Has في السؤال)",
+            "⑦ I have lived here for five years. (مدة → for)",
+            "⑧ She has worked here since 2022. (نقطة بداية → since)"
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l31-source-2",
+          "reference": "㊱ الاختيار الذكي — الحلول الثمانية",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l31-source-2-%E2%91%A0",
+              "number": "①",
+              "segments": [
+                "① finished · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l31-source-2-%E2%91%A1",
+              "number": "②",
+              "segments": [
+                "② have finished · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l31-source-2-%E2%91%A2",
+              "number": "③",
+              "segments": [
+                "③ traveled · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l31-source-2-%E2%91%A3",
+              "number": "④",
+              "segments": [
+                "④ has traveled"
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l31-source-2-%E2%91%A4",
+              "number": "⑤",
+              "segments": [
+                "⑤ solved · "
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l31-source-2-%E2%91%A5",
+              "number": "⑥",
+              "segments": [
+                "⑥ have solved · "
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l31-source-2-%E2%91%A6",
+              "number": "⑦",
+              "segments": [
+                "⑦ lost · "
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l31-source-2-%E2%91%A7",
+              "number": "⑧",
+              "segments": [
+                "⑧ has lost"
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            }
+          ],
+          "context": [
+            {
+              "text": "التعليل: الأزواج الأربعة تتبادل بين وقت ماضٍ محدد (yesterday / in 2024 / last night / two days ago) وكلمة رابطة بالحاضر (already / before).",
+              "line": 2
+            },
+            {
+              "text": "اجعل الطالب يقرأ كل زوج مرة أخرى بصوت عالٍ ويلاحظ تغيّر المعنى — ㊱ يقول: لاحظ كيف تغير المعنى.",
+              "line": 3
+            }
+          ],
+          "originalLines": [
+            "① finished · ② have finished · ③ traveled · ④ has traveled",
+            "⑤ solved · ⑥ have solved · ⑦ lost · ⑧ has lost",
+            "التعليل: الأزواج الأربعة تتبادل بين وقت ماضٍ محدد (yesterday / in 2024 / last night / two days ago) وكلمة رابطة بالحاضر (already / before).",
+            "اجعل الطالب يقرأ كل زوج مرة أخرى بصوت عالٍ ويلاحظ تغيّر المعنى — ㊱ يقول: لاحظ كيف تغير المعنى."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l31-source-3",
+          "reference": "㊲ ㊳ IQ200 — قراءة المعنى لا القاعدة",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "Maya lost her passport → خبر عن حدث في الماضي · Maya has lost her passport → نتيجة مهمة الآن (ربما ما زال مفقودًا).",
+              "line": 0
+            },
+            {
+              "text": "Daniel went to the library → حدث ماضٍ · Daniel has gone to the library → غالبًا هو موجود هناك الآن أو لم يعد بعد.",
+              "line": 1
+            },
+            {
+              "text": "الطائرة: I have flown on a plane (تجربة) و I flew on a plane in 2022 (حدث محدد) — كلتاهما صحيحة، والمعنى مختلف.",
+              "line": 2
+            },
+            {
+              "text": "الخلاصة التي يجب أن ينطقها الطالب: الزمن اختيار زاوية نظر، وليس مجرد قاعدة.",
+              "line": 3
+            }
+          ],
+          "originalLines": [
+            "Maya lost her passport → خبر عن حدث في الماضي · Maya has lost her passport → نتيجة مهمة الآن (ربما ما زال مفقودًا).",
+            "Daniel went to the library → حدث ماضٍ · Daniel has gone to the library → غالبًا هو موجود هناك الآن أو لم يعد بعد.",
+            "الطائرة: I have flown on a plane (تجربة) و I flew on a plane in 2022 (حدث محدد) — كلتاهما صحيحة، والمعنى مختلف.",
+            "الخلاصة التي يجب أن ينطقها الطالب: الزمن اختيار زاوية نظر، وليس مجرد قاعدة."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l31-source-4",
+          "reference": "㊴ Boss Challenge — أزمنة نص Lina",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "has always loved → Present Perfect · has visited → Present Perfect · has recently started → Present Perfect",
+              "line": 0
+            },
+            {
+              "text": "joined → Past Simple · built → Past Simple · has already completed → Present Perfect",
+              "line": 1
+            },
+            {
+              "text": "السبب: last year فترة ماضية منتهية (Past Simple) · this year فترة ما زالت مرتبطة بالحاضر (Present Perfect).",
+              "line": 2
+            }
+          ],
+          "originalLines": [
+            "has always loved → Present Perfect · has visited → Present Perfect · has recently started → Present Perfect",
+            "joined → Past Simple · built → Past Simple · has already completed → Present Perfect",
+            "السبب: last year فترة ماضية منتهية (Past Simple) · this year فترة ما زالت مرتبطة بالحاضر (Present Perfect)."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l31-source-5",
+          "reference": "㊵ تحويل اليابان",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "I visited Japan in 2021. → I have visited Japan.",
+              "line": 0
+            },
+            {
+              "text": "حذفنا in 2021 لأن Present Perfect الأساسي لا يُستخدم مع وقت ماضٍ محدد ومنتهٍ مثل yesterday / last year / in 2021 / two days ago.",
+              "line": 1
+            },
+            {
+              "text": "اسأل الطالب: ماذا تغيّر في المعنى؟ صار التركيز على الخبرة لا على تاريخ الرحلة.",
+              "line": 2
+            }
+          ],
+          "originalLines": [
+            "I visited Japan in 2021. → I have visited Japan.",
+            "حذفنا in 2021 لأن Present Perfect الأساسي لا يُستخدم مع وقت ماضٍ محدد ومنتهٍ مثل yesterday / last year / in 2021 / two days ago.",
+            "اسأل الطالب: ماذا تغيّر في المعنى؟ صار التركيز على الخبرة لا على تاريخ الرحلة."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l31-source-6",
+          "reference": "㊶ for / since — الحلول الخمسة",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l31-source-6-%E2%91%A0",
+              "number": "①",
+              "segments": [
+                "① since 2020 · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l31-source-6-%E2%91%A1",
+              "number": "②",
+              "segments": [
+                "② for four years · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l31-source-6-%E2%91%A2",
+              "number": "③",
+              "segments": [
+                "③ since childhood · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l31-source-6-%E2%91%A3",
+              "number": "④",
+              "segments": [
+                "④ for six months · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l31-source-6-%E2%91%A4",
+              "number": "⑤",
+              "segments": [
+                "⑤ since 2018"
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            }
+          ],
+          "context": [
+            {
+              "text": "قاعدة الذهب: for + مدة · since + بداية.",
+              "line": 1
+            },
+            {
+              "text": "تدريب إضافي: اطلب من الطالب تحويل since 2018 → for + عدد سنوات، والعكس.",
+              "line": 2
+            }
+          ],
+          "originalLines": [
+            "① since 2020 · ② for four years · ③ since childhood · ④ for six months · ⑤ since 2018",
+            "قاعدة الذهب: for + مدة · since + بداية.",
+            "تدريب إضافي: اطلب من الطالب تحويل since 2018 → for + عدد سنوات، والعكس."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l31-source-7",
+          "reference": "㊷ التحدي النهائي — إجابات نموذجية (للقياس لا للنسخ)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l31-source-7-%E2%91%A0",
+              "number": "①",
+              "segments": [
+                "① I have never ridden a horse. · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l31-source-7-%E2%91%A1",
+              "number": "②",
+              "segments": [
+                "② I have already finished my homework. · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l31-source-7-%E2%91%A2",
+              "number": "③",
+              "segments": [
+                "③ I have just arrived."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l31-source-7-%E2%91%A3",
+              "number": "④",
+              "segments": [
+                "④ I haven't eaten yet. · "
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l31-source-7-%E2%91%A4",
+              "number": "⑤",
+              "segments": [
+                "⑤ Have you ever visited Turkey? · "
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l31-source-7-%E2%91%A5",
+              "number": "⑥",
+              "segments": [
+                "⑥ I have lived in this city for six years."
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l31-source-7-%E2%91%A6",
+              "number": "⑦",
+              "segments": [
+                "⑦ I have studied English since 2019."
+              ],
+              "sourceLineIndexes": [
+                2
+              ]
+            }
+          ],
+          "context": [
+            {
+              "text": "الشرط: إجابات حقيقية من حياة الطالب — الصيغة صحيحة والمعنى شخصي.",
+              "line": 3
+            }
+          ],
+          "originalLines": [
+            "① I have never ridden a horse. · ② I have already finished my homework. · ③ I have just arrived.",
+            "④ I haven't eaten yet. · ⑤ Have you ever visited Turkey? · ⑥ I have lived in this city for six years.",
+            "⑦ I have studied English since 2019.",
+            "الشرط: إجابات حقيقية من حياة الطالب — الصيغة صحيحة والمعنى شخصي."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l31-source-8",
+          "reference": "㊸ Final Boss — أربع جمل، أربعة معانٍ",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l31-source-8-%E2%91%A0",
+              "number": "①",
+              "segments": [
+                "① I ate the cake. → Past Simple — أكلت الكعكة. حدث ماضٍ."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l31-source-8-%E2%91%A1",
+              "number": "②",
+              "segments": [
+                "② I was eating the cake. → Past Continuous — الفعل كان جاريًا في لحظة ماضية."
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l31-source-8-%E2%91%A2",
+              "number": "③",
+              "segments": [
+                "③ I had eaten the cake before they arrived. → Past Perfect — كنت قد أكلتها قبل وصولهم."
+              ],
+              "sourceLineIndexes": [
+                2
+              ]
+            },
+            {
+              "id": "l31-source-8-%E2%91%A3",
+              "number": "④",
+              "segments": [
+                "④ I have eaten the cake. → Present Perfect — هناك علاقة بالحاضر."
+              ],
+              "sourceLineIndexes": [
+                3
+              ]
+            }
+          ],
+          "context": [
+            {
+              "text": "اطلب رسم خط زمني صغير لكل جملة — الرسم يكشف الفرق فورًا.",
+              "line": 4
+            }
+          ],
+          "originalLines": [
+            "① I ate the cake. → Past Simple — أكلت الكعكة. حدث ماضٍ.",
+            "② I was eating the cake. → Past Continuous — الفعل كان جاريًا في لحظة ماضية.",
+            "③ I had eaten the cake before they arrived. → Past Perfect — كنت قد أكلتها قبل وصولهم.",
+            "④ I have eaten the cake. → Present Perfect — هناك علاقة بالحاضر.",
+            "اطلب رسم خط زمني صغير لكل جملة — الرسم يكشف الفرق فورًا."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l31-source-9",
+          "reference": "مختبرات الدرس التفاعلية — حلول مختصرة",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l31-source-9-%E2%91%A2",
+              "number": "③",
+              "segments": [
+                "③ have/has: I/You/We/They → have · He/She/It → has."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l31-source-9-%E2%91%A3",
+              "number": "④",
+              "segments": [
+                "④ V3: gone · eaten · seen · written · taken · broken · finished · played."
+              ],
+              "sourceLineIndexes": [
+                1
+              ]
+            },
+            {
+              "id": "l31-source-9-%E2%91%A4",
+              "number": "⑤",
+              "segments": [
+                "⑤ المثبتة: cleaned · opened · built · forgotten · finished · eaten (والجذر forgotten من forget → forgot → forgotten)."
+              ],
+              "sourceLineIndexes": [
+                2
+              ]
+            },
+            {
+              "id": "l31-source-9-%E2%91%B0",
+              "number": "⑰",
+              "segments": [
+                "⑰ on the periods: today/this week/this year = فترات مفتوحة · last week = فترة مغلقة."
+              ],
+              "sourceLineIndexes": [
+                3
+              ]
+            }
+          ],
+          "context": [
+            {
+              "text": "㊸ ㊹ الخريطة: 📸 Past Simple · 🎥 Past Continuous · ⏪ Past Perfect · 🌉 Present Perfect.",
+              "line": 4
+            }
+          ],
+          "originalLines": [
+            "③ have/has: I/You/We/They → have · He/She/It → has.",
+            "④ V3: gone · eaten · seen · written · taken · broken · finished · played.",
+            "⑤ المثبتة: cleaned · opened · built · forgotten · finished · eaten (والجذر forgotten من forget → forgot → forgotten).",
+            "⑰ on the periods: today/this week/this year = فترات مفتوحة · last week = فترة مغلقة.",
+            "㊸ ㊹ الخريطة: 📸 Past Simple · 🎥 Past Continuous · ⏪ Past Perfect · 🌉 Present Perfect."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        }
+      ]
+    },
+    {
+      "lesson": 32,
+      "groups": [
+        {
+          "id": "l32-source-1",
+          "reference": "§11 · الإجابات القصيرة (المصدر)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "Have you been studying? → Yes, I have. ✅ / No, I haven't. · Has she been working? → Yes, she has. / No, she hasn't. · Have they been waiting? → Yes, they have. / No, they haven't.",
+              "line": 0
+            },
+            {
+              "text": "Yes, I have been. ❌ — خطأ متعمد في المصدر.",
+              "line": 1
+            }
+          ],
+          "originalLines": [
+            "Have you been studying? → Yes, I have. ✅ / No, I haven't. · Has she been working? → Yes, she has. / No, she hasn't. · Have they been waiting? → Yes, they have. / No, they haven't.",
+            "Yes, I have been. ❌ — خطأ متعمد في المصدر."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l32-source-2",
+          "reference": "§12 · Wh Questions (المصدر)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "What have you been doing? · Where have they been staying? · Why has she been crying? · How long have you been waiting? · Who has been using my computer?",
+              "line": 0
+            },
+            {
+              "text": "Platform Explanation: في Who has been using my computer؟ الكلمة who هي الفاعل، لذلك لا يأتي has قبلها.",
+              "line": 1
+            }
+          ],
+          "originalLines": [
+            "What have you been doing? · Where have they been staying? · Why has she been crying? · How long have you been waiting? · Who has been using my computer?",
+            "Platform Explanation: في Who has been using my computer؟ الكلمة who هي الفاعل، لذلك لا يأتي has قبلها."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l32-source-3",
+          "reference": "§16 · مثال IQ200 (المصدر)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "A: I have written five pages. ← التركيز على النتيجة والكمية. B: I have been writing for three hours. ← التركيز على النشاط والمدة.",
+              "line": 0
+            }
+          ],
+          "originalLines": [
+            "A: I have written five pages. ← التركيز على النتيجة والكمية. B: I have been writing for three hours. ← التركيز على النشاط والمدة."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l32-source-4",
+          "reference": "§23 · الأفعال الحالية (المصدر)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "I have known him for ten years. ✅ · She has understood the problem. ✅",
+              "line": 0
+            },
+            {
+              "text": "I have been knowing him for ten years. ❌ · She has been understanding the problem. ❌ (عادةً).",
+              "line": 1
+            }
+          ],
+          "originalLines": [
+            "I have known him for ten years. ✅ · She has understood the problem. ✅",
+            "I have been knowing him for ten years. ❌ · She has been understanding the problem. ❌ (عادةً)."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l32-source-5",
+          "reference": "§27 · Grammar Detective (المصدر — 8 أخطاء)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l32-source-5-%E2%91%A0",
+              "number": "①",
+              "segments": [
+                "① She has been studying for two hours. "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-5-%E2%91%A1",
+              "number": "②",
+              "segments": [
+                "② I have been working for three hours. "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-5-%E2%91%A2",
+              "number": "③",
+              "segments": [
+                "③ He has known her for years. "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-5-%E2%91%A3",
+              "number": "④",
+              "segments": [
+                "④ Have you been waiting long? "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-5-%E2%91%A4",
+              "number": "⑤",
+              "segments": [
+                "⑤ They have been playing all afternoon. "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-5-%E2%91%A5",
+              "number": "⑥",
+              "segments": [
+                "⑥ She hasn't been sleeping well. "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-5-%E2%91%A6",
+              "number": "⑦",
+              "segments": [
+                "⑦ How long has he been working here? "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-5-%E2%91%A7",
+              "number": "⑧",
+              "segments": [
+                "⑧ I have written five emails.",
+                "⑧: نركز على عدد مكتمل (five emails) ← have written، وليس have been written."
+              ],
+              "sourceLineIndexes": [
+                0,
+                1
+              ]
+            }
+          ],
+          "context": [],
+          "originalLines": [
+            "① She has been studying for two hours. ② I have been working for three hours. ③ He has known her for years. ④ Have you been waiting long? ⑤ They have been playing all afternoon. ⑥ She hasn't been sleeping well. ⑦ How long has he been working here? ⑧ I have written five emails.",
+            "⑧: نركز على عدد مكتمل (five emails) ← have written، وليس have been written."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l32-source-6",
+          "reference": "§28 · تحدي الاختيار (المصدر)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l32-source-6-%E2%91%A0",
+              "number": "①",
+              "segments": [
+                "① have read · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-6-%E2%91%A1",
+              "number": "②",
+              "segments": [
+                "② have been reading · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-6-%E2%91%A2",
+              "number": "③",
+              "segments": [
+                "③ has made · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-6-%E2%91%A3",
+              "number": "④",
+              "segments": [
+                "④ has been making · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-6-%E2%91%A4",
+              "number": "⑤",
+              "segments": [
+                "⑤ have cleaned · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-6-%E2%91%A5",
+              "number": "⑥",
+              "segments": [
+                "⑥ have been cleaning."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            }
+          ],
+          "context": [
+            {
+              "text": "الشرح: العدد أو الإنجاز الواضح ← Present Perfect؛ النشاط والمدة ← Present Perfect Continuous.",
+              "line": 1
+            }
+          ],
+          "originalLines": [
+            "① have read · ② have been reading · ③ has made · ④ has been making · ⑤ have cleaned · ⑥ have been cleaning.",
+            "الشرح: العدد أو الإنجاز الواضح ← Present Perfect؛ النشاط والمدة ← Present Perfect Continuous."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l32-source-7",
+          "reference": "§29 · IQ200 — نفس الفعل (المصدر)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "I have repaired my bicycle → الدراجة أصبحت مُصلحة (نتيجة) · I have been repairing my bicycle → كنت أعمل على إصلاحها، وقد لا أكون انتهيت (نشاط).",
+              "line": 0
+            },
+            {
+              "text": "المعلم يسأل الطالب: «ما الذي أريد أن أُبرزه؟» قبل «أي زمن أصعب؟».",
+              "line": 1
+            }
+          ],
+          "originalLines": [
+            "I have repaired my bicycle → الدراجة أصبحت مُصلحة (نتيجة) · I have been repairing my bicycle → كنت أعمل على إصلاحها، وقد لا أكون انتهيت (نشاط).",
+            "المعلم يسأل الطالب: «ما الذي أريد أن أُبرزه؟» قبل «أي زمن أصعب؟»."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l32-source-8",
+          "reference": "§32 · Boss Challenge (المصدر — 8 جمل)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [
+            {
+              "id": "l32-source-8-%E2%91%A0",
+              "number": "①",
+              "segments": [
+                "① play — Present Simple · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-8-%E2%91%A1",
+              "number": "②",
+              "segments": [
+                "② are playing — Present Continuous · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-8-%E2%91%A2",
+              "number": "③",
+              "segments": [
+                "③ have read — Present Perfect · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-8-%E2%91%A3",
+              "number": "④",
+              "segments": [
+                "④ have been studying — Present Perfect Continuous · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-8-%E2%91%A4",
+              "number": "⑤",
+              "segments": [
+                "⑤ studies — Present Simple · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-8-%E2%91%A5",
+              "number": "⑥",
+              "segments": [
+                "⑥ is studying — Present Continuous · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-8-%E2%91%A6",
+              "number": "⑦",
+              "segments": [
+                "⑦ has been studying — Present Perfect Continuous · "
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            },
+            {
+              "id": "l32-source-8-%E2%91%A7",
+              "number": "⑧",
+              "segments": [
+                "⑧ has read — Present Perfect."
+              ],
+              "sourceLineIndexes": [
+                0
+              ]
+            }
+          ],
+          "context": [
+            {
+              "text": "المصدر: «لاحظ كيف أصبح لدينا الآن أربع درجات مختلفة من الزمن في الحاضر».",
+              "line": 1
+            }
+          ],
+          "originalLines": [
+            "① play — Present Simple · ② are playing — Present Continuous · ③ have read — Present Perfect · ④ have been studying — Present Perfect Continuous · ⑤ studies — Present Simple · ⑥ is studying — Present Continuous · ⑦ has been studying — Present Perfect Continuous · ⑧ has read — Present Perfect.",
+            "المصدر: «لاحظ كيف أصبح لدينا الآن أربع درجات مختلفة من الزمن في الحاضر»."
+          ],
+          "mappingStatus": "explicit-reference-numbering"
+        },
+        {
+          "id": "l32-source-9",
+          "reference": "§33 · Final IQ200 (المصدر — فقرة Adam)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "has studied → Present Perfect · has built → Present Perfect (six robots) · has been working → Present Perfect Continuous (since January) · has been testing → Present Perfect Continuous (every afternoon).",
+              "line": 0
+            },
+            {
+              "text": "انظر ملاحظة التصنيف في قسم الملاحظات: has studied for three years.",
+              "line": 1
+            }
+          ],
+          "originalLines": [
+            "has studied → Present Perfect · has built → Present Perfect (six robots) · has been working → Present Perfect Continuous (since January) · has been testing → Present Perfect Continuous (every afternoon).",
+            "انظر ملاحظة التصنيف في قسم الملاحظات: has studied for three years."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l32-source-10",
+          "reference": "§34 · Final Boss (المصدر — قصة Maya)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "She has been studying science for several months. · She has read eight books so far. · She has been working on her project since January. · She has completed most of the experiments. · She is tired because she has been working all day.",
+              "line": 0
+            }
+          ],
+          "originalLines": [
+            "She has been studying science for several months. · She has read eight books so far. · She has been working on her project since January. · She has completed most of the experiments. · She is tired because she has been working all day."
+          ],
+          "mappingStatus": "unmapped-group"
+        },
+        {
+          "id": "l32-source-11",
+          "reference": "§31 · since و for (المصدر)",
+          "sourcePage": null,
+          "originalQuestionText": null,
+          "items": [],
+          "context": [
+            {
+              "text": "المصدر: I have been studying since three hours. ❌ ← الصحيح: I have been studying for three hours. ✅ · since 5:00 نقطة بداية.",
+              "line": 0
+            }
+          ],
+          "originalLines": [
+            "المصدر: I have been studying since three hours. ❌ ← الصحيح: I have been studying for three hours. ✅ · since 5:00 نقطة بداية."
+          ],
+          "mappingStatus": "unmapped-group"
+        }
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "lesson": 1,
+      "id": "L1-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 2,
+      "id": "L2-textbook-key",
+      "reason": "All 29 canonical exercise questions are directly navigable behind the teacher gate. External textbook page and printed question provenance remain unavailable.",
+      "items": [
+        {
+          "id": "l02-pronoun-choice/q1",
+          "prompt": "Khalil is a student.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[0]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-choice/q2",
+          "prompt": "Sara is happy.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[1]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-choice/q3",
+          "prompt": "Khalil and Adam are friends.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[2]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-choice/q4",
+          "prompt": "Sara and I are students.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[3]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-choice/q5",
+          "prompt": "The book is new.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-choice.questions[4]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-choice/q1",
+          "prompt": "I … happy.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[0]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-choice/q2",
+          "prompt": "He … a teacher.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[1]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-choice/q3",
+          "prompt": "She … tired.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[2]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-choice/q4",
+          "prompt": "We … students.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[3]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-choice/q5",
+          "prompt": "They … friends.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[4]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-choice/q6",
+          "prompt": "You … ready.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[5]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-choice/q7",
+          "prompt": "It … small.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-choice.questions[6]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-correction-reveal/q1",
+          "prompt": "I is happy.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[0]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-correction-reveal/q2",
+          "prompt": "He are a student.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[1]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-correction-reveal/q3",
+          "prompt": "They is students.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[2]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-correction-reveal/q4",
+          "prompt": "She am tired.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[3]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-correction-reveal/q5",
+          "prompt": "We is friends.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-correction-reveal.questions[4]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-completion/q1",
+          "prompt": "I … a student.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[0]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-completion/q2",
+          "prompt": "Khalil … happy.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[1]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-completion/q3",
+          "prompt": "Sara … a teacher.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[2]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-completion/q4",
+          "prompt": "We … friends.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[3]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-completion/q5",
+          "prompt": "They … ready.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[4]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-completion/q6",
+          "prompt": "The car … fast.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[5]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-be-completion/q7",
+          "prompt": "You … smart.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-be-completion.questions[6]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-reveal/q1",
+          "prompt": "Mahmoud is a student.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[0]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-reveal/q2",
+          "prompt": "Mia is happy.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[1]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-reveal/q3",
+          "prompt": "Mahmoud and Khalil are friends.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[2]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-reveal/q4",
+          "prompt": "Mia and I are students.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[3]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        },
+        {
+          "id": "l02-pronoun-reveal/q5",
+          "prompt": "The dog is small.",
+          "sourcePath": "src/lessons/lesson2/data.ts#l02-pronoun-reveal.questions[4]",
+          "missing": [
+            "external textbook page",
+            "printed question numbering"
+          ]
+        }
+      ]
+    },
+    {
+      "lesson": 3,
+      "id": "L3-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 4,
+      "id": "L4-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 5,
+      "id": "L5-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 6,
+      "id": "L6-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 7,
+      "id": "L7-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 8,
+      "id": "L8-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 9,
+      "id": "L9-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 10,
+      "id": "L10-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 11,
+      "id": "L11-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 12,
+      "id": "L12-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 13,
+      "id": "L13-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 14,
+      "id": "L14-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 15,
+      "id": "L15-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 16,
+      "id": "L16-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 17,
+      "id": "L17-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 18,
+      "id": "L18-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 19,
+      "id": "L19-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 20,
+      "id": "L20-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 21,
+      "id": "L21-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 22,
+      "id": "L22-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 23,
+      "id": "L23-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 24,
+      "id": "L24-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 25,
+      "id": "L25-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 26,
+      "id": "L26-textbook-key",
+      "reason": "Legacy teacher area contains the FinalQuiz key, not a textbook-question solution bank. Source activity mapping remains unverified."
+    },
+    {
+      "lesson": 27,
+      "id": "l27-source-1",
+      "reference": "㉚ تدريب 1 — اختر الفعل الصحيح",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 6,
+          "text": "القاعدة الجامعة: بعد had يأتي V3 دائمًا."
+        }
+      ]
+    },
+    {
+      "lesson": 27,
+      "id": "l27-source-2",
+      "reference": "㉛ تدريب 2 — had أو have؟",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 5,
+          "text": "ملاحظة للمعلم: المصدر يعطي القاعدة دون مفتاح؛ الإجابات مستنتجة منها ومعروضة للطالب بعد التحقق."
+        }
+      ]
+    },
+    {
+      "lesson": 27,
+      "id": "l27-source-3",
+      "reference": "㉜ تدريب 3 — Past Simple أم Past Perfect؟",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 6,
+          "text": "نبّه الطلاب: بعض الجمل تتغير إجابتها بتغيّر المعنى المقصود — وهذه هي الفكرة لا عيب في السؤال."
+        }
+      ]
+    },
+    {
+      "lesson": 27,
+      "id": "l27-source-4",
+      "reference": "㉝ ترتيب الأحداث — Noah",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "B → A: القطار اختفى أولًا (had disappeared) ثم وصل نوح."
+        },
+        {
+          "line": 2,
+          "text": "درّب الطالب على استخراج الترتيب من الصيغة لا من ترتيب الكلمات."
+        }
+      ]
+    },
+    {
+      "lesson": 27,
+      "id": "l27-source-5",
+      "reference": "㉞ اكتشف الخطأ",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": []
+    },
+    {
+      "lesson": 27,
+      "id": "l27-source-6",
+      "reference": "㉟ تحدي التحويل",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "المثال المحلول: The train had left before I arrived."
+        },
+        {
+          "line": 2,
+          "text": "Sara had finished the test before the teacher collected the papers."
+        },
+        {
+          "line": 3,
+          "text": "The children had eaten dinner before their parents came home."
+        },
+        {
+          "line": 4,
+          "text": "ركّز على خطوتين: حدّد الأقدم ← ضعه بصيغة had + V3 مع before."
+        }
+      ]
+    },
+    {
+      "lesson": 27,
+      "id": "l27-source-7",
+      "reference": "㊱ محقق المتحف (متقدم)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "had disappeared ← Past Perfect (الحدث الأقدم)."
+        },
+        {
+          "line": 2,
+          "text": "arrived / searched / couldn't find ← Past Simple (تحريك الأحداث)."
+        },
+        {
+          "line": 3,
+          "text": "were looking / were talking ← Past Continuous (الخلفية)."
+        },
+        {
+          "line": 4,
+          "text": "ناقش: كل زمن له وظيفة — التحديد المسبق، الخلفية، التقدم."
+        }
+      ]
+    },
+    {
+      "lesson": 27,
+      "id": "l27-source-8",
+      "reference": "㊷ Boss Battle",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 3,
+          "text": "القرار من المعنى لا من حفظ القالب."
+        }
+      ]
+    },
+    {
+      "lesson": 27,
+      "id": "l27-source-9",
+      "reference": "㊸ الاختبار النهائي المورّد (10 أسئلة)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": []
+    },
+    {
+      "lesson": 27,
+      "id": "l27-source-10",
+      "reference": "توجيه المختبرات الكبرى",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "مختبر الخط الزمني: اطلب من الطالب نطق الترتيب قبل كشف الإجابة."
+        },
+        {
+          "line": 2,
+          "text": "مختبر V1/V2/V3: ابدأ بالأفعال العشرة غير المنتظمة ثم المنتظمة للمقارنة."
+        },
+        {
+          "line": 3,
+          "text": "مفتاح Lina: بدّل بين الجملتين واطلب إعادة رسم الترتيب شفهيًا."
+        },
+        {
+          "line": 4,
+          "text": "السينما ثلاثية الأزمنة: اطلب تسمية دور كل فعل (خلفية/حدث/فلاش باك) قبل الكشف."
+        },
+        {
+          "line": 5,
+          "text": "تحدي ㊴: اقبل الترتيبين B,C,A,D و C,B,A,D وناقش ملاحظة السياق — لا تعاقب الفهم."
+        }
+      ]
+    },
+    {
+      "lesson": 28,
+      "id": "l28-source-1",
+      "reference": "㉚ تمرين 1 — اختر",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 6,
+          "text": "القاعدة الجامعة: حدد الترتيب أولًا ثم اختر الزمن."
+        }
+      ]
+    },
+    {
+      "lesson": 28,
+      "id": "l28-source-2",
+      "reference": "㉛ تمرين 2 — حدد الحدث الأول",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 4,
+          "text": "القاعدة: الفعل مع had هو الحدث الأول مهما كان موقعه في الجملة."
+        }
+      ]
+    },
+    {
+      "lesson": 28,
+      "id": "l28-source-3",
+      "reference": "㉜ تمرين 3 — صحح الأخطاء",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": []
+    },
+    {
+      "lesson": 28,
+      "id": "l28-source-4",
+      "reference": "㉝ IQ200 Challenge — John / Mary (ملاحظة منطقية)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "سؤال المصدر وإجابته محفوظان: الإجابة المورّدة A."
+        },
+        {
+          "line": 2,
+          "text": "القراءة الزمنية الدقيقة: A تعني Mary left ← John arrived، وB تعني John left ← Mary arrived."
+        },
+        {
+          "line": 3,
+          "text": "إذن لا توجد جملة تثبت حرفيًا أن «جون وصل أولًا» دون سياق إضافي — وهذا خلل في صياغة السؤال الأصلي، وقد عرضته المنصة للطالب بوسم «ملاحظة منطقية من المنصة» دون حذف السؤال أو تغيير الإجابة المورّدة."
+        },
+        {
+          "line": 4,
+          "text": "استخدم هذا التمرين لتعليم الدقة: لا نستنتج ترتيبًا لا تثبته الصيغة."
+        }
+      ]
+    },
+    {
+      "lesson": 28,
+      "id": "l28-source-5",
+      "reference": "㉞ تحدي أصعب — Sarah / Tom",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "الإجابة: B."
+        },
+        {
+          "line": 2,
+          "text": "A تعني: Tom left ← Sarah arrived (توم غادر أولًا)."
+        },
+        {
+          "line": 3,
+          "text": "B تعني: Sarah arrived ← Tom left (سارة وصلت أولًا) — وهي المطلوبة."
+        },
+        {
+          "line": 4,
+          "text": "درّب الطالب على استخراج الترتيب من الصيغة لا من ترتيب الكلمات."
+        }
+      ]
+    },
+    {
+      "lesson": 28,
+      "id": "l28-source-6",
+      "reference": "㉟ ثلاثة أحداث — مختبر Daniel",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "قبل دخول دانيال: had completed (المرحلة الأولى)."
+        },
+        {
+          "line": 2,
+          "text": "كان يحدث لحظة الدخول: were discussing."
+        },
+        {
+          "line": 3,
+          "text": "بعد ذلك: joined (المرحلة الثانية)."
+        },
+        {
+          "line": 4,
+          "text": "ناقش: لماذا entered ماضٍ بسيط؟ لأنه نقطة القصة التي نقف عندها."
+        }
+      ]
+    },
+    {
+      "lesson": 28,
+      "id": "l28-source-7",
+      "reference": "㊱ اختبار المنطق الزمني — my father read / was reading",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "«my father read the newspaper» لا تعني بالضرورة أنه كان يقرأ في تلك اللحظة — إنها حدث مكتمل."
+        },
+        {
+          "line": 2,
+          "text": "للتعبير عن نشاط مستمر لحظة الاستيقاظ: My father was reading the newspaper."
+        },
+        {
+          "line": 3,
+          "text": "الصورة الكاملة: had left (أقدم) · was preparing (مستمر) · was reading (مستمر) · woke up (الحدث الرئيسي)."
+        },
+        {
+          "line": 4,
+          "text": "هذا فرق دلالي حقيقي وليس تحسينًا أسلوبيًا."
+        }
+      ]
+    },
+    {
+      "lesson": 28,
+      "id": "l28-source-8",
+      "reference": "㊴ Boss Battle",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "الإجابة: B."
+        },
+        {
+          "line": 2,
+          "text": "was running ← النشاط كان مستمرًا."
+        },
+        {
+          "line": 3,
+          "text": "saw ← حدث وقع أثناء ذلك."
+        },
+        {
+          "line": 4,
+          "text": "realized ← حدث ذهني."
+        },
+        {
+          "line": 5,
+          "text": "had seen ← رؤية الكلب حدثت قبل لحظة الإدراك."
+        },
+        {
+          "line": 6,
+          "text": "A تفقد الاستمرار والرجوع إلى الوراء؛ C تستخدم had run و was seeing بشكل خاطئ."
+        }
+      ]
+    },
+    {
+      "lesson": 29,
+      "id": "L29-textbook-key",
+      "reason": "Teacher area has overview/notes and assessment keys, but no TEACHER_29_SOLUTIONS reference bank."
+    },
+    {
+      "lesson": 30,
+      "id": "l30-source-1",
+      "reference": "㉕ اختبار 1 — اختر الزمن",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": []
+    },
+    {
+      "lesson": 30,
+      "id": "l30-source-2",
+      "reference": "㉖ اختبار 2 — اختر حسب المعنى",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "1 → B (Ahmed was sleeping): نصف ما كان يحدث عند لحظة الوصول."
+        },
+        {
+          "line": 2,
+          "text": "2 → A (Ahmed had slept): التركيز على حدوث النوم قبل وصولي."
+        },
+        {
+          "line": 3,
+          "text": "3 → C (had been sleeping for two hours): التركيز على المدة."
+        },
+        {
+          "line": 4,
+          "text": "وجّه الطالب: الجمل العربية الثلاث متشابهة جدًا — الفرق كله في «كان ينام / كان قد نام / نائم منذ ساعتين»."
+        }
+      ]
+    },
+    {
+      "lesson": 30,
+      "id": "l30-source-3",
+      "reference": "㉜ اختبار 3 — صحح الأخطاء",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": []
+    },
+    {
+      "lesson": 30,
+      "id": "l30-source-4",
+      "reference": "㉝ السؤال الخادع",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "C — had been studying: for an hour مدة امتدت حتى نقطة ماضية."
+        },
+        {
+          "line": 2,
+          "text": "لكن بدون for an hour تصبح was studying صحيحة إذا كان التركيز على اللحظة — ناقش الحالتين."
+        }
+      ]
+    },
+    {
+      "lesson": 30,
+      "id": "l30-source-5",
+      "reference": "㉞ سؤال أصعب",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "«كانت قد أنهت قبل وصولي» → C (had finished)."
+        },
+        {
+          "line": 2,
+          "text": "«كانت في عملية الإنهاء عندما وصلت» → B (was finishing)."
+        },
+        {
+          "line": 3,
+          "text": "«كانت تعمل على الإنهاء لفترة قبل وصولي» → D (had been finishing)."
+        },
+        {
+          "line": 4,
+          "text": "A (finished) ممكنة في سياق تتابعي: وصلتُ ثم أنهت."
+        },
+        {
+          "line": 5,
+          "text": "الهدف التربوي: لا تسأل «ما الإجابة الصحيحة؟» بل «ما المعنى المقصود؟»."
+        }
+      ]
+    },
+    {
+      "lesson": 30,
+      "id": "l30-source-6",
+      "reference": "㉔ المحقق — فريق الإنقاذ",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "arrived → Past Simple · were standing → Past Continuous · had been waiting → Past Perfect Continuous · had reached → Past Perfect."
+        },
+        {
+          "line": 2,
+          "text": "التحليل: وصل الفريق، كان القرويون واقفين، كانوا ينتظرون منذ ساعات، وكانت المياه قد وصلت قبل وصول الفريق."
+        }
+      ]
+    },
+    {
+      "lesson": 30,
+      "id": "l30-source-7",
+      "reference": "㉚ Boss Battle — قصة Sam",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "was driving → PC · had finished → PP · had been working → PPC · was → PS من verb to be · rang → PS."
+        },
+        {
+          "line": 2,
+          "text": "اربطها بخط الزمن في ㉛: بدأ العمل → استمر → انتهى → بعد ساعة → كان يقود → رن الهاتف → NOW."
+        }
+      ]
+    },
+    {
+      "lesson": 30,
+      "id": "l30-source-8",
+      "reference": "㊱ القصة السينمائية — Lina",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "were searching → PC · had already locked → PP · had broken → PP · had been searching → PPC · noticed → PS · came → PS."
+        },
+        {
+          "line": 2,
+          "text": "اربطها بـ ㊲: كل زمن له وظيفة — يحرك القصة / يصف المشهد / يشرح ما قبل النقطة / يشرح نشاطًا ممتدًا."
+        }
+      ]
+    },
+    {
+      "lesson": 30,
+      "id": "l30-source-9",
+      "reference": "🚀 FINAL CHALLENGE — المختبر",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "entered → PS (وصول العالم) · were checking → PC (لحظة وصوله) · had already completed → PP (الاختبار الأول اكتمل قبله) · had been working → PPC (ثلاث ساعات تقريبًا) · stopped → PS (حدث مفاجئ)."
+        },
+        {
+          "line": 2,
+          "text": "الخلاصة: 📸 الحدث → 🎥 الخلفية → ⏪ الحدث الأقدم → ⏪🎥 النشاط الأقدم المستمر."
+        }
+      ]
+    },
+    {
+      "lesson": 31,
+      "id": "l31-source-1",
+      "reference": "㉟ المحقق — الحلول الثمانية",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": []
+    },
+    {
+      "lesson": 31,
+      "id": "l31-source-2",
+      "reference": "㊱ الاختيار الذكي — الحلول الثمانية",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 3,
+          "text": "التعليل: الأزواج الأربعة تتبادل بين وقت ماضٍ محدد (yesterday / in 2024 / last night / two days ago) وكلمة رابطة بالحاضر (already / before)."
+        },
+        {
+          "line": 4,
+          "text": "اجعل الطالب يقرأ كل زوج مرة أخرى بصوت عالٍ ويلاحظ تغيّر المعنى — ㊱ يقول: لاحظ كيف تغير المعنى."
+        }
+      ]
+    },
+    {
+      "lesson": 31,
+      "id": "l31-source-3",
+      "reference": "㊲ ㊳ IQ200 — قراءة المعنى لا القاعدة",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "Maya lost her passport → خبر عن حدث في الماضي · Maya has lost her passport → نتيجة مهمة الآن (ربما ما زال مفقودًا)."
+        },
+        {
+          "line": 2,
+          "text": "Daniel went to the library → حدث ماضٍ · Daniel has gone to the library → غالبًا هو موجود هناك الآن أو لم يعد بعد."
+        },
+        {
+          "line": 3,
+          "text": "الطائرة: I have flown on a plane (تجربة) و I flew on a plane in 2022 (حدث محدد) — كلتاهما صحيحة، والمعنى مختلف."
+        },
+        {
+          "line": 4,
+          "text": "الخلاصة التي يجب أن ينطقها الطالب: الزمن اختيار زاوية نظر، وليس مجرد قاعدة."
+        }
+      ]
+    },
+    {
+      "lesson": 31,
+      "id": "l31-source-4",
+      "reference": "㊴ Boss Challenge — أزمنة نص Lina",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "has always loved → Present Perfect · has visited → Present Perfect · has recently started → Present Perfect"
+        },
+        {
+          "line": 2,
+          "text": "joined → Past Simple · built → Past Simple · has already completed → Present Perfect"
+        },
+        {
+          "line": 3,
+          "text": "السبب: last year فترة ماضية منتهية (Past Simple) · this year فترة ما زالت مرتبطة بالحاضر (Present Perfect)."
+        }
+      ]
+    },
+    {
+      "lesson": 31,
+      "id": "l31-source-5",
+      "reference": "㊵ تحويل اليابان",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "I visited Japan in 2021. → I have visited Japan."
+        },
+        {
+          "line": 2,
+          "text": "حذفنا in 2021 لأن Present Perfect الأساسي لا يُستخدم مع وقت ماضٍ محدد ومنتهٍ مثل yesterday / last year / in 2021 / two days ago."
+        },
+        {
+          "line": 3,
+          "text": "اسأل الطالب: ماذا تغيّر في المعنى؟ صار التركيز على الخبرة لا على تاريخ الرحلة."
+        }
+      ]
+    },
+    {
+      "lesson": 31,
+      "id": "l31-source-6",
+      "reference": "㊶ for / since — الحلول الخمسة",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 2,
+          "text": "قاعدة الذهب: for + مدة · since + بداية."
+        },
+        {
+          "line": 3,
+          "text": "تدريب إضافي: اطلب من الطالب تحويل since 2018 → for + عدد سنوات، والعكس."
+        }
+      ]
+    },
+    {
+      "lesson": 31,
+      "id": "l31-source-7",
+      "reference": "㊷ التحدي النهائي — إجابات نموذجية (للقياس لا للنسخ)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 4,
+          "text": "الشرط: إجابات حقيقية من حياة الطالب — الصيغة صحيحة والمعنى شخصي."
+        }
+      ]
+    },
+    {
+      "lesson": 31,
+      "id": "l31-source-8",
+      "reference": "㊸ Final Boss — أربع جمل، أربعة معانٍ",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 5,
+          "text": "اطلب رسم خط زمني صغير لكل جملة — الرسم يكشف الفرق فورًا."
+        }
+      ]
+    },
+    {
+      "lesson": 31,
+      "id": "l31-source-9",
+      "reference": "مختبرات الدرس التفاعلية — حلول مختصرة",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 5,
+          "text": "㊸ ㊹ الخريطة: 📸 Past Simple · 🎥 Past Continuous · ⏪ Past Perfect · 🌉 Present Perfect."
+        }
+      ]
+    },
+    {
+      "lesson": 32,
+      "id": "l32-source-1",
+      "reference": "§11 · الإجابات القصيرة (المصدر)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "Have you been studying? → Yes, I have. ✅ / No, I haven't. · Has she been working? → Yes, she has. / No, she hasn't. · Have they been waiting? → Yes, they have. / No, they haven't."
+        },
+        {
+          "line": 2,
+          "text": "Yes, I have been. ❌ — خطأ متعمد في المصدر."
+        }
+      ]
+    },
+    {
+      "lesson": 32,
+      "id": "l32-source-2",
+      "reference": "§12 · Wh Questions (المصدر)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "What have you been doing? · Where have they been staying? · Why has she been crying? · How long have you been waiting? · Who has been using my computer?"
+        },
+        {
+          "line": 2,
+          "text": "Platform Explanation: في Who has been using my computer؟ الكلمة who هي الفاعل، لذلك لا يأتي has قبلها."
+        }
+      ]
+    },
+    {
+      "lesson": 32,
+      "id": "l32-source-3",
+      "reference": "§16 · مثال IQ200 (المصدر)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "A: I have written five pages. ← التركيز على النتيجة والكمية. B: I have been writing for three hours. ← التركيز على النشاط والمدة."
+        }
+      ]
+    },
+    {
+      "lesson": 32,
+      "id": "l32-source-4",
+      "reference": "§23 · الأفعال الحالية (المصدر)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "I have known him for ten years. ✅ · She has understood the problem. ✅"
+        },
+        {
+          "line": 2,
+          "text": "I have been knowing him for ten years. ❌ · She has been understanding the problem. ❌ (عادةً)."
+        }
+      ]
+    },
+    {
+      "lesson": 32,
+      "id": "l32-source-5",
+      "reference": "§27 · Grammar Detective (المصدر — 8 أخطاء)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": []
+    },
+    {
+      "lesson": 32,
+      "id": "l32-source-6",
+      "reference": "§28 · تحدي الاختيار (المصدر)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 2,
+          "text": "الشرح: العدد أو الإنجاز الواضح ← Present Perfect؛ النشاط والمدة ← Present Perfect Continuous."
+        }
+      ]
+    },
+    {
+      "lesson": 32,
+      "id": "l32-source-7",
+      "reference": "§29 · IQ200 — نفس الفعل (المصدر)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "I have repaired my bicycle → الدراجة أصبحت مُصلحة (نتيجة) · I have been repairing my bicycle → كنت أعمل على إصلاحها، وقد لا أكون انتهيت (نشاط)."
+        },
+        {
+          "line": 2,
+          "text": "المعلم يسأل الطالب: «ما الذي أريد أن أُبرزه؟» قبل «أي زمن أصعب؟»."
+        }
+      ]
+    },
+    {
+      "lesson": 32,
+      "id": "l32-source-8",
+      "reference": "§32 · Boss Challenge (المصدر — 8 جمل)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 2,
+          "text": "المصدر: «لاحظ كيف أصبح لدينا الآن أربع درجات مختلفة من الزمن في الحاضر»."
+        }
+      ]
+    },
+    {
+      "lesson": 32,
+      "id": "l32-source-9",
+      "reference": "§33 · Final IQ200 (المصدر — فقرة Adam)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "has studied → Present Perfect · has built → Present Perfect (six robots) · has been working → Present Perfect Continuous (since January) · has been testing → Present Perfect Continuous (every afternoon)."
+        },
+        {
+          "line": 2,
+          "text": "انظر ملاحظة التصنيف في قسم الملاحظات: has studied for three years."
+        }
+      ]
+    },
+    {
+      "lesson": 32,
+      "id": "l32-source-10",
+      "reference": "§34 · Final Boss (المصدر — قصة Maya)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "She has been studying science for several months. · She has read eight books so far. · She has been working on her project since January. · She has completed most of the experiments. · She is tired because she has been working all day."
+        }
+      ]
+    },
+    {
+      "lesson": 32,
+      "id": "l32-source-11",
+      "reference": "§31 · since و for (المصدر)",
+      "reason": "Source page and original question text not mapped in teacher reference bank.",
+      "unmappedLines": [
+        {
+          "line": 1,
+          "text": "المصدر: I have been studying since three hours. ❌ ← الصحيح: I have been studying for three hours. ✅ · since 5:00 نقطة بداية."
+        }
+      ]
+    }
+  ]
+}

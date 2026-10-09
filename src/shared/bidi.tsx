@@ -44,7 +44,7 @@ const AR_RUN = new RegExp(`[${AR_CLASS}](?:[${AR_CLASS} ]*[${AR_CLASS}])?`, "g")
  * مادة المقطع الإنجليزي المتصل (بما فيه المسافات والفواصل والرموز المعتادة).
  * الأقواس تُعالَج بعدّ التوازن في tryPair لأن القوس المفتوح الخارجي لا يُضم.
  */
-const ENGLISH_MATERIAL = /[A-Za-z0-9 '’.&+\/#\-=:–—→←|·?!,;\u2300-\u23FF\u2460-\u24FF\u2600-\u27BF\u3200-\u32FF«»“”]/;
+const ENGLISH_MATERIAL = /[A-Za-z0-9 "'’.&+\/#\-=:–—→←|·?!,;\u2300-\u23FF\u2460-\u24FF\u2600-\u27BF\u3200-\u32FF«»“”]/;
 const HAS_LATIN_LETTER = /[A-Za-z]/;
 /** الفواصل الصريحة التي تربط الإنجليزية بعبارتها العربية. */
 const PAIR_SEPARATORS = new Set(["=", ":", "–", "—", "-", "→", "←", "/", "|", "·", "(", ".", "!", "?", "،", ",", "؛", ";"]);
@@ -257,7 +257,9 @@ function tryPair(text: string, s: number, floor: number) {
     ls--;
   }
   // لا تُضم علامات الترقيم والمسافات البادئة إلى العبارة الإنجليزية
-  while (ls < enEnd && !/[A-Za-z0-9(]/.test(text[ls])) ls++;
+  // A grammatical suffix prefix (-ed/-ING) is part of the English token,
+  // not punctuation belonging to the preceding Arabic clause.
+  while (ls < enEnd && !/[A-Za-z0-9("'«“]/.test(text[ls]) && !(text[ls] === "-" && /[A-Za-z]/.test(text[ls + 1] ?? ""))) ls++;
   const en = text.slice(ls, enEnd);
   if (!HAS_LATIN_LETTER.test(en) || AR_CHAR.test(en)) return null;
   return { en, enStart: ls, lead: text.slice(enEnd, s) };
@@ -284,7 +286,16 @@ function pushLatin(out: MixedSegment[], s: string) {
     if (HAS_LATIN_LETTER.test(head) && !AR_CHAR.test(head)) out.push({ kind: "en", text: head });
     else out.push({ kind: "text", text: head });
   }
-  if (tail !== "") out.push({ kind: "text", text: tail });
+  if (tail !== "") {
+    // Only the unmatched enclosure belongs to the surrounding RTL context.
+    // English after it must still be segmented: (a أو an) previously left
+    // `a` raw, preventing the alternatives pass from grouping both choices.
+    const boundary = /^(\s*[()[\]{}])([\s\S]*)$/.exec(tail);
+    if (boundary) {
+      out.push({ kind: "text", text: boundary[1] });
+      pushLatin(out, boundary[2]);
+    } else out.push({ kind: "text", text: tail });
+  }
 }
 
 /**
@@ -298,17 +309,17 @@ function pushLatin(out: MixedSegment[], s: string) {
  * الأقواس المتوازنة داخل المقطع («(see Lesson 5)») لا تُمَس.
  */
 function splitUnbalancedParens(s: string): { head: string; tail: string } {
-  let depth = 0;
+  const stack: { char: string; at: number }[] = [];
+  const closing: Record<string, string> = { ")": "(", "]": "[", "}": "{" };
   for (let i = 0; i < s.length; i++) {
     const c = s[i];
-    if (c === "(") depth++;
-    else if (c !== ")") continue;
-    else if (--depth < 0) return cutAt(s, i);
+    if ("([{".includes(c)) stack.push({ char: c, at: i });
+    else if (closing[c]) {
+      if (stack.at(-1)?.char !== closing[c]) return cutAt(s, i);
+      stack.pop();
+    }
   }
-  if (depth > 0) {
-    const open = /\(\s*$/.exec(s);
-    if (open) return cutAt(s, open.index);
-  }
+  if (stack.length) return cutAt(s, stack[0].at);
   return { head: s, tail: "" };
 }
 
@@ -320,15 +331,43 @@ function cutAt(s: string, at: number): { head: string; tail: string } {
 }
 
 /** يعرض النص المختلط: كل إنجليزية معزولة LTR، وكل زوج «English = Arabic» غلاف LTR واحد. */
-export function LatinRuns({ text }: { text: string }) {
+export function LatinRuns({ text, marked = false }: { text: string; marked?: boolean }) {
+  // Parse presentation markup before direction segmentation: punctuation and
+  // multi-word phrases must share the same isolate, even across a highlight.
+  const highlights: { start: number; end: number }[] = [];
+  let removed = 0;
+  const plain = marked ? text.replace(/\[\[(.+?)\]\]/g, (match, content: string, offset: number) => {
+    highlights.push({ start: offset - removed, end: offset - removed + content.length });
+    removed += match.length - content.length;
+    return content;
+  }) : text;
+  let consumed = 0;
+  const decorate = (value: string): ReactNode => {
+    if (!highlights.length || !value) return value;
+    const start = plain.indexOf(value, consumed);
+    if (start < 0) return value;
+    consumed = start + value.length;
+    const pieces: ReactNode[] = [];
+    let from = 0;
+    for (const range of highlights) {
+      const left = Math.max(start, range.start) - start;
+      const right = Math.min(consumed, range.end) - start;
+      if (right <= left) continue;
+      pieces.push(value.slice(from, left));
+      pieces.push(<span key={range.start} className="rounded-lg bg-slate-900/5 px-1 font-bold">{value.slice(left, right)}</span>);
+      from = right;
+    }
+    pieces.push(value.slice(from));
+    return pieces;
+  };
   return (
     <>
-      {splitMixedText(text).map((seg, i) => {
-        if (seg.kind === "text") return <Fragment key={i}>{seg.text}</Fragment>;
+      {splitMixedText(plain).map((seg, i) => {
+        if (seg.kind === "text") return <Fragment key={i}>{decorate(seg.text)}</Fragment>;
         if (seg.kind === "en") {
           return (
             <span key={i} dir="ltr" className="font-en">
-              {seg.text}
+              {decorate(seg.text)}
             </span>
           );
         }
@@ -340,43 +379,43 @@ export function LatinRuns({ text }: { text: string }) {
                   {j > 0 && (
                     <Fragment>
                       {" "}
-                      <span dir="rtl">{seg.connectors[j - 1]}</span>{" "}
+                      <span dir="rtl">{decorate(seg.connectors[j - 1])}</span>{" "}
                     </Fragment>
                   )}
                   <span dir="ltr" className="font-en">
-                    {item}
+                    {decorate(item)}
                   </span>
                 </Fragment>
               ))}
               {seg.gloss && (
                 <>
-                  {seg.gloss.lead}
+                  {decorate(seg.gloss.lead)}
                   {seg.gloss.arabic.map((a, j) => (
                     <Fragment key={j}>
                       {j > 0 && seg.gloss!.between[j - 1]}
-                      <span dir="rtl">{a}</span>
+                      <span dir="rtl">{decorate(a)}</span>
                     </Fragment>
                   ))}
-                  {seg.gloss.trail}
+                  {decorate(seg.gloss.trail)}
                 </>
               )}
-              {seg.trail && <span dir="rtl">{seg.trail}</span>}
+              {seg.trail && <span dir="rtl">{decorate(seg.trail)}</span>}
             </span>
           );
         }
         return (
           <span key={i} dir="ltr" className="ltr-pair">
             <span dir="ltr" className="font-en">
-              {seg.en}
+              {decorate(seg.en)}
             </span>
-            {seg.lead}
+            {decorate(seg.lead)}
             {seg.arabic.map((a, j) => (
               <Fragment key={j}>
                 {j > 0 && seg.between[j - 1]}
-                <span dir="rtl">{a}</span>
+                <span dir="rtl">{decorate(a)}</span>
               </Fragment>
             ))}
-            {seg.trail}
+            {decorate(seg.trail)}
           </span>
         );
       })}
@@ -399,7 +438,7 @@ export function EnAr({
   arClassName = "",
 }: {
   en: ReactNode;
-  ar?: string;
+  ar?: ReactNode;
   /** فاصل اختياري بين الإنجليزية والعربية (مثل «—» أو «·») يبقى داخل المجموعة LTR. */
   sep?: string;
   className?: string;
@@ -414,7 +453,7 @@ export function EnAr({
       {sep && <span>{sep}</span>}
       {ar && (
         <span dir="rtl" className={arClassName}>
-          <LatinRuns text={ar} />
+          {typeof ar === "string" ? <LatinRuns text={ar} /> : ar}
         </span>
       )}
     </span>

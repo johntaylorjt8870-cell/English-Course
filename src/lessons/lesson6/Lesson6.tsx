@@ -1,3 +1,6 @@
+import { Verdict as SharedVerdict } from "../../shared/lessonKit";
+import { En as SharedEn } from "../../shared/lessonKit";
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -33,26 +36,11 @@ const RS: Record<Role6, { chip: string; solid: string; text: string }> = {
 };
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <span className={`ltr font-en ${className}`}>{children}</span>;
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const parts = text.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((x, i) => {
-        const m = x.match(/^\[\[(.+)\]\]$/);
-        if (m) {
-          return (
-            <span key={i} dir="ltr" className="ltr font-en mx-1 rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
-              {m[1]}
-            </span>
-          );
-        }
-        return <LatinRuns key={i} text={x} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function PartsLine({ parts, q, size = "md", label = true }: { parts: Part6[]; q?: boolean; size?: "sm" | "md" | "lg"; label?: boolean }) {
@@ -98,7 +86,7 @@ function Frame({ mascot, step, badge, title, lead, children, tip }: { mascot: st
         {mascot}
       </div>
       <div className="flex items-center gap-2.5">
-        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-teal-600 text-lg font-bold text-white">{step}</span>}
+        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-teal-600 text-lg font-bold text-white">{mixedText(step)}</span>}
         {badge && <span className="rounded-full bg-teal-100 px-3.5 py-1.5 text-sm font-bold text-teal-800"><LatinRuns text={badge} /></span>}
       </div>
       <h2 className="font-head mt-3 max-w-[88%] text-3xl font-bold leading-snug text-slate-900 md:text-[2.05rem]"><LatinRuns text={title} /></h2>
@@ -107,7 +95,7 @@ function Frame({ mascot, step, badge, title, lead, children, tip }: { mascot: st
       {tip && (
         <div className="mt-6 flex items-center gap-3 rounded-2xl bg-gradient-to-l from-teal-700 to-emerald-700 p-4 text-white">
           <span className="text-2xl">🦉</span>
-          <span className="text-base font-semibold md:text-lg">{tip}</span>
+          <span className="text-base font-semibold md:text-lg">{mixedText(tip)}</span>
         </div>
       )}
     </section>
@@ -123,15 +111,7 @@ function Note({ emoji, text }: { emoji: string; text: string }) {
   );
 }
 
-function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; why?: string }) {
-  return (
-    <div className={`flex flex-wrap items-center gap-3 rounded-3xl border-2 p-4 ${ok ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`}>
-      <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-base font-bold text-white ${ok ? "bg-emerald-500" : "bg-rose-500"}`}>{ok ? "✓" : "✕"}</span>
-      <EnAr en={en} ar={ar} enClassName={`text-xl font-bold ${ok ? "text-emerald-900" : "text-rose-800 line-through decoration-rose-300"}`} arClassName="text-base text-slate-500" />
-      {why && <span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}><LatinRuns text={why} /></span>}
-    </div>
-  );
-}
+function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; why?: string }) { return <SharedVerdict ok={ok} en={en} ar={ar} why={why} />; }
 
 // ============================================================
 // تفاعليات
@@ -149,7 +129,7 @@ function DayTimeline() {
             onClick={() => setI(di)}
             className={`rounded-xl border-2 px-3 py-1.5 text-sm font-bold transition active:scale-95 ${di === i ? "border-transparent bg-teal-600 text-white" : "border-slate-200 bg-white text-slate-600 hover:border-teal-300"}`}
           >
-            {di + 1} · {d.ar}
+            {di + 1} · <LatinRuns text={d.ar ?? ""} />
           </button>
         ))}
       </div>
@@ -160,10 +140,10 @@ function DayTimeline() {
           label={false}
         />
         <div className="mt-2 text-lg text-slate-500">
-          أنا {st.ar} {st.time ? st.time.replace("at ", "الساعة ") : ""}.
+          أنا <LatinRuns text={st.ar ?? ""} /> {st.time ? st.time.replace("at ", "الساعة ") : ""}.
         </div>
       </div>
-      <div className="mt-3 text-center text-sm font-bold text-teal-700">كل هذه الجمل Present Simple لأنها تتكرر كل يوم ✅</div>
+      <div className="mt-3 text-center text-sm font-bold text-teal-700"><LatinRuns text={"كل هذه الجمل Present Simple لأنها تتكرر كل يوم ✅"} /></div>
     </div>
   );
 }
@@ -269,7 +249,7 @@ function PronounTabs() {
           <div key={v.base} className="flex flex-wrap items-center gap-3 rounded-2xl bg-white px-4 py-2.5">
             <PartsLine parts={[{ text: s.en, role: "s" }, { text: verbFor(v.base, s.third), role: "v" }, { text: "…", role: "o" }]} size="sm" label={false} />
             <span className="mr-auto text-sm text-slate-500">
-              {s.ar} {arVerb(v.ar, s.en)}
+              <LatinRuns text={s.ar ?? ""} /> {arVerb(v.ar, s.en)}
             </span>
           </div>
         ))}
@@ -328,7 +308,7 @@ function RuleTabs() {
         ))}
       </div>
       <div key={t} className="pop">
-        <div className="mb-3 text-center font-bold text-slate-700">{data.title}</div>
+        <div className="mb-3 text-center font-bold text-slate-700">{mixedText(data.title)}</div>
         <div className="grid gap-2 sm:grid-cols-2">
           {data.rows.map(([a, b]) => (
             <div key={a} dir="ltr" className="flex items-center justify-center gap-3 rounded-2xl bg-white px-3 py-2">
@@ -378,7 +358,7 @@ function Conj() {
       <div key={`${si}-${vi}`} className="pop mt-4 rounded-3xl border-2 border-slate-200 bg-white p-5 text-center">
         <PartsLine parts={[{ text: s.en, role: "s" }, { text: form, role: "v" }]} size="lg" />
         <div className="mt-2 text-lg text-slate-500">
-          {s.ar} {arVerb(v.ar, s.en)}.
+          <LatinRuns text={s.ar ?? ""} /> {arVerb(v.ar, s.en)}.
         </div>
         <div className="mt-3 flex flex-wrap justify-center gap-2">
           {s.third ? (
@@ -400,8 +380,8 @@ function Facts() {
       {FACTS.map((f, i) => (
         <div key={i} className={`pop pop-${i + 1} rounded-3xl border-2 border-emerald-200 bg-emerald-50/60 p-4`}>
           <En className="text-xl font-extrabold text-slate-800">{f.en}</En>
-          <div className="mt-1 text-slate-600">{f.ar}</div>
-          <div className="mt-2 inline-block rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">حقيقة عامة · Fact</div>
+          <div className="mt-1 text-slate-600"><LatinRuns text={f.ar ?? ""} /></div>
+          <div className="mt-2 inline-block rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700"><LatinRuns text={"حقيقة عامة · Fact"} /></div>
         </div>
       ))}
     </div>
@@ -429,7 +409,7 @@ function IQGroups() {
   return (
     <div className="grid gap-3 md:grid-cols-2">
       <div className="rounded-3xl border-2 border-sky-200 bg-sky-50 p-5">
-        <div className="font-head text-xl font-bold text-sky-800">مجموعة DON'T CHANGE</div>
+        <div className="font-head text-xl font-bold text-sky-800"><LatinRuns text={"مجموعة DON'T CHANGE"} /></div>
         <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row mt-2 flex flex-wrap gap-1.5">
           {["I", "You", "We", "They"].map((x) => (
             <span key={x} className="font-en rounded-xl bg-sky-500 px-3 py-1 text-lg font-extrabold text-white">
@@ -447,7 +427,7 @@ function IQGroups() {
         <div className="mt-2 text-sm font-bold text-sky-700">الفعل يبقى كما هو</div>
       </div>
       <div className="rounded-3xl border-2 border-teal-200 bg-teal-50 p-5">
-        <div className="font-head text-xl font-bold text-teal-800">مجموعة S</div>
+        <div className="font-head text-xl font-bold text-teal-800"><LatinRuns text={"مجموعة S"} /></div>
         <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row mt-2 flex flex-wrap gap-1.5">
           {["He", "She", "It"].map((x) => (
             <span key={x} className="font-en rounded-xl bg-teal-600 px-3 py-1 text-lg font-extrabold text-white">
@@ -462,7 +442,7 @@ function IQGroups() {
             </En>
           ))}
         </div>
-        <div className="mt-2 text-sm font-bold text-teal-700">الفعل يأخذ s غالبًا</div>
+        <div className="mt-2 text-sm font-bold text-teal-700"><LatinRuns text={"الفعل يأخذ s غالبًا"} /></div>
       </div>
     </div>
   );
@@ -495,7 +475,7 @@ function ChooseEx({ ex }: { ex: Extract<Exercise6, { type: "choose" }> }) {
                 <En className="text-xl font-bold text-slate-800">{it.o}</En>
               </div>
             </div>
-            <div className="mt-1.5 pr-11 text-xs text-slate-400">{it.ar}</div>
+            <div className="mt-1.5 pr-11 text-xs text-slate-400"><LatinRuns text={it.ar ?? ""} /></div>
             <div className="mt-2 flex gap-1.5 pr-11">
               {it.opts.map((o, oi) => (
                 <button
@@ -674,7 +654,7 @@ function OrderRow({ n, item }: { n: number; item: { words: string[]; correct: st
         ))}
         {shown.length > 0 && <span className="font-en text-xl font-bold text-slate-300">.</span>}
       </div>
-      {finished && <div className="tada mt-2 font-bold text-emerald-700">🎉 {item.ar}</div>}
+      {finished && <div className="tada mt-2 font-bold text-emerald-700">🎉 <LatinRuns text={item.ar ?? ""} /></div>}
       {bad && <div className="mt-2 text-sm font-bold text-rose-600">✕ ليس بعد — كلمة التكرار تأتي قبل الفعل</div>}
     </div>
   );
@@ -795,7 +775,7 @@ function Builder() {
       <div key={`${ai}-${vi}-${oi}`} className="pop rounded-3xl border-2 border-slate-200 bg-white p-5 text-center">
         <PartsLine parts={[{ text: "I", role: "s" }, { text: a.en, role: "adv" }, { text: v.base, role: "v" }, { text: o.en, role: "o" }]} size="lg" />
         <div className="mt-2 text-lg text-slate-500">
-          أنا {a.ar} {arVerb(v.ar, "I")} {o.ar}.
+          أنا <LatinRuns text={a.ar ?? ""} /> {arVerb(v.ar, "I")} <LatinRuns text={o.ar ?? ""} />.
         </div>
         <div className="mt-2 text-xs font-bold text-teal-700"><LatinRuns text="مع I الفعل يبقى بدون s ✅ · كلمة التكرار قبل الفعل ✅" /></div>
       </div>
@@ -912,10 +892,8 @@ function Closing({ onExit }: { onExit: () => void }) {
       <div className="pointer-events-none absolute -bottom-16 -right-16 h-64 w-64 rounded-full bg-fuchsia-500/25 blur-3xl" />
       <div className="relative">
         <div className="pop text-6xl anim-drift">⏭️</div>
-        <h2 className="pop pop-1 font-head mt-3 text-3xl font-bold md:text-4xl">الدرس 7 — الجزء الثاني من Present Simple</h2>
-        <p className="pop pop-2 mx-auto mt-3 max-w-xl text-lg text-slate-300">
-          والأهم من ناحية الاستخدام: النفي بـ <En className="font-bold text-teal-300">do / does</En> + السؤال بـ <En className="font-bold text-teal-300">Do / Does</En> + الإجابات القصيرة.
-        </p>
+        <h2 className="pop pop-1 font-head mt-3 text-3xl font-bold md:text-4xl"><LatinRuns text={"الدرس 7 — الجزء الثاني من Present Simple"} /></h2>
+        <p className="pop pop-2 mx-auto mt-3 max-w-xl text-lg text-slate-300"><LatinRuns text={"والأهم من ناحية الاستخدام: النفي بـ [[do / does]] + السؤال بـ [[Do / Does]] + الإجابات القصيرة."} marked /></p>
         <div className="pop pop-3 mt-8 flex flex-wrap justify-center gap-3">
           <button onClick={onExit} className="rounded-xl bg-white px-5 py-2.5 font-bold text-slate-900 shadow transition hover:bg-slate-100">
             جميع الدروس
@@ -1138,7 +1116,7 @@ export default function Lesson6({ onExit }: { onExit: () => void }) {
             </button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500">
-                {slide.section} · <span className="text-slate-800"><LatinRuns text={slideTitle(slide)} /></span>
+                {mixedText(slide.section)} · <span className="text-slate-800"><LatinRuns text={slideTitle(slide)} /></span>
               </div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
                 <div className="h-full rounded-full bg-gradient-to-l from-teal-500 via-fuchsia-400 to-sky-500 transition-all duration-500" style={{ width: `${progress}%` }} />

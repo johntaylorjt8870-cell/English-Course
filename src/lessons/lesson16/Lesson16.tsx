@@ -1,3 +1,5 @@
+import { En as SharedEn } from "../../shared/lessonKit";
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -58,31 +60,11 @@ import { LatinRuns } from "../../shared/bidi";
 // ============================================================
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
-      {children}
-    </span>
-  );
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const clean = text.replace(/\*\*/g, "");
-  const parts = clean.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((part, i) => {
-        const marked = part.match(/^\[\[(.+)\]\]$/);
-        if (marked) {
-          return (
-            <span key={i} dir="ltr" style={{ direction: "ltr" }} className="ltr font-en rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
-              {marked[1]}
-            </span>
-          );
-        }
-        return <LatinRuns key={i} text={part} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function TextBlock({ text, className = "" }: { text: string; className?: string }) {
@@ -121,11 +103,11 @@ function Frame({ mascot, step, badge, title, lead, children, tip, sourceHeading 
     <section dir="rtl" className="relative rounded-[1.75rem] border-2 border-slate-900/[0.05] bg-white p-6 shadow-[0_14px_44px_-20px_rgba(20,184,166,0.18)] md:p-9">
       <div className="pointer-events-none absolute -left-2 top-4 select-none text-4xl anim-drift md:text-5xl" aria-hidden>{mascot}</div>
       <div className="flex flex-wrap items-center gap-2.5">
-        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-teal-600 text-lg font-bold text-white">{step}</span>}
+        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-teal-600 text-lg font-bold text-white">{mixedText(step)}</span>}
         {badge && <span className="rounded-full bg-teal-100 px-3.5 py-1.5 text-sm font-bold text-teal-800"><Rich text={badge} /></span>}
       </div>
       {sourceHeading && <div className="mt-3 rounded-xl bg-slate-50 px-3 py-2 text-xs font-bold text-slate-500"><Rich text={sourceHeading} /></div>}
-      <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{title}</h2>
+      <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{mixedText(title)}</h2>
       {lead && <div className="mt-2 max-w-[92%] text-lg text-slate-500 md:text-xl"><Rich text={lead} /></div>}
       <div className="mt-6 space-y-3.5">{children}</div>
       {tip && <div className="mt-6 flex items-center gap-3 rounded-2xl bg-gradient-to-l from-teal-600 to-emerald-600 p-4 text-white"><span className="text-2xl">🦉</span><span className="text-base font-semibold md:text-lg"><Rich text={tip} /></span></div>}
@@ -206,7 +188,7 @@ function ExampleGridView({ items }: { items: { en: string; ar: string }[] }) {
       {items.map((it, i) => (
         <div key={i} className="rounded-2xl border-2 border-slate-100 bg-white p-3 text-center">
           <En className="block text-lg font-extrabold text-slate-900">{it.en}</En>
-          <div dir="rtl" className="mt-1 text-sm font-bold text-slate-500">{it.ar}</div>
+          <div dir="rtl" className="mt-1 text-sm font-bold text-slate-500"><LatinRuns text={it.ar ?? ""} /></div>
         </div>
       ))}
     </div>
@@ -220,7 +202,7 @@ function ItsAlarm() {
   return (
     <div className="grid gap-3">
       <div className="rounded-3xl border-2 border-rose-200 bg-rose-50 p-4">
-        <div className="mb-3 text-center text-sm font-bold text-rose-700">🚨 Grammar Alarm — حرف واحد يغيّر المعنى</div>
+        <div className="mb-3 text-center text-sm font-bold text-rose-700"><LatinRuns text={"🚨 Grammar Alarm — حرف واحد يغيّر المعنى"} /></div>
         <div className="grid gap-3 md:grid-cols-2">
           <div className="rounded-2xl border-2 border-emerald-200 bg-white p-3">
             <En className="block text-center text-xl font-black text-emerald-700">its</En>
@@ -228,7 +210,7 @@ function ItsAlarm() {
           </div>
           <div className="rounded-2xl border-2 border-violet-200 bg-white p-3">
             <En className="block text-center text-xl font-black text-violet-700">it's</En>
-            <div dir="rtl" className="mt-1 text-center text-sm font-bold text-slate-600">= اختصار لـ it is</div>
+            <div dir="rtl" className="mt-1 text-center text-sm font-bold text-slate-600"><LatinRuns text={"= اختصار لـ it is"} /></div>
           </div>
         </div>
       </div>
@@ -361,7 +343,7 @@ function FamilyBoard() {
             }`}
           >
             <En className="block text-lg font-extrabold text-slate-900">{item.en}</En>
-            <div dir="rtl" className="mt-1 text-sm font-bold text-slate-500">{item.ar}</div>
+            <div dir="rtl" className="mt-1 text-sm font-bold text-slate-500"><LatinRuns text={item.ar ?? ""} /></div>
             {isSel && (
               <div dir="ltr" className="mt-2 rounded-xl bg-teal-100 px-2 py-1 text-xs font-bold text-teal-700">
                 Owner: {possMap[possAdj] || possAdj} → {possAdj}
@@ -404,7 +386,7 @@ function GameBoard() {
                         si === 0 ? "bg-sky-100 text-sky-800" :
                         si < item.chain.length - 1 ? "bg-violet-100 text-violet-800" :
                         "bg-emerald-100 text-emerald-800"
-                      }`}>{step}</span>
+                      }`}>{mixedText(step)}</span>
                     </span>
                   ))}
                 </div>
@@ -483,13 +465,13 @@ function DogExperiment() {
         {(view === "its" || view === "both") && (
           <div className="rounded-2xl border-2 border-teal-200 bg-white p-3">
             <En className="block text-center text-lg font-black text-teal-700">Its name is Max.</En>
-            <div dir="rtl" className="mt-2 text-center text-sm font-bold text-slate-500">its → الاسم يعود إلى dog (الكلب يملك اسمًا)</div>
+            <div dir="rtl" className="mt-2 text-center text-sm font-bold text-slate-500"><LatinRuns text={"its → الاسم يعود إلى dog (الكلب يملك اسمًا)"} /></div>
           </div>
         )}
         {(view === "her" || view === "both") && (
           <div className="rounded-2xl border-2 border-amber-200 bg-white p-3">
             <En className="block text-center text-lg font-black text-amber-700">Sara loves her dog.</En>
-            <div dir="rtl" className="mt-2 text-center text-sm font-bold text-slate-500">her → الكلب ملك Sara (سارة تملك الكلب)</div>
+            <div dir="rtl" className="mt-2 text-center text-sm font-bold text-slate-500"><LatinRuns text={"her → الكلب ملك Sara (سارة تملك الكلب)"} /></div>
           </div>
         )}
       </div>
@@ -664,7 +646,7 @@ function Level4Ex() {
                   <div className="text-sm font-bold text-slate-500">صاحب الشيء: <En>{item.owner}</En></div>
                 </div>
                 <En className="block rounded-xl border-2 border-emerald-200 bg-emerald-50 p-2 text-base font-black text-emerald-800">{item.correct}</En>
-                <div className="text-sm font-bold text-teal-700">{item.explanation}</div>
+                <div className="text-sm font-bold text-teal-700"><LatinRuns text={item.explanation ?? ""} /></div>
               </div>
             )}
           </div>
@@ -685,7 +667,7 @@ function Level5Ex() {
   return (
     <div className="space-y-4">
       <div className="rounded-3xl border-2 border-teal-200 bg-gradient-to-br from-teal-50 to-emerald-50 p-4">
-        <div className="mb-2 text-center text-sm font-bold text-teal-700">🧠 Grammar Scanner — حلل الجملة</div>
+        <div className="mb-2 text-center text-sm font-bold text-teal-700"><LatinRuns text={"🧠 Grammar Scanner — حلل الجملة"} /></div>
         <div dir="ltr" className="flex flex-wrap items-center justify-center gap-3">
           {SENTENCE_ANALYSIS_31.sentence.split(" ").map((word, i) => {
             const clean = word.replace(".", "");
@@ -781,7 +763,7 @@ function DetectiveEx() {
   return (
     <div className="space-y-4">
       <div className="rounded-3xl border-2 border-indigo-200 bg-gradient-to-br from-indigo-50 to-violet-50 p-4">
-        <div className="mb-2 text-center text-sm font-bold text-indigo-700">🕵️ Grammar Detective — اقرأ النص:</div>
+        <div className="mb-2 text-center text-sm font-bold text-indigo-700"><LatinRuns text={"🕵️ Grammar Detective — اقرأ النص:"} /></div>
         <div dir="ltr" className="rounded-2xl border-2 border-indigo-100 bg-white p-4 text-lg font-bold leading-relaxed text-slate-900">
           <En>{DETECTIVE_PASSAGE_16}</En>
         </div>
@@ -807,7 +789,7 @@ function DetectiveEx() {
               {isRevealed && (
                 <div className="mt-3 space-y-1 pr-11">
                   <En className="block rounded-xl bg-emerald-100 px-3 py-2 text-lg font-black text-emerald-800">{q.answer}</En>
-                  <div className="text-sm font-bold text-teal-700">{q.explanation}</div>
+                  <div className="text-sm font-bold text-teal-700"><LatinRuns text={q.explanation ?? ""} /></div>
                 </div>
               )}
             </div>
@@ -824,7 +806,7 @@ function IQ200Ex() {
   return (
     <div className="space-y-4">
       <div className="rounded-3xl border-2 border-fuchsia-200 bg-gradient-to-br from-fuchsia-50 to-pink-50 p-4">
-        <div className="mb-2 text-center text-sm font-bold text-fuchsia-700">🚀 IQ200 — ملكيتان في جملة واحدة</div>
+        <div className="mb-2 text-center text-sm font-bold text-fuchsia-700"><LatinRuns text={"🚀 IQ200 — ملكيتان في جملة واحدة"} /></div>
         <div dir="ltr" className="rounded-2xl border-2 border-fuchsia-100 bg-white p-4 text-center text-xl font-black text-slate-900">
           <En>{IQ200_16.sentence}</En>
         </div>
@@ -1004,7 +986,7 @@ function Cover() {
   return (
     <div className="rounded-[2rem] border-2 border-teal-200 bg-gradient-to-br from-teal-600 to-emerald-700 p-8 text-white shadow-xl md:p-12">
       <div className="text-7xl anim-float">🏠</div>
-      <h1 className="font-head mt-4 text-3xl font-bold md:text-5xl">الدرس 16: Possessive Adjectives</h1>
+      <h1 className="font-head mt-4 text-3xl font-bold md:text-5xl"><LatinRuns text={"الدرس 16: Possessive Adjectives"} /></h1>
       <div className="mt-2 text-xl font-bold text-teal-100">صفات الملكية</div>
       <div className="mt-6 rounded-2xl bg-white/10 p-5 text-lg leading-relaxed text-teal-50">
         <Rich text={COVER_PLAN_16} />
@@ -1018,7 +1000,7 @@ function Cover() {
           </div>
         ))}
       </div>
-      <div className="mt-6 rounded-xl bg-white/10 p-3 text-center text-sm font-bold text-teal-100">🔎 THE OWNERSHIP DETECTIVE — من صاحب الشيء؟</div>
+      <div className="mt-6 rounded-xl bg-white/10 p-3 text-center text-sm font-bold text-teal-100"><LatinRuns text={"🔎 THE OWNERSHIP DETECTIVE — من صاحب الشيء؟"} /></div>
     </div>
   );
 }
@@ -1148,7 +1130,7 @@ function Roadmap() {
             <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-xl text-sm font-bold text-white ${"here" in it && it.here ? "bg-teal-600" : "bg-slate-500"}`}>{it.n}</span>
             <div>
               <div dir="ltr" className={`font-en text-sm font-bold ${"here" in it && it.here ? "text-teal-900" : "text-slate-700"}`}>{it.en}</div>
-              <div className="text-xs font-bold text-slate-500">{it.ar}</div>
+              <div className="text-xs font-bold text-slate-500"><LatinRuns text={it.ar ?? ""} /></div>
             </div>
           </div>
         ))}
@@ -1170,7 +1152,7 @@ function Closing({ onExit }: { onExit: () => void }) {
       <div className="mt-4 rounded-2xl bg-white/10 p-4"><Rich text={ROADMAP_16_NEXT} /></div>
       <div className="mt-7 flex flex-wrap gap-3">
         <button onClick={onExit} className="rounded-xl bg-white px-5 py-3 font-bold text-teal-700 transition hover:bg-teal-50">← جميع الدروس</button>
-        <span className="rounded-xl border-2 border-white/40 px-5 py-3 font-bold text-white/80">الدرس 17 قريباً → Possessive Pronouns</span>
+        <span className="rounded-xl border-2 border-white/40 px-5 py-3 font-bold text-white/80"><LatinRuns text={"الدرس 17 قريباً → Possessive Pronouns"} /></span>
       </div>
     </div>
   );
@@ -1255,7 +1237,7 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
               return (
                 <button key={index} onClick={() => { setI(index); onClose?.(); }} className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${active ? "bg-teal-600 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}>
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/25" : "bg-slate-100"}`}>{index + 1}</span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[index])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[index]))}</span>
                   <span className="mr-auto text-base">{SLIDES[index].mascot}</span>
                 </button>
               );
@@ -1301,7 +1283,7 @@ export default function Lesson16({ onExit }: { onExit: () => void }) {
           <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
             <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border-2 border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس">☰</button>
             <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-bold text-slate-500"><Rich text={`${slide.section} · `} /><span className="text-slate-800"><Rich text={slideTitle(slide)} /></span></div>
+              <div className="truncate text-sm font-bold text-slate-500"><Rich text={`${slide.section} · ${slideTitle(slide)}`} /></div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80"><div className="h-full rounded-full bg-gradient-to-l from-teal-600 via-emerald-500 to-cyan-500 transition-all duration-500" style={{ width: `${progress}%` }} /></div>
             </div>
             <span className="rounded-lg bg-white px-3 py-1 text-sm font-bold text-slate-500 shadow-sm">{index + 1} / {total}</span>

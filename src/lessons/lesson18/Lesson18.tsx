@@ -1,3 +1,6 @@
+import { En as SharedEn } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -63,31 +66,11 @@ import { LatinRuns } from "../../shared/bidi";
 // ============================================================
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
-      {children}
-    </span>
-  );
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const clean = text.replace(/\*\*/g, "");
-  const parts = clean.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((part, i) => {
-        const marked = part.match(/^\[\[(.+)\]\]$/);
-        if (marked) {
-          return (
-            <span key={i} dir="ltr" style={{ direction: "ltr" }} className="ltr font-en rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
-              {marked[1]}
-            </span>
-          );
-        }
-        return <LatinRuns key={i} text={part} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function TextBlock({ text, className = "" }: { text: string; className?: string }) {
@@ -176,7 +159,7 @@ function Frame({
       <div className="flex flex-wrap items-center gap-2.5">
         {step && (
           <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-teal-600 text-lg font-bold text-white">
-            {step}
+            {mixedText(step)}
           </span>
         )}
         {badge && (
@@ -191,7 +174,7 @@ function Frame({
         </div>
       )}
       <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">
-        {title}
+        {mixedText(title)}
       </h2>
       {lead && (
         <div className="mt-2 max-w-[92%] text-lg text-slate-500 md:text-xl">
@@ -232,14 +215,7 @@ function LabPanel({
     >
       <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-teal-100 bg-white px-3 py-2">
         <span className="text-xl">{emoji}</span>
-        <span dir="ltr" className="font-en text-[11px] font-black uppercase tracking-[0.18em] text-teal-600">
-          {label}
-        </span>
-        {ar && (
-          <span className="text-sm font-bold text-slate-600">
-            <Rich text={ar} />
-          </span>
-        )}
+        <EnAr en={label} ar={ar} enClassName="font-en text-[11px] font-black uppercase tracking-[0.18em] text-teal-600" arClassName="text-sm font-bold text-slate-600" />
       </div>
       {children}
     </div>
@@ -293,12 +269,11 @@ function SingPluralBoard() {
             <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row mt-3 grid gap-1.5">
               {p.data.words.map((w) => (
                 <div key={w.en} className="flex items-center justify-between rounded-xl bg-white px-3 py-2 shadow-sm">
-                  <span dir="ltr" className={`font-en rounded-lg px-2 py-0.5 text-base font-black ${p.chip}`}>
+                  <EnAr en={<span dir="ltr" className={`font-en rounded-lg px-2 py-0.5 text-base font-black ${p.chip}`}>
                     {w.en}
-                  </span>
-                  <span dir="rtl" className="text-sm font-bold text-slate-500">
-                    {w.ar}
-                  </span>
+                  </span>} ar={<span dir="rtl" className="text-sm font-bold text-slate-500">
+                    <LatinRuns text={w.ar ?? ""} />
+                  </span>} />
                 </div>
               ))}
             </div>
@@ -919,7 +894,7 @@ function FeCautionLab() {
     <LabPanel emoji="⚠️" label="F / FE CAUTION LAB" ar="انتبه: ليست كل f/fe تصبح ves" seq="l18-fe">
       <div className="grid gap-3 md:grid-cols-2">
         <div className="rounded-3xl border-2 border-violet-200 bg-white p-3">
-          <div className="mb-2 text-center text-sm font-bold text-violet-700">✅ من تتحول: f / fe → ves</div>
+          <div className="mb-2 text-center text-sm font-bold text-violet-700"><LatinRuns text={"✅ من تتحول: f / fe → ves"} /></div>
           <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row grid gap-1.5">
             {FE_CAUTION_18.ves.map((e) => (
               <Row key={`v-${e.sing}`} sing={e.sing} plural={e.plural} cls="border-violet-100 bg-violet-50/50" />
@@ -927,7 +902,7 @@ function FeCautionLab() {
           </div>
         </div>
         <div className="rounded-3xl border-2 border-amber-300 bg-white p-3">
-          <div className="mb-2 text-center text-sm font-bold text-amber-700"> من تكتفي بـ S</div>
+          <div className="mb-2 text-center text-sm font-bold text-amber-700"><LatinRuns text={" من تكتفي بـ S"} /></div>
           <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row grid gap-1.5">
             {FE_CAUTION_18.s.map((e) => (
               <Row key={`s-${e.sing}`} sing={e.sing} plural={e.plural} cls="border-amber-200 bg-amber-50/50" />
@@ -1175,10 +1150,9 @@ function RuleDetector() {
               }`}
             >
               <div className="flex flex-wrap items-center gap-2">
-                <span dir="ltr" className="font-en rounded-xl bg-teal-600 px-3 py-1.5 text-lg font-black text-white">
+                <EnAr en={<span dir="ltr" className="font-en rounded-xl bg-teal-600 px-3 py-1.5 text-lg font-black text-white">
                   {item.word}
-                </span>
-                <span className="text-sm font-bold text-slate-500">ما قاعدة جمعها؟</span>
+                </span>} ar={<span className="text-sm font-bold text-slate-500">ما قاعدة جمعها؟</span>} />
               </div>
               <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row mt-2 flex flex-wrap gap-1.5">
                 {RULE_DETECT_OPTIONS_18.map((opt) => {
@@ -1474,7 +1448,7 @@ function PresentSimpleBoard() {
           <div key={side.key} className={`rounded-3xl border-2 p-3 ${mode === side.key ? "border-teal-300 bg-white shadow" : "border-slate-200 bg-white/70"}`}>
             <div className="flex items-center justify-center gap-2">
               <span dir="ltr" className={`font-en rounded-lg px-2.5 py-1 text-sm font-black ${mode === side.key ? "bg-teal-600 text-white" : "bg-slate-100 text-slate-500"}`}>
-                {side.data.label}
+                {mixedText(side.data.label)}
               </span>
               <En className="text-base font-black text-slate-800">{side.data.sentence}</En>
             </div>
@@ -1567,7 +1541,7 @@ function ErrorsBoard() {
               <div className="flex items-start gap-3">
                 <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-rose-600 text-sm font-bold text-white">{item.n}</span>
                 <div className="min-w-0 flex-1">
-                  <div className="text-xs font-bold text-slate-400">{item.label}</div>
+                  <div className="text-xs font-bold text-slate-400">{mixedText(item.label)}</div>
                   <div dir="ltr">
                     <En className="block text-base font-extrabold text-rose-700 line-through decoration-rose-300">{item.wrong}</En>
                   </div>
@@ -2087,7 +2061,7 @@ function FinalBossEx() {
   return (
     <div className="space-y-4" data-en-seq="l18-boss">
       <div className="rounded-3xl border-2 border-amber-300 bg-gradient-to-br from-amber-50 to-orange-50 p-4">
-        <div className="text-center text-sm font-bold text-amber-700">🏆 FINAL BOSS — تحدي المرحلة</div>
+        <div className="text-center text-sm font-bold text-amber-700"><LatinRuns text={"🏆 FINAL BOSS — تحدي المرحلة"} /></div>
         <div className="mt-2 text-center text-sm font-bold text-slate-600">
           <Rich text={FINAL_BOSS_18.readLabel} />
         </div>
@@ -2844,7 +2818,7 @@ function Rail({
                   >
                     {index + 1}
                   </span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[index])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[index]))}</span>
                   <span className="mr-auto text-base">{SLIDES[index].mascot}</span>
                 </button>
               );
@@ -2913,10 +2887,7 @@ export default function Lesson18({ onExit }: { onExit: () => void }) {
             </button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500">
-                <Rich text={`${slide.section} · `} />
-                <span className="text-slate-800">
-                  <Rich text={slideTitle(slide)} />
-                </span>
+                <Rich text={`${slide.section} · ${slideTitle(slide)}`} />
               </div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
                 <div

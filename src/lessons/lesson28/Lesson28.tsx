@@ -1,3 +1,7 @@
+import TeacherSourceBrowser from "../../shared/TeacherSourceBrowser";
+import { mixedText } from "../../shared/lessonKit";
+import { TeachingDetails } from "../../shared/TeacherWorkspace";
+import TeacherWorkspace, { TeacherSection } from "../../shared/TeacherWorkspace";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   SLIDES as DATA_SLIDES,
@@ -2275,9 +2279,9 @@ function S38_MeaningRule() {
             </div>
             {flip && (
               <div className="mt-2 space-y-1 text-sm font-bold text-slate-700">
-                <En className="block">Their light was on ← حالة؟ مستمر/ثابت</En>
-                <En className="block">had left ← غادروا وحدهم أقدم من الآن</En>
-                <En className="block">wanted to travel ← رغبة بسيطة في الماضي</En>
+                <En className="block"><LatinRuns text={"Their light was on ← حالة؟ مستمر/ثابت"} /></En>
+                <En className="block"><LatinRuns text={"had left ← غادروا وحدهم أقدم من الآن"} /></En>
+                <En className="block"><LatinRuns text={"wanted to travel ← رغبة بسيطة في الماضي"} /></En>
               </div>
             )}
           </div>
@@ -2344,8 +2348,8 @@ function S39_ExBoss() {
               <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row flex justify-between gap-2 rounded-lg bg-violet-50 px-3 py-1.5"><En className="font-black">I had seen</En><span className="text-xs font-bold text-violet-800">→ رؤية الكلب حدثت قبل لحظة الإدراك.</span></div>
             </div>
             <div className="mt-2 grid gap-1 rounded-xl bg-slate-50 px-3 py-2 text-xs">
-              <En className="text-rose-700">A: ran ← لا خلفية مستمرة، وI saw this dog before يساوي زمن رؤيتها الآن — لا تعبير عن الحدث الأقدم ❌</En>
-              <En className="text-rose-700">C: had run في أول الجملة يعني أن الركض هو الأقدم — والمعنى المطلوب العكس، وwas seeing لحالة إدراكية غير سليمة ❌</En>
+              <En className="text-rose-700"><LatinRuns text={"A: ran ← لا خلفية مستمرة، وI saw this dog before يساوي زمن رؤيتها الآن — لا تعبير عن الحدث الأقدم ❌"} /></En>
+              <En className="text-rose-700"><LatinRuns text={"C: had run في أول الجملة يعني أن الركض هو الأقدم — والمعنى المطلوب العكس، وwas seeing لحالة إدراكية غير سليمة ❌"} /></En>
             </div>
           </div>
         </SourceReveal>
@@ -3064,7 +3068,7 @@ export function TestArea28({ onCheckedChange, onShowSolutions }: { onCheckedChan
               disabled={!all}
               className="rounded-2xl bg-indigo-700 px-6 py-2.5 text-sm font-black text-white shadow transition enabled:hover:bg-indigo-800 disabled:opacity-30"
             >
-              <Rich text={`✅ إنهاء الاختبار (${answered}/20)`} />
+              <Rich text={`تحقق من الإجابات — إنهاء الاختبار (${answered}/20)`} />
             </button>
             {!all && (
               <span className="text-xs font-bold text-slate-500">
@@ -3129,9 +3133,9 @@ export function Solutions28({ unlocked, onGoTest, onGoTeacher }: { unlocked: boo
             <div className="rounded-xl border-2 border-emerald-200 bg-emerald-50/70 px-3 py-2 text-sm font-black text-emerald-900">
               <Rich text="✅ الإجابة الصحيحة: " /><En>{sol.answer}</En>
             </div>
-            <div className="rounded-xl bg-slate-50 px-3 py-2 text-sm font-bold text-slate-600">
+            <TeachingDetails><div className="rounded-xl bg-slate-50 px-3 py-2 text-sm font-bold text-slate-600">
               <Rich text={`💡 لماذا تتثبت؟ ${sol.explanation}`} />
-            </div>
+            </div></TeachingDetails>
             {sol.trap && (
               <div className="rounded-xl bg-amber-50 px-3 py-2 text-sm font-bold text-amber-800">
                 <Rich text={`🪤 الفخ: ${sol.trap}`} />
@@ -3186,9 +3190,7 @@ export function TeacherArea28({ unlocked, onUnlockChange, onGoSolutions }: { unl
   if (!ok) return <TeacherGate ok={ok} setOk={setOk} />;
   return (
     <div data-area="l28-teacher" className="space-y-3">
-      {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
-      <FinalTestAnswerKey lesson={28} questions={FINAL_TESTS[28]} accent="bg-indigo-700" />
-      <div className="rounded-3xl border-2 border-sky-200 bg-gradient-to-l from-sky-50 to-indigo-50 p-4">
+<div className="rounded-3xl border-2 border-sky-200 bg-gradient-to-l from-sky-50 to-indigo-50 p-4">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-2xl">🧑‍🏫</span>
           <div className="min-w-0 flex-1">
@@ -3205,8 +3207,15 @@ export function TeacherArea28({ unlocked, onUnlockChange, onGoSolutions }: { unl
           </button>
         )}
       </div>
+<TeacherWorkspace lesson={28}>
+      {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
+      <TeacherSection title="مفتاح الاختبار النهائي" category="assessment">
+<FinalTestAnswerKey lesson={28} questions={FINAL_TESTS[28]} accent="bg-indigo-700" />
+</TeacherSection>
 
-      <div className="rounded-3xl border-2 border-slate-100 bg-white p-4">
+
+      <TeacherSection title="نظرة عامة" category="teaching">
+<div className="rounded-3xl border-2 border-slate-100 bg-white p-4">
         <div className="font-head text-base font-bold text-slate-900"><Rich text={`🗺️ ${TEACHER_28_OVERVIEW.title}`} /></div>
         <div className="mt-2 space-y-2">
           <div className="rounded-xl bg-indigo-50 px-3 py-2 text-sm font-bold text-indigo-900"><Rich text={`الموضوع: ${TEACHER_28_OVERVIEW.theme}`} /></div>
@@ -3228,8 +3237,10 @@ export function TeacherArea28({ unlocked, onUnlockChange, onGoSolutions }: { unl
           </div>
         </div>
       </div>
+</TeacherSection>
 
-      <div className="rounded-3xl border-2 border-slate-100 bg-white p-4">
+      <TeacherSection title="ملاحظات التدريس" category="teaching">
+<div className="rounded-3xl border-2 border-slate-100 bg-white p-4">
         <div className="font-head text-base font-bold text-slate-900"><Rich text="🧑‍🏫 ملاحظات التدريس" /></div>
         <div className="mt-2 space-y-2">
           {TEACHER_28_NOTES.map((n) => (
@@ -3242,29 +3253,28 @@ export function TeacherArea28({ unlocked, onUnlockChange, onGoSolutions }: { unl
           ))}
         </div>
       </div>
+</TeacherSection>
 
-      <div className="rounded-3xl border-2 border-slate-100 bg-white p-4">
+      <TeacherSection title="حلول تمارين المصدر" category="source">
+<div className="rounded-3xl border-2 border-slate-100 bg-white p-4">
         <div className="font-head text-base font-bold text-slate-900"><Rich text="📝 حلول تمارين المصدر بالتفصيل (للمعلم)" /></div>
         <div className="mt-2 space-y-2">
-          {TEACHER_28_SOLUTIONS.map((s) => (
-            <div key={s.head} className="rounded-2xl border-2 border-slate-50 bg-slate-50/60 p-3">
-              <div className="text-sm font-black text-emerald-800"><Rich text={s.head} /></div>
-              <ul className="mt-1 space-y-0.5 text-xs font-bold text-slate-600">
-                {s.lines.map((l) => <li key={l}><Rich text={`• ${l}`} /></li>)}
-              </ul>
-            </div>
-          ))}
+          <TeacherSourceBrowser lesson={28} groups={TEACHER_28_SOLUTIONS} />
         </div>
       </div>
+</TeacherSection>
 
-      <div className="rounded-3xl border-2 border-slate-100 bg-white p-4">
+      <TeacherSection title="سلم التقييم" category="teaching">
+<div className="rounded-3xl border-2 border-slate-100 bg-white p-4">
         <div className="font-head text-base font-bold text-slate-900"><Rich text={`📏 ${TEACHER_28_RUBRIC.head}`} /></div>
         <ul className="mt-2 space-y-1 text-sm font-bold text-slate-700">
           {TEACHER_28_RUBRIC.lines.map((r) => <li key={r} className="rounded-xl bg-amber-50 px-3 py-1.5"><Rich text={`• ${r}`} /></li>)}
         </ul>
       </div>
+</TeacherSection>
 
-      <div className="rounded-3xl border-2 border-slate-100 bg-white p-4">
+      <TeacherSection title="تشخيص الأخطاء" category="teaching">
+<div className="rounded-3xl border-2 border-slate-100 bg-white p-4">
         <div className="font-head text-base font-bold text-slate-900"><Rich text="🩺 الأخطاء الجسيمة (تدريب سريع للمعلم على التشخيص)" /></div>
         <div className="mt-2 space-y-1.5">
           {TEACHER_28_MISTAKES.map((m) => (
@@ -3277,7 +3287,10 @@ export function TeacherArea28({ unlocked, onUnlockChange, onGoSolutions }: { unl
           ))}
         </div>
       </div>
-    </div>
+</TeacherSection>
+    <TeacherSection title="مفتاح منطقة الاختبارات — 20 سؤالًا" category="assessment"><Solutions28 unlocked={true} /></TeacherSection>
+</TeacherWorkspace>
+</div>
   );
 }
 
@@ -3344,7 +3357,7 @@ function Rail({
               aria-pressed={area === a.id}
               className={`rounded-xl border-2 px-2 py-2 text-xs font-black transition ${area === a.id ? "border-indigo-600 bg-indigo-700 text-white shadow" : "border-slate-200 bg-white text-slate-600 hover:border-indigo-300"}`}
             >
-              {a.emoji} {a.ar}
+              {a.emoji} <LatinRuns text={a.ar ?? ""} />
             </button>
           ))}
         </div>
@@ -3454,17 +3467,14 @@ export default function Lesson28({ onExit }: { onExit: () => void }) {
                     aria-pressed={area === a.id}
                     className={`rounded-full px-3 py-1.5 text-xs font-black transition md:text-sm ${area === a.id ? "bg-indigo-700 text-white shadow" : "bg-white text-slate-500 shadow-sm hover:bg-indigo-50"}`}
                   >
-                    {a.emoji} {a.ar}
+                    {a.emoji} <LatinRuns text={a.ar ?? ""} />
                   </button>
                 ))}
               </div>
               {area === "lesson" && (
                 <>
                   <div className="mt-1.5 truncate text-sm font-bold text-slate-500">
-                    <Rich text={`${slide.section} · `} />
-                    <span className="text-slate-800">
-                      <Rich text={slideTitle(slide)} />
-                    </span>
+                    <Rich text={`${slide.section} · ${slideTitle(slide)}`} />
                   </div>
                   <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-indigo-100/70">
                     <div

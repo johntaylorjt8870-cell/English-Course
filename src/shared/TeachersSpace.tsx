@@ -1,4 +1,5 @@
-import { useState } from "react";
+import TeacherWorkspace, { TeacherSection } from "./TeacherWorkspace";
+import { useState, type ReactNode } from "react";
 import type { QuizQ } from "./quizBank";
 import { LatinRuns } from "./bidi";
 
@@ -26,10 +27,12 @@ const LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H"];
 
 export default function TeachersSpace({
   lesson,
+  sourceReference,
   questions,
   accent = "bg-slate-900",
 }: {
   lesson: number;
+  sourceReference?: ReactNode;
   questions: QuizQ[];
   accent?: string;
 }) {
@@ -127,6 +130,9 @@ export default function TeachersSpace({
         </span>
       </div>
 
+      <TeacherWorkspace lesson={lesson}>
+      {sourceReference && <TeacherSection title="حلول تمارين الدرس" category="source">{sourceReference}</TeacherSection>}
+      <TeacherSection title="مفتاح الاختبار النهائي" category="assessment">
       <div className="mt-4 grid gap-3">
         {questions.map((q, i) => (
           <div key={i} data-ts-q={i} className="rounded-2xl border-2 border-slate-200 bg-white p-4">
@@ -146,6 +152,14 @@ export default function TeachersSpace({
               </div>
             </div>
 
+            <div className="mt-2 pr-11 text-sm font-bold text-slate-700">
+              الإجابة الصحيحة:{" "}
+              <span dir="ltr" className="font-en text-emerald-700">
+                {LETTERS[q.answer]}) {q.opts[q.answer]}
+              </span>
+            </div>
+            <details className="mt-3">
+              <summary className="cursor-pointer font-bold">السؤال والخيارات والتفسير · <span dir="ltr">Platform Explanation</span></summary>
             {/* كل الخيارات كما هي — الإجابة الصحيحة موضحة بعلامة ✓ فقط هنا في فضاء المعلم */}
             <div className="mt-3 grid gap-2 pr-11 sm:grid-cols-2">
               {q.opts.map((o, oi) => {
@@ -168,21 +182,18 @@ export default function TeachersSpace({
               })}
             </div>
 
-            <div className="mt-2 pr-11 text-sm font-bold text-slate-700">
-              الإجابة الصحيحة:{" "}
-              <span dir="ltr" className="font-en text-emerald-700">
-                {LETTERS[q.answer]}) {q.opts[q.answer]}
-              </span>
-            </div>
             {/* الشرح يُعرض فقط إذا وُجد في بيانات الاختبار الأصلية — لا شرح مُخترع */}
             {q.why && (
               <div className="mt-1 pr-11 text-sm font-bold text-slate-500">
                 💡 <LatinRuns text={q.why} />
               </div>
             )}
+            </details>
           </div>
         ))}
       </div>
+      </TeacherSection>
+      </TeacherWorkspace>
     </section>
   );
 }

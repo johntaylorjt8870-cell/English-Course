@@ -1,3 +1,6 @@
+import { En as SharedEn } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   SLIDES,
@@ -87,20 +90,12 @@ function kindOf(text: string): Kind {
 
 // ---------------- Helpers ----------------
 
-function En({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
-      {children}
-    </span>
-  );
+function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  return (
-    <span className={className}>
-      <LatinRuns text={text} />
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function Note({ emoji, text }: { emoji: string; text: string }) {
@@ -142,7 +137,7 @@ function Frame({
       <div className="flex flex-wrap items-center gap-2.5">
         {step && (
           <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-teal-700 text-lg font-bold text-white shadow-sm">
-            {step}
+            {mixedText(step)}
           </span>
         )}
         {badge && (
@@ -156,11 +151,10 @@ function Frame({
           data-source-section={sourceHeading}
           className="mt-3 flex flex-wrap items-center gap-1.5 rounded-xl border border-teal-100 bg-teal-50/70 px-3 py-2 text-xs font-bold text-teal-900"
         >
-          <span className="rounded-md bg-white px-1.5 py-0.5 text-teal-700">SOURCE SECTION</span>
-          <Rich text={sourceHeading} />
+          <EnAr en="SOURCE SECTION" ar={sourceHeading} enClassName="rounded-md bg-white px-1.5 py-0.5 text-teal-700" />
         </div>
       )}
-      <h2 className="font-head mt-3 max-w-[92%] text-2xl font-bold leading-snug text-slate-900 md:text-[2rem]">{title}</h2>
+      <h2 className="font-head mt-3 max-w-[92%] text-2xl font-bold leading-snug text-slate-900 md:text-[2rem]">{mixedText(title)}</h2>
       {lead && (
         <div className="mt-2 max-w-[94%] text-base text-slate-500 md:text-lg">
           <Rich text={lead} />
@@ -199,8 +193,7 @@ function LabPanel({
     >
       <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-teal-100 bg-white px-3 py-2">
         <span className="text-xl">{emoji}</span>
-        <En className="text-[11px] font-black uppercase tracking-[0.16em] text-teal-700">{label}</En>
-        {ar && <Rich text={ar} className="text-sm font-bold text-slate-600" />}
+        <EnAr en={label} ar={ar} enClassName="text-[11px] font-black uppercase tracking-[0.16em] text-teal-700" arClassName="text-sm font-bold text-slate-600" />
       </div>
       {children}
     </div>
@@ -979,12 +972,7 @@ function WhenVsWhileLab({ lines }: { lines: string[] }) {
       </div>
       <div className="mt-3 rounded-2xl border-2 border-white bg-white p-3">
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <span className={`rounded-xl px-3 py-1.5 text-sm font-black ${active ? "bg-amber-500 text-white" : "bg-sky-600 text-white"}`}>
-            <En>{word}</En>
-          </span>
-          <span className="text-sm font-bold text-slate-700">
-            <Rich text={mean} />
-          </span>
+          <EnAr en={word} ar={<Rich text={mean} />} enClassName={`rounded-xl px-3 py-1.5 text-sm font-black ${active ? "bg-amber-500 text-white" : "bg-sky-600 text-white"}`} arClassName="text-sm font-bold text-slate-700" />
         </div>
         <div className="mt-3 space-y-2">
           <TrackBar label={<Rich text={first} />} color="bg-teal-500" width="100%" />
@@ -1365,10 +1353,9 @@ function EmmaAnalysisLab({ lines }: { lines: string[] }) {
               }`}
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <En className="text-sm font-black text-slate-900">{p.verb}</En>
-                <span className={`rounded-lg px-2 py-0.5 text-[10px] font-black text-white ${cont ? "bg-teal-600" : "bg-orange-500"}`}>
+                <EnAr en={<En className="text-sm font-black text-slate-900">{p.verb}</En>} ar={<span className={`rounded-lg px-2 py-0.5 text-[10px] font-black text-white ${cont ? "bg-teal-600" : "bg-orange-500"}`}>
                   <Rich text={cont ? "🎥 خلفية" : "📸 حدث"} />
-                </span>
+                </span>} />
               </div>
               <div className="mt-1 text-xs font-bold text-slate-600">
                 <Rich text={p.role} />
@@ -2478,10 +2465,10 @@ function Iq200MatchLab({ lines }: { lines: string[] }) {
         </div>
         <div className="mt-2 grid gap-2 sm:grid-cols-2">
           <div className="rounded-xl bg-sky-50 px-3 py-2 text-xs font-bold text-sky-900">
-            <En className="font-black">{m1Key}</En> <Rich text={m1} />
+            <EnAr en={<En className="font-black">{m1Key}</En>} ar={<Rich text={m1} />} />
           </div>
           <div className="rounded-xl bg-sky-50 px-3 py-2 text-xs font-bold text-sky-900">
-            <En className="font-black">{m2Key}</En> <Rich text={m2} />
+            <EnAr en={<En className="font-black">{m2Key}</En>} ar={<Rich text={m2} />} />
           </div>
         </div>
         <div className="mt-2 text-center text-xs font-black text-slate-500">
@@ -3684,7 +3671,7 @@ function Rail({
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/25" : "bg-slate-100"}`}>
                     {i + 1}
                   </span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[i])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[i]))}</span>
                   <span className="mr-auto text-base">{SLIDES[i].mascot}</span>
                 </button>
               );
@@ -3750,10 +3737,7 @@ export default function Lesson26({ onExit }: { onExit: () => void }) {
             </button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500">
-                <Rich text={`${slide.section} · `} />
-                <span className="text-slate-800">
-                  <Rich text={slideTitle(slide)} />
-                </span>
+                <Rich text={`${slide.section} · ${slideTitle(slide)}`} />
               </div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-teal-100/70">
                 <div

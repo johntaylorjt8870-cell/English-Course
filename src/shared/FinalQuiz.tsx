@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+import { LatinRuns } from "./bidi";
 import { useMemo, useState } from "react";
 import { QUIZZES } from "./quizBank";
 import TeachersSpace from "./TeachersSpace";
@@ -11,7 +13,7 @@ import TeachersSpace from "./TeachersSpace";
  * كل التغذية الراجعة (صح/خطأ، الإجابة الصحيحة، الشرح، النتيجة)
  * تتوقف على checked وحدها — فلا يظهر أي كشف قبل الضغط على الزر.
  */
-export default function FinalQuiz({ lesson, accent = "bg-slate-900" }: { lesson: number; accent?: string }) {
+export default function FinalQuiz({ lesson, accent = "bg-slate-900", teacherSource }: { lesson: number; accent?: string; teacherSource?: ReactNode }) {
   const questions = QUIZZES[lesson] ?? [];
   const [pick, setPick] = useState<Record<number, number>>({});
   const [checked, setChecked] = useState(false);
@@ -70,13 +72,13 @@ export default function FinalQuiz({ lesson, accent = "bg-slate-900" }: { lesson:
           }
 
           return (
-            <div key={i} className={`rounded-3xl border-2 p-4 transition ${card}`}>
+            <div key={i} data-quiz-q={i + 1} className={`rounded-3xl border-2 p-4 transition ${card}`}>
               <div className="flex flex-wrap items-start gap-3">
                 <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-xl text-sm font-bold text-white ${accent}`}>
                   {i + 1}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <div className="font-bold text-slate-800">{q.ar}</div>
+                  <div className="font-bold text-slate-800"><LatinRuns text={q.ar} /></div>
                   {q.en && (
                     <div dir="ltr" className="font-en mt-1 text-left text-xl font-extrabold text-slate-900">
                       {q.en}
@@ -120,7 +122,7 @@ export default function FinalQuiz({ lesson, accent = "bg-slate-900" }: { lesson:
                     !picked ? "text-slate-500" : right ? "text-emerald-700" : "text-rose-700"
                   }`}
                 >
-                  {!picked ? "⚠ لم تختر إجابة لهذا السؤال. " : right ? "✓ صحيح! " : "✕ "}💡 {q.why}
+                  {!picked ? "⚠ لم تختر إجابة لهذا السؤال. " : right ? "✓ صحيح! " : "✕ "}💡 <LatinRuns text={q.why} />
                 </div>
               )}
             </div>
@@ -134,7 +136,7 @@ export default function FinalQuiz({ lesson, accent = "bg-slate-900" }: { lesson:
             <>
               <button
                 type="button"
-                onClick={() => setChecked(true)}
+                onClick={() => { if (allAnswered) setChecked(true); }}
                 disabled={!allAnswered}
                 title={allAnswered ? undefined : "أجب عن كل الأسئلة أولًا"}
                 className={`rounded-xl px-5 py-2.5 font-bold text-white shadow transition ${accent} enabled:hover:brightness-110 disabled:opacity-30`}
@@ -154,7 +156,7 @@ export default function FinalQuiz({ lesson, accent = "bg-slate-900" }: { lesson:
               <div className={`grid h-14 w-14 place-items-center rounded-2xl text-xl font-extrabold text-white ${accent}`}>
                 {pct}%
               </div>
-              <div className="min-w-0 flex-1">
+              <div role="status" aria-live="polite" className="min-w-0 flex-1">
                 <div className="font-extrabold text-slate-800">
                   نتيجتك: {score} / {questions.length}
                 </div>
@@ -174,7 +176,7 @@ export default function FinalQuiz({ lesson, accent = "bg-slate-900" }: { lesson:
 
       {/* فضاء المعلم (الخطوة 4): مفتاح نفس هذا الاختبار خلف كلمة مرور —
           حالة مستقلة تمامًا عن pick/checked ولا تمسّ سلوك الاختبار */}
-      <TeachersSpace lesson={lesson} questions={questions} accent={accent} />
+      <TeachersSpace lesson={lesson} questions={questions} accent={accent} sourceReference={teacherSource} />
     </div>
   );
 }

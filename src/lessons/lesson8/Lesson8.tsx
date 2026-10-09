@@ -1,3 +1,8 @@
+import { Verdict as SharedVerdict } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
+import { En as SharedEn } from "../../shared/lessonKit";
+import { mixedText } from "../../shared/lessonKit";
+import { LatinRuns } from "../../shared/bidi";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -32,25 +37,11 @@ const RS: Record<Role8, { chip: string; solid: string; text: string }> = {
 };
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <span dir="ltr" className={`font-en ${className}`}>{children}</span>;
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const parts = text.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((x, i) => {
-        const m = x.match(/^\[\[(.+)\]\]$/);
-        return m ? (
-          <span key={i} dir="ltr" className="font-en mx-1 rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
-            {m[1]}
-          </span>
-        ) : (
-          <Fragment key={i}>{x}</Fragment>
-        );
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function PartsLine({ parts, q, size = "md", label = true }: { parts: Part8[]; q?: boolean; size?: "sm" | "md" | "lg"; label?: boolean }) {
@@ -74,7 +65,7 @@ function SentenceCard({ parts, ar, note, q }: { parts: Part8[]; ar: string; note
       <PartsLine parts={parts} q={q} />
       <div className="mt-2 flex flex-wrap items-center gap-2">
         <span className="text-lg text-slate-500">{ar}</span>
-        {note && <span className="rounded-full bg-indigo-50 px-3 py-1 text-sm font-bold text-indigo-700">📌 {note}</span>}
+        {note && <span className="rounded-full bg-indigo-50 px-3 py-1 text-sm font-bold text-indigo-700"><LatinRuns text={`📌 ${note}`} /></span>}
       </div>
     </div>
   );
@@ -85,16 +76,16 @@ function Frame({ mascot, step, badge, title, lead, children, tip }: { mascot: st
     <section className="relative rounded-[1.75rem] border-2 border-slate-900/[0.05] bg-white p-6 shadow-[0_14px_44px_-20px_rgba(79,70,229,0.3)] md:p-9">
       <div className="pointer-events-none absolute -left-2 top-4 select-none text-4xl anim-drift md:text-5xl" aria-hidden>{mascot}</div>
       <div className="flex items-center gap-2.5">
-        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-indigo-600 text-lg font-bold text-white">{step}</span>}
-        {badge && <span className="rounded-full bg-indigo-100 px-3.5 py-1.5 text-sm font-bold text-indigo-800">{badge}</span>}
+        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-indigo-600 text-lg font-bold text-white">{mixedText(step)}</span>}
+        {badge && <span className="rounded-full bg-indigo-100 px-3.5 py-1.5 text-sm font-bold text-indigo-800">{mixedText(badge)}</span>}
       </div>
-      <h2 className="font-head mt-3 max-w-[88%] text-3xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{title}</h2>
-      {lead && <p className="mt-2 max-w-[88%] text-lg text-slate-500 md:text-xl">{lead}</p>}
+      <h2 className="font-head mt-3 max-w-[88%] text-3xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{mixedText(title)}</h2>
+      {lead && <p className="mt-2 max-w-[88%] text-lg text-slate-500 md:text-xl">{mixedText(lead)}</p>}
       <div className="mt-6 space-y-3.5">{children}</div>
       {tip && (
         <div className="mt-6 flex items-center gap-3 rounded-2xl bg-gradient-to-l from-indigo-700 to-violet-700 p-4 text-white">
           <span className="text-2xl">🦉</span>
-          <span className="text-base font-semibold md:text-lg">{tip}</span>
+          <span className="text-base font-semibold md:text-lg">{mixedText(tip)}</span>
         </div>
       )}
     </section>
@@ -110,16 +101,7 @@ function Note({ emoji, text }: { emoji: string; text: string }) {
   );
 }
 
-function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; why?: string }) {
-  return (
-    <div className={`flex flex-wrap items-center gap-3 rounded-3xl border-2 p-4 ${ok ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`}>
-      <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-base font-bold text-white ${ok ? "bg-emerald-500" : "bg-rose-500"}`}>{ok ? "✓" : "✕"}</span>
-      <En className={`text-xl font-bold ${ok ? "text-emerald-900" : "text-rose-800 line-through decoration-rose-300"}`}>{en}</En>
-      {ar && <span className="text-base text-slate-500">{ar}</span>}
-      {why && <span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}>{why}</span>}
-    </div>
-  );
-}
+function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; why?: string }) { return <SharedVerdict ok={ok} en={en} ar={ar} why={why} />; }
 
 // ============================================================
 // ودجات المراجعة
@@ -134,13 +116,13 @@ function Uses() {
         {USES.map((x, xi) => (
           <button key={x.en} onClick={() => setI(xi)} className={`rounded-2xl border-2 p-3 text-center transition active:scale-95 ${xi === i ? "border-indigo-400 bg-white shadow" : "border-slate-200 bg-white/60 hover:bg-white"}`}>
             <div className="text-3xl">{x.emoji}</div>
-            <div className={`mt-1 text-sm font-bold ${xi === i ? "text-indigo-700" : "text-slate-600"}`}>{x.ar}</div>
+            <div className={`mt-1 text-sm font-bold ${xi === i ? "text-indigo-700" : "text-slate-600"}`}><LatinRuns text={x.ar ?? ""} /></div>
             <En className="text-xs font-bold text-slate-400">{x.en}</En>
           </button>
         ))}
       </div>
       <div key={i} className="pop mt-4">
-        <div className="mb-3 text-center font-bold text-slate-600">{u.desc}</div>
+        <div className="mb-3 text-center font-bold text-slate-600">{mixedText(u.desc)}</div>
         <div className="grid gap-2.5">
           {u.sents.map((s, si) => (
             <SentenceCard key={si} parts={s.parts} ar={s.ar} note={s.mark} />
@@ -157,7 +139,7 @@ function Signals() {
       {SIGNALS.map((w, i) => (
         <span key={w.en} className={`rounded-2xl border-2 px-3.5 py-2 shadow-sm anim-float ${w.freq ? "border-amber-200 bg-white" : "border-indigo-200 bg-white"}`} style={{ animationDelay: `${(i % 6) * 0.25}s` }}>
           <En className={`text-lg font-extrabold ${w.freq ? "text-amber-700" : "text-indigo-700"}`}>{w.en}</En>
-          <span className="mr-2 text-sm text-slate-500">{w.ar}</span>
+          <span className="mr-2 text-sm text-slate-500"><LatinRuns text={w.ar ?? ""} /></span>
         </span>
       ))}
     </div>
@@ -172,8 +154,7 @@ function Ladder() {
       <div className="grid gap-2">
         {LADDER.map((x, xi) => (
           <button key={x.en} onClick={() => setI(xi)} className={`flex items-center gap-3 rounded-2xl border-2 p-2.5 text-right transition ${xi === i ? "border-amber-300 bg-white shadow" : "border-transparent bg-white/60 hover:bg-white"}`}>
-            <En className={`w-24 shrink-0 text-lg font-extrabold ${xi === i ? "text-amber-700" : "text-slate-600"}`}>{x.en}</En>
-            <span className="w-16 shrink-0 text-sm font-bold text-slate-500">{x.ar}</span>
+            <EnAr en={<En className={`w-24 shrink-0 text-lg font-extrabold ${xi === i ? "text-amber-700" : "text-slate-600"}`}>{x.en}</En>} ar={<span className="w-16 shrink-0 text-sm font-bold text-slate-500"><LatinRuns text={x.ar ?? ""} /></span>} />
             <span className="h-3 flex-1 overflow-hidden rounded-full bg-slate-200">
               <span className="block h-full rounded-full bg-gradient-to-l from-amber-500 to-indigo-500 transition-all duration-500" style={{ width: `${x.pct}%` }} />
             </span>
@@ -202,8 +183,7 @@ function Groups() {
       <div key={g} className="pop grid gap-2">
         {(g === 0 ? left : right).map((s) => (
           <div key={s} className="flex items-center justify-between rounded-2xl bg-white px-4 py-2.5">
-            <En className="text-xl font-extrabold text-slate-800">{s} {g === 0 ? "explore" : "explores"} the garden.</En>
-            <span className="text-sm text-slate-500">{g === 0 ? "الفعل الأساسي" : "+ s"}</span>
+            <EnAr en={<En className="text-xl font-extrabold text-slate-800">{s} {g === 0 ? "explore" : "explores"} the garden.</En>} ar={<span className="text-sm text-slate-500">{g === 0 ? "الفعل الأساسي" : "+ s"}</span>} />
           </div>
         ))}
       </div>
@@ -225,7 +205,7 @@ function ConjTabs() {
         ))}
       </div>
       <div key={t} className="pop">
-        <div className="mb-3 text-center font-bold text-slate-700">{d.title}</div>
+        <div className="mb-3 text-center font-bold text-slate-700">{mixedText(d.title)}</div>
         <div className="grid gap-2 sm:grid-cols-2">
           {d.rows.map(([a, b]) => (
             <div key={a} dir="ltr" className="flex items-center justify-center gap-3 rounded-2xl bg-white px-3 py-2">
@@ -237,9 +217,9 @@ function ConjTabs() {
         </div>
         <div className="mt-3 rounded-2xl bg-white p-3 text-center">
           <En className="text-lg font-extrabold text-slate-800">{d.ex.en}</En>
-          <div className="text-sm text-slate-500">{d.ex.ar}</div>
+          <div className="text-sm text-slate-500"><LatinRuns text={d.ex.ar ?? ""} /></div>
         </div>
-        <div className="mt-2 rounded-2xl bg-indigo-50 p-2.5 text-center text-sm font-bold text-indigo-800">{d.note}</div>
+        <div className="mt-2 rounded-2xl bg-indigo-50 p-2.5 text-center text-sm font-bold text-indigo-800"><LatinRuns text={d.note ?? ""} /></div>
       </div>
     </div>
   );
@@ -248,7 +228,7 @@ function ConjTabs() {
 function VowelY() {
   return (
     <div className="rounded-3xl border-2 border-rose-200 bg-rose-50/60 p-5">
-      <div className="mb-3 text-center font-bold text-slate-700">⚠️ قبل y حرف متحرك (a · e · i · o · u) ← نضيف s فقط</div>
+      <div className="mb-3 text-center font-bold text-slate-700"><LatinRuns text={"⚠️ قبل y حرف متحرك (a · e · i · o · u) ← نضيف s فقط"} /></div>
       <div className="grid gap-2 sm:grid-cols-3">
         {VOWEL_Y.map(([a, b]) => (
           <div key={a} dir="ltr" className="flex items-center justify-center gap-2 rounded-2xl bg-white px-3 py-2">
@@ -287,9 +267,9 @@ function TravelS() {
           {st === 1 && (<><span className="tada font-en rounded-xl bg-indigo-600 px-3 py-1.5 text-2xl font-extrabold text-white">Does</span><EnChip t="she" c="sky" /><EnChip t="paint" c="slate" dim /><EnChip t="pictures?" c="slate" /></>)}
           {st === 2 && (<><EnChip t="She" c="sky" /><span className="tada font-en rounded-xl bg-rose-500 px-3 py-1.5 text-2xl font-extrabold text-white">doesn't</span><EnChip t="paint" c="slate" dim /><EnChip t="pictures." c="slate" /></>)}
         </div>
-        <div className="mt-3 font-bold text-slate-600">{cur.ar}</div>
+        <div className="mt-3 font-bold text-slate-600"><LatinRuns text={cur.ar ?? ""} /></div>
       </div>
-      <div className="mt-3 text-sm font-bold text-indigo-700">does + play — وليس does + plays ✅</div>
+      <div className="mt-3 text-sm font-bold text-indigo-700"><LatinRuns text={"does + play — وليس does + plays ✅"} /></div>
     </div>
   );
 }
@@ -309,19 +289,19 @@ function AdvPlace() {
             { en: "She usually arrives early.", ar: "هي عادةً تصل باكرًا." },
             { en: "Mona never skips breakfast.", ar: "منى لا تفوّت الفطور أبدًا." },
           ].map((x) => (
-            <div key={x.en} className="rounded-2xl bg-white p-3"><En className="text-lg font-extrabold text-slate-800">{x.en}</En><div className="text-sm text-slate-500">{x.ar}</div></div>
+            <div key={x.en} className="rounded-2xl bg-white p-3"><En className="text-lg font-extrabold text-slate-800">{x.en}</En><div className="text-sm text-slate-500"><LatinRuns text={x.ar ?? ""} /></div></div>
           ))}
         </div>
       </div>
       <div className="rounded-3xl border-2 border-indigo-200 bg-indigo-50/60 p-4">
-        <div className="mb-2 text-sm font-bold text-indigo-700">مع Verb to be ← بعد am / is / are (استثناء مهم!)</div>
+        <div className="mb-2 text-sm font-bold text-indigo-700"><LatinRuns text={"مع Verb to be ← بعد am / is / are (استثناء مهم!)"} /></div>
         <div className="grid gap-2">
           {[
             { en: "She is always polite.", ar: "هي دائمًا مهذبة." },
             { en: "They are usually quiet.", ar: "هم عادةً هادئون." },
             { en: "He is often tired.", ar: "هو غالبًا متعب." },
           ].map((x) => (
-            <div key={x.en} className="rounded-2xl bg-white p-3"><En className="text-lg font-extrabold text-slate-800">{x.en}</En><div className="text-sm text-slate-500">{x.ar}</div></div>
+            <div key={x.en} className="rounded-2xl bg-white p-3"><En className="text-lg font-extrabold text-slate-800">{x.en}</En><div className="text-sm text-slate-500"><LatinRuns text={x.ar ?? ""} /></div></div>
           ))}
         </div>
       </div>
@@ -343,7 +323,7 @@ function EveryTrap() {
             <En className="text-3xl font-extrabold text-indigo-700">every day</En>
             <div className="mt-1 font-bold text-slate-600">= كل يوم (عبارة زمنية — كلمتان)</div>
             <div className="mt-3 rounded-2xl bg-slate-50 p-3"><En className="text-xl font-extrabold text-slate-800">I practice the piano every day.</En><div className="text-sm text-slate-500">أنا أتدرب على البيانو كل يوم.</div></div>
-            <div className="mt-2 text-sm text-slate-400">نسأل: <En>When do I practice?</En> ← <En>Every day.</En></div>
+            <div className="mt-2 text-sm text-slate-400"><LatinRuns text={"نسأل: [[When do I practice?]] ← [[Every day.]]"} marked /></div>
           </>
         ) : (
           <>
@@ -364,9 +344,9 @@ function GoldenRule() {
   return (
     <div className="rounded-3xl bg-slate-900 p-6 text-center text-white">
       <div className="text-sm font-bold text-amber-400">🏅 قاعدة الدرس الذهبية</div>
-      <div className="font-head mt-2 text-2xl font-bold">إذا رأيت He / She / It فاسأل: هل توجد does أو doesn't؟</div>
+      <div className="font-head mt-2 text-2xl font-bold"><LatinRuns text={"إذا رأيت He / She / It فاسأل: هل توجد does أو doesn't؟"} /></div>
       <div className="mt-4 grid gap-3 text-right md:grid-cols-2">
-        <div className="rounded-2xl bg-white/10 p-4"><div className="font-bold text-emerald-300">لا توجد ← أحتاج s / es / ies</div><En className="mt-1 block text-lg font-extrabold">She writes.</En></div>
+        <div className="rounded-2xl bg-white/10 p-4"><div className="font-bold text-emerald-300"><LatinRuns text={"لا توجد ← أحتاج s / es / ies"} /></div><En className="mt-1 block text-lg font-extrabold">She writes.</En></div>
         <div className="rounded-2xl bg-white/10 p-4"><div className="font-bold text-rose-300">توجد ← الفعل أساسي</div><En className="mt-1 block text-lg font-extrabold">Does she write? / She doesn't write.</En></div>
       </div>
     </div>
@@ -414,7 +394,7 @@ function ChooseEx({ ex }: { ex: Extract<Ex8, { type: "choose" }> }) {
         const c = pick[i];
         return (
           <div key={i} className={`rounded-3xl border-2 p-4 transition ${c !== undefined ? (c === it.answer ? "border-emerald-300 bg-emerald-50/50" : "border-rose-300 bg-rose-50/50") : "border-slate-200 bg-white"}`}>
-            <div className="flex flex-wrap items-center gap-3"><Nub n={i + 1} /><En className="text-lg font-bold text-slate-800">{it.stem}</En><span className="text-sm text-slate-400">{it.ar}</span></div>
+            <div className="flex flex-wrap items-center gap-3"><Nub n={i + 1} /><EnAr en={<En className="text-lg font-bold text-slate-800">{it.stem}</En>} ar={<span className="text-sm text-slate-400"><LatinRuns text={it.ar ?? ""} /></span>} /></div>
             <div className="mt-2.5 flex flex-wrap gap-2 pr-11">
               {it.opts.map((o, oi) => (
                 <button key={o} onClick={() => setPick((p) => ({ ...p, [i]: oi }))}><OptBtn o={o} st={c === undefined ? "idle" : oi === it.answer ? "right" : c === oi ? "wrong" : "dim"} /></button>
@@ -469,7 +449,7 @@ function DoDoesEx({ ex }: { ex: Extract<Ex8, { type: "doDoes" }> }) {
                 <En className="text-lg font-bold text-slate-800">{it.rest}</En>
               </span>
             </div>
-            <div className="mt-1 pr-11 text-xs text-slate-400">{it.ar}</div>
+            <div className="mt-1 pr-11 text-xs text-slate-400"><LatinRuns text={it.ar ?? ""} /></div>
             <div className="mt-2 flex gap-2 pr-11">
               {["Do", "Does"].map((o, oi) => (
                 <button key={o} onClick={() => setPick((p) => ({ ...p, [i]: oi }))}><OptBtn o={o} st={c === undefined ? "idle" : oi === it.answer ? "right" : c === oi ? "wrong" : "dim"} /></button>
@@ -497,7 +477,7 @@ function DontEx({ ex }: { ex: Extract<Ex8, { type: "dont" }> }) {
                 <En className="text-lg font-bold text-slate-800">{it.rest}</En>
               </span>
             </div>
-            <div className="mt-1 pr-11 text-xs text-slate-400">{it.ar}</div>
+            <div className="mt-1 pr-11 text-xs text-slate-400"><LatinRuns text={it.ar ?? ""} /></div>
             <div className="mt-2 flex gap-2 pr-11">
               {["don't", "doesn't"].map((o, oi) => (
                 <button key={o} onClick={() => setPick((p) => ({ ...p, [i]: oi }))}><OptBtn o={o} st={c === undefined ? "idle" : oi === it.answer ? "right" : c === oi ? "wrong" : "dim"} /></button>
@@ -519,7 +499,7 @@ function FixEx({ ex }: { ex: Extract<Ex8, { type: "fix" }> }) {
           <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-rose-500 text-sm font-bold text-white">{i + 1}</span>
           <En className="text-lg font-bold text-rose-700 line-through decoration-rose-300">{it.wrong}</En>
           {show[i] ? (
-            <div className="tada flex flex-wrap items-center gap-2"><En className="text-lg font-extrabold text-emerald-700">→ {it.correct}</En><span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">{it.why}</span></div>
+            <div className="tada flex flex-wrap items-center gap-2"><EnAr en={<En className="text-lg font-extrabold text-emerald-700">→ {it.correct}</En>} ar={<span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700"><LatinRuns text={it.why ?? ""} /></span>} /></div>
           ) : (
             <button onClick={() => setShow((s) => ({ ...s, [i]: true }))} className="mr-auto rounded-xl bg-emerald-600 px-4 py-1.5 text-sm font-bold text-white transition hover:bg-emerald-700">الحل 💡</button>
           )}
@@ -568,7 +548,7 @@ function AdvEx({ ex }: { ex: Extract<Ex8, { type: "adv" }> }) {
         const c = pick[i];
         return (
           <div key={i} className={`rounded-3xl border-2 p-4 transition ${c !== undefined ? (c === it.answer ? "border-emerald-300 bg-emerald-50/50" : "border-rose-300 bg-rose-50/50") : "border-slate-200 bg-white"}`}>
-            <div className="flex flex-wrap items-center gap-3"><Nub n={i + 1} /><En className="text-lg font-bold text-slate-800">{it.stem}</En><span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700">💭 {it.ar}</span></div>
+            <div className="flex flex-wrap items-center gap-3"><Nub n={i + 1} /><EnAr en={<En className="text-lg font-bold text-slate-800">{it.stem}</En>} ar={<span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700">💭 <LatinRuns text={it.ar ?? ""} /></span>} /></div>
             <div className="mt-2.5 flex gap-2 pr-11">
               {it.opts.map((o, oi) => (
                 <button key={o} onClick={() => setPick((p) => ({ ...p, [i]: oi }))}><OptBtn o={o} st={c === undefined ? "idle" : oi === it.answer ? "right" : c === oi ? "wrong" : "dim"} /></button>
@@ -608,8 +588,8 @@ function OrderRow({ item }: { item: Extract<IQItem, { kind: "order" }> }) {
         ))}
         {shown.length > 0 && <span className="font-en text-xl font-bold text-slate-300">.</span>}
       </div>
-      {fin && <div className="tada mt-2 font-bold text-emerald-700">🎉 <En>{cap1(item.correct.join(" "))}.</En> <span className="font-normal text-slate-500">{item.ar}</span></div>}
-      {bad && <div className="mt-2 text-sm font-bold text-rose-600">✕ ليس بعد — تذكر مكان usually</div>}
+      {fin && <div className="tada mt-2 font-bold text-emerald-700">🎉 <En>{cap1(item.correct.join(" "))}.</En> <span className="font-normal text-slate-500"><LatinRuns text={item.ar ?? ""} /></span></div>}
+      {bad && <div className="mt-2 text-sm font-bold text-rose-600"><LatinRuns text={"✕ ليس بعد — تذكر مكان usually"} /></div>}
     </div>
   );
 }
@@ -631,12 +611,12 @@ function IQEx({ ex }: { ex: Extract<Ex8, { type: "iq" }> }) {
                     return <button key={oi} onClick={() => setPick((p) => ({ ...p, [i]: oi }))} className={`flex items-center gap-3 rounded-2xl border-2 px-4 py-2.5 text-right transition active:scale-[0.99] ${c === undefined ? "border-slate-200 bg-white hover:border-indigo-400" : oi === it.answer ? "border-transparent bg-emerald-600 text-white" : c === oi ? "border-transparent bg-rose-600 text-white" : "border-slate-200 bg-white text-slate-300"}`}><span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-white/25 font-en text-sm font-bold">{oi + 1}</span><En className="text-lg font-bold">{o}</En></button>;
                   })}
                 </div>
-                {pick[i] !== undefined && <div className={`mt-2 text-sm font-bold ${pick[i] === it.answer ? "text-emerald-700" : "text-rose-600"}`}>{pick[i] === it.answer ? "✓ " : "✕ "}{it.why}</div>}
+                {pick[i] !== undefined && <div className={`mt-2 text-sm font-bold ${pick[i] === it.answer ? "text-emerald-700" : "text-rose-600"}`}>{pick[i] === it.answer ? "✓ " : "✕ "}<LatinRuns text={it.why ?? ""} /></div>}
               </>
             )}
             {it.kind === "explain" && (
               open[i] ? (
-                <div className="tada rounded-2xl bg-indigo-50 p-4"><div className="font-extrabold text-rose-600">{it.verdict} ❌</div><div className="mt-1 font-bold text-slate-700">{it.why}</div></div>
+                <div className="tada rounded-2xl bg-indigo-50 p-4"><div className="font-extrabold text-rose-600">{it.verdict} ❌</div><div className="mt-1 font-bold text-slate-700"><LatinRuns text={it.why ?? ""} /></div></div>
               ) : (
                 <button onClick={() => setOpen((o) => ({ ...o, [i]: true }))} className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-bold text-white hover:bg-indigo-700">فكّر ثم اكشف الشرح 🔍</button>
               )
@@ -644,7 +624,7 @@ function IQEx({ ex }: { ex: Extract<Ex8, { type: "iq" }> }) {
             {it.kind === "order" && <OrderRow item={it} />}
             {it.kind === "spot" && (
               open[i] ? (
-                <div className="tada rounded-2xl bg-emerald-50 p-4"><En className="text-xl font-extrabold text-emerald-700">{it.answer}</En><div className="mt-1 font-bold text-slate-700">{it.why}</div></div>
+                <div className="tada rounded-2xl bg-emerald-50 p-4"><En className="text-xl font-extrabold text-emerald-700">{it.answer}</En><div className="mt-1 font-bold text-slate-700"><LatinRuns text={it.why ?? ""} /></div></div>
               ) : (
                 <button onClick={() => setOpen((o) => ({ ...o, [i]: true }))} className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-bold text-white hover:bg-indigo-700">اكشف الخطأ 🔍</button>
               )
@@ -702,7 +682,7 @@ function TFEx({ ex }: { ex: Extract<Ex8, { type: "tf" }> }) {
                 <button onClick={() => setPick((p) => ({ ...p, [i]: false }))} className={`rounded-xl border-2 px-4 py-1.5 text-sm font-bold transition active:scale-95 ${c === false ? (right ? "border-transparent bg-emerald-600 text-white" : "border-transparent bg-rose-600 text-white") : "border-slate-200 bg-white text-slate-600"}`}>✕ خطأ</button>
               </div>
             </div>
-            {c !== undefined && <div className={`mt-2 pr-11 text-sm font-bold ${right ? "text-emerald-700" : "text-rose-600"}`}>{it.why}</div>}
+            {c !== undefined && <div className={`mt-2 pr-11 text-sm font-bold ${right ? "text-emerald-700" : "text-rose-600"}`}><LatinRuns text={it.why ?? ""} /></div>}
           </div>
         );
       })}
@@ -720,7 +700,7 @@ function Cover() {
       <div className="pointer-events-none absolute -bottom-12 -right-12 h-52 w-52 rounded-full bg-amber-100 blur-3xl" />
       <div className="relative">
         <div className="pop text-7xl anim-drift">🧠</div>
-        <div className="pop pop-1 mt-4 inline-block rounded-full bg-indigo-600 px-5 py-2 text-base font-bold text-white">الدرس الثامن · مستوى IQ200</div>
+        <div className="pop pop-1 mt-4 inline-block rounded-full bg-indigo-600 px-5 py-2 text-base font-bold text-white"><LatinRuns text={"الدرس الثامن · مستوى IQ200"} /></div>
         <h1 className="pop pop-2 font-head mt-4 text-4xl font-bold leading-tight text-slate-900 md:text-5xl">مراجعة شاملة للمضارع البسيط</h1>
         <p className="pop pop-3 mt-2 text-2xl text-slate-500"><En>Present Simple · Full Review</En></p>
         <p className="pop pop-4 mx-auto mt-4 max-w-xl text-lg text-slate-600">اليوم لن نضيف زمنًا جديدًا — سنجمع كل القواعد ونختبر: هل تتحكم بالمضارع البسيط أم تحفظه فقط؟</p>
@@ -766,7 +746,7 @@ function Challenge() {
   return (
     <Frame mascot="🏆" badge="تحدي الأستاذ · IQ200+" title="اكتب فقرة من 6 جمل عن Alex" lead="شخص خيالي — تحقق من كل شرط بعد كتابته:">
       <div className="rounded-3xl border-2 border-amber-200 bg-amber-50/60 p-5">
-        <div className="mb-2 text-sm font-bold text-amber-700">مثال لنوع المطلوب فقط (ليس حلًا): <En>Alex usually ...</En></div>
+        <div className="mb-2 text-sm font-bold text-amber-700"><LatinRuns text={"مثال لنوع المطلوب فقط (ليس حلًا): [[Alex usually ...]]"} marked /></div>
         <div className="grid gap-2 sm:grid-cols-2">
           {reqs.map((r, i) => (
             <button key={r} onClick={() => setChk((c) => ({ ...c, [i]: !c[i] }))} className={`flex items-center gap-2 rounded-2xl border-2 px-3 py-2 text-right text-sm font-bold transition active:scale-95 ${chk[i] ? "border-emerald-400 bg-emerald-50 text-emerald-800" : "border-slate-200 bg-white text-slate-600"}`}>
@@ -807,8 +787,8 @@ function Closing({ onExit }: { onExit: () => void }) {
       <div className="pointer-events-none absolute -bottom-16 -right-16 h-64 w-64 rounded-full bg-amber-500/25 blur-3xl" />
       <div className="relative">
         <div className="pop text-6xl anim-drift">⏭️</div>
-        <h2 className="pop pop-1 font-head mt-3 text-3xl font-bold md:text-4xl">الدرس القادم: Present Continuous</h2>
-        <p className="pop pop-2 mx-auto mt-3 max-w-xl text-lg text-slate-300">سنبدأ بمقارنة ذكية بين <En className="font-bold text-indigo-300">I play</En> و <En className="font-bold text-indigo-300">I am playing</En> — أحد أهم مفاتيح فهم الأزمنة.</p>
+        <h2 className="pop pop-1 font-head mt-3 text-3xl font-bold md:text-4xl"><LatinRuns text={"الدرس القادم: Present Continuous"} /></h2>
+        <p className="pop pop-2 mx-auto mt-3 max-w-xl text-lg text-slate-300"><LatinRuns text={"سنبدأ بمقارنة ذكية بين [[I play]] و [[I am playing]] — أحد أهم مفاتيح فهم الأزمنة."} marked /></p>
         <div className="pop pop-3 mt-6 flex justify-center gap-3">
           <div className="rounded-2xl bg-white/10 px-5 py-3"><En className="font-bold">I play</En><div className="text-xs text-slate-400">عادة</div></div>
           <div className="rounded-2xl bg-white/10 px-5 py-3"><En className="font-bold">I am playing</En><div className="text-xs text-slate-400">الآن</div></div>
@@ -892,7 +872,7 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
               return (
                 <button key={idx} onClick={() => { setI(idx); onClose?.(); }} className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${on ? "bg-indigo-600 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}>
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${on ? "bg-white/25" : "bg-slate-100"}`}>{idx + 1}</span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[idx])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[idx]))}</span>
                   <span className="mr-auto text-base">{SLIDES[idx].mascot}</span>
                 </button>
               );
@@ -940,7 +920,7 @@ export default function Lesson8({ onExit }: { onExit: () => void }) {
           <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
             <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border-2 border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس">☰</button>
             <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-bold text-slate-500">{slide.section} · <span className="text-slate-800">{slideTitle(slide)}</span></div>
+              <div className="truncate text-sm font-bold text-slate-500"><Rich text={`${slide.section} · ${slideTitle(slide)}`} /></div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
                 <div className="h-full rounded-full bg-gradient-to-l from-indigo-500 via-violet-400 to-amber-400 transition-all duration-500" style={{ width: `${progress}%` }} />
               </div>

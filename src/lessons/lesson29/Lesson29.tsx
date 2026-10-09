@@ -1,3 +1,6 @@
+import { mixedText } from "../../shared/lessonKit";
+import { TeachingDetails } from "../../shared/TeacherWorkspace";
+import TeacherWorkspace, { TeacherSection } from "../../shared/TeacherWorkspace";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   U29,
@@ -196,7 +199,7 @@ function Track({ nodes, active }: { nodes: { label: string; en?: boolean; color?
               active === i ? "scale-105 border-teal-500 bg-teal-600 text-white shadow" : n.color ?? "border-slate-200 bg-slate-50 text-slate-700"
             }`}
           >
-            {n.label}
+            {mixedText(n.label)}
           </span>
         </div>
       ))}
@@ -599,7 +602,7 @@ function S3Formula() {
           ))}
           {placed.length > 0 && <span className="font-en text-lg font-bold text-slate-300">{done ? "✓" : "…"}</span>}
         </div>
-        {bad && <div className="text-center text-sm font-bold text-rose-600">✕ ليس بعد — الترتيب: الفاعل ثم had ثم been ثم الفعل بـ -ing</div>}
+        {bad && <div className="text-center text-sm font-bold text-rose-600"><LatinRuns text={"✕ ليس بعد — الترتيب: الفاعل ثم had ثم been ثم الفعل بـ -ing"} /></div>}
         {done && (
           <div className="pop space-y-3">
             <FormulaStrip items={[u[0], u[1]]} />
@@ -612,7 +615,7 @@ function S3Formula() {
           {S3_EXAMPLES.map((ex, i) => (
             <div key={i} className="flex flex-wrap items-center gap-3 rounded-2xl bg-white px-4 py-2.5 border-2 border-slate-100">
               <PartsLine parts={ex.parts} roles={R29} size="sm" label={false} />
-              <span className="mr-auto text-sm text-slate-500">{ex.ar}</span>
+              <span className="mr-auto text-sm text-slate-500"><LatinRuns text={ex.ar ?? ""} /></span>
             </div>
           ))}
         </div>
@@ -647,7 +650,7 @@ function S4Had() {
       {sel && (
         <div key={sel} className="pop rounded-2xl border-2 border-teal-100 bg-white p-4 text-center">
           <PartsLine parts={[P(sel, "s"), P("had", "had"), P("been", "been"), P("…", "ving")]} roles={R29} label={false} />
-          <div className="mt-2 text-sm font-bold text-teal-700">نفس had مع الجميع — لا تتغير أبدًا ✅</div>
+          <div className="mt-2 text-sm font-bold text-teal-700"><LatinRuns text={"نفس had مع الجميع — لا تتغير أبدًا ✅"} /></div>
         </div>
       )}
       <div className="text-center text-xs font-bold text-slate-400">جرّبت {count} / {pronouns.length}</div>
@@ -762,7 +765,7 @@ function DurLab({ secId, role }: { secId: "s8" | "s9"; role: "for" | "since" }) 
         </div>
         <div key={sel} className="pop rounded-2xl border-2 border-slate-100 bg-white p-4 text-center">
           <PartsLine parts={[...base.pre, P(chips[sel], "dur"), P(base.evt, "evt")]} roles={R29} size="sm" label={false} />
-          <div className="mt-2 text-sm text-slate-500">{base.ar}</div>
+          <div className="mt-2 text-sm text-slate-500"><LatinRuns text={base.ar ?? ""} /></div>
         </div>
       </Lab>
     </>
@@ -876,7 +879,7 @@ function S12Gallery() {
       </div>
       <div key={i} className="pop rounded-2xl border-2 border-slate-100 bg-white p-4">
         <PartsLine parts={S12_DISSECT[i].parts} roles={R29} size="sm" />
-        <div className="mt-2 text-sm text-slate-500 md:text-base">{S12_DISSECT[i].ar}</div>
+        <div className="mt-2 text-sm text-slate-500 md:text-base"><LatinRuns text={S12_DISSECT[i].ar ?? ""} /></div>
       </div>
     </Lab>
   );
@@ -1072,9 +1075,9 @@ function S19Stative() {
         {pick !== undefined && (
           <div className="pop space-y-2">
             {pick === 0 ? (
-              <div className="tada text-center text-sm font-bold text-emerald-700">✓ صحيح — know فعل حالة، فنستخدم Past Perfect لا المستمر</div>
+              <div className="tada text-center text-sm font-bold text-emerald-700"><LatinRuns text={"✓ صحيح — know فعل حالة، فنستخدم Past Perfect لا المستمر"} /></div>
             ) : (
-              <div className="text-center text-sm font-bold text-rose-600">✕ know فعل حالة — الصيغة المستمرة معه غير طبيعية</div>
+              <div className="text-center text-sm font-bold text-rose-600"><LatinRuns text={"✕ know فعل حالة — الصيغة المستمرة معه غير طبيعية"} /></div>
             )}
             <Verdict ok en={u[3]} ar="حتى مع المدة الطويلة — Past Perfect هو الطبيعي هنا" />
             <Note emoji="⚖️" text={u[4]} />
@@ -1146,7 +1149,7 @@ function S21IngRules() {
             );
           })}
         </div>
-        <div className="mt-3 rounded-2xl bg-teal-50 p-2.5 text-center text-sm font-bold text-teal-800">{tabs[t].note}</div>
+        <div className="mt-3 rounded-2xl bg-teal-50 p-2.5 text-center text-sm font-bold text-teal-800"><LatinRuns text={tabs[t].note ?? ""} /></div>
       </div>
     </Lab>
   );
@@ -1173,7 +1176,7 @@ function S22Negative() {
               {open[i] ? (
                 <div className="pop flex flex-wrap items-center gap-3">
                   <PartsLine parts={ng.parts} roles={R29} size="sm" label={false} />
-                  <span className="mr-auto text-sm text-slate-500">{ng.ar}</span>
+                  <span className="mr-auto text-sm text-slate-500"><LatinRuns text={ng.ar ?? ""} /></span>
                 </div>
               ) : (
                 <button type="button" onClick={() => setOpen((o) => ({ ...o, [i]: true }))} className="flex w-full items-center justify-between gap-2">
@@ -1217,7 +1220,7 @@ function S23Questions() {
         </div>
         <div key={i} className="pop rounded-2xl border-2 border-slate-100 bg-white p-4 text-center">
           <PartsLine parts={qs[i].parts} roles={R29} q size="sm" />
-          <div className="mt-2 text-xs font-bold text-violet-700">👆 لاحظ: had قفزت قبل الفاعل — وbeen وverb-ing في مكانهما</div>
+          <div className="mt-2 text-xs font-bold text-violet-700"><LatinRuns text={"👆 لاحظ: had قفزت قبل الفاعل — وbeen وverb-ing في مكانهما"} /></div>
         </div>
       </Lab>
     </>
@@ -1362,7 +1365,7 @@ function S2728Timeline() {
           />
         </div>
       )}
-      <div className="text-center text-xs font-bold text-slate-500">for تملأ المسافة ⏱️ · since تحدد نقطة الانطلاق 🕰️</div>
+      <div className="text-center text-xs font-bold text-slate-500"><LatinRuns text={"for تملأ المسافة ⏱️ · since تحدد نقطة الانطلاق 🕰️"} /></div>
     </Lab>
   );
 }
@@ -1558,7 +1561,7 @@ function FixRow({ n, fx, sourceLine }: { n: number; fx: { segs: string[]; bad: n
           ))}
         </div>
       </div>
-      {miss && !found && <div className="mt-2 pr-11 text-sm font-bold text-rose-600">✕ ليس هذا الجزء — أين يكسر القاعدة had been + verb-ing؟</div>}
+      {miss && !found && <div className="mt-2 pr-11 text-sm font-bold text-rose-600"><LatinRuns text={"✕ ليس هذا الجزء — أين يكسر القاعدة had been + verb-ing؟"} /></div>}
       {found && !revealed && (
         <div className="mt-2 flex flex-wrap items-center gap-2 pr-11">
           <span className="text-sm font-bold text-amber-700">✓ وجدت الخطأ!</span>
@@ -1570,7 +1573,7 @@ function FixRow({ n, fx, sourceLine }: { n: number; fx: { segs: string[]; bad: n
       {revealed && (
         <div className="tada mt-2 space-y-1.5 pr-11">
           <En className="block text-lg font-extrabold text-emerald-700">→ {fx.correct}</En>
-          <span className="inline-block rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">💡 {fx.why}</span>
+          <span className="inline-block rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">💡 <LatinRuns text={fx.why ?? ""} /></span>
           <div>
             <SourceReveal text={sourceLine} />
           </div>
@@ -2046,7 +2049,7 @@ const TYPE_LABEL: Record<string, string> = {
   match: "مطابقة",
 };
 
-function TestArea({ onSubmitted }: { onSubmitted: () => void }) {
+function TestArea({ onSubmitted }: { onSubmitted: (checked: boolean) => void }) {
   const [answers, setAnswers] = useState<Record<number, TestAnswer>>({});
   const [checked, setChecked] = useState(false);
   const answeredCount = TEST_29.reduce((n, q, i) => n + (isAnswered(q, answers[i]) ? 1 : 0), 0);
@@ -2065,6 +2068,7 @@ function TestArea({ onSubmitted }: { onSubmitted: () => void }) {
   const reset = () => {
     setAnswers({});
     setChecked(false);
+    onSubmitted(false);
   };
 
   return (
@@ -2079,7 +2083,7 @@ function TestArea({ onSubmitted }: { onSubmitted: () => void }) {
             if (checked) card = right ? "border-emerald-300 bg-emerald-50/50" : "border-rose-300 bg-rose-50/50";
             else if (answered) card = "border-slate-300 bg-slate-50/70";
             return (
-              <div key={i} className={`rounded-3xl border-2 p-4 transition ${card}`}>
+              <div key={i} data-test-q={i + 1} className={`rounded-3xl border-2 p-4 transition ${card}`}>
                 <div className="flex flex-wrap items-start gap-3">
                   <Nub n={i + 1} className="bg-slate-900" />
                   <div className="min-w-0 flex-1">
@@ -2105,11 +2109,11 @@ function TestArea({ onSubmitted }: { onSubmitted: () => void }) {
               disabled={!all}
               onClick={() => {
                 setChecked(true);
-                onSubmitted();
+                onSubmitted(true);
               }}
               className="mr-auto rounded-xl bg-teal-600 px-6 py-2.5 font-bold text-white shadow transition enabled:hover:bg-teal-700 disabled:opacity-40"
             >
-              تسليم الاختبار ✅
+              تحقق من الإجابات — تسليم الاختبار ✅
             </button>
           ) : (
             <>
@@ -2272,7 +2276,7 @@ function Solutions({ unlocked, onGoTest, onGoTeacher }: { unlocked: boolean; onG
               <div className="mt-2 rounded-2xl bg-emerald-50 px-3.5 py-2 text-base font-extrabold text-emerald-900">
                 ✓ <Rich text={s.answer} />
               </div>
-              <Rich text={s.explanation} className="mt-2 block text-sm leading-relaxed text-slate-700 md:text-base" />
+              <TeachingDetails><Rich text={s.explanation} className="mt-2 block text-sm leading-relaxed text-slate-700 md:text-base" /></TeachingDetails>
               <div className="mt-2 rounded-2xl bg-rose-50 px-3.5 py-2 text-sm font-bold text-rose-700">⚠️ الفخ الشائع: <Rich text={s.trap} /></div>
             </article>
           ))}
@@ -2322,12 +2326,11 @@ function Teacher({ unlocked, onUnlock, onGoSolutions }: { unlocked: boolean; onU
     );
   }
   return (
-    <div data-area="lesson29-teacher">
-      {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
-      <div className="mb-4">
+    <div data-area="lesson29-teacher"><TeacherWorkspace lesson={29}>
+<TeacherSection title="مفتاح الاختبار النهائي" category="assessment"><div className="mb-4">
         <FinalTestAnswerKey lesson={29} questions={FINAL_TESTS[29]} accent="bg-teal-600" />
-      </div>
-      <Frame mascot="👨‍🏫" badge="Teacher Area" title="منطقة المعلم — Past Perfect Continuous" lead="نظرة عامة، أهداف المصدر، وملاحظات تدريس حاسمة." accent={ACCENT29}>
+      </div></TeacherSection>
+<TeacherSection title="إعداد الدرس وملاحظات التدريس" category="teaching"><Frame mascot="👨‍🏫" badge="Teacher Area" title="منطقة المعلم — Past Perfect Continuous" lead="نظرة عامة، أهداف المصدر، وملاحظات تدريس حاسمة." accent={ACCENT29}>
         <div className="grid gap-2">
           {TEACHER_29_OVERVIEW.map((x, i) => (
             <div key={i} className="rounded-2xl border-2 border-slate-100 bg-white p-3.5">
@@ -2355,8 +2358,9 @@ function Teacher({ unlocked, onUnlock, onGoSolutions }: { unlocked: boolean; onU
         <button type="button" onClick={onGoSolutions} className="rounded-xl bg-emerald-600 px-5 py-2.5 font-bold text-white shadow transition hover:bg-emerald-700">
           ✅ فتح حلول الاختبارات
         </button>
-      </Frame>
-    </div>
+      </Frame></TeacherSection>
+<TeacherSection title="مفتاح منطقة الاختبارات — 20 سؤالًا" category="assessment"><Solutions unlocked={true} onGoTest={onGoSolutions} onGoTeacher={onGoSolutions} /></TeacherSection>
+</TeacherWorkspace></div>
   );
 }
 
@@ -2434,7 +2438,7 @@ function Rail({
               }}
               className={`rounded-xl px-2 py-2 text-xs font-bold transition ${area === a.id ? "bg-teal-600 text-white shadow" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}
             >
-              {a.label}
+              {mixedText(a.label)}
             </button>
           ))}
         </div>
@@ -2537,7 +2541,7 @@ export default function Lesson29({ onExit }: { onExit: () => void }) {
                 </>
               ) : (
                 <div className="truncate text-sm font-bold text-slate-500">
-                  الدرس 29 · <span className="text-slate-800">{AREAS.find((a) => a.id === area)?.label}</span>
+                  الدرس 29 · <span className="text-slate-800">{mixedText(AREAS.find((a) => a.id === area)?.label)}</span>
                 </div>
               )}
             </div>
@@ -2565,7 +2569,7 @@ export default function Lesson29({ onExit }: { onExit: () => void }) {
               </div>
             </div>
             <div className="mx-auto max-w-4xl" hidden={area !== "test"}>
-              <TestArea onSubmitted={() => setTestDone(true)} />
+              <TestArea onSubmitted={setTestDone} />
             </div>
             <div className="mx-auto max-w-4xl" hidden={area !== "solutions"}>
               <Solutions unlocked={solutionsUnlocked} onGoTest={() => setArea("test")} onGoTeacher={() => setArea("teacher")} />

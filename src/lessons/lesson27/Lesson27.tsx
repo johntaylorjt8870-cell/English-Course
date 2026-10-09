@@ -1,3 +1,7 @@
+import TeacherSourceBrowser from "../../shared/TeacherSourceBrowser";
+import { TeachingDetails } from "../../shared/TeacherWorkspace";
+import { mixedText } from "../../shared/lessonKit";
+import TeacherWorkspace, { TeacherSection } from "../../shared/TeacherWorkspace";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   SOURCE_SECTIONS,
@@ -196,9 +200,9 @@ function DualPastTimeline({
   return (
     <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row rounded-2xl border-2 border-violet-100 bg-white p-3.5 sm:p-4">
       <div className="mb-2 flex items-center justify-between text-xs font-black text-slate-400">
-        <span>⏪ EARLIER PAST (الأقدم)</span>
-        <span>📸 LATER PAST (الأحدث)</span>
-        <span>⏰ NOW (الآن)</span>
+        <span><LatinRuns text={"⏪ EARLIER PAST (الأقدم)"} /></span>
+        <span><LatinRuns text={"📸 LATER PAST (الأحدث)"} /></span>
+        <span><LatinRuns text={"⏰ NOW (الآن)"} /></span>
       </div>
       <div className="relative flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         {/* الحدث الأول */}
@@ -210,7 +214,7 @@ function DualPastTimeline({
           }`}
         >
           <div className="flex items-center gap-1.5 text-xs font-black text-violet-700">
-            <span>⏪ الحدث ① (Past Perfect)</span>
+            <span><LatinRuns text={"⏪ الحدث ① (Past Perfect)"} /></span>
           </div>
           <EnAr en={firstEn} ar={firstAr} enClassName="mt-1 block text-lg font-extrabold text-violet-900" arClassName="mt-0.5 block text-xs font-bold text-slate-600" />
         </div>
@@ -226,7 +230,7 @@ function DualPastTimeline({
           }`}
         >
           <div className="flex items-center gap-1.5 text-xs font-black text-orange-700">
-            <span>📸 الحدث ② (Past Simple)</span>
+            <span><LatinRuns text={"📸 الحدث ② (Past Simple)"} /></span>
           </div>
           <EnAr en={secondEn} ar={secondAr} enClassName="mt-1 block text-lg font-extrabold text-orange-900" arClassName="mt-0.5 block text-xs font-bold text-slate-600" />
         </div>
@@ -419,7 +423,7 @@ function S1Timeline() {
   return (
     <div className="space-y-4" data-en-seq="l27-timeline">
       <Note emoji="🧠" text="Past Perfect = الماضي التام. الفكرة الأساسية بسيطة جدًا: نحن نتحدث عن حدثين في الماضي، ونريد أن نوضح أن أحدهما حدث قبل الآخر." />
-      
+
       <Lab emoji="🕰️" label="Chronological Timeline" ar="خط الزمن: الماضي الأقدم ← الحدث الأول ← الحدث الثاني ← الآن">
         <div className="flex justify-center gap-2">
           <button
@@ -689,13 +693,13 @@ function S7TeacherSwitch() {
           <div className="space-y-2 rounded-2xl border-2 border-orange-200 bg-orange-50/50 p-4">
             <En className="block text-xl font-black text-orange-950">When I arrived, the teacher left.</En>
             <p className="text-sm font-bold text-slate-700">المعنى: وصلتُ، <span className="text-orange-700 font-extrabold">ثم</span> غادر المعلم.</p>
-            <div className="text-xs font-black text-slate-500">الترتيب: ① I arrived ← ② The teacher left</div>
+            <div className="text-xs font-black text-slate-500"><LatinRuns text={"الترتيب: ① I arrived ← ② The teacher left"} /></div>
           </div>
         ) : (
           <div className="space-y-2 rounded-2xl border-2 border-violet-200 bg-violet-50/50 p-4">
             <En className="block text-xl font-black text-violet-950">When I arrived, the teacher had left.</En>
             <p className="text-sm font-bold text-slate-700">المعنى: عندما وصلت، كان المعلم <span className="text-violet-700 font-extrabold">قد غادر بالفعل</span>.</p>
-            <div className="text-xs font-black text-violet-800">الترتيب: ① The teacher left ← ② I arrived</div>
+            <div className="text-xs font-black text-violet-800"><LatinRuns text={"الترتيب: ① The teacher left ← ② I arrived"} /></div>
           </div>
         )}
       </Lab>
@@ -1239,12 +1243,12 @@ function S28OrderClear() {
         {mode === "then" ? (
           <div className="rounded-2xl border-2 border-orange-200 bg-orange-50 p-4">
             <En className="text-lg font-black text-orange-950">I ate dinner and then I watched TV.</En>
-            <p className="mt-1 text-xs font-bold text-slate-600">الماضي البسيط كافٍ وطبيعي جدًا لأن and then توضّح الترتيب.</p>
+            <p className="mt-1 text-xs font-bold text-slate-600"><LatinRuns text={"الماضي البسيط كافٍ وطبيعي جدًا لأن and then توضّح الترتيب."} /></p>
           </div>
         ) : (
           <div className="rounded-2xl border-2 border-violet-200 bg-violet-50 p-4">
             <En className="text-lg font-black text-violet-950">After I had eaten dinner, I watched TV.</En>
-            <p className="mt-1 text-xs font-bold text-slate-600">كلاهما صحيح — Past Perfect يعطي تركيزًا إضافيًا على الأسبقية.</p>
+            <p className="mt-1 text-xs font-bold text-slate-600"><LatinRuns text={"كلاهما صحيح — Past Perfect يعطي تركيزًا إضافيًا على الأسبقية."} /></p>
           </div>
         )}
       </Lab>
@@ -1282,7 +1286,7 @@ function S29IqStepper() {
 
         <div className="rounded-2xl border-2 border-violet-200 bg-white p-4">
           <div className="text-xs font-black text-violet-700">خطوة {steps[cur].n} من 4</div>
-          <div className="mt-1 text-lg font-black text-slate-900">{steps[cur].title}</div>
+          <div className="mt-1 text-lg font-black text-slate-900">{mixedText(steps[cur].title)}</div>
           <div className="mt-3 grid gap-2 sm:grid-cols-2">
             <div className="rounded-xl bg-slate-50 p-2.5 text-xs font-bold text-slate-700">
               ❌ إذا كان لا: {steps[cur].no}
@@ -1454,7 +1458,7 @@ function S35Transform() {
       {/* التحدي 1 */}
       <div className="rounded-2xl border-2 border-violet-100 bg-white p-4">
         <div className="flex items-center justify-between">
-          <span className="font-bold text-violet-900">تحدي 1: Sara finished the test. The teacher collected the papers.</span>
+          <span className="font-bold text-violet-900"><LatinRuns text={"تحدي 1: Sara finished the test. The teacher collected the papers."} /></span>
           <button
             type="button"
             onClick={() => setShow1(!show1)}
@@ -1474,7 +1478,7 @@ function S35Transform() {
       {/* التحدي 2 */}
       <div className="rounded-2xl border-2 border-violet-100 bg-white p-4">
         <div className="flex items-center justify-between">
-          <span className="font-bold text-violet-900">تحدي 2 (أصعب): The children ate dinner. Their parents came home.</span>
+          <span className="font-bold text-violet-900"><LatinRuns text={"تحدي 2 (أصعب): The children ate dinner. Their parents came home."} /></span>
           <button
             type="button"
             onClick={() => setShow2(!show2)}
@@ -1692,7 +1696,7 @@ function S39OrderChallenge() {
               </span>
               <div>
                 <En className="font-bold text-slate-900">{it.en}</En>
-                <div className="text-xs text-slate-500">{it.ar}</div>
+                <div className="text-xs text-slate-500"><LatinRuns text={it.ar ?? ""} /></div>
               </div>
             </button>
           );
@@ -1977,7 +1981,7 @@ function GoldenSummary() {
     <div className="space-y-4">
       <div className="rounded-3xl border-2 border-amber-300 bg-amber-50 p-6 text-center">
         <span className="text-4xl">🧠</span>
-        <h3 className="font-head mt-2 text-2xl font-black text-amber-950">الملخص الذهبي لـ Past Perfect</h3>
+        <h3 className="font-head mt-2 text-2xl font-black text-amber-950"><LatinRuns text={"الملخص الذهبي لـ Past Perfect"} /></h3>
         <p className="mt-2 text-base font-semibold text-amber-900">
           حدث أقدم في الماضي + حدث أحدث في الماضي.
         </p>
@@ -2030,7 +2034,7 @@ function KeyRule() {
     <div className="space-y-4 text-center">
       <div className="rounded-3xl border-2 border-violet-300 bg-gradient-to-br from-violet-600 to-indigo-700 p-8 text-white shadow-md">
         <span className="text-4xl">🚨</span>
-        <h3 className="font-head mt-2 text-2xl font-black">إذا رأيت had فكّر مباشرة بـ V3</h3>
+        <h3 className="font-head mt-2 text-2xl font-black"><LatinRuns text={"إذا رأيت had فكّر مباشرة بـ V3"} /></h3>
         <En className="mt-2 block text-xl font-extrabold text-violet-200">had + V3 (NOT V2!)</En>
       </div>
 
@@ -2063,7 +2067,7 @@ function TenseMap() {
           </span>
           <div>
             <En className="text-base font-black text-slate-900">{it.en}</En>
-            <div className="text-xs font-bold text-slate-500">{it.ar}</div>
+            <div className="text-xs font-bold text-slate-500"><LatinRuns text={it.ar ?? ""} /></div>
           </div>
         </div>
       ))}
@@ -2101,7 +2105,7 @@ function ClosingStep({ onGoTest }: { onGoTest: () => void }) {
     <div className="space-y-5 text-center">
       <div className="rounded-3xl border-2 border-violet-200 bg-gradient-to-br from-violet-600 to-indigo-800 p-8 text-white shadow-lg">
         <div className="text-5xl anim-drift">🏆</div>
-        <h3 className="font-head mt-3 text-2xl font-black md:text-3xl">أحسنت! — LESSON 27 COMPLETE</h3>
+        <h3 className="font-head mt-3 text-2xl font-black md:text-3xl"><LatinRuns text={"أحسنت! — LESSON 27 COMPLETE"} /></h3>
         <p className="mt-2 text-base font-semibold text-violet-100 md:text-lg">
           <LatinRuns text="أكملت الدرس 27: Past Perfect — الماضي التام. الآن أنت جاهز لاختبار فهمك عبر 20 سؤالًا شاملة!" />
         </p>
@@ -2253,7 +2257,7 @@ function SlideBody({ id, onGoTest }: { id: string; onGoTest: () => void }) {
 // منطقة الاختبارات (Test Area) — 20 سؤالًا مستقلة
 // ============================================================
 
-export function TestArea27({ onShowSolutions }: { onShowSolutions?: () => void }) {
+export function TestArea27({ onShowSolutions, onCheckedChange }: { onShowSolutions?: () => void; onCheckedChange?: (checked: boolean) => void }) {
   const [answers, setAnswers] = useState<Record<number, any>>({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -2340,11 +2344,13 @@ export function TestArea27({ onShowSolutions }: { onShowSolutions?: () => void }
   const handleSubmit = () => {
     if (!allAnswered) return;
     setSubmitted(true);
+    onCheckedChange?.(true);
   };
 
   const handleReset = () => {
     setAnswers({});
     setSubmitted(false);
+    onCheckedChange?.(false);
   };
 
   return (
@@ -2368,7 +2374,7 @@ export function TestArea27({ onShowSolutions }: { onShowSolutions?: () => void }
         </div>
 
         {submitted && (
-          <div className="mt-6 rounded-2xl border-2 border-violet-200 bg-violet-50 p-5 text-center shadow-sm">
+          <div role="status" aria-live="polite" className="mt-6 rounded-2xl border-2 border-violet-200 bg-violet-50 p-5 text-center shadow-sm">
             <div className="text-3xl">🎉</div>
             <div className="font-head mt-1 text-2xl font-black text-violet-950">
               نتيجتك: {score} / 20
@@ -2408,13 +2414,13 @@ export function TestArea27({ onShowSolutions }: { onShowSolutions?: () => void }
             : "border-slate-200 bg-white";
 
           return (
-            <div key={q.n} data-test-q={q.n} className={`rounded-3xl border-2 p-5 transition ${cardBorder}`}>
+            <div key={q.n} data-test-q={q.n} role="group" aria-label={`السؤال ${q.n}`} className={`rounded-3xl border-2 p-5 transition ${cardBorder}`}>
               <div className="flex items-start gap-3">
                 <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-xl font-en text-sm font-black text-white ${submitted ? (isCorrect ? "bg-emerald-600" : "bg-rose-600") : "bg-violet-700"}`}>
                   {q.n}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <div className="text-base font-bold text-slate-900">{q.ar}</div>
+                  <div className="text-base font-bold text-slate-900"><LatinRuns text={q.ar ?? ""} /></div>
                   {q.en && <En className="mt-1 block text-lg font-black text-violet-900">{q.en}</En>}
 
                   {/* Single Choice */}
@@ -2427,6 +2433,7 @@ export function TestArea27({ onShowSolutions }: { onShowSolutions?: () => void }
                             key={oi}
                             type="button"
                             disabled={submitted}
+                            aria-pressed={sel}
                             onClick={() => setSingle(q.n, oi)}
                             className={`rounded-xl border-2 px-3.5 py-1.5 font-en font-bold transition active:scale-95 ${
                               sel
@@ -2456,6 +2463,7 @@ export function TestArea27({ onShowSolutions }: { onShowSolutions?: () => void }
                             key={String(val)}
                             type="button"
                             disabled={submitted}
+                            aria-pressed={sel}
                             onClick={() => setTf(q.n, val)}
                             className={`rounded-xl border-2 px-4 py-1.5 font-bold transition active:scale-95 ${
                               sel
@@ -2485,6 +2493,7 @@ export function TestArea27({ onShowSolutions }: { onShowSolutions?: () => void }
                             key={oi}
                             type="button"
                             disabled={submitted}
+                            aria-pressed={sel}
                             onClick={() => setMulti(q.n, oi)}
                             className={`rounded-xl border-2 px-3.5 py-1.5 font-en font-bold transition active:scale-95 ${
                               sel
@@ -2516,6 +2525,7 @@ export function TestArea27({ onShowSolutions }: { onShowSolutions?: () => void }
                               key={ii}
                               type="button"
                               disabled={submitted}
+                            aria-pressed={sel}
                               onClick={() => setOrderPick(q.n, item, q.items.length)}
                               className={`rounded-xl border-2 px-3 py-1.5 font-en text-xs font-bold transition active:scale-95 ${
                                 sel
@@ -2552,6 +2562,7 @@ export function TestArea27({ onShowSolutions }: { onShowSolutions?: () => void }
                                     key={ri}
                                     type="button"
                                     disabled={submitted}
+                            aria-pressed={sel}
                                     onClick={() => setMatchPick(q.n, li, ri)}
                                     className={`rounded-xl border px-2.5 py-1 text-xs font-bold transition ${
                                       sel
@@ -2584,6 +2595,7 @@ export function TestArea27({ onShowSolutions }: { onShowSolutions?: () => void }
                             key={si}
                             type="button"
                             disabled={submitted}
+                            aria-pressed={sel}
                             onClick={() => setSpotPick(q.n, si)}
                             className={`rounded-xl border-2 px-3 py-1.5 font-en text-sm font-bold transition active:scale-95 ${
                               sel
@@ -2609,14 +2621,16 @@ export function TestArea27({ onShowSolutions }: { onShowSolutions?: () => void }
       </div>
 
       <div className="rounded-3xl border-2 border-violet-100 bg-white p-5 text-center">
+        <p id="l27-completion" className="mb-3 text-sm">أجب عن أسئلة هذا الاختبار فقط لتفعيل التصحيح: {answeredCount} / 20</p>
         {!submitted ? (
           <button
             type="button"
             disabled={!allAnswered}
             onClick={handleSubmit}
+            aria-describedby="l27-completion"
             className="rounded-2xl bg-violet-700 px-10 py-3.5 text-lg font-black text-white shadow-md transition active:scale-95 hover:bg-violet-800 disabled:opacity-40"
           >
-            إنهاء الاختبار
+            تحقق من الإجابات — إنهاء الاختبار
           </button>
         ) : (
           <button
@@ -2665,7 +2679,7 @@ export function Solutions27({ unlocked }: { unlocked: boolean }) {
               {sol.n}
             </span>
             <div className="min-w-0 flex-1 space-y-2">
-              <div className="text-base font-bold text-slate-900">{sol.ar}</div>
+              <div className="text-base font-bold text-slate-900"><LatinRuns text={sol.ar ?? ""} /></div>
               {sol.en && <En className="block text-lg font-black text-violet-900">{sol.en}</En>}
 
               <div className="rounded-2xl border border-emerald-200 bg-emerald-50/70 p-3">
@@ -2673,10 +2687,10 @@ export function Solutions27({ unlocked }: { unlocked: boolean }) {
                 <div className="mt-0.5 text-base font-black text-emerald-950"><Rich text={sol.answer} /></div>
               </div>
 
-              <div className="text-sm font-semibold text-slate-700">
+              <TeachingDetails><div className="text-sm font-semibold text-slate-700">
                 <span className="font-bold text-slate-900">💡 التفسير: </span>
-                <Rich text={sol.explanation} />
-              </div>
+                <Rich text={sol.why} />
+              </div></TeachingDetails>
 
               {sol.trap && (
                 <div className="rounded-xl bg-amber-50 p-2.5 text-xs font-bold text-amber-900">
@@ -2731,6 +2745,7 @@ export function TeacherArea27({
           <form onSubmit={handleUnlock} className="mt-5 space-y-3">
             <input
               type="password"
+              aria-label="كلمة مرور المعلم"
               value={pass}
               onChange={(e) => {
                 setPass(e.target.value);
@@ -2754,9 +2769,7 @@ export function TeacherArea27({
 
   return (
     <div data-area="l27-teacher" className="space-y-6">
-      {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
-      <FinalTestAnswerKey lesson={27} questions={FINAL_TESTS[27]} accent="bg-violet-700" />
-      <div className="rounded-3xl border-2 border-emerald-200 bg-emerald-50/80 p-5">
+<div className="rounded-3xl border-2 border-emerald-200 bg-emerald-50/80 p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <span className="text-2xl">🔓</span>
@@ -2776,9 +2789,16 @@ export function TeacherArea27({
           )}
         </div>
       </div>
+<TeacherWorkspace lesson={27}>
+      {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
+      <TeacherSection title="مفتاح الاختبار النهائي" category="assessment">
+<FinalTestAnswerKey lesson={27} questions={FINAL_TESTS[27]} accent="bg-violet-700" />
+</TeacherSection>
+
 
       {/* 1) Overview */}
-      <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
+      <TeacherSection title="نظرة عامة" category="teaching">
+<div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
         <h3 className="font-head text-lg font-black text-slate-900"><Rich text="Lesson Overview — نظرة عامة" /></h3>
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="rounded-2xl bg-slate-50 p-3 text-xs space-y-1">
@@ -2795,9 +2815,11 @@ export function TeacherArea27({
           </div>
         </div>
       </div>
+</TeacherSection>
 
       {/* 2) Teaching Notes */}
-      <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
+      <TeacherSection title="ملاحظات التدريس" category="teaching">
+<div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
         <h3 className="font-head text-lg font-black text-slate-900"><Rich text="Teaching Notes — ملاحظات تعليمية (16 بندًا)" /></h3>
         <div className="grid gap-2.5 sm:grid-cols-2">
           {TEACHER_27_NOTES.map((note, i) => (
@@ -2812,26 +2834,21 @@ export function TeacherArea27({
           ))}
         </div>
       </div>
+</TeacherSection>
 
       {/* 3) Activity Solutions */}
-      <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
+      <TeacherSection title="حلول الأنشطة والتدريبات" category="source">
+<div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
         <h3 className="font-head text-lg font-black text-slate-900"><Rich text="Activity Solutions — حلول الأنشطة والتدريبات (10 أقسام)" /></h3>
         <div className="space-y-2">
-          {TEACHER_27_SOLUTIONS.map((sol, i) => (
-            <div key={i} className="rounded-2xl border border-slate-100 bg-slate-50 p-3 text-xs">
-              <div className="font-black text-slate-900"><Rich text={sol.head} /></div>
-              <div className="mt-1 space-y-0.5 text-slate-700">
-                {sol.lines.map((l, li) => (
-                  <div key={li}>• <Rich text={l} /></div>
-                ))}
-              </div>
-            </div>
-          ))}
+          <TeacherSourceBrowser lesson={27} groups={TEACHER_27_SOLUTIONS} />
         </div>
       </div>
+</TeacherSection>
 
       {/* 4) Story Rubric */}
-      <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-2">
+      <TeacherSection title="سلم تقييم القصة" category="teaching">
+<div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-2">
         <h3 className="font-head text-lg font-black text-slate-900"><Rich text="Story Rubric — سلّم قصة «The Mysterious Door»" /></h3>
         <div className="rounded-2xl bg-violet-50 p-3.5 text-xs font-semibold text-violet-950 space-y-1">
           {TEACHER_27_RUBRIC.lines.map((l, i) => (
@@ -2839,9 +2856,11 @@ export function TeacherArea27({
           ))}
         </div>
       </div>
+</TeacherSection>
 
       {/* 5) Common Mistakes */}
-      <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
+      <TeacherSection title="الأخطاء الشائعة" category="teaching">
+<div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
         <h3 className="font-head text-lg font-black text-slate-900"><Rich text="Common Mistakes — الأخطاء الشائعة (8 محاور)" /></h3>
         <div className="grid gap-2 sm:grid-cols-2">
           {TEACHER_27_MISTAKES.map((m, i) => (
@@ -2856,7 +2875,10 @@ export function TeacherArea27({
           ))}
         </div>
       </div>
-    </div>
+</TeacherSection>
+    <TeacherSection title="مفتاح منطقة الاختبارات — 20 سؤالًا" category="assessment"><Solutions27 unlocked={true} /></TeacherSection>
+</TeacherWorkspace>
+</div>
   );
 }
 
@@ -3073,6 +3095,7 @@ export default function Lesson27({ onExit }: { onExit?: () => void }) {
 
         {tab === "test" && (
           <TestArea27
+            onCheckedChange={setTestUnlocked}
             onShowSolutions={() => {
               setTestUnlocked(true);
               setTab("solutions");
@@ -3089,7 +3112,7 @@ export default function Lesson27({ onExit }: { onExit?: () => void }) {
             unlocked={teacherUnlocked}
             onUnlockChange={(u) => {
               setTeacherUnlocked(u);
-              if (u) setTestUnlocked(true);
+
             }}
             onGoSolutions={() => setTab("solutions")}
           />

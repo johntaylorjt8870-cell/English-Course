@@ -1,3 +1,7 @@
+import { Verdict as SharedVerdict } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
+import { En as SharedEn } from "../../shared/lessonKit";
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -32,26 +36,11 @@ const RS: Record<Role7, { chip: string; solid: string; text: string }> = {
 };
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <span className={`ltr font-en ${className}`}>{children}</span>;
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const parts = text.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((x, i) => {
-        const m = x.match(/^\[\[(.+)\]\]$/);
-        if (m) {
-          return (
-            <span key={i} className="ltr font-en mx-1 rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
-              {m[1]}
-            </span>
-          );
-        }
-        return <LatinRuns key={i} text={x} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 function PartsLine({ parts, q, size = "md", label = true }: { parts: Part7[]; q?: boolean; size?: "sm" | "md" | "lg"; label?: boolean }) {
@@ -92,16 +81,16 @@ function Frame({ mascot, step, badge, title, lead, children, tip }: { mascot: st
         {mascot}
       </div>
       <div className="flex items-center gap-2.5">
-        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-rose-600 text-lg font-bold text-white">{step}</span>}
-        {badge && <span className="rounded-full bg-rose-100 px-3.5 py-1.5 text-sm font-bold text-rose-800">{badge}</span>}
+        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-rose-600 text-lg font-bold text-white">{mixedText(step)}</span>}
+        {badge && <span className="rounded-full bg-rose-100 px-3.5 py-1.5 text-sm font-bold text-rose-800">{mixedText(badge)}</span>}
       </div>
-      <h2 className="font-head mt-3 max-w-[88%] text-3xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{title}</h2>
-      {lead && <p className="mt-2 max-w-[88%] text-lg text-slate-500 md:text-xl">{lead}</p>}
+      <h2 className="font-head mt-3 max-w-[88%] text-3xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{mixedText(title)}</h2>
+      {lead && <p className="mt-2 max-w-[88%] text-lg text-slate-500 md:text-xl">{mixedText(lead)}</p>}
       <div className="mt-6 space-y-3.5">{children}</div>
       {tip && (
         <div className="mt-6 flex items-center gap-3 rounded-2xl bg-gradient-to-l from-rose-700 to-pink-700 p-4 text-white">
           <span className="text-2xl">🦉</span>
-          <span className="text-base font-semibold md:text-lg">{tip}</span>
+          <span className="text-base font-semibold md:text-lg">{mixedText(tip)}</span>
         </div>
       )}
     </section>
@@ -117,16 +106,7 @@ function Note({ emoji, text }: { emoji: string; text: string }) {
   );
 }
 
-function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; why?: string }) {
-  return (
-    <div className={`flex flex-wrap items-center gap-3 rounded-3xl border-2 p-4 ${ok ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`}>
-      <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-base font-bold text-white ${ok ? "bg-emerald-500" : "bg-rose-500"}`}>{ok ? "✓" : "✕"}</span>
-      <En className={`text-xl font-bold ${ok ? "text-emerald-900" : "text-rose-800 line-through decoration-rose-300"}`}>{en}</En>
-      {ar && <span className="text-base text-slate-500">{ar}</span>}
-      {why && <span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}>{why}</span>}
-    </div>
-  );
-}
+function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; why?: string }) { return <SharedVerdict ok={ok} en={en} ar={ar} why={why} />; }
 
 // ============================================================
 // تفاعليات
@@ -202,11 +182,10 @@ function Vanish() {
           <div className="mb-2 text-xs font-bold text-emerald-600">الإثبات</div>
           <div dir="ltr" className="flex flex-wrap items-center gap-2">
             <En className="rounded-xl bg-sky-100 px-3 py-1.5 text-2xl font-extrabold text-sky-900">{s.en}</En>
-            <span className="rounded-xl bg-teal-100 px-3 py-1.5 font-en text-2xl font-extrabold text-teal-900">
+            <EnAr en={<span className="rounded-xl bg-teal-100 px-3 py-1.5 font-en text-2xl font-extrabold text-teal-900">
               {s.third ? v.base : v.base}
               {s.third && <span className="tada rounded-md bg-rose-500 px-1 text-white">{sPart}</span>}
-            </span>
-            <span className="text-slate-400">← {s.ar} {arVerb7(v.ar, s.en)}</span>
+            </span>} ar={<span className="text-slate-400">← <LatinRuns text={s.ar ?? ""} /> {arVerb7(v.ar, s.en)}</span>} />
           </div>
         </div>
         {/* النفي */}
@@ -223,7 +202,7 @@ function Vanish() {
             </span>
             <En className="rounded-xl bg-teal-100 px-3 py-1.5 text-2xl font-extrabold text-teal-900">{v.base}</En>
           </div>
-          {s.third && <div className="mt-2 text-sm font-bold text-rose-600">👀 الـ s انتقلت من الفعل إلى does — والفعل عاد أساسيًا!</div>}
+          {s.third && <div className="mt-2 text-sm font-bold text-rose-600"><LatinRuns text={"👀 الـ s انتقلت من الفعل إلى does — والفعل عاد أساسيًا!"} /></div>}
         </div>
         {/* السؤال */}
         <div className="rounded-2xl border-2 border-indigo-200 bg-white p-4">
@@ -239,7 +218,7 @@ function Vanish() {
             <En className="rounded-xl bg-sky-100 px-3 py-1.5 text-2xl font-extrabold text-sky-900">{s.en === "I" ? "I" : s.en.toLowerCase()}</En>
             <En className="rounded-xl bg-teal-100 px-3 py-1.5 text-2xl font-extrabold text-teal-900">{v.base}?</En>
           </div>
-          {s.third && <div className="mt-2 text-sm font-bold text-indigo-600">👀 الـ s في Does — لذلك الفعل بدون s.</div>}
+          {s.third && <div className="mt-2 text-sm font-bold text-indigo-600"><LatinRuns text={"👀 الـ s في Does — لذلك الفعل بدون s."} /></div>}
         </div>
       </div>
     </div>
@@ -295,16 +274,16 @@ function BeVsDo() {
   return (
     <div className="grid gap-3 md:grid-cols-2">
       <div className="rounded-3xl border-2 border-sky-200 bg-sky-50 p-5">
-        <div className="mb-2 font-head text-lg font-bold text-sky-800">Verb to be ← مع الصفات</div>
+        <div className="mb-2 font-head text-lg font-bold text-sky-800"><LatinRuns text={"Verb to be ← مع الصفات"} /></div>
         <En className="block text-xl font-extrabold text-slate-800">Is he happy?</En>
         <En className="mt-1 block text-lg font-bold text-slate-600">Yes, he is.</En>
-        <div className="mt-2 text-sm text-slate-500">happy صفة ← نستخدم is</div>
+        <div className="mt-2 text-sm text-slate-500"><LatinRuns text={"happy صفة ← نستخدم is"} /></div>
       </div>
       <div className="rounded-3xl border-2 border-teal-200 bg-teal-50 p-5">
-        <div className="mb-2 font-head text-lg font-bold text-teal-800">Present Simple ← مع الأفعال</div>
+        <div className="mb-2 font-head text-lg font-bold text-teal-800"><LatinRuns text={"Present Simple ← مع الأفعال"} /></div>
         <En className="block text-xl font-extrabold text-slate-800">Does he play football?</En>
         <En className="mt-1 block text-lg font-bold text-slate-600">Yes, he does.</En>
-        <div className="mt-2 text-sm text-slate-500">play فعل ← نستخدم Does</div>
+        <div className="mt-2 text-sm text-slate-500"><LatinRuns text={"play فعل ← نستخدم Does"} /></div>
       </div>
       <div className="md:col-span-2">
         <Verdict ok={false} en="Does he is happy?" why="لا do مع Verb to be" />
@@ -424,7 +403,7 @@ function AuxPick({ ex }: { ex: Extract<Exercise7, { type: "auxPick" }> }) {
                 <En className="text-xl font-bold text-slate-800">{it.after}</En>
               </div>
             </div>
-            <div className="mt-1.5 pr-11 text-xs text-slate-400">{it.ar}</div>
+            <div className="mt-1.5 pr-11 text-xs text-slate-400"><LatinRuns text={it.ar ?? ""} /></div>
             <div className="mt-2 flex gap-1.5 pr-11">
               {it.opts.map((o, oi) => (
                 <button
@@ -453,8 +432,7 @@ function FixEx({ ex }: { ex: Extract<Exercise7, { type: "fix" }> }) {
           <En className="text-xl font-bold text-rose-700 line-through decoration-rose-300">{it.wrong}</En>
           {show[i] ? (
             <div className="tada flex flex-wrap items-center gap-2">
-              <En className="text-xl font-extrabold text-emerald-700">→ {it.correct}</En>
-              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">{it.why}</span>
+              <EnAr en={<En className="text-xl font-extrabold text-emerald-700">→ {it.correct}</En>} ar={<span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700"><LatinRuns text={it.why ?? ""} /></span>} />
             </div>
           ) : (
             <button onClick={() => setShow((s) => ({ ...s, [i]: true }))} className="mr-auto rounded-xl bg-emerald-600 px-4 py-1.5 text-sm font-bold text-white transition hover:bg-emerald-700">
@@ -522,7 +500,7 @@ function TransformEx({ ex }: { ex: Extract<Exercise7, { type: "transform" }> }) 
             </div>
             {done && (
               <div className="tada mt-2 pr-11 font-bold text-slate-600">
-                {it.ar} {it.third && <span className="text-rose-600">— اختفت الـ s من {it.vs}!</span>}
+                <LatinRuns text={it.ar ?? ""} /> {it.third && <span className="text-rose-600"><LatinRuns text={"— اختفت الـ s من "} />{it.vs}!</span>}
               </div>
             )}
           </div>
@@ -542,8 +520,7 @@ function ChooseEx({ ex }: { ex: Extract<Exercise7, { type: "choose" }> }) {
           <div key={i} className={`rounded-3xl border-2 p-4 transition ${c !== undefined ? (c === it.answer ? "border-emerald-300 bg-emerald-50/50" : "border-rose-300 bg-rose-50/50") : "border-slate-200 bg-white"}`}>
             <div className="flex flex-wrap items-center gap-3">
               <Nub n={i + 1} />
-              <En className="text-xl font-bold text-slate-800">{it.stem}</En>
-              <span className="text-sm text-slate-400">{it.ar}</span>
+              <EnAr en={<En className="text-xl font-bold text-slate-800">{it.stem}</En>} ar={<span className="text-sm text-slate-400"><LatinRuns text={it.ar ?? ""} /></span>} />
             </div>
             <div className="mt-3 flex flex-wrap gap-2 pr-11">
               {it.opts.map((o, oi) => {
@@ -583,7 +560,7 @@ function ClassifyEx({ ex }: { ex: Extract<Exercise7, { type: "classify" }> }) {
               <Nub n={i + 1} />
               <En className="text-lg font-bold text-slate-800">{it.en}</En>
             </div>
-            <div className="mt-1 pr-11 text-xs text-slate-400">{it.ar}</div>
+            <div className="mt-1 pr-11 text-xs text-slate-400"><LatinRuns text={it.ar ?? ""} /></div>
             <div className="mt-2 flex gap-1.5 pr-11">
               {opts.map((o) => (
                 <button
@@ -635,7 +612,7 @@ function IQ() {
                 <div className="tada mt-3 rounded-2xl bg-rose-50 p-3">
                   <div className="mb-1 text-xs font-bold text-rose-600">النفي</div>
                   <PartsLine parts={stages[0].parts} size="sm" label={false} />
-                  {it.third && <div className="mt-1 text-xs font-bold text-rose-600">اختفت الـ s من {it.vs}!</div>}
+                  {it.third && <div className="mt-1 text-xs font-bold text-rose-600"><LatinRuns text={"اختفت الـ s من "} />{it.vs}!</div>}
                 </div>
               )}
               {st >= 2 && (
@@ -670,8 +647,7 @@ function Challenge() {
             <En className="text-xl font-bold text-rose-700 line-through decoration-rose-300">{it.wrong}</En>
             {show[i] ? (
               <div className="tada flex flex-wrap items-center gap-2">
-                <En className="text-xl font-extrabold text-emerald-700">→ {it.correct}</En>
-                <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">💡 {it.why}</span>
+                <EnAr en={<En className="text-xl font-extrabold text-emerald-700">→ {it.correct}</En>} ar={<span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">💡 <LatinRuns text={it.why ?? ""} /></span>} />
               </div>
             ) : (
               <button onClick={() => setShow((s) => ({ ...s, [i]: true }))} className="mr-auto rounded-xl bg-slate-900 px-4 py-1.5 text-sm font-bold text-white transition hover:bg-slate-700">
@@ -706,7 +682,7 @@ function Cover() {
         <div className="pop pop-4 mt-9 flex justify-center">
           <div className="rounded-3xl border-2 border-slate-100 bg-slate-50 p-5">
             <PartsLine parts={[{ text: "He", role: "s" }, { text: "doesn't", role: "nt" }, { text: "play", role: "v" }]} size="lg" />
-            <div className="mt-2 text-center text-slate-500">هو لا يلعب. — أين ذهبت الـ s؟ 🤔</div>
+            <div className="mt-2 text-center text-slate-500"><LatinRuns text={"هو لا يلعب. — أين ذهبت الـ s؟ 🤔"} /></div>
           </div>
         </div>
         <p className="pop pop-5 mt-8 text-sm text-slate-400">للتنقل: الأسهم ← → أو مفتاح المسافة</p>
@@ -751,7 +727,7 @@ function Summary() {
       </div>
       <MapTable />
       <div className="rounded-3xl bg-slate-900 p-5 text-white">
-        <div className="mb-3 font-head text-lg font-bold">🚀 الآن أصبح Present Simple شبه مكتمل:</div>
+        <div className="mb-3 font-head text-lg font-bold"><LatinRuns text={"🚀 الآن أصبح Present Simple شبه مكتمل:"} /></div>
         <div className="grid gap-1.5 sm:grid-cols-2">
           {pts.map((p, i) => (
             <div key={i} className="flex items-center gap-2 rounded-xl bg-white/10 px-3 py-1.5 text-sm">
@@ -773,9 +749,7 @@ function Closing({ onExit }: { onExit: () => void }) {
       <div className="relative">
         <div className="pop text-6xl anim-drift">🚀</div>
         <h2 className="pop pop-1 font-head mt-3 text-3xl font-bold md:text-4xl">الدرس 8 — مراجعة وتثبيت قوية</h2>
-        <p className="pop pop-2 mx-auto mt-3 max-w-xl text-lg text-slate-300">
-          سنجمع كل شيء في درس واحد مع تمارين من السهل إلى <En className="font-bold text-rose-300">IQ200</En> — وبعدها ننتقل إلى <En className="font-bold text-rose-300">Present Continuous</En>.
-        </p>
+        <p className="pop pop-2 mx-auto mt-3 max-w-xl text-lg text-slate-300"><LatinRuns text={"سنجمع كل شيء في درس واحد مع تمارين من السهل إلى [[IQ200]] — وبعدها ننتقل إلى [[Present Continuous]]."} marked /></p>
         <div className="pop pop-3 mt-8">
           <button onClick={onExit} className="rounded-xl bg-white px-5 py-2.5 font-bold text-slate-900 shadow transition hover:bg-slate-100">
             جميع الدروس
@@ -920,7 +894,7 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
                   className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${on ? "bg-rose-600 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}
                 >
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${on ? "bg-white/25" : "bg-slate-100"}`}>{idx + 1}</span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[idx])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[idx]))}</span>
                   <span className="mr-auto text-base">{SLIDES[idx].mascot}</span>
                 </button>
               );
@@ -984,7 +958,7 @@ export default function Lesson7({ onExit }: { onExit: () => void }) {
             </button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500">
-                {slide.section} · <span className="text-slate-800">{slideTitle(slide)}</span>
+                <Rich text={`${slide.section} · ${slideTitle(slide)}`} />
               </div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
                 <div className="h-full rounded-full bg-gradient-to-l from-rose-500 via-pink-400 to-violet-500 transition-all duration-500" style={{ width: `${progress}%` }} />

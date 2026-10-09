@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { LatinRuns } from "./bidi";
+import { LatinRuns, EnAr } from "./bidi";
 
 // ============================================================
 // Lesson Kit — أنماط التدريس المشتركة المستخلصة من الدرس 6 (الـ benchmark)
@@ -19,6 +19,11 @@ import { LatinRuns } from "./bidi";
 // ============================================================
 
 export function En({ children, className = "" }: { children: ReactNode; className?: string }) {
+  // Legacy examples sometimes carry a translation in the same source string.
+  // Font choice must not force that Arabic gloss into an English paragraph.
+  if (typeof children === "string" && /[\u0600-\u06ff]/.test(children)) {
+    return <span dir="rtl" className={className}><LatinRuns text={children} /></span>;
+  }
   return (
     <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
       {children}
@@ -30,7 +35,7 @@ export function En({ children, className = "" }: { children: ReactNode; classNam
 export function Rich({ text, className = "" }: { text: string; className?: string }) {
   return (
     <span className={className}>
-      <LatinRuns text={text} />
+      <LatinRuns text={text} marked />
     </span>
   );
 }
@@ -149,7 +154,7 @@ const DEFAULT_ACCENT: FrameAccent = {
 };
 
 /** النصوص الخام تمرّ عبر LatinRuns حتى لا يُعكس ترتيب «English · عربي»؛ العناصر الأخرى تبقى كما هي. */
-function mixedText(value: ReactNode): ReactNode {
+export function mixedText(value: ReactNode): ReactNode {
   return typeof value === "string" ? <LatinRuns text={value} /> : value;
 }
 
@@ -225,11 +230,10 @@ export function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: str
       <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-base font-bold text-white ${ok ? "bg-emerald-500" : "bg-rose-500"}`}>
         {ok ? "✓" : "✕"}
       </span>
-      <span dir="ltr" className="ltr-pair inline-flex flex-wrap items-center gap-3">
-        <En className={`text-lg font-bold md:text-xl ${ok ? "text-emerald-900" : "text-rose-800 line-through decoration-rose-300"}`}>{en}</En>
-        {ar && <span dir="rtl"><Rich text={ar} className="text-base text-slate-500" /></span>}
-      </span>
-      {why && <span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}><LatinRuns text={why} /></span>}
+      <EnAr
+        en={<En className={`text-lg font-bold md:text-xl ${ok ? "text-emerald-900" : "text-rose-800 line-through decoration-rose-300"}`}>{en}</En>}
+        ar={<>{ar && <Rich text={ar} className="text-base text-slate-500" />}{why && <span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}><LatinRuns text={why} /></span>}</>}
+      />
     </div>
   );
 }
@@ -237,4 +241,12 @@ export function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: str
 /** رقم بند داخل تمرين. */
 export function Nub({ n, className = "bg-teal-600" }: { n: number; className?: string }) {
   return <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-xl text-sm font-bold text-white ${className}`}>{n}</span>;
+}
+
+/** Lesson shortcuts must not steal native editing/activation keys from controls. */
+export function isInteractiveKeyTarget(event: KeyboardEvent): boolean {
+  if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return true;
+  return event.target instanceof Element && !!event.target.closest(
+    'button, input, select, textarea, a[href], summary, [role="button"], [role="radio"], [role="checkbox"], [role="tab"], [contenteditable]:not([contenteditable="false"])'
+  );
 }

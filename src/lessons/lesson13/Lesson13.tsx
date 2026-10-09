@@ -1,3 +1,7 @@
+import { Verdict as SharedVerdict } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
+import { En as SharedEn } from "../../shared/lessonKit";
+import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
   SLIDES,
@@ -73,27 +77,12 @@ const RS: Record<Role13, { chip: string; text: string }> = {
 };
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <span className={`ltr font-en ${className}`}>{children}</span>;
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 /** يعزل كل مقطع إنجليزي [[...]] كوحدة LTR واحدة — بدون تقسيم الكلمات. */
 function Rich({ text, className = "" }: { text: string; className?: string }) {
-  const parts = text.split(/(\[\[.+?\]\])/g);
-  return (
-    <span className={className}>
-      {parts.map((x, i) => {
-        const m = x.match(/^\[\[(.+)\]\]$/);
-        if (m) {
-          return (
-            <span key={i} className="ltr font-en mx-1 rounded-lg bg-slate-900/5 px-1.5 py-0.5 font-bold text-slate-800">
-              {m[1]}
-            </span>
-          );
-        }
-        return <LatinRuns key={i} text={x} />;
-      })}
-    </span>
-  );
+  return <span className={className}><LatinRuns text={text} marked /></span>;
 }
 
 /** يبرز **النص** كعريض مع الحفاظ على عزل الإنجليزية. */
@@ -140,7 +129,7 @@ function FormulaRowView({ fk, size = "md" }: { fk: FormulaKey; size?: "sm" | "md
             <span className={`font-en inline-flex items-center rounded-2xl border-2 border-amber-300 bg-white font-extrabold leading-tight text-slate-900 ${sz}`}>
               {tk.t}
             </span>
-            {tk.label && <span dir="rtl" className="mt-1 text-[11px] font-bold text-slate-500">{tk.label}</span>}
+            {tk.label && <span dir="rtl" className="mt-1 text-[11px] font-bold text-slate-500">{mixedText(tk.label)}</span>}
           </span>
         )
       )}
@@ -167,7 +156,7 @@ function PartsLine({ parts, q = false, size = "md", label = true }: { parts: Par
       {parts.map((p, i) => (
         <span key={i} className="inline-flex flex-col items-center">
           <span className={`font-en inline-flex items-center rounded-2xl border-2 font-extrabold leading-tight ${RS[p.role].chip} ${sz}`}>{p.text}</span>
-          {label && <span dir="rtl" className="mt-0.5 text-[10px] font-bold text-slate-500">{ROLE13_AR[p.role]}</span>}
+          {label && <span dir="rtl" className="mt-0.5 text-[10px] font-bold text-slate-500"><LatinRuns text={ROLE13_AR[p.role]} /></span>}
         </span>
       ))}
       <span className="font-en pb-1 text-2xl font-bold text-slate-300">{q ? "?" : "."}</span>
@@ -214,16 +203,16 @@ function Frame({
         {mascot}
       </div>
       <div className="flex flex-wrap items-center gap-2.5">
-        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-amber-600 text-lg font-bold text-white">{step}</span>}
-        {badge && <span className="rounded-full bg-amber-100 px-3.5 py-1.5 text-sm font-bold text-amber-800">{badge}</span>}
+        {step && <span className="font-head grid h-10 w-10 place-items-center rounded-2xl bg-amber-600 text-lg font-bold text-white">{mixedText(step)}</span>}
+        {badge && <span className="rounded-full bg-amber-100 px-3.5 py-1.5 text-sm font-bold text-amber-800">{mixedText(badge)}</span>}
       </div>
-      <h2 className="font-head mt-3 max-w-[88%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{title}</h2>
+      <h2 className="font-head mt-3 max-w-[88%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">{mixedText(title)}</h2>
       {lead && <div className="mt-2 max-w-[88%] text-lg text-slate-500 md:text-xl"><Rich text={String(lead)} /></div>}
       <div className="mt-6 space-y-3.5">{children}</div>
       {tip && (
         <div className="mt-6 flex items-center gap-3 rounded-2xl bg-gradient-to-l from-amber-600 to-orange-600 p-4 text-white">
           <span className="text-2xl">🦉</span>
-          <span className="text-base font-semibold md:text-lg">{tip}</span>
+          <span className="text-base font-semibold md:text-lg">{mixedText(tip)}</span>
         </div>
       )}
     </section>
@@ -239,16 +228,7 @@ function Note({ emoji, text }: { emoji: string; text: string }) {
   );
 }
 
-function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; why?: string }) {
-  return (
-    <div className={`flex flex-wrap items-center gap-3 rounded-3xl border-2 p-4 ${ok ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`}>
-      <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-base font-bold text-white ${ok ? "bg-emerald-500" : "bg-rose-500"}`}>{ok ? "✓" : "✕"}</span>
-      <En className={`text-xl font-bold ${ok ? "text-emerald-900" : "text-rose-800 line-through decoration-rose-300"}`}>{en}</En>
-      {ar && <span className="text-base font-bold text-slate-500">{ar}</span>}
-      {why && <span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}>{why}</span>}
-    </div>
-  );
-}
+function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; why?: string }) { return <SharedVerdict ok={ok} en={en} ar={ar} why={why} />; }
 
 function Nub({ n }: { n: number }) {
   return <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-amber-600 text-sm font-bold text-white">{n}</span>;
@@ -288,7 +268,7 @@ function DidHero() {
               <span className="font-en text-lg text-slate-300">→</span>
               <span className="font-en text-xl font-black text-violet-700">did</span>
             </span>
-            <span dir="rtl" className="text-xs font-bold text-slate-500">{p.ar}</span>
+            <span dir="rtl" className="text-xs font-bold text-slate-500"><LatinRuns text={p.ar ?? ""} /></span>
           </button>
         ))}
       </div>
@@ -306,14 +286,14 @@ function GoldenMachine() {
     <div className="rounded-3xl border-2 border-amber-200 bg-amber-50 p-5">
       <Toolbar>
         <TabBtn on={mode === "aff"} onClick={() => setMode("aff")}>الجملة المثبتة</TabBtn>
-        <TabBtn on={mode === "q"} onClick={() => setMode("q")}>عندما يدخل DID</TabBtn>
+        <TabBtn on={mode === "q"} onClick={() => setMode("q")}><LatinRuns text={"عندما يدخل DID"} /></TabBtn>
       </Toolbar>
       <div key={mode} className="pop mt-4 grid gap-3 rounded-2xl border-2 border-white bg-white p-4">
         <PartsLine parts={mode === "aff" ? GOLDEN.aff : GOLDEN.q} q={mode === "q"} />
         <div className="flex flex-wrap items-center justify-center gap-2">
           {mode === "aff" ? (
             <span className="rounded-full bg-orange-100 px-3 py-1 text-xs font-bold text-orange-800">
-              الماضي على الفعل: <En>{GOLDEN.change.from}</En> = الماضي
+              <LatinRuns text={`الماضي على الفعل: ${GOLDEN.change.from} = الماضي`} />
             </span>
           ) : (
             <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800">
@@ -346,9 +326,7 @@ function NegMachine() {
           {mode === "aff" ? (
             <span className="rounded-full bg-orange-100 px-3 py-1 text-xs font-bold text-orange-800">الفعل الماضي وحده يحمل معنى الماضي</span>
           ) : (
-            <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800">
-              <En className="font-black">didn't</En> حملت الماضي، والفعل رجع إلى <En className="font-black">visit</En>
-            </span>
+            <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800"><LatinRuns text={"[[didn't]] حملت الماضي، والفعل رجع إلى [[visit]]"} marked /></span>
           )}
         </div>
       </div>
@@ -366,8 +344,7 @@ function PronounGallery() {
         return (
           <div key={it.pronoun} className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="font-en grid h-10 min-w-10 place-items-center rounded-2xl bg-slate-900 px-3 text-lg font-black text-white">{it.pronoun}</span>
-              <span dir="rtl" className="text-sm font-bold text-slate-500">{it.ar}</span>
+              <EnAr en={<span className="font-en grid h-10 min-w-10 place-items-center rounded-2xl bg-slate-900 px-3 text-lg font-black text-white">{it.pronoun}</span>} ar={<span dir="rtl" className="text-sm font-bold text-slate-500"><LatinRuns text={it.ar ?? ""} /></span>} />
               <button
                 onClick={() => setOpen((o) => ({ ...o, [i]: !o[i] }))}
                 className="mr-auto rounded-xl bg-rose-500 px-4 py-1.5 text-sm font-bold text-white transition hover:brightness-110"
@@ -404,7 +381,7 @@ function TwoPastMarkers() {
             <span className="font-en text-lg font-black text-rose-400">+</span>
             <span className="font-en rounded-xl border-2 border-rose-300 bg-rose-50 px-3 py-1.5 text-lg font-bold text-rose-800 line-through decoration-rose-400">went</span>
           </div>
-          <div className="mt-2 text-center text-xs font-bold text-rose-700">did = ماضي · went = ماضي</div>
+          <div className="mt-2 text-center text-xs font-bold text-rose-700"><LatinRuns text={"did = ماضي · went = ماضي"} /></div>
         </div>
         <div className="rounded-3xl border-2 border-emerald-200 bg-white p-4">
           <div className="mb-2 text-center text-xs font-bold text-emerald-700">✅ علامة ماضٍ واحدة</div>
@@ -413,7 +390,7 @@ function TwoPastMarkers() {
             <span className="font-en text-lg font-black text-emerald-400">+</span>
             <span className="font-en rounded-xl border-2 border-emerald-300 bg-emerald-50 px-3 py-1.5 text-lg font-black text-emerald-800">go</span>
           </div>
-          <div className="mt-2 text-center text-xs font-bold text-emerald-700">did = ماضي · go = الفعل الأساسي</div>
+          <div className="mt-2 text-center text-xs font-bold text-emerald-700"><LatinRuns text={"did = ماضي · go = الفعل الأساسي"} /></div>
         </div>
       </div>
       <div className="mt-4 grid gap-2 md:grid-cols-2">
@@ -442,7 +419,7 @@ function PastBall() {
       <Toolbar>
         {steps.map((st, i) => (
           <TabBtn key={st.title} on={i === stepIdx} onClick={() => setStepIdx(i)}>
-            {st.title}
+            {mixedText(st.title)}
           </TabBtn>
         ))}
       </Toolbar>
@@ -452,17 +429,11 @@ function PastBall() {
           <En className="text-xl font-extrabold text-slate-800">{s.en}</En>
         </div>
         <div className="mt-3 grid gap-2 md:grid-cols-2">
-          <div className={`rounded-2xl border-2 p-3 text-center text-xs font-bold transition ${s.ball === "on-verb" ? "border-orange-400 bg-orange-50 text-orange-800" : "border-slate-100 bg-slate-50 text-slate-400"}`}>
-            الكرة على الفعل: <En className="font-black">went</En>
-          </div>
-          <div className={`rounded-2xl border-2 p-3 text-center text-xs font-bold transition ${s.ball === "on-did" ? "border-violet-400 bg-violet-50 text-violet-800" : "border-slate-100 bg-slate-50 text-slate-400"}`}>
-            الكرة على المساعد: <En className="font-black">did</En>
-          </div>
+          <div className={`rounded-2xl border-2 p-3 text-center text-xs font-bold transition ${s.ball === "on-verb" ? "border-orange-400 bg-orange-50 text-orange-800" : "border-slate-100 bg-slate-50 text-slate-400"}`}><LatinRuns text={"الكرة على الفعل: [[went]]"} marked /></div>
+          <div className={`rounded-2xl border-2 p-3 text-center text-xs font-bold transition ${s.ball === "on-did" ? "border-violet-400 bg-violet-50 text-violet-800" : "border-slate-100 bg-slate-50 text-slate-400"}`}><LatinRuns text={"الكرة على المساعد: [[did]]"} marked /></div>
         </div>
         {stepIdx === 2 && (
-          <div className="mt-3 rounded-2xl bg-emerald-50 p-3 text-center text-sm font-bold text-emerald-800">
-            فلذلك نقول <En className="font-black">Did she go?</En> — وليس <En className="line-through">Did she went?</En>
-          </div>
+          <div className="mt-3 rounded-2xl bg-emerald-50 p-3 text-center text-sm font-bold text-emerald-800"><LatinRuns text={"فلذلك نقول [[Did she go?]] — وليس [[Did she went?]]"} marked /></div>
         )}
       </div>
     </div>
@@ -501,7 +472,7 @@ function QuestionBuilder() {
           {show[idx] ? (
             <div className="tada">
               <PartsLine parts={it.q} q />
-              <div className="mt-2 text-sm font-bold text-slate-500">{it.ar}</div>
+              <div className="mt-2 text-sm font-bold text-slate-500"><LatinRuns text={it.ar ?? ""} /></div>
             </div>
           ) : (
             <div className="grid gap-2 opacity-60">
@@ -526,7 +497,7 @@ function ExtraQuestions() {
           className={`rounded-3xl border-2 bg-white p-4 text-right transition ${big === i ? "border-sky-400 shadow-lg" : "border-slate-200 hover:border-slate-400"}`}
         >
           <En className={`block font-extrabold text-slate-800 ${big === i ? "text-2xl" : "text-lg"}`}>{q.en}</En>
-          <div className="mt-1 text-sm font-bold text-slate-500">{q.ar}</div>
+          <div className="mt-1 text-sm font-bold text-slate-500"><LatinRuns text={q.ar ?? ""} /></div>
         </button>
       ))}
     </div>
@@ -608,7 +579,7 @@ function PresentPastToggle({ mode }: { mode: "question" | "negative" }) {
       <div className="mt-3 rounded-2xl bg-white p-3 text-center text-sm font-bold text-slate-600">
         {mode === "question" ? (
           <>
-            <En>Do / Does</En> → <En>Did</En> — والفعل يبقى <En>Base Verb</En>
+            <LatinRuns text="Do / Does → Did — والفعل يبقى Base Verb" />
           </>
         ) : (
           <>
@@ -651,10 +622,8 @@ function GeniusLadder() {
         </div>
       </div>
       <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-center text-sm font-bold text-violet-800">
-        <En className="rounded-lg bg-white px-2 py-1">does / doesn't</En>
-        <span>أخذت القاعدة في المضارع ·</span>
-        <En className="rounded-lg bg-white px-2 py-1">did / didn't</En>
-        <span>أخذت الماضي · والفعل يعود إلى</span>
+        <EnAr en={<En className="rounded-lg bg-white px-2 py-1">does / doesn't</En>} ar={<span>أخذت القاعدة في المضارع ·</span>} />
+        <EnAr en={<En className="rounded-lg bg-white px-2 py-1">did / didn't</En>} ar={<span>أخذت الماضي · والفعل يعود إلى</span>} />
         <En className="rounded-lg bg-amber-100 px-2 py-1 font-black">Base Form</En>
       </div>
     </div>
@@ -668,7 +637,7 @@ function WhMeanings() {
       {WH_MEANINGS.map((w) => (
         <div key={w.en} className="flex flex-col items-center rounded-2xl border-2 border-fuchsia-200 bg-white px-3 py-3">
           <span className="font-en text-lg font-black text-fuchsia-700">{w.en}</span>
-          <span dir="rtl" className="mt-1 text-xs font-bold text-slate-500">{w.ar}</span>
+<span dir="rtl" className="mt-1 text-xs font-bold text-slate-500"><LatinRuns text={w.ar ?? ""} /></span>
         </div>
       ))}
     </div>
@@ -688,8 +657,7 @@ function WhGrid() {
               onClick={() => setOpen((o) => ({ ...o, [g.word]: !shown }))}
               className="flex w-full flex-wrap items-center gap-3"
             >
-              <span className="font-en grid h-10 place-items-center rounded-2xl bg-fuchsia-600 px-4 text-lg font-black text-white">{g.word}</span>
-              <span dir="rtl" className="text-sm font-bold text-slate-500">{g.ar}</span>
+              <EnAr en={<span className="font-en grid h-10 place-items-center rounded-2xl bg-fuchsia-600 px-4 text-lg font-black text-white">{g.word}</span>} ar={<span dir="rtl" className="text-sm font-bold text-slate-500"><LatinRuns text={g.ar ?? ""} /></span>} />
               <span className="mr-auto rounded-lg bg-slate-100 px-3 py-1 text-xs font-bold text-slate-500">
                 {shown ? "↺ إخفاء" : "أظهر الأمثلة"}
               </span>
@@ -698,8 +666,7 @@ function WhGrid() {
               <div className="pop mt-3 grid gap-2">
                 {g.items.map((it) => (
                   <div key={it.en} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-slate-100 bg-slate-50/60 p-3">
-                    <En className="text-lg font-extrabold text-slate-800">{it.en}</En>
-                    <span dir="rtl" className="text-sm font-bold text-slate-500">{it.ar}</span>
+                    <EnAr en={<En className="text-lg font-extrabold text-slate-800">{it.en}</En>} ar={<span dir="rtl" className="text-sm font-bold text-slate-500"><LatinRuns text={it.ar ?? ""} /></span>} />
                   </div>
                 ))}
               </div>
@@ -729,7 +696,7 @@ function WhFromSentence() {
       {pick !== null && (
         <div className="tada mt-4 rounded-2xl border-2 border-emerald-200 bg-white p-4 text-center">
           <En className="text-xl font-black text-emerald-800">{WH_FROM_SENTENCE.items[pick].q}</En>
-          <div className="mt-1 text-sm font-bold text-slate-500">{WH_FROM_SENTENCE.items[pick].ar}</div>
+          <div className="mt-1 text-sm font-bold text-slate-500"><LatinRuns text={WH_FROM_SENTENCE.items[pick].ar ?? ""} /></div>
         </div>
       )}
     </div>
@@ -759,9 +726,7 @@ function DangerBoard() {
           </div>
         ))}
       </div>
-      <div className="mt-4 rounded-2xl bg-white p-3 text-center text-sm font-bold text-rose-800">
-        القاعدة: <En className="font-black">DID / DIDN'T + BASE VERB</En>
-      </div>
+      <div className="mt-4 rounded-2xl bg-white p-3 text-center text-sm font-bold text-rose-800"><LatinRuns text={"القاعدة: [[DID / DIDN'T + BASE VERB]]"} marked /></div>
     </div>
   );
 }
@@ -824,10 +789,10 @@ function TwoJobsOfDid() {
     <div className="rounded-3xl border-2 border-amber-200 bg-amber-50 p-5">
       <Toolbar>
         <TabBtn on={pick === "main"} onClick={() => setPick("main")}>
-          <En>did</En> = فعل أساسي
+          <LatinRuns text="did = فعل أساسي" />
         </TabBtn>
         <TabBtn on={pick === "aux"} onClick={() => setPick("aux")} tone="violet">
-          <En>Did</En> = فعل مساعد
+          <LatinRuns text="Did = فعل مساعد" />
         </TabBtn>
       </Toolbar>
       <div key={pick} className="pop mt-4 rounded-2xl border-2 border-white bg-white p-4 text-center">
@@ -1035,10 +1000,9 @@ function FillEx({ ex }: { ex: Extract<Exercise13, { type: "fill" }> }) {
           <div className="mt-3 flex flex-wrap items-center gap-2 pr-11">
             {show[i] ? (
               <span className="tada flex flex-wrap items-center gap-3">
-                <En className="text-lg font-black text-emerald-700">{it.answer}</En>
-                <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">
+                <EnAr en={<En className="text-lg font-black text-emerald-700">{it.answer}</En>} ar={<span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">
                   <Rich text={it.why} />
-                </span>
+                </span>} />
               </span>
             ) : (
               <button onClick={() => setShow((s) => ({ ...s, [i]: true }))} className="rounded-xl bg-emerald-600 px-4 py-1.5 text-sm font-bold text-white">
@@ -1077,7 +1041,7 @@ function TripleEx() {
         {TRIPLE_TRANSFORM.items.map((it, i) => (
           <div key={it.label} className={`rounded-3xl border-2 p-4 transition ${show[i] ? "border-emerald-300 bg-emerald-50/40" : "border-slate-200 bg-white"}`}>
             <div className="flex flex-wrap items-center gap-3">
-              <span className="rounded-xl bg-slate-900 px-3 py-1 text-sm font-bold text-white">{it.label}</span>
+              <span className="rounded-xl bg-slate-900 px-3 py-1 text-sm font-bold text-white">{mixedText(it.label)}</span>
               {show[i] ? (
                 <En className="tada text-lg font-extrabold text-emerald-800">{it.en}</En>
               ) : (
@@ -1090,9 +1054,7 @@ function TripleEx() {
         ))}
       </div>
       {all && (
-        <div className="tada rounded-3xl border-2 border-amber-200 bg-amber-50 p-4 text-center text-sm font-bold text-amber-900">
-          🔥 لاحظ: الماضي إما على الفعل الماضي، أو على <En className="font-black">didn't</En> / <En className="font-black">Did</En> — والمفعول به نفسه في الثلاثة.
-        </div>
+        <div className="tada rounded-3xl border-2 border-amber-200 bg-amber-50 p-4 text-center text-sm font-bold text-amber-900"><LatinRuns text={"🔥 لاحظ: الماضي إما على الفعل الماضي، أو على [[didn't]] / [[Did]] — والمفعول به نفسه في الثلاثة."} marked /></div>
       )}
     </div>
   );
@@ -1134,7 +1096,7 @@ function IQ200Ex() {
         </button>
       </div>
       <div className="rounded-3xl border-2 border-violet-200 bg-violet-50 p-4 text-sm font-bold text-violet-900">
-        <Lbl en="DID" /> + <Lbl en="Base Verb" /> — {IQ200_TASK.note}
+        <EnAr en={<><Lbl en="DID" /> + <Lbl en="Base Verb" /></>} sep=" — " ar={IQ200_TASK.note ?? ""} />
       </div>
       <div className="rounded-2xl border-2 border-dashed border-slate-300 bg-white p-3 text-xs font-bold text-slate-500">
         ⓘ {IQ200_TASK.modelNote}
@@ -1263,7 +1225,7 @@ function FinalChallengeEx() {
           </div>
         </div>
         <div className="mt-4 rounded-2xl border-2 border-amber-100 bg-white p-3">
-          <div className="text-sm font-bold text-amber-800">{FINAL_CHALLENGE.note}</div>
+          <div className="text-sm font-bold text-amber-800"><LatinRuns text={FINAL_CHALLENGE.note ?? ""} /></div>
           <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row mt-2 flex flex-wrap gap-2">
             {FINAL_CHALLENGE.verbs.map((v) => (
               <span key={v} className="font-en rounded-xl border-2 border-slate-200 bg-slate-50 px-3 py-1 text-sm font-bold text-slate-700">
@@ -1306,31 +1268,25 @@ function Cover() {
       <div className="relative">
         <div className="pop anim-drift text-7xl">📘</div>
         <div className="pop pop-1 mt-4 inline-block rounded-full bg-gradient-to-l from-amber-600 to-orange-600 px-5 py-2 text-base font-bold text-white">الدرس الثالث عشر</div>
-        <h1 className="pop pop-2 font-head mt-4 text-3xl font-bold leading-tight text-slate-900 md:text-4xl">
-          Past Simple — النفي والأسئلة والإجابات القصيرة
-        </h1>
+        <h1 className="pop pop-2 font-head mt-4 text-3xl font-bold leading-tight text-slate-900 md:text-4xl"><LatinRuns text={"Past Simple — النفي والأسئلة والإجابات القصيرة"} marked /></h1>
         <div className="pop pop-3 mt-3">
           <FormulaRowView fk="neg" />
         </div>
         <div className="pop pop-4 mt-3 inline-flex items-center gap-2 rounded-full border-2 border-amber-200 bg-amber-50 px-4 py-2">
           <span>🔥</span>
-          <span className="text-sm font-bold text-amber-800">IQ200 — DID يأخذ الماضي معه، والفعل يرجع إلى الأساس</span>
+          <span className="text-sm font-bold text-amber-800"><LatinRuns text={"IQ200 — DID يأخذ الماضي معه، والفعل يرجع إلى الأساس"} /></span>
         </div>
         <div className="pop pop-5 mx-auto mt-6 max-w-xl space-y-3 rounded-3xl border-2 border-slate-100 bg-slate-50 p-5 text-right">
           <div className="text-sm font-bold text-slate-600">ممتاز! في الدرس السابق تعلمنا الجملة المثبتة في الماضي:</div>
           <div className="grid gap-2">
             <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold">
-              <En className="rounded-lg bg-orange-600 px-2 py-0.5 text-white">Past Simple</En>
-              <span className="text-slate-600">→ الجملة المثبتة: Subject + Past Verb</span>
+              <EnAr en={<En className="rounded-lg bg-orange-600 px-2 py-0.5 text-white">Past Simple</En>} ar={<span className="text-slate-600"><LatinRuns text={"→ الجملة المثبتة: Subject + Past Verb"} /></span>} />
             </div>
             <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold">
-              <En className="rounded-lg bg-amber-600 px-2 py-0.5 text-white">Lesson 13</En>
-              <span className="text-slate-600">→ النفي والأسئلة والإجابات القصيرة مع did / didn't</span>
+              <EnAr en={<En className="rounded-lg bg-amber-600 px-2 py-0.5 text-white">Lesson 13</En>} ar={<span className="text-slate-600"><LatinRuns text={"→ النفي والأسئلة والإجابات القصيرة مع did / didn't"} /></span>} />
             </div>
           </div>
-          <div className="text-sm font-bold text-slate-700">
-            اليوم سنجيب عن السؤال: كيف نقول «لم أفعل» و«هل فعلت؟» — ونكتشف لماذا يرجع الفعل إلى شكله الأساسي بعد <En className="font-extrabold text-amber-700">did</En> و<En className="font-extrabold text-amber-700">didn't</En>.
-          </div>
+          <div className="text-sm font-bold text-slate-700"><LatinRuns text={"اليوم سنجيب عن السؤال: كيف نقول «لم أفعل» و«هل فعلت؟» — ونكتشف لماذا يرجع الفعل إلى شكله الأساسي بعد [[did]] و[[didn't]]."} marked /></div>
         </div>
         <div className="pop pop-6 mx-auto mt-4 grid max-w-2xl grid-cols-1 gap-1.5 text-right sm:grid-cols-2">
           {COVER_PLAN_13.map((x, i) => (
@@ -1365,9 +1321,7 @@ function Objectives() {
           </div>
         ))}
       </div>
-      <div className="rounded-3xl border-2 border-amber-200 bg-amber-50 p-4 text-center text-sm font-bold text-amber-900">
-        🎓 سبعة أهداف — كلها مبنية على فكرة واحدة: <En className="font-black">DID = الماضي</En>، والفعل بعده يرجع إلى الأساس.
-      </div>
+      <div className="rounded-3xl border-2 border-amber-200 bg-amber-50 p-4 text-center text-sm font-bold text-amber-900"><LatinRuns text={"🎓 سبعة أهداف — كلها مبنية على فكرة واحدة: DID = الماضي، والفعل بعده يرجع إلى الأساس."} /></div>
     </Frame>
   );
 }
@@ -1428,9 +1382,7 @@ function KeyRule() {
           </div>
         ))}
       </div>
-      <div className="rounded-3xl border-2 border-violet-200 bg-violet-50 p-5 text-center text-sm font-bold text-violet-900">
-        🧠 السؤال الذكي: أين يقف الماضي؟ — إذا رأيت <En className="font-black">did</En> أو <En className="font-black">didn't</En> فالماضي عنده، والفعل الرئيسي يبقى <En className="font-black">Base Form</En>.
-      </div>
+      <div className="rounded-3xl border-2 border-violet-200 bg-violet-50 p-5 text-center text-sm font-bold text-violet-900"><LatinRuns text={"🧠 السؤال الذكي: أين يقف الماضي؟ — إذا رأيت [[did]] أو [[didn't]] فالماضي عنده، والفعل الرئيسي يبقى [[Base Form]]."} marked /></div>
     </Frame>
   );
 }
@@ -1472,12 +1424,7 @@ function Closing({ onExit }: { onExit: () => void }) {
       <div className="relative">
         <div className="pop anim-drift text-6xl">🎓</div>
         <h2 className="pop pop-1 font-head mt-3 text-3xl font-bold md:text-4xl">أصبحت تتكلم عن الماضي بسؤال ونفي صحيحين</h2>
-        <p className="pop pop-2 mx-auto mt-3 max-w-2xl text-lg text-slate-300">
-          الآن تعرف: <En className="font-extrabold text-amber-300">Subject + didn't + Base Verb</En> للنفي، و
-          <En className="font-extrabold text-amber-300">Did + Subject + Base Verb?</En> للسؤال، و
-          <En className="font-extrabold text-amber-300">Yes, subject + did.</En> / <En className="font-extrabold text-amber-300">No, subject + didn't.</En> للإجابة القصيرة —
-          والماضي دائمًا في <En className="font-extrabold text-amber-300">did / didn't</En>.
-        </p>
+        <p className="pop pop-2 mx-auto mt-3 max-w-2xl text-lg text-slate-300"><LatinRuns text={"الآن تعرف: [[Subject + didn't + Base Verb]] للنفي، و[[Did + Subject + Base Verb?]] للسؤال، و[[Yes, subject + did.]] / [[No, subject + didn't.]] للإجابة القصيرة — والماضي دائمًا في [[did / didn't]]."} marked /></p>
         <div className="pop pop-3 mt-8 flex flex-wrap justify-center gap-3">
           <button onClick={onExit} className="rounded-xl bg-white px-5 py-2.5 font-bold text-slate-900 shadow transition hover:bg-slate-100">
             جميع الدروس
@@ -1521,7 +1468,7 @@ function BlockView({ b }: { b: Block13 }) {
       return (
         <div dir="ltr" style={{ direction: "ltr" }} className={`ltr-row flex flex-wrap items-center gap-3 rounded-3xl border-2 p-4 ${tone}`}>
           <span className={`font-en text-left text-lg font-extrabold md:text-xl ${b.tone === "bad" ? "text-rose-700 line-through decoration-rose-300" : "text-slate-800"}`}>{b.en}</span>
-          {b.ar && <span dir="rtl" className="text-base font-bold text-slate-500">{b.ar}</span>}
+          {b.ar && <span dir="rtl" className="text-base font-bold text-slate-500"><LatinRuns text={b.ar ?? ""} /></span>}
         </div>
       );
     }
@@ -1567,7 +1514,7 @@ function BlockView({ b }: { b: Block13 }) {
             <div key={i} className="flex items-center gap-3 rounded-3xl border-2 border-slate-100 bg-slate-50/60 p-4">
               {c.emoji && <span className="text-2xl">{c.emoji}</span>}
               <div className="min-w-0 flex-1">
-                {c.label && <div className="text-xs font-bold text-slate-400">{c.label}</div>}
+                {c.label && <div className="text-xs font-bold text-slate-400">{mixedText(c.label)}</div>}
                 <Rich text={c.ar} className="text-base font-bold text-slate-700 md:text-lg" />
                 {c.en && (
                   <En className="mt-1 block text-lg font-extrabold text-slate-800">{c.en}</En>
@@ -1710,7 +1657,7 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
         <button onClick={onExit} className="text-sm font-semibold text-slate-400 transition hover:text-slate-800">
           → جميع الدروس
         </button>
-        <div className="font-head mt-2 text-lg font-bold text-slate-900">الدرس 13 · did / didn&apos;t والأسئلة</div>
+        <div className="font-head mt-2 text-lg font-bold text-slate-900"><LatinRuns text={"الدرس 13 · did / didn&apos;t والأسئلة"} /></div>
         <En className="text-xs font-semibold text-slate-400">Past Simple — Negative · Questions · Short Answers</En>
       </div>
       <nav className="flex-1 overflow-y-auto p-3">
@@ -1729,7 +1676,7 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
                   className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${on ? "bg-amber-600 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}
                 >
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${on ? "bg-white/25" : "bg-slate-100"}`}>{idx + 1}</span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[idx])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[idx]))}</span>
                   <span className="mr-auto text-base">{SLIDES[idx].mascot}</span>
                 </button>
               );
@@ -1793,7 +1740,7 @@ export default function Lesson13({ onExit }: { onExit: () => void }) {
             </button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500">
-                {slide.section} · <span className="text-slate-800">{slideTitle(slide)}</span>
+                <Rich text={`${slide.section} · ${slideTitle(slide)}`} />
               </div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
                 <div className="h-full rounded-full bg-gradient-to-l from-amber-500 via-orange-400 to-rose-500 transition-all duration-500" style={{ width: `${progress}%` }} />

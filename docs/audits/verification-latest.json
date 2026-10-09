@@ -1,0 +1,64 @@
+{
+  "baseOfThisIteration": "59ba597",
+  "qualityPipelineExitCode": 0,
+  "productionBuildExitCode": 0,
+  "bidi": {
+    "starting": 68,
+    "repaired": 20,
+    "unresolved": 48,
+    "paragraph": 32,
+    "row": 16,
+    "alternatives": 0,
+    "matchingExceptions": 0
+  },
+  "embeddedActivities": {
+    "verifiedScope": "Lesson 2 named source exercises",
+    "verifiedInstances": 5,
+    "scopeInstanceDenominator": 5,
+    "questionDenominator": 29,
+    "globalUniqueInstanceDenominator": null,
+    "wholeCourseStrictCertificationExitCode": 1
+  },
+  "teacher": {
+    "newCanonicalQuestionMappings": 29,
+    "newCanonicalQuestionDenominator": 29,
+    "externalPrintedMappingsVerified": 0,
+    "externalPrintedMappingDenominator": 29,
+    "existingSourceGroupsAccountedFor": 47,
+    "existingSourceGroupDenominator": 47,
+    "existingNumberedReferencesIndexed": 113,
+    "existingNumberedReferenceDenominator": 113,
+    "originalGapRecordsStillOpen": 74
+  },
+  "typecheck": {
+    "currentDiagnostics": 178,
+    "baseDiagnostics": 179,
+    "newNormalizedDiagnostics": 0,
+    "currentExitCode": 2,
+    "baseExitCode": 2
+  },
+  "summaries": [
+    "✓ English-direction check passed (1617 assertions, 32 lessons).",
+    "59/59 BIDI rendering assertions passed",
+    "✓ Render audit passed (1454 assertions): Subject → Verb → Object, I → am → a → student.",
+    "Lesson 24 audit passed (165 assertions): 165 checks, 0 failures.",
+    "✓ Lesson 26 audit passed (164 assertions): ledger, render-level fidelity, delayed reveal, BIDI isolation.",
+    "✓ Lesson 27 audit passed (363 checks): 44-section ledger, 53 native steps, 20-Q test, explanatory solutions, teacher area, BIDI sweep of all 53 step titles + rendered IQ200 order.",
+    "✓ Lesson 28 audit passed (328 assertions): 47-section ledger exact-once coverage, 47 native steps rendered, reveal gating, ㉝ logic note, 20-Q test flow, solutions, teacher gate, BIDI isolation.",
+    "✓ Lesson 29 audit passed (84 checks)",
+    "✓ Lesson 30 audit passed (486 assertions): 46-section ledger exact-once coverage, 46 native steps rendered, immediate-feedback contract, 20-Q test flow, solutions, teacher gate, BIDI isolation.",
+    "✓ Lesson 31 audit passed (724 assertions): 50-section ledger exact-once coverage, 50 native steps rendered, immediate-feedback contract, 20-Q test flow, solutions, teacher gate, BIDI isolation.",
+    "✓ Final Test audit passed (854 checks): 6 lessons × 15 questions, no reveal before the single correction, reset clears everything, teacher key behind the existing teacher gate.",
+    "✓ Final Test coverage audit passed (579 checks): كل درس من 1 إلى 32 له اختبار نهائي واحد في نهاية الدرس، 12–15 سؤالًا بمفاتيح صالحة، بلا كشف قبل التصحيح، مع مفتاح المعلم ومنطقة اختبار منفصلة.",
+    "✓ Source-reveal audit passed (60 checks): لا لوحة «نص المصدر الحرفي — اضغط للعرض» ولا أي مكافئ لها، وأسطر المصدر المقرونة بالمحاولة محفوظة، ودفتر المصدر والوثائق وفهرس المعلم سليمة.",
+    "unique violations: 48 (allowlisted: 0)",
+    "BIDI audit passed",
+    "Lesson navigation audit: 90 passed, 0 failed",
+    "Interaction test: 963 passed, 0 failed",
+    "✓ Final Test audit passed (854 checks): 6 lessons × 15 questions, no reveal before the single correction, reset clears everything, teacher key behind the existing teacher gate.",
+    "PASS: 54 browser scenarios; all 38 primary assessments inventoried; independent submit/reset; delayed modern correction; 7 teacher gates and keyboard/category navigation.",
+    "PASS: 5/5 Lesson 2 exercise instances, 29 questions; 29/29 gated canonical question references. Whole-course coverage remains incomplete.",
+    "PASS: Chromium 153.0.8010.0 — punctuation, brackets, quotes, alternatives, highlight boundaries, Arabic punctuation, RTL override, mobile wrapping; negative control fails as intended.",
+    "Explicit tsc: current 178 diagnostics (exit 2); base 179 (exit 2); added 0, removed 1. Typecheck FAILS. A zero added count is a regression comparison, not a clean typecheck."
+  ]
+}

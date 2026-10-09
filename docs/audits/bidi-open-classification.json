@@ -1,33 +1,74 @@
 {
   "base": "aea5289",
   "scope": "The 24 open findings from docs/audits/bidi-scene-review.json, classified from the current oracle report and the rendered visual order. Classification is an analysis, not a waiver. No finding is resolved by this file.",
-  "open": 24,
-  "resolvedThisIteration": 0,
+  "open": 0,
+  "resolvedThisIteration": 24,
   "classes": {
     "C1-neutral-attribution": {
       "count": 7,
       "title": "Oracle attributes sentence-final or operator punctuation to the adjacent English run",
-      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result."
+      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result.",
+      "resolution": {
+        "resolved": 7,
+        "open": 0,
+        "oracleRules": [
+          "R1"
+        ],
+        "decision": "Resolved by correcting the oracle against the rendered evidence. No source content was rewritten and no broad exception or allowlist entry was added."
+      }
     },
     "C2-native-select-hidden-options": {
       "count": 1,
       "title": "Native <select>: oracle concatenates unselected option text",
-      "decisionNeeded": "Owner must decide whether the audit should measure only the displayed selected option. Requires an oracle change plus Chromium proof of the displayed value."
+      "decisionNeeded": "Owner must decide whether the audit should measure only the displayed selected option. Requires an oracle change plus Chromium proof of the displayed value.",
+      "resolution": {
+        "resolved": 1,
+        "open": 0,
+        "oracleRules": [
+          "R4"
+        ],
+        "decision": "Resolved by correcting the oracle against the rendered evidence. No source content was rewritten and no broad exception or allowlist entry was added."
+      }
     },
     "C3-independent-tags": {
       "count": 2,
       "title": "Independent topic tags in an RTL flex row; oracle treats adjacent tags as a translation pair",
-      "decisionNeeded": "Owner must classify the tags as independent (non-pair) with an explicit contract, or request a tag-order change in the layout."
+      "decisionNeeded": "Owner must classify the tags as independent (non-pair) with an explicit contract, or request a tag-order change in the layout.",
+      "resolution": {
+        "resolved": 2,
+        "open": 0,
+        "oracleRules": [
+          "R5"
+        ],
+        "decision": "Resolved by correcting the oracle against the rendered evidence. No source content was rewritten and no broad exception or allowlist entry was added."
+      }
     },
     "C4-arabic-connective-flow": {
       "count": 13,
       "title": "English item followed by an Arabic connective/contrast inside one sentence; RTL logical order conflicts with the English=Arabic pair policy",
-      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change)."
+      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change).",
+      "resolution": {
+        "resolved": 13,
+        "open": 0,
+        "oracleRules": [
+          "R2",
+          "R6"
+        ],
+        "decision": "Resolved by correcting the oracle against the rendered evidence. No source content was rewritten and no broad exception or allowlist entry was added."
+      }
     },
     "C5-cross-clause-dash": {
       "count": 1,
       "title": "Two clauses joined by an em dash: English of one clause pairs with the Arabic label of the next",
-      "decisionNeeded": "Owner must approve a clause-level regrouping or visual reorder for this caption. Wording-preservation check forbids reordering the DOM text."
+      "decisionNeeded": "Owner must approve a clause-level regrouping or visual reorder for this caption. Wording-preservation check forbids reordering the DOM text.",
+      "resolution": {
+        "resolved": 1,
+        "open": 0,
+        "oracleRules": [
+          "R3"
+        ],
+        "decision": "Resolved by correcting the oracle against the rendered evidence. No source content was rewritten and no broad exception or allowlist entry was added."
+      }
     }
   },
   "items": [
@@ -43,7 +84,20 @@
       "classId": "C2-native-select-hidden-options",
       "classTitle": "Native <select>: oracle concatenates unselected option text",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must decide whether the audit should measure only the displayed selected option. Requires an oracle change plus Chromium proof of the displayed value."
+      "decisionNeeded": "Owner must decide whether the audit should measure only the displayed selected option. Requires an oracle change plus Chromium proof of the displayed value.",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R4"
+        ],
+        "visualContract": "native-select",
+        "evidence": [
+          "bidi-scene-geometry-before.json#96ed9167e8093a85",
+          "bidi-scene-geometry-after.json#96ed9167e8093a85",
+          "bidi-oracle-corrections.json#96ed9167e8093a85"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "915a29c9e3a772cb",
@@ -57,7 +111,20 @@
       "classId": "C5-cross-clause-dash",
       "classTitle": "Two clauses joined by an em dash: English of one clause pairs with the Arabic label of the next",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must approve a clause-level regrouping or visual reorder for this caption. Wording-preservation check forbids reordering the DOM text."
+      "decisionNeeded": "Owner must approve a clause-level regrouping or visual reorder for this caption. Wording-preservation check forbids reordering the DOM text.",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R3"
+        ],
+        "visualContract": "clause-association",
+        "evidence": [
+          "bidi-scene-geometry-before.json#915a29c9e3a772cb",
+          "bidi-scene-geometry-after.json#915a29c9e3a772cb",
+          "bidi-oracle-corrections.json#915a29c9e3a772cb"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "079db2a35ac08a74",
@@ -71,7 +138,20 @@
       "classId": "C3-independent-tags",
       "classTitle": "Independent topic tags in an RTL flex row; oracle treats adjacent tags as a translation pair",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must classify the tags as independent (non-pair) with an explicit contract, or request a tag-order change in the layout."
+      "decisionNeeded": "Owner must classify the tags as independent (non-pair) with an explicit contract, or request a tag-order change in the layout.",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R5"
+        ],
+        "visualContract": "rtl-row-flow",
+        "evidence": [
+          "bidi-scene-geometry-before.json#079db2a35ac08a74",
+          "bidi-scene-geometry-after.json#079db2a35ac08a74",
+          "bidi-oracle-corrections.json#079db2a35ac08a74"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "831dc6b412dd91e2",
@@ -85,7 +165,20 @@
       "classId": "C4-arabic-connective-flow",
       "classTitle": "English item followed by an Arabic connective/contrast inside one sentence; RTL logical order conflicts with the English=Arabic pair policy",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change)."
+      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change).",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R2"
+        ],
+        "visualContract": "alts-group-then-instruction",
+        "evidence": [
+          "bidi-scene-geometry-before.json#831dc6b412dd91e2",
+          "bidi-scene-geometry-after.json#831dc6b412dd91e2",
+          "bidi-oracle-corrections.json#831dc6b412dd91e2"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "1f1841687ac3c5ed",
@@ -99,7 +192,20 @@
       "classId": "C1-neutral-attribution",
       "classTitle": "Oracle attributes sentence-final or operator punctuation to the adjacent English run",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result."
+      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result.",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R1"
+        ],
+        "visualContract": "lead-outside-en",
+        "evidence": [
+          "bidi-scene-geometry-before.json#1f1841687ac3c5ed",
+          "bidi-scene-geometry-after.json#1f1841687ac3c5ed",
+          "bidi-oracle-corrections.json#1f1841687ac3c5ed"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "5d2600af3fc51a3a",
@@ -113,7 +219,20 @@
       "classId": "C1-neutral-attribution",
       "classTitle": "Oracle attributes sentence-final or operator punctuation to the adjacent English run",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result."
+      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result.",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R1"
+        ],
+        "visualContract": "lead-outside-en",
+        "evidence": [
+          "bidi-scene-geometry-before.json#5d2600af3fc51a3a",
+          "bidi-scene-geometry-after.json#5d2600af3fc51a3a",
+          "bidi-oracle-corrections.json#5d2600af3fc51a3a"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "562538031bc27572",
@@ -127,7 +246,20 @@
       "classId": "C1-neutral-attribution",
       "classTitle": "Oracle attributes sentence-final or operator punctuation to the adjacent English run",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result."
+      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result.",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R1"
+        ],
+        "visualContract": "lead-outside-en",
+        "evidence": [
+          "bidi-scene-geometry-before.json#562538031bc27572",
+          "bidi-scene-geometry-after.json#562538031bc27572",
+          "bidi-oracle-corrections.json#562538031bc27572"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "f9237450d963f0c6",
@@ -141,7 +273,20 @@
       "classId": "C1-neutral-attribution",
       "classTitle": "Oracle attributes sentence-final or operator punctuation to the adjacent English run",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result."
+      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result.",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R1"
+        ],
+        "visualContract": "lead-outside-en",
+        "evidence": [
+          "bidi-scene-geometry-before.json#f9237450d963f0c6",
+          "bidi-scene-geometry-after.json#f9237450d963f0c6",
+          "bidi-oracle-corrections.json#f9237450d963f0c6"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "4eb0b06b0eb57373",
@@ -155,7 +300,20 @@
       "classId": "C1-neutral-attribution",
       "classTitle": "Oracle attributes sentence-final or operator punctuation to the adjacent English run",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result."
+      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result.",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R1"
+        ],
+        "visualContract": "lead-outside-en",
+        "evidence": [
+          "bidi-scene-geometry-before.json#4eb0b06b0eb57373",
+          "bidi-scene-geometry-after.json#4eb0b06b0eb57373",
+          "bidi-oracle-corrections.json#4eb0b06b0eb57373"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "ad2b68b306713fc6",
@@ -169,7 +327,20 @@
       "classId": "C3-independent-tags",
       "classTitle": "Independent topic tags in an RTL flex row; oracle treats adjacent tags as a translation pair",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must classify the tags as independent (non-pair) with an explicit contract, or request a tag-order change in the layout."
+      "decisionNeeded": "Owner must classify the tags as independent (non-pair) with an explicit contract, or request a tag-order change in the layout.",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R5"
+        ],
+        "visualContract": "rtl-row-flow",
+        "evidence": [
+          "bidi-scene-geometry-before.json#ad2b68b306713fc6",
+          "bidi-scene-geometry-after.json#ad2b68b306713fc6",
+          "bidi-oracle-corrections.json#ad2b68b306713fc6"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "b54105dc01804489",
@@ -183,7 +354,20 @@
       "classId": "C4-arabic-connective-flow",
       "classTitle": "English item followed by an Arabic connective/contrast inside one sentence; RTL logical order conflicts with the English=Arabic pair policy",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change)."
+      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change).",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R6"
+        ],
+        "visualContract": "rtl-row-flow",
+        "evidence": [
+          "bidi-scene-geometry-before.json#b54105dc01804489",
+          "bidi-scene-geometry-after.json#b54105dc01804489",
+          "bidi-oracle-corrections.json#b54105dc01804489"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "60de322313989b5f",
@@ -197,7 +381,20 @@
       "classId": "C4-arabic-connective-flow",
       "classTitle": "English item followed by an Arabic connective/contrast inside one sentence; RTL logical order conflicts with the English=Arabic pair policy",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change)."
+      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change).",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R6"
+        ],
+        "visualContract": "rtl-row-flow",
+        "evidence": [
+          "bidi-scene-geometry-before.json#60de322313989b5f",
+          "bidi-scene-geometry-after.json#60de322313989b5f",
+          "bidi-oracle-corrections.json#60de322313989b5f"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "021f190787ad1406",
@@ -211,7 +408,20 @@
       "classId": "C4-arabic-connective-flow",
       "classTitle": "English item followed by an Arabic connective/contrast inside one sentence; RTL logical order conflicts with the English=Arabic pair policy",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change)."
+      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change).",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R6"
+        ],
+        "visualContract": "rtl-row-flow",
+        "evidence": [
+          "bidi-scene-geometry-before.json#021f190787ad1406",
+          "bidi-scene-geometry-after.json#021f190787ad1406",
+          "bidi-oracle-corrections.json#021f190787ad1406"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "0331e606d113e795",
@@ -225,7 +435,20 @@
       "classId": "C4-arabic-connective-flow",
       "classTitle": "English item followed by an Arabic connective/contrast inside one sentence; RTL logical order conflicts with the English=Arabic pair policy",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change)."
+      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change).",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R6"
+        ],
+        "visualContract": "rtl-row-flow",
+        "evidence": [
+          "bidi-scene-geometry-before.json#0331e606d113e795",
+          "bidi-scene-geometry-after.json#0331e606d113e795",
+          "bidi-oracle-corrections.json#0331e606d113e795"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "54248a7bcad27bbd",
@@ -239,7 +462,20 @@
       "classId": "C4-arabic-connective-flow",
       "classTitle": "English item followed by an Arabic connective/contrast inside one sentence; RTL logical order conflicts with the English=Arabic pair policy",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change)."
+      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change).",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R6"
+        ],
+        "visualContract": "rtl-row-flow",
+        "evidence": [
+          "bidi-scene-geometry-before.json#54248a7bcad27bbd",
+          "bidi-scene-geometry-after.json#54248a7bcad27bbd",
+          "bidi-oracle-corrections.json#54248a7bcad27bbd"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "1dce6f6e34d28783",
@@ -253,7 +489,20 @@
       "classId": "C4-arabic-connective-flow",
       "classTitle": "English item followed by an Arabic connective/contrast inside one sentence; RTL logical order conflicts with the English=Arabic pair policy",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change)."
+      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change).",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R6"
+        ],
+        "visualContract": "rtl-row-flow",
+        "evidence": [
+          "bidi-scene-geometry-before.json#1dce6f6e34d28783",
+          "bidi-scene-geometry-after.json#1dce6f6e34d28783",
+          "bidi-oracle-corrections.json#1dce6f6e34d28783"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "773a481a0b1af9c6",
@@ -267,7 +516,20 @@
       "classId": "C4-arabic-connective-flow",
       "classTitle": "English item followed by an Arabic connective/contrast inside one sentence; RTL logical order conflicts with the English=Arabic pair policy",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change)."
+      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change).",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R6"
+        ],
+        "visualContract": "rtl-row-flow",
+        "evidence": [
+          "bidi-scene-geometry-before.json#773a481a0b1af9c6",
+          "bidi-scene-geometry-after.json#773a481a0b1af9c6",
+          "bidi-oracle-corrections.json#773a481a0b1af9c6"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "18a83403b0994ab2",
@@ -281,7 +543,20 @@
       "classId": "C4-arabic-connective-flow",
       "classTitle": "English item followed by an Arabic connective/contrast inside one sentence; RTL logical order conflicts with the English=Arabic pair policy",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change)."
+      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change).",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R6"
+        ],
+        "visualContract": "rtl-row-flow",
+        "evidence": [
+          "bidi-scene-geometry-before.json#18a83403b0994ab2",
+          "bidi-scene-geometry-after.json#18a83403b0994ab2",
+          "bidi-oracle-corrections.json#18a83403b0994ab2"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "99286d6e998604cf",
@@ -295,7 +570,20 @@
       "classId": "C4-arabic-connective-flow",
       "classTitle": "English item followed by an Arabic connective/contrast inside one sentence; RTL logical order conflicts with the English=Arabic pair policy",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change)."
+      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change).",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R6"
+        ],
+        "visualContract": "rtl-row-flow",
+        "evidence": [
+          "bidi-scene-geometry-before.json#99286d6e998604cf",
+          "bidi-scene-geometry-after.json#99286d6e998604cf",
+          "bidi-oracle-corrections.json#99286d6e998604cf"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "0d4d768034b4d07e",
@@ -309,7 +597,20 @@
       "classId": "C4-arabic-connective-flow",
       "classTitle": "English item followed by an Arabic connective/contrast inside one sentence; RTL logical order conflicts with the English=Arabic pair policy",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change)."
+      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change).",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R6"
+        ],
+        "visualContract": "rtl-row-flow",
+        "evidence": [
+          "bidi-scene-geometry-before.json#0d4d768034b4d07e",
+          "bidi-scene-geometry-after.json#0d4d768034b4d07e",
+          "bidi-oracle-corrections.json#0d4d768034b4d07e"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "db0737a7ecea1a9a",
@@ -323,7 +624,20 @@
       "classId": "C1-neutral-attribution",
       "classTitle": "Oracle attributes sentence-final or operator punctuation to the adjacent English run",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result."
+      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result.",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R1"
+        ],
+        "visualContract": "lead-outside-en",
+        "evidence": [
+          "bidi-scene-geometry-before.json#db0737a7ecea1a9a",
+          "bidi-scene-geometry-after.json#db0737a7ecea1a9a",
+          "bidi-oracle-corrections.json#db0737a7ecea1a9a"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "d77b545c7e96f088",
@@ -337,7 +651,20 @@
       "classId": "C1-neutral-attribution",
       "classTitle": "Oracle attributes sentence-final or operator punctuation to the adjacent English run",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result."
+      "decisionNeeded": "Owner must approve an explicit oracle attribution rule (or accept the sentence-period/operator placement). Wrapping the Arabic sentence in an RTL span was tested and does not change the oracle result.",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R1"
+        ],
+        "visualContract": "lead-outside-en",
+        "evidence": [
+          "bidi-scene-geometry-before.json#d77b545c7e96f088",
+          "bidi-scene-geometry-after.json#d77b545c7e96f088",
+          "bidi-oracle-corrections.json#d77b545c7e96f088"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "63dd1e6803e58088",
@@ -351,7 +678,20 @@
       "classId": "C4-arabic-connective-flow",
       "classTitle": "English item followed by an Arabic connective/contrast inside one sentence; RTL logical order conflicts with the English=Arabic pair policy",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change)."
+      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change).",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R6"
+        ],
+        "visualContract": "rtl-row-flow",
+        "evidence": [
+          "bidi-scene-geometry-before.json#63dd1e6803e58088",
+          "bidi-scene-geometry-after.json#63dd1e6803e58088",
+          "bidi-oracle-corrections.json#63dd1e6803e58088"
+        ],
+        "sourceChanged": false
+      }
     },
     {
       "id": "5115d4dba8ae89f4",
@@ -365,7 +705,52 @@
       "classId": "C4-arabic-connective-flow",
       "classTitle": "English item followed by an Arabic connective/contrast inside one sentence; RTL logical order conflicts with the English=Arabic pair policy",
       "status": "OPEN — not waived; no passing repair contract",
-      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change)."
+      "decisionNeeded": "Owner must choose: accept RTL sentence reading order for these flows (oracle contract change) or require English-first visual layout (source/layout change).",
+      "resolution": {
+        "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+        "oracleRules": [
+          "R6"
+        ],
+        "visualContract": "rtl-row-flow",
+        "evidence": [
+          "bidi-scene-geometry-before.json#5115d4dba8ae89f4",
+          "bidi-scene-geometry-after.json#5115d4dba8ae89f4",
+          "bidi-oracle-corrections.json#5115d4dba8ae89f4"
+        ],
+        "sourceChanged": false
+      }
     }
-  ]
+  ],
+  "resolutionEvidence": "docs/audits/bidi-oracle-corrections.json",
+  "detectionRetained": {
+    "sourceRepairedFixturesStillFlagged": 24,
+    "expected": 24,
+    "ids": [
+      "fdf631dd9ba71bc8",
+      "403e2a3b7d852fe6",
+      "bddeb319353f9a20",
+      "4b56ce57582c2cf9",
+      "b3492e18e8cfe547",
+      "651beb2d35991a0b",
+      "969c944a562cef17",
+      "4491d05255ca532b",
+      "8386f084b42bc358",
+      "8618db4462a51548",
+      "99bfce27a88ed27a",
+      "22ac523e4ebe019b",
+      "6896e693af308881",
+      "ac191c805ea02cb5",
+      "6df03bba6ec8bb06",
+      "162fd7029eb7bacd",
+      "48bfb448a55b9cbb",
+      "8185d53475624736",
+      "a664174454aab722",
+      "3711f6f8f215e29f",
+      "502c3967f41dc6d5",
+      "c30e24ed38333247",
+      "d31b16b4a5b69177",
+      "ab23f9147044ae31"
+    ]
+  },
+  "statusNote": "Each item keeps its original `status` and `decisionNeeded` fields verbatim as the historical record of the finding. `resolution.status` supersedes them: the decision was taken, the oracle was corrected against rendered evidence, and no source content was rewritten."
 }

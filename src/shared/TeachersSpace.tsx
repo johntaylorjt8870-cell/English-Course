@@ -59,7 +59,7 @@ export default function TeachersSpace({
   // المفتاح لا يُرَندَر إطلاقًا هنا — لا نصوص إجابات ولا شروح في الـ DOM.
   if (!unlocked) {
     return (
-      <section className="mt-10 rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50/60 p-4 sm:p-6">
+      <section data-teachers-space={lesson} className="mt-10 rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50/60 p-4 sm:p-6">
         <div className="flex flex-wrap items-center gap-3">
           <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-slate-200 text-xl">🧑‍🏫</span>
           <div className="min-w-0 flex-1">
@@ -112,7 +112,7 @@ export default function TeachersSpace({
 
   // ---------------- مفتوح: مراجعة مفتاح نفس الاختبار المعروض للطالب ----------------
   return (
-    <section className="pop mt-10 rounded-3xl border-2 border-slate-300 bg-white/80 p-4 sm:p-6">
+    <section data-teachers-space={lesson} className="pop mt-10 rounded-3xl border-2 border-slate-300 bg-white/80 p-4 sm:p-6">
       <div className="flex flex-wrap items-center gap-3">
         <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-2xl text-xl text-white ${accent}`}>
           🧑‍🏫

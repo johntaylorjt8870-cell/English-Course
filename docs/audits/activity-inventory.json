@@ -1,5 +1,5 @@
 {
-  "sourceDataFingerprint": "6b52695b70c5aec2cf64147e5d5288dba44b41d6c1862e8582f8a16311396dac",
+  "sourceDataFingerprint": "6f6929a5569639f3ba06f6683f830a37cec14d5c6b16c77f34e7ec3bc8c6b977",
   "scope": "All JSX interactive control definitions in src/**/*.tsx, including delegated props and source bindings. A template is NOT every runtime data-bound activity instance. No behavioral claim follows from discovery.",
   "records": [
     {
@@ -47463,7 +47463,7 @@
           "id": "src/shared/FinalQuiz.tsx#FinalQuiz/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 105,
+          "line": 108,
           "column": 21,
           "handlers": [
             {
@@ -47487,7 +47487,7 @@
           "id": "src/shared/FinalQuiz.tsx#FinalQuiz/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 137,
+          "line": 140,
           "column": 15,
           "handlers": [
             {
@@ -47508,7 +47508,7 @@
           "id": "src/shared/FinalQuiz.tsx#FinalQuiz/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 146,
+          "line": 149,
           "column": 15,
           "handlers": [
             {
@@ -47529,7 +47529,7 @@
           "id": "src/shared/FinalQuiz.tsx#FinalQuiz/4",
           "tag": "button",
           "type": "\"button\"",
-          "line": 165,
+          "line": 168,
           "column": 15,
           "handlers": [
             {

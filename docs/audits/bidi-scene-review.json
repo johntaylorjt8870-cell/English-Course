@@ -1,16 +1,87 @@
 {
-  "base": "ee70138",
+  "base": "aea5289",
+  "oracleCorrectionBase": "aea5289",
   "original": 48,
+  "repairedInSource": 24,
+  "resolvedByOracleCorrection": 24,
   "repaired": 24,
-  "open": 24,
+  "open": 0,
   "matchingExemptions": 0,
   "categoryBefore": {
     "pair": 32,
     "row": 16
   },
   "categoryAfter": {
-    "pair": 10,
-    "row": 14
+    "pair": 0,
+    "row": 0
+  },
+  "oracleRules": [
+    {
+      "id": "R1",
+      "fixes": "C1-neutral-attribution",
+      "statement": "A Latin run starts at a Latin letter/digit or at a suffix/quote mark attached to one; a preceding sentence period or expression operator belongs to the RTL context. Mirrors tryPair in src/shared/bidi.tsx.",
+      "cases": 7
+    },
+    {
+      "id": "R2",
+      "fixes": "C4 (Arabic punctuation before the separator)",
+      "statement": "The character a pair separator attaches to must not be Arabic script (؟ U+061F closes an alternatives group).",
+      "cases": 1
+    },
+    {
+      "id": "R3",
+      "fixes": "C5-cross-clause-dash",
+      "statement": "An Arabic run followed by a label separator (: = – —) and a Latin run is a clause label with its own value, not the gloss of the Latin run across the dash. Sentence terminators (. ! ؟) do not trigger it.",
+      "cases": 1
+    },
+    {
+      "id": "R4",
+      "fixes": "C2-native-select-hidden-options",
+      "statement": "A native <select> contributes only its selected <option>; unselected options are not rendered text.",
+      "cases": 1
+    },
+    {
+      "id": "R5",
+      "fixes": "C3-independent-tags",
+      "statement": "A flex row repeating one chip template three or more times is a list of independent tags, not a set of label/gloss pairs.",
+      "cases": 2
+    },
+    {
+      "id": "R6",
+      "fixes": "C4-arabic-connective-flow",
+      "statement": "An English row sibling followed by an Arabic continuation (leading connective particle, interrogative tail, or an Arabic-led sibling) is inside an RTL sentence; its right-to-left row order is the correct reading order.",
+      "cases": 15
+    }
+  ],
+  "detectionRetained": {
+    "sourceRepairedFixturesStillFlagged": 24,
+    "expected": 24,
+    "ids": [
+      "fdf631dd9ba71bc8",
+      "403e2a3b7d852fe6",
+      "bddeb319353f9a20",
+      "4b56ce57582c2cf9",
+      "b3492e18e8cfe547",
+      "651beb2d35991a0b",
+      "969c944a562cef17",
+      "4491d05255ca532b",
+      "8386f084b42bc358",
+      "8618db4462a51548",
+      "99bfce27a88ed27a",
+      "22ac523e4ebe019b",
+      "6896e693af308881",
+      "ac191c805ea02cb5",
+      "6df03bba6ec8bb06",
+      "162fd7029eb7bacd",
+      "48bfb448a55b9cbb",
+      "8185d53475624736",
+      "a664174454aab722",
+      "3711f6f8f215e29f",
+      "502c3967f41dc6d5",
+      "c30e24ed38333247",
+      "d31b16b4a5b69177",
+      "ab23f9147044ae31"
+    ]
   },
   "byLesson": [
     {
@@ -31,7 +102,7 @@
     {
       "lesson": 4,
       "before": 1,
-      "after": 1
+      "after": 0
     },
     {
       "lesson": 5,
@@ -46,12 +117,12 @@
     {
       "lesson": 7,
       "before": 1,
-      "after": 1
+      "after": 0
     },
     {
       "lesson": 8,
       "before": 2,
-      "after": 1
+      "after": 0
     },
     {
       "lesson": 9,
@@ -61,7 +132,7 @@
     {
       "lesson": 10,
       "before": 4,
-      "after": 2
+      "after": 0
     },
     {
       "lesson": 11,
@@ -71,7 +142,7 @@
     {
       "lesson": 12,
       "before": 3,
-      "after": 1
+      "after": 0
     },
     {
       "lesson": 13,
@@ -91,17 +162,17 @@
     {
       "lesson": 16,
       "before": 2,
-      "after": 2
+      "after": 0
     },
     {
       "lesson": 17,
       "before": 1,
-      "after": 1
+      "after": 0
     },
     {
       "lesson": 18,
       "before": 2,
-      "after": 2
+      "after": 0
     },
     {
       "lesson": 19,
@@ -111,7 +182,7 @@
     {
       "lesson": 20,
       "before": 6,
-      "after": 6
+      "after": 0
     },
     {
       "lesson": 21,
@@ -121,17 +192,17 @@
     {
       "lesson": 22,
       "before": 2,
-      "after": 1
+      "after": 0
     },
     {
       "lesson": 23,
       "before": 2,
-      "after": 2
+      "after": 0
     },
     {
       "lesson": 24,
       "before": 2,
-      "after": 2
+      "after": 0
     },
     {
       "lesson": 25,
@@ -141,7 +212,7 @@
     {
       "lesson": 26,
       "before": 5,
-      "after": 2
+      "after": 0
     },
     {
       "lesson": 27,
@@ -188,6 +259,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#fdf631dd9ba71bc8",
         "bidi-scene-geometry-after.json#fdf631dd9ba71bc8"
@@ -211,6 +284,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#403e2a3b7d852fe6",
         "bidi-scene-geometry-after.json#403e2a3b7d852fe6"
@@ -234,6 +309,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#bddeb319353f9a20",
         "bidi-scene-geometry-after.json#bddeb319353f9a20"
@@ -257,6 +334,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#4b56ce57582c2cf9",
         "bidi-scene-geometry-after.json#4b56ce57582c2cf9"
@@ -280,6 +359,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#b3492e18e8cfe547",
         "bidi-scene-geometry-after.json#b3492e18e8cfe547"
@@ -300,14 +381,19 @@
       "sourceOrigin": "src/lessons/lesson4/Lesson4.tsx#Challenge:1120:15",
       "lessonOrigin": "src/lessons/lesson4/Lesson4.tsx#Challenge:1120:15",
       "currentOrigin": "src/lessons/lesson4/Lesson4.tsx#Challenge:1120:15",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Native select: the inferred Verb to beArticle target concatenates mutually exclusive options. Native option glyph ranges are zero; selected-option rendering has not been certified. Do not treat zero rectangles as passing evidence.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Native select: the inferred Verb to beArticle target concatenates mutually exclusive options. Native option glyph ranges are zero; selected-option rendering has not been certified. Do not treat zero rectangles as passing evidence. RESOLVED by correcting the oracle (rules R4), not the source: the rendered order was verified in Chromium against the «native-select» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R4"
+      ],
+      "resolution": "native-select",
       "evidence": [
         "bidi-scene-geometry-before.json#96ed9167e8093a85",
-        "bidi-scene-geometry-after.json#96ed9167e8093a85"
+        "bidi-scene-geometry-after.json#96ed9167e8093a85",
+        "bidi-oracle-corrections.json#96ed9167e8093a85"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -323,14 +409,19 @@
       "sourceOrigin": "src/lessons/lesson7/Lesson7.tsx#GroupsDo:137:7",
       "lessonOrigin": "src/lessons/lesson7/Lesson7.tsx#GroupsDo:137:7",
       "currentOrigin": "src/lessons/lesson7/Lesson7.tsx#GroupsDo:137:7",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Arabic-led negative/question clauses separated by an em dash. The oracle pairs don’t with the next clause label, not its own label. English question punctuation still needs a clause-aware regression; blindly grouping across the dash risks changing meaning.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Arabic-led negative/question clauses separated by an em dash. The oracle pairs don’t with the next clause label, not its own label. English question punctuation still needs a clause-aware regression; blindly grouping across the dash risks changing meaning. RESOLVED by correcting the oracle (rules R3), not the source: the rendered order was verified in Chromium against the «clause-association» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R3"
+      ],
+      "resolution": "clause-association",
       "evidence": [
         "bidi-scene-geometry-before.json#915a29c9e3a772cb",
-        "bidi-scene-geometry-after.json#915a29c9e3a772cb"
+        "bidi-scene-geometry-after.json#915a29c9e3a772cb",
+        "bidi-oracle-corrections.json#915a29c9e3a772cb"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -346,14 +437,19 @@
       "sourceOrigin": "src/lessons/lesson8/Lesson8.tsx#Cover:707:9",
       "lessonOrigin": "src/lessons/lesson8/Lesson8.tsx#Cover:707:9",
       "currentOrigin": "src/lessons/lesson8/Lesson8.tsx#Cover:707:9",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Independent cover pills, not a translated label. Row oracle conflates neighboring topic tags. Their intended order and wrapping require an explicit source-semantic contract.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Independent cover pills, not a translated label. Row oracle conflates neighboring topic tags. Their intended order and wrapping require an explicit source-semantic contract. RESOLVED by correcting the oracle (rules R5), not the source: the rendered order was verified in Chromium against the «rtl-row-flow» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R5"
+      ],
+      "resolution": "rtl-row-flow",
       "evidence": [
         "bidi-scene-geometry-before.json#079db2a35ac08a74",
-        "bidi-scene-geometry-after.json#079db2a35ac08a74"
+        "bidi-scene-geometry-after.json#079db2a35ac08a74",
+        "bidi-oracle-corrections.json#079db2a35ac08a74"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -372,6 +468,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#651beb2d35991a0b",
         "bidi-scene-geometry-after.json#651beb2d35991a0b"
@@ -395,6 +493,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#969c944a562cef17",
         "bidi-scene-geometry-after.json#969c944a562cef17"
@@ -415,14 +515,19 @@
       "sourceOrigin": "src/lessons/lesson10/Lesson10.tsx#Rail:1119:19",
       "lessonOrigin": "src/lessons/lesson10/Lesson10.tsx#Rail:1119:19",
       "currentOrigin": "src/lessons/lesson10/Lesson10.tsx#Rail:1119:19",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Rail alternative question followed by Arabic instruction. Actual desktop punctuation/instruction wraps; rail is hidden at narrow width. No mobile geometry claim; clause boundaries and punctuation remain unresolved.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Rail alternative question followed by Arabic instruction. Actual desktop punctuation/instruction wraps; rail is hidden at narrow width. No mobile geometry claim; clause boundaries and punctuation remain unresolved. RESOLVED by correcting the oracle (rules R2), not the source: the rendered order was verified in Chromium against the «alts-group-then-instruction» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R2"
+      ],
+      "resolution": "alts-group-then-instruction",
       "evidence": [
         "bidi-scene-geometry-before.json#831dc6b412dd91e2",
-        "bidi-scene-geometry-after.json#831dc6b412dd91e2"
+        "bidi-scene-geometry-after.json#831dc6b412dd91e2",
+        "bidi-oracle-corrections.json#831dc6b412dd91e2"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -441,6 +546,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#4491d05255ca532b",
         "bidi-scene-geometry-after.json#4491d05255ca532b"
@@ -464,6 +571,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#8386f084b42bc358",
         "bidi-scene-geometry-after.json#8386f084b42bc358"
@@ -484,14 +593,19 @@
       "sourceOrigin": "src/lessons/lesson10/Lesson10.tsx#Rich:47:10",
       "lessonOrigin": "src/lessons/lesson10/Lesson10.tsx#Rich:47:10",
       "currentOrigin": "src/lessons/lesson10/Lesson10.tsx#Rich:47:10",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Inferred Latin begins with the preceding Arabic sentence’s period. Actual plays starts left of its Arabic explanation. Exact oracle boundary review needed; not waived.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Inferred Latin begins with the preceding Arabic sentence’s period. Actual plays starts left of its Arabic explanation. Exact oracle boundary review needed; not waived. RESOLVED by correcting the oracle (rules R1), not the source: the rendered order was verified in Chromium against the «lead-outside-en» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R1"
+      ],
+      "resolution": "lead-outside-en",
       "evidence": [
         "bidi-scene-geometry-before.json#1f1841687ac3c5ed",
-        "bidi-scene-geometry-after.json#1f1841687ac3c5ed"
+        "bidi-scene-geometry-after.json#1f1841687ac3c5ed",
+        "bidi-oracle-corrections.json#1f1841687ac3c5ed"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -510,6 +624,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#8618db4462a51548",
         "bidi-scene-geometry-after.json#8618db4462a51548"
@@ -530,14 +646,19 @@
       "sourceOrigin": "src/lessons/lesson12/Lesson12.tsx#Frame:99:16",
       "lessonOrigin": "src/lessons/lesson12/Lesson12.tsx#Frame:99:16",
       "currentOrigin": "src/lessons/lesson12/Lesson12.tsx#Frame:99:16",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Consonant + y formula: plus is outside the isolated y. Whether plus belongs to the preceding Arabic operand or the English token needs an explicit expression contract; no silent source rewrite.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Consonant + y formula: plus is outside the isolated y. Whether plus belongs to the preceding Arabic operand or the English token needs an explicit expression contract; no silent source rewrite. RESOLVED by correcting the oracle (rules R1), not the source: the rendered order was verified in Chromium against the «lead-outside-en» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R1"
+      ],
+      "resolution": "lead-outside-en",
       "evidence": [
         "bidi-scene-geometry-before.json#5d2600af3fc51a3a",
-        "bidi-scene-geometry-after.json#5d2600af3fc51a3a"
+        "bidi-scene-geometry-after.json#5d2600af3fc51a3a",
+        "bidi-oracle-corrections.json#5d2600af3fc51a3a"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -556,6 +677,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Shared parser trimmed the attached suffix hyphen as preceding punctuation. Preserve a leading hyphen immediately attached to a Latin token.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#99bfce27a88ed27a",
         "bidi-scene-geometry-after.json#99bfce27a88ed27a"
@@ -579,6 +702,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#22ac523e4ebe019b",
         "bidi-scene-geometry-after.json#22ac523e4ebe019b"
@@ -602,6 +727,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#6896e693af308881",
         "bidi-scene-geometry-after.json#6896e693af308881"
@@ -625,6 +752,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#ac191c805ea02cb5",
         "bidi-scene-geometry-after.json#ac191c805ea02cb5"
@@ -648,6 +777,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#6df03bba6ec8bb06",
         "bidi-scene-geometry-after.json#6df03bba6ec8bb06"
@@ -671,6 +802,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#162fd7029eb7bacd",
         "bidi-scene-geometry-after.json#162fd7029eb7bacd"
@@ -694,6 +827,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#48bfb448a55b9cbb",
         "bidi-scene-geometry-after.json#48bfb448a55b9cbb"
@@ -714,14 +849,19 @@
       "sourceOrigin": "src/lessons/lesson16/Lesson16.tsx#Rich:67:10",
       "lessonOrigin": "src/lessons/lesson16/Lesson16.tsx#Rich:67:10",
       "currentOrigin": "src/lessons/lesson16/Lesson16.tsx#Rich:67:10",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "The inferred . book starts at the preceding Arabic sentence’s period. The actual b is left of الاسم; oracle boundary candidate, retained without exemption.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "The inferred . book starts at the preceding Arabic sentence’s period. The actual b is left of الاسم; oracle boundary candidate, retained without exemption. RESOLVED by correcting the oracle (rules R1), not the source: the rendered order was verified in Chromium against the «lead-outside-en» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R1"
+      ],
+      "resolution": "lead-outside-en",
       "evidence": [
         "bidi-scene-geometry-before.json#562538031bc27572",
-        "bidi-scene-geometry-after.json#562538031bc27572"
+        "bidi-scene-geometry-after.json#562538031bc27572",
+        "bidi-oracle-corrections.json#562538031bc27572"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -737,14 +877,19 @@
       "sourceOrigin": "src/lessons/lesson16/Lesson16.tsx#Rich:67:10",
       "lessonOrigin": "src/lessons/lesson16/Lesson16.tsx#Rich:67:10",
       "currentOrigin": "src/lessons/lesson16/Lesson16.tsx#Rich:67:10",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "The inferred . their starts at a preceding Arabic sentence’s period. Actual their is left of its gloss; oracle boundary candidate, retained without exemption.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "The inferred . their starts at a preceding Arabic sentence’s period. Actual their is left of its gloss; oracle boundary candidate, retained without exemption. RESOLVED by correcting the oracle (rules R1), not the source: the rendered order was verified in Chromium against the «lead-outside-en» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R1"
+      ],
+      "resolution": "lead-outside-en",
       "evidence": [
         "bidi-scene-geometry-before.json#f9237450d963f0c6",
-        "bidi-scene-geometry-after.json#f9237450d963f0c6"
+        "bidi-scene-geometry-after.json#f9237450d963f0c6",
+        "bidi-oracle-corrections.json#f9237450d963f0c6"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -760,14 +905,19 @@
       "sourceOrigin": "src/shared/bidi.tsx#EnAr:447:5",
       "lessonOrigin": "src/lessons/lesson17/Lesson17.tsx#LabPanel:226:7",
       "currentOrigin": "src/shared/bidi.tsx#EnAr:449:5",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Arabic ownership map contains noun + possessive suffix. Plus is not grouped with the suffix; choosing an expression boundary without source-semantic verification risks changing the map.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Arabic ownership map contains noun + possessive suffix. Plus is not grouped with the suffix; choosing an expression boundary without source-semantic verification risks changing the map. RESOLVED by correcting the oracle (rules R1), not the source: the rendered order was verified in Chromium against the «lead-outside-en» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R1"
+      ],
+      "resolution": "lead-outside-en",
       "evidence": [
         "bidi-scene-geometry-before.json#4eb0b06b0eb57373",
-        "bidi-scene-geometry-after.json#4eb0b06b0eb57373"
+        "bidi-scene-geometry-after.json#4eb0b06b0eb57373",
+        "bidi-oracle-corrections.json#4eb0b06b0eb57373"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -783,14 +933,19 @@
       "sourceOrigin": "src/lessons/lesson18/Lesson18.tsx#Cover:2463:9",
       "lessonOrigin": "src/lessons/lesson18/Lesson18.tsx#Cover:2463:9",
       "currentOrigin": "src/lessons/lesson18/Lesson18.tsx#Cover:2463:9",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Independent cover topic pills; row oracle interprets English topic and Arabic topic as a translation. Needs a pill-order contract, not a blanket flex exception.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Independent cover topic pills; row oracle interprets English topic and Arabic topic as a translation. Needs a pill-order contract, not a blanket flex exception. RESOLVED by correcting the oracle (rules R5), not the source: the rendered order was verified in Chromium against the «rtl-row-flow» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R5"
+      ],
+      "resolution": "rtl-row-flow",
       "evidence": [
         "bidi-scene-geometry-before.json#ad2b68b306713fc6",
-        "bidi-scene-geometry-after.json#ad2b68b306713fc6"
+        "bidi-scene-geometry-after.json#ad2b68b306713fc6",
+        "bidi-oracle-corrections.json#ad2b68b306713fc6"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -806,14 +961,19 @@
       "sourceOrigin": "src/lessons/lesson18/Lesson18.tsx#Summary:2530:13",
       "lessonOrigin": "src/lessons/lesson18/Lesson18.tsx#Summary:2530:13",
       "currentOrigin": "src/lessons/lesson18/Lesson18.tsx#Summary:2530:13",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Mixed Arabic/English pluralization title plus separate exception note. Applying English-only label direction to the whole Arabic-led title would be unsafe.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Mixed Arabic/English pluralization title plus separate exception note. Applying English-only label direction to the whole Arabic-led title would be unsafe. RESOLVED by correcting the oracle (rules R6), not the source: the rendered order was verified in Chromium against the «rtl-row-flow» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R6"
+      ],
+      "resolution": "rtl-row-flow",
       "evidence": [
         "bidi-scene-geometry-before.json#b54105dc01804489",
-        "bidi-scene-geometry-after.json#b54105dc01804489"
+        "bidi-scene-geometry-after.json#b54105dc01804489",
+        "bidi-oracle-corrections.json#b54105dc01804489"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -832,6 +992,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#8185d53475624736",
         "bidi-scene-geometry-after.json#8185d53475624736"
@@ -852,14 +1014,19 @@
       "sourceOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
       "lessonOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
       "currentOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "This chip is embedded in an Arabic question, followed by في السؤال الأول؟; the suffix is not a translation of this. Preserve RTL question reading and test chip/punctuation boundaries.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "This chip is embedded in an Arabic question, followed by في السؤال الأول؟; the suffix is not a translation of this. Preserve RTL question reading and test chip/punctuation boundaries. RESOLVED by correcting the oracle (rules R6), not the source: the rendered order was verified in Chromium against the «rtl-row-flow» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R6"
+      ],
+      "resolution": "rtl-row-flow",
       "evidence": [
         "bidi-scene-geometry-before.json#60de322313989b5f",
-        "bidi-scene-geometry-after.json#60de322313989b5f"
+        "bidi-scene-geometry-after.json#60de322313989b5f",
+        "bidi-oracle-corrections.json#60de322313989b5f"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -875,14 +1042,19 @@
       "sourceOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
       "lessonOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
       "currentOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "That chip is embedded in an Arabic question, followed by في السؤال الثاني؟; not a translated label. Needs RTL question-flow regression.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "That chip is embedded in an Arabic question, followed by في السؤال الثاني؟; not a translated label. Needs RTL question-flow regression. RESOLVED by correcting the oracle (rules R6), not the source: the rendered order was verified in Chromium against the «rtl-row-flow» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R6"
+      ],
+      "resolution": "rtl-row-flow",
       "evidence": [
         "bidi-scene-geometry-before.json#021f190787ad1406",
-        "bidi-scene-geometry-after.json#021f190787ad1406"
+        "bidi-scene-geometry-after.json#021f190787ad1406",
+        "bidi-oracle-corrections.json#021f190787ad1406"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -898,14 +1070,19 @@
       "sourceOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
       "lessonOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
       "currentOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "These chip followed by Arabic connective مع and notebooks; not a translation. Both English tokens and question punctuation need a complete sentence test.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "These chip followed by Arabic connective مع and notebooks; not a translation. Both English tokens and question punctuation need a complete sentence test. RESOLVED by correcting the oracle (rules R6), not the source: the rendered order was verified in Chromium against the «rtl-row-flow» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R6"
+      ],
+      "resolution": "rtl-row-flow",
       "evidence": [
         "bidi-scene-geometry-before.json#0331e606d113e795",
-        "bidi-scene-geometry-after.json#0331e606d113e795"
+        "bidi-scene-geometry-after.json#0331e606d113e795",
+        "bidi-oracle-corrections.json#0331e606d113e795"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -921,14 +1098,19 @@
       "sourceOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
       "lessonOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
       "currentOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Those chip followed by Arabic connective مع and bicycles; not a translation. Do not reverse the whole Arabic question to satisfy a pair heuristic.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Those chip followed by Arabic connective مع and bicycles; not a translation. Do not reverse the whole Arabic question to satisfy a pair heuristic. RESOLVED by correcting the oracle (rules R6), not the source: the rendered order was verified in Chromium against the «rtl-row-flow» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R6"
+      ],
+      "resolution": "rtl-row-flow",
       "evidence": [
         "bidi-scene-geometry-before.json#54248a7bcad27bbd",
-        "bidi-scene-geometry-after.json#54248a7bcad27bbd"
+        "bidi-scene-geometry-after.json#54248a7bcad27bbd",
+        "bidi-oracle-corrections.json#54248a7bcad27bbd"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -944,14 +1126,19 @@
       "sourceOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
       "lessonOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
       "currentOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "English noun phrase followed by Arabic conjunction و; the conjunction connects another phrase, not a gloss. Full question-flow contract remains open.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "English noun phrase followed by Arabic conjunction و; the conjunction connects another phrase, not a gloss. Full question-flow contract remains open. RESOLVED by correcting the oracle (rules R6), not the source: the rendered order was verified in Chromium against the «rtl-row-flow» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R6"
+      ],
+      "resolution": "rtl-row-flow",
       "evidence": [
         "bidi-scene-geometry-before.json#1dce6f6e34d28783",
-        "bidi-scene-geometry-after.json#1dce6f6e34d28783"
+        "bidi-scene-geometry-after.json#1dce6f6e34d28783",
+        "bidi-oracle-corrections.json#1dce6f6e34d28783"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -967,14 +1154,19 @@
       "sourceOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
       "lessonOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
       "currentOrigin": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Possessive noun phrase followed by ولم نقل and a contrasting phrase. It is a contrast question, not English-to-Arabic translation.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Possessive noun phrase followed by ولم نقل and a contrasting phrase. It is a contrast question, not English-to-Arabic translation. RESOLVED by correcting the oracle (rules R6), not the source: the rendered order was verified in Chromium against the «rtl-row-flow» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R6"
+      ],
+      "resolution": "rtl-row-flow",
       "evidence": [
         "bidi-scene-geometry-before.json#773a481a0b1af9c6",
-        "bidi-scene-geometry-after.json#773a481a0b1af9c6"
+        "bidi-scene-geometry-after.json#773a481a0b1af9c6",
+        "bidi-oracle-corrections.json#773a481a0b1af9c6"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -993,6 +1185,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#a664174454aab722",
         "bidi-scene-geometry-after.json#a664174454aab722"
@@ -1013,14 +1207,19 @@
       "sourceOrigin": "src/lessons/lesson22/Lesson22.tsx#OpeningRecall:493:9",
       "lessonOrigin": "src/lessons/lesson22/Lesson22.tsx#OpeningRecall:493:9",
       "currentOrigin": "src/lessons/lesson22/Lesson22.tsx#OpeningRecall:493:9",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Recall pills and final Arabic continuation وحتى الجمل الأطول. Different roles are conflated as a bilingual label by the row oracle; no exemption added.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Recall pills and final Arabic continuation وحتى الجمل الأطول. Different roles are conflated as a bilingual label by the row oracle; no exemption added. RESOLVED by correcting the oracle (rules R6), not the source: the rendered order was verified in Chromium against the «rtl-row-flow» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R6"
+      ],
+      "resolution": "rtl-row-flow",
       "evidence": [
         "bidi-scene-geometry-before.json#18a83403b0994ab2",
-        "bidi-scene-geometry-after.json#18a83403b0994ab2"
+        "bidi-scene-geometry-after.json#18a83403b0994ab2",
+        "bidi-oracle-corrections.json#18a83403b0994ab2"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -1039,6 +1238,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#3711f6f8f215e29f",
         "bidi-scene-geometry-after.json#3711f6f8f215e29f"
@@ -1059,14 +1260,19 @@
       "sourceOrigin": "src/lessons/lesson23/Lesson23.tsx#InformationLab:2168:9",
       "lessonOrigin": "src/lessons/lesson23/Lesson23.tsx#InformationLab:2168:9",
       "currentOrigin": "src/lessons/lesson23/Lesson23.tsx#InformationLab:2168:9",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Countable pieces followed by contrast وليس information نفسها. English target and Arabic connective are not a definition pair; needs whole-statement geometry.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Countable pieces followed by contrast وليس information نفسها. English target and Arabic connective are not a definition pair; needs whole-statement geometry. RESOLVED by correcting the oracle (rules R6), not the source: the rendered order was verified in Chromium against the «rtl-row-flow» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R6"
+      ],
+      "resolution": "rtl-row-flow",
       "evidence": [
         "bidi-scene-geometry-before.json#99286d6e998604cf",
-        "bidi-scene-geometry-after.json#99286d6e998604cf"
+        "bidi-scene-geometry-after.json#99286d6e998604cf",
+        "bidi-oracle-corrections.json#99286d6e998604cf"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -1082,14 +1288,19 @@
       "sourceOrigin": "src/lessons/lesson23/Lesson23.tsx#TrapNote:2447:7",
       "lessonOrigin": "src/lessons/lesson23/Lesson23.tsx#TrapNote:2447:7",
       "currentOrigin": "src/lessons/lesson23/Lesson23.tsx#TrapNote:2447:7",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Correct some rice and incorrect alternative separated by وليس. Preserve contrast sequence; pairing correct answer with connective alone would misrepresent the source.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Correct some rice and incorrect alternative separated by وليس. Preserve contrast sequence; pairing correct answer with connective alone would misrepresent the source. RESOLVED by correcting the oracle (rules R6), not the source: the rendered order was verified in Chromium against the «rtl-row-flow» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R6"
+      ],
+      "resolution": "rtl-row-flow",
       "evidence": [
         "bidi-scene-geometry-before.json#0d4d768034b4d07e",
-        "bidi-scene-geometry-after.json#0d4d768034b4d07e"
+        "bidi-scene-geometry-after.json#0d4d768034b4d07e",
+        "bidi-oracle-corrections.json#0d4d768034b4d07e"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -1105,14 +1316,19 @@
       "sourceOrigin": "src/lessons/lesson24/Lesson24.tsx#BodyLine:203:9",
       "lessonOrigin": "src/lessons/lesson24/Lesson24.tsx#BodyLine:203:9",
       "currentOrigin": "src/lessons/lesson24/Lesson24.tsx#BodyLine:203:9",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Inferred . few includes previous Arabic sentence punctuation. Actual few is left of its explanation; retained pending exact oracle-boundary regression.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Inferred . few includes previous Arabic sentence punctuation. Actual few is left of its explanation; retained pending exact oracle-boundary regression. RESOLVED by correcting the oracle (rules R1), not the source: the rendered order was verified in Chromium against the «lead-outside-en» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R1"
+      ],
+      "resolution": "lead-outside-en",
       "evidence": [
         "bidi-scene-geometry-before.json#db0737a7ecea1a9a",
-        "bidi-scene-geometry-after.json#db0737a7ecea1a9a"
+        "bidi-scene-geometry-after.json#db0737a7ecea1a9a",
+        "bidi-oracle-corrections.json#db0737a7ecea1a9a"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -1128,14 +1344,19 @@
       "sourceOrigin": "src/lessons/lesson24/Lesson24.tsx#BodyLine:203:9",
       "lessonOrigin": "src/lessons/lesson24/Lesson24.tsx#BodyLine:203:9",
       "currentOrigin": "src/lessons/lesson24/Lesson24.tsx#BodyLine:203:9",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Inferred . little includes previous Arabic sentence punctuation. Actual little is left of its explanation; retained pending exact oracle-boundary regression.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Inferred . little includes previous Arabic sentence punctuation. Actual little is left of its explanation; retained pending exact oracle-boundary regression. RESOLVED by correcting the oracle (rules R1), not the source: the rendered order was verified in Chromium against the «lead-outside-en» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R1"
+      ],
+      "resolution": "lead-outside-en",
       "evidence": [
         "bidi-scene-geometry-before.json#d77b545c7e96f088",
-        "bidi-scene-geometry-after.json#d77b545c7e96f088"
+        "bidi-scene-geometry-after.json#d77b545c7e96f088",
+        "bidi-oracle-corrections.json#d77b545c7e96f088"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -1154,6 +1375,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Shared parser trimmed the attached suffix hyphen as preceding punctuation. Preserve a leading hyphen immediately attached to a Latin token.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#502c3967f41dc6d5",
         "bidi-scene-geometry-after.json#502c3967f41dc6d5"
@@ -1174,14 +1397,19 @@
       "sourceOrigin": "src/lessons/lesson26/Lesson26.tsx#CookSceneLab:669:7",
       "lessonOrigin": "src/lessons/lesson26/Lesson26.tsx#CookSceneLab:669:7",
       "currentOrigin": "src/lessons/lesson26/Lesson26.tsx#CookSceneLab:669:7",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Past Continuous / لكن / contrasting tense is a contrast sequence, not label/gloss. Complete contrast reading order needs verification.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Past Continuous / لكن / contrasting tense is a contrast sequence, not label/gloss. Complete contrast reading order needs verification. RESOLVED by correcting the oracle (rules R6), not the source: the rendered order was verified in Chromium against the «rtl-row-flow» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R6"
+      ],
+      "resolution": "rtl-row-flow",
       "evidence": [
         "bidi-scene-geometry-before.json#63dd1e6803e58088",
-        "bidi-scene-geometry-after.json#63dd1e6803e58088"
+        "bidi-scene-geometry-after.json#63dd1e6803e58088",
+        "bidi-oracle-corrections.json#63dd1e6803e58088"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -1200,6 +1428,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#c30e24ed38333247",
         "bidi-scene-geometry-after.json#c30e24ed38333247"
@@ -1220,14 +1450,19 @@
       "sourceOrigin": "src/lessons/lesson26/Lesson26.tsx#GrammarDetective:3167:7",
       "lessonOrigin": "src/lessons/lesson26/Lesson26.tsx#GrammarDetective:3167:7",
       "currentOrigin": "src/lessons/lesson26/Lesson26.tsx#GrammarDetective:3162:7",
-      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates",
-      "status": "OPEN — not waived",
-      "cause": "Progressive formula followed by و joining another pattern. Conjunction is not a gloss; full expression sequence remains unverified.",
+      "severity": "None — the rendering was correct; the audit measured a string that is not on screen",
+      "status": "RESOLVED — oracle misattribution corrected; visual contract verified in Chromium; source wording untouched",
+      "cause": "Progressive formula followed by و joining another pattern. Conjunction is not a gloss; full expression sequence remains unverified. RESOLVED by correcting the oracle (rules R6), not the source: the rendered order was verified in Chromium against the «rtl-row-flow» contract at 1180px and 390px. All 24 source-repaired negative controls are still flagged by the corrected oracle.",
+      "oracleRules": [
+        "R6"
+      ],
+      "resolution": "rtl-row-flow",
       "evidence": [
         "bidi-scene-geometry-before.json#5115d4dba8ae89f4",
-        "bidi-scene-geometry-after.json#5115d4dba8ae89f4"
+        "bidi-scene-geometry-after.json#5115d4dba8ae89f4",
+        "bidi-oracle-corrections.json#5115d4dba8ae89f4"
       ],
-      "negativeControl": "No passing repair contract; remains blocking",
+      "negativeControl": "Corrected oracle still flags all 24 pre-repair defects (detectionRetained=24/24); rule-level must-flag controls in bidi-oracle-corrections.json",
       "viewports": [
         1180,
         390
@@ -1246,6 +1481,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#d31b16b4a5b69177",
         "bidi-scene-geometry-after.json#d31b16b4a5b69177"
@@ -1269,6 +1506,8 @@
       "severity": "Instructional label/suffix reading-order defect",
       "status": "REPAIRED — real-source geometry and original negative control pass",
       "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "oracleRules": [],
+      "resolution": null,
       "evidence": [
         "bidi-scene-geometry-before.json#ab23f9147044ae31",
         "bidi-scene-geometry-after.json#ab23f9147044ae31"

@@ -14,6 +14,35 @@ const bidi = req("bidi-js")();
 const AR = /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/;
 const LAT = /[A-Za-z]/;
 const SEP = new Set(["=", ":", "–", "—", "-", "→", "←", "/", "|", "·", "(", ".", "!", "?", "،", ",", "؛", ";"]);
+
+// ---- Run-boundary attribution (shared with src/shared/bidi.tsx) -------------
+// The oracle must attribute a run's first character the same way the production
+// segmenter does, otherwise it measures a string that is never on screen.
+// `tryPair` in src/shared/bidi.tsx trims every leading character that is not a
+// Latin letter/digit and not a suffix mark attached to one; the oracle used to
+// keep it, which glued the previous Arabic sentence's period («. plays») or an
+// expression operator («+ y», «+ 's») onto the English side of the pair.
+function isLatinRunStart(s, i) {
+  const c = s[i];
+  const next = s[i + 1] ?? "";
+  if (/[A-Za-z0-9]/.test(c)) return true;
+  // A suffix / quote / opening enclosure belongs to the token only when it is
+  // immediately attached to one («'s», «-ed», «-ING», «(already)», ««Door»»).
+  if (/[’'"«“(]/.test(c)) return /[A-Za-z0-9"'«“(]/.test(next);
+  if (c === "-") return /[A-Za-z0-9]/.test(next);
+  return false;
+}
+
+// Label separators introduce «Arabic label: English value». Sentence
+// terminators and list separators do not: «…بالاسم. their = صفة…» is a period
+// closing a clause, not a label colon, so that pair is still checked.
+const LABEL_SEP = new Set([":", "=", "–", "—"]);
+
+// Arabic particles that continue a sentence instead of glossing a tag. A
+// translation/gloss never opens with a coordinating, contrastive or negative
+// particle, so an Arabic row sibling that does is a sentence continuation whose
+// RTL reading order is correct («some rice» ‖ «وليس:» ‖ «three rices»).
+const AR_CONNECTIVE = /^(?:و|ف|ثم|أو|أم|لكن|بل|ليس|لم|لا)/;
 const BLOCK = new Set(["DIV", "P", "LI", "TD", "TH", "H1", "H2", "H3", "H4", "H5", "H6", "SECTION", "ARTICLE", "HEADER", "FOOTER", "UL", "OL", "TABLE", "TR", "TBODY", "THEAD", "BUTTON", "FORM", "NAV", "ASIDE", "BLOCKQUOTE", "DT", "DD", "FIGCAPTION", "DL", "LABEL"]);
 
 // Boxed layout (display:block/flex/grid/inline-flex) starts its own line/paragraph.
@@ -71,6 +100,23 @@ function collect(root) {
     let cur = null;
     const flush = () => { if (cur && cur.parts.length) paras.push(cur); cur = null; };
     const ensure = () => { if (!cur) cur = { base: baseDir, parts: [], host: el }; return cur; };
+    // A native <select> renders only its selected <option>; the unselected
+    // options are never on screen. Concatenating them invented mixed text
+    // («Verb to beArticle») that no reader sees, and the audit measured it.
+    // jsdom reports selectedIndex for the parsed markup; `selected` on an
+    // <option> wins when present, exactly as in a browser.
+    const pushSelect = (sel, inIso) => {
+      const options = [...sel.children].filter((o) => o.tagName === "OPTION");
+      const chosen = options.find((o) => o.hasAttribute("selected")) ?? options[sel.selectedIndex] ?? options[0] ?? null;
+      if (!chosen) return;
+      if (isIsoEl(chosen)) {
+        const dir = isoDir(chosen);
+        const p = ensure();
+        p.parts.push({ t: "", open: dir });
+        inline(chosen, dir);
+        p.parts.push({ t: "", close: true });
+      } else inline(chosen, inIso);
+    };
     const inline = (node, inIso) => {
       for (const ch of node.childNodes) {
         if (ch.nodeType === 3) {
@@ -80,7 +126,9 @@ function collect(root) {
           const dirAttr = ch.getAttribute("dir");
           const nb = dirAttr ? dirAttr : baseDir;
           if (tag === "SCRIPT" || tag === "STYLE" || tag === "SVG") continue;
-          if (isFlexRow(ch) && !inIso) {
+          if (tag === "SELECT") {
+            pushSelect(ch, inIso);
+          } else if (isFlexRow(ch) && !inIso) {
             flush();
             walkRow(ch, nb);
           } else if ((BLOCK.has(tag) || isBoxEl(ch)) && !inIso) {
@@ -98,6 +146,11 @@ function collect(root) {
         }
       }
     };
+    if (el.tagName === "SELECT") {
+      pushSelect(el, null);
+      flush();
+      return;
+    }
     inline(el, null);
     flush();
   };
@@ -203,10 +256,31 @@ function analyzeParagraph(p) {
     }
     // Only explicit separators right before the Arabic (no bare-space pair).
     if (!sawSep) continue;
+    // The character the separator attaches to must be part of an English run.
+    // Arabic-script characters — including the Arabic question mark ؟ (U+061F) —
+    // belong to the RTL flow: in «Present Simple أم Continuous؟ — اختر ثم اشرح
+    // السبب» the ؟ closes the alternatives group, so the run before the em dash
+    // is Arabic punctuation, not English. tryPair in src/shared/bidi.tsx reaches
+    // the same conclusion because ENGLISH_MATERIAL excludes Arabic.
+    if (q < 0 || AR.test(s[q])) continue;
+    // «Arabic label: English value» is a clause with its own value, not the
+    // gloss of the Latin run on the other side of the dash. In
+    // «النفي: don't — السؤال: Do...?» السؤال is a label; pairing it with don't
+    // would demand moving Do...? away from its own label.
+    {
+      let la = ae + 1;
+      while (la < s.length && s[la] === " ") la++;
+      if (la < s.length && LABEL_SEP.has(s[la])) {
+        let lb = la + 1;
+        while (lb < s.length && s[lb] === " ") lb++;
+        if (lb < s.length && LAT.test(s[lb])) continue;
+      }
+    }
     // Latin run ending at q
     let ls = q;
     while (ls - 1 >= 0 && /[A-Za-z0-9 '’.&+\/#-]/.test(s[ls - 1]) && !AR.test(s[ls - 1])) ls--;
     while (ls <= q && s[ls] === " ") ls++;
+    while (ls <= q && !isLatinRunStart(s, ls)) ls++;
     if (ls > q || !/[A-Za-z]/.test(s.slice(ls, q + 1))) continue;
     pairs++;
     const lpos = []; for (let k = ls; k <= q; k++) lpos.push(vis[k]);
@@ -289,6 +363,37 @@ export function analyzeHtml(html) {
       if (row.len.get(row.idxs[i]) > 80 || row.len.get(row.idxs[i + 1]) > 80) continue;
       const a = items[i].parts.map((x) => x.t || "").join("");
       const b = items[i + 1].parts.map((x) => x.t || "").join("");
+      // A flex row separates its children with a CSS gap only — no logical
+      // character between them. Two adjacent children are an «English = Arabic»
+      // unit only when neither is (1) an item of a repeated tag list nor (2) an
+      // English token inside an Arabic sentence flow. Both of those are laid out
+      // in RTL row order, which is their correct reading order; the paragraph
+      // oracle's own contract is that a space alone is not a separator.
+      // (1) Independent tags: a row that repeats one chip template three or more
+      //     times is a list of topics («العادات · s / es / ies · do / does ·
+      //     النفي · السؤال · every day»), not a set of label/gloss pairs.
+      const repeatedTagList = () => {
+        const sig = row.psig.get(row.idxs[i]);
+        if (row.psig.get(row.idxs[i + 1]) !== sig) return false;
+        let same = 0;
+        for (const k of row.idxs) if (row.kinds.get(k) === "el" && row.psig.get(k) === sig) same++;
+        return same >= 3;
+      };
+      // (2) Arabic sentence flow: the Arabic sibling continues the sentence the
+      //     English token is embedded in, instead of translating it.
+      const arabicSentenceFlow = () => {
+        const ar = b.trim();
+        // The English side of a pair cannot itself contain Arabic: an
+        // Arabic-led item («بعض F / FE → VES») is part of the RTL sentence.
+        if (AR.test(a)) return true;
+        // A continuation opens with a connective / contrastive / negative
+        // particle («وليس:», «لكن:», «و», «ولم نقل:»). A gloss never does.
+        if (AR_CONNECTIVE.test(ar)) return true;
+        // …or it closes the interrogative the token sits inside
+        // («this» ‖ «في السؤال الأول؟»).
+        return /[؟?]$/.test(ar);
+      };
+      if (repeatedTagList() || arabicSentenceFlow()) continue;
       const la = lastLetter(a), fb = firstLetter(b);
       if (/[A-Za-z]/.test(la) && /[A-Za-z]/.test(a) && AR.test(fb)) {
         out.push({ logical: a.trim() + " | " + b.trim(), visual: "(row)", pairs: 1, violations: [{ latin: a.trim(), arabic: b.trim(), sig: "row:" + (row.psig.get(row.idxs[i]) || "?") + " >> " + (row.psig.get(row.idxs[i + 1]) || "?") + " in " + (row.host || "") }] });

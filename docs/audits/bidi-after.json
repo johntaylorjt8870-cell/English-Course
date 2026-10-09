@@ -20,7 +20,7 @@
       "exceptions": 0
     },
     "4": {
-      "pair": 1,
+      "pair": 0,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
@@ -38,7 +38,7 @@
       "exceptions": 0
     },
     "7": {
-      "pair": 1,
+      "pair": 0,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
@@ -46,7 +46,7 @@
     "8": {
       "pair": 0,
       "alternatives": 0,
-      "row": 1,
+      "row": 0,
       "exceptions": 0
     },
     "9": {
@@ -56,7 +56,7 @@
       "exceptions": 0
     },
     "10": {
-      "pair": 2,
+      "pair": 0,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
@@ -68,7 +68,7 @@
       "exceptions": 0
     },
     "12": {
-      "pair": 1,
+      "pair": 0,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
@@ -92,13 +92,13 @@
       "exceptions": 0
     },
     "16": {
-      "pair": 2,
+      "pair": 0,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
     },
     "17": {
-      "pair": 1,
+      "pair": 0,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
@@ -106,7 +106,7 @@
     "18": {
       "pair": 0,
       "alternatives": 0,
-      "row": 2,
+      "row": 0,
       "exceptions": 0
     },
     "19": {
@@ -118,7 +118,7 @@
     "20": {
       "pair": 0,
       "alternatives": 0,
-      "row": 6,
+      "row": 0,
       "exceptions": 0
     },
     "21": {
@@ -130,17 +130,17 @@
     "22": {
       "pair": 0,
       "alternatives": 0,
-      "row": 1,
+      "row": 0,
       "exceptions": 0
     },
     "23": {
       "pair": 0,
       "alternatives": 0,
-      "row": 2,
+      "row": 0,
       "exceptions": 0
     },
     "24": {
-      "pair": 2,
+      "pair": 0,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
@@ -154,7 +154,7 @@
     "26": {
       "pair": 0,
       "alternatives": 0,
-      "row": 2,
+      "row": 0,
       "exceptions": 0
     },
     "27": {
@@ -194,294 +194,5 @@
       "exceptions": 0
     }
   },
-  "findings": [
-    {
-      "lesson": 4,
-      "kind": "para",
-      "latin": "Verb to beArticle",
-      "arabic": "الأداة",
-      "sig": "para:select.mt-2.w-full.rounded-lg",
-      "logical": "اختر…Subject · الفاعلVerb to beArticle · الأداةNoun · الاسم",
-      "visual": "Noun · مسالاArticle · ةادألاVerb to beSubject · لعافلا…رتخا",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 7,
-      "kind": "para",
-      "latin": "don't",
-      "arabic": "السؤال",
-      "sig": "para:div.mt-3.rounded-2xl.p-3",
-      "logical": "النفي: don't — السؤال: Do...?",
-      "visual": "?...Do :لاؤسلا — don't :يفنلا",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 8,
-      "kind": "row",
-      "latin": "do / does",
-      "arabic": "النفي",
-      "sig": "row:span.rounded-full.bg-indigo-50.px-4 >> span.rounded-full.bg-indigo-50.px-4 in div.pop.pop-5.mt-8",
-      "logical": "do / does | النفي",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 10,
-      "kind": "para",
-      "latin": "Continuous؟",
-      "arabic": "اختر ثم اشرح السبب",
-      "sig": "para:span.truncate.font-semibold",
-      "logical": "Present Simple أم Continuous؟ — اختر ثم اشرح السبب",
-      "visual": "ببسلا حرشا مث رتخا — Present Simple مأ Continuous؟",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 10,
-      "kind": "para",
-      "latin": ". plays",
-      "arabic": "عادة",
-      "sig": "para:span.text-base.font-semibold.leading-relaxed",
-      "logical": "لاحظ أن تغييرًا صغيرًا جدًا غيّر معنى الجملة. plays → عادة / قدرة / نشاط عام · is playing → يحدث الآن",
-      "visual": "is playing → نآلا ثدحي · plays → ةداع / ةردق / ماع طاشن .ةلمجلا ىنعم رّيغ اًدج اًريغص اًرييغت نأ ظحال",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 12,
-      "kind": "para",
-      "latin": "+ y",
-      "arabic": "نحوّل",
-      "sig": "para:p.mt-2.max-w-[88%].text-lg",
-      "logical": "إذا انتهى الفعل بـ: حرف ساكن + y — نحوّل y → i ثم نضيف ed.",
-      "visual": "ed.فيضن مث y → i y — لّوحن + نكاس فرح :ـب لعفلا ىهتنا اذإ",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 16,
-      "kind": "para",
-      "latin": ". book",
-      "arabic": "الاسم",
-      "sig": "para:div.text-base.font-semibold.leading-relaxed",
-      "logical": "my تحدد أي كتاب. book = الاسم.",
-      "visual": "book = مسالا. .باتك يأ ددحتmy",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 16,
-      "kind": "para",
-      "latin": ". their",
-      "arabic": "صفة ملكية مرتبطة بالضمير",
-      "sig": "para:div.text-base.font-semibold.leading-relaxed",
-      "logical": "لاحظ: students' = ملكية مرتبطة بالاسم. their = صفة ملكية مرتبطة بالضمير.",
-      "visual": "their = ريمضلاب ةطبترم ةيكلم ةفص. students' = مسالاب ةطبترم ةيكلم. :ظحال",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 17,
-      "kind": "para",
-      "latin": "+ 's",
-      "arabic": "صفة ملكية",
-      "sig": "para:span.ltr-pair.inline-flex.flex-wrap",
-      "logical": "THREE-SYSTEM OWNERSHIP MAPاسم + 's ← صفة ملكية ← ضمير ملكية",
-      "visual": "THREE-SYSTEM OWNERSHIP MAPةيكلم ريمض ← 's ← ةيكلم ةفص + مسا",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 18,
-      "kind": "row",
-      "latin": "some / any",
-      "arabic": "الأسماء المعدودة وغير المعدودة",
-      "sig": "row:span.rounded-lg.bg-white/15.px-2.5 >> span.rounded-lg.bg-white/15.px-2.5 in div.mt-2.flex.flex-wrap",
-      "logical": "some / any | الأسماء المعدودة وغير المعدودة",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 18,
-      "kind": "row",
-      "latin": "بعض F / FE → VES",
-      "arabic": "مع وجود استثناءات.",
-      "sig": "row:span.text-lg.font-black.text-slate-800 >> span.text-xs.font-bold.text-slate-400 in div.flex.flex-wrap.items-center",
-      "logical": "بعض F / FE → VES | مع وجود استثناءات.",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 20,
-      "kind": "row",
-      "latin": "this",
-      "arabic": "في السؤال الأول؟",
-      "sig": "row:span.ltr.font-en.rounded-lg >> span.text-sm.font-bold.text-slate-700 in div.mt-1.flex.flex-wrap",
-      "logical": "this | في السؤال الأول؟",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 20,
-      "kind": "row",
-      "latin": "that",
-      "arabic": "في السؤال الثاني؟",
-      "sig": "row:span.ltr.font-en.rounded-lg >> span.text-sm.font-bold.text-slate-700 in div.mt-1.flex.flex-wrap",
-      "logical": "that | في السؤال الثاني؟",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 20,
-      "kind": "row",
-      "latin": "these",
-      "arabic": "مع notebooks؟",
-      "sig": "row:span.ltr.font-en.rounded-lg >> span.text-sm.font-bold.text-slate-700 in div.mt-1.flex.flex-wrap",
-      "logical": "these | مع notebooks؟",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 20,
-      "kind": "row",
-      "latin": "those",
-      "arabic": "مع bicycles؟",
-      "sig": "row:span.ltr.font-en.rounded-lg >> span.text-sm.font-bold.text-slate-700 in div.mt-1.flex.flex-wrap",
-      "logical": "those | مع bicycles؟",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 20,
-      "kind": "row",
-      "latin": "my new camera",
-      "arabic": "و",
-      "sig": "row:span.ltr.font-en.rounded-lg >> span.text-sm.font-bold.text-slate-500 in div.mt-1.flex.flex-wrap",
-      "logical": "my new camera | و",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 20,
-      "kind": "row",
-      "latin": "children's bicycles",
-      "arabic": "ولم نقل:",
-      "sig": "row:span.ltr.font-en.rounded-lg >> span.text-sm.font-bold.text-slate-500 in div.mt-1.flex.flex-wrap",
-      "logical": "children's bicycles | ولم نقل:",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 22,
-      "kind": "row",
-      "latin": "Adjectives",
-      "arabic": "وحتى الجمل الأطول.",
-      "sig": "row:span.rounded-lg.bg-white.px-2.5 >> span.rounded-lg.bg-white.px-2.5 in div.mt-2.flex.flex-wrap",
-      "logical": "Adjectives | وحتى الجمل الأطول.",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 23,
-      "kind": "row",
-      "latin": "pieces",
-      "arabic": "وليس information نفسها.",
-      "sig": "row:span.ltr.font-en.rounded-lg >> span. in div.mt-2.flex.flex-wrap",
-      "logical": "pieces | وليس information نفسها.",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 23,
-      "kind": "row",
-      "latin": "some rice",
-      "arabic": "وليس:",
-      "sig": "row:span.ltr.font-en.rounded-xl >> span.text-sm.font-bold.text-slate-600 in div.mt-2.flex.flex-wrap",
-      "logical": "some rice | وليس:",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 24,
-      "kind": "para",
-      "latin": ". few",
-      "arabic": "عدد قليل جدًا مع إحساس بالنقص",
-      "sig": "para:span.text-sm.font-bold.leading-7",
-      "logical": "عدد قليل لكنه موجود وكافٍ نسبيًا. few = عدد قليل جدًا مع إحساس بالنقص.",
-      "visual": "few = صقنلاب ساسحإ عم اًدج ليلق ددع. .اًيبسن ٍفاكو دوجوم هنكل ليلق ددع",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 24,
-      "kind": "para",
-      "latin": ". little",
-      "arabic": "كمية صغيرة جدًا مع إحساس بالنقص",
-      "sig": "para:span.text-sm.font-bold.leading-7",
-      "logical": "كمية صغيرة لكنها موجودة ومقبولة. little = كمية صغيرة جدًا مع إحساس بالنقص.",
-      "visual": "little = صقنلاب ساسحإ عم اًدج ةريغص ةيمك. .ةلوبقمو ةدوجوم اهنكل ةريغص ةيمك",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 26,
-      "kind": "row",
-      "latin": "Past Continuous",
-      "arabic": "لكن:",
-      "sig": "row:span.rounded-lg.px-2.py-1 >> span.text-xs.font-black.text-slate-600 in div.mt-3.flex.flex-wrap",
-      "logical": "Past Continuous | لكن:",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 26,
-      "kind": "row",
-      "latin": "was/were + ing",
-      "arabic": "و",
-      "sig": "row:span.ltr.font-en.rounded-xl >> span.self-center.text-xs.font-black in div.flex.flex-wrap.justify-center",
-      "logical": "was/were + ing | و",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    }
-  ]
+  "findings": []
 }

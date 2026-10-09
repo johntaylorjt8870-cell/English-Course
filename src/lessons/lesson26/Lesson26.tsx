@@ -3125,7 +3125,7 @@ function GrammarDetective() {
           } else if (marked) {
             cls = "bg-violet-100 text-violet-900";
           } else if (isErr) {
-            cls = "text-rose-700";
+            cls = "text-slate-800 hover:bg-violet-50"; // قبل التصحيح: الجزء الخاطئ غير المحدَّد يجب أن يطابق الصحيح تمامًا — اللون الوردي كان يكشف الإجابة
           }
           return (
             <button

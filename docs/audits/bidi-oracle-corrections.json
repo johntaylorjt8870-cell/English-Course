@@ -1,0 +1,2574 @@
+{
+  "base": "aea5289",
+  "oracle": "scripts/lib/bidi-sim.mjs",
+  "scope": "Regression proof for the six corrected oracle rules and the Chromium visual contract of each of the 24 previously-open findings. The 24 original case records are retained with their original classification.",
+  "rules": [
+    {
+      "id": "R1",
+      "fixes": "C1-neutral-attribution",
+      "statement": "A Latin run starts at a Latin letter/digit or at a suffix/quote mark attached to one; a preceding sentence period or expression operator belongs to the RTL context. Mirrors tryPair in src/shared/bidi.tsx.",
+      "cases": 7
+    },
+    {
+      "id": "R2",
+      "fixes": "C4 (Arabic punctuation before the separator)",
+      "statement": "The character a pair separator attaches to must not be Arabic script (؟ U+061F closes an alternatives group).",
+      "cases": 1
+    },
+    {
+      "id": "R3",
+      "fixes": "C5-cross-clause-dash",
+      "statement": "An Arabic run followed by a label separator (: = – —) and a Latin run is a clause label with its own value, not the gloss of the Latin run across the dash. Sentence terminators (. ! ؟) do not trigger it.",
+      "cases": 1
+    },
+    {
+      "id": "R4",
+      "fixes": "C2-native-select-hidden-options",
+      "statement": "A native <select> contributes only its selected <option>; unselected options are not rendered text.",
+      "cases": 1
+    },
+    {
+      "id": "R5",
+      "fixes": "C3-independent-tags",
+      "statement": "A flex row repeating one chip template three or more times is a list of independent tags, not a set of label/gloss pairs.",
+      "cases": 2
+    },
+    {
+      "id": "R6",
+      "fixes": "C4-arabic-connective-flow",
+      "statement": "An English row sibling followed by an Arabic continuation (leading connective particle, interrogative tail, or an Arabic-led sibling) is inside an RTL sentence; its right-to-left row order is the correct reading order.",
+      "cases": 15
+    }
+  ],
+  "detectionRetained": {
+    "sourceRepairedFixturesStillFlagged": 24,
+    "expected": 24,
+    "ids": [
+      "fdf631dd9ba71bc8",
+      "403e2a3b7d852fe6",
+      "bddeb319353f9a20",
+      "4b56ce57582c2cf9",
+      "b3492e18e8cfe547",
+      "651beb2d35991a0b",
+      "969c944a562cef17",
+      "4491d05255ca532b",
+      "8386f084b42bc358",
+      "8618db4462a51548",
+      "99bfce27a88ed27a",
+      "22ac523e4ebe019b",
+      "6896e693af308881",
+      "ac191c805ea02cb5",
+      "6df03bba6ec8bb06",
+      "162fd7029eb7bacd",
+      "48bfb448a55b9cbb",
+      "8185d53475624736",
+      "a664174454aab722",
+      "3711f6f8f215e29f",
+      "502c3967f41dc6d5",
+      "c30e24ed38333247",
+      "d31b16b4a5b69177",
+      "ab23f9147044ae31"
+    ]
+  },
+  "misattributionsCleared": {
+    "count": 24,
+    "expected": 24,
+    "ids": [
+      "96ed9167e8093a85",
+      "915a29c9e3a772cb",
+      "079db2a35ac08a74",
+      "831dc6b412dd91e2",
+      "1f1841687ac3c5ed",
+      "5d2600af3fc51a3a",
+      "562538031bc27572",
+      "f9237450d963f0c6",
+      "4eb0b06b0eb57373",
+      "ad2b68b306713fc6",
+      "b54105dc01804489",
+      "60de322313989b5f",
+      "021f190787ad1406",
+      "0331e606d113e795",
+      "54248a7bcad27bbd",
+      "1dce6f6e34d28783",
+      "773a481a0b1af9c6",
+      "18a83403b0994ab2",
+      "99286d6e998604cf",
+      "0d4d768034b4d07e",
+      "db0737a7ecea1a9a",
+      "d77b545c7e96f088",
+      "63dd1e6803e58088",
+      "5115d4dba8ae89f4"
+    ]
+  },
+  "ruleControls": [
+    {
+      "rule": "R1 latin-run start (C1: sentence period is not part of the English run)",
+      "controls": [
+        {
+          "why": "reversed pair still detected, and the period of the preceding Arabic sentence is no longer glued to «plays»",
+          "expect": "flag",
+          "latin": "plays",
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "plays",
+              "arabic": "عادة"
+            }
+          ]
+        },
+        {
+          "why": "the same pair without a preceding sentence is unchanged",
+          "expect": "flag",
+          "latin": "plays",
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "plays",
+              "arabic": "عادة"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule": "R1 latin-run start (C1: expression operator is not part of the English run)",
+      "controls": [
+        {
+          "why": "«+» joins the Arabic operand to y; the measured run is «y»",
+          "expect": "flag",
+          "latin": "y",
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "y",
+              "arabic": "نحوّل"
+            }
+          ]
+        },
+        {
+          "why": "«+» is the operator; the measured run is the suffix «'s»",
+          "expect": "flag",
+          "latin": "'s",
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "'s",
+              "arabic": "صفة ملكية"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule": "R1 latin-run start (C1: attached suffix hyphen stays inside the token)",
+      "controls": [
+        {
+          "why": "a leading hyphen attached to a letter is part of the English token, not preceding punctuation",
+          "expect": "flag",
+          "latin": "-ed",
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "-ed",
+              "arabic": "اضغط أي فعل لترى القاعدة"
+            }
+          ]
+        },
+        {
+          "why": "same for -ING",
+          "expect": "flag",
+          "latin": "-ING",
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "-ING",
+              "arabic": "اضغط"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule": "R2 separator must attach to a Latin run (C4: Arabic ؟ before the dash)",
+      "controls": [
+        {
+          "why": "an English run before the dash is still checked",
+          "expect": "flag",
+          "latin": "Continuous",
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "Continuous",
+              "arabic": "اختر ثم اشرح السبب"
+            }
+          ]
+        },
+        {
+          "why": "؟ closes the alternatives group, so what precedes the dash is Arabic punctuation, not an English run",
+          "expect": "clean",
+          "latin": null,
+          "flagged": false,
+          "reported": []
+        }
+      ]
+    },
+    {
+      "rule": "R3 label clause (C5: «النفي: don't — السؤال: Do...?»)",
+      "controls": [
+        {
+          "why": "a real «English — Arabic» gloss is still checked",
+          "expect": "flag",
+          "latin": "don't",
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "don't",
+              "arabic": "النفي"
+            }
+          ]
+        },
+        {
+          "why": "السؤال is a label with its own value Do...?, so don't is not its gloss",
+          "expect": "clean",
+          "latin": null,
+          "flagged": false,
+          "reported": []
+        }
+      ]
+    },
+    {
+      "rule": "R3 label clause does not swallow a pair that follows a sentence period",
+      "controls": [
+        {
+          "why": "a period closes a clause; «their = صفة ملكية…» is still measured as a pair",
+          "expect": "flag",
+          "latin": "their",
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "their",
+              "arabic": "صفة ملكية مرتبطة بالضمير"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule": "R4 native select (C2: hidden options are not rendered text)",
+      "controls": [
+        {
+          "why": "mixed text that really is on screen is still checked",
+          "expect": "flag",
+          "latin": null,
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "Article",
+              "arabic": "الأداة"
+            }
+          ]
+        },
+        {
+          "why": "only «اختر…» is displayed; the concatenation «Verb to beArticle» never exists on screen",
+          "expect": "clean",
+          "latin": null,
+          "flagged": false,
+          "reported": []
+        },
+        {
+          "why": "when the dir=ltr option really is selected, its own LTR isolate orders «Article · الأداة» correctly",
+          "expect": "clean",
+          "latin": null,
+          "flagged": false,
+          "reported": []
+        },
+        {
+          "why": "the selected option is still measured: without dir=ltr it renders reversed",
+          "expect": "flag",
+          "latin": null,
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "Article",
+              "arabic": "الأداة"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule": "R5 independent tag list (C3)",
+      "controls": [
+        {
+          "why": "a two-child label/gloss row is still checked",
+          "expect": "flag",
+          "latin": null,
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "on",
+              "arabic": "تخبرنا بالعلاقة بين: book و table."
+            }
+          ]
+        },
+        {
+          "why": "six chips of one template are independent topics, not pairs",
+          "expect": "clean",
+          "latin": null,
+          "flagged": false,
+          "reported": []
+        }
+      ]
+    },
+    {
+      "rule": "R6 Arabic sentence flow (C4: connective sibling)",
+      "controls": [
+        {
+          "why": "a real gloss sibling is still checked",
+          "expect": "flag",
+          "latin": null,
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "when",
+              "arabic": "غالبًا نستخدمه لإدخال حدث وقع أثناء فعل آخر."
+            }
+          ]
+        },
+        {
+          "why": "«وليس:» continues the contrast sentence",
+          "expect": "clean",
+          "latin": null,
+          "flagged": false,
+          "reported": []
+        }
+      ]
+    },
+    {
+      "rule": "R6 Arabic sentence flow (C4: interrogative tail)",
+      "controls": [
+        {
+          "why": "a plain gloss sibling is still checked",
+          "expect": "flag",
+          "latin": null,
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "between",
+              "arabic": "بين شيئين"
+            }
+          ]
+        },
+        {
+          "why": "the token sits inside an Arabic question",
+          "expect": "clean",
+          "latin": null,
+          "flagged": false,
+          "reported": []
+        }
+      ]
+    },
+    {
+      "rule": "R6 Arabic sentence flow (C4: Arabic-led sibling)",
+      "controls": [
+        {
+          "why": "an English tag with an Arabic gloss is still checked",
+          "expect": "flag",
+          "latin": null,
+          "flagged": true,
+          "reported": [
+            {
+              "latin": "Possessive Nouns",
+              "arabic": "ملكية الاسم"
+            }
+          ]
+        },
+        {
+          "why": "the first item is Arabic-led, not an English tag",
+          "expect": "clean",
+          "latin": null,
+          "flagged": false,
+          "reported": []
+        }
+      ]
+    }
+  ],
+  "resolved": {
+    "C2": [
+      {
+        "id": "96ed9167e8093a85",
+        "lesson": 4,
+        "latin": "Verb to beArticle",
+        "arabic": "الأداة",
+        "originalClass": "C2-native-select-hidden-options",
+        "contract": "native-select",
+        "rules": [
+          "R4"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "96ed9167e8093a85",
+          "lesson": 4,
+          "class": "C2",
+          "kind": "native-select",
+          "widths": {},
+          "probe": {
+            "options": 5,
+            "selectedIndex": 0,
+            "displayed": "اختر…",
+            "displayedLatin": false,
+            "concatenated": "اختر…Subject · الفاعلVerb to beArticle · الأداةNoun · الاسم",
+            "box": {
+              "w": 122,
+              "h": 19
+            },
+            "laidOutOptionChars": 0,
+            "totalOptionChars": 59
+          },
+          "selectionChange": {
+            "displayed": "Article · الأداة",
+            "value": "art"
+          }
+        }
+      }
+    ],
+    "C5": [
+      {
+        "id": "915a29c9e3a772cb",
+        "lesson": 7,
+        "latin": "don't",
+        "arabic": "السؤال",
+        "originalClass": "C5-cross-clause-dash",
+        "contract": "clause-association",
+        "rules": [
+          "R3"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "915a29c9e3a772cb",
+          "lesson": 7,
+          "class": "C5",
+          "kind": "clause-association",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 29,
+              "totalChars": 29,
+              "neg": [
+                301,
+                295,
+                290,
+                279,
+                265
+              ],
+              "negEn": [
+                214,
+                224,
+                234,
+                244,
+                248
+              ],
+              "q": [
+                186,
+                180,
+                166,
+                157,
+                153,
+                140
+              ],
+              "qEn": [
+                109,
+                120,
+                103,
+                98,
+                93,
+                85
+              ],
+              "gaps": {
+                "dontToNeg": 17.171875,
+                "dontToQuestion": 28.5625,
+                "doToQuestion": 20.109375,
+                "doToDont": 93.890625
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 29,
+              "totalChars": 29,
+              "neg": [
+                696,
+                690,
+                685,
+                674,
+                660
+              ],
+              "negEn": [
+                609,
+                619,
+                629,
+                639,
+                643
+              ],
+              "q": [
+                581,
+                575,
+                561,
+                552,
+                548,
+                535
+              ],
+              "qEn": [
+                504,
+                515,
+                498,
+                493,
+                488,
+                480
+              ],
+              "gaps": {
+                "dontToNeg": 17.171875,
+                "dontToQuestion": 28.5625,
+                "doToQuestion": 20.109375,
+                "doToDont": 93.890625
+              }
+            }
+          }
+        }
+      }
+    ],
+    "C3": [
+      {
+        "id": "079db2a35ac08a74",
+        "lesson": 8,
+        "latin": "do / does",
+        "arabic": "النفي",
+        "originalClass": "C3-independent-tags",
+        "contract": "rtl-row-flow",
+        "rules": [
+          "R5"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "079db2a35ac08a74",
+          "lesson": 8,
+          "class": "C3",
+          "kind": "rtl-row-flow",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 48,
+              "totalChars": 48,
+              "sameLine": false,
+              "sameTemplateCount": 6,
+              "en": {
+                "x": [
+                  55,
+                  65,
+                  80,
+                  90,
+                  100,
+                  109,
+                  119
+                ],
+                "y": 48
+              },
+              "ar": {
+                "x": [
+                  314,
+                  309,
+                  303,
+                  293,
+                  279
+                ],
+                "y": 88
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 48,
+              "totalChars": 48,
+              "sameLine": true,
+              "sameTemplateCount": 6,
+              "en": {
+                "x": [
+                  594,
+                  604,
+                  618,
+                  628,
+                  638,
+                  648,
+                  657
+                ],
+                "y": 48
+              },
+              "ar": {
+                "x": [
+                  549,
+                  544,
+                  538,
+                  528,
+                  514
+                ],
+                "y": 48
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "ad2b68b306713fc6",
+        "lesson": 18,
+        "latin": "some / any",
+        "arabic": "الأسماء المعدودة وغير المعدودة",
+        "originalClass": "C3-independent-tags",
+        "contract": "rtl-row-flow",
+        "rules": [
+          "R5"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "ad2b68b306713fc6",
+          "lesson": 18,
+          "class": "C3",
+          "kind": "rtl-row-flow",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 102,
+              "totalChars": 102,
+              "sameLine": true,
+              "sameTemplateCount": 8,
+              "en": {
+                "x": [
+                  307,
+                  314,
+                  322,
+                  335,
+                  347,
+                  356,
+                  364,
+                  372
+                ],
+                "y": 50
+              },
+              "ar": {
+                "x": [
+                  277,
+                  272,
+                  268,
+                  256,
+                  248,
+                  243,
+                  237,
+                  229,
+                  224,
+                  216,
+                  210,
+                  203,
+                  195,
+                  189,
+                  182,
+                  170,
+                  162,
+                  157,
+                  150,
+                  141,
+                  137,
+                  129,
+                  122,
+                  115,
+                  108,
+                  102,
+                  95
+                ],
+                "y": 50
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 102,
+              "totalChars": 102,
+              "sameLine": true,
+              "sameTemplateCount": 8,
+              "en": {
+                "x": [
+                  709,
+                  716,
+                  724,
+                  737,
+                  749,
+                  758,
+                  766,
+                  775
+                ],
+                "y": 20
+              },
+              "ar": {
+                "x": [
+                  679,
+                  675,
+                  670,
+                  658,
+                  650,
+                  646,
+                  640,
+                  631,
+                  627,
+                  619,
+                  612,
+                  605,
+                  598,
+                  591,
+                  584,
+                  573,
+                  564,
+                  560,
+                  552,
+                  544,
+                  539,
+                  531,
+                  524,
+                  518,
+                  510,
+                  504,
+                  497
+                ],
+                "y": 20
+              }
+            }
+          }
+        }
+      }
+    ],
+    "C4": [
+      {
+        "id": "831dc6b412dd91e2",
+        "lesson": 10,
+        "latin": "Continuous؟",
+        "arabic": "اختر ثم اشرح السبب",
+        "originalClass": "C4-arabic-connective-flow",
+        "contract": "alts-group-then-instruction",
+        "rules": [
+          "R2"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "831dc6b412dd91e2",
+          "lesson": 10,
+          "class": "C4",
+          "kind": "alts-group-then-instruction",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 50,
+              "totalChars": 50,
+              "en": {
+                "x": [
+                  288,
+                  300,
+                  311,
+                  322,
+                  330,
+                  335,
+                  347,
+                  358,
+                  369,
+                  380
+                ],
+                "y": 36
+              },
+              "tail": {
+                "x": [
+                  381
+                ],
+                "y": 60
+              },
+              "ar": {
+                "x": [
+                  348,
+                  337,
+                  330,
+                  320,
+                  308,
+                  296,
+                  285,
+                  269,
+                  259,
+                  248,
+                  237,
+                  231,
+                  214,
+                  208,
+                  191
+                ],
+                "y": 60
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 50,
+              "totalChars": 50,
+              "en": {
+                "x": [
+                  1069,
+                  1081,
+                  1092,
+                  1103,
+                  1111,
+                  1116,
+                  1127,
+                  1139,
+                  1150,
+                  1161
+                ],
+                "y": 12
+              },
+              "tail": {
+                "x": [
+                  1171
+                ],
+                "y": 12
+              },
+              "ar": {
+                "x": [
+                  871,
+                  859,
+                  853,
+                  843,
+                  831,
+                  819,
+                  808,
+                  792,
+                  782,
+                  770,
+                  759,
+                  753,
+                  737,
+                  731,
+                  714
+                ],
+                "y": 12
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "b54105dc01804489",
+        "lesson": 18,
+        "latin": "بعض F / FE → VES",
+        "arabic": "مع وجود استثناءات.",
+        "originalClass": "C4-arabic-connective-flow",
+        "contract": "rtl-row-flow",
+        "rules": [
+          "R6"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "b54105dc01804489",
+          "lesson": 18,
+          "class": "C4",
+          "kind": "rtl-row-flow",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 35,
+              "totalChars": 35,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  186,
+                  204,
+                  217,
+                  229,
+                  248,
+                  269,
+                  283,
+                  296
+                ],
+                "y": 16
+              },
+              "ar": {
+                "x": [
+                  164,
+                  156,
+                  144,
+                  136,
+                  128,
+                  122,
+                  114,
+                  102,
+                  97,
+                  92,
+                  87,
+                  83,
+                  76,
+                  72,
+                  60
+                ],
+                "y": 16
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 35,
+              "totalChars": 35,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  976,
+                  994,
+                  1007,
+                  1019,
+                  1038,
+                  1059,
+                  1073,
+                  1086
+                ],
+                "y": 16
+              },
+              "ar": {
+                "x": [
+                  954,
+                  946,
+                  934,
+                  926,
+                  918,
+                  912,
+                  904,
+                  892,
+                  887,
+                  882,
+                  877,
+                  873,
+                  866,
+                  862,
+                  850
+                ],
+                "y": 16
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "60de322313989b5f",
+        "lesson": 20,
+        "latin": "this",
+        "arabic": "في السؤال الأول؟",
+        "originalClass": "C4-arabic-connective-flow",
+        "contract": "rtl-row-flow",
+        "rules": [
+          "R6"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "60de322313989b5f",
+          "lesson": 20,
+          "class": "C4",
+          "kind": "rtl-row-flow",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 20,
+              "totalChars": 20,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  352,
+                  359,
+                  369,
+                  374
+                ],
+                "y": 18
+              },
+              "ar": {
+                "x": [
+                  329,
+                  315,
+                  305,
+                  300,
+                  286,
+                  277,
+                  272,
+                  260,
+                  250,
+                  245,
+                  240,
+                  231,
+                  219
+                ],
+                "y": 18
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 20,
+              "totalChars": 20,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  1142,
+                  1149,
+                  1159,
+                  1164
+                ],
+                "y": 18
+              },
+              "ar": {
+                "x": [
+                  1119,
+                  1105,
+                  1095,
+                  1090,
+                  1076,
+                  1067,
+                  1062,
+                  1050,
+                  1040,
+                  1035,
+                  1030,
+                  1021,
+                  1009
+                ],
+                "y": 18
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "021f190787ad1406",
+        "lesson": 20,
+        "latin": "that",
+        "arabic": "في السؤال الثاني؟",
+        "originalClass": "C4-arabic-connective-flow",
+        "contract": "rtl-row-flow",
+        "rules": [
+          "R6"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "021f190787ad1406",
+          "lesson": 20,
+          "class": "C4",
+          "kind": "rtl-row-flow",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 21,
+              "totalChars": 21,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  349,
+                  356,
+                  366,
+                  375
+                ],
+                "y": 18
+              },
+              "ar": {
+                "x": [
+                  326,
+                  312,
+                  302,
+                  297,
+                  283,
+                  274,
+                  269,
+                  257,
+                  247,
+                  242,
+                  236,
+                  231,
+                  226,
+                  212
+                ],
+                "y": 18
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 21,
+              "totalChars": 21,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  1139,
+                  1146,
+                  1156,
+                  1165
+                ],
+                "y": 18
+              },
+              "ar": {
+                "x": [
+                  1116,
+                  1102,
+                  1092,
+                  1087,
+                  1073,
+                  1064,
+                  1059,
+                  1047,
+                  1037,
+                  1032,
+                  1026,
+                  1021,
+                  1016,
+                  1002
+                ],
+                "y": 18
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "0331e606d113e795",
+        "lesson": 20,
+        "latin": "these",
+        "arabic": "مع notebooks؟",
+        "originalClass": "C4-arabic-connective-flow",
+        "contract": "rtl-row-flow",
+        "rules": [
+          "R6"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "0331e606d113e795",
+          "lesson": 20,
+          "class": "C4",
+          "kind": "rtl-row-flow",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 18,
+              "totalChars": 18,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  338,
+                  345,
+                  355,
+                  364,
+                  373
+                ],
+                "y": 18
+              },
+              "ar": {
+                "x": [
+                  315,
+                  306,
+                  223,
+                  233,
+                  243,
+                  249,
+                  259,
+                  269,
+                  279,
+                  288,
+                  297
+                ],
+                "y": 18
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 18,
+              "totalChars": 18,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  1128,
+                  1135,
+                  1145,
+                  1154,
+                  1163
+                ],
+                "y": 18
+              },
+              "ar": {
+                "x": [
+                  1105,
+                  1096,
+                  1013,
+                  1023,
+                  1033,
+                  1039,
+                  1049,
+                  1059,
+                  1069,
+                  1078,
+                  1087
+                ],
+                "y": 18
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "54248a7bcad27bbd",
+        "lesson": 20,
+        "latin": "those",
+        "arabic": "مع bicycles؟",
+        "originalClass": "C4-arabic-connective-flow",
+        "contract": "rtl-row-flow",
+        "rules": [
+          "R6"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "54248a7bcad27bbd",
+          "lesson": 20,
+          "class": "C4",
+          "kind": "rtl-row-flow",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 17,
+              "totalChars": 17,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  338,
+                  345,
+                  355,
+                  364,
+                  373
+                ],
+                "y": 18
+              },
+              "ar": {
+                "x": [
+                  315,
+                  306,
+                  242,
+                  253,
+                  257,
+                  266,
+                  275,
+                  283,
+                  288,
+                  297
+                ],
+                "y": 18
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 17,
+              "totalChars": 17,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  1128,
+                  1135,
+                  1145,
+                  1154,
+                  1163
+                ],
+                "y": 18
+              },
+              "ar": {
+                "x": [
+                  1105,
+                  1096,
+                  1032,
+                  1043,
+                  1047,
+                  1056,
+                  1065,
+                  1073,
+                  1078,
+                  1087
+                ],
+                "y": 18
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "1dce6f6e34d28783",
+        "lesson": 20,
+        "latin": "my new camera",
+        "arabic": "و",
+        "originalClass": "C4-arabic-connective-flow",
+        "contract": "rtl-row-flow",
+        "rules": [
+          "R6"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "1dce6f6e34d28783",
+          "lesson": 20,
+          "class": "C4",
+          "kind": "rtl-row-flow",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 37,
+              "totalChars": 37,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  258,
+                  273,
+                  287,
+                  297,
+                  306,
+                  324,
+                  332,
+                  342,
+                  356,
+                  366,
+                  373
+                ],
+                "y": 18
+              },
+              "ar": {
+                "x": [
+                  235
+                ],
+                "y": 18
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 37,
+              "totalChars": 37,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  1048,
+                  1063,
+                  1077,
+                  1087,
+                  1096,
+                  1114,
+                  1122,
+                  1132,
+                  1146,
+                  1156,
+                  1163
+                ],
+                "y": 18
+              },
+              "ar": {
+                "x": [
+                  1025
+                ],
+                "y": 18
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "773a481a0b1af9c6",
+        "lesson": 20,
+        "latin": "children's bicycles",
+        "arabic": "ولم نقل:",
+        "originalClass": "C4-arabic-connective-flow",
+        "contract": "rtl-row-flow",
+        "rules": [
+          "R6"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "773a481a0b1af9c6",
+          "lesson": 20,
+          "class": "C4",
+          "kind": "rtl-row-flow",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 47,
+              "totalChars": 47,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  237,
+                  245,
+                  255,
+                  260,
+                  265,
+                  275,
+                  282,
+                  291,
+                  301,
+                  306,
+                  319,
+                  329,
+                  334,
+                  342,
+                  351,
+                  359,
+                  364,
+                  374
+                ],
+                "y": 18
+              },
+              "ar": {
+                "x": [
+                  214,
+                  209,
+                  198,
+                  188,
+                  178,
+                  165
+                ],
+                "y": 18
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 47,
+              "totalChars": 47,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  1027,
+                  1035,
+                  1045,
+                  1050,
+                  1055,
+                  1065,
+                  1072,
+                  1081,
+                  1091,
+                  1096,
+                  1109,
+                  1119,
+                  1124,
+                  1132,
+                  1141,
+                  1149,
+                  1154,
+                  1164
+                ],
+                "y": 18
+              },
+              "ar": {
+                "x": [
+                  1004,
+                  999,
+                  988,
+                  978,
+                  968,
+                  955
+                ],
+                "y": 18
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "18a83403b0994ab2",
+        "lesson": 22,
+        "latin": "Adjectives",
+        "arabic": "وحتى الجمل الأطول.",
+        "originalClass": "C4-arabic-connective-flow",
+        "contract": "rtl-row-flow",
+        "rules": [
+          "R6"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "18a83403b0994ab2",
+          "lesson": 22,
+          "class": "C4",
+          "kind": "rtl-row-flow",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 91,
+              "totalChars": 91,
+              "sameLine": false,
+              "en": {
+                "x": [
+                  71,
+                  82,
+                  92,
+                  96,
+                  106,
+                  114,
+                  121,
+                  126,
+                  135,
+                  144
+                ],
+                "y": 90
+              },
+              "ar": {
+                "x": [
+                  259,
+                  249,
+                  243,
+                  229,
+                  219,
+                  214,
+                  204,
+                  194,
+                  182,
+                  172,
+                  167,
+                  162,
+                  149,
+                  140,
+                  128
+                ],
+                "y": 124
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 91,
+              "totalChars": 91,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  345,
+                  356,
+                  366,
+                  370,
+                  380,
+                  388,
+                  395,
+                  400,
+                  409,
+                  418
+                ],
+                "y": 22
+              },
+              "ar": {
+                "x": [
+                  310,
+                  300,
+                  294,
+                  280,
+                  270,
+                  265,
+                  255,
+                  246,
+                  233,
+                  223,
+                  218,
+                  213,
+                  200,
+                  191,
+                  179
+                ],
+                "y": 22
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "99286d6e998604cf",
+        "lesson": 23,
+        "latin": "pieces",
+        "arabic": "وليس information نفسها.",
+        "originalClass": "C4-arabic-connective-flow",
+        "contract": "rtl-row-flow",
+        "rules": [
+          "R6"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "99286d6e998604cf",
+          "lesson": 23,
+          "class": "C4",
+          "kind": "rtl-row-flow",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 44,
+              "totalChars": 44,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  214,
+                  224,
+                  229,
+                  238,
+                  247,
+                  256
+                ],
+                "y": 22
+              },
+              "ar": {
+                "x": [
+                  187,
+                  182,
+                  176,
+                  157,
+                  59,
+                  64,
+                  74,
+                  80,
+                  90,
+                  97,
+                  111,
+                  121,
+                  127,
+                  132,
+                  142,
+                  49,
+                  39,
+                  25,
+                  16,
+                  10
+                ],
+                "y": 22
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 44,
+              "totalChars": 44,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  609,
+                  619,
+                  624,
+                  633,
+                  642,
+                  651
+                ],
+                "y": 22
+              },
+              "ar": {
+                "x": [
+                  582,
+                  577,
+                  571,
+                  552,
+                  454,
+                  459,
+                  469,
+                  475,
+                  485,
+                  492,
+                  506,
+                  516,
+                  522,
+                  527,
+                  537,
+                  444,
+                  434,
+                  420,
+                  411,
+                  405
+                ],
+                "y": 22
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "0d4d768034b4d07e",
+        "lesson": 23,
+        "latin": "some rice",
+        "arabic": "وليس:",
+        "originalClass": "C4-arabic-connective-flow",
+        "contract": "rtl-row-flow",
+        "rules": [
+          "R6"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "0d4d768034b4d07e",
+          "lesson": 23,
+          "class": "C4",
+          "kind": "rtl-row-flow",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 25,
+              "totalChars": 25,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  245,
+                  254,
+                  265,
+                  282,
+                  298,
+                  306,
+                  312,
+                  321
+                ],
+                "y": 30
+              },
+              "ar": {
+                "x": [
+                  214,
+                  209,
+                  203,
+                  183
+                ],
+                "y": 30
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 25,
+              "totalChars": 25,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  640,
+                  649,
+                  660,
+                  677,
+                  693,
+                  701,
+                  707,
+                  716
+                ],
+                "y": 30
+              },
+              "ar": {
+                "x": [
+                  609,
+                  604,
+                  598,
+                  578
+                ],
+                "y": 30
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "63dd1e6803e58088",
+        "lesson": 26,
+        "latin": "Past Continuous",
+        "arabic": "لكن:",
+        "originalClass": "C4-arabic-connective-flow",
+        "contract": "rtl-row-flow",
+        "rules": [
+          "R6"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "63dd1e6803e58088",
+          "lesson": 26,
+          "class": "C4",
+          "kind": "rtl-row-flow",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 57,
+              "totalChars": 57,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  167,
+                  174,
+                  180,
+                  186,
+                  195,
+                  202,
+                  209,
+                  216,
+                  221,
+                  224,
+                  231,
+                  238,
+                  245,
+                  252
+                ],
+                "y": 36
+              },
+              "ar": {
+                "x": [
+                  146,
+                  139,
+                  128
+                ],
+                "y": 36
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 57,
+              "totalChars": 57,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  696,
+                  703,
+                  710,
+                  716,
+                  724,
+                  732,
+                  738,
+                  746,
+                  750,
+                  754,
+                  761,
+                  768,
+                  775,
+                  782
+                ],
+                "y": 36
+              },
+              "ar": {
+                "x": [
+                  676,
+                  669,
+                  658
+                ],
+                "y": 36
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "5115d4dba8ae89f4",
+        "lesson": 26,
+        "latin": "was/were + ing",
+        "arabic": "و",
+        "originalClass": "C4-arabic-connective-flow",
+        "contract": "rtl-row-flow",
+        "rules": [
+          "R6"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "5115d4dba8ae89f4",
+          "lesson": 26,
+          "class": "C4",
+          "kind": "rtl-row-flow",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 35,
+              "totalChars": 35,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  234,
+                  245,
+                  253,
+                  260,
+                  265,
+                  276,
+                  284,
+                  290,
+                  302,
+                  316,
+                  320,
+                  329
+                ],
+                "y": 14
+              },
+              "ar": {
+                "x": [
+                  206
+                ],
+                "y": 14
+              }
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 35,
+              "totalChars": 35,
+              "sameLine": true,
+              "en": {
+                "x": [
+                  629,
+                  640,
+                  648,
+                  655,
+                  660,
+                  671,
+                  679,
+                  685,
+                  697,
+                  711,
+                  715,
+                  724
+                ],
+                "y": 14
+              },
+              "ar": {
+                "x": [
+                  601
+                ],
+                "y": 14
+              }
+            }
+          }
+        }
+      }
+    ],
+    "C1": [
+      {
+        "id": "1f1841687ac3c5ed",
+        "lesson": 10,
+        "latin": ". plays",
+        "arabic": "عادة",
+        "originalClass": "C1-neutral-attribution",
+        "contract": "lead-outside-en",
+        "rules": [
+          "R1"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "1f1841687ac3c5ed",
+          "lesson": 10,
+          "class": "C1",
+          "kind": "lead-outside-en",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 99,
+              "totalChars": 101,
+              "en": {
+                "x": [
+                  128,
+                  140,
+                  145,
+                  155,
+                  166
+                ],
+                "y": 39
+              },
+              "lead": {
+                "x": [
+                  50
+                ],
+                "y": 13
+              },
+              "ar": {
+                "x": [
+                  228,
+                  222,
+                  213,
+                  204
+                ],
+                "y": 39
+              },
+              "sameLine": true,
+              "leadSameLineAsEn": false
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 101,
+              "totalChars": 101,
+              "en": {
+                "x": [
+                  497,
+                  510,
+                  516,
+                  528,
+                  539
+                ],
+                "y": 15
+              },
+              "lead": {
+                "x": [
+                  797
+                ],
+                "y": 15
+              },
+              "ar": {
+                "x": [
+                  608,
+                  602,
+                  592,
+                  582
+                ],
+                "y": 15
+              },
+              "sameLine": true,
+              "leadSameLineAsEn": true
+            }
+          }
+        }
+      },
+      {
+        "id": "5d2600af3fc51a3a",
+        "lesson": 12,
+        "latin": "+ y",
+        "arabic": "نحوّل",
+        "originalClass": "C1-neutral-attribution",
+        "contract": "lead-outside-en",
+        "rules": [
+          "R1"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "5d2600af3fc51a3a",
+          "lesson": 12,
+          "class": "C1",
+          "kind": "lead-outside-en",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 58,
+              "totalChars": 58,
+              "en": {
+                "x": [
+                  58
+                ],
+                "y": 22
+              },
+              "lead": {
+                "x": [
+                  143
+                ],
+                "y": 22
+              },
+              "ar": {
+                "x": [
+                  132,
+                  121,
+                  111,
+                  111,
+                  98
+                ],
+                "y": 22
+              },
+              "sameLine": true,
+              "leadSameLineAsEn": true
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 58,
+              "totalChars": 58,
+              "en": {
+                "x": [
+                  811
+                ],
+                "y": 22
+              },
+              "lead": {
+                "x": [
+                  906
+                ],
+                "y": 22
+              },
+              "ar": {
+                "x": [
+                  894,
+                  881,
+                  870,
+                  870,
+                  856
+                ],
+                "y": 22
+              },
+              "sameLine": true,
+              "leadSameLineAsEn": true
+            }
+          }
+        }
+      },
+      {
+        "id": "562538031bc27572",
+        "lesson": 16,
+        "latin": ". book",
+        "arabic": "الاسم",
+        "originalClass": "C1-neutral-attribution",
+        "contract": "lead-outside-en",
+        "rules": [
+          "R1"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "562538031bc27572",
+          "lesson": 16,
+          "class": "C1",
+          "kind": "lead-outside-en",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 30,
+              "totalChars": 30,
+              "en": {
+                "x": [
+                  155,
+                  165,
+                  175,
+                  184
+                ],
+                "y": 12
+              },
+              "lead": {
+                "x": [
+                  265
+                ],
+                "y": 12
+              },
+              "ar": {
+                "x": [
+                  250,
+                  246,
+                  241,
+                  228,
+                  217
+                ],
+                "y": 12
+              },
+              "sameLine": true,
+              "leadSameLineAsEn": true
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 30,
+              "totalChars": 30,
+              "en": {
+                "x": [
+                  945,
+                  955,
+                  965,
+                  974
+                ],
+                "y": 12
+              },
+              "lead": {
+                "x": [
+                  1055
+                ],
+                "y": 12
+              },
+              "ar": {
+                "x": [
+                  1040,
+                  1036,
+                  1031,
+                  1018,
+                  1007
+                ],
+                "y": 12
+              },
+              "sameLine": true,
+              "leadSameLineAsEn": true
+            }
+          }
+        }
+      },
+      {
+        "id": "f9237450d963f0c6",
+        "lesson": 16,
+        "latin": ". their",
+        "arabic": "صفة ملكية مرتبطة بالضمير",
+        "originalClass": "C1-neutral-attribution",
+        "contract": "lead-outside-en",
+        "rules": [
+          "R1"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "f9237450d963f0c6",
+          "lesson": 16,
+          "class": "C1",
+          "kind": "lead-outside-en",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 71,
+              "totalChars": 72,
+              "en": {
+                "x": [
+                  9,
+                  16,
+                  26,
+                  36,
+                  40
+                ],
+                "y": 12
+              },
+              "lead": {
+                "x": [
+                  340
+                ],
+                "y": 12
+              },
+              "ar": {
+                "x": [
+                  87,
+                  79,
+                  70,
+                  376,
+                  371,
+                  362,
+                  357,
+                  349
+                ],
+                "y": 12
+              },
+              "sameLine": true,
+              "leadSameLineAsEn": true
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 72,
+              "totalChars": 72,
+              "en": {
+                "x": [
+                  644,
+                  650,
+                  660,
+                  670,
+                  674
+                ],
+                "y": 12
+              },
+              "lead": {
+                "x": [
+                  1130
+                ],
+                "y": 12
+              },
+              "ar": {
+                "x": [
+                  872,
+                  864,
+                  855,
+                  841,
+                  836,
+                  827,
+                  822,
+                  814
+                ],
+                "y": 12
+              },
+              "sameLine": true,
+              "leadSameLineAsEn": true
+            }
+          }
+        }
+      },
+      {
+        "id": "4eb0b06b0eb57373",
+        "lesson": 17,
+        "latin": "+ 's",
+        "arabic": "صفة ملكية",
+        "originalClass": "C1-neutral-attribution",
+        "contract": "lead-outside-en",
+        "rules": [
+          "R1"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "4eb0b06b0eb57373",
+          "lesson": 17,
+          "class": "C1",
+          "kind": "lead-outside-en",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 59,
+              "totalChars": 59,
+              "en": {
+                "x": [
+                  100,
+                  105
+                ],
+                "y": 35
+              },
+              "lead": {
+                "x": [
+                  213
+                ],
+                "y": 35
+              },
+              "ar": {
+                "x": [
+                  195,
+                  185,
+                  176,
+                  163,
+                  157,
+                  149,
+                  143,
+                  135
+                ],
+                "y": 35
+              },
+              "sameLine": true,
+              "leadSameLineAsEn": true
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 59,
+              "totalChars": 59,
+              "en": {
+                "x": [
+                  1021,
+                  1025
+                ],
+                "y": 10
+              },
+              "lead": {
+                "x": [
+                  1134
+                ],
+                "y": 10
+              },
+              "ar": {
+                "x": [
+                  1115,
+                  1105,
+                  1097,
+                  1083,
+                  1078,
+                  1069,
+                  1064,
+                  1055
+                ],
+                "y": 10
+              },
+              "sameLine": true,
+              "leadSameLineAsEn": true
+            }
+          }
+        }
+      },
+      {
+        "id": "db0737a7ecea1a9a",
+        "lesson": 24,
+        "latin": ". few",
+        "arabic": "عدد قليل جدًا مع إحساس بالنقص",
+        "originalClass": "C1-neutral-attribution",
+        "contract": "lead-outside-en",
+        "rules": [
+          "R1"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "db0737a7ecea1a9a",
+          "lesson": 24,
+          "class": "C1",
+          "kind": "lead-outside-en",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 69,
+              "totalChars": 70,
+              "en": {
+                "x": [
+                  11,
+                  17,
+                  27
+                ],
+                "y": 14
+              },
+              "lead": {
+                "x": [
+                  157
+                ],
+                "y": 14
+              },
+              "ar": {
+                "x": [
+                  380,
+                  372,
+                  365,
+                  351,
+                  345,
+                  340,
+                  327
+                ],
+                "y": 14
+              },
+              "sameLine": true,
+              "leadSameLineAsEn": true
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 70,
+              "totalChars": 70,
+              "en": {
+                "x": [
+                  621,
+                  628,
+                  638
+                ],
+                "y": 14
+              },
+              "lead": {
+                "x": [
+                  930
+                ],
+                "y": 14
+              },
+              "ar": {
+                "x": [
+                  1170,
+                  1161,
+                  1153,
+                  1138,
+                  1132,
+                  1126,
+                  1113
+                ],
+                "y": 14
+              },
+              "sameLine": true,
+              "leadSameLineAsEn": true
+            }
+          }
+        }
+      },
+      {
+        "id": "d77b545c7e96f088",
+        "lesson": 24,
+        "latin": ". little",
+        "arabic": "كمية صغيرة جدًا مع إحساس بالنقص",
+        "originalClass": "C1-neutral-attribution",
+        "contract": "lead-outside-en",
+        "rules": [
+          "R1"
+        ],
+        "sourceChanged": false,
+        "visualEvidence": {
+          "id": "d77b545c7e96f088",
+          "lesson": 24,
+          "class": "C1",
+          "kind": "lead-outside-en",
+          "widths": {
+            "390": {
+              "width": 390,
+              "direction": "rtl",
+              "laidOutChars": 73,
+              "totalChars": 74,
+              "en": {
+                "x": [
+                  4,
+                  9,
+                  13,
+                  20,
+                  27,
+                  32
+                ],
+                "y": 14
+              },
+              "lead": {
+                "x": [
+                  148
+                ],
+                "y": 14
+              },
+              "ar": {
+                "x": [
+                  382,
+                  372,
+                  367,
+                  358,
+                  340,
+                  332,
+                  326,
+                  318,
+                  309
+                ],
+                "y": 14
+              },
+              "sameLine": true,
+              "leadSameLineAsEn": true
+            },
+            "1180": {
+              "width": 1180,
+              "direction": "rtl",
+              "laidOutChars": 74,
+              "totalChars": 74,
+              "en": {
+                "x": [
+                  584,
+                  589,
+                  594,
+                  601,
+                  608,
+                  614
+                ],
+                "y": 14
+              },
+              "lead": {
+                "x": [
+                  921
+                ],
+                "y": 14
+              },
+              "ar": {
+                "x": [
+                  1171,
+                  1161,
+                  1155,
+                  1146,
+                  1126,
+                  1118,
+                  1112,
+                  1102,
+                  1094
+                ],
+                "y": 14
+              },
+              "sameLine": true,
+              "leadSameLineAsEn": true
+            }
+          }
+        }
+      }
+    ]
+  },
+  "checks": 352,
+  "failures": []
+}

@@ -40,7 +40,10 @@ export default function FinalQuiz({ lesson, accent = "bg-slate-900", teacherSour
   };
 
   return (
-    <div>
+    // data-final-quiz gives this engine the same stable rendered instance
+    // identity the other task engines already emit (data-final-test,
+    // data-activity, data-exercise). Inert attribute: no styling or behavior.
+    <div data-final-quiz={lesson}>
       <div className="mb-4 flex flex-wrap items-center gap-3 rounded-2xl border-2 border-slate-100 bg-slate-50/70 p-4">
         <span className="text-2xl">📝</span>
         <span className="font-bold text-slate-700">

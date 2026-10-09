@@ -110922,7 +110922,7 @@
       "id": "src/shared/FinalQuiz.tsx#FinalQuiz/4",
       "lesson": null,
       "source": "src/shared/FinalQuiz.tsx",
-      "line": 165,
+      "line": 168,
       "reason": "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal."
     },
     {

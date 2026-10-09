@@ -427,7 +427,7 @@ export function EnAr({
   arClassName = "",
 }: {
   en: ReactNode;
-  ar?: string;
+  ar?: ReactNode;
   /** فاصل اختياري بين الإنجليزية والعربية (مثل «—» أو «·») يبقى داخل المجموعة LTR. */
   sep?: string;
   className?: string;
@@ -442,7 +442,7 @@ export function EnAr({
       {sep && <span>{sep}</span>}
       {ar && (
         <span dir="rtl" className={arClassName}>
-          <LatinRuns text={ar} />
+          {typeof ar === "string" ? <LatinRuns text={ar} /> : ar}
         </span>
       )}
     </span>

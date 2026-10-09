@@ -28,6 +28,8 @@ import { mkdirSync, readFileSync, rmSync, writeFileSync, existsSync } from "node
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
+import { activityInstrumentation, observeActivities } from "./lib/activity-observation.mjs";
+
 import { analyzeHtml } from "./lib/bidi-sim.mjs";
 
 const req = createRequire(import.meta.url);
@@ -43,6 +45,9 @@ const ALLOWLIST = new Set([
   "L6|I usually play football every day|لكن في الكلام الطبيعي يكفي أحدهما حسب المعنى",
 ]);
 const LESSONS = process.env.ONLY ? process.env.ONLY.split(",").map(Number) : Array.from({ length: 32 }, (_, i) => i + 1);
+const ACTIVITY_REPORT = process.argv[process.argv.indexOf("--activity-report") + 1];
+const OBSERVE = process.argv.includes("--activity-report");
+const activityObservations = [];
 const WRITE = process.argv.includes("--write-baseline");
 
 // ---------------- crawler ----------------
@@ -53,6 +58,7 @@ async function loadApp() {
   const outFile = join(dir, `app-${process.pid}.mjs`);
   await esbuild.build({
     absWorkingDir: root,
+    plugins: OBSERVE ? [activityInstrumentation(root)] : [],
     stdin: {
       contents: `export { default as App } from ${JSON.stringify(join(root, "src/App.tsx"))};
 export { createRoot } from "react-dom/client";
@@ -103,7 +109,7 @@ async function crawl(M) {
       const html = root.innerHTML;
       if (html === prev) break;
       prev = html;
-      if (!seen.has(html)) { seen.add(html); snapshots[n].push(html); }
+      if (!seen.has(html)) { seen.add(html); snapshots[n].push(html); if (OBSERVE) activityObservations.push(...observeActivities(document, n, i + 1)); }
       const b = findNext();
       if (!b) break;
       b.click();
@@ -117,6 +123,13 @@ async function crawl(M) {
 async function main() {
   const M = await loadApp();
   const snaps = await crawl(M);
+  if (OBSERVE) {
+    const census = JSON.parse(readFileSync("docs/audits/activity-inventory.json", "utf8"));
+    const observed = new Set(activityObservations.flatMap(a => a.controls.map(c => c.site)));
+    const unobserved = census.records.flatMap(r => r.sites.filter(s => !observed.has(s.id)).map(s => ({ id: s.id, lesson: r.lesson, source: r.source, line: s.line, reason: "Not observed in the initial-state step crawl; conditional, delegated, gate/shell, or a navigation branch. Requires reconciliation, not dismissal." })));
+    mkdirSync(dirname(ACTIVITY_REPORT), { recursive: true });
+    writeFileSync(ACTIVITY_REPORT, JSON.stringify({ scope: "Audit-instrumented initial-state crawl; no inferred submission/reset certification", observations: activityObservations, unobserved }, null, 2) + "\n");
+  }
   const counts = {};
   const uniq = [];
   for (const n of LESSONS) {
@@ -126,7 +139,7 @@ async function main() {
         for (const v of r.violations) {
           const kind = r.visual === "(row)" ? "row" : "para";
           const key = `${kind}|${v.latin}|${v.arabic}`;
-          if (!seen.has(key)) seen.set(key, { kind, latin: v.latin, arabic: v.arabic, sig: v.sig || "" });
+          if (!seen.has(key)) seen.set(key, { kind, latin: v.latin, arabic: v.arabic, sig: v.sig || "", logical: r.logical, visual: r.visual });
         }
       }
     }
@@ -134,6 +147,19 @@ async function main() {
     for (const v of seen.values()) uniq.push({ lesson: n, ...v });
   }
   if (process.argv.includes("--details")) console.log(JSON.stringify({ violations: uniq }, null, 2));
+  const reportAt = process.argv.indexOf("--report");
+  if (reportAt >= 0) {
+    const byLesson = Object.fromEntries(LESSONS.map(n => [n, { pair: 0, alternatives: 0, row: 0, exceptions: 0 }]));
+    const findings = uniq.map(v => {
+      const category = v.sig.startsWith("alts:") ? "alternatives" : v.kind === "row" ? "row" : "pair";
+      const exception = ALLOWLIST.has(`L${v.lesson}|${v.latin}|${v.arabic}`);
+      byLesson[v.lesson][exception ? "exceptions" : category]++;
+      return { ...v, category, exception, disposition: exception ? "existing explicit exception; browser evidence required" : "unresolved; not waived" };
+    });
+    const destination = process.argv[reportAt + 1];
+    mkdirSync(dirname(destination), { recursive: true });
+    writeFileSync(destination, JSON.stringify({ scope: "lesson step crawl; not all interaction states", byLesson, findings }, null, 2) + "\n");
+  }
   const total = uniq.length;
   const failures = [];
   const allowed = [];

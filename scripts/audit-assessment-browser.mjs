@@ -80,15 +80,42 @@ try{
  // Actual gated teacher components, not a detached key. Invalid password must
  // never mount a key. Valid password gives independent category navigation.
  for(const n of [1,27,28,29,30,31,32]){
-  await mount('teacher',n);assert.equal(await page.locator('[data-ft-key],[data-ts-q],[data-teacher-workspace]').count(),0);
+  await mount('teacher',n);assert.equal(await page.locator('[data-ft-key],[data-ts-q],[data-teacher-workspace],[data-teacher-source]').count(),0);
   const pw=page.locator('input[type=password]');await pw.fill('wrong');
-  const unlock=page.getByRole('button',{name:/فتح|دخول/}).first();await unlock.click();assert.equal(await page.locator('[data-teacher-workspace]').count(),0);
+  const unlock=page.getByRole('button',{name:/فتح|دخول/}).first();await unlock.click();assert.equal(await page.locator('[data-teacher-workspace],[data-teacher-source]').count(),0);
   await pw.fill('somer173');await unlock.click();await page.locator('[data-teacher-workspace]').waitFor();
   assert.equal(await page.locator('[data-teacher-workspace] nav').count(),1);
   const nav=page.locator('[data-teacher-workspace] nav');const key=nav.getByRole('button',{name:'مفتاح الاختبار النهائي',exact:true});await key.focus();await page.keyboard.press('Enter');
   const rows=page.locator(n<27?'[data-ts-q]':'[data-ft-key-item]');assert.equal(await rows.count(),n<27?(await page.evaluate(n=>window.quizAnswers(n),n)).length:15);assert(await rows.first().isVisible());
   const details=rows.first().locator('details');assert.equal(await details.getAttribute('open'),null);await details.locator('summary').click();assert.notEqual(await details.getAttribute('open'),null);
   if(n>=27){await nav.getByRole('button',{name:/مفتاح منطقة الاختبارات/}).click();assert.equal(await rows.first().isVisible(),false);const reasons=page.getByRole('region',{name:'مفتاح منطقة الاختبارات — 20 سؤالًا',exact:true}).locator('details');assert.equal(await reasons.count(),20);assert.equal(await reasons.first().getAttribute('open'),null);await reasons.first().locator('summary').click();assert.notEqual(await reasons.first().getAttribute('open'),null);}
+  if([27,28,30,31,32].includes(n)){
+   const source=JSON.parse(readFileSync('docs/audits/teacher-source-coverage.json','utf8')).lessons.find(l=>l.lesson===n);
+   await nav.getByRole('button',{name:/حلول (الأنشطة|تمارين المصدر|أنشطة المصدر)/}).click();
+   const area=page.locator(`[data-teacher-source="${n}"]`);
+   for(let gi=0;gi<source.groups.length;gi++){
+    await area.getByLabel('التمرين / مرجع المصدر').selectOption(String(gi));
+    assert.equal(await area.locator('[data-source-item]').count(),source.groups[gi].items.length);
+    for(const q of source.groups[gi].items){
+     await area.getByLabel('رقم البند كما ورد في مرجع المعلم').selectOption(q.id);
+     assert.equal(await area.locator('[data-source-item]').count(),1);
+     assert((await area.locator('[data-source-item]').textContent()).includes(q.number));
+     const item=area.locator('[data-source-item]');
+     if(q.segments.length>1){const disclosure=item.locator('summary');await disclosure.focus();await page.keyboard.press('Enter');assert.notEqual(await item.locator('details').getAttribute('open'),null);}
+     const text=await item.textContent();for(const segment of q.segments)assert(text.includes(segment));
+    }
+    const original=area.locator('details').filter({has:page.locator('summary',{hasText:'مرجع المعلم الكامل'})});
+    await original.locator('summary').click();
+    assert.deepEqual(await original.locator('[data-source-original]').allTextContents(),source.groups[gi].originalLines);
+   }
+   await area.getByLabel('رقم البند كما ورد في مرجع المعلم').selectOption('');
+   await area.getByLabel('بحث داخل الإجابات').fill('no-source-item-should-match-this');
+   assert.equal(await area.locator('[data-source-item]').count(),0);
+   await area.getByLabel('التمرين / مرجع المصدر').selectOption('0');
+   assert.equal(await area.getByLabel('بحث داخل الإجابات').inputValue(),'');
+   assert.equal(await area.locator('[data-source-item]').count(),source.groups[0].items.length);
+   checks++;
+  }
   await nav.getByRole('button',{name:'فهرس الدرس',exact:true}).click();assert.equal(await rows.first().isVisible(),false);
   assert(await page.getByRole('link',{name:'قائمة الدروس'}).isVisible());checks++;
  }

@@ -1,3 +1,5 @@
+import { En as SharedEn } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
 import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -62,11 +64,7 @@ import { LatinRuns } from "../../shared/bidi";
 // ============================================================
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
-      {children}
-    </span>
-  );
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
@@ -215,14 +213,7 @@ function LabPanel({
     >
       <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-amber-100 bg-white px-3 py-2">
         <span className="text-xl">{emoji}</span>
-        <span dir="ltr" className="font-en text-[11px] font-black uppercase tracking-[0.18em] text-amber-700">
-          {label}
-        </span>
-        {ar && (
-          <span className="text-sm font-bold text-slate-600">
-            <Rich text={ar} />
-          </span>
-        )}
+        <EnAr en={label} ar={ar} enClassName="font-en text-[11px] font-black uppercase tracking-[0.18em] text-amber-700" arClassName="text-sm font-bold text-slate-600" />
       </div>
       {children}
     </div>
@@ -496,7 +487,7 @@ function NumberDetector() {
               <div className="flex items-center justify-between">
                 <span className="text-xl">{lane.emoji}</span>
                 <span dir="ltr" className={`font-en rounded-xl px-2.5 py-1 text-[11px] font-black ${a.chip}`}>
-                  {lane.label}
+                  {mixedText(lane.label)}
                 </span>
               </div>
               <div className="mt-1.5 text-center text-xs font-bold text-slate-500">
@@ -771,7 +762,7 @@ function ApostropheMachine() {
             <span dir="ltr" className="font-en text-xs font-black">
               {m.mode}
             </span>
-            <span className="text-[11px] font-bold opacity-80">
+<span className="text-[11px] font-bold opacity-80">
               <Rich text={m.ar} />
             </span>
           </button>
@@ -875,7 +866,7 @@ function ThreeSystemsBoard() {
           <div key={s.n} className={`rounded-3xl border-2 p-4 text-center ${a.soft}`}>
             <div className="text-xl">{s.n}</div>
             <div dir="ltr" className={`font-en mt-1 rounded-xl px-2 py-1 text-sm font-black ${a.chip}`}>
-              {s.label}
+              {mixedText(s.label)}
             </div>
             <div dir="ltr" className="mt-3">
               <En className="block text-lg font-black text-slate-900">{s.en}</En>
@@ -933,7 +924,7 @@ function ThreeSystemMachine() {
               )}
               <div className={`flex w-full flex-wrap items-center justify-center gap-2 rounded-2xl border-2 px-3 py-2.5 transition ${si < stage ? "border-slate-200 bg-slate-50" : "border-slate-100 bg-white"}`}>
                 <span dir="ltr" className={`font-en rounded-lg px-2 py-0.5 text-[10px] font-black ${st.accent}`}>
-                  {st.label}
+                  {mixedText(st.label)}
                 </span>
                 <span dir="rtl" className="text-[11px] font-bold text-slate-400">
                   <Rich text={st.lesson} />
@@ -1689,19 +1680,17 @@ function SpeedTestEx() {
         </div>
         <div dir="ltr" className="mt-2 space-y-1.5">
           <div className="flex flex-wrap items-center justify-center gap-2">
-            <En className="rounded-xl bg-white px-3 py-1.5 text-base font-black text-slate-900 shadow-sm">{SPEED_TEST_19.note1.en}</En>
-            <span className="text-sm font-bold text-slate-600">
+            <EnAr en={<En className="rounded-xl bg-white px-3 py-1.5 text-base font-black text-slate-900 shadow-sm">{SPEED_TEST_19.note1.en}</En>} ar={<span className="text-sm font-bold text-slate-600">
               <Rich text={SPEED_TEST_19.note1.ar} />
-            </span>
+            </span>} />
           </div>
           <div className="flex flex-wrap items-center justify-center gap-2">
             <span className="text-sm font-bold text-slate-500">
               <Rich text={SPEED_TEST_19.note2Lead} />
             </span>
-            <En className="rounded-xl bg-white px-3 py-1.5 text-base font-black text-slate-900 shadow-sm">{SPEED_TEST_19.note2.en}</En>
-            <span className="text-sm font-bold text-slate-600">
+            <EnAr en={<En className="rounded-xl bg-white px-3 py-1.5 text-base font-black text-slate-900 shadow-sm">{SPEED_TEST_19.note2.en}</En>} ar={<span className="text-sm font-bold text-slate-600">
               <Rich text={SPEED_TEST_19.note2.ar} />
-            </span>
+            </span>} />
           </div>
         </div>
         {answered === SPEED_TEST_19.sentences.length && (
@@ -2290,7 +2279,7 @@ function Rail({
                   >
                     {index + 1}
                   </span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[index])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[index]))}</span>
                   <span className="mr-auto text-base">{SLIDES[index].mascot}</span>
                 </button>
               );
@@ -2359,10 +2348,7 @@ export default function Lesson19({ onExit }: { onExit: () => void }) {
             </button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500">
-                <Rich text={`${slide.section} · `} />
-                <span className="text-slate-800">
-                  <Rich text={slideTitle(slide)} />
-                </span>
+                <Rich text={`${slide.section} · ${slideTitle(slide)}`} />
               </div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
                 <div

@@ -5,8 +5,8 @@ import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 import assert from 'node:assert/strict';
 const file = resolve('node_modules/.bidi-browser.mjs');
-await build({ stdin: { contents: `export {LatinRuns, splitMixedText} from './src/shared/bidi'; export {Rich} from './src/shared/lessonKit'; export {renderToStaticMarkup as render} from 'react-dom/server'; export {createElement as h} from 'react';`, resolveDir: process.cwd(), loader: 'tsx' }, bundle: true, jsx: 'automatic', packages: 'external', platform: 'node', format: 'esm', outfile: file });
-const { LatinRuns, Rich, render, h, splitMixedText } = await import(pathToFileURL(file));
+await build({ stdin: { contents: `export {LatinRuns, EnAr, splitMixedText} from './src/shared/bidi'; export {Rich, En} from './src/shared/lessonKit'; export {renderToStaticMarkup as render} from 'react-dom/server'; export {createElement as h} from 'react';`, resolveDir: process.cwd(), loader: 'tsx' }, bundle: true, jsx: 'automatic', packages: 'external', platform: 'node', format: 'esm', outfile: file });
+const { LatinRuns, EnAr, En, Rich, render, h, splitMixedText } = await import(pathToFileURL(file));
 rmSync(file);
 const css = readdirSync('dist/assets').filter(f => f.endsWith('.css')).map(f => readFileSync(`dist/assets/${f}`, 'utf8')).join('\n');
 const b = await browser();
@@ -27,6 +27,7 @@ try {
  const punctuationCorrect = cs => { const i = index(cs, 'had.'); return i >= 0 && cs[i+3].x > cs[i+2].x; };
  const broken = await chars('نستخدم <span dir="ltr">had</span>.');
  assert.equal(punctuationCorrect(broken), false, 'negative control: orphaned period must fail geometry oracle');
+ const capital=await chars(render(h(Rich,{text:'استخدام Had.'})));const hi=index(capital,'Had.');assert(capital[hi+3].x>capital[hi+2].x,'Had final period is to the right of d');
  for (const text of ['نستخدم [[had]].', 'نستخدم had.', 'نستخدم [[had]]!', 'نستخدم [[had]]?', 'نستخدم [[had]],', 'نستخدم [[had]];', 'نستخدم [[had]]:']) {
    const cs = await chars(render(h(Rich, {text}))); const i=index(cs,'had'); assert(i>=0); assert(cs[i+3].x>cs[i+2].x, text);
  }
@@ -41,6 +42,15 @@ try {
    const html=render(h(Rich,{text}));const cs=await chars(html);const a=index(cs,text.startsWith('[[')?'have':text.startsWith('IQ')?'had danced':'had');const z=index(cs,text.startsWith('[[')?'has':text.startsWith('IQ')?'was dancing':text.includes('V3')?'V3':'شرح');
    if(z>=0) assert(cs[a].x<cs[z].x,text);
  }
+ // Previously separate flex siblings: labels and source references must
+ // remain a single semantic unit, even inside an RTL shell.
+ for(const [en,ar] of [['SOURCE SECTION','أهداف الدرس'],['DEMONSTRATIVE RADAR','الرادار يقرأ العدد والمسافة']]){
+   const cs=await chars(render(h(EnAr,{en,ar})));assert(cs[index(cs,en)].x<cs[index(cs,ar)].x,'label/gloss order: '+en);
+ }
+ const mixedEn=await chars(render(h(En,{children:'He / She / It → is (المفرد الغائب)'})));
+ assert(mixedEn[index(mixedEn,'He')].x<mixedEn[index(mixedEn,'المفرد')].x,'mixed source passed through En retains Arabic gloss');
+ const joined=await chars(render(h(Rich,{text:'الأساس — was / were · القاعدة الأساسية'})));
+ assert(joined[index(joined,'was')].x<joined[index(joined,'القاعدة')].x,'rail section and title grouped together');
  await chars(render(h(Rich,{text:'نستخدم [[had]] ثم had.'})));
  assert.equal(await page.locator('#line .rounded-lg').count(),1,'only the marked occurrence is highlighted');
  await chars(render(h(Rich,{text:'نستخدم [[had + V3]]، [[الشرح]] محفوظ.'})));

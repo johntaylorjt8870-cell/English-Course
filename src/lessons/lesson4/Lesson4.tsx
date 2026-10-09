@@ -1,3 +1,6 @@
+import { Verdict as SharedVerdict } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
+import { En as SharedEn } from "../../shared/lessonKit";
 import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -34,7 +37,7 @@ const PART_STYLE: Record<Part["role"], { chip: string; solid: string; text: stri
 };
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <span className={`ltr font-en ${className}`}>{children}</span>;
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
@@ -225,8 +228,7 @@ function CatsSlide({ title }: { title: string }) {
         <div className="grid gap-2 sm:grid-cols-3">
           {list.map((n) => (
             <div key={n.en} className="flex items-center justify-between rounded-2xl bg-white px-3 py-2 shadow-sm">
-              <En className="text-xl font-bold text-slate-800">{n.en}</En>
-              <span className="text-sm font-semibold text-slate-500"><LatinRuns text={n.ar ?? ""} /></span>
+              <EnAr en={<En className="text-xl font-bold text-slate-800">{n.en}</En>} ar={<span className="text-sm font-semibold text-slate-500"><LatinRuns text={n.ar ?? ""} /></span>} />
             </div>
           ))}
         </div>
@@ -587,8 +589,7 @@ function WordList({ words, note }: { words: { en: string; ar: string }[]; note?:
       <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {words.map((w) => (
           <div key={w.en} className="flex items-center justify-between rounded-2xl bg-white px-3 py-2 shadow-sm">
-            <En className="text-lg font-bold text-slate-800">{w.en}</En>
-            <span className="text-sm font-semibold text-slate-500"><LatinRuns text={w.ar ?? ""} /></span>
+            <EnAr en={<En className="text-lg font-bold text-slate-800">{w.en}</En>} ar={<span className="text-sm font-semibold text-slate-500"><LatinRuns text={w.ar ?? ""} /></span>} />
           </div>
         ))}
       </div>
@@ -615,16 +616,7 @@ function Compare({ pairs }: { pairs: { right: string; wrong: string }[] }) {
   );
 }
 
-function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; why?: string }) {
-  return (
-    <div className={`flex flex-wrap items-center gap-3 rounded-3xl border-2 p-4 ${ok ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`}>
-      <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-base font-bold text-white ${ok ? "bg-emerald-500" : "bg-rose-500"}`}>{ok ? "✓" : "✕"}</span>
-      <En className={`text-xl font-bold ${ok ? "text-emerald-900" : "text-rose-800 line-through decoration-rose-300"}`}>{en}</En>
-      {ar && <span className="text-base text-slate-500">{ar}</span>}
-      {why && <span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}>{why}</span>}
-    </div>
-  );
-}
+function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; why?: string }) { return <SharedVerdict ok={ok} en={en} ar={ar} why={why} />; }
 
 function Pieces() {
   const all = [
@@ -643,8 +635,7 @@ function Pieces() {
         {all.map((p) => (
           <div key={p.en} className="flex items-center gap-2 rounded-2xl bg-white/10 px-3 py-2">
             <span className={`h-3 w-3 rounded-full ${p.c}`} />
-            <En className="font-bold">{p.en}</En>
-            <span className="mr-auto text-sm text-slate-300"><LatinRuns text={p.ar ?? ""} /></span>
+            <EnAr en={<En className="font-bold">{p.en}</En>} ar={<span className="mr-auto text-sm text-slate-300"><LatinRuns text={p.ar ?? ""} /></span>} />
           </div>
         ))}
       </div>
@@ -719,8 +710,7 @@ function TableSlide({ title }: { title: string }) {
       <div className="grid gap-3">
         <div className="rounded-3xl border-2 border-emerald-200 bg-emerald-50 p-5">
           <div className="flex flex-wrap items-center gap-2">
-            <En className="text-2xl font-extrabold text-emerald-700">Noun</En>
-            <span className="text-lg text-slate-600">= اسم شخص أو مكان أو شيء أو حيوان</span>
+            <EnAr en={<En className="text-2xl font-extrabold text-emerald-700">Noun</En>} ar={<span className="text-lg text-slate-600">= اسم شخص أو مكان أو شيء أو حيوان</span>} />
           </div>
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
@@ -1304,7 +1294,7 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
                   className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${on ? "bg-slate-900 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}
                 >
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${on ? "bg-white/20" : "bg-slate-100"}`}>{idx + 1}</span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[idx])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[idx]))}</span>
                   <span className="mr-auto text-base">{SLIDES[idx].mascot}</span>
                 </button>
               );
@@ -1375,7 +1365,7 @@ export default function Lesson4({ onExit }: { onExit: () => void }) {
             </button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500">
-                {slide.section} · <span className="text-slate-800">{slideTitle(slide)}</span>
+                <Rich text={`${slide.section} · ${slideTitle(slide)}`} />
               </div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
                 <div className="h-full rounded-full bg-gradient-to-l from-emerald-500 via-amber-400 to-violet-500 transition-all duration-500" style={{ width: `${progress}%` }} />

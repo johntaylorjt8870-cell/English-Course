@@ -1,3 +1,6 @@
+import { Verdict as SharedVerdict } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
+import { En as SharedEn } from "../../shared/lessonKit";
 import { mixedText } from "../../shared/lessonKit";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import {
@@ -36,11 +39,7 @@ function Rich({ text, className = "" }: { text: string; className?: string }) {
 }
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" className={`font-en inline-block ${className}`}>
-      {children}
-    </span>
-  );
+  return <SharedEn className={`inline-block ${className}`}>{children}</SharedEn>;
 }
 
 function Mixed({ text }: { text: string }) {
@@ -127,7 +126,7 @@ function Formula({ roles, example, big }: { roles: Role[]; example?: string[]; b
               <span dir="ltr" className={`font-en font-extrabold ${big ? "text-3xl md:text-4xl" : "text-2xl"}`}>
                 {ROLE_INFO[r].en}
               </span>
-              <span className={`font-semibold opacity-90 ${big ? "text-base" : "text-sm"}`}><LatinRuns text={ROLE_INFO[r].ar ?? ""} /></span>
+<span className={`font-semibold opacity-90 ${big ? "text-base" : "text-sm"}`}><LatinRuns text={ROLE_INFO[r].ar ?? ""} /></span>
             </div>
           </Fragment>
         ))}
@@ -179,8 +178,7 @@ function Term({ en, ar, desc, role }: { en: string; ar: string; desc?: string; r
 function Plain({ en, ar }: { en: string; ar: string }) {
   return (
     <div className="flex flex-wrap items-center gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-      <En className="text-3xl font-bold text-slate-800">{en}</En>
-      <span className="text-lg text-slate-500">{ar}</span>
+      <EnAr en={<En className="text-3xl font-bold text-slate-800">{en}</En>} ar={<span className="text-lg text-slate-500">{ar}</span>} />
     </div>
   );
 }
@@ -197,10 +195,9 @@ function QA({ sentence, q, a, role }: { sentence: string; q: string; a: string; 
           <span className={`tada flex items-center gap-2 rounded-2xl border-2 ${st.border} ${st.soft} px-3 py-1.5`}>
             <En className={`text-xl font-extrabold ${st.text}`}>{a}</En>
             <span className="text-slate-400">=</span>
-            <En className={`text-sm font-bold ${st.text}`}>{ROLE_INFO[role].en}</En>
-            <span dir="rtl" className="text-sm text-slate-500">
+            <EnAr en={<En className={`text-sm font-bold ${st.text}`}>{ROLE_INFO[role].en}</En>} ar={<span dir="rtl" className="text-sm text-slate-500">
               (<LatinRuns text={ROLE_INFO[role].ar ?? ""} />)
-            </span>
+            </span>} />
           </span>
         ) : (
           <button onClick={() => setOpen(true)} className="mr-auto rounded-xl bg-slate-900 px-4 py-1.5 text-sm font-bold text-white transition hover:bg-slate-700">
@@ -212,17 +209,7 @@ function QA({ sentence, q, a, role }: { sentence: string; q: string; a: string; 
   );
 }
 
-function Verdict({ ok, en, ar }: { ok: boolean; en: string; ar?: string }) {
-  return (
-    <div className={`flex flex-wrap items-center gap-4 rounded-3xl border-2 p-4 ${ok ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`}>
-      <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-lg font-bold text-white ${ok ? "bg-emerald-500" : "bg-rose-500"}`}>
-        {ok ? "✓" : "✕"}
-      </span>
-      <En className={`text-2xl font-bold ${ok ? "text-emerald-800" : "text-rose-800 line-through decoration-rose-300"}`}>{en}</En>
-      {ar && <span className="text-base text-slate-500">{ar}</span>}
-    </div>
-  );
-}
+function Verdict({ ok, en, ar }: { ok: boolean; en: string; ar?: string }) { return <SharedVerdict ok={ok} en={en} ar={ar} />; }
 
 function Note({ emoji, text }: { emoji: string; text: string }) {
   return (
@@ -242,7 +229,7 @@ function Patterns() {
     <div className="grid gap-4 md:grid-cols-2">
       {cards.map((c) => (
         <div key={c.label} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="mb-3 text-sm font-bold text-slate-400">{c.label}</div>
+          <div className="mb-3 text-sm font-bold text-slate-400">{mixedText(c.label)}</div>
           <div dir="ltr" className="flex flex-wrap items-center gap-2">
             {c.roles.map((r, i) => (
               <Fragment key={r}>
@@ -791,8 +778,7 @@ function OrderItem({ n, item }: { n: number; item: { scrambled: string[]; correc
       {done && (
         <div className="tada mt-2 flex flex-wrap items-center gap-3 font-bold text-emerald-700">
           <span className="text-xl">🎉</span>
-          <En>{item.correct.join(" ")}.</En>
-          <span className="font-normal text-slate-500"><LatinRuns text={item.ar ?? ""} /></span>
+          <EnAr en={<En>{item.correct.join(" ")}.</En>} ar={<span className="font-normal text-slate-500"><LatinRuns text={item.ar ?? ""} /></span>} />
         </div>
       )}
       {wrong && <div className="mt-2 font-bold text-rose-600">✕ الترتيب غير صحيح — اضغط على كلمة لإرجاعها وحاول مجددًا</div>}
@@ -1076,7 +1062,7 @@ export default function Lesson1({ onExit }: { onExit: () => void }) {
           </button>
           <div className="min-w-0 flex-1">
             <div className="truncate text-sm font-bold text-slate-500">
-              {slide.section} ·{" "}
+              {mixedText(slide.section)} ·{" "}
               <span className="text-slate-800">
                 <Mixed text={slideTitle(slide)} />
               </span>

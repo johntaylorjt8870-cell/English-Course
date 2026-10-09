@@ -1,3 +1,6 @@
+import { Verdict as SharedVerdict } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
+import { En as SharedEn } from "../../shared/lessonKit";
 import { mixedText } from "../../shared/lessonKit";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import {
@@ -36,7 +39,7 @@ const RS: Record<Role, { chip: string; solid: string; text: string }> = {
 };
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <span className={`ltr font-en ${className}`}>{children}</span>;
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
@@ -186,8 +189,7 @@ function NounVsAdj() {
         return (
           <div key={w.en} className={`rounded-3xl border-2 p-3.5 transition ${done ? (right ? "border-emerald-300 bg-emerald-50/60" : "border-rose-300 bg-rose-50/60") : "border-slate-200 bg-white"}`}>
             <div className="flex items-center justify-between">
-              <En className="text-xl font-extrabold text-slate-800">{w.en}</En>
-              <span className="text-sm text-slate-500"><LatinRuns text={w.ar ?? ""} /></span>
+              <EnAr en={<En className="text-xl font-extrabold text-slate-800">{w.en}</En>} ar={<span className="text-sm text-slate-500"><LatinRuns text={w.ar ?? ""} /></span>} />
             </div>
             <div className="mt-2 flex gap-1.5">
               {[false, true].map((v) => (
@@ -239,16 +241,7 @@ function Formula({ roles, example, big }: { roles: Role[]; example?: string[]; b
   );
 }
 
-function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; why?: string }) {
-  return (
-    <div className={`flex flex-wrap items-center gap-3 rounded-3xl border-2 p-4 ${ok ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`}>
-      <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-base font-bold text-white ${ok ? "bg-emerald-500" : "bg-rose-500"}`}>{ok ? "✓" : "✕"}</span>
-      <En className={`text-xl font-bold ${ok ? "text-emerald-900" : "text-rose-800 line-through decoration-rose-300"}`}>{en}</En>
-      {ar && <span className="text-base text-slate-500">{ar}</span>}
-      {why && <span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}>{why}</span>}
-    </div>
-  );
-}
+function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; why?: string }) { return <SharedVerdict ok={ok} en={en} ar={ar} why={why} />; }
 
 function Note({ emoji, text }: { emoji: string; text: string }) {
   return (
@@ -503,8 +496,7 @@ function Journey() {
         {JOURNEY.map((j) => (
           <div key={j.n} className="flex items-center gap-2 rounded-2xl bg-white/10 px-3 py-2">
             <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-violet-500 text-xs font-bold">{j.n}</span>
-            <En className="text-sm font-bold">{j.en}</En>
-            <span className="mr-auto text-xs text-slate-300"><LatinRuns text={j.ar ?? ""} /></span>
+            <EnAr en={<En className="text-sm font-bold">{j.en}</En>} ar={<span className="mr-auto text-xs text-slate-300"><LatinRuns text={j.ar ?? ""} /></span>} />
           </div>
         ))}
       </div>
@@ -571,8 +563,7 @@ function SortNA({ ex }: { ex: Extract<Exercise, { type: "sortNA" }> }) {
           <div key={it.en} className={`rounded-3xl border-2 p-3.5 transition ${done ? (right ? "border-emerald-300 bg-emerald-50/60" : "border-rose-300 bg-rose-50/60") : "border-slate-200 bg-white"}`}>
             <div className="flex flex-wrap items-center gap-3">
               <Nub n={i + 1} />
-              <En className="text-xl font-extrabold text-slate-800">{it.en}</En>
-              <span className="text-sm text-slate-400"><LatinRuns text={it.ar ?? ""} /></span>
+              <EnAr en={<En className="text-xl font-extrabold text-slate-800">{it.en}</En>} ar={<span className="text-sm text-slate-400"><LatinRuns text={it.ar ?? ""} /></span>} />
               <div className="mr-auto flex gap-1.5">
                 {[false, true].map((v) => (
                   <button
@@ -605,8 +596,7 @@ function ChooseEx({ ex }: { ex: Extract<Exercise, { type: "choose" }> }) {
           <div key={i} className={`rounded-3xl border-2 p-4 transition ${c !== undefined ? (c === it.answer ? "border-emerald-300 bg-emerald-50/50" : "border-rose-300 bg-rose-50/50") : "border-slate-200 bg-white"}`}>
             <div className="flex flex-wrap items-center gap-3">
               <Nub n={i + 1} />
-              <En className="text-xl font-bold text-slate-800">{it.stem}</En>
-              <span className="text-sm text-slate-400"><LatinRuns text={it.ar ?? ""} /></span>
+              <EnAr en={<En className="text-xl font-bold text-slate-800">{it.stem}</En>} ar={<span className="text-sm text-slate-400"><LatinRuns text={it.ar ?? ""} /></span>} />
             </div>
             <div className="mt-3 flex flex-wrap gap-2 pr-11">
               {it.opts.map((o, oi) => {
@@ -713,8 +703,7 @@ function FixEx({ ex }: { ex: Extract<Exercise, { type: "fix" }> }) {
           <En className="text-xl font-bold text-rose-700 line-through decoration-rose-300">{it.wrong}</En>
           {show[i] ? (
             <div className="tada flex flex-wrap items-center gap-2">
-              <En className="text-xl font-extrabold text-emerald-700">→ {it.correct}</En>
-              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700"><LatinRuns text={it.why ?? ""} /></span>
+              <EnAr en={<En className="text-xl font-extrabold text-emerald-700">→ {it.correct}</En>} ar={<span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700"><LatinRuns text={it.why ?? ""} /></span>} />
             </div>
           ) : (
             <button onClick={() => setShow((s) => ({ ...s, [i]: true }))} className="mr-auto rounded-xl bg-emerald-600 px-4 py-1.5 text-sm font-bold text-white transition hover:bg-emerald-700">
@@ -979,13 +968,12 @@ function Closing({ onExit }: { onExit: () => void }) {
           {JOURNEY.map((j) => (
             <div key={j.n} className="flex items-center gap-2.5 rounded-2xl bg-white/10 px-3 py-2.5 backdrop-blur">
               <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-violet-500 text-xs font-bold">{j.n}</span>
-              <En className="text-sm font-bold">{j.en}</En>
-              <span className="mr-auto text-xs text-slate-300"><LatinRuns text={j.ar ?? ""} /></span>
+              <EnAr en={<En className="text-sm font-bold">{j.en}</En>} ar={<span className="mr-auto text-xs text-slate-300"><LatinRuns text={j.ar ?? ""} /></span>} />
             </div>
           ))}
         </div>
         <div className="pop pop-4 mt-8 rounded-2xl border border-white/20 bg-white/5 p-4">
-          <span className="text-lg font-bold">وهذا بالضبط الوقت المناسب للانتقال إلى الدرس 6: <En className="text-violet-300">Present Simple</En></span>
+          <span className="text-lg font-bold"><LatinRuns text={"وهذا بالضبط الوقت المناسب للانتقال إلى الدرس 6: [[Present Simple]]"} marked /></span>
         </div>
         <div className="pop pop-5 mt-8">
           <button onClick={onExit} className="rounded-xl bg-white px-5 py-2.5 font-bold text-slate-900 shadow transition hover:bg-slate-100">
@@ -1104,7 +1092,7 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
                   className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${on ? "bg-violet-600 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}
                 >
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${on ? "bg-white/25" : "bg-slate-100"}`}>{idx + 1}</span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[idx])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[idx]))}</span>
                   <span className="mr-auto text-base">{SLIDES[idx].mascot}</span>
                 </button>
               );
@@ -1168,7 +1156,7 @@ export default function Lesson5({ onExit }: { onExit: () => void }) {
             </button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500">
-                {slide.section} · <span className="text-slate-800">{slideTitle(slide)}</span>
+                <Rich text={`${slide.section} · ${slideTitle(slide)}`} />
               </div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
                 <div className="h-full rounded-full bg-gradient-to-l from-violet-500 via-fuchsia-400 to-sky-500 transition-all duration-500" style={{ width: `${progress}%` }} />

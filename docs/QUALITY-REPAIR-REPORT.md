@@ -8,6 +8,63 @@
 - Session branch: `arena/8744e70e-english-course` (Arena fixes the session branch).
 - Draft PR: https://github.com/johntaylorjt8870-cell/English-Course/pull/41 — do not merge or delete the branch.
 - No lesson data bank, source ledger, source mapping, or textbook answer was changed.
+- Commit status: the continuation implementation and evidence are recorded together on this branch; its exact SHA is recorded in the PR #41 progress comment. Previously verified commits `b762e4e` and `68595c7` are retained.
+
+## Continuation verification — 2026-10-09
+
+**Still incomplete / still draft.** The following supersedes the original counts below. The pass/fail distinction is important: unchanged historical ratchets pass, but they do not certify zero BIDI defects or complete interaction coverage.
+
+### Direction repair and exact remaining debt
+
+| Audit category | Before continuation | After continuation |
+|---|---:|---:|
+| Mixed paragraph/pair findings | 198 | 46 |
+| Separately authored English/Arabic row findings | 430 | 21 |
+| Alternative-order findings | 21 | 1 |
+| Unresolved total | **649** | **68** |
+| Matching historical exceptions | 1 | 0 |
+
+The original exception entry was not broadened; the shared verdict repair removed its observed warning. No new waiver, threshold increase, oracle relaxation, or deletion of a negative control was used.
+
+- Exact before/after records, including logical text, simulated visual text, selectors and per-lesson/category counts: [`bidi-before.json`](audits/bidi-before.json), [`bidi-after.json`](audits/bidi-after.json).
+- Human-readable table for **each of Lessons 1–32** and all 68 exact remaining cases: [`BIDI-REMAINING.md`](audits/BIDI-REMAINING.md).
+- The residual cases remain explicitly **OPEN**, not classified away as harmless. In particular, fragments such as Lesson 20's `this | في السؤال الأول؟` need interpretation as part of the entire Arabic sentence; forcing every neighboring span into LTR is not a safe general repair. Native-option text, vertical bilingual diagrams, the `(a أو an)` boundary, and dynamic explanatory text need their own source-intent/layout decisions. The crawl does not prove source punctuation is malformed and does not justify rewriting it.
+
+Verified root-cause repairs in this continuation:
+
+1. **DOM grouping:** source/LabPanel labels and Arabic headings were unrelated RTL flex siblings. They now use the existing `EnAr` semantic pair. `EnAr.ar` accepts a React node as well as a string so existing styled explanations can remain intact. Deliberately vertical diagrams retain their vertical structure.
+2. **Inheritance:** local `En` implementations delegate to shared `En`; mixed Arabic strings are passed through the existing parser instead of forcing Arabic inside an LTR font wrapper. Pure English remains isolated.
+3. **Unshared verdict rendering:** legacy verdicts delegate to the existing shared verdict, which groups the English example with its gloss/reason. No answer or reason is changed.
+4. **Boundary grouping:** combined section/title rails are parsed together rather than isolating their two halves independently. Raw mixed captions/callouts use `LatinRuns`/`Rich`. React-node renderers are never interpolated into source strings; an intermediate coercion error was detected and repaired before final verification.
+5. **Native controls:** the new teacher reference options stay text-only, with explicit direction; no invalid span markup was placed inside options.
+
+The Chromium Range regressions now additionally cover exact `استخدام Had.` (period right of `d`), `EnAr` label/gloss order, an Arabic gloss supplied to shared `En`, and a combined rail heading. Existing punctuation/enclosure/quote/highlight/280px tests and the orphan-period negative control still pass. **These are targeted fixtures and interface tests, not exhaustive character geometry for every lesson, every correction state, or native dropdown rendering.**
+
+### Activity inventory — discovery is not certification
+
+- [`activity-inventory.json`](audits/activity-inventory.json) and [`ACTIVITY-INVENTORY.md`](audits/ACTIVITY-INVENTORY.md): **874 component/control templates, 1,673 JSX control sites**, including delegated events, all 32 lessons and shared shells. Records contain source/line/column, handler and data-binding evidence, check/reset evidence, native keyboard properties, and explicitly unverified behavioral fields.
+- `npm run audit:activity-inventory` detects manifest drift. A fingerprint of **all TS/TSX source and data** also invalidates the census when a data-bound activity changes without changing its JSX control template. Regeneration is a review step, not permission to label the contract verified.
+- [`activity-observations.json`](audits/activity-observations.json): audit-only instrumentation records initial rendered controls across the complete step crawl. **1,346 owner/task/step group observations and 7,853 control occurrences** were observed; **820 source sites were not observed** in this initial-state traversal and are listed individually for reconciliation. These groups can contain multiple unlabeled task instances and are **not** a certified count of unique activities. Conditional controls, answers, alternate branches, teacher states and data-bound instance boundaries remain incomplete.
+- All 874 behavioral contracts remain OPEN. `--require-verified` deliberately fails. The existing 38-primary-assessment suite and its passing tests have not been substituted for this wider inventory.
+- A concrete remaining policy/behavior review is Lesson 2's embedded `MC` and `Fill`: their current selection handlers reveal correctness immediately and have no separate whole-activity bottom submission/reset contract. They are not certified as meeting the requested delayed-assessment policy. Immediate-feedback demonstrations and graded tasks must be distinguished explicitly before changing all such components.
+- Complete empty/partial/full/repeated submission, accessibility-tree no-leak, independent reset/restart, and keyboard contracts for every embedded activity remain a blocker. The previously repaired primary-assessment behavior, Lesson 27/29 parent entitlement and Lesson 32 footer continue to pass their regression tests.
+
+### Question-level teacher reference
+
+The existing gated textbook/source destinations in Lessons **27, 28, 30, 31 and 32** now have an exercise/reference selector, a printed-item-number selector and answer search. The first source answer segment is immediately visible; further source segments are expandable. Unnumbered context and a full-original-reference disclosure preserve every line. Selecting another group clears item/search filters. This uses the existing authentication and does not mount protected content early.
+
+- [`teacher-source-coverage.json`](audits/teacher-source-coverage.json): **47 source groups, 113 explicitly numbered reference items**. Indexing asserts lossless line reconstruction and preserves the source data verbatim. Array positions are not passed off as original question numbers.
+- **74 exact mapping gaps remain:** 47 groups lack an explicit original-question/page mapping; 27 lessons (1–26 and 29) do not have these teacher source-solution banks. The artifact lists each gap and every contextual/unmapped line. This does not imply those lessons have no material elsewhere, or that the 113 references constitute complete textbook coverage.
+- Unknown page and question text are visibly described as unknown. No authoritative reasoning is invented, shortened or relabeled as textbook content. This browser does not add platform-authored solutions; existing Platform Explanation distinctions elsewhere remain unchanged.
+- Chromium now selects **every group and numbered item**, exercises details via keyboard, verifies all original lines, tests no-result search and filter clearing, and checks successful/failed authentication. Final Test keys, modern Test Area keys, source references and preparation remain distinct destinations.
+
+### Reverification and readiness
+
+Production build and the existing direction, render, Lessons 24/26/27–32, Final Test, final coverage, source-reveal, navigation and interaction audits were rerun. Counts: direction 1,617; render 1,454; BIDI regression 59; L24 165; L26 164; L27 363; L28 328; L29 84; L30 486; L31 724; L32 307; Final Test 854; final coverage 579; source-reveal 60; navigation 90; legacy interaction 963. The Chromium assessment suite now passes **54 scenarios** including seven actual teacher gates. Source-index and census-drift checks pass.
+
+`node scripts/audit-typecheck-baseline.mjs` re-extracts the exact base source using `git archive` and runs identical explicit TypeScript flags on both trees. [`typecheck-comparison.json`](audits/typecheck-comparison.json) stores complete diagnostics: **current 178 / base 179, zero new normalized diagnostics, one removed**. Both typechecks exit 2. The comparison gate passing does **not** mean TypeScript passes. A transient new undefined-variable diagnostic was caught and corrected during the continuation.
+
+Remaining release blockers are the **68 unresolved mixed findings**, incomplete state/geometry coverage, OPEN embedded-activity contracts, exact teacher source mappings, and the failing full typecheck. Existing duplicate-key/nested-button/build-size warnings are disclosed, not claimed resolved. PR **#41 stays open, draft and unmerged** on the existing session branch; no other branch or PR is used.
 
 ## Diagnosis before implementation
 
@@ -72,7 +129,7 @@ All **38 primary assessments already had submission controls** at the baseline. 
 - `interaction-test.mjs` now runs every legacy lesson 1–26, not only an 11-lesson sample: **963 assertions** covering selection versus correction, score/reasons, locking, reset, invalid/valid teacher passwords, and legacy embedded exercises already in that harness.
 - Existing shared Final Test audit: **854 assertions**, including all six 15-question tests, multiple question types, correction/reset, and protected keys.
 - Existing full lesson Final Test coverage audit: **579 checks**, traversing lesson navigation and verifying one Final Test per lesson, complete teacher keys, and distinct modern Test Areas.
-- New Chromium assessment audit: **49 scenarios**. Inventories all 38 primary final actions, checks that the action follows the last question, scrolls it into view at 390px, exercises keyboard submission, submits/resets one legacy test while a sibling's DOM remains unchanged, completes all questions in Test Areas 27 and 29 to 20/20 and verifies reset callbacks, checks partial submission/reset in Test Area 32, and tests seven actual teacher gates plus workspace navigation and detail disclosure.
+- New Chromium assessment audit: **54 scenarios**. Inventories all 38 primary final actions, checks that the action follows the last question, scrolls it into view at 390px, exercises keyboard submission, submits/resets one legacy test while a sibling's DOM remains unchanged, completes all questions in Test Areas 27 and 29 to 20/20 and verifies reset callbacks, checks partial submission/reset in Test Area 32, and tests seven actual teacher gates plus workspace navigation and detail disclosure.
 - Existing lesson audits 28, 30, 31, 32 retain their richer per-type correct/wrong submission and reset paths. The lesson 27 audit retains its IQ200/teacher checks.
 
 **Inventory limitation:** this enumerates primary assessments, not every small lesson-specific exercise/game/question group. Existing exercise audits cover many immediate-feedback and delayed-check activities, but there is not yet an exhaustive new per-activity behavioral manifest for every legacy lesson. Immediate-feedback teaching activities must not be silently converted into delayed tests; this PR does not do that.
@@ -90,7 +147,7 @@ All **38 primary assessments already had submission controls** at the baseline. 
 - All 20 explanations are present for each modern teacher key; browser tests check disclosure completeness, invalid-password non-mounting, valid unlock, category switching, and final-key row counts.
 - Lesson 29 only exposes categories for material it actually has; no textbook solutions or page numbers were fabricated. Legacy spaces retain their existing final-test-key material rather than pretending to contain textbook solution banks.
 
-**Remaining IA limitation:** textbook solutions retain existing source-authored activity groups and their original lines. They are not all normalized into a uniform question/answer/reason/page schema because that metadata is not consistently present. Full question-by-question textbook retrieval, page-reference completeness, and a human teaching-usability review remain outstanding. The selector uses existing lesson routes; after switching lessons, the teacher opens that lesson's Teacher Area and its existing gate.
+**Remaining IA limitation:** the new source-reference browser indexes printed item numbers and retains existing source-authored activity groups and their original lines. They are not all normalized into a uniform question/answer/reason/page schema because that metadata is not consistently present. Full question-by-question textbook retrieval, page-reference completeness, and a human teaching-usability review remain outstanding. The selector uses existing lesson routes; after switching lessons, the teacher opens that lesson's Teacher Area and its existing gate.
 
 ### Authentication and fidelity
 
@@ -111,6 +168,10 @@ npm run audit:english-direction
 npm run audit:lesson-navigation
 npm run audit:assessments
 npm run audit:browser
+npm run audit:teacher-source
+npm run audit:activity-inventory
+node scripts/audit-typecheck-baseline.mjs
+node scripts/audit-bidi-mixed.mjs --report docs/audits/bidi-after.json --activity-report docs/audits/activity-observations.json
 ```
 
 Browser audits require the build CSS. `audit:browser` builds it first; `audit:assessments` should be run after `npm run build`. Browser tooling is pinned, dev-only, and uses the npm-distributed Chromium binary. The included library bootstrap targets Linux; it is not a cross-platform browser installer.
@@ -122,7 +183,7 @@ Verified results:
 - Lesson audits 27–32 pass; source-reveal audit passes (60 checks).
 - Lesson navigation passes (90 checks).
 - Legacy interaction, shared final-test, all-lesson final-test coverage, and new browser tests pass as detailed above.
-- Full mixed-BIDI audit passes its **unchanged historical thresholds**, but the last complete run still reports **649 non-allowlisted violations**, down from 806. Strict Lessons 6 and 27–32 remain at zero. This is a blocker to claiming Goal 1 fully complete, not an acceptable definition of “fixed.”
+- Full mixed-BIDI audit passes its **unchanged historical thresholds**, but the last complete run still reports **68 non-allowlisted findings**, down from 649 at the start of this continuation (806 before the original shared repair). Strict Lessons 6 and 27–32 remain at zero. This is a blocker to claiming Goal 1 fully complete, not an acceptable definition of “fixed.”
 - `git diff --check` passes; no unrelated data rewrites or generated browser bundles are included.
 - There is no project `tsconfig.json` / full typecheck script. An explicit `tsc --noEmit --jsx react-jsx --moduleResolution bundler --module esnext --target es2022 --lib es2022,dom --allowSyntheticDefaultImports --skipLibCheck src/main.tsx` fails: **178 diagnostics**, versus 179 with identical flags on the base source. Diagnostic comparison found no new diagnostic messages; the removed diagnostic is Lesson 27's invalid `explanation` field. **Full TypeScript validation did not pass.**
 - Pre-existing duplicate React keys, a legacy nested-button warning, dependency advisories, and build-size warnings remain outside this focused repair.

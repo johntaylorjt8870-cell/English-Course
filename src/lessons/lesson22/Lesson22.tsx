@@ -1,3 +1,5 @@
+import { En as SharedEn } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
 import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
@@ -131,12 +133,8 @@ import { LatinRuns } from "../../shared/bidi";
 // كل وحدة إنجليزية معزولة LTR.
 // ============================================================
 
-function En({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
-      {children}
-    </span>
-  );
+function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
@@ -234,8 +232,7 @@ function Frame({
           data-source-section={sourceHeading}
           className="mt-3 flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-500"
         >
-          <span className="rounded-md bg-white px-1.5 py-0.5 text-teal-700">SOURCE SECTION</span>
-          <Rich text={sourceHeading} />
+          <EnAr en="SOURCE SECTION" ar={sourceHeading} enClassName="rounded-md bg-white px-1.5 py-0.5 text-teal-700" />
         </div>
       )}
       <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">
@@ -276,8 +273,7 @@ function LabPanel({
     <div data-en-seq={seq} className="rounded-3xl border-2 border-teal-200 bg-gradient-to-br from-teal-50 via-cyan-50 to-sky-50 p-4">
       <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-teal-100 bg-white px-3 py-2">
         <span className="text-xl">{emoji}</span>
-        <En className="text-[11px] font-black uppercase tracking-[0.18em] text-teal-700">{label}</En>
-        {ar && <Rich text={ar} className="text-sm font-bold text-slate-600" />}
+        <EnAr en={label} ar={ar} enClassName="text-[11px] font-black uppercase tracking-[0.18em] text-teal-700" arClassName="text-sm font-bold text-slate-600" />
       </div>
       {children}
     </div>
@@ -863,8 +859,7 @@ function PrepositionMap() {
       <div className="mt-2 grid gap-2 sm:grid-cols-2 md:grid-cols-3">
         {PREP_MAP.map((item) => (
           <div key={item.en} className="flex items-center justify-between gap-2 rounded-2xl border-2 border-teal-100 bg-white p-3">
-            <En className="text-lg font-black text-teal-900">{item.en}</En>
-            <Rich text={item.ar} className="text-base font-bold text-slate-700" />
+            <EnAr en={<En className="text-lg font-black text-teal-900">{item.en}</En>} ar={<Rich text={item.ar} className="text-base font-bold text-slate-700" />} />
           </div>
         ))}
       </div>
@@ -923,8 +918,7 @@ function WhereQuestions() {
       <div className="mt-2 flex flex-wrap justify-center gap-2">
         {WH_WORDS.map((w) => (
           <div key={w.en} className="flex items-center gap-2 rounded-xl bg-slate-100 px-3 py-1.5">
-            <En className="text-base font-black text-slate-700">{w.en}</En>
-            <span className="text-sm font-bold text-slate-600">= <LatinRuns text={w.ar ?? ""} /></span>
+            <EnAr en={<En className="text-base font-black text-slate-700">{w.en}</En>} ar={<span className="text-sm font-bold text-slate-600">= <LatinRuns text={w.ar ?? ""} /></span>} />
           </div>
         ))}
       </div>
@@ -1983,7 +1977,7 @@ function Rail({
               return (
                 <button key={i} onClick={() => { setIndex(i); onClose?.(); }} className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${active ? "bg-teal-700 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}>
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/25" : "bg-slate-100"}`}>{i + 1}</span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[i])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[i]))}</span>
                   <span className="mr-auto text-base">{SLIDES[i].mascot}</span>
                 </button>
               );
@@ -2032,7 +2026,7 @@ export default function Lesson22({ onExit }: { onExit: () => void }) {
           <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
             <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border-2 border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس">☰</button>
             <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-bold text-slate-500"><Rich text={`${slide.section} · `} /><span className="text-slate-800"><Rich text={slideTitle(slide)} /></span></div>
+              <div className="truncate text-sm font-bold text-slate-500"><Rich text={`${slide.section} · ${slideTitle(slide)}`} /></div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80"><div className="h-full rounded-full bg-gradient-to-l from-teal-700 via-cyan-600 to-sky-500 transition-all duration-500" style={{ width: `${progress}%` }} /></div>
             </div>
             <span data-slide-counter className="rounded-lg bg-white px-3 py-1 text-sm font-bold text-slate-500 shadow-sm">{index + 1} / {total}</span>

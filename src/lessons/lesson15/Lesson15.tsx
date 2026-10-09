@@ -1,3 +1,5 @@
+import { EnAr } from "../../shared/bidi";
+import { En as SharedEn } from "../../shared/lessonKit";
 import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -82,11 +84,7 @@ const ROLE_STYLE: Record<string, string> = {
 };
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
-      {children}
-    </span>
-  );
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
@@ -123,7 +121,7 @@ function SourceLine({ en, ar, tone = "neutral" }: { en: string; ar?: string; ton
 function FormulaRowView({ formula, emphasis = false }: { formula: (typeof FORMULAS_15)[number]; emphasis?: boolean }) {
   return (
     <div dir="ltr" style={{ direction: "ltr" }} data-en-formula={formula.key} className={`ltr-row rounded-3xl border-2 p-3 ${emphasis ? "border-amber-300 bg-amber-50 shadow" : "border-amber-100 bg-amber-50/70"}`}>
-      <div className="mb-2 text-center text-xs font-bold text-slate-500" dir="rtl">{formula.label}</div>
+      <div className="mb-2 text-center text-xs font-bold text-slate-500" dir="rtl">{mixedText(formula.label)}</div>
       <div className="flex flex-wrap items-end justify-center gap-2">
         {formula.tokens.map((token, i) => {
           const operator = token.text === "+" || token.text === "?";
@@ -132,7 +130,7 @@ function FormulaRowView({ formula, emphasis = false }: { formula: (typeof FORMUL
           ) : (
             <span key={`${token.text}-${i}`} className="inline-flex flex-col items-center">
               <span dir="ltr" className="font-en rounded-2xl border-2 border-amber-300 bg-white px-3 py-2 text-lg font-extrabold text-slate-900 md:text-xl">{token.text}</span>
-              {token.label && <span dir="rtl" className="mt-1 text-[10px] font-bold text-slate-500">{token.label}</span>}
+              {token.label && <span dir="rtl" className="mt-1 text-[10px] font-bold text-slate-500">{mixedText(token.label)}</span>}
             </span>
           );
         })}
@@ -325,7 +323,7 @@ function TransformationMachine() {
       <div className="mt-4 grid gap-3">
         {forms.map((f, i) => (
           <div key={f.en} className={`relative rounded-2xl border-2 p-4 text-center ${f.color}`}>
-            <div className="text-xs font-bold text-slate-500">{f.label}</div>
+            <div className="text-xs font-bold text-slate-500">{mixedText(f.label)}</div>
             <En className="mt-1 block text-lg font-black text-slate-900">{f.en}</En>
             {i < forms.length - 1 && <div className="absolute -bottom-5 left-1/2 z-10 grid h-8 w-8 -translate-x-1/2 place-items-center rounded-full bg-slate-900 text-white">↓</div>}
           </div>
@@ -462,7 +460,7 @@ function WhBoard() {
         {boards.map((b, i) => <button key={b.wh} onClick={() => setSel(i)} className={`rounded-xl border-2 px-3 py-2 font-en font-bold ${i === sel ? "bg-fuchsia-600 text-white border-transparent" : "bg-white border-fuchsia-200 text-fuchsia-700"}`}>{b.wh} = <LatinRuns text={b.ar ?? ""} /></button>)}
       </div>
       <div key={sel} className="pop mt-4 grid gap-2">
-        {cur.items.map((it) => <div key={it.en} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-white bg-white p-3"><En className="font-black text-slate-800">{it.en}</En><span dir="rtl" className="text-sm font-bold text-slate-500"><LatinRuns text={it.ar ?? ""} /></span></div>)}
+        {cur.items.map((it) => <div key={it.en} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-white bg-white p-3"><EnAr en={<En className="font-black text-slate-800">{it.en}</En>} ar={<span dir="rtl" className="text-sm font-bold text-slate-500"><LatinRuns text={it.ar ?? ""} /></span>} /></div>)}
       </div>
     </div>
   );
@@ -579,7 +577,7 @@ function GeniusComparison() {
 function WhatExamples() {
   return (
     <div className="grid gap-2">
-      {WHAT_WITH_BE_15.map((w) => <div key={w.en} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-slate-100 bg-white p-3"><En className="font-black text-slate-800">{w.en}</En><span className="text-sm font-bold text-slate-500"><LatinRuns text={w.ar ?? ""} /></span></div>)}
+      {WHAT_WITH_BE_15.map((w) => <div key={w.en} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-slate-100 bg-white p-3"><EnAr en={<En className="font-black text-slate-800">{w.en}</En>} ar={<span className="text-sm font-bold text-slate-500"><LatinRuns text={w.ar ?? ""} /></span>} /></div>)}
       <div className="rounded-2xl border-2 border-amber-200 bg-amber-50 p-3 text-center"><En className="font-black text-amber-800">{WHAT_NOTE_15}</En></div>
     </div>
   );
@@ -742,8 +740,7 @@ function DetectiveEx() {
           <div key={it.q} className={`rounded-3xl border-2 p-4 ${open === i ? "border-emerald-300 bg-emerald-50" : "border-slate-200 bg-white"}`}>
             <button onClick={() => setOpen(open === i ? null : i)} className="flex w-full items-center gap-3 text-right">
               <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-teal-600 text-sm font-bold text-white">{it.n}</span>
-              <En className="font-extrabold text-slate-800">{it.q}</En>
-              <span className="mr-auto text-slate-400">{open === i ? "↺" : "؟"}</span>
+              <EnAr en={<En className="font-extrabold text-slate-800">{it.q}</En>} ar={<span className="mr-auto text-slate-400">{open === i ? "↺" : "؟"}</span>} />
             </button>
             {open === i && (
               <div className="tada mt-3 rounded-2xl border-2 border-emerald-200 bg-white p-3 text-center">
@@ -768,7 +765,7 @@ function IQ200AEx() {
         <div className="mt-2 grid gap-2">
           {IQ200_15.tasks.map((t) => (
             <div key={t.label} className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-white bg-white p-3">
-              <span className="rounded-xl bg-orange-100 px-3 py-1 text-xs font-bold text-orange-800">{t.label}</span>
+              <span className="rounded-xl bg-orange-100 px-3 py-1 text-xs font-bold text-orange-800">{mixedText(t.label)}</span>
               {show && <En className="font-black text-emerald-800">{t.answer}</En>}
             </div>
           ))}
@@ -777,7 +774,7 @@ function IQ200AEx() {
       <button onClick={() => setShow((v) => !v)} className="rounded-xl bg-orange-600 px-5 py-2 font-bold text-white">{show ? "إخفاء الحل" : "اعرض الحل"}</button>
       {show && (
         <div className="tada grid gap-2 rounded-3xl border-2 border-emerald-200 bg-emerald-50 p-4">
-          {IQ200_15.tasks.map((t) => <div key={t.label} className="rounded-2xl border-2 border-white bg-white p-3"><div className="text-xs font-bold text-slate-500">{t.label}</div><En className="font-black text-slate-800">{t.answer}</En></div>)}
+          {IQ200_15.tasks.map((t) => <div key={t.label} className="rounded-2xl border-2 border-white bg-white p-3"><div className="text-xs font-bold text-slate-500">{mixedText(t.label)}</div><En className="font-black text-slate-800">{t.answer}</En></div>)}
         </div>
       )}
     </div>
@@ -1144,7 +1141,7 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
               return (
                 <button key={index} onClick={() => { setI(index); onClose?.(); }} className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${active ? "bg-amber-600 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}>
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/25" : "bg-slate-100"}`}>{index + 1}</span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[index])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[index]))}</span>
                   <span className="mr-auto text-base">{SLIDES[index].mascot}</span>
                 </button>
               );
@@ -1190,7 +1187,7 @@ export default function Lesson15({ onExit }: { onExit: () => void }) {
           <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
             <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border-2 border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس">☰</button>
             <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-bold text-slate-500"><Rich text={`${slide.section} · `} /><span className="text-slate-800"><Rich text={slideTitle(slide)} /></span></div>
+              <div className="truncate text-sm font-bold text-slate-500"><Rich text={`${slide.section} · ${slideTitle(slide)}`} /></div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80"><div className="h-full rounded-full bg-gradient-to-l from-amber-600 via-orange-500 to-violet-500 transition-all duration-500" style={{ width: `${progress}%` }} /></div>
             </div>
             <span className="rounded-lg bg-white px-3 py-1 text-sm font-bold text-slate-500 shadow-sm">{index + 1} / {total}</span>

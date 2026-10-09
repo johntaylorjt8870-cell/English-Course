@@ -1,3 +1,5 @@
+import { EnAr } from "../../shared/bidi";
+import { En as SharedEn } from "../../shared/lessonKit";
 /* ============================================================================
    الدرس 24 — QUANTITY LAB · QUANTIFIER COMMAND CENTER
    ----------------------------------------------------------------------------
@@ -45,12 +47,8 @@ const EN_THEN_AR = new RegExp(
   "^([A-Za-z][A-Za-z0-9 .,!?:;'\\u2019\\u201C\\u201D()\\[\\]\\-\\u2014\\u00B7/=]*?[.!\\u2026\\uFF1F])\\s+(?=[\\u0600-\\u06FF])"
 );
 
-function En({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
-      {children}
-    </span>
-  );
+function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
@@ -339,8 +337,7 @@ function Zone({
           <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl text-2xl shadow-sm ${z.badge}`} aria-hidden>
             {emoji}
           </span>
-          <En className={`rounded-xl px-3 py-1 text-[12px] font-black uppercase tracking-[0.22em] ${z.label}`}>{en}</En>
-          <h2 className={`font-head text-xl font-black leading-7 md:text-2xl ${z.title}`}><LatinRuns text={ar} /></h2>
+          <h2 className={`font-head text-xl font-black leading-7 md:text-2xl ${z.title}`}><EnAr en={en} ar={ar} enClassName={`rounded-xl px-3 py-1 text-[12px] font-black uppercase tracking-[0.22em] ${z.label}`} /></h2>
         </div>
         {blurb && (
           <p className={`mt-2 text-sm font-bold leading-7 md:text-[15px] ${z.blurb}`}>
@@ -695,17 +692,13 @@ function TimeSensor() {
           <LtrRow className="justify-center">
             <En className="rounded-xl bg-violet-600 px-3 py-1.5 text-base font-black text-white shadow">How much time?</En>
           </LtrRow>
-          <p className="mt-2 text-center text-[12.5px] font-black text-slate-700">
-            وقت ككمية واحدة <En className="rounded bg-violet-100 px-1.5 py-0.5 text-[11px] font-black text-violet-800">Uncountable</En>
-          </p>
+          <p className="mt-2 text-center text-[12.5px] font-black text-slate-700"><LatinRuns text={"وقت ككمية واحدة [[Uncountable]]"} marked /></p>
         </div>
         <div className="rounded-xl border-2 border-white bg-white/80 p-3">
           <LtrRow className="justify-center">
             <En className="rounded-xl bg-emerald-600 px-3 py-1.5 text-base font-black text-white shadow">three times</En>
           </LtrRow>
-          <p className="mt-2 text-center text-[12.5px] font-black text-slate-700">
-            مرات متكررة تُعَدّ <En className="rounded bg-emerald-100 px-1.5 py-0.5 text-[11px] font-black text-emerald-800">Countable</En>
-          </p>
+          <p className="mt-2 text-center text-[12.5px] font-black text-slate-700"><LatinRuns text={"مرات متكررة تُعَدّ [[Countable]]"} marked /></p>
         </div>
       </div>
       <p className="mt-2.5 text-[12px] font-bold leading-6 text-amber-900">
@@ -906,8 +899,7 @@ function MeaningDetector() {
     <div dir="rtl" className="rounded-2xl border-2 border-slate-300 bg-gradient-to-b from-slate-50 to-white p-4 shadow-sm">
       <div className="flex flex-wrap items-center gap-2">
         <span className="grid h-9 w-9 place-items-center rounded-xl bg-slate-900 text-lg shadow-sm" aria-hidden>{"\uD83D\uDD2C"}</span>
-        <En className="rounded-lg bg-slate-900 px-2.5 py-1 text-[10px] font-black tracking-[0.22em] text-cyan-200">MEANING DETECTOR</En>
-        <span className="text-[12px] font-black text-slate-600">المس أداة — اقرأ نوعها ومعناها قبل الحفظ</span>
+        <EnAr en={<En className="rounded-lg bg-slate-900 px-2.5 py-1 text-[10px] font-black tracking-[0.22em] text-cyan-200">MEANING DETECTOR</En>} ar={<span className="text-[12px] font-black text-slate-600">المس أداة — اقرأ نوعها ومعناها قبل الحفظ</span>} />
       </div>
       <LtrRow className="mt-3 justify-center gap-1.5">
         {DETECTOR_TILES.map((tl, i) => (

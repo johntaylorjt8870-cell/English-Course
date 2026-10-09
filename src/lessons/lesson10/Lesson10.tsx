@@ -1,3 +1,6 @@
+import { Verdict as SharedVerdict } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
+import { En as SharedEn } from "../../shared/lessonKit";
 import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -37,7 +40,7 @@ const RS: Record<Role10, { chip: string; solid: string; text: string }> = {
 };
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <span className={`ltr font-en ${className}`}>{children}</span>;
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
@@ -111,16 +114,7 @@ function Note({ emoji, text }: { emoji: string; text: string }) {
   );
 }
 
-function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; why?: string }) {
-  return (
-    <div className={`flex flex-wrap items-center gap-3 rounded-3xl border-2 p-4 ${ok ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`}>
-      <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-base font-bold text-white ${ok ? "bg-emerald-500" : "bg-rose-500"}`}>{ok ? "✓" : "✕"}</span>
-      <En className={`text-xl font-bold ${ok ? "text-emerald-900" : "text-rose-800 line-through decoration-rose-300"}`}>{en}</En>
-      {ar && <span className="text-base text-slate-500">{ar}</span>}
-      {why && <span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}>{why}</span>}
-    </div>
-  );
-}
+function Verdict({ ok, en, ar, why }: { ok: boolean; en: string; ar?: string; why?: string }) { return <SharedVerdict ok={ok} en={en} ar={ar} why={why} />; }
 
 // ============================================================
 // تفاعليات متقدمة
@@ -262,8 +256,7 @@ function SignalWords() {
     <div className="flex flex-wrap gap-2 rounded-3xl border-2 border-slate-100 bg-slate-50/70 p-5">
       {ADV_SIGNALS.map((w, i) => (
         <span key={w.en} className="rounded-2xl border-2 border-cyan-200 bg-white px-3.5 py-2 shadow-sm anim-float" style={{ animationDelay: `${(i % 5) * 0.3}s` }}>
-          <En className="text-lg font-extrabold text-cyan-700">{w.en}</En>
-          <span className="mr-2 text-sm text-slate-500"><LatinRuns text={w.ar ?? ""} /></span>
+          <EnAr en={w.en} ar={w.ar} enClassName="text-lg font-extrabold text-cyan-700" arClassName="mr-2 text-sm text-slate-500" />
         </span>
       ))}
     </div>
@@ -364,13 +357,11 @@ function StativeGrid() {
       <div className="mt-4 grid gap-2">
         <div className="rounded-2xl bg-white p-3 border-2 border-emerald-200 flex flex-wrap items-center gap-2">
           <span className="grid h-7 w-7 place-items-center rounded-full bg-emerald-500 text-white text-sm">✓</span>
-          <En className="font-bold text-emerald-800">I know the answer.</En>
-          <span className="text-sm text-slate-500">أنا أعرف الإجابة.</span>
+          <EnAr en={<En className="font-bold text-emerald-800">I know the answer.</En>} ar={<span className="text-sm text-slate-500">أنا أعرف الإجابة.</span>} />
         </div>
         <div className="rounded-2xl bg-white p-3 border-2 border-rose-200 flex flex-wrap items-center gap-2">
           <span className="grid h-7 w-7 place-items-center rounded-full bg-rose-500 text-white text-sm">✕</span>
-          <En className="font-bold text-rose-700 line-through decoration-rose-300">I am knowing the answer.</En>
-          <span className="rounded-full bg-rose-100 px-2 py-0.5 text-xs font-bold text-rose-700">نادر + غير أساسي</span>
+          <EnAr en={<En className="font-bold text-rose-700 line-through decoration-rose-300">I am knowing the answer.</En>} ar={<span className="rounded-full bg-rose-100 px-2 py-0.5 text-xs font-bold text-rose-700">نادر + غير أساسي</span>} />
         </div>
       </div>
     </div>
@@ -488,8 +479,7 @@ function ChooseTenseEx({ ex }: { ex: Extract<Exercise10, { type: "chooseTense" }
           <div key={i} className={`rounded-3xl border-2 p-4 transition ${c !== undefined ? (right ? "border-emerald-300 bg-emerald-50/50" : "border-rose-300 bg-rose-50/50") : "border-slate-200 bg-white"}`}>
             <div className="flex flex-wrap items-center gap-3">
               <Nub n={i + 1} />
-              <En className="text-lg font-bold text-slate-800">{it.stem}</En>
-              <span className="rounded-full bg-violet-50 px-3 py-1 text-xs font-bold text-violet-700">💭 <LatinRuns text={it.ar ?? ""} /></span>
+              <EnAr en={<En className="text-lg font-bold text-slate-800">{it.stem}</En>} ar={<span className="rounded-full bg-violet-50 px-3 py-1 text-xs font-bold text-violet-700">💭 <LatinRuns text={it.ar ?? ""} /></span>} />
             </div>
             <div className="mt-2.5 flex gap-2 pr-11">
               {it.opts.map((o, oi) => (
@@ -612,8 +602,7 @@ function FixEx({ ex }: { ex: Extract<Exercise10, { type: "fix" }> }) {
           <En className="text-xl font-bold text-rose-700 line-through decoration-rose-300">{it.wrong}</En>
           {show[i] ? (
             <div className="tada flex flex-wrap items-center gap-2">
-              <En className="text-xl font-extrabold text-emerald-700">→ {it.correct}</En>
-              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700"><LatinRuns text={it.why ?? ""} /></span>
+              <EnAr en={<En className="text-xl font-extrabold text-emerald-700">→ {it.correct}</En>} ar={<span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700"><LatinRuns text={it.why ?? ""} /></span>} />
             </div>
           ) : (
             <button onClick={() => setShow((s) => ({ ...s, [i]: true }))} className="mr-auto rounded-xl bg-emerald-600 px-4 py-1.5 text-sm font-bold text-white transition hover:bg-emerald-700">
@@ -637,8 +626,7 @@ function TenseChooseExplainEx({ ex }: { ex: Extract<Exercise10, { type: "tenseCh
           <div key={i} className={`rounded-3xl border-2 p-4 transition ${c !== undefined ? (right ? "border-emerald-300 bg-emerald-50/50" : "border-rose-300 bg-rose-50/50") : "border-slate-200 bg-white"}`}>
             <div className="flex flex-wrap items-center gap-3">
               <Nub n={i + 1} />
-              <En className="text-lg font-bold text-slate-800">{it.en}</En>
-              <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700"><LatinRuns text={it.ar ?? ""} /></span>
+              <EnAr en={<En className="text-lg font-bold text-slate-800">{it.en}</En>} ar={<span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700"><LatinRuns text={it.ar ?? ""} /></span>} />
             </div>
             <div className="mt-2.5 flex gap-2 pr-11">
               {it.opts.map((o, oi) => (
@@ -899,7 +887,7 @@ function Objectives() {
         <div className="mt-2 inline-block rounded-2xl bg-white px-4 py-2 border-2 border-cyan-200">
           <En className="text-xl font-extrabold text-slate-800"><LatinRuns text={"\"هل أستخدم Present Simple أم Present Continuous؟\""} /></En>
         </div>
-        <div className="mt-3 text-sm font-bold text-slate-500">وليس فقط لأنك رأيت كلمة <En className="font-bold text-cyan-700">now</En> بل لأنك فهمت معنى الجملة.</div>
+        <div className="mt-3 text-sm font-bold text-slate-500"><LatinRuns text={"وليس فقط لأنك رأيت كلمة [[now]] بل لأنك فهمت معنى الجملة."} marked /></div>
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         {goals.slice(2).map((g, i) => (
@@ -1128,7 +1116,7 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
                   className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${on ? "bg-cyan-600 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}
                 >
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${on ? "bg-white/25" : "bg-slate-100"}`}>{idx + 1}</span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[idx])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[idx]))}</span>
                   <span className="mr-auto text-base">{SLIDES[idx].mascot}</span>
                 </button>
               );
@@ -1192,7 +1180,7 @@ export default function Lesson10({ onExit }: { onExit: () => void }) {
             </button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500">
-                {slide.section} · <span className="text-slate-800">{slideTitle(slide)}</span>
+                <Rich text={`${slide.section} · ${slideTitle(slide)}`} />
               </div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
                 <div className="h-full rounded-full bg-gradient-to-l from-cyan-500 via-violet-400 to-sky-500 transition-all duration-500" style={{ width: `${progress}%` }} />

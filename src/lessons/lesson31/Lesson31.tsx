@@ -1,3 +1,5 @@
+import TeacherSourceBrowser from "../../shared/TeacherSourceBrowser";
+import { mixedText } from "../../shared/lessonKit";
 import { TeachingDetails } from "../../shared/TeacherWorkspace";
 import TeacherWorkspace, { TeacherSection } from "../../shared/TeacherWorkspace";
 // ============================================================
@@ -274,7 +276,7 @@ function BridgeTrack({ active = "link", segs }: { active?: string; segs?: { key:
             style={{ flexGrow: s.wide ?? 1, flexBasis: 0 }}
             className={`flex items-center justify-center overflow-hidden rounded-lg ${tone[s.key] ?? "bg-slate-400"} ${active === s.key ? "ring-2 ring-amber-300" : ""}`}
           >
-            <span className="px-1 text-center text-[10px] font-black leading-tight text-white">{s.label}</span>
+            <span className="px-1 text-center text-[10px] font-black leading-tight text-white">{mixedText(s.label)}</span>
           </div>
         ))}
       </div>
@@ -3685,16 +3687,7 @@ export function TeacherArea31({ unlocked, onUnlockChange, onGoSolutions }: { unl
 <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <h3 className="font-head text-lg font-black text-slate-800">📚 حلول تمارين المصدر وأنشطته ({TEACHER_31_SOLUTIONS.length})</h3>
             <div className="mt-3 space-y-2.5">
-              {TEACHER_31_SOLUTIONS.map((n, i) => (
-                <div key={i} className="rounded-2xl border-2 border-emerald-100 bg-emerald-50/40 p-3">
-                  <p className="text-sm font-black text-emerald-900"><Rich text={n.head} /></p>
-                  <ul className="mt-1.5 space-y-1">
-                    {n.lines.map((l, j) => (
-                      <li key={j} className="flex items-start gap-2 text-sm font-semibold leading-relaxed text-slate-700"><span className="text-emerald-400">✓</span><Rich text={l} /></li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+              <TeacherSourceBrowser lesson={31} groups={TEACHER_31_SOLUTIONS} />
             </div>
           </div>
 </TeacherSection>

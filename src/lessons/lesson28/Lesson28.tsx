@@ -1,3 +1,5 @@
+import TeacherSourceBrowser from "../../shared/TeacherSourceBrowser";
+import { mixedText } from "../../shared/lessonKit";
 import { TeachingDetails } from "../../shared/TeacherWorkspace";
 import TeacherWorkspace, { TeacherSection } from "../../shared/TeacherWorkspace";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
@@ -3257,14 +3259,7 @@ export function TeacherArea28({ unlocked, onUnlockChange, onGoSolutions }: { unl
 <div className="rounded-3xl border-2 border-slate-100 bg-white p-4">
         <div className="font-head text-base font-bold text-slate-900"><Rich text="📝 حلول تمارين المصدر بالتفصيل (للمعلم)" /></div>
         <div className="mt-2 space-y-2">
-          {TEACHER_28_SOLUTIONS.map((s) => (
-            <div key={s.head} className="rounded-2xl border-2 border-slate-50 bg-slate-50/60 p-3">
-              <div className="text-sm font-black text-emerald-800"><Rich text={s.head} /></div>
-              <ul className="mt-1 space-y-0.5 text-xs font-bold text-slate-600">
-                {s.lines.map((l) => <li key={l}><Rich text={`• ${l}`} /></li>)}
-              </ul>
-            </div>
-          ))}
+          <TeacherSourceBrowser lesson={28} groups={TEACHER_28_SOLUTIONS} />
         </div>
       </div>
 </TeacherSection>
@@ -3479,10 +3474,7 @@ export default function Lesson28({ onExit }: { onExit: () => void }) {
               {area === "lesson" && (
                 <>
                   <div className="mt-1.5 truncate text-sm font-bold text-slate-500">
-                    <Rich text={`${slide.section} · `} />
-                    <span className="text-slate-800">
-                      <Rich text={slideTitle(slide)} />
-                    </span>
+                    <Rich text={`${slide.section} · ${slideTitle(slide)}`} />
                   </div>
                   <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-indigo-100/70">
                     <div

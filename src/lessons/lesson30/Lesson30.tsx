@@ -1,3 +1,5 @@
+import TeacherSourceBrowser from "../../shared/TeacherSourceBrowser";
+import { mixedText } from "../../shared/lessonKit";
 import { TeachingDetails } from "../../shared/TeacherWorkspace";
 import TeacherWorkspace, { TeacherSection } from "../../shared/TeacherWorkspace";
 // ============================================================
@@ -218,7 +220,7 @@ function TimeTrack({ segs }: { segs: { lens: Lens30; label: string; wide?: boole
       <div className="flex h-9 gap-1">
         {segs.map((s, i) => (
           <div key={i} className={`relative flex ${s.wide ? "flex-[2]" : "flex-1"} items-center justify-center overflow-hidden rounded-lg ${LENS_META[s.lens].bar}`}>
-            <span className="px-1 text-center text-[10px] font-black leading-tight text-white">{s.label}</span>
+            <span className="px-1 text-center text-[10px] font-black leading-tight text-white">{mixedText(s.label)}</span>
           </div>
         ))}
       </div>
@@ -2482,16 +2484,7 @@ export function TeacherArea30({ unlocked, onUnlockChange, onGoSolutions }: { unl
 <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
             <h3 className="font-head text-lg font-black text-slate-800">✅ حلول أنشطة المصدر ({TEACHER_30_SOLUTIONS.length})</h3>
             <div className="mt-3 space-y-2.5">
-              {TEACHER_30_SOLUTIONS.map((n, i) => (
-                <div key={i} className="rounded-2xl border-2 border-emerald-100 bg-emerald-50/40 p-3">
-                  <p className="text-sm font-black text-emerald-900"><Rich text={n.head} /></p>
-                  <ul className="mt-1.5 space-y-1">
-                    {n.lines.map((l, j) => (
-                      <li key={j} className="flex items-start gap-2 text-sm font-semibold leading-relaxed text-slate-700"><span className="text-emerald-400">✓</span><Rich text={l} /></li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+              <TeacherSourceBrowser lesson={30} groups={TEACHER_30_SOLUTIONS} />
             </div>
           </div>
 </TeacherSection>

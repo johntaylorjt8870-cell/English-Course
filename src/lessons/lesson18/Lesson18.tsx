@@ -1,3 +1,5 @@
+import { En as SharedEn } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
 import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -64,11 +66,7 @@ import { LatinRuns } from "../../shared/bidi";
 // ============================================================
 
 function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
-      {children}
-    </span>
-  );
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
@@ -217,14 +215,7 @@ function LabPanel({
     >
       <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-teal-100 bg-white px-3 py-2">
         <span className="text-xl">{emoji}</span>
-        <span dir="ltr" className="font-en text-[11px] font-black uppercase tracking-[0.18em] text-teal-600">
-          {label}
-        </span>
-        {ar && (
-          <span className="text-sm font-bold text-slate-600">
-            <Rich text={ar} />
-          </span>
-        )}
+        <EnAr en={label} ar={ar} enClassName="font-en text-[11px] font-black uppercase tracking-[0.18em] text-teal-600" arClassName="text-sm font-bold text-slate-600" />
       </div>
       {children}
     </div>
@@ -278,12 +269,11 @@ function SingPluralBoard() {
             <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row mt-3 grid gap-1.5">
               {p.data.words.map((w) => (
                 <div key={w.en} className="flex items-center justify-between rounded-xl bg-white px-3 py-2 shadow-sm">
-                  <span dir="ltr" className={`font-en rounded-lg px-2 py-0.5 text-base font-black ${p.chip}`}>
+                  <EnAr en={<span dir="ltr" className={`font-en rounded-lg px-2 py-0.5 text-base font-black ${p.chip}`}>
                     {w.en}
-                  </span>
-                  <span dir="rtl" className="text-sm font-bold text-slate-500">
+                  </span>} ar={<span dir="rtl" className="text-sm font-bold text-slate-500">
                     <LatinRuns text={w.ar ?? ""} />
-                  </span>
+                  </span>} />
                 </div>
               ))}
             </div>
@@ -1160,10 +1150,9 @@ function RuleDetector() {
               }`}
             >
               <div className="flex flex-wrap items-center gap-2">
-                <span dir="ltr" className="font-en rounded-xl bg-teal-600 px-3 py-1.5 text-lg font-black text-white">
+                <EnAr en={<span dir="ltr" className="font-en rounded-xl bg-teal-600 px-3 py-1.5 text-lg font-black text-white">
                   {item.word}
-                </span>
-                <span className="text-sm font-bold text-slate-500">ما قاعدة جمعها؟</span>
+                </span>} ar={<span className="text-sm font-bold text-slate-500">ما قاعدة جمعها؟</span>} />
               </div>
               <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row mt-2 flex flex-wrap gap-1.5">
                 {RULE_DETECT_OPTIONS_18.map((opt) => {
@@ -1459,7 +1448,7 @@ function PresentSimpleBoard() {
           <div key={side.key} className={`rounded-3xl border-2 p-3 ${mode === side.key ? "border-teal-300 bg-white shadow" : "border-slate-200 bg-white/70"}`}>
             <div className="flex items-center justify-center gap-2">
               <span dir="ltr" className={`font-en rounded-lg px-2.5 py-1 text-sm font-black ${mode === side.key ? "bg-teal-600 text-white" : "bg-slate-100 text-slate-500"}`}>
-                {side.data.label}
+                {mixedText(side.data.label)}
               </span>
               <En className="text-base font-black text-slate-800">{side.data.sentence}</En>
             </div>
@@ -1552,7 +1541,7 @@ function ErrorsBoard() {
               <div className="flex items-start gap-3">
                 <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-rose-600 text-sm font-bold text-white">{item.n}</span>
                 <div className="min-w-0 flex-1">
-                  <div className="text-xs font-bold text-slate-400">{item.label}</div>
+                  <div className="text-xs font-bold text-slate-400">{mixedText(item.label)}</div>
                   <div dir="ltr">
                     <En className="block text-base font-extrabold text-rose-700 line-through decoration-rose-300">{item.wrong}</En>
                   </div>
@@ -2829,7 +2818,7 @@ function Rail({
                   >
                     {index + 1}
                   </span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[index])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[index]))}</span>
                   <span className="mr-auto text-base">{SLIDES[index].mascot}</span>
                 </button>
               );
@@ -2898,10 +2887,7 @@ export default function Lesson18({ onExit }: { onExit: () => void }) {
             </button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500">
-                <Rich text={`${slide.section} · `} />
-                <span className="text-slate-800">
-                  <Rich text={slideTitle(slide)} />
-                </span>
+                <Rich text={`${slide.section} · ${slideTitle(slide)}`} />
               </div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
                 <div

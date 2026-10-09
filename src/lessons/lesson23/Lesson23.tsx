@@ -1,3 +1,5 @@
+import { En as SharedEn } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
 import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
@@ -356,12 +358,8 @@ import { LatinRuns } from "../../shared/bidi";
 // كل وحدة إنجليزية معزولة LTR.
 // ============================================================
 
-function En({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
-      {children}
-    </span>
-  );
+function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
@@ -461,8 +459,7 @@ function Frame({
           data-source-section={sourceHeading}
           className="mt-3 flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-500"
         >
-          <span className="rounded-md bg-white px-1.5 py-0.5 text-indigo-700">SOURCE SECTION</span>
-          <Rich text={sourceHeading} />
+          <EnAr en="SOURCE SECTION" ar={sourceHeading} enClassName="rounded-md bg-white px-1.5 py-0.5 text-indigo-700" />
         </div>
       )}
       <h2 className="font-head mt-3 max-w-[90%] text-2xl font-bold leading-snug text-slate-900 md:text-[2.05rem]">
@@ -506,8 +503,7 @@ function LabPanel({
     >
       <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-indigo-100 bg-white px-3 py-2">
         <span className="text-xl">{emoji}</span>
-        <En className="text-[11px] font-black uppercase tracking-[0.18em] text-indigo-700">{label}</En>
-        {ar && <Rich text={ar} className="text-sm font-bold text-slate-600" />}
+        <EnAr en={label} ar={ar} enClassName="text-[11px] font-black uppercase tracking-[0.18em] text-indigo-700" arClassName="text-sm font-bold text-slate-600" />
       </div>
       {children}
     </div>
@@ -720,8 +716,7 @@ function CountingMachine() {
         <En className="mt-1 block text-center text-lg font-black text-indigo-900">{COUNTABLE_APPLE_EQ}</En>
       </div>
       <div className="mt-2 flex flex-wrap items-center justify-center gap-2 rounded-2xl bg-white p-2.5">
-        <En className="rounded-xl bg-emerald-700 px-3 py-1.5 text-base font-black text-white">{COUNTABLE_MEANING.en}</En>
-        <span className="text-sm font-bold text-slate-600">= <LatinRuns text={COUNTABLE_MEANING.ar ?? ""} /></span>
+        <EnAr en={<En className="rounded-xl bg-emerald-700 px-3 py-1.5 text-base font-black text-white">{COUNTABLE_MEANING.en}</En>} ar={<span className="text-sm font-bold text-slate-600">= <LatinRuns text={COUNTABLE_MEANING.ar ?? ""} /></span>} />
       </div>
     </LabPanel>
   );
@@ -736,8 +731,7 @@ function CountableExamples() {
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-5">
         {COUNTABLE_EXAMPLES.map((row) => (
           <div key={row.en} className="flex items-center justify-center gap-2 rounded-2xl border-2 border-white bg-white p-2.5">
-            <En className="rounded-lg bg-indigo-700 px-2.5 py-1 text-base font-black text-white">{row.en}</En>
-            <Rich text={`= ${row.ar}`} className="text-sm font-bold text-slate-600" />
+            <EnAr en={<En className="rounded-lg bg-indigo-700 px-2.5 py-1 text-base font-black text-white">{row.en}</En>} ar={<Rich text={`= ${row.ar}`} className="text-sm font-bold text-slate-600" />} />
           </div>
         ))}
       </div>
@@ -941,8 +935,7 @@ function UncountableIntro() {
       </div>
       <En className="mt-1 block text-center text-2xl font-black text-violet-800">{SURPRISE_LABEL}</En>
       <div className="mt-2 flex flex-wrap items-center justify-center gap-2 rounded-2xl bg-white p-2.5">
-        <En className="rounded-xl bg-violet-700 px-3 py-1.5 text-base font-black text-white">{UNCOUNTABLE_MEANING.en}</En>
-        <span className="text-sm font-bold text-slate-600">= <LatinRuns text={UNCOUNTABLE_MEANING.ar ?? ""} /></span>
+        <EnAr en={<En className="rounded-xl bg-violet-700 px-3 py-1.5 text-base font-black text-white">{UNCOUNTABLE_MEANING.en}</En>} ar={<span className="text-sm font-bold text-slate-600">= <LatinRuns text={UNCOUNTABLE_MEANING.ar ?? ""} /></span>} />
       </div>
       <div className="mt-2 rounded-2xl border-2 border-white bg-white p-3 text-center text-base font-semibold leading-relaxed text-slate-700">
         <Rich text={UNCOUNTABLE_DEF} />
@@ -953,8 +946,7 @@ function UncountableIntro() {
       <div className="mt-1.5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
         {UNCOUNTABLE_EXAMPLES.map((row) => (
           <div key={row.en} className="flex items-center justify-center gap-2 rounded-2xl border-2 border-white bg-white p-2.5">
-            <En className="rounded-lg bg-violet-700 px-2.5 py-1 text-base font-black text-white">{row.en}</En>
-            <Rich text={`= ${row.ar}`} className="text-sm font-bold text-slate-600" />
+            <EnAr en={<En className="rounded-lg bg-violet-700 px-2.5 py-1 text-base font-black text-white">{row.en}</En>} ar={<Rich text={`= ${row.ar}`} className="text-sm font-bold text-slate-600" />} />
           </div>
         ))}
       </div>
@@ -1385,8 +1377,7 @@ function ImportantWords() {
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
         {IMPORTANT_WORDS.map((row) => (
           <div key={row.en} className="flex items-center justify-center gap-2 rounded-2xl border-2 border-white bg-white p-2.5">
-            <En className="rounded-lg bg-violet-700 px-2.5 py-1 text-base font-black text-white">{row.en}</En>
-            <Rich text={`= ${row.ar}`} className="text-sm font-bold text-slate-600" />
+            <EnAr en={<En className="rounded-lg bg-violet-700 px-2.5 py-1 text-base font-black text-white">{row.en}</En>} ar={<Rich text={`= ${row.ar}`} className="text-sm font-bold text-slate-600" />} />
           </div>
         ))}
       </div>
@@ -1556,10 +1547,9 @@ function ThereBridge() {
         {THERE_CASES.map((row) => (
           <div key={row.en} className="rounded-2xl border-2 border-white bg-white p-3">
             <div className="flex flex-wrap items-center gap-2">
-              <En className="rounded-lg bg-indigo-100 px-2.5 py-1 text-xs font-black text-indigo-800">{row.label}</En>
-              <span className="text-sm font-bold text-slate-500">
+              <EnAr en={<En className="rounded-lg bg-indigo-100 px-2.5 py-1 text-xs font-black text-indigo-800">{row.label}</En>} ar={<span className="text-sm font-bold text-slate-500">
                 <Rich text={`مع ${row.label === "Countable Singular" ? "المفرد المعدود" : row.label === "Countable Plural" ? "الجمع المعدود" : "غير المعدود"}:`} />
-              </span>
+              </span>} />
             </div>
             <En className="mt-1.5 block text-left text-lg font-black text-slate-900">{row.en}</En>
             <div dir="rtl" className="mt-1 text-sm font-bold text-slate-500">
@@ -3606,7 +3596,7 @@ function GoldenSummary() {
           <div className="mt-1 grid gap-1">
             {GOLDEN_23_COUNTABLE_FORMS.map((form) => (
               <div key={form.label} className="flex items-center justify-center gap-2 rounded-xl bg-white p-2">
-                <span className="text-sm font-bold text-slate-600">{form.label}</span>
+                <span className="text-sm font-bold text-slate-600">{mixedText(form.label)}</span>
                 <En className="text-base font-black text-emerald-800">{form.en}</En>
               </div>
             ))}
@@ -4012,7 +4002,7 @@ function Rail({
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/25" : "bg-slate-100"}`}>
                     {i + 1}
                   </span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[i])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[i]))}</span>
                   <span className="mr-auto text-base">{SLIDES[i].mascot}</span>
                 </button>
               );
@@ -4078,10 +4068,7 @@ export default function Lesson23({ onExit }: { onExit: () => void }) {
             </button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500">
-                <Rich text={`${slide.section} · `} />
-                <span className="text-slate-800">
-                  <Rich text={slideTitle(slide)} />
-                </span>
+                <Rich text={`${slide.section} · ${slideTitle(slide)}`} />
               </div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
                 <div

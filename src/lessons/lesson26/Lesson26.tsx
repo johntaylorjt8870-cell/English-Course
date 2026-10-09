@@ -1,3 +1,5 @@
+import { En as SharedEn } from "../../shared/lessonKit";
+import { EnAr } from "../../shared/bidi";
 import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
@@ -88,12 +90,8 @@ function kindOf(text: string): Kind {
 
 // ---------------- Helpers ----------------
 
-function En({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
-      {children}
-    </span>
-  );
+function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <SharedEn className={`${className}`}>{children}</SharedEn>;
 }
 
 function Rich({ text, className = "" }: { text: string; className?: string }) {
@@ -153,8 +151,7 @@ function Frame({
           data-source-section={sourceHeading}
           className="mt-3 flex flex-wrap items-center gap-1.5 rounded-xl border border-teal-100 bg-teal-50/70 px-3 py-2 text-xs font-bold text-teal-900"
         >
-          <span className="rounded-md bg-white px-1.5 py-0.5 text-teal-700">SOURCE SECTION</span>
-          <Rich text={sourceHeading} />
+          <EnAr en="SOURCE SECTION" ar={sourceHeading} enClassName="rounded-md bg-white px-1.5 py-0.5 text-teal-700" />
         </div>
       )}
       <h2 className="font-head mt-3 max-w-[92%] text-2xl font-bold leading-snug text-slate-900 md:text-[2rem]">{mixedText(title)}</h2>
@@ -196,8 +193,7 @@ function LabPanel({
     >
       <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-teal-100 bg-white px-3 py-2">
         <span className="text-xl">{emoji}</span>
-        <En className="text-[11px] font-black uppercase tracking-[0.16em] text-teal-700">{label}</En>
-        {ar && <Rich text={ar} className="text-sm font-bold text-slate-600" />}
+        <EnAr en={label} ar={ar} enClassName="text-[11px] font-black uppercase tracking-[0.16em] text-teal-700" arClassName="text-sm font-bold text-slate-600" />
       </div>
       {children}
     </div>
@@ -1362,10 +1358,9 @@ function EmmaAnalysisLab({ lines }: { lines: string[] }) {
               }`}
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <En className="text-sm font-black text-slate-900">{p.verb}</En>
-                <span className={`rounded-lg px-2 py-0.5 text-[10px] font-black text-white ${cont ? "bg-teal-600" : "bg-orange-500"}`}>
+                <EnAr en={<En className="text-sm font-black text-slate-900">{p.verb}</En>} ar={<span className={`rounded-lg px-2 py-0.5 text-[10px] font-black text-white ${cont ? "bg-teal-600" : "bg-orange-500"}`}>
                   <Rich text={cont ? "🎥 خلفية" : "📸 حدث"} />
-                </span>
+                </span>} />
               </div>
               <div className="mt-1 text-xs font-bold text-slate-600">
                 <Rich text={p.role} />
@@ -3681,7 +3676,7 @@ function Rail({
                   <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/25" : "bg-slate-100"}`}>
                     {i + 1}
                   </span>
-                  <span className="truncate font-semibold">{slideTitle(SLIDES[i])}</span>
+                  <span className="truncate font-semibold">{mixedText(slideTitle(SLIDES[i]))}</span>
                   <span className="mr-auto text-base">{SLIDES[i].mascot}</span>
                 </button>
               );
@@ -3747,10 +3742,7 @@ export default function Lesson26({ onExit }: { onExit: () => void }) {
             </button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500">
-                <Rich text={`${slide.section} · `} />
-                <span className="text-slate-800">
-                  <Rich text={slideTitle(slide)} />
-                </span>
+                <Rich text={`${slide.section} · ${slideTitle(slide)}`} />
               </div>
               <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-teal-100/70">
                 <div

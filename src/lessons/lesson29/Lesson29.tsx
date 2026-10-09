@@ -1,3 +1,4 @@
+import { mixedText } from "../../shared/lessonKit";
 import { TeachingDetails } from "../../shared/TeacherWorkspace";
 import TeacherWorkspace, { TeacherSection } from "../../shared/TeacherWorkspace";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
@@ -198,7 +199,7 @@ function Track({ nodes, active }: { nodes: { label: string; en?: boolean; color?
               active === i ? "scale-105 border-teal-500 bg-teal-600 text-white shadow" : n.color ?? "border-slate-200 bg-slate-50 text-slate-700"
             }`}
           >
-            {n.label}
+            {mixedText(n.label)}
           </span>
         </div>
       ))}
@@ -2437,7 +2438,7 @@ function Rail({
               }}
               className={`rounded-xl px-2 py-2 text-xs font-bold transition ${area === a.id ? "bg-teal-600 text-white shadow" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}
             >
-              {a.label}
+              {mixedText(a.label)}
             </button>
           ))}
         </div>
@@ -2540,7 +2541,7 @@ export default function Lesson29({ onExit }: { onExit: () => void }) {
                 </>
               ) : (
                 <div className="truncate text-sm font-bold text-slate-500">
-                  الدرس 29 · <span className="text-slate-800">{AREAS.find((a) => a.id === area)?.label}</span>
+                  الدرس 29 · <span className="text-slate-800">{mixedText(AREAS.find((a) => a.id === area)?.label)}</span>
                 </div>
               )}
             </div>

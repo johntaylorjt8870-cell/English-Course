@@ -1,3 +1,4 @@
+import TeacherSourceBrowser from "../../shared/TeacherSourceBrowser";
 import { TeachingDetails } from "../../shared/TeacherWorkspace";
 import { mixedText } from "../../shared/lessonKit";
 import TeacherWorkspace, { TeacherSection } from "../../shared/TeacherWorkspace";
@@ -2840,16 +2841,7 @@ export function TeacherArea27({
 <div className="rounded-3xl border-2 border-slate-100 bg-white p-5 space-y-3">
         <h3 className="font-head text-lg font-black text-slate-900"><Rich text="Activity Solutions — حلول الأنشطة والتدريبات (10 أقسام)" /></h3>
         <div className="space-y-2">
-          {TEACHER_27_SOLUTIONS.map((sol, i) => (
-            <div key={i} className="rounded-2xl border border-slate-100 bg-slate-50 p-3 text-xs">
-              <div className="font-black text-slate-900"><Rich text={sol.head} /></div>
-              <div className="mt-1 space-y-0.5 text-slate-700">
-                {sol.lines.map((l, li) => (
-                  <div key={li}>• <Rich text={l} /></div>
-                ))}
-              </div>
-            </div>
-          ))}
+          <TeacherSourceBrowser lesson={27} groups={TEACHER_27_SOLUTIONS} />
         </div>
       </div>
 </TeacherSection>

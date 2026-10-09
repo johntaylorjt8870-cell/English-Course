@@ -12,7 +12,9 @@
     "audit:lesson-navigation": "node scripts/audit-lesson-navigation.mjs",
     "test:bidi-browser": "npm run build && node scripts/test-bidi-browser.mjs",
     "audit:assessments": "node scripts/interaction-test.mjs && node scripts/audit-final-test.mjs && node scripts/audit-assessment-browser.mjs",
-    "audit:browser": "npm run build && node scripts/test-bidi-browser.mjs && node scripts/audit-assessment-browser.mjs"
+    "audit:browser": "npm run build && node scripts/test-bidi-browser.mjs && node scripts/audit-assessment-browser.mjs",
+    "audit:activity-inventory": "node scripts/audit-activity-inventory.mjs",
+    "audit:teacher-source": "node scripts/audit-teacher-source.mjs"
   },
   "dependencies": {
     "clsx": "2.1.1",

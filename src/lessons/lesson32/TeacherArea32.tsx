@@ -1,3 +1,4 @@
+import TeacherSourceBrowser from "../../shared/TeacherSourceBrowser";
 import { Solutions32 } from "./TestArea32";
 import TeacherWorkspace, { TeacherSection } from "../../shared/TeacherWorkspace";
 // ============================================================
@@ -106,11 +107,7 @@ export default function TeacherArea32({ unlocked, onUnlockChange, onGoSolutions 
       <TeacherSection title="حلول تمارين المصدر" category="source">
 <Card title="🔑 حلول تمارين المصدر (مرجع المعلم)">
         <p className="text-xs font-bold text-slate-600"><Rich text="الإجابات المعتمدة هي إجابات المصدر. الأخطاء المتعمدة تُدرَّس كتصحيح، ولا تُغيَّر صيغها." /></p>
-        {TEACHER_32_SOLUTIONS.map((s, i) => (
-          <Sub key={i} head={s.head}>
-            <ul className="list-disc space-y-1 ps-5 text-sm font-semibold text-slate-700">{s.lines.map((l, j) => <li key={j} className="font-en"><LatinRuns text={l} /></li>)}</ul>
-          </Sub>
-        ))}
+        <TeacherSourceBrowser lesson={32} groups={TEACHER_32_SOLUTIONS} />
       </Card>
 </TeacherSection>
 

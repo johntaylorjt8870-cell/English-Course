@@ -1,3 +1,5 @@
+import { EnAr } from "../../shared/bidi";
+import { En as SharedEn } from "../../shared/lessonKit";
 import { mixedText } from "../../shared/lessonKit";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -28,8 +30,8 @@ function theme(i: number) {
 // عناصر مساعدة
 // ============================================================
 
-function En({ children }: { children: React.ReactNode }) {
-  return <span className="ltr font-en inline-block">{children}</span>;
+function En({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <SharedEn className={`inline-block ${className}`}>{children}</SharedEn>;
 }
 
 /** يعزل المقاطع الإنجليزية داخل النص العربي تلقائيًا — يمنع انعكاس الترتيب نهائيًا */
@@ -105,14 +107,14 @@ function Block({ b, t }: { b: ContentBlock; t: ReturnType<typeof theme> }) {
       return (
         <div className="flex items-center gap-3 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-4">
           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-emerald-500 text-lg text-white">✓</span>
-          <span className="ltr font-en text-xl font-semibold text-emerald-800">{b.text}</span>
+          <span className="text-xl font-semibold text-emerald-800"><Mixed text={b.text} /></span>
         </div>
       );
     case "wrong":
       return (
         <div className="flex items-center gap-3 rounded-2xl border-2 border-rose-200 bg-rose-50 p-4">
           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-rose-500 text-lg text-white">✕</span>
-          <span className="ltr font-en text-xl font-semibold text-rose-800">{b.text}</span>
+          <span className="text-xl font-semibold text-rose-800"><Mixed text={b.text} /></span>
         </div>
       );
     case "rule":
@@ -122,8 +124,7 @@ function Block({ b, t }: { b: ContentBlock; t: ReturnType<typeof theme> }) {
         <div className="flex items-center gap-4 rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50/70 p-4">
           <span className="text-3xl anim-wiggle">{b.emoji}</span>
           <span className="font-fun text-xl font-semibold text-slate-800">
-            {/* اسمح للنص أن يعرض أجزاء إنجليزية بشكل صحيح */}
-            {b.text}
+            <Mixed text={b.text} />
           </span>
         </div>
       );
@@ -132,11 +133,7 @@ function Block({ b, t }: { b: ContentBlock; t: ReturnType<typeof theme> }) {
         <div className="flex flex-wrap gap-3">
           {b.pairs.map((p, i) => (
             <div key={i} className="flex items-center gap-2 rounded-full border-2 border-slate-200 bg-white px-4 py-2 shadow-sm">
-              <span className="ltr font-en font-bold text-slate-800">{p.from}</span>
-              <span className={`text-lg ${t.txt}`}>←</span>
-              <span className="font-semibold text-slate-600">
-                <Mixed text={p.to} />
-              </span>
+              <EnAr en={<><En className="font-bold text-slate-800">{p.from}</En><span className={`text-lg ${t.txt}`}>←</span></>} ar={p.to} arClassName="font-semibold text-slate-600" />
             </div>
           ))}
         </div>
@@ -264,9 +261,7 @@ function VerbTable({ idx }: { idx: number }) {
     <div className="relative">
       <Stickers seed={idx} />
       <Badge emoji="🧠" badge="الأهم" t={t} />
-      <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800">
-        <En>Verb to be</En> مع الضمائر
-      </h2>
+      <h2 className="font-fun mt-5 text-4xl font-extrabold text-slate-800"><LatinRuns text={"[[Verb to be]] مع الضمائر"} marked /></h2>
       <p className="mt-2 text-xl text-slate-500">احفظ هذا الجدول جيدًا — كلمة واحدة لكل مجموعة</p>
       <div className="mt-6 grid gap-4 md:grid-cols-3">
         {groups.map((g, i) => (
@@ -278,8 +273,7 @@ function VerbTable({ idx }: { idx: number }) {
               {g.items.map((it) => (
                 <div key={it.en} className="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-2">
                   <span className="text-2xl">{it.emoji}</span>
-                  <span className="ltr font-en text-xl font-bold text-slate-800">{it.en}</span>
-                  <span className="mr-auto text-slate-500"><LatinRuns text={it.ar ?? ""} /></span>
+                  <EnAr en={<span className="ltr font-en text-xl font-bold text-slate-800">{it.en}</span>} ar={<span className="mr-auto text-slate-500"><LatinRuns text={it.ar ?? ""} /></span>} />
                 </div>
               ))}
             </div>
@@ -288,9 +282,7 @@ function VerbTable({ idx }: { idx: number }) {
       </div>
       <div className="mt-5 flex items-center gap-4 rounded-2xl border-2 border-dashed border-indigo-300 bg-indigo-50/60 p-4">
         <span className="text-3xl anim-wiggle">🎵</span>
-        <span className="font-fun text-xl font-semibold text-slate-800">
-          كرّرها كأنها نشيد: <En>I am · You are · He is · She is · It is · We are · They are</En>
-        </span>
+        <span className="font-fun text-xl font-semibold text-slate-800"><LatinRuns text={"كرّرها كأنها نشيد: [[I am · You are · He is · She is · It is · We are · They are]]"} marked /></span>
       </div>
     </div>
   );
@@ -515,9 +507,7 @@ function Summary() {
 
       <div className="mt-5 flex items-center gap-4 rounded-2xl bg-gradient-to-l from-indigo-500 to-violet-600 p-5 text-white shadow-lg">
         <span className="text-4xl anim-bob">🏆</span>
-        <span className="font-fun text-2xl font-bold">
-          <En>Verb to be</En> ليس ثانويًا — إنه أساس تكوين الجملة الإنجليزية. أحسنت!
-        </span>
+        <span className="font-fun text-2xl font-bold"><LatinRuns text={"[[Verb to be]] ليس ثانويًا — إنه أساس تكوين الجملة الإنجليزية. أحسنت!"} marked /></span>
       </div>
     </div>
   );
@@ -660,7 +650,7 @@ export default function Lesson2({ onExit }: { onExit: () => void }) {
           <div className="font-fun truncate text-lg font-extrabold text-slate-800 md:text-xl">
             الدرس 2 · الضمائر و <span className="ltr font-en text-indigo-600">Verb to be</span>
           </div>
-          <div className="truncate text-xs text-slate-400">{slideTitle(SLIDES[i])}</div>
+          <div className="truncate text-xs text-slate-400">{mixedText(slideTitle(SLIDES[i]))}</div>
         </div>
         <button
           onClick={() => setMenu(true)}
@@ -748,7 +738,7 @@ export default function Lesson2({ onExit }: { onExit: () => void }) {
                   >
                     <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-slate-100 text-2xl">{slideEmoji(s)}</span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate font-bold text-slate-800">{slideTitle(s)}</span>
+                      <span className="block truncate font-bold text-slate-800">{mixedText(slideTitle(s))}</span>
                       <span className="text-xs text-slate-400">الشريحة {di + 1}</span>
                     </span>
                     {di === i && <span className="text-indigo-500">●</span>}

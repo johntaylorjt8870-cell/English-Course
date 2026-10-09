@@ -83,6 +83,13 @@ Role colors in sentence dissection: subject = sky, `had` = violet,
   true/false, multi-select, ordering, matching). Answers stay neutral —
   no correctness styling or feedback — until the single Submit action;
   then score, per-question review, and reset are available.
+- The lesson ends with the **Final Test** layer: 15 platform-authored
+  questions (`finalTestBank.ts` → `LESSON_29`) spanning all seven types.
+  While answering there is no correctness styling, no score, and no
+  explanation; the single «تصحيح الاختبار» action reveals them, and reset
+  clears every answer. Its teaching-format answer key (correct answer · why ·
+  lesson concept · common trap) is in the Teacher Area. The Final Test is a
+  layer at the end of the lesson, separate from the 20-question Test Area.
 - The Solutions Area (`TEST_29_SOLUTIONS`, one unique explanation per
   question) unlocks after finishing the test or via teacher access.
 - The Teacher Area remains locked behind `somer173`.

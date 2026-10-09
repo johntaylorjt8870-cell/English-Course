@@ -66,7 +66,6 @@ const mixedCases = [
   ["for 3 years (مدة)", "LatinRuns"],
   ["since 2020 (وقت محدد ومنتهٍ)", "LatinRuns"],
   ["V1 · V2 · V3 — الأفعال الثلاثة", "LatinRuns"],
-  ["play → plays (بعد y)", "LatinRuns"],
   ["(already) = بالفعل", "LatinRuns"],
   ["eat / ate / eaten — أكل", "LatinRuns"],
   ["Past Simple — الماضي البسيط", "LatinRuns"],
@@ -80,6 +79,41 @@ for (const [text] of mixedCases) {
   const { pairs, viol } = inspect(html);
   ok(pairs >= 1, `pair detected: "${text}"`);
   ok(viol.length === 0, `no visual violation: "${text}"`);
+}
+
+// ---- parenthetical clause: «English (عربي …)» stays in the RTL flow ----
+// A "(" joins English to its Arabic gloss only when the gloss fills the paren
+// («for 3 years (مدة)» above). When the paren opens a whole Arabic clause —
+// «play → plays (بعد y)», «when / while (الدرسان 25 و26)» — gluing the first
+// Arabic word to the English tears the paren apart: the "(" ends up on the
+// far edge of the LTR isolate, next to the wrong words, and the rest of the
+// clause («25 و26)», « y)») is stranded outside it. Both parens must stay out
+// of the isolates so the browser mirrors them in place and the clause reads in
+// RTL order: English → ( → عربي … → ).
+const parenClauseCases = [
+  "play → plays (بعد y)",
+  "الفرق بينهما + when / while (الدرسان 25 و26).",
+  "حدث ماضٍ واحد: Yesterday, I visited… (بلا had).",
+];
+const enRunsOf = (html) => [...html.matchAll(/<span dir="ltr" class="[^"]*">([^<]*)<\/span>/g)].map((x) => x[1]);
+for (const text of parenClauseCases) {
+  const html = ssr(h(LatinRuns, { text }));
+  const { viol } = inspect(html);
+  const runs = enRunsOf(html).filter((r) => /[A-Za-z]/.test(r));
+  ok(viol.length === 0, `parenthetical clause reads in order: "${text}"`);
+  ok(runs.length > 0 && runs.every((r) => !/[()]/.test(r)), `parens stay outside the LTR isolates: "${text}"`);
+}
+// Controls: the paren's on-screen seat is what the fix is about. Swallowed by
+// the isolate, "(" is parked at the isolate's far edge — visually after the
+// whole English sentence, next to the Arabic label it does not belong to.
+// Left in the RTL flow it sits between the sentence and its own content.
+{
+  const visualOf = (html) => analyzeHtml(line(html)).map((r) => r.visual).join("");
+  const raw = `<span dir="ltr" class="font-en">: Yesterday, I visited… (</span>بلا<span dir="ltr" class="font-en"> had).</span>`;
+  const bad = visualOf(raw);
+  ok(bad.indexOf("(") > bad.indexOf("Yesterday"), `negative control flagged (paren swallowed by the isolate): "(" lands after the sentence — ${JSON.stringify(bad)}`);
+  const good = visualOf(ssr(h(LatinRuns, { text: "حدث ماضٍ واحد: Yesterday, I visited… (بلا had)." })));
+  ok(good.indexOf("(") < good.indexOf("Yesterday") && good.indexOf("(") > good.indexOf("had"), `positive control: "(" stays beside its own content — ${JSON.stringify(good)}`);
 }
 
 // ---- positive: EnAr English + Arabic gloss with explicit separator ----
@@ -97,6 +131,39 @@ for (const c of enArCases) {
   const arAt = html.indexOf(c.ar);
   ok(group, `EnAr renders one LTR group: "${c.en}"`);
   ok(enAt >= 0 && arAt > enAt, `EnAr English precedes Arabic: "${c.en} ${c.sep} ${c.ar}"`);
+}
+
+// ---- positive: «English A أم English B؟» must keep the written order ----
+// The alternatives oracle (scripts/lib/bidi-sim.mjs) flags a reversed pair, so
+// these cases fail if the group is split into two isolates again.
+const altCases = [
+  "IQ200 — had danced أم was dancing؟",
+  "المقارنة الأهم — Lina left أم had left؟",
+  "تدريب 3 — Past Simple أم Past Perfect؟",
+  "هل أستخدم Present Simple أم Present Continuous؟",
+  "hadn't + V3 أو had not + V3 — لا did أبدًا.",
+  "ثمانية أزواج: Present Perfect أم Past Simple — المعنى يحسم.",
+  "before أو after",
+];
+for (const text of altCases) {
+  const html = ssr(h(LatinRuns, { text }));
+  const { viol } = inspect(html);
+  ok(viol.length === 0, `alternatives order kept: "${text}"`);
+}
+{
+  const html = ssr(h(LatinRuns, { text: "IQ200 — had danced أم was dancing؟" }));
+  const group = /^<span dir="ltr" class="ltr-pair[^"]*">/.test(html);
+  const firstAt = html.indexOf("IQ200 — had danced");
+  const connectorAt = html.indexOf("أم");
+  const secondAt = html.indexOf("was dancing");
+  ok(group, "alternatives render as one LTR group");
+  ok(firstAt >= 0 && connectorAt > firstAt && secondAt > connectorAt, "alternatives keep A ← أم ← B order in the markup");
+}
+// Negative control: the old split rendering (two isolates) must be flagged.
+{
+  const raw = `<span dir="ltr" class="font-en">IQ200 — had danced</span> أم <span dir="ltr" class="font-en">was dancing</span>؟`;
+  const { viol } = inspect(raw);
+  ok(viol.length >= 1, "negative control flagged (split alternatives): \"IQ200 — had danced أم was dancing؟\"");
 }
 
 // ---- isolation: English is inside an LTR group, and no Unicode controls are injected into data ----

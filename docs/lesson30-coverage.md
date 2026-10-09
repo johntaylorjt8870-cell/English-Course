@@ -32,6 +32,7 @@ isolation. Platform-added explanations are always tagged
 | Signature interactive experiences | **10** (see below) |
 | In-lesson practice | **Immediate feedback + why everywhere** — no solve-all-then-check in the student area; gated source summaries appear only after completing each interaction |
 | Test Area questions | **20** newly authored (`TEST_30`, numbered 1–20): 9 single + 3 tf + 2 multi + 2 order + 2 match + 2 spot — real tap/spot UI, neutral until submit |
+| Final Test (end of lesson) | **15** platform-authored questions (`finalTestBank.ts` → `LESSON_30`) spanning all seven types — no correctness, score, or explanation while answering; the single «تصحيح الاختبار» action reveals score + review + explanations, with a full reset. Separate from the 20-question Test Area; answer key lives in the Teacher Area |
 | Test solutions | **20** explanatory solutions (answer + why + trap), gated until test submit or teacher unlock |
 | Teacher area | `somer173`-gated: overview (6 objectives + 4 prerequisites + 3 core briefs) + 9 teaching notes + 9 activity solutions + 2 rubrics + 8 common mistakes + solutions entry |
 | Intentional source errors preserved verbatim | **6** (`INTENTIONALLY_WRONG_30`, ㉜ wrong→right pairs) |

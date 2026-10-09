@@ -41,6 +41,8 @@ import {
   type RoleStyle,
   type FrameAccent,
 } from "../../shared/lessonKit";
+import FinalTest, { FinalTestAnswerKey } from "../../shared/finalTest";
+import { FINAL_TESTS } from "../../shared/finalTestBank";
 
 // ============================================================
 // ⏳ الدرس 29 — Past Perfect Continuous — الماضي التام المستمر
@@ -2321,6 +2323,10 @@ function Teacher({ unlocked, onUnlock, onGoSolutions }: { unlocked: boolean; onU
   }
   return (
     <div data-area="lesson29-teacher">
+      {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
+      <div className="mb-4">
+        <FinalTestAnswerKey lesson={29} questions={FINAL_TESTS[29]} accent="bg-teal-600" />
+      </div>
       <Frame mascot="👨‍🏫" badge="Teacher Area" title="منطقة المعلم — Past Perfect Continuous" lead="نظرة عامة، أهداف المصدر، وملاحظات تدريس حاسمة." accent={ACCENT29}>
         <div className="grid gap-2">
           {TEACHER_29_OVERVIEW.map((x, i) => (
@@ -2545,6 +2551,17 @@ export default function Lesson29({ onExit }: { onExit: () => void }) {
             <div data-area="student-lesson" className="mx-auto max-w-4xl" hidden={area !== "lesson"}>
               <div key={index} className="pop">
                 <SlideView slide={slide} onExit={onExit} onGoTest={() => setArea("test")} />
+                {/* 🏁 الاختبار النهائي — طبقة نهاية الدرس (تظهر مع الخطوة الأخيرة فقط) */}
+                {index === total - 1 && (
+                  <div className="mt-4">
+                    <FinalTest
+                      lesson={29}
+                      questions={FINAL_TESTS[29]}
+                      accent="bg-teal-600"
+                      onGoTeacher={() => setArea("teacher")}
+                    />
+                  </div>
+                )}
               </div>
             </div>
             <div className="mx-auto max-w-4xl" hidden={area !== "test"}>

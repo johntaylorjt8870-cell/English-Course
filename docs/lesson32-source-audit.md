@@ -75,5 +75,6 @@ No source line was found to be unreadable. No source content was invented.
 ## 7. Source-to-lesson mapping strategy
 
 - One native step per ledger unit (40 steps, one-to-one).
-- Source exercises are gated: their «الحلول» lines appear only after the student's attempt (completion-gated reveal).
+- The student UI never reveals the literal source text: the `SourceReveal32` panel («نص المصدر الحرفي — اضغط للعرض») was removed and not replaced by any equivalent toggle/collapsible. Each step closes with a completion badge (`data-gate-done`), the verbatim units stay in `ledger32.ts`, and the teacher-only source index (`TeacherArea32.tsx`, `SOURCE_SECTIONS`) is preserved.
+- Exercise feedback and solutions still appear only after the student's attempt (completion-gated feedback — not a source-reveal control).
 - Platform explanations (analogies, hints, "why" feedback, mnemonic names such as *Activity Ribbon*) are always labelled **Platform Explanation**.

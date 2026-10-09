@@ -1,6 +1,8 @@
 // ============================================================
-// خطوات الدرس 32 — جسم كل خطوة (تفاعل → اكتشاف → شرح → مصدر → تدريب → إتقان)
-// كل خطوة تُغلق نص المصدر حتى تُتمّ التفاعل، والخطوات الشارحة تعرضه فورًا.
+// خطوات الدرس 32 — جسم كل خطوة (تفاعل → اكتشاف → شرح → تدريب → إتقان)
+// واجهة الطالب لا تكشف النص الحرفي للمصدر إطلاقًا: مكان المصدر يظهر كشارة
+// قسم مصدري فقط (data-source-section في الإطار)، والنص الحرفي يبقى في
+// سجل المصدر وسجل المعلم. تكتمل الخطوة بشارة إتمام تفاعل — بلا أي كشف.
 // ============================================================
 
 import { useState, type ReactNode } from "react";
@@ -14,19 +16,23 @@ import {
   ADAM_TEXT_S33, MAYA_S34, GOLDEN_S35, GEARS_S36, OBJECTIVES_32,
 } from "./data";
 import {
-  ACCENT32, FOCUS32, Lab32, Platform32, SourceReveal32, BlockBuilder32, FlipParts32, SortBuckets32,
+  ACCENT32, FOCUS32, Lab32, Platform32, BlockBuilder32, FlipParts32, SortBuckets32,
   SlotPick32, PerRow32, TapFix32, TypedFill32, EvidenceCases32, RibbonMaker32, ExploreGrid32,
   StativeGate32, ReferenceRail32, StillRunning32, Boss32, VerbTap32, GearMap32, ObjectivesChecklist32,
   type Row32,
 } from "./kit32";
 
 
-/** يعرض الإطار المصدري بعد إتمام التفاعل — ويُغلق بالتصميم حتى يُنجز الطالب المحاولة */
+/** شارة إتمام التفاعل — تأكيد حقيقي بلا أي كشف لنص المصدر */
 function Gate({ id, done, children }: { id: string; done: boolean; children?: ReactNode }) {
   return (
     <>
       {children}
-      <SourceReveal32 id={id} show={done} />
+      {done && (
+        <p data-gate-done={id} role="status" className="rounded-2xl border-2 border-emerald-200 bg-emerald-50 px-3.5 py-2 text-sm font-black text-emerald-900">
+          <Rich text="✓ أتممت هذا التفاعل — تابع الشرح والتدريب في نفس الخطوة." />
+        </p>
+      )}
     </>
   );
 }
@@ -46,7 +52,6 @@ function Cover() {
           ))}
         </div>
       </div>
-      <SourceReveal32 id="cover" show />
     </Lab32>
   );
 }
@@ -56,7 +61,6 @@ function Objectives() {
   return (
     <Lab32 emoji="🎯" label="OBJECTIVES" ar="علّم كل هدف بعد أن تتقنه" seq="objectives">
       <ObjectivesChecklist32 items={OBJECTIVES_32.map((o) => ({ n: o.n, text: o.text }))} />
-      <SourceReveal32 id="objectives" show alwaysOpen={false} />
     </Lab32>
   );
 }
@@ -506,7 +510,6 @@ function Summary() {
   return (
     <Lab32 emoji="📋" label="SUMMARY" ar="ملخص الدرس 32" seq="summary">
       <Platform32>{"ملخص المنصة: النتيجة ← Present Perfect · النشاط والمدة ← Present Perfect Continuous · for = مدة · since = نقطة بداية · الزمن يتحدد بزاوية النظر."}</Platform32>
-      <SourceReveal32 id="summary" show alwaysOpen />
     </Lab32>
   );
 }
@@ -521,7 +524,6 @@ function Closing({ onGoTest }: { onGoTest: () => void }) {
           🧪 <Rich text="ابدأ اختبار الدرس 32" />
         </button>
       </div>
-      <SourceReveal32 id="closing" show alwaysOpen />
     </Lab32>
   );
 }

@@ -24,6 +24,7 @@ No parallel competing architecture was introduced.
 | Ten required interactive experiences | **10** (see the map below) |
 | In-lesson exercises | **9** (`choose`, `firstEvent`, `errors`, `johnMary`, `sarahTom`, `daniel`, `boss`, `iqFinal`, `story`) |
 | Test Area questions | **20** newly authored (`TEST_28`, numbered 1–20): 10 single + 3 tf + 2 multi + 2 order + 1 match + 2 spot — not a copy of ㉚–㊴ |
+| Final Test (end of lesson) | **15** platform-authored questions (`finalTestBank.ts` → `LESSON_28`) spanning all seven types — no correctness, score, or explanation while answering; the single «تصحيح الاختبار» action reveals score + review + explanations, with a full reset. Separate from the 20-question Test Area; answer key lives in the Teacher Area |
 | Test solutions | **20** detailed solutions (`Solutions28`), gated until submit or teacher unlock |
 | Teacher area | `somer173`-gated: overview (theme, core skill, Lesson-27 link) + 10 objectives + 13 teaching notes + 8 activity solutions + story rubric + 7 common mistakes + solutions entry |
 | Intentional source errors preserved verbatim | **13** (`INTENTIONALLY_WRONG_28`) |

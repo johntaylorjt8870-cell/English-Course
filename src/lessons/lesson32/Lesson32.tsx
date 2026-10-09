@@ -16,6 +16,8 @@ import { ACCENT32, FOCUS32 } from "./kit32";
 import { StepBody32 } from "./Steps32";
 import TestArea32, { Solutions32 } from "./TestArea32";
 import TeacherArea32 from "./TeacherArea32";
+import FinalTest from "../../shared/finalTest";
+import { FINAL_TESTS } from "../../shared/finalTestBank";
 
 type Area32 = "lesson" | "test" | "solutions" | "teacher";
 const AREAS_32: { id: Area32; emoji: string; ar: string }[] = [
@@ -207,6 +209,17 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
                 section={slide.section}
                 onGoTest={() => setArea("test")}
               />
+              {/* 🏁 الاختبار النهائي — طبقة نهاية الدرس (تظهر مع الخطوة الأخيرة فقط) */}
+              {index === SLIDE_COUNT_32 - 1 && (
+                <div className="mt-4">
+                  <FinalTest
+                    lesson={32}
+                    questions={FINAL_TESTS[32]}
+                    accent="bg-emerald-700"
+                    onGoTeacher={() => setArea("teacher")}
+                  />
+                </div>
+              )}
               <div className="mt-4 flex items-center gap-2">
                 <button type="button" disabled={index === 0} onClick={() => setIndex((i) => Math.max(0, i - 1))}
                   className={`flex-1 rounded-2xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-black text-slate-700 transition enabled:hover:border-emerald-300 disabled:opacity-30 ${FOCUS32}`}>

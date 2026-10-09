@@ -6,10 +6,11 @@
 
 Native multi-step، على نمط الدروس 27–31، لا سجل مصدر خام:
 
-- **الدرس (Student Lesson):** 40 خطوة، كل خطوة = تفاعل → اكتشاف → شرح (Platform Explanation عند الحاجة) → نص المصدر الحرفي (يُكشف بعد إتمام التفاعل) → تدريب → إتقان.
+- **الدرس (Student Lesson):** 40 خطوة، كل خطوة = تفاعل → اكتشاف → شرح (Platform Explanation عند الحاجة) → تدريب → إتقان، وتُختَم بشارة إتمام التفاعل (`data-gate-done`). واجهة الطالب لا تكشف النص الحرفي للمصدر ولا يوجد فيها أي عنصر «اضغط للعرض»: مكان المصدر يُتتبَّع بشارة القسم المصدري (`data-source-section` في الإطار)، ويبقى النص الحرفي في سجل المصدر (`ledger32.ts`) وفهرس المعلم.
 - **منطقة الاختبار (Test Area):** 20 سؤالًا جديدًا (لا نسخ ولا إعادة صياغة)، محايدة قبل الإرسال، درجة بعد الإرسال، إعادة كاملة.
+- **الاختبار النهائي (Final Test):** 15 سؤالًا من تأليف المنصة (`finalTestBank.ts` → `LESSON_32`) في آخر خطوة من الدرس، بكل الأنواع السبعة. محايد تمامًا أثناء الإجابة — بلا صح/خطأ ولا درجة ولا شرح ولا تلميح — حتى إجراء «تصحيح الاختبار» الواحد، وبعده تظهر الدرجة والتصحيح والإجابات الصحيحة والشرح مع إعادة تعيين كاملة. طبقة نهاية الدرس، لا منطقة اختبار علوية، ولا تحلّ محل منطقة الاختبار (20 سؤالًا).
 - **حلول الاختبار (Test Solutions):** 20 حلًا مجمّعة كل 5، مقفلة قبل الإرسال.
-- **منطقة المعلم (Teacher Area):** كلمة مرور `somer173` (لا تُغيَّر)، ودعم تدريسي حقيقي: نظرة عامة، توزيع الحصة، ملاحظات، حلول تمارين المصدر، rubrics، الأخطاء الشائعة، الأخطاء المتعمدة (12)، دليل الاختبار، خطة المعالجة، فهرس المصدر الحرفي.
+- **منطقة المعلم (Teacher Area):** كلمة مرور `somer173` (لا تُغيَّر)، ودعم تدريسي حقيقي: نظرة عامة، توزيع الحصة، ملاحظات، حلول تمارين المصدر، rubrics، الأخطاء الشائعة، الأخطاء المتعمدة (12)، دليل الاختبار، خطة المعالجة، فهرس المصدر الحرفي، ومفتاح الاختبار النهائي (15 إجابة بصيغة تدريسية: الإجابة · السبب · المفهوم · الفخ الشائع).
 
 الهوية البصرية: زمرّدي/كهرماني (شريط النشاط)، مختلفة عن أزرق/تركوازي الدرس 31.
 
@@ -25,7 +26,7 @@ Native multi-step، على نمط الدروس 27–31، لا سجل مصدر خ
 
 | # | Ledger id | Step (section) | Verbatim source unit | Interaction / native mechanic |
 |---|---|---|---|---|
-| 1 | `cover` | الغلاف تتبّع الأثر المستمر _(🌿 البداية)_ | الدرس 32: Present Perfect Continuous — المضارع التام المستمر | Animated activity ribbon + key-word chips (static, source reveal open) |
+| 1 | `cover` | الغلاف تتبّع الأثر المستمر _(🌿 البداية)_ | الدرس 32: Present Perfect Continuous — المضارع التام المستمر | Animated activity ribbon + key-word chips (static) |
 | 2 | `objectives` | الأهداف أهداف الدرس _(🌿 البداية)_ | 🎯 أهداف الدرس | Objectives checklist (9 items, toggles) |
 | 3 | `s1` | ① التعريف ما هو Present Perfect Continuous؟ _(🧱 الصيغة والأساس)_ | 🧠 1. ما هو Present Perfect Continuous؟ | Block builder: tap tokens in order (have/has · been · V-ing) |
 | 4 | `s2` | ② الأجزاء لماذا have + been + ing؟ _(🧱 الصيغة والأساس)_ | 🔥 2. لماذا لدينا have + been + ing؟ | Flip cards: reveal each part's role |
@@ -69,7 +70,7 @@ Native multi-step، على نمط الدروس 27–31، لا سجل مصدر خ
 
 ## 3. جرد التفاعلات (Interaction inventory)
 
-- **17 مكوّنًا تفاعليًا قابلًا لإعادة الاستخدام** في `kit32.tsx`: BlockBuilder32، FlipParts32، SortBuckets32، SlotPick32، PerRow32، TapFix32، TypedFill32، EvidenceCases32، RibbonMaker32، ExploreGrid32، StativeGate32، ReferenceRail32، StillRunning32، Boss32، VerbTap32، GearMap32، ObjectivesChecklist32. ويُضاف إليها عناصر العرض: Lab32، Frame، Verdict32، Platform32، Progress32، SourceReveal32.
+- **17 مكوّنًا تفاعليًا قابلًا لإعادة الاستخدام** في `kit32.tsx`: BlockBuilder32، FlipParts32، SortBuckets32، SlotPick32، PerRow32، TapFix32، TypedFill32، EvidenceCases32، RibbonMaker32، ExploreGrid32، StativeGate32، ReferenceRail32، StillRunning32، Boss32، VerbTap32، GearMap32، ObjectivesChecklist32. ويُضاف إليها عناصر العرض: Lab32، Frame، Verdict32، Platform32، Progress32. (مكوّن `SourceReveal32` حُذف: لا كشف لنص المصدر في واجهة الطالب.)
 - **إشارتان مميّزتان (signature mechanics):**
   1. **شريط النشاط (Activity Ribbon)**: طول الشريط = المدة، ومؤشر NOW، وزر «ما زال مستمرًا؟» يبيّن أن الجملة نفسها تبقى مع اختلاف الواقع (الخطوات ④ و⑱).
   2. **مؤشر نقطة المرجع (Reference Point Rail)**: مؤشر قابل للسحب والنقر ولوحة المفاتيح (←/→) يُظهر كيف تتغيّر الصيغة مع نقطة المرجع (الخطوات ㉔–㉖).

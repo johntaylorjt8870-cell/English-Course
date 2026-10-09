@@ -257,7 +257,9 @@ function tryPair(text: string, s: number, floor: number) {
     ls--;
   }
   // لا تُضم علامات الترقيم والمسافات البادئة إلى العبارة الإنجليزية
-  while (ls < enEnd && !/[A-Za-z0-9("'«“]/.test(text[ls])) ls++;
+  // A grammatical suffix prefix (-ed/-ING) is part of the English token,
+  // not punctuation belonging to the preceding Arabic clause.
+  while (ls < enEnd && !/[A-Za-z0-9("'«“]/.test(text[ls]) && !(text[ls] === "-" && /[A-Za-z]/.test(text[ls + 1] ?? ""))) ls++;
   const en = text.slice(ls, enEnd);
   if (!HAS_LATIN_LETTER.test(en) || AR_CHAR.test(en)) return null;
   return { en, enStart: ls, lead: text.slice(enEnd, s) };

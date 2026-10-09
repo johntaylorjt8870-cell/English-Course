@@ -137,7 +137,7 @@ function BeTabs() {
         ))}
       </div>
       <div className="mt-3 text-center text-sm font-bold text-violet-700">
-        {s.en} ← نستخدم <En className="font-extrabold">{s.be}</En>
+        <EnAr en={s.en} sep=" ← " ar={<>نستخدم <En className="font-extrabold">{s.be}</En></>} />
       </div>
     </div>
   );

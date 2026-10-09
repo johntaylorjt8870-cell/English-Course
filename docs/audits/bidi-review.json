@@ -1,8 +1,8 @@
 {
   "baseline": "59ba597",
   "starting": 68,
-  "repaired": 20,
-  "remaining": 48,
+  "repaired": 44,
+  "remaining": 24,
   "added": [],
   "records": [
     {
@@ -76,10 +76,15 @@
       "logical": "I am happy.أنا سعيد.",
       "signature": "para:div.",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson3/Lesson3.tsx#NegativeEx:804:15",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#fdf631dd9ba71bc8",
+        "bidi-scene-geometry-after.json#fdf631dd9ba71bc8"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-f36666e484b1",
@@ -88,10 +93,15 @@
       "logical": "He is tall.هو طويل.",
       "signature": "para:div.",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson3/Lesson3.tsx#NegativeEx:804:15",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#403e2a3b7d852fe6",
+        "bidi-scene-geometry-after.json#403e2a3b7d852fe6"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-1d8de6cd388c",
@@ -100,10 +110,15 @@
       "logical": "She is a teacher.هي معلّمة.",
       "signature": "para:div.",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson3/Lesson3.tsx#NegativeEx:804:15",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#bddeb319353f9a20",
+        "bidi-scene-geometry-after.json#bddeb319353f9a20"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-a222598ccc72",
@@ -112,10 +127,15 @@
       "logical": "We are ready.نحن جاهزون.",
       "signature": "para:div.",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson3/Lesson3.tsx#NegativeEx:804:15",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#4b56ce57582c2cf9",
+        "bidi-scene-geometry-after.json#4b56ce57582c2cf9"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-eaf0b7bf6261",
@@ -124,10 +144,15 @@
       "logical": "They are friends.هم أصدقاء.",
       "signature": "para:div.",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson3/Lesson3.tsx#NegativeEx:804:15",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#b3492e18e8cfe547",
+        "bidi-scene-geometry-after.json#b3492e18e8cfe547"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-e86aa84a4814",
@@ -202,9 +227,9 @@
       "signature": "para:select.mt-2.w-full.rounded-lg",
       "category": "pair",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson4/Lesson4.tsx#Challenge:1120:15",
+      "cause": "Native select: the inferred Verb to beArticle target concatenates mutually exclusive options. Native option glyph ranges are zero; selected-option rendering has not been certified. Do not treat zero rectangles as passing evidence.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-a688d0e61d80",
@@ -214,9 +239,9 @@
       "signature": "para:div.mt-3.rounded-2xl.p-3",
       "category": "pair",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson7/Lesson7.tsx#GroupsDo:137:7",
+      "cause": "Arabic-led negative/question clauses separated by an em dash. The oracle pairs don’t with the next clause label, not its own label. English question punctuation still needs a clause-aware regression; blindly grouping across the dash risks changing meaning.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-079db2a35ac0",
@@ -226,9 +251,9 @@
       "signature": "row:span.rounded-full.bg-indigo-50.px-4 >> span.rounded-full.bg-indigo-50.px-4 in div.pop.pop-5.mt-8",
       "category": "row",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson8/Lesson8.tsx#Cover:707:9",
+      "cause": "Independent cover pills, not a translated label. Row oracle conflates neighboring topic tags. Their intended order and wrapping require an explicit source-semantic contract.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-209b454ea196",
@@ -237,10 +262,15 @@
       "logical": "📌 every morning ← علامة قوية على العادة",
       "signature": "para:span.rounded-full.bg-indigo-50.px-3",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson8/Lesson8.tsx#SentenceCard:68:18",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#651beb2d35991a0b",
+        "bidi-scene-geometry-after.json#651beb2d35991a0b"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-ed0e634ef4d2",
@@ -345,10 +375,15 @@
       "logical": "I ← نستخدم am",
       "signature": "para:div.mt-3.text-center.text-sm",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson9/Lesson9.tsx#BeTabs:139:7",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#969c944a562cef17",
+        "bidi-scene-geometry-after.json#969c944a562cef17"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-88a57830a256",
@@ -358,9 +393,9 @@
       "signature": "para:span.truncate.font-semibold",
       "category": "pair",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson10/Lesson10.tsx#Rail:1119:19",
+      "cause": "Rail alternative question followed by Arabic instruction. Actual desktop punctuation/instruction wraps; rail is hidden at narrow width. No mobile geometry claim; clause boundaries and punctuation remain unresolved.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-e4006ec84205",
@@ -369,10 +404,15 @@
       "logical": "Present Simple — عادة / روتين / حقيقة / مستقر",
       "signature": "para:",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson10/Lesson10.tsx#VsSimpleAdvanced:317:9",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#4491d05255ca532b",
+        "bidi-scene-geometry-after.json#4491d05255ca532b"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-87b22d51b4dc",
@@ -381,10 +421,15 @@
       "logical": "Present Continuous — الآن / هذه الفترة / مؤقت",
       "signature": "para:",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson10/Lesson10.tsx#VsSimpleAdvanced:329:9",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#8386f084b42bc358",
+        "bidi-scene-geometry-after.json#8386f084b42bc358"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-0355c410f871",
@@ -394,9 +439,9 @@
       "signature": "para:span.text-base.font-semibold.leading-relaxed",
       "category": "pair",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson10/Lesson10.tsx#Rich:47:10",
+      "cause": "Inferred Latin begins with the preceding Arabic sentence’s period. Actual plays starts left of its Arabic explanation. Exact oracle boundary review needed; not waived.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-2206331aa0ff",
@@ -405,10 +450,15 @@
       "logical": "في الماضي: I played · You played · He played · She played · It played · We played · They played — الجميع متشابهون!",
       "signature": "para:div.mt-3.text-center.text-xs",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson12/Lesson12.tsx#SubjectGrid:406:7",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#8618db4462a51548",
+        "bidi-scene-geometry-after.json#8618db4462a51548"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-3bb3ea94e095",
@@ -418,9 +468,9 @@
       "signature": "para:p.mt-2.max-w-[88%].text-lg",
       "category": "pair",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson12/Lesson12.tsx#Frame:99:16",
+      "cause": "Consonant + y formula: plus is outside the isolated y. Whether plus belongs to the preceding Arabic operand or the English token needs an explicit expression contract; no silent source rewrite.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-aa20db4136bf",
@@ -429,10 +479,15 @@
       "logical": "🛠️ آلة قواعد -ed — اضغط أي فعل لترى القاعدة",
       "signature": "para:div.text-center.font-bold.text-orange-800",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson12/Lesson12.tsx#EdMachine:354:7",
+      "cause": "Shared parser trimmed the attached suffix hyphen as preceding punctuation. Preserve a leading hyphen immediately attached to a Latin token.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#99bfce27a88ed27a",
+        "bidi-scene-geometry-after.json#99bfce27a88ed27a"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-1afe090c685e",
@@ -489,10 +544,15 @@
       "logical": "did — فعل مساعد",
       "signature": "para:span.inline-flex.flex-col.items-center",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson13/Lesson13.tsx#PartsLine:159:21",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#22ac523e4ebe019b",
+        "bidi-scene-geometry-after.json#22ac523e4ebe019b"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-9bd5f173a1ad",
@@ -517,10 +577,15 @@
       "logical": "didn't — النفي",
       "signature": "para:span.inline-flex.flex-col.items-center",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson13/Lesson13.tsx#PartsLine:159:21",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#6896e693af308881",
+        "bidi-scene-geometry-after.json#6896e693af308881"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-644763489117",
@@ -529,10 +594,15 @@
       "logical": "Do / Does → Did — والفعل يبقى Base Verb",
       "signature": "para:div.mt-3.rounded-2xl.bg-white",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson13/Lesson13.tsx#PresentPastToggle:579:7",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#ac191c805ea02cb5",
+        "bidi-scene-geometry-after.json#ac191c805ea02cb5"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-68cea80f8fc2",
@@ -541,10 +611,15 @@
       "logical": "did = فعل أساسي",
       "signature": "para:button.rounded-xl.border-2.px-5",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson13/Lesson13.tsx#TabBtn:244:5",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#6df03bba6ec8bb06",
+        "bidi-scene-geometry-after.json#6df03bba6ec8bb06"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-786f9f948f1b",
@@ -553,10 +628,15 @@
       "logical": "Did = فعل مساعد",
       "signature": "para:button.rounded-xl.border-2.px-5",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson13/Lesson13.tsx#TabBtn:244:5",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#162fd7029eb7bacd",
+        "bidi-scene-geometry-after.json#162fd7029eb7bacd"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-674889859c45",
@@ -565,10 +645,15 @@
       "logical": "DID + Base Verb — فكر بالقاعدة، وليس بالحفظ.",
       "signature": "para:div.rounded-3xl.border-2.border-violet-200",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson13/Lesson13.tsx#IQ200Ex:1098:7",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#48bfb448a55b9cbb",
+        "bidi-scene-geometry-after.json#48bfb448a55b9cbb"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-40b81967896a",
@@ -578,9 +663,9 @@
       "signature": "para:div.text-base.font-semibold.leading-relaxed",
       "category": "pair",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson16/Lesson16.tsx#Rich:67:10",
+      "cause": "The inferred . book starts at the preceding Arabic sentence’s period. The actual b is left of الاسم; oracle boundary candidate, retained without exemption.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-00c69856ef04",
@@ -590,9 +675,9 @@
       "signature": "para:div.text-base.font-semibold.leading-relaxed",
       "category": "pair",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson16/Lesson16.tsx#Rich:67:10",
+      "cause": "The inferred . their starts at a preceding Arabic sentence’s period. Actual their is left of its gloss; oracle boundary candidate, retained without exemption.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-4cc4e41e1715",
@@ -602,9 +687,9 @@
       "signature": "para:span.ltr-pair.inline-flex.flex-wrap",
       "category": "pair",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/shared/bidi.tsx#EnAr:447:5",
+      "cause": "Arabic ownership map contains noun + possessive suffix. Plus is not grouped with the suffix; choosing an expression boundary without source-semantic verification risks changing the map.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-ad2b68b30671",
@@ -614,9 +699,9 @@
       "signature": "row:span.rounded-lg.bg-white/15.px-2.5 >> span.rounded-lg.bg-white/15.px-2.5 in div.mt-2.flex.flex-wrap",
       "category": "row",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson18/Lesson18.tsx#Cover:2463:9",
+      "cause": "Independent cover topic pills; row oracle interprets English topic and Arabic topic as a translation. Needs a pill-order contract, not a blanket flex exception.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-b54105dc0180",
@@ -626,9 +711,9 @@
       "signature": "row:span.text-lg.font-black.text-slate-800 >> span.text-xs.font-bold.text-slate-400 in div.flex.flex-wrap.items-center",
       "category": "row",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson18/Lesson18.tsx#Summary:2530:13",
+      "cause": "Mixed Arabic/English pluralization title plus separate exception note. Applying English-only label direction to the whole Arabic-led title would be unsafe.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-9eb87f332dfa",
@@ -637,10 +722,15 @@
       "logical": "🏆 FINAL BOSS — اقرأ:",
       "signature": "para:div.text-center.text-sm.font-bold",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson19/Lesson19.tsx#FinalBossEx:1516:9",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#8185d53475624736",
+        "bidi-scene-geometry-after.json#8185d53475624736"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-60de32231398",
@@ -650,9 +740,9 @@
       "signature": "row:span.ltr.font-en.rounded-lg >> span.text-sm.font-bold.text-slate-700 in div.mt-1.flex.flex-wrap",
       "category": "row",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
+      "cause": "This chip is embedded in an Arabic question, followed by في السؤال الأول؟; the suffix is not a translation of this. Preserve RTL question reading and test chip/punctuation boundaries.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-021f190787ad",
@@ -662,9 +752,9 @@
       "signature": "row:span.ltr.font-en.rounded-lg >> span.text-sm.font-bold.text-slate-700 in div.mt-1.flex.flex-wrap",
       "category": "row",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
+      "cause": "That chip is embedded in an Arabic question, followed by في السؤال الثاني؟; not a translated label. Needs RTL question-flow regression.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-0331e606d113",
@@ -674,9 +764,9 @@
       "signature": "row:span.ltr.font-en.rounded-lg >> span.text-sm.font-bold.text-slate-700 in div.mt-1.flex.flex-wrap",
       "category": "row",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
+      "cause": "These chip followed by Arabic connective مع and notebooks; not a translation. Both English tokens and question punctuation need a complete sentence test.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-54248a7bcad2",
@@ -686,9 +776,9 @@
       "signature": "row:span.ltr.font-en.rounded-lg >> span.text-sm.font-bold.text-slate-700 in div.mt-1.flex.flex-wrap",
       "category": "row",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
+      "cause": "Those chip followed by Arabic connective مع and bicycles; not a translation. Do not reverse the whole Arabic question to satisfy a pair heuristic.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-1dce6f6e34d2",
@@ -698,9 +788,9 @@
       "signature": "row:span.ltr.font-en.rounded-lg >> span.text-sm.font-bold.text-slate-500 in div.mt-1.flex.flex-wrap",
       "category": "row",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
+      "cause": "English noun phrase followed by Arabic conjunction و; the conjunction connects another phrase, not a gloss. Full question-flow contract remains open.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-773a481a0b1a",
@@ -710,9 +800,9 @@
       "signature": "row:span.ltr.font-en.rounded-lg >> span.text-sm.font-bold.text-slate-500 in div.mt-1.flex.flex-wrap",
       "category": "row",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson20/Lesson20.tsx#FinalBossEx:1116:21",
+      "cause": "Possessive noun phrase followed by ولم نقل and a contrasting phrase. It is a contrast question, not English-to-Arabic translation.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-ed2ad23ea511",
@@ -721,10 +811,15 @@
       "logical": "in = في",
       "signature": "para:div.mt-3.rounded-2xl.border-2",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson21/Lesson21.tsx#LocationLab:671:7",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#a664174454aab722",
+        "bidi-scene-geometry-after.json#a664174454aab722"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-18a83403b099",
@@ -734,9 +829,9 @@
       "signature": "row:span.rounded-lg.bg-white.px-2.5 >> span.rounded-lg.bg-white.px-2.5 in div.mt-2.flex.flex-wrap",
       "category": "row",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson22/Lesson22.tsx#OpeningRecall:493:9",
+      "cause": "Recall pills and final Arabic continuation وحتى الجمل الأطول. Different roles are conflated as a bilingual label by the row oracle; no exemption added.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-3711f6f8f215",
@@ -745,10 +840,15 @@
       "logical": "on | تخبرنا بالعلاقة بين: book و table.",
       "signature": "row:span.ltr.font-en.rounded-xl >> span.text-base.font-bold.text-slate-700 in div.mt-2.flex.flex-wrap",
       "category": "row",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson22/Lesson22.tsx#PositionOverview:534:7",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#3711f6f8f215e29f",
+        "bidi-scene-geometry-after.json#3711f6f8f215e29f"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-99286d6e9986",
@@ -758,9 +858,9 @@
       "signature": "row:span.ltr.font-en.rounded-lg >> span. in div.mt-2.flex.flex-wrap",
       "category": "row",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson23/Lesson23.tsx#InformationLab:2168:9",
+      "cause": "Countable pieces followed by contrast وليس information نفسها. English target and Arabic connective are not a definition pair; needs whole-statement geometry.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-0d4d768034b4",
@@ -770,9 +870,9 @@
       "signature": "row:span.ltr.font-en.rounded-xl >> span.text-sm.font-bold.text-slate-600 in div.mt-2.flex.flex-wrap",
       "category": "row",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson23/Lesson23.tsx#TrapNote:2447:7",
+      "cause": "Correct some rice and incorrect alternative separated by وليس. Preserve contrast sequence; pairing correct answer with connective alone would misrepresent the source.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-b6292134cb18",
@@ -782,9 +882,9 @@
       "signature": "para:span.text-sm.font-bold.leading-7",
       "category": "pair",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson24/Lesson24.tsx#BodyLine:203:9",
+      "cause": "Inferred . few includes previous Arabic sentence punctuation. Actual few is left of its explanation; retained pending exact oracle-boundary regression.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-07cc2473cede",
@@ -794,9 +894,9 @@
       "signature": "para:span.text-sm.font-bold.leading-7",
       "category": "pair",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson24/Lesson24.tsx#BodyLine:203:9",
+      "cause": "Inferred . little includes previous Arabic sentence punctuation. Actual little is left of its explanation; retained pending exact oracle-boundary regression.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-d9de07aa1ed5",
@@ -837,10 +937,15 @@
       "logical": "WH و -ING · صيغة -ING — The -ING Form",
       "signature": "para:div.truncate.text-sm.font-bold",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson25/Lesson25.tsx#Rich:343:10",
+      "cause": "Shared parser trimmed the attached suffix hyphen as preceding punctuation. Preserve a leading hyphen immediately attached to a Latin token.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#502c3967f41dc6d5",
+        "bidi-scene-geometry-after.json#502c3967f41dc6d5"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-63dd1e6803e5",
@@ -850,9 +955,9 @@
       "signature": "row:span.rounded-lg.px-2.py-1 >> span.text-xs.font-black.text-slate-600 in div.mt-3.flex.flex-wrap",
       "category": "row",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson26/Lesson26.tsx#CookSceneLab:669:7",
+      "cause": "Past Continuous / لكن / contrasting tense is a contrast sequence, not label/gloss. Complete contrast reading order needs verification.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-c30e24ed3833",
@@ -861,10 +966,15 @@
       "logical": "when | غالبًا نستخدمه لإدخال حدث وقع أثناء فعل آخر.",
       "signature": "row:span.rounded-xl.px-3.py-1.5 >> span.text-sm.font-bold.text-slate-700 in div.flex.flex-wrap.items-center",
       "category": "row",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson26/Lesson26.tsx#WhenVsWhileLab:974:9",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#c30e24ed38333247",
+        "bidi-scene-geometry-after.json#c30e24ed38333247"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-5115d4dba8ae",
@@ -874,9 +984,9 @@
       "signature": "row:span.ltr.font-en.rounded-xl >> span.self-center.text-xs.font-black in div.flex.flex-wrap.justify-center",
       "category": "row",
       "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "component": "src/lessons/lesson26/Lesson26.tsx#GrammarDetective:3167:7",
+      "cause": "Progressive formula followed by و joining another pattern. Conjunction is not a gloss; full expression sequence remains unverified.",
+      "severity": "Potential instructional reading-order/punctuation issue; unresolved, including heuristic candidates"
     },
     {
       "id": "bidi-f5873347065f",
@@ -885,10 +995,15 @@
       "logical": "A: عندما نريد التركيز على عملية المشي في سياق معين.",
       "signature": "para:div.rounded-xl.bg-sky-50.px-3",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson26/Lesson26.tsx#Iq200MatchLab:2472:11",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#d31b16b4a5b69177",
+        "bidi-scene-geometry-after.json#d31b16b4a5b69177"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     },
     {
       "id": "bidi-b24b447a87c2",
@@ -897,10 +1012,15 @@
       "logical": "B: عندما نريد ببساطة إخبار الشخص أن المشي إلى المدرسة حدث.",
       "signature": "para:div.rounded-xl.bg-sky-50.px-3",
       "category": "pair",
-      "status": "OPEN — not waived",
-      "component": null,
-      "cause": "individual source/component and geometry review remains incomplete",
-      "severity": "not yet determined; retained as a blocker"
+      "severity": "Instructional label/suffix reading-order defect",
+      "status": "repaired; actual source regression passes",
+      "component": "src/lessons/lesson26/Lesson26.tsx#Iq200MatchLab:2475:11",
+      "cause": "Bilingual semantic unit was split into raw text or unrelated RTL siblings. Reuse LatinRuns for the complete label or EnAr for the existing structured label/gloss.",
+      "evidence": [
+        "bidi-scene-geometry-before.json#ab23f9147044ae31",
+        "bidi-scene-geometry-after.json#ab23f9147044ae31"
+      ],
+      "negativeControl": "Original actual App DOM fails the same character-position contract at one or both widths"
     }
   ]
 }

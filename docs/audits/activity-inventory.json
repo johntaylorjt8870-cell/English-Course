@@ -1,5 +1,5 @@
 {
-  "sourceDataFingerprint": "867245b9d81f9632a8f09ebcdc7bf96359d1ae2dbefb702a910857925ad55c54",
+  "sourceDataFingerprint": "6b52695b70c5aec2cf64147e5d5288dba44b41d6c1862e8582f8a16311396dac",
   "scope": "All JSX interactive control definitions in src/**/*.tsx, including delegated props and source bindings. A template is NOT every runtime data-bound activity instance. No behavioral claim follows from discovery.",
   "records": [
     {
@@ -5699,14 +5699,14 @@
               "expression": "{() => setPick(\"main\")}"
             }
           ],
-          "labelEvidence": "<En>did</En> = فعل أساسي",
+          "labelEvidence": "<LatinRuns text=\"did = فعل أساسي\" />",
           "ariaLabel": null,
           "dataBindings": [],
           "nativeKeyboard": false,
           "keyboardHandler": false,
           "checkEvidence": false,
           "resetEvidence": false,
-          "fingerprint": "66adda9173759e66"
+          "fingerprint": "67627c23a86dfea2"
         },
         {
           "id": "src/lessons/lesson13/Lesson13.tsx#TwoJobsOfDid/2",
@@ -5720,14 +5720,14 @@
               "expression": "{() => setPick(\"aux\")}"
             }
           ],
-          "labelEvidence": "<En>Did</En> = فعل مساعد",
+          "labelEvidence": "<LatinRuns text=\"Did = فعل مساعد\" />",
           "ariaLabel": null,
           "dataBindings": [],
           "nativeKeyboard": false,
           "keyboardHandler": false,
           "checkEvidence": false,
           "resetEvidence": false,
-          "fingerprint": "60bde307cc29f72a"
+          "fingerprint": "6b4b5acc0384fdae"
         }
       ],
       "feedbackTiming": "UNVERIFIED",
@@ -16068,7 +16068,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#ConstructionMachine/1",
           "tag": "button",
           "type": null,
-          "line": 725,
+          "line": 724,
           "column": 9,
           "handlers": [
             {
@@ -16089,7 +16089,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#ConstructionMachine/2",
           "tag": "button",
           "type": null,
-          "line": 731,
+          "line": 730,
           "column": 9,
           "handlers": [
             {
@@ -16123,7 +16123,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#NegativeTransformer/1",
           "tag": "button",
           "type": null,
-          "line": 781,
+          "line": 780,
           "column": 11,
           "handlers": [
             {
@@ -16144,7 +16144,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#NegativeTransformer/2",
           "tag": "button",
           "type": null,
-          "line": 799,
+          "line": 798,
           "column": 11,
           "handlers": [
             {
@@ -16178,7 +16178,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#QuestionMachine/1",
           "tag": "button",
           "type": null,
-          "line": 881,
+          "line": 880,
           "column": 13,
           "handlers": [
             {
@@ -16201,7 +16201,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#QuestionMachine/2",
           "tag": "button",
           "type": null,
-          "line": 898,
+          "line": 897,
           "column": 13,
           "handlers": [
             {
@@ -16237,7 +16237,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#ShortAnswerBridge/1",
           "tag": "button",
           "type": null,
-          "line": 950,
+          "line": 949,
           "column": 17,
           "handlers": [
             {
@@ -16274,7 +16274,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#AnySystem/1",
           "tag": "button",
           "type": null,
-          "line": 1150,
+          "line": 1149,
           "column": 13,
           "handlers": [
             {
@@ -16310,7 +16310,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#QuantityLab/1",
           "tag": "button",
           "type": null,
-          "line": 1215,
+          "line": 1214,
           "column": 11,
           "handlers": [
             {
@@ -16346,7 +16346,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#RoomBuilder/1",
           "tag": "button",
           "type": null,
-          "line": 1315,
+          "line": 1314,
           "column": 13,
           "handlers": [
             {
@@ -16382,7 +16382,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#SceneDescription/1",
           "tag": "button",
           "type": null,
-          "line": 1351,
+          "line": 1350,
           "column": 11,
           "handlers": [
             {
@@ -16418,7 +16418,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#SceneQA/1",
           "tag": "button",
           "type": null,
-          "line": 1398,
+          "line": 1397,
           "column": 19,
           "handlers": [
             {
@@ -16455,7 +16455,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Investigation/1",
           "tag": "button",
           "type": null,
-          "line": 1467,
+          "line": 1466,
           "column": 19,
           "handlers": [
             {
@@ -16479,7 +16479,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Investigation/2",
           "tag": "button",
           "type": null,
-          "line": 1481,
+          "line": 1480,
           "column": 17,
           "handlers": [
             {
@@ -16515,7 +16515,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#ErrorDetector/1",
           "tag": "button",
           "type": null,
-          "line": 1838,
+          "line": 1837,
           "column": 17,
           "handlers": [
             {
@@ -16551,7 +16551,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#DetectiveEx/1",
           "tag": "input",
           "type": null,
-          "line": 1898,
+          "line": 1897,
           "column": 17,
           "handlers": [
             {
@@ -16574,7 +16574,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#DetectiveEx/2",
           "tag": "button",
           "type": null,
-          "line": 1905,
+          "line": 1904,
           "column": 17,
           "handlers": [
             {
@@ -16597,7 +16597,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#DetectiveEx/3",
           "tag": "button",
           "type": null,
-          "line": 1906,
+          "line": 1905,
           "column": 17,
           "handlers": [
             {
@@ -16633,7 +16633,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Challenge1Ex/1",
           "tag": "button",
           "type": null,
-          "line": 1973,
+          "line": 1972,
           "column": 19,
           "handlers": [
             {
@@ -16670,7 +16670,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Challenge2Ex/1",
           "tag": "button",
           "type": null,
-          "line": 2012,
+          "line": 2011,
           "column": 19,
           "handlers": [
             {
@@ -16707,7 +16707,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#TransformEx/1",
           "tag": "input",
           "type": null,
-          "line": 2066,
+          "line": 2065,
           "column": 15,
           "handlers": [
             {
@@ -16730,7 +16730,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#TransformEx/2",
           "tag": "button",
           "type": null,
-          "line": 2075,
+          "line": 2074,
           "column": 15,
           "handlers": [
             {
@@ -16753,7 +16753,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#TransformEx/3",
           "tag": "button",
           "type": null,
-          "line": 2076,
+          "line": 2075,
           "column": 15,
           "handlers": [
             {
@@ -16789,7 +16789,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#IQ200Ex/1",
           "tag": "input",
           "type": null,
-          "line": 2166,
+          "line": 2165,
           "column": 17,
           "handlers": [
             {
@@ -16812,7 +16812,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#IQ200Ex/2",
           "tag": "button",
           "type": null,
-          "line": 2173,
+          "line": 2172,
           "column": 17,
           "handlers": [
             {
@@ -16835,7 +16835,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#IQ200Ex/3",
           "tag": "input",
           "type": null,
-          "line": 2191,
+          "line": 2190,
           "column": 17,
           "handlers": [
             {
@@ -16858,7 +16858,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#IQ200Ex/4",
           "tag": "button",
           "type": null,
-          "line": 2198,
+          "line": 2197,
           "column": 17,
           "handlers": [
             {
@@ -16881,7 +16881,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#IQ200Ex/5",
           "tag": "input",
           "type": null,
-          "line": 2217,
+          "line": 2216,
           "column": 17,
           "handlers": [
             {
@@ -16904,7 +16904,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#IQ200Ex/6",
           "tag": "button",
           "type": null,
-          "line": 2224,
+          "line": 2223,
           "column": 17,
           "handlers": [
             {
@@ -16940,7 +16940,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#KitchenEx/1",
           "tag": "button",
           "type": null,
-          "line": 2274,
+          "line": 2273,
           "column": 19,
           "handlers": [
             {
@@ -16964,7 +16964,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#KitchenEx/2",
           "tag": "input",
           "type": null,
-          "line": 2304,
+          "line": 2303,
           "column": 17,
           "handlers": [
             {
@@ -16987,7 +16987,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#KitchenEx/3",
           "tag": "button",
           "type": null,
-          "line": 2311,
+          "line": 2310,
           "column": 17,
           "handlers": [
             {
@@ -17023,7 +17023,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#FinalBossEx/1",
           "tag": "button",
           "type": null,
-          "line": 2365,
+          "line": 2364,
           "column": 15,
           "handlers": [
             {
@@ -17046,7 +17046,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#FinalBossEx/2",
           "tag": "textarea",
           "type": null,
-          "line": 2391,
+          "line": 2390,
           "column": 9,
           "handlers": [
             {
@@ -17080,7 +17080,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Closing/1",
           "tag": "button",
           "type": null,
-          "line": 2706,
+          "line": 2705,
           "column": 9,
           "handlers": [
             {
@@ -17114,7 +17114,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#SlideView21/1",
           "tag": "Closing",
           "type": null,
-          "line": 2742,
+          "line": 2741,
           "column": 28,
           "handlers": [
             {
@@ -17148,7 +17148,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Rail/1",
           "tag": "button",
           "type": null,
-          "line": 2789,
+          "line": 2788,
           "column": 9,
           "handlers": [
             {
@@ -17169,7 +17169,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Rail/2",
           "tag": "button",
           "type": null,
-          "line": 2805,
+          "line": 2804,
           "column": 17,
           "handlers": [
             {
@@ -17206,7 +17206,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Lesson21/1",
           "tag": "Rail",
           "type": null,
-          "line": 2851,
+          "line": 2850,
           "column": 122,
           "handlers": [
             {
@@ -17227,7 +17227,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Lesson21/2",
           "tag": "button",
           "type": null,
-          "line": 2854,
+          "line": 2853,
           "column": 13,
           "handlers": [
             {
@@ -17248,7 +17248,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Lesson21/3",
           "tag": "SlideView21",
           "type": null,
-          "line": 2861,
+          "line": 2860,
           "column": 150,
           "handlers": [
             {
@@ -17269,7 +17269,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Lesson21/4",
           "tag": "button",
           "type": null,
-          "line": 2864,
+          "line": 2863,
           "column": 15,
           "handlers": [
             {
@@ -17290,7 +17290,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Lesson21/5",
           "tag": "button",
           "type": null,
-          "line": 2866,
+          "line": 2865,
           "column": 15,
           "handlers": [
             {
@@ -17311,7 +17311,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Lesson21/6",
           "tag": "div",
           "type": null,
-          "line": 2871,
+          "line": 2870,
           "column": 16,
           "handlers": [
             {
@@ -17332,7 +17332,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Lesson21/7",
           "tag": "div",
           "type": null,
-          "line": 2873,
+          "line": 2872,
           "column": 9,
           "handlers": [
             {
@@ -17353,7 +17353,7 @@
           "id": "src/lessons/lesson21/Lesson21.tsx#Lesson21/8",
           "tag": "Rail",
           "type": null,
-          "line": 2873,
+          "line": 2872,
           "column": 130,
           "handlers": [
             {
@@ -17391,7 +17391,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#PositionOverview/1",
           "tag": "button",
           "type": null,
-          "line": 544,
+          "line": 543,
           "column": 13,
           "handlers": [
             {
@@ -17427,7 +17427,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#AboveLab/1",
           "tag": "button",
           "type": null,
-          "line": 665,
+          "line": 664,
           "column": 9,
           "handlers": [
             {
@@ -17461,7 +17461,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#InsideOutsideLab/1",
           "tag": "button",
           "type": null,
-          "line": 812,
+          "line": 811,
           "column": 9,
           "handlers": [
             {
@@ -17482,7 +17482,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#InsideOutsideLab/2",
           "tag": "button",
           "type": null,
-          "line": 818,
+          "line": 817,
           "column": 9,
           "handlers": [
             {
@@ -17516,7 +17516,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#AnswersBoard/1",
           "tag": "button",
           "type": null,
-          "line": 974,
+          "line": 973,
           "column": 9,
           "handlers": [
             {
@@ -17550,7 +17550,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#MultiPrepBuilder/1",
           "tag": "button",
           "type": null,
-          "line": 1075,
+          "line": 1074,
           "column": 11,
           "handlers": [
             {
@@ -17586,7 +17586,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#PeoplePositionLab/1",
           "tag": "button",
           "type": null,
-          "line": 1120,
+          "line": 1119,
           "column": 11,
           "handlers": [
             {
@@ -17622,7 +17622,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#RoomSceneBuilder/1",
           "tag": "button",
           "type": null,
-          "line": 1235,
+          "line": 1234,
           "column": 13,
           "handlers": [
             {
@@ -17658,7 +17658,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#DetectiveEx/1",
           "tag": "input",
           "type": null,
-          "line": 1296,
+          "line": 1295,
           "column": 17,
           "handlers": [
             {
@@ -17681,7 +17681,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#DetectiveEx/2",
           "tag": "button",
           "type": null,
-          "line": 1303,
+          "line": 1302,
           "column": 17,
           "handlers": [
             {
@@ -17704,7 +17704,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#DetectiveEx/3",
           "tag": "button",
           "type": null,
-          "line": 1304,
+          "line": 1303,
           "column": 17,
           "handlers": [
             {
@@ -17740,7 +17740,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Challenge1Ex/1",
           "tag": "button",
           "type": null,
-          "line": 1355,
+          "line": 1354,
           "column": 19,
           "handlers": [
             {
@@ -17777,7 +17777,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Challenge2Ex/1",
           "tag": "button",
           "type": null,
-          "line": 1395,
+          "line": 1394,
           "column": 19,
           "handlers": [
             {
@@ -17814,7 +17814,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Challenge3Ex/1",
           "tag": "input",
           "type": null,
-          "line": 1438,
+          "line": 1437,
           "column": 15,
           "handlers": [
             {
@@ -17837,7 +17837,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Challenge3Ex/2",
           "tag": "button",
           "type": null,
-          "line": 1447,
+          "line": 1446,
           "column": 15,
           "handlers": [
             {
@@ -17860,7 +17860,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Challenge3Ex/3",
           "tag": "button",
           "type": null,
-          "line": 1448,
+          "line": 1447,
           "column": 15,
           "handlers": [
             {
@@ -17896,7 +17896,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#IQ200A/1",
           "tag": "button",
           "type": null,
-          "line": 1487,
+          "line": 1486,
           "column": 17,
           "handlers": [
             {
@@ -17932,7 +17932,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#IQ200B/1",
           "tag": "button",
           "type": null,
-          "line": 1527,
+          "line": 1526,
           "column": 19,
           "handlers": [
             {
@@ -17969,7 +17969,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#FinalBossEx/1",
           "tag": "button",
           "type": null,
-          "line": 1573,
+          "line": 1572,
           "column": 15,
           "handlers": [
             {
@@ -17992,7 +17992,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#FinalBossEx/2",
           "tag": "textarea",
           "type": null,
-          "line": 1599,
+          "line": 1598,
           "column": 9,
           "handlers": [
             {
@@ -18026,7 +18026,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#TrueFalseEx/1",
           "tag": "button",
           "type": null,
-          "line": 1639,
+          "line": 1638,
           "column": 17,
           "handlers": [
             {
@@ -18062,7 +18062,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Closing/1",
           "tag": "button",
           "type": null,
-          "line": 1880,
+          "line": 1879,
           "column": 9,
           "handlers": [
             {
@@ -18096,7 +18096,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#SlideView22/1",
           "tag": "Closing",
           "type": null,
-          "line": 1916,
+          "line": 1915,
           "column": 28,
           "handlers": [
             {
@@ -18130,7 +18130,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Rail/1",
           "tag": "button",
           "type": null,
-          "line": 1962,
+          "line": 1961,
           "column": 9,
           "handlers": [
             {
@@ -18151,7 +18151,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Rail/2",
           "tag": "button",
           "type": null,
-          "line": 1978,
+          "line": 1977,
           "column": 17,
           "handlers": [
             {
@@ -18188,7 +18188,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Lesson22/1",
           "tag": "Rail",
           "type": null,
-          "line": 2024,
+          "line": 2023,
           "column": 122,
           "handlers": [
             {
@@ -18209,7 +18209,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Lesson22/2",
           "tag": "button",
           "type": null,
-          "line": 2027,
+          "line": 2026,
           "column": 13,
           "handlers": [
             {
@@ -18230,7 +18230,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Lesson22/3",
           "tag": "SlideView22",
           "type": null,
-          "line": 2034,
+          "line": 2033,
           "column": 150,
           "handlers": [
             {
@@ -18251,7 +18251,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Lesson22/4",
           "tag": "button",
           "type": null,
-          "line": 2037,
+          "line": 2036,
           "column": 15,
           "handlers": [
             {
@@ -18272,7 +18272,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Lesson22/5",
           "tag": "button",
           "type": null,
-          "line": 2039,
+          "line": 2038,
           "column": 15,
           "handlers": [
             {
@@ -18293,7 +18293,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Lesson22/6",
           "tag": "div",
           "type": null,
-          "line": 2044,
+          "line": 2043,
           "column": 16,
           "handlers": [
             {
@@ -18314,7 +18314,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Lesson22/7",
           "tag": "div",
           "type": null,
-          "line": 2046,
+          "line": 2045,
           "column": 9,
           "handlers": [
             {
@@ -18335,7 +18335,7 @@
           "id": "src/lessons/lesson22/Lesson22.tsx#Lesson22/8",
           "tag": "Rail",
           "type": null,
-          "line": 2046,
+          "line": 2045,
           "column": 130,
           "handlers": [
             {
@@ -23249,7 +23249,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#WhenAnalysisLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1024,
+          "line": 1019,
           "column": 11,
           "handlers": [
             {
@@ -23272,7 +23272,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#WhenAnalysisLab/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1042,
+          "line": 1037,
           "column": 9,
           "handlers": [
             {
@@ -23306,7 +23306,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#WhileNuanceLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1103,
+          "line": 1098,
           "column": 9,
           "handlers": [
             {
@@ -23340,7 +23340,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#FourPatternBoardLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1168,
+          "line": 1163,
           "column": 13,
           "handlers": [
             {
@@ -23376,7 +23376,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#StoryDirectorLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1251,
+          "line": 1246,
           "column": 11,
           "handlers": [
             {
@@ -23412,7 +23412,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#EmmaAnalysisLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1333,
+          "line": 1328,
           "column": 11,
           "handlers": [
             {
@@ -23448,7 +23448,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#ParallelPairsLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1413,
+          "line": 1408,
           "column": 11,
           "handlers": [
             {
@@ -23484,7 +23484,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#SimultaneousLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1479,
+          "line": 1474,
           "column": 11,
           "handlers": [
             {
@@ -23518,7 +23518,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#InterruptionLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1524,
+          "line": 1519,
           "column": 11,
           "handlers": [
             {
@@ -23554,7 +23554,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#InterruptionModelLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1606,
+          "line": 1601,
           "column": 9,
           "handlers": [
             {
@@ -23588,7 +23588,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#NotEverySimpleLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1628,
+          "line": 1623,
           "column": 9,
           "handlers": [
             {
@@ -23609,7 +23609,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#NotEverySimpleLab/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1636,
+          "line": 1631,
           "column": 9,
           "handlers": [
             {
@@ -23643,7 +23643,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#SequenceSceneLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1706,
+          "line": 1701,
           "column": 11,
           "handlers": [
             {
@@ -23679,7 +23679,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#DeepDifferenceLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1758,
+          "line": 1753,
           "column": 9,
           "handlers": [
             {
@@ -23700,7 +23700,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#DeepDifferenceLab/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1766,
+          "line": 1761,
           "column": 9,
           "handlers": [
             {
@@ -23734,7 +23734,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#CompareFourLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1818,
+          "line": 1813,
           "column": 11,
           "handlers": [
             {
@@ -23770,7 +23770,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#CompareMeaningsLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1874,
+          "line": 1869,
           "column": 11,
           "handlers": [
             {
@@ -23806,7 +23806,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#ErrorsDetectiveLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1947,
+          "line": 1942,
           "column": 13,
           "handlers": [
             {
@@ -23829,7 +23829,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#ErrorsDetectiveLab/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1985,
+          "line": 1980,
           "column": 9,
           "handlers": [
             {
@@ -23850,7 +23850,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#ErrorsDetectiveLab/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 1995,
+          "line": 1990,
           "column": 11,
           "handlers": [
             {
@@ -23884,7 +23884,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#WasWereControlLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2047,
+          "line": 2042,
           "column": 13,
           "handlers": [
             {
@@ -23920,7 +23920,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#NounAgreementLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2129,
+          "line": 2124,
           "column": 13,
           "handlers": [
             {
@@ -23956,7 +23956,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#TimeExpressionsLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2187,
+          "line": 2182,
           "column": 11,
           "handlers": [
             {
@@ -23992,7 +23992,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#TimeNotRulesLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2227,
+          "line": 2222,
           "column": 9,
           "handlers": [
             {
@@ -24013,7 +24013,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#TimeNotRulesLab/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2235,
+          "line": 2230,
           "column": 9,
           "handlers": [
             {
@@ -24047,7 +24047,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#MeaningFirstLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2323,
+          "line": 2318,
           "column": 19,
           "handlers": [
             {
@@ -24071,7 +24071,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#MeaningFirstLab/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2357,
+          "line": 2352,
           "column": 9,
           "handlers": [
             {
@@ -24092,7 +24092,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#MeaningFirstLab/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2371,
+          "line": 2366,
           "column": 13,
           "handlers": [
             {
@@ -24126,7 +24126,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Iq200MatchLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2443,
+          "line": 2438,
           "column": 19,
           "handlers": [
             {
@@ -24150,7 +24150,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Iq200MatchLab/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2487,
+          "line": 2482,
           "column": 9,
           "handlers": [
             {
@@ -24171,7 +24171,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Iq200MatchLab/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2497,
+          "line": 2492,
           "column": 11,
           "handlers": [
             {
@@ -24205,7 +24205,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Iq200BothLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2550,
+          "line": 2545,
           "column": 13,
           "handlers": [
             {
@@ -24228,7 +24228,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Iq200BothLab/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2571,
+          "line": 2566,
           "column": 9,
           "handlers": [
             {
@@ -24249,7 +24249,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Iq200BothLab/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2580,
+          "line": 2575,
           "column": 11,
           "handlers": [
             {
@@ -24283,7 +24283,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#StoryLayersLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2622,
+          "line": 2617,
           "column": 11,
           "handlers": [
             {
@@ -24319,7 +24319,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#MasterMapLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2698,
+          "line": 2693,
           "column": 11,
           "handlers": [
             {
@@ -24355,7 +24355,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#GoldenRuleLab/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2792,
+          "line": 2787,
           "column": 11,
           "handlers": [
             {
@@ -24391,7 +24391,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#FinalCheckLab/1",
           "tag": "input",
           "type": null,
-          "line": 2843,
+          "line": 2838,
           "column": 19,
           "handlers": [
             {
@@ -24415,7 +24415,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#FinalCheckLab/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2871,
+          "line": 2866,
           "column": 9,
           "handlers": [
             {
@@ -24449,7 +24449,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Ex26Choose/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2945,
+          "line": 2940,
           "column": 19,
           "handlers": [
             {
@@ -24473,7 +24473,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Ex26Choose/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2967,
+          "line": 2962,
           "column": 9,
           "handlers": [
             {
@@ -24494,7 +24494,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Ex26Choose/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 2981,
+          "line": 2976,
           "column": 13,
           "handlers": [
             {
@@ -24528,7 +24528,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#CompleteStory/1",
           "tag": "input",
           "type": null,
-          "line": 3033,
+          "line": 3028,
           "column": 19,
           "handlers": [
             {
@@ -24551,7 +24551,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#CompleteStory/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 3070,
+          "line": 3065,
           "column": 9,
           "handlers": [
             {
@@ -24572,7 +24572,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#CompleteStory/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 3084,
+          "line": 3079,
           "column": 13,
           "handlers": [
             {
@@ -24606,7 +24606,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#GrammarDetective/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 3136,
+          "line": 3131,
           "column": 13,
           "handlers": [
             {
@@ -24629,7 +24629,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#GrammarDetective/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 3190,
+          "line": 3185,
           "column": 9,
           "handlers": [
             {
@@ -24650,7 +24650,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#GrammarDetective/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 3204,
+          "line": 3199,
           "column": 13,
           "handlers": [
             {
@@ -24684,7 +24684,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#FinalBoss/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 3264,
+          "line": 3259,
           "column": 15,
           "handlers": [
             {
@@ -24707,7 +24707,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#FinalBoss/2",
           "tag": "textarea",
           "type": null,
-          "line": 3296,
+          "line": 3291,
           "column": 9,
           "handlers": [
             {
@@ -24728,7 +24728,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#FinalBoss/3",
           "tag": "button",
           "type": "\"button\"",
-          "line": 3312,
+          "line": 3307,
           "column": 11,
           "handlers": [
             {
@@ -24762,7 +24762,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Cover/1",
           "tag": "button",
           "type": "\"button\"",
-          "line": 3363,
+          "line": 3358,
           "column": 9,
           "handlers": [],
           "labelEvidence": "<div className=\"flex flex-wrap items-center justify-between gap-2\"> <En className=\"text-xs font-black tracking-widest text-orange-800\">{VIEW_EVENT_TAG}</En> <span className=\"text-2xl\">📸</span> </div> <div className=\"mt-2 text-base font-black text-orange-900\"> <Rich text={VIEW_EVENT_AR} /> </div> <En className=\"mt-1 block text-left text-sm font-black text-orange-800\">I watched TV last night.</En>",
@@ -24778,7 +24778,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Cover/2",
           "tag": "button",
           "type": "\"button\"",
-          "line": 3377,
+          "line": 3372,
           "column": 9,
           "handlers": [],
           "labelEvidence": "<div className=\"flex flex-wrap items-center justify-between gap-2\"> <En className=\"text-xs font-black tracking-widest text-teal-800\">{VIEW_PROGRESS_TAG}</En> <span className=\"text-2xl\">🎥</span> </div> <div className=\"mt-2 text-base font-black text-teal-900\"> <Rich text={VIEW_PROGRESS_AR} /> </div> <En className=\"mt-1 block text-left text-sm font-black text-teal-800\">I was watching TV at 9:00 last night.</En>",
@@ -24807,7 +24807,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Closing/1",
           "tag": "button",
           "type": null,
-          "line": 3538,
+          "line": 3533,
           "column": 9,
           "handlers": [
             {
@@ -24841,7 +24841,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#SlideView26/1",
           "tag": "Closing",
           "type": null,
-          "line": 3594,
+          "line": 3589,
           "column": 14,
           "handlers": [
             {
@@ -24875,7 +24875,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Rail/1",
           "tag": "button",
           "type": null,
-          "line": 3642,
+          "line": 3637,
           "column": 9,
           "handlers": [
             {
@@ -24896,7 +24896,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Rail/2",
           "tag": "button",
           "type": null,
-          "line": 3666,
+          "line": 3661,
           "column": 17,
           "handlers": [
             {
@@ -24933,7 +24933,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Lesson26/1",
           "tag": "Rail",
           "type": null,
-          "line": 3732,
+          "line": 3727,
           "column": 11,
           "handlers": [
             {
@@ -24954,7 +24954,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Lesson26/2",
           "tag": "button",
           "type": null,
-          "line": 3736,
+          "line": 3731,
           "column": 13,
           "handlers": [
             {
@@ -24975,7 +24975,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Lesson26/3",
           "tag": "SlideView26",
           "type": null,
-          "line": 3760,
+          "line": 3755,
           "column": 15,
           "handlers": [
             {
@@ -24996,7 +24996,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Lesson26/4",
           "tag": "button",
           "type": null,
-          "line": 3765,
+          "line": 3760,
           "column": 15,
           "handlers": [
             {
@@ -25017,7 +25017,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Lesson26/5",
           "tag": "button",
           "type": null,
-          "line": 3773,
+          "line": 3768,
           "column": 15,
           "handlers": [
             {
@@ -25038,7 +25038,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Lesson26/6",
           "tag": "div",
           "type": null,
-          "line": 3785,
+          "line": 3780,
           "column": 9,
           "handlers": [
             {
@@ -25059,7 +25059,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Lesson26/7",
           "tag": "div",
           "type": null,
-          "line": 3787,
+          "line": 3782,
           "column": 11,
           "handlers": [
             {
@@ -25080,7 +25080,7 @@
           "id": "src/lessons/lesson26/Lesson26.tsx#Lesson26/8",
           "tag": "Rail",
           "type": null,
-          "line": 3788,
+          "line": 3783,
           "column": 13,
           "handlers": [
             {
@@ -32904,7 +32904,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#NegativeEx/1",
           "tag": "SmallBtn",
           "type": null,
-          "line": 810,
+          "line": 809,
           "column": 19,
           "handlers": [
             {
@@ -32927,7 +32927,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#NegativeEx/2",
           "tag": "SmallBtn",
           "type": null,
-          "line": 814,
+          "line": 813,
           "column": 17,
           "handlers": [
             {
@@ -32950,7 +32950,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#NegativeEx/3",
           "tag": "SmallBtn",
           "type": null,
-          "line": 815,
+          "line": 814,
           "column": 17,
           "handlers": [
             {
@@ -32973,7 +32973,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#NegativeEx/4",
           "tag": "input",
           "type": null,
-          "line": 819,
+          "line": 818,
           "column": 15,
           "handlers": [
             {
@@ -33009,7 +33009,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#SwapItem/1",
           "tag": "button",
           "type": null,
-          "line": 874,
+          "line": 873,
           "column": 9,
           "handlers": [
             {
@@ -33043,7 +33043,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#MCQEx/1",
           "tag": "button",
           "type": null,
-          "line": 910,
+          "line": 909,
           "column": 19,
           "handlers": [
             {
@@ -33080,7 +33080,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#FixEx/1",
           "tag": "button",
           "type": null,
-          "line": 934,
+          "line": 933,
           "column": 13,
           "handlers": [
             {
@@ -33116,7 +33116,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#Closing/1",
           "tag": "button",
           "type": null,
-          "line": 1043,
+          "line": 1042,
           "column": 11,
           "handlers": [
             {
@@ -33150,7 +33150,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#SlideView/1",
           "tag": "Closing",
           "type": null,
-          "line": 1089,
+          "line": 1088,
           "column": 14,
           "handlers": [
             {
@@ -33184,7 +33184,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#SmallBtn/1",
           "tag": "button",
           "type": null,
-          "line": 1118,
+          "line": 1117,
           "column": 5,
           "handlers": [
             {
@@ -33218,7 +33218,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#Rail/1",
           "tag": "button",
           "type": null,
-          "line": 1157,
+          "line": 1156,
           "column": 9,
           "handlers": [
             {
@@ -33239,7 +33239,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#Rail/2",
           "tag": "button",
           "type": null,
-          "line": 1170,
+          "line": 1169,
           "column": 17,
           "handlers": [
             {
@@ -33276,7 +33276,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#Lesson3/1",
           "tag": "Rail",
           "type": null,
-          "line": 1241,
+          "line": 1240,
           "column": 11,
           "handlers": [
             {
@@ -33297,7 +33297,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#Lesson3/2",
           "tag": "button",
           "type": null,
-          "line": 1247,
+          "line": 1246,
           "column": 13,
           "handlers": [
             {
@@ -33318,7 +33318,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#Lesson3/3",
           "tag": "SlideView",
           "type": null,
-          "line": 1265,
+          "line": 1264,
           "column": 15,
           "handlers": [
             {
@@ -33339,7 +33339,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#Lesson3/4",
           "tag": "button",
           "type": null,
-          "line": 1271,
+          "line": 1270,
           "column": 15,
           "handlers": [
             {
@@ -33360,7 +33360,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#Lesson3/5",
           "tag": "button",
           "type": null,
-          "line": 1275,
+          "line": 1274,
           "column": 15,
           "handlers": [
             {
@@ -33381,7 +33381,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#Lesson3/6",
           "tag": "div",
           "type": null,
-          "line": 1284,
+          "line": 1283,
           "column": 9,
           "handlers": [
             {
@@ -33402,7 +33402,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#Lesson3/7",
           "tag": "div",
           "type": null,
-          "line": 1286,
+          "line": 1285,
           "column": 11,
           "handlers": [
             {
@@ -33423,7 +33423,7 @@
           "id": "src/lessons/lesson3/Lesson3.tsx#Lesson3/8",
           "tag": "Rail",
           "type": null,
-          "line": 1287,
+          "line": 1286,
           "column": 13,
           "handlers": [
             {

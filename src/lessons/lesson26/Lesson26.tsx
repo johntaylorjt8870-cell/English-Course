@@ -972,12 +972,7 @@ function WhenVsWhileLab({ lines }: { lines: string[] }) {
       </div>
       <div className="mt-3 rounded-2xl border-2 border-white bg-white p-3">
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <span className={`rounded-xl px-3 py-1.5 text-sm font-black ${active ? "bg-amber-500 text-white" : "bg-sky-600 text-white"}`}>
-            <En>{word}</En>
-          </span>
-          <span className="text-sm font-bold text-slate-700">
-            <Rich text={mean} />
-          </span>
+          <EnAr en={word} ar={<Rich text={mean} />} enClassName={`rounded-xl px-3 py-1.5 text-sm font-black ${active ? "bg-amber-500 text-white" : "bg-sky-600 text-white"}`} arClassName="text-sm font-bold text-slate-700" />
         </div>
         <div className="mt-3 space-y-2">
           <TrackBar label={<Rich text={first} />} color="bg-teal-500" width="100%" />
@@ -2470,10 +2465,10 @@ function Iq200MatchLab({ lines }: { lines: string[] }) {
         </div>
         <div className="mt-2 grid gap-2 sm:grid-cols-2">
           <div className="rounded-xl bg-sky-50 px-3 py-2 text-xs font-bold text-sky-900">
-            <En className="font-black">{m1Key}</En> <Rich text={m1} />
+            <EnAr en={<En className="font-black">{m1Key}</En>} ar={<Rich text={m1} />} />
           </div>
           <div className="rounded-xl bg-sky-50 px-3 py-2 text-xs font-bold text-sky-900">
-            <En className="font-black">{m2Key}</En> <Rich text={m2} />
+            <EnAr en={<En className="font-black">{m2Key}</En>} ar={<Rich text={m2} />} />
           </div>
         </div>
         <div className="mt-2 text-center text-xs font-black text-slate-500">

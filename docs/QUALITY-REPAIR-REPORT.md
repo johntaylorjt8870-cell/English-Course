@@ -10,9 +10,90 @@
 - Source wording, answer values and existing ledgers are preserved. This iteration adds stable IDs to Lesson 2 exercise metadata; it does not rewrite its questions or answers.
 - Commit status: the continuation implementation and evidence are recorded together on this branch; its exact SHA is recorded in the PR #41 progress comment. Previously verified commits `b762e4e` and `68595c7` are retained.
 
-## Follow-up to `59ba597` — current status
+## Continuation from `ee70138` — latest verified status
 
-**Partial implementation, not completion of the three requested blockers.** Current evidence supersedes the earlier continuation snapshot below. The remaining 48 BIDI cases have not all received individual component/severity/geometry review; the whole-course behavioral registry and the 74 teacher provenance gaps are not finished. No merge-readiness claim is made.
+**Partial repair; all three global acceptance gates remain blocked.** This section supersedes numerical status in the historical sections below. Work stays on the existing session branch and OPEN/DRAFT PR #41; no merge or new PR.
+
+### A. 24 additional BIDI repairs; 24 findings remain open
+
+| Category | At ee70138 | Current | Repaired |
+|---|---:|---:|---:|
+| Paragraph/pair | 32 | 10 | 22 |
+| Row | 16 | 14 | 2 |
+| Alternatives | 0 | 0 | 0 |
+| Total | **48** | **24** | **24** |
+
+The full unchanged oracle reports **zero new findings and zero matching exceptions**. No threshold, negative control, baseline, or allowlist was relaxed. The historic 68-case ledger now records 44 repairs and 24 open cases. Passing the existing ratchet is not zero-defect certification.
+
+- Before production edits, `test-bidi-scene-repairs.mjs` exited **1** against the actual pre-repair scenes. All 24 selected cases reproduced their defect at at least one tested width.
+- Audit-only source instrumentation traced **48/48** originals to exact rendered source hosts/functions. Saved original App DOM fixtures are retained as compressed negative controls, not regenerated from current code.
+- Chromium **153.0.8010.0**, production CSS, desktop **1180px** and narrow **390px**: all **24/24** repaired cases now pass at both widths. The test also retains all **48/48** cases and checks unchanged normalized rendered wording at both widths.
+- The `-ed` / `-ING` repair is in the existing shared parser: an attached leading hyphen remains part of its Latin suffix. Other changes send complete semantic labels through `LatinRuns`, or group existing English/Arabic fields using `EnAr`. No new direction helper, local CSS override, source-data rewrite, or activity behavior change.
+- Geometry compares overlapping vertical glyph rectangles, not identical top coordinates across different font sizes. Evidence consists of real-browser glyph positions from actual App step snapshots, **not** browser-driven certification of every interactive state. Animations are frozen at their final state.
+
+Every original ID, exact source/component, severity, root-cause assessment, disposition, and per-lesson total is in [BIDI-SCENE-REVIEW.md](audits/BIDI-SCENE-REVIEW.md) / [bidi-scene-review.json](audits/bidi-scene-review.json). Before/after individual character rectangles are in `bidi-scene-geometry-{before,after}.json`.
+
+**Remaining 24 are not waived.** They include prior-sentence punctuation mistaken for a Latin prefix, a native-select cross-option target, independent topic pills, Arabic question/contrast/conjunction flows, and unresolved mixed formula/rail punctuation boundaries. These are individually described, not blanket false-positive exemptions. Native option ranges are zero and the narrow rail is hidden: neither is proof of correct rendering. Unsafe semantic reinterpretations were left open rather than forcing every Arabic sentence into LTR.
+
+Reproduce from the current checkout:
+
+```sh
+npm run audit:bidi-scenes
+npm run check:english-direction
+npm run audit:english-direction
+```
+
+The first command rebuilds, remeasures immutable pre-fix scenes, checks all 24 negative controls, crawls the current real App for **all 48 original targets including repaired cases**, measures the new scenes, asserts the repair contracts and wording preservation, and writes the per-case review. Missing scenes fail rather than disappearing from the denominator.
+
+### B. Whole-course activity certification remains unfinished
+
+**No additional activity instance was behaviorally certified in this continuation.** The verified Lesson 2 five-instance / 29-question suite was preserved and rerun successfully. Existing primary-assessment coverage remains 54 browser scenarios over 38 assessments, not exhaustive embedded-activity coverage.
+
+The refreshed source census still contains **875 component templates / 1,681 control sites**. These are not unique activities. The fresh initial-state App crawl recorded **1,346 observation groups / 7,861 controls / 822 unobserved source sites**; these likewise are not a reconciled activity denominator. Reproduce with `node scripts/audit-bidi-mixed.mjs --activity-report docs/audits/activity-observations.json`. **Unique activities discovered: unknown; whole-course verified/excluded/unresolved totals: not established.** Only the scoped Lesson 2 count is 5 verified / 5 in that suite, with no inference about the rest of Lessons 1–32.
+
+`node scripts/audit-activity-inventory.mjs --require-verified` was rerun and **fails (exit 1)**. The census drift gate still detects changed/new source controls, but it is not the requested permanent per-instance behavioral gate. A stable runtime/source instance registry, justified exclusions, empty/partial/complete and repeat/reset/isolation/keyboard tests in real lesson shells, and a reconciled denominator remain required. This blocker is not closed by the refreshed inventory or passing shared assessment tests.
+
+### C. All 74 original provenance records itemized; none closed
+
+`audit-teacher-provenance.mjs` reconciles all original IDs against `ee70138`, records exact known teacher-group references or the explicit lack of identified textbook items, canonical source locations, source/data/derived-ledger hashes and exports, known answer-reference numbers, missing question/subquestion/page evidence, solution-verification limits, and the required next action.
+
+- **74 original records / 0 closed / 74 unresolved.**
+- Original PDF/image/document candidates among **tracked repository files: 0**. This is not a claim about external or untracked materials.
+- Existing 47 teacher answer groups / 113 numbered answer references and Lesson 2's 29 canonical links remain distinct from original-question verification.
+- No page, printed question number, original wording, or textbook-to-solution correspondence was inferred from canonical indices.
+- [TEACHER-PROVENANCE.md](audits/TEACHER-PROVENANCE.md) and [teacher-provenance.json](audits/teacher-provenance.json) retain every original ID and its evidence/result/remaining action. Lesson-level gaps that lack an exact source-question identity explicitly remain unidentified.
+
+```sh
+node scripts/audit-teacher-source.mjs
+node scripts/audit-teacher-provenance.mjs
+node scripts/audit-teacher-provenance.mjs --require-closed # expected FAIL, 74 unresolved
+```
+
+The provenance discovery check is reproducible; it does not automatically close gaps. Closure still needs original source material and reviewed question/solution/numbering/navigation evidence, retaining the original IDs.
+
+### Fresh final verification
+
+| Check | Result and scope |
+|---|---|
+| Production build | PASS; size warning remains |
+| English direction/source checks and rendering regressions | PASS; 59/59 rendering assertions, negative controls preserved |
+| Complete BIDI crawl | Ratchet PASS; **24 open findings**, not zero defects |
+| All-original-scene repair suite | PASS; 48 retained scenes, 24 reproduced pre-fix failures and 24 post-fix passes, two widths |
+| Existing Chromium BIDI suite | PASS, including its negative control |
+| Lesson navigation | PASS, 90 checks |
+| Lessons 24, 26–32; final-test/coverage/source-reveal audits | PASS via `audit:english-direction` |
+| Assessment suites | PASS within existing scope: 54 browser scenarios / 38 assessments; 7 teacher gates; Final Test 854 checks |
+| Lesson 2 full-shell activities | PASS: 5/5 activities, 29 questions, 29/29 gated canonical references |
+| Whole-course activity certification | **FAIL / denominator unknown** |
+| Teacher-source census and provenance discovery | PASS as inventory/drift checks; **74 original-source gaps unresolved** |
+| Strict provenance closure | **FAIL**, exit 1 |
+| Explicit tsc comparison vs `1f879216…` | Current **178** diagnostics / base **179**; both compiler exits **2**; **0 new normalized / 1 removed**. Typecheck still FAILS |
+
+Existing Lesson 2 feedback timing, Space-shortcut guard, canonical navigation and authentication were not modified. Full production diff was reviewed for wording/data/auth/behavior changes. Duplicate React-key warnings, existing type errors, and build-size warnings remain disclosed. This is **not complete, not merge-ready, and not exhaustive behavioral or textbook-source certification**.
+
+## Historical follow-up to `59ba597` (superseded status)
+
+**Historical partial implementation, not completion of the three requested blockers.** The latest continuation above supersedes this snapshot. The remaining 48 BIDI cases have not all received individual component/severity/geometry review; the whole-course behavioral registry and the 74 teacher provenance gaps are not finished. No merge-readiness claim is made.
 
 ### 1. BIDI: 20 of the 68 starting findings repaired; 48 remain
 

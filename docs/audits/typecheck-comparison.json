@@ -111,7 +111,7 @@
       },
       {
         "file": "src/lessons/lesson21/Lesson21.tsx",
-        "line": 2126,
+        "line": 2125,
         "column": 128,
         "code": "TS2677",
         "message": "A type predicate's type must be assignable to its parameter's type.\n  Type 'string' is not assignable to type '\"child\" | \"mouse\" | \"woman\"'."

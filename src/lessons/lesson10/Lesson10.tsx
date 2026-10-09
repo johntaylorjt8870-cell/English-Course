@@ -315,7 +315,7 @@ function VsSimpleAdvanced() {
     <div className="grid gap-3 md:grid-cols-2">
       <div className="rounded-3xl border-2 border-slate-200 bg-slate-50 p-5">
         <div className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-600">
-          <span className="h-2 w-2 rounded-full bg-slate-400" /> Present Simple — عادة / روتين / حقيقة / مستقر
+          <span className="h-2 w-2 rounded-full bg-slate-400" /> <LatinRuns text="Present Simple — عادة / روتين / حقيقة / مستقر" />
         </div>
         <En className="text-xl font-extrabold text-slate-700">Omar rides his bicycle to school every day.</En>
         <div className="mt-1 text-sm text-slate-500">عمر يركب دراجته إلى المدرسة كل يوم — روتين.</div>
@@ -327,7 +327,7 @@ function VsSimpleAdvanced() {
       </div>
       <div className="rounded-3xl border-2 border-cyan-200 bg-cyan-50 p-5">
         <div className="mb-2 flex items-center gap-2 text-sm font-bold text-cyan-700">
-          <span className="h-2 w-2 rounded-full bg-cyan-500" /> Present Continuous — الآن / هذه الفترة / مؤقت
+          <span className="h-2 w-2 rounded-full bg-cyan-500" /> <LatinRuns text="Present Continuous — الآن / هذه الفترة / مؤقت" />
         </div>
         <En className="text-xl font-extrabold text-slate-800">Omar is riding the bus this week.</En>
         <div className="mt-1 text-sm text-slate-600">عمر يركب الحافلة هذا الأسبوع — وضع مؤقت.</div>

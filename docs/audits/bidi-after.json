@@ -14,7 +14,7 @@
       "exceptions": 0
     },
     "3": {
-      "pair": 5,
+      "pair": 0,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
@@ -44,19 +44,19 @@
       "exceptions": 0
     },
     "8": {
-      "pair": 1,
+      "pair": 0,
       "alternatives": 0,
       "row": 1,
       "exceptions": 0
     },
     "9": {
-      "pair": 1,
+      "pair": 0,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
     },
     "10": {
-      "pair": 4,
+      "pair": 2,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
@@ -68,13 +68,13 @@
       "exceptions": 0
     },
     "12": {
-      "pair": 3,
+      "pair": 1,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
     },
     "13": {
-      "pair": 6,
+      "pair": 0,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
@@ -110,7 +110,7 @@
       "exceptions": 0
     },
     "19": {
-      "pair": 1,
+      "pair": 0,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
@@ -122,7 +122,7 @@
       "exceptions": 0
     },
     "21": {
-      "pair": 1,
+      "pair": 0,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
@@ -130,7 +130,7 @@
     "22": {
       "pair": 0,
       "alternatives": 0,
-      "row": 2,
+      "row": 1,
       "exceptions": 0
     },
     "23": {
@@ -146,15 +146,15 @@
       "exceptions": 0
     },
     "25": {
-      "pair": 1,
+      "pair": 0,
       "alternatives": 0,
       "row": 0,
       "exceptions": 0
     },
     "26": {
-      "pair": 2,
+      "pair": 0,
       "alternatives": 0,
-      "row": 3,
+      "row": 2,
       "exceptions": 0
     },
     "27": {
@@ -196,66 +196,6 @@
   },
   "findings": [
     {
-      "lesson": 3,
-      "kind": "para",
-      "latin": "I am happy",
-      "arabic": "أنا سعيد",
-      "sig": "para:div.",
-      "logical": "I am happy.أنا سعيد.",
-      "visual": ".ديعس انأI am happy.",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 3,
-      "kind": "para",
-      "latin": "He is tall",
-      "arabic": "هو طويل",
-      "sig": "para:div.",
-      "logical": "He is tall.هو طويل.",
-      "visual": ".ليوط وهHe is tall.",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 3,
-      "kind": "para",
-      "latin": "She is a teacher",
-      "arabic": "هي معلّمة",
-      "sig": "para:div.",
-      "logical": "She is a teacher.هي معلّمة.",
-      "visual": ".ةمّلعم يهShe is a teacher.",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 3,
-      "kind": "para",
-      "latin": "We are ready",
-      "arabic": "نحن جاهزون",
-      "sig": "para:div.",
-      "logical": "We are ready.نحن جاهزون.",
-      "visual": ".نوزهاج نحنWe are ready.",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 3,
-      "kind": "para",
-      "latin": "They are friends",
-      "arabic": "هم أصدقاء",
-      "sig": "para:div.",
-      "logical": "They are friends.هم أصدقاء.",
-      "visual": ".ءاقدصأ مهThey are friends.",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
       "lesson": 4,
       "kind": "para",
       "latin": "Verb to beArticle",
@@ -292,30 +232,6 @@
       "disposition": "unresolved; not waived"
     },
     {
-      "lesson": 8,
-      "kind": "para",
-      "latin": "every morning",
-      "arabic": "علامة قوية على العادة",
-      "sig": "para:span.rounded-full.bg-indigo-50.px-3",
-      "logical": "📌 every morning ← علامة قوية على العادة",
-      "visual": "ةداعلا ىلع ةيوق ةمالع ← 📌 every morning",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 9,
-      "kind": "para",
-      "latin": "I",
-      "arabic": "نستخدم",
-      "sig": "para:div.mt-3.text-center.text-sm",
-      "logical": "I ← نستخدم am",
-      "visual": "am مدختسن ← I",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
       "lesson": 10,
       "kind": "para",
       "latin": "Continuous؟",
@@ -323,30 +239,6 @@
       "sig": "para:span.truncate.font-semibold",
       "logical": "Present Simple أم Continuous؟ — اختر ثم اشرح السبب",
       "visual": "ببسلا حرشا مث رتخا — Present Simple مأ Continuous؟",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 10,
-      "kind": "para",
-      "latin": "Present Simple",
-      "arabic": "عادة",
-      "sig": "para:",
-      "logical": "Present Simple — عادة / روتين / حقيقة / مستقر",
-      "visual": "رقتسم / ةقيقح / نيتور / ةداع — Present Simple",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 10,
-      "kind": "para",
-      "latin": "Present Continuous",
-      "arabic": "الآن",
-      "sig": "para:",
-      "logical": "Present Continuous — الآن / هذه الفترة / مؤقت",
-      "visual": "تقؤم / ةرتفلا هذه / نآلا — Present Continuous",
       "category": "pair",
       "exception": false,
       "disposition": "unresolved; not waived"
@@ -366,107 +258,11 @@
     {
       "lesson": 12,
       "kind": "para",
-      "latin": "They played",
-      "arabic": "الجميع متشابهون",
-      "sig": "para:div.mt-3.text-center.text-xs",
-      "logical": "في الماضي: I played · You played · He played · She played · It played · We played · They played — الجميع متشابهون!",
-      "visual": "!نوهباشتم عيمجلا — I played · You played · He played · She played · It played · We played · They played :يضاملا يف",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 12,
-      "kind": "para",
       "latin": "+ y",
       "arabic": "نحوّل",
       "sig": "para:p.mt-2.max-w-[88%].text-lg",
       "logical": "إذا انتهى الفعل بـ: حرف ساكن + y — نحوّل y → i ثم نضيف ed.",
       "visual": "ed.فيضن مث y → i y — لّوحن + نكاس فرح :ـب لعفلا ىهتنا اذإ",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 12,
-      "kind": "para",
-      "latin": "-ed",
-      "arabic": "اضغط أي فعل لترى القاعدة",
-      "sig": "para:div.text-center.font-bold.text-orange-800",
-      "logical": "🛠️ آلة قواعد -ed — اضغط أي فعل لترى القاعدة",
-      "visual": "ed — ةدعاقلا ىرتل لعف يأ طغضا- دعاوق ةلآ 🛠️",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 13,
-      "kind": "para",
-      "latin": "did",
-      "arabic": "فعل مساعد",
-      "sig": "para:span.inline-flex.flex-col.items-center",
-      "logical": "did — فعل مساعد",
-      "visual": "دعاسم لعف — did",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 13,
-      "kind": "para",
-      "latin": "didn't",
-      "arabic": "النفي",
-      "sig": "para:span.inline-flex.flex-col.items-center",
-      "logical": "didn't — النفي",
-      "visual": "يفنلا — didn't",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 13,
-      "kind": "para",
-      "latin": "Did",
-      "arabic": "والفعل يبقى",
-      "sig": "para:div.mt-3.rounded-2xl.bg-white",
-      "logical": "Do / Does → Did — والفعل يبقى Base Verb",
-      "visual": "Base Verb ىقبي لعفلاو — Did → Do / Does",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 13,
-      "kind": "para",
-      "latin": "did",
-      "arabic": "فعل أساسي",
-      "sig": "para:button.rounded-xl.border-2.px-5",
-      "logical": "did = فعل أساسي",
-      "visual": "يساسأ لعف = did",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 13,
-      "kind": "para",
-      "latin": "Did",
-      "arabic": "فعل مساعد",
-      "sig": "para:button.rounded-xl.border-2.px-5",
-      "logical": "Did = فعل مساعد",
-      "visual": "دعاسم لعف = Did",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 13,
-      "kind": "para",
-      "latin": "DID + Base Verb",
-      "arabic": "فكر بالقاعدة، وليس بالحفظ",
-      "sig": "para:div.rounded-3xl.border-2.border-violet-200",
-      "logical": "DID + Base Verb — فكر بالقاعدة، وليس بالحفظ.",
-      "visual": ".ظفحلاب سيلو ،ةدعاقلاب ركف — Base Verb + DID",
       "category": "pair",
       "exception": false,
       "disposition": "unresolved; not waived"
@@ -528,18 +324,6 @@
       "logical": "بعض F / FE → VES | مع وجود استثناءات.",
       "visual": "(row)",
       "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 19,
-      "kind": "para",
-      "latin": "FINAL BOSS",
-      "arabic": "اقرأ",
-      "sig": "para:div.text-center.text-sm.font-bold",
-      "logical": "🏆 FINAL BOSS — اقرأ:",
-      "visual": ":أرقا — 🏆 FINAL BOSS",
-      "category": "pair",
       "exception": false,
       "disposition": "unresolved; not waived"
     },
@@ -616,36 +400,12 @@
       "disposition": "unresolved; not waived"
     },
     {
-      "lesson": 21,
-      "kind": "para",
-      "latin": "in",
-      "arabic": "في",
-      "sig": "para:div.mt-3.rounded-2xl.border-2",
-      "logical": "in = في",
-      "visual": "يف = in",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
       "lesson": 22,
       "kind": "row",
       "latin": "Adjectives",
       "arabic": "وحتى الجمل الأطول.",
       "sig": "row:span.rounded-lg.bg-white.px-2.5 >> span.rounded-lg.bg-white.px-2.5 in div.mt-2.flex.flex-wrap",
       "logical": "Adjectives | وحتى الجمل الأطول.",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 22,
-      "kind": "row",
-      "latin": "on",
-      "arabic": "تخبرنا بالعلاقة بين: book و table.",
-      "sig": "row:span.ltr.font-en.rounded-xl >> span.text-base.font-bold.text-slate-700 in div.mt-2.flex.flex-wrap",
-      "logical": "on | تخبرنا بالعلاقة بين: book و table.",
       "visual": "(row)",
       "category": "row",
       "exception": false,
@@ -700,18 +460,6 @@
       "disposition": "unresolved; not waived"
     },
     {
-      "lesson": 25,
-      "kind": "para",
-      "latin": "-ING",
-      "arabic": "صيغة",
-      "sig": "para:div.truncate.text-sm.font-bold",
-      "logical": "WH و -ING · صيغة -ING — The -ING Form",
-      "visual": "-ING — The -ING FormING · ةغيص- وWH",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
       "lesson": 26,
       "kind": "row",
       "latin": "Past Continuous",
@@ -726,48 +474,12 @@
     {
       "lesson": 26,
       "kind": "row",
-      "latin": "when",
-      "arabic": "غالبًا نستخدمه لإدخال حدث وقع أثناء فعل آخر.",
-      "sig": "row:span.rounded-xl.px-3.py-1.5 >> span.text-sm.font-bold.text-slate-700 in div.flex.flex-wrap.items-center",
-      "logical": "when | غالبًا نستخدمه لإدخال حدث وقع أثناء فعل آخر.",
-      "visual": "(row)",
-      "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 26,
-      "kind": "row",
       "latin": "was/were + ing",
       "arabic": "و",
       "sig": "row:span.ltr.font-en.rounded-xl >> span.self-center.text-xs.font-black in div.flex.flex-wrap.justify-center",
       "logical": "was/were + ing | و",
       "visual": "(row)",
       "category": "row",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 26,
-      "kind": "para",
-      "latin": "A",
-      "arabic": "عندما نريد التركيز على عملية المشي في سياق معين",
-      "sig": "para:div.rounded-xl.bg-sky-50.px-3",
-      "logical": "A: عندما نريد التركيز على عملية المشي في سياق معين.",
-      "visual": ".نيعم قايس يف يشملا ةيلمع ىلع زيكرتلا ديرن امدنع A:",
-      "category": "pair",
-      "exception": false,
-      "disposition": "unresolved; not waived"
-    },
-    {
-      "lesson": 26,
-      "kind": "para",
-      "latin": "B",
-      "arabic": "عندما نريد ببساطة إخبار الشخص أن المشي إلى المدرسة حدث",
-      "sig": "para:div.rounded-xl.bg-sky-50.px-3",
-      "logical": "B: عندما نريد ببساطة إخبار الشخص أن المشي إلى المدرسة حدث.",
-      "visual": ".ثدح ةسردملا ىلإ يشملا نأ صخشلا رابخإ ةطاسبب ديرن امدنع B:",
-      "category": "pair",
       "exception": false,
       "disposition": "unresolved; not waived"
     }

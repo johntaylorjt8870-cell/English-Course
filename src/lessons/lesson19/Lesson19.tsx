@@ -1514,7 +1514,7 @@ function FinalBossEx() {
     <div className="space-y-4" data-en-seq="l19-boss">
       <div className="rounded-3xl border-2 border-amber-300 bg-gradient-to-br from-amber-50 to-orange-50 p-4">
         <div className="text-center text-sm font-bold text-amber-700">
-          🏆 FINAL BOSS — <Rich text={FINAL_BOSS_19.readLabel} />
+          <LatinRuns text={`🏆 FINAL BOSS — ${FINAL_BOSS_19.readLabel}`} />
         </div>
         <div className="mt-2">
           <BossPassage />

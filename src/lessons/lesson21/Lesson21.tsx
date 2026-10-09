@@ -669,8 +669,7 @@ function LocationLab() {
         ))}
       </div>
       <div className="mt-3 rounded-2xl border-2 border-teal-200 bg-white p-3 text-center">
-        <En className="text-2xl font-black text-teal-800">{prep.en}</En>
-        <span className="text-base font-bold text-slate-600"> = <LatinRuns text={prep.ar ?? ""} /></span>
+        <EnAr en={prep.en} sep=" = " ar={prep.ar} enClassName="text-2xl font-black text-teal-800" arClassName="text-base font-bold text-slate-600" />
       </div>
       <div className="mt-3 text-center text-sm font-bold text-slate-500">
         <Rich text={PLACE_21.examplesLabel} />

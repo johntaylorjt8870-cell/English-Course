@@ -532,8 +532,7 @@ function PositionOverview() {
       </div>
       <SourceLine en={PREP_EXAMPLE.en} ar={PREP_EXAMPLE.ar} tone="focus" />
       <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
-        <En className="rounded-xl bg-teal-600 px-4 py-2 text-lg font-black text-white">{PREP_KEY_WORD.en}</En>
-        <Rich text={PREP_KEY_REL} className="text-base font-bold text-slate-700" />
+        <EnAr en={<En className="rounded-xl bg-teal-600 px-4 py-2 text-lg font-black text-white">{PREP_KEY_WORD.en}</En>} ar={<Rich text={PREP_KEY_REL} className="text-base font-bold text-slate-700" />} />
       </div>
       <div className="mt-3">
         <div className="mb-2 text-center text-sm font-bold text-slate-600">

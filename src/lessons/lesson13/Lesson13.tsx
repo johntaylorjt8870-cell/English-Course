@@ -156,7 +156,7 @@ function PartsLine({ parts, q = false, size = "md", label = true }: { parts: Par
       {parts.map((p, i) => (
         <span key={i} className="inline-flex flex-col items-center">
           <span className={`font-en inline-flex items-center rounded-2xl border-2 font-extrabold leading-tight ${RS[p.role].chip} ${sz}`}>{p.text}</span>
-          {label && <span dir="rtl" className="mt-0.5 text-[10px] font-bold text-slate-500">{ROLE13_AR[p.role]}</span>}
+          {label && <span dir="rtl" className="mt-0.5 text-[10px] font-bold text-slate-500"><LatinRuns text={ROLE13_AR[p.role]} /></span>}
         </span>
       ))}
       <span className="font-en pb-1 text-2xl font-bold text-slate-300">{q ? "?" : "."}</span>
@@ -579,7 +579,7 @@ function PresentPastToggle({ mode }: { mode: "question" | "negative" }) {
       <div className="mt-3 rounded-2xl bg-white p-3 text-center text-sm font-bold text-slate-600">
         {mode === "question" ? (
           <>
-            <En>Do / Does</En> → <En>Did</En> — والفعل يبقى <En>Base Verb</En>
+            <LatinRuns text="Do / Does → Did — والفعل يبقى Base Verb" />
           </>
         ) : (
           <>
@@ -789,10 +789,10 @@ function TwoJobsOfDid() {
     <div className="rounded-3xl border-2 border-amber-200 bg-amber-50 p-5">
       <Toolbar>
         <TabBtn on={pick === "main"} onClick={() => setPick("main")}>
-          <En>did</En> = فعل أساسي
+          <LatinRuns text="did = فعل أساسي" />
         </TabBtn>
         <TabBtn on={pick === "aux"} onClick={() => setPick("aux")} tone="violet">
-          <En>Did</En> = فعل مساعد
+          <LatinRuns text="Did = فعل مساعد" />
         </TabBtn>
       </Toolbar>
       <div key={pick} className="pop mt-4 rounded-2xl border-2 border-white bg-white p-4 text-center">
@@ -1096,7 +1096,7 @@ function IQ200Ex() {
         </button>
       </div>
       <div className="rounded-3xl border-2 border-violet-200 bg-violet-50 p-4 text-sm font-bold text-violet-900">
-        <Lbl en="DID" /> + <Lbl en="Base Verb" /> — <LatinRuns text={IQ200_TASK.note ?? ""} />
+        <EnAr en={<><Lbl en="DID" /> + <Lbl en="Base Verb" /></>} sep=" — " ar={IQ200_TASK.note ?? ""} />
       </div>
       <div className="rounded-2xl border-2 border-dashed border-slate-300 bg-white p-3 text-xs font-bold text-slate-500">
         ⓘ {IQ200_TASK.modelNote}

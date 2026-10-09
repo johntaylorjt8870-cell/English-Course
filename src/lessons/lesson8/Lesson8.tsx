@@ -65,7 +65,7 @@ function SentenceCard({ parts, ar, note, q }: { parts: Part8[]; ar: string; note
       <PartsLine parts={parts} q={q} />
       <div className="mt-2 flex flex-wrap items-center gap-2">
         <span className="text-lg text-slate-500">{ar}</span>
-        {note && <span className="rounded-full bg-indigo-50 px-3 py-1 text-sm font-bold text-indigo-700">📌 {note}</span>}
+        {note && <span className="rounded-full bg-indigo-50 px-3 py-1 text-sm font-bold text-indigo-700"><LatinRuns text={`📌 ${note}`} /></span>}
       </div>
     </div>
   );

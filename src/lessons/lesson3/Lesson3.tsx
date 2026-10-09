@@ -802,8 +802,7 @@ function NegativeEx({ ex }: { ex: Extract<Exercise, { type: "negative" }> }) {
             <div className="flex flex-wrap items-center gap-3">
               <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-slate-900 text-sm font-bold text-white">{i + 1}</span>
               <div>
-                <En className="text-xl font-bold text-slate-800">{it.aff.s} {it.aff.b} {it.aff.rest}.</En>
-                <span className="text-sm text-slate-500"><LatinRuns text={it.aff.ar ?? ""} /></span>
+                <EnAr en={<En className="text-xl font-bold text-slate-800">{it.aff.s} {it.aff.b} {it.aff.rest}.</En>} ar={it.aff.ar} arClassName="text-sm text-slate-500" />
               </div>
               <div className="mr-auto flex gap-2">
                 {!typed && (

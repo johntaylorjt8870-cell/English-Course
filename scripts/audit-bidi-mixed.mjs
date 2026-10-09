@@ -23,11 +23,14 @@
 // Limitations: the crawler clicks "التالي" only and never answers quizzes,
 // so answer feedback is not measured here; it is covered by the lesson audits.
 // ============================================================
+import assert from "node:assert/strict";
+import { gunzipSync } from "node:zlib";
 import { createRequire } from "node:module";
 import { mkdirSync, readFileSync, rmSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
+import { renderOriginInstrumentation } from "./lib/render-origin.mjs";
 import { activityInstrumentation, observeActivities } from "./lib/activity-observation.mjs";
 
 import { analyzeHtml } from "./lib/bidi-sim.mjs";
@@ -48,6 +51,14 @@ const LESSONS = process.env.ONLY ? process.env.ONLY.split(",").map(Number) : Arr
 const ACTIVITY_REPORT = process.argv[process.argv.indexOf("--activity-report") + 1];
 const OBSERVE = process.argv.includes("--activity-report");
 const activityObservations = [];
+const CAPTURE = process.argv.includes("--capture-cases");
+assert(!(CAPTURE && OBSERVE),"Run render-origin capture and activity observation separately; each uses its own AST instrumentation");
+const targetAt=process.argv.indexOf("--capture-targets");
+const targetPath=targetAt<0?null:process.argv[targetAt+1];
+const captureTargets=!targetPath?null:JSON.parse(targetPath.endsWith(".gz")?gunzipSync(readFileSync(targetPath)).toString():readFileSync(targetPath,"utf8"));
+assert(!captureTargets||CAPTURE,"--capture-targets requires --capture-cases");
+const capturedTargets=new Set();
+const scenes=[];
 const WRITE = process.argv.includes("--write-baseline");
 
 // ---------------- crawler ----------------
@@ -58,7 +69,7 @@ async function loadApp() {
   const outFile = join(dir, `app-${process.pid}.mjs`);
   await esbuild.build({
     absWorkingDir: root,
-    plugins: OBSERVE ? [activityInstrumentation(root)] : [],
+    plugins: CAPTURE ? [renderOriginInstrumentation(root)] : OBSERVE ? [activityInstrumentation(root)] : [],
     stdin: {
       contents: `export { default as App } from ${JSON.stringify(join(root, "src/App.tsx"))};
 export { createRoot } from "react-dom/client";
@@ -110,6 +121,23 @@ async function crawl(M) {
       if (html === prev) break;
       prev = html;
       if (!seen.has(html)) { seen.add(html); snapshots[n].push(html); if (OBSERVE) activityObservations.push(...observeActivities(document, n, i + 1)); }
+      if(CAPTURE && captureTargets){
+        const norm=t=>t.replace(/\s+/g,'');
+        for(const [ti,target] of captureTargets.entries()){
+          if(target.lesson!==n||capturedTargets.has(ti))continue;
+          const component=target.origin.split(':')[0];
+          let candidates=[...root.querySelectorAll('[data-render-origin]')].filter(el=>{
+            const match=target.kind==='row'?el.textContent.includes(target.latin)&&el.textContent.includes(target.arabic):norm(el.textContent)===norm(target.logical);
+            if(!match)return false;
+            for(let p=el;p&&p!==root;p=p.parentElement)if(p.getAttribute('data-render-origin')?.split(':')[0]===component)return true;
+            return false;
+          });
+          candidates.sort((a,b)=>a.textContent.length-b.textContent.length||a.querySelectorAll('*').length-b.querySelectorAll('*').length);
+          const el=candidates[0];if(!el)continue;
+          const origin=el.getAttribute('data-render-origin');
+          scenes.push({...target,step:i+1,origin,occurrence:[...root.querySelectorAll('[data-render-origin]')].filter(e=>e.getAttribute('data-render-origin')===origin).indexOf(el),element:el.outerHTML,html});capturedTargets.add(ti);
+        }
+      }
       const b = findNext();
       if (!b) break;
       b.click();
@@ -139,7 +167,17 @@ async function main() {
         for (const v of r.violations) {
           const kind = r.visual === "(row)" ? "row" : "para";
           const key = `${kind}|${v.latin}|${v.arabic}`;
-          if (!seen.has(key)) seen.set(key, { kind, latin: v.latin, arabic: v.arabic, sig: v.sig || "", logical: r.logical, visual: r.visual });
+          if (!seen.has(key)) {
+            const finding={ kind, latin: v.latin, arabic: v.arabic, sig: v.sig || "", logical: r.logical, visual: r.visual };
+            seen.set(key,finding);
+            if(CAPTURE && !captureTargets){
+              const doc=new JSDOM(html).window.document, norm=t=>t.replace(/\s+/g,'');
+              let candidates=[...doc.querySelectorAll('[data-render-origin]')].filter(e=>kind==='row'?e.textContent.includes(v.latin)&&e.textContent.includes(v.arabic):norm(e.textContent)===norm(r.logical));
+              candidates.sort((a,b)=>a.textContent.length-b.textContent.length||a.querySelectorAll('*').length-b.querySelectorAll('*').length);
+              const el=candidates[0],origin=el?.getAttribute('data-render-origin');
+              scenes.push({lesson:n,step:snaps[n].indexOf(html)+1,...finding,origin:origin||null,occurrence:el?[...doc.querySelectorAll('[data-render-origin]')].filter(e=>e.getAttribute('data-render-origin')===origin).indexOf(el):null,element:el?.outerHTML||null,html});
+            }
+          }
         }
       }
     }
@@ -160,6 +198,8 @@ async function main() {
     mkdirSync(dirname(destination), { recursive: true });
     writeFileSync(destination, JSON.stringify({ scope: "lesson step crawl; not all interaction states", byLesson, findings }, null, 2) + "\n");
   }
+  if(captureTargets)assert.equal(capturedTargets.size,captureTargets.filter(t=>LESSONS.includes(t.lesson)).length,"Original scene disappeared or changed wording; do not drop it");
+  if(CAPTURE){const path=process.argv[process.argv.indexOf('--capture-cases')+1];mkdirSync(dirname(path),{recursive:true});writeFileSync(path,JSON.stringify(scenes));}
   const total = uniq.length;
   const failures = [];
   const allowed = [];

@@ -406,7 +406,7 @@ function SubjectGrid() {
       <div className="mt-3 text-center text-xs font-bold text-slate-500">
         {mode === "past" ? (
           <>
-            في الماضي: <En>I played · You played · He played · She played · It played · We played · They played</En> — الجميع متشابهون!
+            <LatinRuns text="في الماضي: I played · You played · He played · She played · It played · We played · They played — الجميع متشابهون!" />
           </>
         ) : (
           <>

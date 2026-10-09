@@ -29,6 +29,16 @@
 
 Environment repair (not repository content): the clone was shallow, so historical commits referenced by the suites (`ee70138`, `59ba597`) were absent. `git fetch --unshallow origin` restored all 92 commits, and `npm install` restored `node_modules`.
 
+### 0. Concurrent change on the preserved branch (not by this session, not merged)
+
+While this iteration was running, a **different session** fast-forwarded the preserved branch `arena/3b39333f-english-course` from `8028958` to `4dacd31` — *"Add three-pass activity reach crawl and union reach into activity denominator"* (author `johntaylorjt8870-cell`, co-authored `arena-agent`, 2026-10-09 21:23:53 UTC).
+
+- `8028958` is **preserved**: `git merge-base --is-ancestor 8028958 origin/arena/3b39333f-english-course` succeeds. No branch was deleted and nothing was force-pushed by this session.
+- That commit adds `scripts/audit-activity-reach.mjs` and `docs/audits/activity-reach.json`: a three-pass discovery crawl (next-only per fresh mount, then one click of every non-navigation control per step, then a depth-2 navigation BFS) reaching **962 distinct source sites** from 52,325 raw snapshots / 292,337 raw control occurrences, which lowers the unreached discovery count from 822 to **719**.
+- **This branch does not contain it.** The 822 figure quoted in section 2 is the single-pass crawl that still runs here; the 962/719 figures belong to `4dacd31`.
+- It was **not** cherry-picked. It rewrites the same three files this iteration rewrote (`scripts/audit-activity-denominator.mjs`, `package.json`, `docs/QUALITY-REPAIR-REPORT.md`) plus `scripts/lib/activity-observation.mjs`, so applying it would be a conflict resolution, not a transfer. The standing instruction for unexpected branch state is to stop and report rather than improvise, so it is reported here. Reconciling the two activity work streams — its deeper *discovery* reach and this iteration's *instance* inventory plus P1–P4 behavioral probe — is the next owner decision.
+- The two are complementary, not contradictory: reach improves the discovery count; it does not establish a denominator. Both keep the certification gate failing.
+
 ### 1. BIDI — 48 original → 24 repaired in source → 24 resolved by correcting the oracle → **0 open**
 
 The 24 remaining findings were audit-oracle misattributions, not rendering defects. Each was resolved by correcting the oracle against Chromium glyph evidence and then proving the correction is narrow.

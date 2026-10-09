@@ -10,6 +10,122 @@
 - Source wording, answer values and existing ledgers are preserved. This iteration adds stable IDs to Lesson 2 exercise metadata; it does not rewrite its questions or answers.
 - Commit status: the continuation implementation and evidence are recorded together on this branch; its exact SHA is recorded in the PR #41 progress comment. Previously verified commits `b762e4e` and `68595c7` are retained.
 
+## Continuation from `aea5289` — current iteration (supersedes numbers below)
+
+**Status: NOT COMPLETE. Draft PR #41 must stay open and unmerged.** This iteration made verified progress on the activity denominator (new permanent gate), re-verified the whole pipeline with exact counts, and classified every remaining BIDI case from its actual rendered evidence. **No BIDI finding was resolved in this iteration, no activity instance was added to the verified set, and no provenance gap was closed.** Counts below are exact.
+
+### Branch and PR state
+
+- This work is on the session branch `arena/3b39333f-english-course`, created from `aea5289`. PR #41's head is `arena/8744e70e-english-course` at `aea5289`; this work does not change that PR's head, and no PR was opened or merged.
+- Environment repair (not repository content): the clone was shallow, so `ee70138`, `59ba597` and other historical commits were absent. `git fetch --unshallow origin` restored them. Before that, four suites exited 1 with `fatal: invalid object name` (`audit:browser`, `audit:assessments`, `audit:lesson2-activities`, `audit:teacher-provenance`). Those failures were environmental, not regressions; after the fetch they pass or fail on their real content.
+
+### 1. BIDI — 24 open findings: 0 resolved this iteration
+
+Denominator (unchanged from the scene review): **48 original → 24 repaired (prior iterations) → 24 open**, 0 matching exceptions. Full per-record classification with oracle visual order: [`docs/audits/bidi-open-classification.json`](audits/bidi-open-classification.json).
+
+| Class | Open | Case IDs (lesson) | Evidence from the current rendered oracle | Owner decision required |
+|---|---:|---|---|---|
+| C1 neutral attribution | 7 | L10 plays (`1f1841687ac3c5ed`), L12 `+ y` (`5d2600af3fc51a3a`), L16 book (`562538031bc27572`), L16 their (`f9237450d963f0c6`), L17 `+ 's` (`4eb0b06b0eb57373`), L24 few (`db0737a7ecea1a9a`), L24 little (`d77b545c7e96f088`) | The sentence period or `+` sits between the English isolate and the Arabic sentence. The oracle counts it as part of the Latin span. Wrapping the Arabic sentence in an RTL span (tested on L10 and L16) leaves the oracle result unchanged. | Approve an explicit oracle attribution rule, or accept the current placement. Not weakened here. |
+| C2 native select | 1 | L4 `96ed9167e8093a85` | The oracle concatenates unselected `<option>` text (`Verb to beArticle`). Only the selected value is displayed. | Approve measuring the displayed value only, with Chromium proof. |
+| C3 independent tags | 2 | L8 `079db2a35ac08a74` (`do / does` ‖ النفي), L18 `ad2b68b306713fc6` (`some / any` ‖ الأسماء…) | Separate topic pills in an RTL flex row. The row oracle treats adjacent independent tags as a translation pair. | Classify as independent tags with an explicit contract, or change tag order in layout. |
+| C4 Arabic connective / contrast flow | 13 | L10 `831dc6b412dd91e2`; L18 `b54105dc01804489`; L20 ×6 (`60de322313989b5f` this, that, these, those, my new camera, children's bicycles); L22 `18a83403b0994ab2`; L23 ×2 (`99286d6e998604cf`, `0d4d768034b4d07e`); L26 ×2 (`63dd1e6803e58088`, `5115d4dba8ae89f4`) | An English item is followed by an Arabic connective inside one sentence (مع، و، ولم نقل، وليس، لكن). RTL logical order is correct for the sentence, but the English=Arabic pair policy expects English on the left. | Choose: accept RTL sentence reading order for these flows (oracle contract change), or require an English-first layout (source/layout change). |
+| C5 cross-clause dash | 1 | L7 `915a29c9e3a772cb` | `النفي: don't — السؤال: Do...?` The dash joins one clause's English to the next clause's label. Raw text is flagged. Routing it through `LatinRuns` clears the pair violation but leaves `Do...?` visually beside `don't`, away from its label. The wording check forbids reordering the DOM text. | Approve a clause-level regrouping or a visual reorder. |
+
+Why none were applied: each class needs a policy decision that the repository does not contain (a rule for neutral attribution, for hidden options, for tag semantics, for Arabic sentence direction, or for clause grouping). Each class is reproducible from `bidi-after.json` and the harness. Waiving any of them would weaken the audit, which this brief forbids. Reproduce: `npm run audit:bidi-scenes`, which passed in this iteration: `unique violations: 24 (allowlisted: 0)`, 48/48 scenes measured at 1180px and 390px, 24/24 repaired cases still pass their contracts. The 24 open are not repaired and remain blocking.
+
+### 2. Activity denominator (Lessons 1–32) — permanent gate added; certification NOT complete
+
+New reconciliation and gate: `npm run audit:activity-denominator` (`scripts/audit-activity-denominator.mjs`, artifact [`docs/audits/activity-denominator.json`](audits/activity-denominator.json)). It joins the source census, the initial-state runtime observations, and the behavioral artifact, and it fails while any source site is unresolved, unaccounted, or in a lesson without a verified instance. It is kept out of the aggregate audit chains so those stay green; it is wired into nothing else until it passes.
+
+| Measure | Count |
+|---|---:|
+| Source census: templates / JSX control sites | **875 / 1,681** |
+| Runtime observation: groups / control occurrences / sites observed | 1,346 / 7,861 / **859** |
+| Source sites unobserved (unresolved, not dismissed) | **822** |
+| Source sites unaccounted for (not in census or observation) | 0 |
+| Verified behavioral instances / questions | **5 / 29** (Lesson 2 only) |
+| Excluded with recorded reason | 0 |
+| Runtime activity instances discovered | **not established** |
+| Lessons with a verified instance | 1 / 32 |
+
+Per-lesson (source sites / observed / unobserved / verified):
+
+| Lesson | Src sites | Observed | Unobserved | Verified |
+|---|---:|---:|---:|---:|
+| App/shell | 70 | 16 | 54 | 0 |
+| 1 | 29 | 12 | 17 | 0 |
+| 2 | 21 | 10 | 11 | **5 (29 q)** |
+| 3 | 35 | 19 | 16 | 0 |
+| 4 | 31 | 19 | 12 | 0 |
+| 5 | 35 | 23 | 12 | 0 |
+| 6 | 33 | 21 | 12 | 0 |
+| 7 | 24 | 12 | 12 | 0 |
+| 8 | 40 | 27 | 13 | 0 |
+| 9 | 28 | 16 | 12 | 0 |
+| 10 | 35 | 22 | 13 | 0 |
+| 11 | 44 | 33 | 11 | 0 |
+| 12 | 44 | 33 | 11 | 0 |
+| 13 | 49 | 24 | 25 | 0 |
+| 14 | 32 | 12 | 20 | 0 |
+| 15 | 32 | 19 | 13 | 0 |
+| 16 | 28 | 17 | 11 | 0 |
+| 17 | 48 | 18 | 30 | 0 |
+| 18 | 54 | 43 | 11 | 0 |
+| 19 | 41 | 27 | 14 | 0 |
+| 20 | 61 | 49 | 12 | 0 |
+| 21 | 52 | 41 | 11 | 0 |
+| 22 | 33 | 22 | 11 | 0 |
+| 23 | 52 | 35 | 17 | 0 |
+| 24 | 23 | 17 | 6 | 0 |
+| 25 | 86 | 27 | 59 | 0 |
+| 26 | 83 | 63 | 20 | 0 |
+| 27 | 86 | 52 | 34 | 0 |
+| 28 | 91 | 49 | 42 | 0 |
+| 29 | 76 | 31 | 45 | 0 |
+| 30 | 66 | 22 | 44 | 0 |
+| 31 | 110 | 25 | 85 | 0 |
+| 32 | 109 | 3 | 106 | 0 |
+
+Scope limits: the 1,346 observation groups come from one initial-state crawl with no answer, reset, or repeat states. The 5 verified instances (Lesson 2) are the only per-instance behavioral certifications. Lessons 1 and 3–32 have **no** per-instance behavioral tests. The 822 unobserved sites are not classified as shell, conditional, or dead; that reconciliation is still required.
+
+### 3. Teacher-source provenance — 74 open, 0 closed
+
+[`docs/audits/teacher-provenance.json`](audits/teacher-provenance.json) retains all 74 original IDs: **27 lesson-level** (`…-textbook-key`, one per lesson, Lessons 1–26 and 29) and **47 item-level** (`l27-source-*`, `l28-source-*`, `l30-source-*`, …). Results: **0 closed, 74 UNRESOLVED.**
+
+What was checked: the repository has 0 tracked PDF/image/document assets; a filesystem search of the sandbox found none for `*.pdf`, `*.docx`, `*.pptx`, or `*textbook*`/`*teacher*` outside the repo's own code. Lesson 2's record includes `sourcePage: null` and `printedQuestionNumber: null`, the only page-related fields, so no textbook page metadata exists in any record. Canonical indices and derived ledgers are not independent proof of original identity and were not treated as such.
+
+Exact missing evidence to close any gap: (a) the original textbook page scans or a reliable transcription with item mapping; (b) for each item, the printed question/sub-question number and page; (c) the original wording, matched to the repository text; (d) confirmation that each teacher answer group corresponds to that exact original item. **Please provide the original source material; without it these 74 cannot be closed honestly.**
+
+### 4. Verification run (this iteration, base `aea5289`)
+
+| Check | Result | Exact count / scope |
+|---|---|---|
+| `npm run build` | PASS | size warning only (3.9 MB JS) |
+| `check:english-direction` | PASS | 1,617 assertions; 59/59 BIDI rendering |
+| `audit:english-direction` | PASS | render 1,454; Lessons 24, 26–32; Final Test 854; coverage 579; source-reveal 60; BIDI ratchet passed with 24 unresolved, 0 exceptions |
+| `audit:lesson-navigation` | PASS | 90 passed, 0 failed |
+| `audit:assessments` | PASS | interaction 963 passed/0 failed; Final Test 854 checks |
+| `audit:browser` | PASS | Chromium 153.0.8010.0; 54 browser scenarios / 38 primary assessments; 7 teacher gates |
+| `audit:lesson2-activities` | PASS | 5/5 instances; 29/29 questions; 29/29 gated references |
+| `audit:bidi-scenes` | PASS | 48/48 scenes measured at 1180px and 390px; 24 repaired contracts pass; 24 open |
+| `audit:teacher-source` | PASS | inventory/drift only |
+| `audit:teacher-provenance` (discovery) | PASS | 74 records reconciled |
+| `audit:teacher-provenance -- --require-closed` | **FAIL, exit 1** | 74 unresolved |
+| `audit:activity-denominator` (new) | **FAIL, exit 1** | 822 unresolved; 31 lessons unverified |
+| `audit:activity-inventory --require-verified` | **FAIL, exit 1** | 875 templates not behaviorally verified |
+| TypeScript explicit comparison vs `1f879216…` | **Typecheck FAILS** | current **178** diagnostics (exit 2); base **179** (exit 2); **0 added, 1 removed** |
+
+No assessment, navigation, or BIDI audit threshold, negative control, allowlist, or baseline was changed in this iteration.
+
+### Blockers preventing completion (PR #41 stays draft)
+
+1. BIDI: 24 open findings; 0 repaired in this iteration. Five classes need owner decisions (section 1).
+2. Activity denominator: 822 unresolved source sites; 5 of 875 templates behaviorally verified (Lesson 2 only); runtime instances not established.
+3. Provenance: 74 of 74 original gaps open; original source material not available.
+4. TypeScript: still fails (178 vs 179 base; 0 new normalized diagnostics).
+
+Reproduce: `npm run audit:bidi-scenes`, `npm run audit:activity-denominator`, `node scripts/audit-teacher-provenance.mjs --require-closed`, `node scripts/audit-typecheck-baseline.mjs`, and the existing commands listed in the earlier sections.
+
 ## Continuation from `ee70138` — latest verified status
 
 **Partial repair; all three global acceptance gates remain blocked.** This section supersedes numerical status in the historical sections below. Work stays on the existing session branch and OPEN/DRAFT PR #41; no merge or new PR.

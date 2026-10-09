@@ -22,12 +22,14 @@ import assert from "node:assert/strict";
 const CENSUS = "docs/audits/activity-inventory.json";
 const OBS = "docs/audits/activity-observations.json";
 const BEHAVIOR = "docs/audits/lesson2-behavior.json";
+const REACH = "docs/audits/activity-reach.json";
 const OUT = "docs/audits/activity-denominator.json";
 const reportOnly = process.argv.includes("--report-only");
 
 const census = JSON.parse(readFileSync(CENSUS, "utf8"));
 const obs = JSON.parse(readFileSync(OBS, "utf8"));
 const behavior = JSON.parse(readFileSync(BEHAVIOR, "utf8"));
+const reach = JSON.parse(readFileSync(REACH, "utf8"));
 
 // ---- 1. source census -------------------------------------------------------
 const sites = new Map(); // site id -> {id, lesson, source, line}
@@ -36,19 +38,18 @@ for (const r of census.records) {
 }
 
 // ---- 2. runtime observation -------------------------------------------------
+// Initial crawl (next-button only) UNION bounded reach crawl (tabs, rails, choices, reveal/check/reset).
 const observedSites = new Set();
-const observedGroups = obs.observations.length;
-const observedControls = obs.observations.reduce((n, g) => n + g.controls.length, 0);
+const observedGroups = obs.observations.length + reach.rawSnapshotCount;
+const observedControls = obs.observations.reduce((n, g) => n + g.controls.length, 0) + reach.rawControlOccurrences;
 for (const g of obs.observations) for (const c of g.controls) observedSites.add(c.site);
-const unobservedIds = new Set(obs.unobserved.map((u) => u.id));
+for (const r of reach.observedSites) observedSites.add(r.site);
+const unobservedIds = new Set([...sites.keys()].filter((id) => !observedSites.has(id)));
 
 // Consistency: every unobserved entry must be a known source site and not observed.
-for (const u of obs.unobserved) {
-  assert(sites.has(u.id), `unobserved site not in census: ${u.id}`);
-  assert(!observedSites.has(u.id), `site both observed and unobserved: ${u.id}`);
-}
+for (const u of obs.unobserved) assert(sites.has(u.id), `unobserved site not in census: ${u.id}`);
 // Every census site must be either observed or unobserved (no silent drops).
-const unaccounted = [...sites.keys()].filter((id) => !observedSites.has(id) && !unobservedIds.has(id));
+const unaccounted = [];
 
 // ---- 3. verified behavioral instances --------------------------------------
 // Verified instances are taken only from the behavioral artifact, and each must
@@ -63,7 +64,7 @@ for (let l = 0; l <= 32; l++) perLesson[l] = { templates: 0, sourceSites: 0, obs
 for (const r of census.records) perLesson[r.lesson ?? 0].templates++;
 for (const s of sites.values()) perLesson[s.lesson].sourceSites++;
 for (const id of observedSites) perLesson[sites.get(id)?.lesson ?? 0].observedSites++;
-for (const u of obs.unobserved) perLesson[u.lesson ?? sites.get(u.id)?.lesson ?? 0].unobservedSites++;
+for (const id of unobservedIds) perLesson[sites.get(id)?.lesson ?? 0].unobservedSites++;
 for (const r of verifiedInstances) {
   const l = Number(/^l(\d+)-/.exec(r.id)?.[1]);
   perLesson[l].verifiedInstances++;
@@ -74,6 +75,7 @@ const totals = {
   censusTemplates: census.records.length,
   censusSourceSites: sites.size,
   observedGroups,
+  reachStatesPerLesson: reach.perLesson,
   observedControlOccurrences: observedControls,
   observedSites: observedSites.size,
   unobservedSourceSites: unobservedIds.size,

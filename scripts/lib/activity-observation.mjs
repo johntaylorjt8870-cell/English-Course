@@ -20,11 +20,11 @@ export function activityInstrumentation(root) {
     });
   }};
 }
-export function observeActivities(document,lesson,step){
+export function observeActivities(document,lesson,step,{includeAside=false}={}){
   const main=document.querySelector('main')||document.body;
   const groups=new Map();
   for(const el of main.querySelectorAll('[data-audit-owner]')){
-    if(el.closest('nav,aside,[hidden]'))continue;
+    if(el.closest(includeAside?'nav,[hidden]':'nav,aside,[hidden]'))continue;
     const text=(el.getAttribute('aria-label')||el.textContent||el.getAttribute('placeholder')||'').replace(/\s+/g,' ').trim();
     const task=el.closest('[data-test-q],[data-ft-q],[data-quiz-q],[data-gate]');
     const taskId=task?[...task.attributes].filter(a=>/^data-(test-q|ft-q|quiz-q|gate)$/.test(a.name)).map(a=>`${a.name}=${a.value}`).join(','):'unlabelled-task';

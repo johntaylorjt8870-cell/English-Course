@@ -8,31 +8,289 @@
   "totals": {
     "censusTemplates": 875,
     "censusSourceSites": 1681,
-    "observedGroups": 1346,
-    "observedControlOccurrences": 7861,
-    "observedSites": 859,
-    "unobservedSourceSites": 822,
+    "observedGroups": 53671,
+    "reachStatesPerLesson": {
+      "1": {
+        "steps": 21,
+        "navStates": 40,
+        "navQueueRemaining": 128,
+        "clicks": 658,
+        "observedSites": 20,
+        "budgetHit": true
+      },
+      "2": {
+        "steps": 30,
+        "navStates": 2,
+        "navQueueRemaining": 0,
+        "clicks": 1920,
+        "observedSites": 16,
+        "budgetHit": true
+      },
+      "3": {
+        "steps": 21,
+        "navStates": 40,
+        "navQueueRemaining": 128,
+        "clicks": 491,
+        "observedSites": 27,
+        "budgetHit": false
+      },
+      "4": {
+        "steps": 33,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 249,
+        "observedSites": 25,
+        "budgetHit": false
+      },
+      "5": {
+        "steps": 32,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 587,
+        "observedSites": 31,
+        "budgetHit": true
+      },
+      "6": {
+        "steps": 31,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 426,
+        "observedSites": 29,
+        "budgetHit": false
+      },
+      "7": {
+        "steps": 28,
+        "navStates": 40,
+        "navQueueRemaining": 541,
+        "clicks": 258,
+        "observedSites": 19,
+        "budgetHit": false
+      },
+      "8": {
+        "steps": 27,
+        "navStates": 40,
+        "navQueueRemaining": 482,
+        "clicks": 441,
+        "observedSites": 36,
+        "budgetHit": false
+      },
+      "9": {
+        "steps": 28,
+        "navStates": 40,
+        "navQueueRemaining": 541,
+        "clicks": 319,
+        "observedSites": 23,
+        "budgetHit": false
+      },
+      "10": {
+        "steps": 33,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 283,
+        "observedSites": 30,
+        "budgetHit": false
+      },
+      "11": {
+        "steps": 36,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 242,
+        "observedSites": 39,
+        "budgetHit": false
+      },
+      "12": {
+        "steps": 38,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 411,
+        "observedSites": 40,
+        "budgetHit": false
+      },
+      "13": {
+        "steps": 37,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 271,
+        "observedSites": 30,
+        "budgetHit": false
+      },
+      "14": {
+        "steps": 35,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 210,
+        "observedSites": 19,
+        "budgetHit": false
+      },
+      "15": {
+        "steps": 45,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 252,
+        "observedSites": 25,
+        "budgetHit": false
+      },
+      "16": {
+        "steps": 46,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 191,
+        "observedSites": 23,
+        "budgetHit": false
+      },
+      "17": {
+        "steps": 201,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 426,
+        "observedSites": 20,
+        "budgetHit": false
+      },
+      "18": {
+        "steps": 32,
+        "navStates": 40,
+        "navQueueRemaining": 423,
+        "clicks": 629,
+        "observedSites": 50,
+        "budgetHit": false
+      },
+      "19": {
+        "steps": 32,
+        "navStates": 40,
+        "navQueueRemaining": 600,
+        "clicks": 468,
+        "observedSites": 37,
+        "budgetHit": false
+      },
+      "20": {
+        "steps": 44,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 324,
+        "observedSites": 56,
+        "budgetHit": false
+      },
+      "21": {
+        "steps": 51,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 273,
+        "observedSites": 48,
+        "budgetHit": false
+      },
+      "22": {
+        "steps": 44,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 225,
+        "observedSites": 28,
+        "budgetHit": false
+      },
+      "23": {
+        "steps": 60,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 255,
+        "observedSites": 42,
+        "budgetHit": false
+      },
+      "24": {
+        "steps": 1,
+        "navStates": 1,
+        "navQueueRemaining": 0,
+        "clicks": 2,
+        "observedSites": 24,
+        "budgetHit": false
+      },
+      "25": {
+        "steps": 45,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 174,
+        "observedSites": 27,
+        "budgetHit": false
+      },
+      "26": {
+        "steps": 55,
+        "navStates": 31,
+        "navQueueRemaining": 0,
+        "clicks": 352,
+        "observedSites": 71,
+        "budgetHit": false
+      },
+      "27": {
+        "steps": 53,
+        "navStates": 1,
+        "navQueueRemaining": 0,
+        "clicks": 54,
+        "observedSites": 64,
+        "budgetHit": false
+      },
+      "28": {
+        "steps": 47,
+        "navStates": 40,
+        "navQueueRemaining": 658,
+        "clicks": 522,
+        "observedSites": 72,
+        "budgetHit": false
+      },
+      "29": {
+        "steps": 52,
+        "navStates": 40,
+        "navQueueRemaining": 658,
+        "clicks": 906,
+        "observedSites": 53,
+        "budgetHit": true
+      },
+      "30": {
+        "steps": 46,
+        "navStates": 40,
+        "navQueueRemaining": 539,
+        "clicks": 816,
+        "observedSites": 43,
+        "budgetHit": false
+      },
+      "31": {
+        "steps": 50,
+        "navStates": 40,
+        "navQueueRemaining": 599,
+        "clicks": 864,
+        "observedSites": 46,
+        "budgetHit": false
+      },
+      "32": {
+        "steps": 2,
+        "navStates": 40,
+        "navQueueRemaining": 539,
+        "clicks": 252,
+        "observedSites": 48,
+        "budgetHit": false
+      }
+    },
+    "observedControlOccurrences": 300198,
+    "observedSites": 962,
+    "unobservedSourceSites": 719,
     "unaccountedSourceSites": 0,
     "verifiedInstances": 5,
     "verifiedQuestions": 29,
     "excludedWithReason": 0,
-    "unresolvedSourceSites": 822,
+    "unresolvedSourceSites": 719,
     "runtimeActivityInstancesDiscovered": "not established"
   },
   "perLesson": {
     "0": {
       "templates": 12,
       "sourceSites": 70,
-      "observedSites": 16,
-      "unobservedSites": 54,
+      "observedSites": 18,
+      "unobservedSites": 52,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
     "1": {
       "templates": 11,
       "sourceSites": 29,
-      "observedSites": 12,
-      "unobservedSites": 17,
+      "observedSites": 13,
+      "unobservedSites": 16,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
@@ -47,8 +305,8 @@
     "3": {
       "templates": 16,
       "sourceSites": 35,
-      "observedSites": 19,
-      "unobservedSites": 16,
+      "observedSites": 20,
+      "unobservedSites": 15,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
@@ -63,48 +321,48 @@
     "5": {
       "templates": 19,
       "sourceSites": 35,
-      "observedSites": 23,
-      "unobservedSites": 12,
+      "observedSites": 24,
+      "unobservedSites": 11,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
     "6": {
       "templates": 18,
       "sourceSites": 33,
-      "observedSites": 21,
-      "unobservedSites": 12,
+      "observedSites": 22,
+      "unobservedSites": 11,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
     "7": {
       "templates": 13,
       "sourceSites": 24,
-      "observedSites": 12,
-      "unobservedSites": 12,
+      "observedSites": 13,
+      "unobservedSites": 11,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
     "8": {
       "templates": 22,
       "sourceSites": 40,
-      "observedSites": 27,
-      "unobservedSites": 13,
+      "observedSites": 29,
+      "unobservedSites": 11,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
     "9": {
       "templates": 15,
       "sourceSites": 28,
-      "observedSites": 16,
-      "unobservedSites": 12,
+      "observedSites": 17,
+      "unobservedSites": 11,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
     "10": {
       "templates": 20,
       "sourceSites": 35,
-      "observedSites": 22,
-      "unobservedSites": 13,
+      "observedSites": 23,
+      "unobservedSites": 12,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
@@ -159,8 +417,8 @@
     "17": {
       "templates": 30,
       "sourceSites": 48,
-      "observedSites": 18,
-      "unobservedSites": 30,
+      "observedSites": 20,
+      "unobservedSites": 28,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
@@ -175,16 +433,16 @@
     "19": {
       "templates": 22,
       "sourceSites": 41,
-      "observedSites": 27,
-      "unobservedSites": 14,
+      "observedSites": 30,
+      "unobservedSites": 11,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
     "20": {
       "templates": 31,
       "sourceSites": 61,
-      "observedSites": 49,
-      "unobservedSites": 12,
+      "observedSites": 50,
+      "unobservedSites": 11,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
@@ -207,8 +465,8 @@
     "23": {
       "templates": 19,
       "sourceSites": 52,
-      "observedSites": 35,
-      "unobservedSites": 17,
+      "observedSites": 36,
+      "unobservedSites": 16,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
@@ -231,56 +489,56 @@
     "26": {
       "templates": 47,
       "sourceSites": 83,
-      "observedSites": 63,
-      "unobservedSites": 20,
+      "observedSites": 65,
+      "unobservedSites": 18,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
     "27": {
       "templates": 36,
       "sourceSites": 86,
-      "observedSites": 52,
-      "unobservedSites": 34,
+      "observedSites": 53,
+      "unobservedSites": 33,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
     "28": {
       "templates": 53,
       "sourceSites": 91,
-      "observedSites": 49,
-      "unobservedSites": 42,
+      "observedSites": 62,
+      "unobservedSites": 29,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
     "29": {
       "templates": 46,
       "sourceSites": 76,
-      "observedSites": 31,
-      "unobservedSites": 45,
+      "observedSites": 43,
+      "unobservedSites": 33,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
     "30": {
       "templates": 39,
       "sourceSites": 66,
-      "observedSites": 22,
-      "unobservedSites": 44,
+      "observedSites": 33,
+      "unobservedSites": 33,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
     "31": {
       "templates": 63,
       "sourceSites": 110,
-      "observedSites": 25,
-      "unobservedSites": 85,
+      "observedSites": 36,
+      "unobservedSites": 74,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     },
     "32": {
       "templates": 62,
       "sourceSites": 109,
-      "observedSites": 3,
-      "unobservedSites": 106,
+      "observedSites": 38,
+      "unobservedSites": 71,
       "verifiedInstances": 0,
       "verifiedQuestions": 0
     }
@@ -358,7 +616,7 @@
   "gate": {
     "passes": false,
     "failureReasons": [
-      "822 source sites unobserved/unresolved",
+      "719 source sites unobserved/unresolved",
       "31 lessons have no verified behavioral instance"
     ]
   }

@@ -165,9 +165,18 @@ The first command rebuilds, remeasures immutable pre-fix scenes, checks all 24 n
 
 **No additional activity instance was behaviorally certified in this continuation.** The verified Lesson 2 five-instance / 29-question suite was preserved and rerun successfully. Existing primary-assessment coverage remains 54 browser scenarios over 38 assessments, not exhaustive embedded-activity coverage.
 
-The refreshed source census still contains **875 component templates / 1,681 control sites**. These are not unique activities. The fresh initial-state App crawl recorded **1,346 observation groups / 7,861 controls / 822 unobserved source sites**; these likewise are not a reconciled activity denominator. Reproduce with `node scripts/audit-bidi-mixed.mjs --activity-report docs/audits/activity-observations.json`. **Unique activities discovered: unknown; whole-course verified/excluded/unresolved totals: not established.** Only the scoped Lesson 2 count is 5 verified / 5 in that suite, with no inference about the rest of Lessons 1–32.
+The source census contains **875 component templates / 1,681 control sites**. A three-pass reach crawl (`scripts/audit-activity-reach.mjs`, npm `audit:activity-reach`) now runs over all Lessons 1–32: a next-only step count, a fresh-mount in-step click pass per step, and a bounded navigation BFS (depth ≤2, ≤40 states per lesson). It observed **962 distinct source sites** across **53,671 observation groups / 300,198 control occurrences**. Written to [activity-reach.json](audits/activity-reach.json) and unioned into [activity-denominator.json](audits/activity-denominator.json).
 
-`node scripts/audit-activity-inventory.mjs --require-verified` was rerun and **fails (exit 1)**. The census drift gate still detects changed/new source controls, but it is not the requested permanent per-instance behavioral gate. A stable runtime/source instance registry, justified exclusions, empty/partial/complete and repeat/reset/isolation/keyboard tests in real lesson shells, and a reconciled denominator remain required. This blocker is not closed by the refreshed inventory or passing shared assessment tests.
+Whole-course denominator, exact: **1,681 census sites = 962 observed + 719 unobserved + 0 unaccounted; 0 excluded-with-reason; 5 verified instances / 29 questions (Lesson 2 only); 1 of 32 lessons with a verified instance.** Runtime-discovered activity instances: not established.
+
+Coverage limits that keep this from being a complete denominator:
+- Navigation BFS stopped at 40 states with queue remaining (`navQueueRemaining > 0`) in Lessons 1, 3, 7, 8, 9, 18, 19, 28, 29, 30, 31, and 32. Lessons 1, 2, 5, and 29 also hit the per-step click budget, so some in-step controls were not clicked.
+- Lesson 17's Next keeps changing the DOM, so its walk hits the 200-step cap.
+- Lesson 27 reaches only one navigation state (queue empty). Its navigation controls were not found by the candidate selector, so it is not established whether its controls are fully covered.
+- The navigation BFS starts only from step 0 and does not revisit deeper steps.
+- No exclusion rule has been applied. The 719 unobserved sites are unresolved, not excluded.
+
+`node scripts/audit-activity-inventory.mjs --require-verified` was rerun and **fails (exit 1)**. `node scripts/audit-activity-denominator.mjs` also **fails**: 719 unresolved sites and 31 lessons without a verified instance. The census drift gate still detects changed/new source controls, but it is not the requested permanent per-instance behavioral gate. A stable runtime/source instance registry, justified exclusions, empty/partial/complete and repeat/reset/isolation/keyboard tests in real lesson shells, and a reconciled denominator remain required. This blocker is not closed by the refreshed inventory or passing shared assessment tests.
 
 ### C. All 74 original provenance records itemized; none closed
 

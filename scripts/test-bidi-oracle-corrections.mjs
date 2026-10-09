@@ -425,7 +425,10 @@ const report = {
   checks,
   failures,
 };
-writeFileSync(OUT, JSON.stringify(report, null, 2) + "\n");
+// --no-browser measures no visual contracts; writing then would strip the
+// committed Chromium evidence from the artifact, so it is left untouched.
+if (!process.argv.includes("--no-browser")) writeFileSync(OUT, JSON.stringify(report, null, 2) + "\n");
+else console.log(`${OUT} not rewritten: --no-browser carries no visual evidence to record`);
 console.log(JSON.stringify({ checks, failures: failures.length, sourceRepairedStillFlagged: phaseA.stillFlagged.length, misattributionsCleared: phaseA.noLongerFlagged.length, visualContracts: phaseC.length }));
 assert.equal(failures.length, 0, `${failures.length} oracle-correction regression failures`);
 console.log("BIDI oracle-correction regressions passed");

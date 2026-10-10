@@ -107,13 +107,15 @@ function regionOf(host, n) {
   if (!isLegacy(n)) return host.querySelector("[data-final-test]");
   // مرساة فريدة: جملة مقدمة FinalQuiz («أجب عنها كلها») لا توجد في أي مكوّن آخر —
   // ضرورية لأن دروسًا مثل L24 تملك أزرار «تحقق من الإجابات» خاصة بها في محطات التدريب.
+  // وفي الدروس المبنية على خطوات مركّبة يبقى الاختبار النهائي مرندرًا داخل خطوته لكن
+  // مخفيًا حتى الوصول إليها، فالاختبار لا يُعدّ «معروضًا» ما دام داخل خطوة مخفية.
   const anchors = [...host.querySelectorAll("span,div,p")].filter((e) => (e.textContent || "").includes("أجب عنها كلها"));
   if (!anchors.length) return null;
   let el = anchors[anchors.length - 1]; // أعمق عنصر يحمل الجملة
   while (el && el !== host && !(el.querySelector("button[aria-pressed]") && [...el.querySelectorAll("button")].some((b) => /تحقق من الإجابات/.test(b.textContent || "")))) {
     el = el.parentElement;
   }
-  return el && el !== host ? el : null;
+  return el && el !== host && !el.closest("[hidden]") ? el : null;
 }
 const questionsOf = (n) => (isLegacy(n) ? M.QUIZZES[n] || [] : M.finalTestFor(n));
 /** نصوص الخيارات الشرعية للسؤال — أي ✓/✕ أو «صحيح/خطأ» خارجها يُعدّ كشفًا */

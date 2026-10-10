@@ -1,24 +1,32 @@
 /* ============================================================================
    الدرس 24 — QUANTITY LAB · QUANTIFIER COMMAND CENTER
    ----------------------------------------------------------------------------
-   إعادة تصميم طبقة العرض فقط. كل وحدة من SOURCE_SECTIONS (64 وحدة) تُرسم كما
-   هي داخل محطة العرض المناسبة لها — مع عزل كل مقطع إنجليزي LTR عبر الأنماط
-   المشتركة (font-en / ltr / LatinRuns من shared/bidi). لم يُحذف أو يُختصر أي
-   محتوى مصدر؛ المخططات والعدادات الإضافية طبقات تعليمية فوق النص المصدر لا
-   بديل عنه.
+   بنية أصلية متعددة الخطوات على نمط الدروس المرجعية 26–28: فهرس خطوات جانبي،
+   شريط تقدّم، عدّاد خطوات (data-slide-counter)، تنقل بالأسهم ومفتاح المسافة،
+   دُرج للشاشات الصغيرة، وإطار خطوة مشترك (shared/lessonKit) لكل محطة، مع
+   محطات التدريب وألواح التحليل وFinalQuiz في مواضعها من المسار.
+
+   طبقة العرض فقط: كل وحدة من SOURCE_SECTIONS (64 وحدة) تُرسم كما هي، مرة واحدة،
+   داخل محطتها بعلامة data-source-section مرقّمة 01..64. المخططات والعدّادات
+   طبقات تعليمية فوق النص المصدر لا بديل عنه — لم يُحذف أو يُختصر أي محتوى.
 
    القواعد الحاكمة:
    - العربية RTL دائمًا، والإنجليزية LTR معزولة (لا نص مختلط داخل عقدة واحدة).
-   - الاختيار محايد: لا ✓/✕ ولا كشف إجابات قبل «تحقق من الإجابات»، ثم يعمل
-     ↺ إعادة.
+   - الاختيار محايد: لا ✓/✕ ولا كشف إجابات قبل «تحقق من الإجابات»، ثم يعمل ↺ إعادة.
    - لا يُعاد تصميم FinalQuiz المشترك؛ فقط يُستدعى كما هو (12 سؤالًا).
+   - كل الخطوات تبقى مركّبة في الـ DOM والمحطة النشطة وحدها مرئية، فيبقى سجل
+     المصدر الكامل (64 وحدة) قابلًا للتحقق على مستوى العرض كما كان.
    ==========================================================================*/
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import FinalQuiz from "../../shared/FinalQuiz";
 import { LatinRuns } from "../../shared/bidi";
+import { En, Frame, Rich, type FrameAccent } from "../../shared/lessonKit";
 import { Signature, SignatureGhost } from "../../shared/Signature";
 import {
   SOURCE_SECTIONS,
+  SOURCE_NUMBERED_COUNT,
+  STEPS_24,
+  STEP_COUNT_24,
   LESSON_TITLE_24,
   TRAINING1,
   TRAINING2,
@@ -29,7 +37,10 @@ import {
   IQ200,
   MEANING,
   MINI_TEST,
+  type Lab24Key,
   type SourceSection,
+  type Step24,
+  type Tone24,
 } from "./data";
 
 type Props = { onExit: () => void };
@@ -45,21 +56,7 @@ const EN_THEN_AR = new RegExp(
   "^([A-Za-z][A-Za-z0-9 .,!?:;'\\u2019\\u201C\\u201D()\\[\\]\\-\\u2014\\u00B7/=]*?[.!\\u2026\\uFF1F])\\s+(?=[\\u0600-\\u06FF])"
 );
 
-function En({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return (
-    <span dir="ltr" style={{ direction: "ltr" }} className={`ltr font-en ${className}`}>
-      {children}
-    </span>
-  );
-}
-
-function Rich({ text, className = "" }: { text: string; className?: string }) {
-  return (
-    <span className={className}>
-      <LatinRuns text={text} />
-    </span>
-  );
-}
+/* En / Rich من مجموعة الدروس المشتركة (shared/lessonKit) — بلا نسخ محلية. */
 
 function LtrRow({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
@@ -316,104 +313,113 @@ function SourceUnit({ u, tone = "slate", bare = false, note }: { u: UnitRef; ton
 }
 
 /* ---------------------------------------------------------------------------
-   هيكل المناطق (Zones) — كل منطقة بهوية بصرية مختلفة
+   نغمات إطار الخطوة — كل محطة تحمل نغمتها كما كانت في طبقة العرض السابقة
+   (نفس عائلات الألوان + إطار الخطوة المشترك: رقم، شارة، نصيحة)
    --------------------------------------------------------------------------*/
-function Zone({
-  id,
-  emoji,
-  en,
-  ar,
-  blurb,
-  tone,
-  children,
-}: {
-  id: string;
-  emoji: string;
-  en: string;
-  ar: string;
-  blurb?: string;
-  tone: keyof typeof ZONE_BG;
-  children: ReactNode;
-}) {
-  const z = ZONE_BG[tone];
-  return (
-    <section id={`zone-${id}`} className="mt-8 scroll-mt-24 md:mt-10">
-      <div className={`relative overflow-hidden rounded-[1.75rem] border-2 p-4 md:p-6 ${z.frame}`}>
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl text-2xl shadow-sm ${z.badge}`} aria-hidden>
-            {emoji}
-          </span>
-          <En className={`rounded-xl px-3 py-1 text-[12px] font-black uppercase tracking-[0.22em] ${z.label}`}>{en}</En>
-          <h2 className={`font-head text-xl font-black leading-7 md:text-2xl ${z.title}`}><LatinRuns text={ar} /></h2>
-        </div>
-        {blurb && (
-          <p className={`mt-2 text-sm font-bold leading-7 md:text-[15px] ${z.blurb}`}>
-            <LatinRuns text={blurb} />
-          </p>
-        )}
-        <div className="mt-5 space-y-4">{children}</div>
-      </div>
-    </section>
-  );
-}
-
-const ZONE_BG = {
-  slate: { frame: "border-slate-200 bg-white/90", badge: "bg-slate-100", label: "bg-slate-900 text-white", title: "text-slate-900", blurb: "text-slate-600" },
-  cyan: { frame: "border-cyan-200/80 bg-gradient-to-l from-cyan-50/90 via-white to-sky-50/80", badge: "bg-cyan-100", label: "bg-cyan-800 text-white", title: "text-cyan-950", blurb: "text-cyan-900/70" },
-  indigo: { frame: "border-indigo-200/80 bg-gradient-to-l from-indigo-50/90 via-white to-violet-50/70", badge: "bg-indigo-100", label: "bg-indigo-700 text-white", title: "text-indigo-950", blurb: "text-indigo-900/70" },
-  teal: { frame: "border-teal-200/80 bg-gradient-to-l from-teal-50/80 via-white to-emerald-50/70", badge: "bg-teal-100", label: "bg-teal-700 text-white", title: "text-teal-950", blurb: "text-teal-900/70" },
-  sky: { frame: "border-sky-200/80 bg-gradient-to-l from-sky-50/90 via-white to-cyan-50/70", badge: "bg-sky-100", label: "bg-sky-700 text-white", title: "text-sky-950", blurb: "text-sky-900/70" },
-  violet: { frame: "border-violet-200/80 bg-gradient-to-l from-violet-50/90 via-white to-fuchsia-50/60", badge: "bg-violet-100", label: "bg-violet-700 text-white", title: "text-violet-950", blurb: "text-violet-900/70" },
-  emerald: { frame: "border-emerald-200/80 bg-gradient-to-l from-emerald-50/80 via-white to-teal-50/70", badge: "bg-emerald-100", label: "bg-emerald-700 text-white", title: "text-emerald-950", blurb: "text-emerald-900/70" },
-  amber: { frame: "border-amber-200/90 bg-gradient-to-l from-amber-50/90 via-white to-orange-50/70", badge: "bg-amber-100", label: "bg-amber-600 text-white", title: "text-amber-950", blurb: "text-amber-900/80" },
-  rose: { frame: "border-rose-200/80 bg-gradient-to-l from-rose-50/80 via-white to-amber-50/60", badge: "bg-rose-100", label: "bg-rose-700 text-white", title: "text-rose-950", blurb: "text-rose-900/70" },
-} as const;
+const ACCENTS24: Record<Tone24, FrameAccent> = {
+  slate: { step: "bg-slate-800", badge: "bg-slate-100 text-slate-700", tip: "from-slate-800 to-slate-900", shadow: "shadow-[0_14px_44px_-20px_rgba(15,23,42,0.25)]" },
+  cyan: { step: "bg-cyan-700", badge: "bg-cyan-100 text-cyan-900", tip: "from-cyan-700 to-indigo-800", shadow: "shadow-[0_14px_44px_-20px_rgba(8,145,178,0.32)]" },
+  sky: { step: "bg-sky-700", badge: "bg-sky-100 text-sky-900", tip: "from-sky-700 to-cyan-800", shadow: "shadow-[0_14px_44px_-20px_rgba(2,132,199,0.32)]" },
+  violet: { step: "bg-violet-700", badge: "bg-violet-100 text-violet-900", tip: "from-violet-700 to-fuchsia-800", shadow: "shadow-[0_14px_44px_-20px_rgba(109,40,217,0.32)]" },
+  indigo: { step: "bg-indigo-700", badge: "bg-indigo-100 text-indigo-900", tip: "from-indigo-700 to-violet-800", shadow: "shadow-[0_14px_44px_-20px_rgba(67,56,202,0.32)]" },
+  emerald: { step: "bg-emerald-700", badge: "bg-emerald-100 text-emerald-900", tip: "from-emerald-700 to-teal-800", shadow: "shadow-[0_14px_44px_-20px_rgba(4,120,87,0.32)]" },
+  teal: { step: "bg-teal-700", badge: "bg-teal-100 text-teal-900", tip: "from-teal-700 to-emerald-800", shadow: "shadow-[0_14px_44px_-20px_rgba(15,118,110,0.32)]" },
+  amber: { step: "bg-amber-600", badge: "bg-amber-100 text-amber-900", tip: "from-amber-600 to-orange-700", shadow: "shadow-[0_14px_44px_-20px_rgba(217,119,6,0.3)]" },
+  rose: { step: "bg-rose-700", badge: "bg-rose-100 text-rose-900", tip: "from-rose-700 to-amber-700", shadow: "shadow-[0_14px_44px_-20px_rgba(190,18,60,0.3)]" },
+  gold: { step: "bg-yellow-500", badge: "bg-yellow-100 text-amber-900", tip: "from-yellow-500 to-amber-600", shadow: "shadow-[0_14px_44px_-20px_rgba(234,179,8,0.35)]" },
+};
 
 /* ---------------------------------------------------------------------------
-   واجهة التصفح بين المحطات (sticky)
+   فهرس الخطوات — شريط جانبي ثابت على الشاشات الكبيرة، ودُرج على الصغيرة
    --------------------------------------------------------------------------*/
-const NAV: { id: string; label: string }[] = [
-  { id: "zone-opening", label: "\uD83D\uDEAA الافتتاح" },
-  { id: "zone-command", label: "\uD83C\uDF9B️ غرفة القيادة" },
-  { id: "zone-map", label: "\uD83D\uDDFA️ خريطة أدوات الكمية" },
-  { id: "zone-some", label: "\uD83E\uDDEA مختبر some" },
-  { id: "zone-any", label: "\uD83E\uDEE7 مختبر any" },
-  { id: "zone-manymuch", label: "\u2696️ MANY مقابل MUCH" },
-  { id: "zone-few", label: "\uD83D\uDCCF موازين a few / few" },
-  { id: "zone-there", label: "\uD83E\uDD16 آلة There is / are" },
-  { id: "zone-training", label: "\uD83C\uDFAF محطات التدريب" },
-  { id: "zone-analysis", label: "\uD83D\uDD75️ التحليل والمختبر" },
-  { id: "zone-boss", label: "\uD83C\uDFC6 المهمة النهائية" },
-  { id: "zone-quiz", label: "\uD83D\uDCDD الاختبار النهائي" },
-];
+const SECTION_TINT: Record<string, string> = {
+  "البداية": "text-cyan-700",
+  "المفهوم": "text-slate-500",
+  "المختبرات": "text-sky-700",
+  "المقارنات": "text-emerald-700",
+  "الأدوات": "text-teal-700",
+  "الربط": "text-indigo-700",
+  "التدريب": "text-amber-700",
+  "التحليل": "text-rose-700",
+  "المهمة": "text-rose-700",
+  "الإجابات": "text-yellow-700",
+  "الخاتمة": "text-slate-500",
+};
 
-function scrollToZone(id: string) {
-  if (typeof document === "undefined") return;
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-function ZoneNav() {
+function Rail({
+  active,
+  setActive,
+  onExit,
+  onClose,
+}: {
+  active: number;
+  setActive: (next: number) => void;
+  onExit: () => void;
+  onClose?: () => void;
+}) {
+  const groups = useMemo(() => {
+    const out: { section: string; indexes: number[] }[] = [];
+    STEPS_24.forEach((step, i) => {
+      const last = out[out.length - 1];
+      if (last?.section === step.section) last.indexes.push(i);
+      else out.push({ section: step.section, indexes: [i] });
+    });
+    return out;
+  }, []);
   return (
-    <nav dir="rtl" className="sticky top-0 z-30 border-b border-slate-900/10 bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-1.5 px-3 py-2">
-        <span className="grid h-7 w-7 place-items-center rounded-xl bg-slate-900 text-sm shadow-sm" aria-hidden>
-          {"\uD83E\uDDEA"}
-        </span>
-        {NAV.map((n) => (
-          <button
-            key={n.id}
-            type="button"
-            onClick={() => scrollToZone(n.id)}
-            className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-black text-slate-600 shadow-sm transition hover:border-cyan-500 hover:text-cyan-800 md:text-xs"
-          >
-            <LatinRuns text={n.label} />
-          </button>
-        ))}
-        <span className="rounded-full border border-slate-200 bg-white px-2 py-1 text-[10px] font-black tracking-widest text-slate-500">
-          64 SOURCE UNITS
-        </span>
+    <aside className="flex h-full flex-col">
+      <div className="border-b border-cyan-100 p-5">
+        <button onClick={onExit} className="text-sm font-semibold text-slate-400 transition hover:text-slate-800">
+          → جميع الدروس
+        </button>
+        <div className="font-head mt-2 text-lg font-bold text-slate-900">
+          <LatinRuns text={LESSON_TITLE_24} />
+        </div>
+        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+          <En className="rounded-full bg-cyan-700 px-2.5 py-1 text-[10px] font-black tracking-[0.18em] text-white">QUANTITY LAB</En>
+          <span className="rounded-full bg-slate-900 px-2.5 py-1 text-[10px] font-black text-cyan-100">
+            {SOURCE_NUMBERED_COUNT} وحدة مصدر · {STEP_COUNT_24} خطوة
+          </span>
+        </div>
       </div>
-    </nav>
+      <nav className="flex-1 overflow-y-auto p-3">
+        {groups.map((group) => (
+          <div key={group.section} className="mb-3">
+            <div className={`px-3 py-1 text-xs font-bold ${SECTION_TINT[group.section] ?? "text-slate-400"}`}>
+              <Rich text={group.section} />
+            </div>
+            {group.indexes.map((i) => {
+              const activeStep = active === i;
+              return (
+                <button
+                  key={STEPS_24[i].id}
+                  type="button"
+                  aria-current={activeStep ? "step" : undefined}
+                  onClick={() => {
+                    setActive(i);
+                    onClose?.();
+                  }}
+                  className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${
+                    activeStep ? "bg-cyan-700 text-white shadow" : "text-slate-600 hover:bg-cyan-50"
+                  }`}
+                >
+                  <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${activeStep ? "bg-white/25" : "bg-slate-100"}`}>
+                    {i + 1}
+                  </span>
+                  <span className="truncate font-semibold">
+                    <LatinRuns text={STEPS_24[i].title} />
+                  </span>
+                  <span className="mr-auto text-base" aria-hidden>
+                    {STEPS_24[i].mascot}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        ))}
+      </nav>
+      <div className="border-t border-cyan-100 p-4 text-xs text-slate-400">التنقل: الأسهم ← → أو مفتاح المسافة</div>
+    </aside>
   );
 }
 
@@ -459,7 +465,7 @@ function BridgeCard({
   );
 }
 
-function Hero({ onExit }: { onExit: () => void }) {
+function Hero({ onExit, goTo }: { onExit: () => void; goTo: (id: string) => void }) {
   return (
     <header className="relative overflow-hidden rounded-[2rem] border-2 border-cyan-900/40 bg-gradient-to-br from-slate-950 via-cyan-950 to-indigo-950 p-5 text-white shadow-2xl md:p-10">
       {/* شبكة المختبر الخلفية */}
@@ -548,13 +554,13 @@ function Hero({ onExit }: { onExit: () => void }) {
         </div>
 
         <div className="mt-5 flex flex-wrap gap-2">
-          <button type="button" onClick={() => scrollToZone("zone-opening")} className="rounded-xl bg-white px-4 py-2 text-sm font-black text-slate-900 shadow transition hover:bg-cyan-50">
+          <button type="button" onClick={() => goTo("opening")} className="rounded-xl bg-white px-4 py-2 text-sm font-black text-slate-900 shadow transition hover:bg-cyan-50">
             🚀 ابدأ من الافتتاح
           </button>
-          <button type="button" onClick={() => scrollToZone("zone-command")} className="rounded-xl bg-cyan-500/90 px-4 py-2 text-sm font-black text-slate-950 shadow transition hover:bg-cyan-400">
+          <button type="button" onClick={() => goTo("command")} className="rounded-xl bg-cyan-500/90 px-4 py-2 text-sm font-black text-slate-950 shadow transition hover:bg-cyan-400">
             🎛️ ادخل غرفة القيادة
           </button>
-          <button type="button" onClick={() => scrollToZone("zone-boss")} className="rounded-xl border border-white/25 bg-white/10 px-4 py-2 text-sm font-black text-white transition hover:bg-white/20">
+          <button type="button" onClick={() => goTo("boss")} className="rounded-xl border border-white/25 bg-white/10 px-4 py-2 text-sm font-black text-white transition hover:bg-white/20">
             🏆 المهمة النهائية
           </button>
         </div>
@@ -1516,309 +1522,319 @@ function TestTubeRack() {
 }
 
 /* ---------------------------------------------------------------------------
-   الفصل الرئيسي
+   الطبقات التفاعلية — نفس مكونات المختبر السابقة بأسمائها ونصوصها وربطها
    --------------------------------------------------------------------------*/
-export function SlideView24({ s }: { s: SourceSection }) {
-  const index = Math.max(0, SOURCE_SECTIONS.findIndex((x) => x.id === s.id));
-  return <SourceUnit u={{ s, index }} tone="cyan" />;
+type LabCtx = { goTo: (id: string) => void; onExit: () => void };
+
+/* لوحة العروض والطلبات — استثناء some في الأسئلة (نفس بطاقة التصميم السابق). */
+function OffersPanel() {
+  return (
+    <div dir="rtl" className="rounded-2xl border-2 border-emerald-300 bg-gradient-to-l from-emerald-50 via-white to-teal-50 p-4">
+      <LtrRow className="justify-center gap-2">
+        <span className="text-xl" aria-hidden>{"\uD83E\uDDDD"}</span>
+        <En className="rounded-lg bg-emerald-700 px-2.5 py-0.5 text-[10px] font-black tracking-[0.22em] text-white">OFFERS &amp; REQUESTS</En>
+      </LtrRow>
+      <p className="mt-2 text-center text-[12.5px] font-black text-emerald-900">هنا — ومعهما — تعود some إلى الأسئلة</p>
+      <div className="mt-3 space-y-2">
+        <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row rounded-xl border-2 border-white bg-white px-3 py-2 shadow-sm">
+          <En className="block text-left text-base font-black text-slate-900 md:text-lg">Would you like some water?</En>
+        </div>
+        <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row rounded-xl border-2 border-white bg-white px-3 py-2 shadow-sm">
+          <En className="block text-left text-base font-black text-slate-900 md:text-lg">Can I have some juice?</En>
+        </div>
+      </div>
+      <p className="mt-2 text-center text-[12px] font-bold leading-6 text-slate-600">
+        <Rich text="السؤال هنا عرض أو طلب — والإجابة المتوقعة «نعم»، لذا some لا any." />
+      </p>
+    </div>
+  );
 }
 
+/** سجل الطبقات التفاعلية — كل مفتاح هنا له وحدة منتظمة في STEPS_24. */
+const LAB24: Record<Lab24Key, (ctx: LabCtx) => ReactNode> = {
+  hero: ({ onExit, goTo }) => <Hero onExit={onExit} goTo={goTo} />,
+  command: () => <CommandConsole />,
+  mapDiagram: () => <QuantifierMapDiagram />,
+  offers: () => <OffersPanel />,
+  vsBoard: () => (
+    <VsBoard
+      left={{ en: "MANY", ar: "عدد أشياء يمكن عدها", tone: "emerald", badge: "COUNTABLE", examples: ["many books", "many students", "many apples", "many questions", "How many apples do you need?"] }}
+      right={{ en: "MUCH", ar: "مقدار شيء لا يُعَد", tone: "violet", badge: "UNCOUNTABLE", examples: ["much water", "much money", "much rice", "much time", "How much water do you drink?"] }}
+      foot="أخطاء شائعة تحفظها الخريطة: many water ❌ — many money ❌ — الصحيح much أو a lot of."
+    />
+  ),
+  fewMeters: () => (
+    <div className="grid items-start gap-3 md:grid-cols-2">
+      <MeaningMeter en="a few books" ar="بضعة كتب — العدد صغير لكنه موجود ومريح." percent={48} tone="emerald" mood={"\uD83D\uDE42"} caption="عدد قليل نسبيًا، لكن الكمية قائمة — إحساس كافٍ/إيجابي." />
+      <MeaningMeter en="few books" ar="كتب قليلة جدًا — العدد يثير إحساس النقص." percent={12} tone="rose" mood={"\uD83D\uDE1F"} caption="عدد صغير مع شعور بالنقص — الجملة أقرب إلى الشكوى." />
+    </div>
+  ),
+  littleMeters: () => (
+    <div className="grid items-start gap-3 md:grid-cols-2">
+      <MeaningMeter en="a little water" ar="قطرات موجودة — تكفي للظمأ الصغير." percent={42} tone="emerald" mood={"\uD83D\uDE42"} caption="كمية قليلة لكنها موجودة ومفيدة — إيجابية." />
+      <MeaningMeter en="little water" ar="قطرات بالكاد — لا تكفي أحدًا." percent={10} tone="rose" mood={"\uD83D\uDE1F"} caption="كمية قليلة جدًا مع إحساس بالنقص — سلبية." />
+    </div>
+  ),
+  timeSensor: () => <TimeSensor />,
+  whyA: () => (
+    <div className="grid items-start gap-3 md:grid-cols-[auto_1fr] md:items-center">
+      <div className="relative mx-auto grid h-28 w-28 place-items-center rounded-[1.5rem] bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-xl ring-4 ring-amber-200">
+        <En className="text-6xl font-black drop-shadow-sm">a</En>
+        <span className="absolute -bottom-2.5 rounded-full bg-slate-900 px-2.5 py-0.5 text-[10px] font-black tracking-widest text-amber-200">THE DIFFERENCE</span>
+      </div>
+      <SourceUnit u={unitOf("iq-explain")} tone="amber" />
+    </div>
+  ),
+  quickRule: () => <QuickRuleScale />,
+  detector: () => <MeaningDetector />,
+  thereMachine: () => <ThereMachine />,
+  testTubes: () => <TestTubeRack />,
+  training1: () => <TrainingStation unitId="training1" no={0} kind={0} />,
+  training2: () => <TrainingStation unitId="training2" no={1} kind={1} />,
+  training3: () => <TrainingStation unitId="training3" no={2} kind={2} />,
+  training4: () => <TrainingStation unitId="training4" no={3} kind={3} />,
+  training5: () => <TrainingStation unitId="training5" no={4} kind={4} />,
+  detectiveBoard: () => (
+    <CaseBoard
+      tag="l24-detective"
+      items={DETECTIVE}
+      tone="rose"
+      correctIndex={9}
+      note="راجع النوع والمعنى: many/a few/few للمعدود الجمع، much/a little/little لغير المعدود، some/any/a lot of/lots of للنوعين. الجملة 10 في Grammar Detective صحيحة."
+    />
+  ),
+  iq200Board: () => (
+    <CaseBoard
+      tag="l24-iq200"
+      items={IQ200}
+      tone="violet"
+      note="راجع النوع والمعنى: many/a few/few تمشي مع الجمع المعدود، much/a little/little مع غير المعدود، some/any/a lot of مع النوعين. صحّح ثم اشرح سبب التصحيح. وتذكّر خصوصية time: How much time? للكمية، وthree times للمرات المعدودة."
+    />
+  ),
+  meaningChallenge: () => <MeaningChallenge />,
+  missionDeck: () => <MissionDeck />,
+  miniTest: () => <MiniTest />,
+  answerKey: () => <AnswerKeyBoard u={unitOf("answers")} />,
+  goldenRule: () => (
+    <div dir="rtl" className="rounded-2xl bg-slate-900 p-4 text-white shadow-xl md:p-5">
+      <LtrRow className="justify-center gap-2">
+        <span className="text-xl" aria-hidden>{"\uD83D\uDC51"}</span>
+        <En className="rounded-lg bg-amber-400/20 px-3 py-1 text-[11px] font-black tracking-[0.24em] text-amber-200 ring-1 ring-amber-300/40">The Golden Rule</En>
+      </LtrRow>
+      <p className="mt-2 text-center text-sm font-black leading-7 text-cyan-50">
+        <Rich text="a few ≠ few — a little ≠ little. وجود a يعني الكمية موجودة ومقبولة؛ غيابها يفتح باب النقص." />
+      </p>
+    </div>
+  ),
+  roadmapTimeline: () => <RoadmapTimeline />,
+  finalQuiz: () => (
+    <section className="rounded-2xl border-2 border-cyan-200 bg-white p-4 shadow-sm md:p-6">
+      <FinalQuiz lesson={24} accent="bg-cyan-700" />
+    </section>
+  ),
+};
+
+/* ---------------------------------------------------------------------------
+   جسم الخطوة — يرسم blocks الخطوة بترتيبها: وحدات المصدر ثم/و الطبقات
+   --------------------------------------------------------------------------*/
+function StepBlocks({ st, goTo, onExit }: { st: Step24; goTo: (id: string) => void; onExit: () => void }) {
+  return (
+    <div className="space-y-4">
+      <LtrRow className="gap-2">
+        <En className="rounded-lg bg-slate-900 px-2.5 py-1 text-[10px] font-black tracking-[0.22em] text-cyan-200">{st.en}</En>
+      </LtrRow>
+      {st.blocks.map((b, i) =>
+        b.t === "lab" ? (
+          <div key={`lab-${b.key}-${i}`} data-lab={`l24-${b.key}`}>
+            {LAB24[b.key]({ goTo, onExit })}
+          </div>
+        ) : (
+          <SourceUnit key={`unit-${b.id}`} u={unitOf(b.id)} tone={b.tone ?? st.tone} bare={b.bare} />
+        )
+      )}
+    </div>
+  );
+}
+
+/* ---------------------------------------------------------------------------
+   محطة واحدة — الغلاف يرسم Hero كما هو، وبقية الخطوات في إطار الخطوة المشترك
+   --------------------------------------------------------------------------*/
+function StepSection({
+  st,
+  index,
+  goTo,
+  onExit,
+}: {
+  st: Step24;
+  index: number;
+  goTo: (id: string) => void;
+  onExit: () => void;
+}) {
+  if (st.kind === "cover") return <Hero onExit={onExit} goTo={goTo} />;
+  return (
+    <>
+      <Frame
+        mascot={st.mascot}
+        step={String(index + 1).padStart(2, "0")}
+        badge={st.section}
+        title={st.title}
+        lead={st.lead}
+        tip={st.tip}
+        accent={ACCENTS24[st.tone]}
+      >
+        <StepBlocks st={st} goTo={goTo} onExit={onExit} />
+      </Frame>
+
+      {st.kind === "quiz" && (
+        <div dir="rtl" className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border-2 border-slate-200 bg-white px-5 py-4 shadow-sm">
+          <div className="text-sm font-black text-slate-600">
+            <LatinRuns text={`انتهت جولة المختبر — ${SOURCE_SECTIONS.length} وحدة مصدر مُنجزة.`} />
+          </div>
+          <button
+            type="button"
+            onClick={onExit}
+            className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-black text-white shadow transition hover:bg-slate-800"
+          >
+            ← العودة إلى جميع الدروس
+          </button>
+        </div>
+      )}
+    </>
+  );
+}
+
+/** عرض محطة واحدة من الخارج (نفس بنية SlideView في الدروس 26–32). */
+export function SlideView24({ s, onExit = () => {} }: { s: Step24; onExit?: () => void }) {
+  const index = Math.max(0, STEPS_24.findIndex((x) => x.id === s.id));
+  return <StepSection st={s} index={index} goTo={() => {}} onExit={onExit} />;
+}
+
+/* ---------------------------------------------------------------------------
+   الفصل الرئيسي — مسار أصلي متعدد الخطوات: فهرس + شريط تقدم + تنقل كامل
+   كل الخطوات تبقى مركّبة في الـ DOM (سجل المصدر الكامل محفوظ على مستوى
+   العرض)، والمحطة النشطة وحدها مرئية — كما تُخفي الدروس 27–32 مناطقها.
+   --------------------------------------------------------------------------*/
 export default function Lesson24({ onExit }: Props) {
-  // خريطة الوحدات — تُبنى من SOURCE_SECTIONS كما هي (سجل 64 وحدة).
-  const ledger = useMemo(() => SOURCE_SECTIONS.map((s, i) => ({ s, i })), []);
+  const [active, setActive] = useState(0);
+  const [menu, setMenu] = useState(false);
+  const total = STEP_COUNT_24;
+
+  const goTo = (id: string) => {
+    const i = STEPS_24.findIndex((s) => s.id === id);
+    if (i >= 0) setActive(i);
+  };
+
+  const navigation = useMemo(
+    () => ({
+      next: () => setActive((value) => Math.min(value + 1, total - 1)),
+      prev: () => setActive((value) => Math.max(value - 1, 0)),
+    }),
+    [total]
+  );
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (menu) return;
+      const target = event.target as HTMLElement | null;
+      if (target && ["INPUT", "SELECT", "TEXTAREA", "BUTTON"].includes(target.tagName)) return;
+      if (event.key === "ArrowLeft") navigation.next();
+      if (event.key === "ArrowRight") navigation.prev();
+      if (event.key === " ") {
+        event.preventDefault();
+        navigation.next();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [navigation, menu]);
+
+  useEffect(() => {
+    document.getElementById("l24-main")?.scrollTo({ top: 0 });
+  }, [active]);
+
+  const step = STEPS_24[active];
+  const progress = ((active + 1) / total) * 100;
 
   return (
-    <div dir="rtl" className="style-b font-body relative min-h-screen overflow-x-hidden bg-[#eef2fa] text-slate-800">
+    <div dir="rtl" className="font-body relative flex h-screen flex-col overflow-hidden bg-[#eef2fa] text-slate-800">
       <Signature />
-      <SignatureGhost />
-      <div className="relative z-10">
-        <ZoneNav />
-        <main className="mx-auto w-full max-w-6xl px-3 pb-16 pt-4 sm:px-6">
-          <Hero onExit={onExit} />
-
-          {/* 01 — الافتتاح: ربط الدرس 23 */}
-          <Zone id="opening" tone="cyan" emoji={"\uD83D\uDEAA"} en="LAB ENTRY" ar="بوابة المختبر — ماذا أخذنا من الدرس 23" blurb="الوحدة المصدرية كاملة كما وردت، بحوار مباشر مع مختبر العدّ.">
-            <SourceUnit u={unitOf("opening")} tone="cyan" />
-          </Zone>
-
-          {/* 02 — غرفة القيادة */}
-          <Zone id="command" tone="indigo" emoji={"\uD83C\uDF9B️"} en="QUANTIFIER COMMAND CENTER" ar="غرفة قيادة أدوات الكمية — أربعة قرارات قبل أي جملة" blurb="قبل اختيار الأداة، أمرّر الاسم على أربع بطاقات قرار. كل بطاقة سؤال واحد فقط.">
-            <CommandConsole />
-            <SourceUnit u={unitOf("objectives")} tone="indigo" />
-          </Zone>
-
-          {/* 03 — المفهوم */}
-          <Zone id="concept" tone="slate" emoji={"\uD83E\uDDE0"} en="WHAT IS A QUANTIFIER" ar="أولًا: ما معنى Quantifier؟" blurb="الكلمة نفسها ليست زينة — هي التي تغيّر معنى الجملة كاملة.">
-            <SourceUnit u={unitOf("what")} tone="slate" />
-          </Zone>
-
-          {/* 04 — الخريطة */}
-          <Zone id="map" tone="teal" emoji={"\uD83D\uDDFA️"} en="QUANTIFIER MAP" ar="خريطة أدوات الكمية — أي أداة تسكن أي عمود؟" blurb="الخريطة طبقة إضافية تُنظّم المصدر؛ نصوص الخريطتين أدناه كما وردت كاملتين.">
-            <QuantifierMapDiagram />
-            <div className="grid items-start gap-3 lg:grid-cols-2">
-              <SourceUnit u={unitOf("map")} tone="teal" />
-              <SourceUnit u={unitOf("full-map")} tone="teal" />
-            </div>
-          </Zone>
-
-          {/* 05 — مختبر SOME */}
-          <Zone id="some" tone="sky" emoji={"\uD83E\uDDEA"} en="SOME LAB" ar="مختبر SOME — كمية غير محددة لكنها موجودة" blurb="أمثلة LTR معزولة، وكل شرح المصدر حاضر بالكامل.">
-            <SourceUnit u={unitOf("some")} tone="sky" />
-            <div className="grid items-start gap-3 md:grid-cols-2">
-              <SourceUnit u={unitOf("some with countable")} tone="sky" bare />
-              <SourceUnit u={unitOf("some with uncountable")} tone="sky" bare />
-              <SourceUnit u={unitOf("some and exact number")} tone="sky" bare />
-              <SourceUnit u={unitOf("some positive sentences")} tone="sky" bare />
-            </div>
-          </Zone>
-
-          {/* 06 — مختبر ANY */}
-          <Zone id="any" tone="violet" emoji={"\uD83E\uDEE7"} en="ANY LAB" ar="مختبر ANY — أرض الأسئلة والنفي" blurb="ثلاث إشارات مرور: مثبتة ← some، سؤال/نفي ← any — مع العلاقة البصرية الكاملة.">
-            <SourceUnit u={unitOf("any")} tone="violet" />
-            <div className="grid items-start gap-3 md:grid-cols-2">
-              <SourceUnit u={unitOf("any in questions")} tone="violet" bare />
-              <SourceUnit u={unitOf("any in negatives")} tone="violet" bare />
-            </div>
-          </Zone>
-
-          {/* 07 — SOME مقابل ANY */}
-          <Zone id="somevsany" tone="amber" emoji={"\u2696️"} en="SOME VS ANY" ar="SOME مقابل ANY — والفرق الذي لا تقوله القاعدة المختصرة" blurb="لا تختزلهما في «مثبتة/سؤال» فقط؛ العروض والطلبات استثناء مهمّ في المصدر.">
-            <SourceUnit u={unitOf("some-any")} tone="amber" />
-            <div className="grid items-start gap-3 lg:grid-cols-2">
-              <SourceUnit u={unitOf("juice comparison")} tone="amber" bare />
-              <div dir="rtl" className="rounded-2xl border-2 border-emerald-300 bg-gradient-to-l from-emerald-50 via-white to-teal-50 p-4">
-                <LtrRow className="justify-center gap-2">
-                  <span className="text-xl" aria-hidden>{"\uD83E\uDDDD"}</span>
-                  <En className="rounded-lg bg-emerald-700 px-2.5 py-0.5 text-[10px] font-black tracking-[0.22em] text-white">OFFERS &amp; REQUESTS</En>
-                </LtrRow>
-                <p className="mt-2 text-center text-[12.5px] font-black text-emerald-900">هنا — ومعهما — تعود some إلى الأسئلة</p>
-                <div className="mt-3 space-y-2">
-                  <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row rounded-xl border-2 border-white bg-white px-3 py-2 shadow-sm">
-                    <En className="block text-left text-base font-black text-slate-900 md:text-lg">Would you like some water?</En>
-                  </div>
-                  <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row rounded-xl border-2 border-white bg-white px-3 py-2 shadow-sm">
-                    <En className="block text-left text-base font-black text-slate-900 md:text-lg">Can I have some juice?</En>
-                  </div>
-                </div>
-                <p className="mt-2 text-center text-[12px] font-bold leading-6 text-slate-600">
-                  <Rich text="السؤال هنا عرض أو طلب — والإجابة المتوقعة «نعم»، لذا some لا any." />
-                </p>
-              </div>
-              <SourceUnit u={unitOf("some offers and requests")} tone="amber" bare />
-            </div>
-          </Zone>
-
-          {/* 08 — MANY مقابل MUCH */}
-          <Zone id="manymuch" tone="emerald" emoji={"\uD83D\uDD00"} en="MANY VS MUCH" ar="MANY مقابل MUCH — عددٌ مقابل مقدار" blurb="لوحة مقارنة بصرية، تليها وحدات المصدر كاملة عن many وmuch والمواجهة بينهما.">
-            <VsBoard
-              left={{ en: "MANY", ar: "عدد أشياء يمكن عدها", tone: "emerald", badge: "COUNTABLE", examples: ["many books", "many students", "many apples", "many questions", "How many apples do you need?"] }}
-              right={{ en: "MUCH", ar: "مقدار شيء لا يُعَد", tone: "violet", badge: "UNCOUNTABLE", examples: ["much water", "much money", "much rice", "much time", "How much water do you drink?"] }}
-              foot="أخطاء شائعة تحفظها الخريطة: many water ❌ — many money ❌ — الصحيح much أو a lot of."
-            />
-            <div className="grid items-start gap-3 lg:grid-cols-2">
-              <SourceUnit u={unitOf("many")} tone="emerald" />
-              <div className="space-y-3">
-                <SourceUnit u={unitOf("many examples")} tone="emerald" bare />
-                <SourceUnit u={unitOf("many errors")} tone="emerald" bare />
-              </div>
-              <SourceUnit u={unitOf("much")} tone="violet" />
-              <div className="space-y-3">
-                <SourceUnit u={unitOf("much examples")} tone="violet" bare />
-                <TimeSensor />
-                <SourceUnit u={unitOf("time special meaning")} tone="amber" bare />
-              </div>
-            </div>
-            <div className="grid items-start gap-3 md:grid-cols-2">
-              <SourceUnit u={unitOf("many-much")} tone="cyan" />
-              <SourceUnit u={unitOf("many versus much")} tone="cyan" bare />
-            </div>
-          </Zone>
-
-          {/* 09 — A LOT OF / LOTS OF */}
-          <Zone id="lot" tone="teal" emoji={"\uD83D\uDCE6"} en="A LOT OF · LOTS OF" ar="خزان الكمية الكبيرة — تعمل مع النوعين" blurb="a lot of وlots of: المعنى نفسه، والاختيار بينهما ذوق لغوي لا قاعدة صلبة.">
-            <div className="grid items-start gap-3 lg:grid-cols-2">
-              <SourceUnit u={unitOf("alot")} tone="teal" />
-              <SourceUnit u={unitOf("lots")} tone="teal" />
-            </div>
-            <div className="grid items-start gap-3 md:grid-cols-2 xl:grid-cols-4">
-              <SourceUnit u={unitOf("a lot countable")} tone="teal" bare />
-              <SourceUnit u={unitOf("a lot uncountable")} tone="teal" bare />
-              <SourceUnit u={unitOf("a lot versus many much")} tone="amber" bare />
-              <SourceUnit u={unitOf("a lot of versus lots of")} tone="sky" bare />
-            </div>
-          </Zone>
-
-          {/* 10 — a few / few */}
-          <Zone id="few" tone="emerald" emoji={"\uD83D\uDCCF"} en="A FEW VS FEW" ar="ميزان المعدود: a few مقابل few — حرف يصنع المعنى" blurb="المسافة بين الكفتين ليست كمية فقط، بل إحساس: موجود وكافٍ… أم ناقص ومُقلق.">
-            <div className="grid items-start gap-3 md:grid-cols-2">
-              <MeaningMeter en="a few books" ar="بضعة كتب — العدد صغير لكنه موجود ومريح." percent={48} tone="emerald" mood={"\uD83D\uDE42"} caption="عدد قليل نسبيًا، لكن الكمية قائمة — إحساس كافٍ/إيجابي." />
-              <MeaningMeter en="few books" ar="كتب قليلة جدًا — العدد يثير إحساس النقص." percent={12} tone="rose" mood={"\uD83D\uDE1F"} caption="عدد صغير مع شعور بالنقص — الجملة أقرب إلى الشكوى." />
-            </div>
-            <div className="grid items-start gap-3 lg:grid-cols-2">
-              <SourceUnit u={unitOf("afew")} tone="emerald" />
-              <SourceUnit u={unitOf("few")} tone="rose" />
-            </div>
-            <div className="grid items-start gap-3 md:grid-cols-2 xl:grid-cols-4">
-              <SourceUnit u={unitOf("a few meaning")} tone="emerald" bare />
-              <SourceUnit u={unitOf("a few positive feeling")} tone="emerald" bare />
-              <SourceUnit u={unitOf("few meaning")} tone="rose" bare />
-              <SourceUnit u={unitOf("a few versus few")} tone="amber" bare />
-            </div>
-          </Zone>
-
-          {/* 11 — a little / little */}
-          <Zone id="little" tone="sky" emoji={"\uD83D\uDCA7"} en="A LITTLE VS LITTLE" ar="ميزان غير المعدود: a little مقابل little" blurb="نفس الحيلة، نفس الحرف — لكن الكوب هذه المرة سائل.">
-            <div className="grid items-start gap-3 md:grid-cols-2">
-              <MeaningMeter en="a little water" ar="قطرات موجودة — تكفي للظمأ الصغير." percent={42} tone="emerald" mood={"\uD83D\uDE42"} caption="كمية قليلة لكنها موجودة ومفيدة — إيجابية." />
-              <MeaningMeter en="little water" ar="قطرات بالكاد — لا تكفي أحدًا." percent={10} tone="rose" mood={"\uD83D\uDE1F"} caption="كمية قليلة جدًا مع إحساس بالنقص — سلبية." />
-            </div>
-            <div className="grid items-start gap-3 lg:grid-cols-2">
-              <SourceUnit u={unitOf("alittle")} tone="sky" />
-              <SourceUnit u={unitOf("little")} tone="rose" />
-            </div>
-            <div className="grid items-start gap-3 md:grid-cols-3">
-              <SourceUnit u={unitOf("a little meaning")} tone="sky" bare />
-              <SourceUnit u={unitOf("little meaning")} tone="rose" bare />
-              <SourceUnit u={unitOf("a little versus little")} tone="amber" bare />
-            </div>
-          </Zone>
-
-          {/* 12 — لماذا a مهمة */}
-          <Zone id="whya" tone="amber" emoji={"\uD83D\uDD24"} en="WHY «A» MATTERS" ar="لماذا حرف a مهمّ لهذه الدرجة؟" blurb="ليس زخرفًا — a تنقل الجملة من الشكوى إلى الاطمئنان.">
-            <div className="grid items-start gap-3 md:grid-cols-[auto_1fr] md:items-center">
-              <div className="relative mx-auto grid h-28 w-28 place-items-center rounded-[1.5rem] bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-xl ring-4 ring-amber-200">
-                <En className="text-6xl font-black drop-shadow-sm">a</En>
-                <span className="absolute -bottom-2.5 rounded-full bg-slate-900 px-2.5 py-0.5 text-[10px] font-black tracking-widest text-amber-200">THE DIFFERENCE</span>
-              </div>
-              <SourceUnit u={unitOf("iq-explain")} tone="amber" />
-            </div>
-            <div className="grid items-start gap-3 md:grid-cols-2">
-              <SourceUnit u={unitOf("why a matters")} tone="amber" bare />
-              <SourceUnit u={unitOf("smart question")} tone="amber" bare />
-            </div>
-          </Zone>
-
-          {/* 13 — جدار الأمثلة + القاعدة السريعة + كاشف المعنى */}
-          <Zone id="wall" tone="slate" emoji={"\uD83E\uDDF1"} en="REFERENCE WALL" ar="جدار الأمثلة — اسم واحد، خمس أدوات" blurb="books / water / students / money / time: الحقل الذي تتصارع عليه الأدوات.">
-            <div className="grid items-start gap-3 lg:grid-cols-2">
-              <SourceUnit u={unitOf("combined")} tone="slate" />
-              <SourceUnit u={unitOf("combined examples")} tone="slate" bare />
-            </div>
-            <div className="grid items-start gap-3 lg:grid-cols-2">
-              <div className="space-y-3">
-                <QuickRuleScale />
-                <SourceUnit u={unitOf("battle")} tone="slate" bare />
-              </div>
-              <div className="space-y-3">
-                <MeaningDetector />
-                <SourceUnit u={unitOf("fast-reference meanings")} tone="slate" bare />
-              </div>
-            </div>
-          </Zone>
-
-          {/* 14 — آلة There is / There are */}
-          <Zone id="there" tone="cyan" emoji={"\uD83E\uDD16"} en="THERE IS · THERE ARE" ar="آلة الكمية الموجودة — is أم are؟" blurb="تذكير من الدرس 21: الفاعل يقرر الفعل، وأداة الكمية لا تزحزحه.">
-            <ThereMachine />
-            <div className="grid items-start gap-3 md:grid-cols-[2fr_1fr]">
-              <SourceUnit u={unitOf("there")} tone="cyan" />
-              <SourceUnit u={unitOf("is are warning")} tone="rose" bare />
-            </div>
-          </Zone>
-
-          {/* 15 — مختبر اللغة */}
-          <Zone id="lab" tone="violet" emoji={"\uD83E\uDD7C️"} en="LANGUAGE LABORATORY" ar="مختبر اللغة — أربع عيّنات تحت المجهر" blurb="العيّنات نفسها في المصدر: فرق الإحساس كله يعود إلى a الصغيرة.">
-            <TestTubeRack />
-            <SourceUnit u={unitOf("lab")} tone="violet" />
-          </Zone>
-
-          {/* 16 — محطات التدريب */}
-          <Zone id="training" tone="cyan" emoji={"\uD83C\uDFAF"} en="TRAINING STATIONS" ar="محطات التدريب الخمس — 38 قرارًا قبل التخرج" blurb="كل بطاقة: اختيار محايد أولًا، ثم «تحقق من الإجابات»، ثم ↺ إعادة. لا كشف مبكر." >
-            {ledger && (
-              <>
-                <TrainingStation unitId="training1" no={0} kind={0} />
-                <TrainingStation unitId="training2" no={1} kind={1} />
-                <TrainingStation unitId="training3" no={2} kind={2} />
-                <TrainingStation unitId="training4" no={3} kind={3} />
-                <TrainingStation unitId="training5" no={4} kind={4} />
-              </>
-            )}
-          </Zone>
-
-          {/* 17 — التحليل: المحقق + IQ200 + كاشف المعنى */}
-          <Zone id="analysis" tone="rose" emoji={"\uD83D\uDD75️"} en="ANALYSIS BENCH" ar="طاولة التحليل — Grammar Detective وIQ200 وتحدي المعنى" blurb="لوحات عمل: علّم ما أنجزته، ثم اكشف الملاحظات. الحكم يبقى بعد الضغط على زر التحقق فقط.">
-            <SourceUnit u={unitOf("detective")} tone="rose" />
-            <CaseBoard
-              tag="l24-detective"
-              items={DETECTIVE}
-              tone="rose"
-              correctIndex={9}
-              note="راجع النوع والمعنى: many/a few/few للمعدود الجمع، much/a little/little لغير المعدود، some/any/a lot of/lots of للنوعين. الجملة 10 في Grammar Detective صحيحة."
-            />
-            <SourceUnit u={unitOf("iq200")} tone="violet" />
-            <CaseBoard
-              tag="l24-iq200"
-              items={IQ200}
-              tone="violet"
-              note="راجع النوع والمعنى: many/a few/few تمشي مع الجمع المعدود، much/a little/little مع غير المعدود، some/any/a lot of مع النوعين. صحّح ثم اشرح سبب التصحيح. وتذكّر خصوصية time: How much time? للكمية، وthree times للمرات المعدودة."
-            />
-            <SourceUnit u={unitOf("meaning")} tone="indigo" />
-            <MeaningChallenge />
-          </Zone>
-
-          {/* 18 — المهمة النهائية */}
-          <Zone id="boss" tone="rose" emoji={"\uD83C\uDFC6"} en="FINAL BOSS — RESTAURANT" ar="المهمة النهائية — مطعم Quantity Lab" blurb="كل أدواتك تتجمّع هنا: عُدّة المطعم + قصة من 10 جمل. لا تُختصر المهمة — نفّذها.">
-            <SourceUnit u={unitOf("boss")} tone="rose" />
-            <MissionDeck />
-          </Zone>
-
-          {/* 19 — الاختبار المصغر */}
-          <Zone id="mini" tone="indigo" emoji={"\uD83E\uDDEA"} en="MINI FINAL TEST" ar="الاختبار النهائي المصغر — 8 أسئلة" blurb="نفس البروتوكول: أجبتَ، تحقّقتَ، أعدتَ. مفتاح التصحيح داخل نفس الوحدة المصدرية.">
-            <SourceUnit u={unitOf("mini")} tone="indigo" bare />
-            <MiniTest />
-          </Zone>
-
-          {/* 20 — مفتاح الإجابات */}
-          <Zone id="key" tone="amber" emoji={"\uD83C\uDFC5"} en="ANSWER KEY" ar="مفتاح الإجابات — خمس حزم تدريب" blurb="كما ورد في المصدر، سطرًا سطرًا، بلا تغيير.">
-            <AnswerKeyBoard u={unitOf("answers")} />
-          </Zone>
-
-          {/* 21 — الخلاصة الذهبية */}
-          <Zone id="summary" tone="teal" emoji={"\uD83D\uDCDC"} en="GOLDEN SUMMARY" ar="الخلاصة النهائية والقاعدة الذهبية">
-            <div dir="rtl" className="rounded-2xl bg-slate-900 p-4 text-white shadow-xl md:p-5">
-              <LtrRow className="justify-center gap-2">
-                <span className="text-xl" aria-hidden>{"\uD83D\uDC51"}</span>
-                <En className="rounded-lg bg-amber-400/20 px-3 py-1 text-[11px] font-black tracking-[0.24em] text-amber-200 ring-1 ring-amber-300/40">The Golden Rule</En>
-              </LtrRow>
-              <p className="mt-2 text-center text-sm font-black leading-7 text-cyan-50">
-                <Rich text="a few ≠ few — a little ≠ little. وجود a يعني الكمية موجودة ومقبولة؛ غيابها يفتح باب النقص." />
-              </p>
-            </div>
-            <SourceUnit u={unitOf("summary")} tone="gold" />
-          </Zone>
-
-          {/* 22 — المسار */}
-          <Zone id="roadmap" tone="slate" emoji={"\uD83D\uDDDFA️"} en="ROADMAP" ar="مسارنا الآن — الخطوة التالية في منظومة الأزمنة">
-            <RoadmapTimeline />
-            <SourceUnit u={unitOf("roadmap")} tone="slate" />
-          </Zone>
-
-          {/* 23 — الاختبار النهائي المشترك */}
-          <Zone id="quiz" tone="cyan" emoji={"\uD83D\uDCDD"} en="FINAL QUIZ — QUANTIFIERS" ar="الاختبار النهائي — 12 سؤالًا جديدة مع الشرح ومساحة المعلم" blurb="المكوّن المشترك كما هو — لا كشف قبل التحقق، ولا مفتاح قبل فتح مساحة المعلم.">
-            <section className="rounded-2xl border-2 border-cyan-200 bg-white p-4 shadow-sm md:p-6">
-              <FinalQuiz lesson={24} accent="bg-cyan-700" />
-            </section>
-          </Zone>
-
-          <div dir="rtl" className="mt-10 flex flex-wrap items-center justify-between gap-3 rounded-2xl border-2 border-slate-200 bg-white px-5 py-4 shadow-sm">
-            <div className="text-sm font-black text-slate-600">
-              <LatinRuns text={`انتهت جولة المختبر — ${ledger.length} وحدة مصدر مُنجزة.`} />
-            </div>
-            <button type="button" onClick={onExit} className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-black text-white shadow transition hover:bg-slate-800">
-              ← العودة إلى جميع الدروس
+      <div className="relative flex min-h-0 flex-1">
+        <SignatureGhost />
+        <div className="relative z-10 hidden w-72 shrink-0 border-l border-cyan-100 bg-white/85 backdrop-blur lg:block">
+          <Rail active={active} setActive={setActive} onExit={onExit} />
+        </div>
+        <div className="relative z-10 flex min-w-0 flex-1 flex-col">
+          <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
+            <button
+              type="button"
+              onClick={() => setMenu(true)}
+              aria-label="فهرس الخطوات"
+              className="grid h-10 w-10 place-items-center rounded-xl border-2 border-cyan-100 bg-white text-lg shadow-sm lg:hidden"
+            >
+              ☰
             </button>
+            <div className="min-w-0 flex-1">
+              <div className="mt-1.5 truncate text-sm font-bold text-slate-500">
+                <Rich text={`${step.section} · `} />
+                <span className="text-slate-800">
+                  <LatinRuns text={step.title} />
+                </span>
+              </div>
+              <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-cyan-100/70">
+                <div
+                  className="h-full rounded-full bg-gradient-to-l from-cyan-700 via-sky-500 to-amber-400 transition-all duration-500"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </div>
+            <span data-slide-counter className="rounded-lg bg-white px-3 py-1 text-sm font-bold text-slate-500 shadow-sm">
+              {active + 1} / {total}
+            </span>
+          </header>
+          <main id="l24-main" data-area="student-lesson" className="flex-1 overflow-y-auto px-3 pb-28 pt-4 md:px-6 lg:px-10">
+            {STEPS_24.map((s, i) => (
+              <section
+                key={s.id}
+                id={`zone-${s.id}`}
+                hidden={i !== active}
+                className={`mx-auto max-w-4xl scroll-mt-24 ${i === active ? "pop" : ""}`}
+              >
+                <StepSection st={s} index={i} goTo={goTo} onExit={onExit} />
+              </section>
+            ))}
+          </main>
+          <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center px-3">
+            <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border-2 border-cyan-900/[0.06] bg-white/95 p-1.5 shadow-xl backdrop-blur">
+              <button
+                type="button"
+                onClick={navigation.prev}
+                disabled={active === 0}
+                className="rounded-full px-4 py-2 text-sm font-bold text-slate-700 transition enabled:hover:bg-slate-100 disabled:opacity-30"
+              >
+                → السابق
+              </button>
+              <span className="h-6 w-px bg-slate-200" />
+              <button
+                type="button"
+                onClick={navigation.next}
+                disabled={active === total - 1}
+                className="rounded-full bg-cyan-700 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-cyan-800 disabled:opacity-30"
+              >
+                التالي ←
+              </button>
+            </div>
           </div>
-        </main>
+        </div>
       </div>
+
+      {menu && (
+        <div className="fixed inset-0 z-50 flex lg:hidden" onClick={() => setMenu(false)}>
+          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" />
+          <div className="relative z-10 h-full w-80 max-w-[85vw] bg-white shadow-2xl" onClick={(event) => event.stopPropagation()}>
+            <Rail active={active} setActive={setActive} onExit={onExit} onClose={() => setMenu(false)} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

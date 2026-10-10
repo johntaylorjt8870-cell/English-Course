@@ -207,7 +207,7 @@ interaction-as-explanation) on the Lesson 27/29 teaching-kit pattern;
 | `npm run build` | ✓ built in ~4.4s |
 | `npm run check:english-direction` | ✓ 1477 assertions, 30 lessons |
 | `node scripts/audit-render-direction.mjs` | ✓ 1452 assertions |
-| `node scripts/audit-lesson24.mjs` | ✓ 165 assertions |
+| `node scripts/audit-lesson24.mjs` | ✓ 206 assertions |
 | `node scripts/audit-lesson26.mjs` | ✓ 164 assertions |
 | `node scripts/audit-lesson27.mjs` | ✓ 165 checks |
 | `node scripts/audit-lesson28.mjs` | ✓ 328 assertions (rewritten for the native walk: per-click state captures, post-walk reveal presence, whitespace-tolerant solutions verification, ledger-phrase split) |

@@ -89,3 +89,510 @@ export const MINI_TEST = [
 export const SLIDES = SOURCE_SECTIONS.map((section, index) => ({ ...section, sourceIndex:index }));
 export const SOURCE_NUMBERED_COUNT = SOURCE_SECTIONS.length;
 export const LESSON_TITLE_24 = 'الدرس 24: Quantifiers — أدوات الكمية';
+
+/* ============================================================================
+   خطة الخطوات الأصلية — الدرس 24 (Native multi-step plan)
+   ----------------------------------------------------------------------------
+   كل خطوة = محطة واحدة في المسار، بعنوانها ونبرتها من طبقة العرض السابقة
+   نفسها (لا نص مصدر جديد). محتوى الخطوة blocks بترتيبها المصدرى:
+     unit → بطاقة وحدة مصدرية كاملة، تُرسم مرة واحدة بعلامة data-source-section.
+     lab  → طبقة تفاعلية قائمة، وقد تغطي وحدات مصدرية بنفسها عبر covers.
+   هذا السجل هو مرجع التغطية: لا وحدة مصدرية تُحذف أو تُكرَّر، ولا خطوة بلا محتوى.
+   ==========================================================================*/
+export type Tone24 = "slate" | "cyan" | "sky" | "violet" | "indigo" | "emerald" | "teal" | "amber" | "rose" | "gold";
+
+export type Lab24Key =
+  | "hero"
+  | "command"
+  | "mapDiagram"
+  | "offers"
+  | "vsBoard"
+  | "fewMeters"
+  | "littleMeters"
+  | "timeSensor"
+  | "whyA"
+  | "quickRule"
+  | "detector"
+  | "thereMachine"
+  | "testTubes"
+  | "training1"
+  | "training2"
+  | "training3"
+  | "training4"
+  | "training5"
+  | "detectiveBoard"
+  | "iq200Board"
+  | "meaningChallenge"
+  | "missionDeck"
+  | "miniTest"
+  | "answerKey"
+  | "goldenRule"
+  | "roadmapTimeline"
+  | "finalQuiz";
+
+export type StepBlock24 =
+  | { t: "unit"; id: string; bare?: boolean; tone?: Tone24 }
+  | { t: "lab"; key: Lab24Key; covers?: string[] };
+
+export type Step24 = {
+  id: string;
+  kind: "cover" | "lesson" | "quiz";
+  /** اسم المجموعة في فهرس الخطوات (عربي مثل بقية الدروس المرجعية) */
+  section: string;
+  /** الشارة الإنجليزية للمحطة — تُرسم معزولة LTR */
+  en: string;
+  mascot: string;
+  title: string;
+  lead?: string;
+  tip?: string;
+  tone: Tone24;
+  blocks: StepBlock24[];
+};
+
+export const STEPS_24: Step24[] = [
+  {
+    id: "cover",
+    kind: "cover",
+    section: "البداية",
+    en: "QUANTITY LAB",
+    mascot: "\uD83E\uDDEA",
+    title: LESSON_TITLE_24,
+    tone: "cyan",
+    blocks: [{ t: "lab", key: "hero" }],
+  },
+  {
+    id: "opening",
+    kind: "lesson",
+    section: "البداية",
+    en: "LAB ENTRY",
+    mascot: "\uD83D\uDEAA",
+    title: "بوابة المختبر — ماذا أخذنا من الدرس 23",
+    lead: "الوحدة المصدرية كاملة كما وردت، بحوار مباشر مع مختبر العدّ.",
+    tone: "cyan",
+    blocks: [{ t: "unit", id: "opening" }],
+  },
+  {
+    id: "command",
+    kind: "lesson",
+    section: "البداية",
+    en: "QUANTIFIER COMMAND CENTER",
+    mascot: "\uD83C\uDF9B\uFE0F",
+    title: "غرفة قيادة أدوات الكمية — أربعة قرارات قبل أي جملة",
+    lead: "قبل اختيار الأداة، أمرّر الاسم على أربع بطاقات قرار. كل بطاقة سؤال واحد فقط.",
+    tone: "indigo",
+    blocks: [
+      { t: "lab", key: "command" },
+      { t: "unit", id: "objectives" },
+    ],
+  },
+  {
+    id: "concept",
+    kind: "lesson",
+    section: "المفهوم",
+    en: "WHAT IS A QUANTIFIER",
+    mascot: "\uD83E\uDDE0",
+    title: "أولًا: ما معنى Quantifier؟",
+    lead: "الكلمة نفسها ليست زينة — هي التي تغيّر معنى الجملة كاملة.",
+    tone: "slate",
+    blocks: [{ t: "unit", id: "what" }],
+  },
+  {
+    id: "map",
+    kind: "lesson",
+    section: "المفهوم",
+    en: "QUANTIFIER MAP",
+    mascot: "\uD83D\uDDFA\uFE0F",
+    title: "خريطة أدوات الكمية — أي أداة تسكن أي عمود؟",
+    lead: "الخريطة طبقة إضافية تُنظّم المصدر؛ نصوص الخريطتين أدناه كما وردت كاملتين.",
+    tone: "teal",
+    blocks: [
+      { t: "lab", key: "mapDiagram" },
+      { t: "unit", id: "map" },
+      { t: "unit", id: "full-map" },
+    ],
+  },
+  {
+    id: "some",
+    kind: "lesson",
+    section: "المختبرات",
+    en: "SOME LAB",
+    mascot: "\uD83E\uDDEA",
+    title: "مختبر SOME — كمية غير محددة لكنها موجودة",
+    lead: "أمثلة LTR معزولة، وكل شرح المصدر حاضر بالكامل.",
+    tone: "sky",
+    blocks: [
+      { t: "unit", id: "some" },
+      { t: "unit", id: "some with countable", bare: true },
+      { t: "unit", id: "some with uncountable", bare: true },
+      { t: "unit", id: "some and exact number", bare: true },
+      { t: "unit", id: "some positive sentences", bare: true },
+    ],
+  },
+  {
+    id: "any",
+    kind: "lesson",
+    section: "المختبرات",
+    en: "ANY LAB",
+    mascot: "\uD83E\uDEE7",
+    title: "مختبر ANY — أرض الأسئلة والنفي",
+    lead: "ثلاث إشارات مرور: مثبتة ← some، سؤال/نفي ← any — مع العلاقة البصرية الكاملة.",
+    tone: "violet",
+    blocks: [
+      { t: "unit", id: "any" },
+      { t: "unit", id: "any in questions", bare: true },
+      { t: "unit", id: "any in negatives", bare: true },
+    ],
+  },
+  {
+    id: "somevsany",
+    kind: "lesson",
+    section: "المختبرات",
+    en: "SOME VS ANY",
+    mascot: "\u2696\uFE0F",
+    title: "SOME مقابل ANY — والفرق الذي لا تقوله القاعدة المختصرة",
+    lead: "لا تختزلهما في «مثبتة/سؤال» فقط؛ العروض والطلبات استثناء مهمّ في المصدر.",
+    tip: "السؤال هنا عرض أو طلب — والإجابة المتوقعة «نعم»، لذا some لا any.",
+    tone: "amber",
+    blocks: [
+      { t: "unit", id: "some-any" },
+      { t: "unit", id: "juice comparison", bare: true },
+      { t: "lab", key: "offers" },
+      { t: "unit", id: "some offers and requests", bare: true },
+    ],
+  },
+  {
+    id: "many",
+    kind: "lesson",
+    section: "المقارنات",
+    en: "MANY",
+    mascot: "\uD83D\uDD00",
+    title: "③ MANY",
+    tone: "emerald",
+    blocks: [
+      { t: "unit", id: "many" },
+      { t: "unit", id: "many examples", bare: true },
+      { t: "unit", id: "many errors", bare: true },
+    ],
+  },
+  {
+    id: "much",
+    kind: "lesson",
+    section: "المقارنات",
+    en: "MUCH",
+    mascot: "\uD83D\uDD00",
+    title: "④ MUCH",
+    tone: "violet",
+    blocks: [
+      { t: "unit", id: "much" },
+      { t: "unit", id: "much examples", bare: true, tone: "violet" },
+      { t: "lab", key: "timeSensor" },
+      { t: "unit", id: "time special meaning", bare: true, tone: "amber" },
+    ],
+  },
+  {
+    id: "manymuch",
+    kind: "lesson",
+    section: "المقارنات",
+    en: "MANY VS MUCH",
+    mascot: "\uD83D\uDD00",
+    title: "MANY مقابل MUCH — عددٌ مقابل مقدار",
+    lead: "لوحة مقارنة بصرية، تليها وحدات المصدر كاملة عن many وmuch والمواجهة بينهما.",
+    tone: "cyan",
+    blocks: [
+      { t: "lab", key: "vsBoard" },
+      { t: "unit", id: "many-much" },
+      { t: "unit", id: "many versus much", bare: true },
+    ],
+  },
+  {
+    id: "lot",
+    kind: "lesson",
+    section: "الأدوات",
+    en: "A LOT OF · LOTS OF",
+    mascot: "\uD83D\uDCE6",
+    title: "خزان الكمية الكبيرة — تعمل مع النوعين",
+    lead: "a lot of وlots of: المعنى نفسه، والاختيار بينهما ذوق لغوي لا قاعدة صلبة.",
+    tone: "teal",
+    blocks: [
+      { t: "unit", id: "alot" },
+      { t: "unit", id: "lots" },
+      { t: "unit", id: "a lot countable", bare: true },
+      { t: "unit", id: "a lot uncountable", bare: true },
+      { t: "unit", id: "a lot versus many much", bare: true, tone: "amber" },
+      { t: "unit", id: "a lot of versus lots of", bare: true, tone: "sky" },
+    ],
+  },
+  {
+    id: "few",
+    kind: "lesson",
+    section: "الأدوات",
+    en: "A FEW VS FEW",
+    mascot: "\uD83D\uDCCF",
+    title: "ميزان المعدود: a few مقابل few — حرف يصنع المعنى",
+    lead: "المسافة بين الكفتين ليست كمية فقط، بل إحساس: موجود وكافٍ… أم ناقص ومُقلق.",
+    tone: "emerald",
+    blocks: [
+      { t: "lab", key: "fewMeters" },
+      { t: "unit", id: "afew", tone: "emerald" },
+      { t: "unit", id: "few", tone: "rose" },
+      { t: "unit", id: "a few meaning", bare: true, tone: "emerald" },
+      { t: "unit", id: "a few positive feeling", bare: true, tone: "emerald" },
+      { t: "unit", id: "few meaning", bare: true, tone: "rose" },
+      { t: "unit", id: "a few versus few", bare: true, tone: "amber" },
+    ],
+  },
+  {
+    id: "little",
+    kind: "lesson",
+    section: "الأدوات",
+    en: "A LITTLE VS LITTLE",
+    mascot: "\uD83D\uDCA7",
+    title: "ميزان غير المعدود: a little مقابل little",
+    lead: "نفس الحيلة، نفس الحرف — لكن الكوب هذه المرة سائل.",
+    tone: "sky",
+    blocks: [
+      { t: "lab", key: "littleMeters" },
+      { t: "unit", id: "alittle", tone: "sky" },
+      { t: "unit", id: "little", tone: "rose" },
+      { t: "unit", id: "a little meaning", bare: true, tone: "sky" },
+      { t: "unit", id: "little meaning", bare: true, tone: "rose" },
+      { t: "unit", id: "a little versus little", bare: true, tone: "amber" },
+    ],
+  },
+  {
+    id: "whya",
+    kind: "lesson",
+    section: "الأدوات",
+    en: "WHY «A» MATTERS",
+    mascot: "\uD83D\uDD24",
+    title: "لماذا حرف a مهمّ لهذه الدرجة؟",
+    lead: "ليس زخرفًا — a تنقل الجملة من الشكوى إلى الاطمئنان.",
+    tone: "amber",
+    blocks: [
+      { t: "lab", key: "whyA", covers: ["iq-explain"] },
+      { t: "unit", id: "why a matters", bare: true },
+      { t: "unit", id: "smart question", bare: true },
+    ],
+  },
+  {
+    id: "wall",
+    kind: "lesson",
+    section: "الأدوات",
+    en: "REFERENCE WALL",
+    mascot: "\uD83E\uDDF1",
+    title: "جدار الأمثلة — اسم واحد، خمس أدوات",
+    lead: "books / water / students / money / time: الحقل الذي تتصارع عليه الأدوات.",
+    tone: "slate",
+    blocks: [
+      { t: "unit", id: "combined" },
+      { t: "unit", id: "combined examples", bare: true },
+      { t: "lab", key: "quickRule" },
+      { t: "unit", id: "battle", bare: true },
+      { t: "lab", key: "detector" },
+      { t: "unit", id: "fast-reference meanings", bare: true },
+    ],
+  },
+  {
+    id: "there",
+    kind: "lesson",
+    section: "الربط",
+    en: "THERE IS · THERE ARE",
+    mascot: "\uD83E\uDD16",
+    title: "آلة الكمية الموجودة — is أم are؟",
+    lead: "تذكير من الدرس 21: الفاعل يقرر الفعل، وأداة الكمية لا تزحزحه.",
+    tone: "cyan",
+    blocks: [
+      { t: "lab", key: "thereMachine" },
+      { t: "unit", id: "there" },
+      { t: "unit", id: "is are warning", bare: true, tone: "rose" },
+    ],
+  },
+  {
+    id: "lab",
+    kind: "lesson",
+    section: "الربط",
+    en: "LANGUAGE LABORATORY",
+    mascot: "\uD83E\uDD7C\uFE0F",
+    title: "مختبر اللغة — أربع عيّنات تحت المجهر",
+    lead: "العيّنات نفسها في المصدر: فرق الإحساس كله يعود إلى a الصغيرة.",
+    tone: "violet",
+    blocks: [
+      { t: "lab", key: "testTubes" },
+      { t: "unit", id: "lab" },
+    ],
+  },
+  {
+    id: "training1",
+    kind: "lesson",
+    section: "التدريب",
+    en: "TRAINING STATIONS",
+    mascot: "\uD83C\uDFAF",
+    title: "محطات التدريب الخمس · المحطة ①",
+    tip: "كل بطاقة: اختيار محايد أولًا، ثم «تحقق من الإجابات»، ثم ↺ إعادة. لا كشف مبكر.",
+    tone: "cyan",
+    blocks: [{ t: "lab", key: "training1", covers: ["training1"] }],
+  },
+  {
+    id: "training2",
+    kind: "lesson",
+    section: "التدريب",
+    en: "TRAINING STATIONS",
+    mascot: "\uD83C\uDFAF",
+    title: "محطات التدريب الخمس · المحطة ②",
+    tip: "كل بطاقة: اختيار محايد أولًا، ثم «تحقق من الإجابات»، ثم ↺ إعادة. لا كشف مبكر.",
+    tone: "sky",
+    blocks: [{ t: "lab", key: "training2", covers: ["training2"] }],
+  },
+  {
+    id: "training3",
+    kind: "lesson",
+    section: "التدريب",
+    en: "TRAINING STATIONS",
+    mascot: "\uD83C\uDFAF",
+    title: "محطات التدريب الخمس · المحطة ③",
+    tip: "كل بطاقة: اختيار محايد أولًا، ثم «تحقق من الإجابات»، ثم ↺ إعادة. لا كشف مبكر.",
+    tone: "emerald",
+    blocks: [{ t: "lab", key: "training3", covers: ["training3"] }],
+  },
+  {
+    id: "training4",
+    kind: "lesson",
+    section: "التدريب",
+    en: "TRAINING STATIONS",
+    mascot: "\uD83C\uDFAF",
+    title: "محطات التدريب الخمس · المحطة ④",
+    tip: "كل بطاقة: اختيار محايد أولًا، ثم «تحقق من الإجابات»، ثم ↺ إعادة. لا كشف مبكر.",
+    tone: "teal",
+    blocks: [{ t: "lab", key: "training4", covers: ["training4"] }],
+  },
+  {
+    id: "training5",
+    kind: "lesson",
+    section: "التدريب",
+    en: "TRAINING STATIONS",
+    mascot: "\uD83C\uDFAF",
+    title: "محطات التدريب الخمس · المحطة ⑤",
+    tip: "كل بطاقة: اختيار محايد أولًا، ثم «تحقق من الإجابات»، ثم ↺ إعادة. لا كشف مبكر.",
+    tone: "rose",
+    blocks: [{ t: "lab", key: "training5", covers: ["training5"] }],
+  },
+  {
+    id: "detective",
+    kind: "lesson",
+    section: "التحليل",
+    en: "ANALYSIS BENCH",
+    mascot: "\uD83D\uDD75\uFE0F",
+    title: "🕵️ Grammar Detective",
+    lead: "لوحات عمل: علّم ما أنجزته، ثم اكشف الملاحظات. الحكم يبقى بعد الضغط على زر التحقق فقط.",
+    tone: "rose",
+    blocks: [
+      { t: "unit", id: "detective" },
+      { t: "lab", key: "detectiveBoard" },
+    ],
+  },
+  {
+    id: "iq200",
+    kind: "lesson",
+    section: "التحليل",
+    en: "IQ200 CHALLENGE",
+    mascot: "\uD83D\uDE80",
+    title: "🚀 IQ200 Challenge",
+    tone: "violet",
+    blocks: [
+      { t: "unit", id: "iq200" },
+      { t: "lab", key: "iq200Board" },
+    ],
+  },
+  {
+    id: "meaning",
+    kind: "lesson",
+    section: "التحليل",
+    en: "MEANING CHALLENGE",
+    mascot: "\uD83E\uDDE0",
+    title: "🧠 تحدي المعنى",
+    tone: "indigo",
+    blocks: [
+      { t: "unit", id: "meaning" },
+      { t: "lab", key: "meaningChallenge" },
+    ],
+  },
+  {
+    id: "boss",
+    kind: "lesson",
+    section: "المهمة",
+    en: "FINAL BOSS — RESTAURANT",
+    mascot: "\uD83C\uDFC6",
+    title: "المهمة النهائية — مطعم Quantity Lab",
+    lead: "كل أدواتك تتجمّع هنا: عُدّة المطعم + قصة من 10 جمل. لا تُختصر المهمة — نفّذها.",
+    tone: "rose",
+    blocks: [
+      { t: "unit", id: "boss" },
+      { t: "lab", key: "missionDeck" },
+    ],
+  },
+  {
+    id: "mini",
+    kind: "lesson",
+    section: "المهمة",
+    en: "MINI FINAL TEST",
+    mascot: "\uD83E\uDDEA",
+    title: "الاختبار النهائي المصغر — 8 أسئلة",
+    lead: "نفس البروتوكول: أجبتَ، تحقّقتَ، أعدتَ. مفتاح التصحيح داخل نفس الوحدة المصدرية.",
+    tone: "indigo",
+    blocks: [
+      { t: "unit", id: "mini", bare: true },
+      { t: "lab", key: "miniTest" },
+    ],
+  },
+  {
+    id: "answers",
+    kind: "lesson",
+    section: "الإجابات",
+    en: "ANSWER KEY",
+    mascot: "\uD83C\uDFC5",
+    title: "مفتاح الإجابات — خمس حزم تدريب",
+    lead: "كما ورد في المصدر، سطرًا سطرًا، بلا تغيير.",
+    tone: "amber",
+    blocks: [{ t: "lab", key: "answerKey", covers: ["answers"] }],
+  },
+  {
+    id: "summary",
+    kind: "lesson",
+    section: "الخاتمة",
+    en: "GOLDEN SUMMARY",
+    mascot: "\uD83D\uDCDC",
+    title: "الخلاصة النهائية والقاعدة الذهبية",
+    tip: "a few ≠ few — a little ≠ little. وجود a يعني الكمية موجودة ومقبولة؛ غيابها يفتح باب النقص.",
+    tone: "teal",
+    blocks: [
+      { t: "lab", key: "goldenRule" },
+      { t: "unit", id: "summary", tone: "gold" },
+    ],
+  },
+  {
+    id: "roadmap",
+    kind: "lesson",
+    section: "الخاتمة",
+    en: "ROADMAP",
+    mascot: "\uD83D\uDDFA",
+    title: "مسارنا الآن — الخطوة التالية في منظومة الأزمنة",
+    tone: "slate",
+    blocks: [
+      { t: "lab", key: "roadmapTimeline" },
+      { t: "unit", id: "roadmap" },
+    ],
+  },
+  {
+    id: "quiz",
+    kind: "quiz",
+    section: "الخاتمة",
+    en: "FINAL QUIZ — QUANTIFIERS",
+    mascot: "\uD83D\uDCDD",
+    title: "الاختبار النهائي — 12 سؤالًا جديدة مع الشرح ومساحة المعلم",
+    tip: "المكوّن المشترك كما هو — لا كشف قبل التحقق، ولا مفتاح قبل فتح مساحة المعلم.",
+    tone: "cyan",
+    blocks: [{ t: "lab", key: "finalQuiz" }],
+  },
+];
+
+export const STEP_COUNT_24 = STEPS_24.length;

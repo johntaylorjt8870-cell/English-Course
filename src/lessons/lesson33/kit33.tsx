@@ -614,32 +614,34 @@ export function TapFix33({ rounds, drv }: { rounds: Detective33[]; drv: GateDriv
       <div data-tap-stage={stage} className="rounded-2xl border border-amber-200 bg-white p-3">
         <div className="mb-2 text-[12px] font-black text-amber-800"><Rich text={`القضية ${cur.n} — المس الكلمة الخاطئة`} /></div>
         <div className="flex flex-wrap gap-1.5" dir="ltr">
-          {cur.segments.map((seg, si) => {
-            const isTapped = tapped === si;
-            const solvedRow = solved > stage;
-            const showBad = solvedRow && si === cur.bad;
-            const showFix = solvedRow && si === cur.bad;
-            return (
-              <button
-                key={si}
-                type="button"
-                data-tap-seg={si}
-                disabled={solvedRow}
-                onClick={() => setTapped(si)}
-                className={`${FOCUS33} rounded-lg border-2 px-2 py-1.5 text-[13px] font-bold transition ${
-                  showBad
-                    ? "border-emerald-500 bg-emerald-50 text-emerald-900"
-                    : isTapped
+          {solved > stage ? (
+            /* بعد الحل تُعرض الجملة المصححة الموثوقة (corrected) كاملة —
+               لا إعادة تركيب من الفهرس لأن الخطأ قد يمتد على كلمتين (been knowing…) */
+            <span className="rounded-lg border-2 border-emerald-500 bg-emerald-50 px-2 py-1.5 text-[13px] font-black text-emerald-900">
+              <LatinRuns text={cur.corrected} />
+            </span>
+          ) : (
+            cur.segments.map((seg, si) => {
+              const isTapped = tapped === si;
+              return (
+                <button
+                  key={si}
+                  type="button"
+                  data-tap-seg={si}
+                  onClick={() => setTapped(si)}
+                  className={`${FOCUS33} rounded-lg border-2 px-2 py-1.5 text-[13px] font-bold transition ${
+                    isTapped
                       ? si === cur.bad
                         ? "border-amber-500 bg-amber-100 text-amber-900"
                         : "border-rose-400 bg-rose-50 text-rose-700"
                       : "border-amber-200 bg-white text-amber-900 hover:border-amber-400"
-                }`}
-              >
-                <LatinRuns text={showFix ? cur.fix : seg} />
-              </button>
-            );
-          })}
+                  }`}
+                >
+                  <LatinRuns text={seg} />
+                </button>
+              );
+            })
+          )}
         </div>
         {tapped !== null && solved === stage ? (
           <div className="mt-3">
@@ -671,7 +673,7 @@ export function TapFix33({ rounds, drv }: { rounds: Detective33[]; drv: GateDriv
         {solved > stage ? (
           <div>
             <Verdict33 tone="good">
-              <LatinRuns text={[...cur.segments.slice(0, cur.bad), cur.fix, ...cur.segments.slice(cur.bad + 1)].join(" ")} />
+              <LatinRuns text={cur.corrected} />
               {" — "}
               {cur.why}
             </Verdict33>

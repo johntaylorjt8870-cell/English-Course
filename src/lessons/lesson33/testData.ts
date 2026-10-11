@@ -68,7 +68,7 @@ export const TEST_LEVELS_33: TestLevel33[] = [
     questions: [
       { type: "spot", ar: "Does he works daily?", segments: ["Does", "he", "works", "daily?"], bad: 2, fix: "work", why: "بعد Does يعود الفعل إلى V1: work." },
       { type: "spot", ar: "She has been cook since morning.", segments: ["She", "has", "been", "cook", "since", "morning."], bad: 3, fix: "cooking", why: "has been تحتاج V-ing: cooking." },
-      { type: "spot", ar: "I am knowing the answer.", segments: ["I", "am", "knowing", "the", "answer."], bad: 1, fix: "know", why: "know فعل حالة ← البسيط: I know (تُحذف am معها knowing)." },
+      { type: "spot", ar: "I am knowing the answer.", segments: ["I", "am knowing", "the", "answer."], bad: 1, fix: "know", why: "know فعل حالة ← البسيط: I know (المقطع الخاطئ am knowing كاملًا ← know)." },
       { type: "spot", ar: "They has already arrived.", segments: ["They", "has", "already", "arrived."], bad: 1, fix: "have", why: "They جمع ← have لا has." },
       { type: "spot", ar: "He has been repair the car for two hours.", segments: ["He", "has", "been", "repair", "the", "car", "for", "two", "hours."], bad: 3, fix: "repairing", why: "has been تحتاج V-ing: repairing." },
     ],

@@ -315,13 +315,14 @@ export const THINK_NOTE_S11 = "think حالة خاصة: I think the plan is good
 // s12 — Grammar Detective الأول (8 قضايا من المصدر)
 //   تُغذّى الواجهة عبر GD1_ITEMS_33 المعرّفة أعلاه (bad: الكلمة الخاطئة)
 // ============================================================
-export type Detective33 = { n: string; segments: string[]; bad: number; fixOpts: string[]; fix: string; why: string };
+export type Detective33 = { n: string; segments: string[]; bad: number; fixOpts: string[]; fix: string; corrected: string; why: string };
 export const DETECTIVE_S12: Detective33[] = GD1_ITEMS_33.map((g) => ({
   n: g.n,
   segments: g.wrong.split(" ").map((w) => w),
   bad: g.wrong.split(" ").findIndex((_, i, arr) => arr.slice(i, i + g.bad.split(" ").length).join(" ") === g.bad),
   fixOpts: [g.fix, ...(g.fix === "doesn't" ? ["not"] : g.fix === "are" ? ["am"] : g.fix === "seen" ? ["saw"] : g.fix === "known" ? ["been knowing"] : g.fix === "is running" ? ["running"] : g.fix === "written" ? ["writes"] : g.fix === "is" ? ["am"] : ["visit"])],
   fix: g.fix,
+  corrected: g.corrected,
   why: g.why,
 }));
 

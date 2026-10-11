@@ -302,11 +302,16 @@ const slugOf = (id) => D.SLIDES.find((x) => x.id === id);
   const el = await mountStep(slugOf("s12"));
   for (let ii = 0; ii < D.DETECTIVE_S12.length; ii++) {
     const it = D.DETECTIVE_S12[ii];
-    const box = q(el, '[data-tap-stage="0"]') ? el : el;
     clickEl(q(el, `[data-tap-seg="${it.bad}"]`));
     await tick(15);
     clickEl(q(el, `[data-tap-fix="${it.fix}"]`));
     await tick(15);
+    // regression: the solved state must render the authoritative corrected
+    // sentence exactly (GD1 ④/⑧ have two-word error spans — a one-token
+    // splice used to leave the dangling token behind), and hold no leftover
+    const boxText = textOf(q(el, "[data-tap-stage]"));
+    ok(boxText.includes(it.corrected), `s12 case ${it.n}: solved state renders the exact corrected sentence (${it.corrected})`);
+    ok(!/(known knowing|visited visiting)/.test(boxText), `s12 case ${it.n}: no dangling erroneous token after correction`);
     clickEl(btnWith(el, "القضية التالية"));
     await tick(15);
   }
@@ -501,6 +506,19 @@ ok(TEST.every((x) => m.isAnswered33(x, undefined) === false), "grade: unanswered
 ok(m.gradeOne33(TEST[8], "have completely missed") === false, "grade: fuzzy strings rejected");
 ok(m.gradeOne33(TEST[5], "Have NOT finished!") === true, "grade: extension ① haven't/have not both accepted");
 ok(m.gradeOne33(TEST[12], 1) === true && m.gradeOne33(TEST[12], 2) === false, "grade: spot am knowing segment position");
+// correction-keys regression: every spot answer key renders the exact corrected
+// sentence; Q13 replaces the full two-word span (am knowing ← know), not one token
+const spotKeys33 = [
+  [10, "Does he work daily? (الخطأ: works ← الصواب: work)"],
+  [11, "She has been cooking since morning. (الخطأ: cook ← الصواب: cooking)"],
+  [13, "They have already arrived. (الخطأ: has ← الصواب: have)"],
+  [14, "He has been repairing the car for two hours. (الخطأ: repair ← الصواب: repairing)"],
+];
+for (const [qi, key] of spotKeys33) ok(T.answerText33(TEST[qi]) === key, `test: spot item ${qi + 1} answer key renders exactly (${key.split(" (")[0]})`);
+const q13Key33 = T.answerText33(TEST[12]);
+ok(q13Key33.startsWith("I know the answer. (الخطأ: am knowing ← الصواب: know)"), `test: Q13 answer key renders exactly "I know the answer." (got: ${q13Key33})`);
+ok(!q13Key33.includes("know knowing"), "test: Q13 answer key holds no dangling erroneous token");
+ok(TEST[12].segments.join(" ") === "I am knowing the answer.", "test: Q13 prompt sentence unchanged (spot the single wrong unit)");
 // neutral until submit; score + band after; full reset
 {
   const el = await mountNode(m.React.createElement(m.TestArea33, { onSubmitted: () => {}, onRestart: () => {} }));
@@ -534,6 +552,11 @@ ok(m.gradeOne33(TEST[12], 1) === true && m.gradeOne33(TEST[12], 2) === false, "g
   ok(t.includes("النتيجة: 25 / 25"), "test: score shown after submit (25/25 for the correct key)");
   ok(t.includes("إتقان"), "test: mastery band shown for a perfect score");
   ok(/✓|✕/.test(t), "test: per-question status chips shown after submit");
+  // Q13 post-submit card: the two-word wrong span is replaced as one unit
+  const q13Card = q(el, '[data-test-q="13"]');
+  const q13FixedChip = q13Card ? q(q13Card, '[data-seg-index="1"]') : null;
+  ok(q13FixedChip && textOf(q13FixedChip) === "know", `test: Q13 post-submit card shows the fix over the full span (got: ${q13FixedChip ? textOf(q13FixedChip) : "missing"})`);
+  ok(q13Card && !textOf(q13Card).includes("knowknowing"), "test: Q13 post-submit card retains no dangling erroneous token");
   clickEl(btnWith(el, "إعادة الاختبار كاملًا"));
   await tick(30);
   ok(textOf(el).includes("أجبت: 0/25"), "test: full reset clears answers");
@@ -548,6 +571,8 @@ ok(m.gradeOne33(TEST[12], 1) === true && m.gradeOne33(TEST[12], 2) === false, "g
   const open = m.renderToString(m.React.createElement(m.Solutions33, { unlocked: true, onGoTest: () => {}, onGoTeacher: () => {} }));
   const openPlain = open.replace(/<[^>]+>/g, "");
   ok(openPlain.includes(T.answerText33(TEST[0])), "solutions: question 1 answer rendered when unlocked");
+  ok(openPlain.includes("I know the answer. (الخطأ: am knowing ← الصواب: know)"), "solutions: Q13 detailed key renders the exact corrected sentence after full-submit unlock");
+  ok(!openPlain.includes("know knowing"), "solutions: Q13 key retains no dangling erroneous token");
   ok(openPlain.includes("مشتقة وفق قواعد الدرس"), "solutions: answers labelled as derived per the lesson rules");
   ok((openPlain.match(/المستوى/g) || []).length >= 5, "solutions: five level groups rendered");
   ok(open.includes("Platform Explanation"), "solutions: explanations labelled Platform Explanation");

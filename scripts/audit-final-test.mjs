@@ -5,7 +5,7 @@
 //   1) نموذج البيانات: كل درس له اختبار من 12–15 سؤالًا، وكل سؤال مكتمل
 //      (نص · إجابة صحيحة · سبب · مفهوم · فخ) وصالح لكل نوع.
 //   2) البنية القابلة لإعادة الاستخدام: محرّك واحد مشترك + بنك مركزي،
-//      وكل درس 1–32 له اختبار نهائي (قديم للدروس 1–26، جديد لـ 27–32).
+//      وكل درس 1–35 له اختبار نهائي (قديم للدروس 1–26، جديد لـ 27–35).
 //   3) السلوك المرندر في jsdom: لا كشف قبل «تصحيح الاختبار»، التصحيح
 //      يكشف النتيجة والصواب والشرح، وإعادة الاختبار تمسح كل شيء.
 //   4) انتقالات الحالة على درس ممثل (27): فريش → جزئي → مكتمل غير مصحّح
@@ -42,6 +42,8 @@ for (const key of ["Element", "HTMLElement", "HTMLInputElement", "HTMLTextAreaEl
   if (win[key] !== undefined) Object.defineProperty(globalThis, key, { value: win[key], configurable: true });
 }
 if (!win.Element.prototype.scrollTo) win.Element.prototype.scrollTo = () => {};
+// jsdom supplies a console-erroring Window.scrollTo stub; replace it for lesson navigation tests.
+win.scrollTo = () => {};
 
 // ---------------- bundle ----------------
 const dir = join(root, "node_modules", ".final-test-audit");
@@ -61,10 +63,11 @@ import Lesson31 from ${JSON.stringify(join(root, "src/lessons/lesson31/Lesson31.
 import Lesson32 from ${JSON.stringify(join(root, "src/lessons/lesson32/Lesson32.tsx"))};
 import Lesson33 from ${JSON.stringify(join(root, "src/lessons/lesson33/Lesson33.tsx"))};
 import Lesson34 from ${JSON.stringify(join(root, "src/lessons/lesson34/Lesson34.tsx"))};
+import Lesson35 from ${JSON.stringify(join(root, "src/lessons/lesson35/Lesson35.tsx"))};
 import * as FINAL from ${JSON.stringify(join(root, "src/shared/finalTest.tsx"))};
 import { FINAL_TESTS, FINAL_TEST_MIN, FINAL_TEST_MAX, finalTestFor, finalTestLessons } from ${JSON.stringify(join(root, "src/shared/finalTestBank.ts"))};
 import { QUIZZES } from ${JSON.stringify(join(root, "src/shared/quizBank.ts"))};
-export { React, createRoot, Lesson27, Lesson28, Lesson29, Lesson30, Lesson31, Lesson32, Lesson33, Lesson34, FINAL, FINAL_TESTS, FINAL_TEST_MIN, FINAL_TEST_MAX, finalTestFor, finalTestLessons, QUIZZES };
+export { React, createRoot, Lesson27, Lesson28, Lesson29, Lesson30, Lesson31, Lesson32, Lesson33, Lesson34, Lesson35, FINAL, FINAL_TESTS, FINAL_TEST_MIN, FINAL_TEST_MAX, finalTestFor, finalTestLessons, QUIZZES };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -92,9 +95,9 @@ const setNativeValue = (el, value) => {
 };
 
 // ---------------- 1) نموذج البيانات ----------------
-const LESSON_IDS = [27, 28, 29, 30, 31, 32, 33, 34];
+const LESSON_IDS = [27, 28, 29, 30, 31, 32, 33, 34, 35];
 ok(m.FINAL_TEST_MIN === 12 && m.FINAL_TEST_MAX === 15, `حدود عدد الأسئلة 12–15 (got ${m.FINAL_TEST_MIN}..${m.FINAL_TEST_MAX})`);
-ok(m.finalTestLessons().join(",") === LESSON_IDS.join(","), `بنك الاختبارات يغطي الدروس 27–34 (got ${m.finalTestLessons().join(",")})`);
+ok(m.finalTestLessons().join(",") === LESSON_IDS.join(","), `بنك الاختبارات يغطي الدروس 27–35 (got ${m.finalTestLessons().join(",")})`);
 
 for (const n of LESSON_IDS) {
   const qs = m.finalTestFor(n);
@@ -135,7 +138,7 @@ for (const n of LESSON_IDS) {
       ok(Array.isArray(q.accept) && q.accept.length >= 1 && q.accept.every((a) => a.trim().length > 0), `${tag}: إجابات مقبولة موجودة`);
       ok(typeof q.before === "string" && typeof q.after === "string" && (q.before.trim() || q.after.trim()), `${tag}: سياق الإجابة المكتوبة موجود`);
       // قاعدة دائمة: الفراغ المكتوب يجب أن يسمّي الفعل/الصيغة المطلوبة بين قوسين،
-      // وإلا صار السؤال تخمينًا للمفردة لا قياسًا للصيغة (عيب تحقّق في بنك 27–34).
+      // وإلا صار السؤال تخمينًا للمفردة لا قياسًا للصيغة (عيب تحقّق في بنك 27–35).
       ok(/\([^)]{2,}\)/.test(q.ar), `${tag}: سؤال الإجابة المكتوبة يسمّي الفعل المطلوب بين قوسين`);
     } else {
       ok(false, `${tag}: نوع سؤال غير معروف (${q.type})`);
@@ -175,7 +178,7 @@ for (const n of LESSON_IDS) {
   ok(src.includes("<FinalTest"), `L${n}: الاختبار النهائي مرندر في الدرس`);
   ok(src.includes("FINAL_TESTS[" + n + "]") || src.includes(`FINAL_TESTS[${n}]`), `L${n}: يستخدم بيانات البنك المركزي`);
   ok(!src.includes("FinalQuiz"), `L${n}: لا نسخة ثانية من الاختبار القديم`);
-  ok(/index === (total|SLIDE_COUNT|SLIDE_COUNT_32|SLIDE_COUNT_33|SLIDE_COUNT_34) - 1|slideIdx === total - 1/.test(src), `L${n}: الاختبار النهائي مربوط بآخر خطوة`);
+  ok(/index === (total|SLIDE_COUNT|SLIDE_COUNT_32|SLIDE_COUNT_33|SLIDE_COUNT_34|SLIDE_COUNT_35) - 1|slideIdx === total - 1/.test(src), `L${n}: الاختبار النهائي مربوط بآخر خطوة`);
   const keySrc = n >= 32 ? readFileSync(join(root, `src/lessons/lesson${n}/TeacherArea${n}.tsx`), "utf8") : src;
   ok(keySrc.includes("FinalTestAnswerKey"), `L${n}: مفتاح الإجابات داخل منطقة المعلم`);
 }
@@ -261,7 +264,7 @@ async function answerAll(host, n, mode) {
 }
 
 for (const n of LESSON_IDS) {
-  const Comp = { 27: m.Lesson27, 28: m.Lesson28, 29: m.Lesson29, 30: m.Lesson30, 31: m.Lesson31, 32: m.Lesson32, 33: m.Lesson33, 34: m.Lesson34 }[n];
+  const Comp = { 27: m.Lesson27, 28: m.Lesson28, 29: m.Lesson29, 30: m.Lesson30, 31: m.Lesson31, 32: m.Lesson32, 33: m.Lesson33, 34: m.Lesson34, 35: m.Lesson35 }[n];
   const { host, unmount } = await mountLesson(n, Comp);
   const qs = m.finalTestFor(n);
   ok(!host.querySelector(`[data-final-test="${n}"]`), `L${n}: لا اختبار نهائي في أول خطوة (نهاية الدرس فقط)`);
@@ -387,7 +390,7 @@ async function unlockTeacher(host) {
 }
 
 for (const n of LESSON_IDS) {
-  const Comp = { 27: m.Lesson27, 28: m.Lesson28, 29: m.Lesson29, 30: m.Lesson30, 31: m.Lesson31, 32: m.Lesson32, 33: m.Lesson33, 34: m.Lesson34 }[n];
+  const Comp = { 27: m.Lesson27, 28: m.Lesson28, 29: m.Lesson29, 30: m.Lesson30, 31: m.Lesson31, 32: m.Lesson32, 33: m.Lesson33, 34: m.Lesson34, 35: m.Lesson35 }[n];
   const { host, unmount } = await mountLesson(n, Comp);
   // مقفلة: لا مفتاح في الـ DOM
   ok(host.querySelectorAll("[data-ft-key-item]").length === 0, `L${n}: المفتاح غير موجود قبل كلمة المرور`);
@@ -424,6 +427,7 @@ for (const n of LESSON_IDS) {
     32: ["src/lessons/lesson32/Lesson32.tsx", "src/lessons/lesson32/TeacherArea32.tsx"],
     33: ["src/lessons/lesson33/Lesson33.tsx", "src/lessons/lesson33/TeacherArea33.tsx"],
     34: ["src/lessons/lesson34/Lesson34.tsx", "src/lessons/lesson34/TeacherArea34.tsx"],
+    35: ["src/lessons/lesson35/Lesson35.tsx", "src/lessons/lesson35/TeacherArea35.tsx"],
   };
   for (const n of LESSON_IDS) {
     const files = lessonFiles[n];
@@ -440,11 +444,11 @@ for (const n of LESSON_IDS) {
   ok(Object.keys(pkg.dependencies).sort().join(",") === "clsx,react,react-dom,tailwind-merge", "deps: لا مكتبات جديدة");
   // الدروس القديمة 1–26 تحتفظ بنظامها الأصلي (لا تكرار ولا حذف)
   ok(Object.keys(m.QUIZZES).length === 26, `نظام الدروس 1–26 كما هو (${Object.keys(m.QUIZZES).length} اختبارًا)`);
-  ok(LESSON_IDS.every((n) => typeof m.QUIZZES[n] === "undefined"), "لا تعارض بين البنكين (1–26 و27–34)");
+  ok(LESSON_IDS.every((n) => typeof m.QUIZZES[n] === "undefined"), "لا تعارض بين البنكين (1–26 و27–35)");
 }
 
 if (failures.length) {
   console.error(`✕ Final Test audit FAILED (${failures.length}/${checks})\n` + failures.map((x) => `  - ${x}`).join("\n"));
   process.exit(1);
 }
-console.log(`✓ Final Test audit passed (${checks} checks): 7 lessons ✕ 12–15 questions, no reveal before the single correction, reset clears everything, teacher key behind somer173.`);
+console.log(`✓ Final Test audit passed (${checks} checks): 9 modern lessons ✕ 12–15 questions, no reveal before the single correction, reset clears everything, teacher key behind somer173.`);

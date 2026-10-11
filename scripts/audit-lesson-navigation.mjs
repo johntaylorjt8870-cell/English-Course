@@ -1,7 +1,7 @@
 /**
  * اختبار تفاعلي (jsdom) لشريط أرقام الدروس `LessonNumberNav`:
  *   1) لا يظهر أكثر من 10 أرقام في النافذة أبدًا (في كل الحالات).
- *   2) النافذة الأولى 1–10، والأخيرة 22–31، والسهمان يتحرّكان رقمًا واحدًا.
+ *   2) النافذة الأولى 1–10، والأخيرة 26–35، والسهمان يتحرّكان رقمًا واحدًا.
  *   3) تعطيل السهم الأيسر في البداية والأيمن في النهاية.
  *   4) الأسهم لا تنقل الطالب إلى أي درس (لا يتغيّر الـ hash).
  *   5) النقر على رقم الدرس يحفظ التوجيه الحالي (#/lesson/N) فعليًا.
@@ -39,7 +39,9 @@ for (const key of [
 }
 if (!win.Element.prototype.scrollTo) win.Element.prototype.scrollTo = () => {};
 if (!win.Element.prototype.scrollIntoView) win.Element.prototype.scrollIntoView = () => {};
-if (!win.scrollTo) win.scrollTo = () => {};
+// jsdom defines a scrollTo stub that logs "Not implemented" rather than being absent.
+// Replace it unconditionally so the newly audited lesson route can exercise its scroll behavior cleanly.
+win.scrollTo = () => {};
 if (!win.matchMedia) {
   win.matchMedia = () => ({ matches: false, addEventListener() {}, removeEventListener() {}, addListener() {}, removeListener() {} });
 }
@@ -116,7 +118,7 @@ function arrows(nav) {
 }
 
 async function main() {
-  const LESSONS_ALL = Array.from({ length: 34 }, (_, i) => ({ n: i + 1 }));
+  const LESSONS_ALL = Array.from({ length: 35 }, (_, i) => ({ n: i + 1 }));
 
   // ============================================================
   // 1) الصفحة الرئيسية — الحالة الأولية
@@ -162,7 +164,7 @@ async function main() {
   const navCopy = nav.cloneNode(true);
   navCopy.querySelectorAll(".sr-only").forEach((el) => el.remove());
   const navText = navCopy.textContent.replace(/\s+/g, " ").trim();
-  ok(!/\b(1[1-9]|2\d|3[01])\b/.test(navText), `hub: لا يظهر أي رقم فوق 10 في الشريط المرئي (نصه: ${navText})`);
+  ok(!/\b(1[1-9]|2\d|3[0-5])\b/.test(navText), `hub: لا يظهر أي رقم فوق 10 في الشريط المرئي (نصه: ${navText})`);
 
   // ============================================================
   // 2) الأسهم: حركة رقم واحد + عدم الانتقال إلى درس
@@ -185,7 +187,7 @@ async function main() {
   ok(nums.join(",") === "2,3,4,5,6,7,8,9,10,11", `hub: نقرة يسار واحدة ترجع خطوة (got ${nums.join(" ")})`);
 
   // ============================================================
-  // 3) النهاية: 25–34 وتعطيل السهم الأيمن (34 درسًا — الدرس 34 أُضيف بعد الدرس 33)
+  // 3) النهاية: 26–35 وتعطيل السهم الأيمن (35 درسًا — أضيف الدرس 35)
   // ============================================================
   for (let i = 0; i < 40; i++) {
     next.click();
@@ -194,12 +196,12 @@ async function main() {
   nums = visibleNumbers(nav);
   ({ prev, next } = arrows(nav));
   ok(nums.length === 10, `hub: عند النهاية يبقى العدد 10 (got ${nums.length})`);
-  ok(nums.join(",") === "25,26,27,28,29,30,31,32,33,34", `hub: النافذة الأخيرة 25–34 (got ${nums.join(" ")})`);
+  ok(nums.join(",") === "26,27,28,29,30,31,32,33,34,35", `hub: النافذة الأخيرة 26–35 (got ${nums.join(" ")})`);
   ok(next.disabled === true, "hub: السهم الأيمن معطّل في النافذة الأخيرة");
   ok(prev.disabled === false, "hub: السهم الأيسر مفعّل في النافذة الأخيرة");
   next.click();
   await tick();
-  ok(visibleNumbers(nav).join(",") === "25,26,27,28,29,30,31,32,33,34", "hub: النقر على سهم معطّل لا يغيّر النافذة");
+  ok(visibleNumbers(nav).join(",") === "26,27,28,29,30,31,32,33,34,35", "hub: النقر على سهم معطّل لا يغيّر النافذة");
 
   // رجوع خطوة بخطوة حتى البداية
   for (let i = 0; i < 40; i++) {
@@ -235,11 +237,22 @@ async function main() {
   nav = app.host.querySelector(NAV_SELECTOR);
   ok(visibleNumbers(nav).join(",") === "22,23,24,25,26,27,28,29,30,31", "hub: بعد درس 31 تظهر النافذة 22–31 تلقائيًا");
   ok(nav.querySelector('a[href="#/lesson/31"]').getAttribute("aria-current") === "true", "hub: الدرس 31 ظاهر ومميّز");
+
+  // Lesson 35 route and its dedicated Future Lab shell
+  win.location.hash = "#/lesson/35";
+  await tick(100);
+  ok(!app.host.querySelector(NAV_SELECTOR), "hub: فتح الدرس 35 يغادر الصفحة الرئيسية عبر الراوتر");
+  ok(app.host.querySelector('[data-lesson="35"]') && app.host.textContent.includes("Future Lab"), "hub: مسار الدرس 35 يرسم Future Lab shell");
+  win.location.hash = "#/";
+  await tick(100);
+  nav = app.host.querySelector(NAV_SELECTOR);
+  ok(visibleNumbers(nav).join(",") === "26,27,28,29,30,31,32,33,34,35", "hub: العودة بعد الدرس 35 تُظهر النافذة الأخيرة");
+  ok(nav.querySelector('a[href="#/lesson/35"]').getAttribute("aria-current") === "true", "hub: الدرس 35 ظاهر ومميّز بعد العودة");
   app.root.unmount();
   document.body.innerHTML = "";
 
   // ============================================================
-  // 5) إزاحة النافذة تلقائيًا لكل درس حالي (1، 10، 11، 17، 22، 31)
+  // 5) إزاحة النافذة تلقائيًا لكل درس حالي (1، 10، 11، 17، 22، 31، 35)
   // ============================================================
   const cases = [
     [1, "1,2,3,4,5,6,7,8,9,10", "1–10"],
@@ -248,6 +261,7 @@ async function main() {
     [17, "8,9,10,11,12,13,14,15,16,17", "8–17"],
     [22, "13,14,15,16,17,18,19,20,21,22", "13–22"],
     [31, "22,23,24,25,26,27,28,29,30,31", "22–31"],
+    [35, "26,27,28,29,30,31,32,33,34,35", "26–35"],
   ];
   for (const [current, expected, label] of cases) {
     const { host, root: r } = mount(M.React.createElement(M.LessonNumberNav, { items: LESSONS_ALL, current }));

@@ -33,6 +33,7 @@ import Lesson31 from "./lessons/lesson31/Lesson31";
 import Lesson32 from "./lessons/lesson32/Lesson32";
 import Lesson33 from "./lessons/lesson33/Lesson33";
 import Lesson34 from "./lessons/lesson34/Lesson34";
+import Lesson35 from "./lessons/lesson35/Lesson35";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -405,6 +406,15 @@ const CARDS: Card[] = [
     href: "#/lesson/34",
     grad: "from-teal-600 to-sky-600",
   },
+  {
+    n: 35,
+    title: "الدرس 35: BE GOING TO — الخطط والنوايا والتوقعات المستقبلية",
+    en: "Future Plans, Intentions & Predictions · Future Lab",
+    emoji: "🧭",
+    stats: "39 خطوة · 13 مشهدًا تفاعليًا · اختبار 25 سؤالًا · Future Lab",
+    href: "#/lesson/35",
+    grad: "from-[#17354a] to-[#245f62]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -520,6 +530,7 @@ export default function App() {
   else if (route === 32) page = <Lesson32 onExit={goHome} />;
   else if (route === 33) page = <Lesson33 onExit={goHome} />;
   else if (route === 34) page = <Lesson34 onExit={goHome} />;
+  else if (route === 35) page = <Lesson35 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

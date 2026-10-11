@@ -25,6 +25,23 @@ export const SECTIONS_35 = [
 
 export type SectionId35 = (typeof SECTIONS_35)[number]["id"];
 
+/** Mission-control metadata for the thirteen scenes (decoration only — never reorders the source). */
+export const SCENE_META_35: Record<SectionId35, { code: string; icon: string }> = {
+  ARRIVE: { code: "ENTER FUTURE LAB", icon: "🛰️" },
+  DISCOVER: { code: "DISCOVER", icon: "🔭" },
+  AUXILIARY: { code: "SELECTOR", icon: "🎛️" },
+  BUILD: { code: "BUILD", icon: "🧱" },
+  PLANS: { code: "INTENTIONS", icon: "🗓️" },
+  CONVERSATION: { code: "CONVERSATION STUDIO", icon: "💬" },
+  EVIDENCE: { code: "EVIDENCE LAB", icon: "🔎" },
+  CONTROL: { code: "CONTROL ROOM", icon: "🎚️" },
+  SIMULATOR: { code: "DECISION SIMULATOR", icon: "🧭" },
+  PRACTICE: { code: "GUIDED PRACTICE", icon: "🕵️" },
+  READING: { code: "READING STUDIO", icon: "📖" },
+  TEST: { code: "MASTER TEST", icon: "🧪" },
+  MISSION: { code: "FINAL MISSION", icon: "🚀" },
+};
+
 const SOURCE_TO_SCENE_35: Record<string, SectionId35> = {
   cover: "ARRIVE",
   s1: "ARRIVE",

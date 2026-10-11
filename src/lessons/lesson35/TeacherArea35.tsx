@@ -88,8 +88,8 @@ export default function TeacherArea35({ unlocked, onUnlockChange, onGoSolutions 
       <PracticeKey35 title="اختر am / is / are · المفاتيح الثمانية" items={AUXILIARY_ITEMS_35} />
       <PracticeKey35 title="حوّل إلى BE GOING TO · المفاتيح الستة" items={TRANSFORMATION_ITEMS_35} />
       <Card35 eyebrow="§31 · source answer key + explanations" title="اختَر WILL أو BE GOING TO — المواقف الثمانية">
-        <p className="mb-2 text-xs font-bold text-[#53676a]">الإجابات والتفسيرات في هذا القسم من النص المورّد؛ تُعرض هنا للمعلم لا في منطقة الطالب.</p>
-        {DECISION_PRACTICE_ITEMS_35.map((item) => <div key={item.n} className="mb-2 rounded-xl border border-[#ded9e9] bg-white p-3"><p className="text-sm font-bold text-[#304750]">{item.n}. {item.promptLines.map((line) => <span key={line} className="block"><Rich text={line} /></span>)}</p><p className="mt-1 text-sm font-black text-[#5d4c7d]"><span className="text-xs">المفتاح الأصلي: </span><En>{item.answer}</En></p><p className="mt-1 text-sm leading-6 text-[#53676a]">{item.explanation}</p></div>)}
+        <p className="mb-2 text-xs font-bold text-[#4a6070]">الإجابات والتفسيرات في هذا القسم من النص المورّد؛ تُعرض هنا للمعلم لا في منطقة الطالب.</p>
+        {DECISION_PRACTICE_ITEMS_35.map((item) => <div key={item.n} className="mb-2 rounded-xl border border-[#ded9e9] bg-white p-3"><p className="text-sm font-bold text-[#304750]">{item.n}. {item.promptLines.map((line) => <span key={line} className="block"><Rich text={line} /></span>)}</p><p className="mt-1 text-sm font-black text-[#5d4c7d]"><span className="text-xs">المفتاح الأصلي: </span><En>{item.answer}</En></p><p className="mt-1 text-sm leading-6 text-[#4a6070]">{item.explanation}</p></div>)}
       </Card35>
 
       <Card35 eyebrow="§33 · source answer key" title="إجابات الفهم القرائي والتحليل النحوي">
@@ -98,7 +98,7 @@ export default function TeacherArea35({ unlocked, onUnlockChange, onGoSolutions 
       </Card35>
 
       <Card35 eyebrow="Final Boss · authored scoring guide" title="روبرك مقترح للفقرة 12–15 جملة">
-        <p className="mb-2 text-xs font-bold text-[#53676a]">المتطلبات التالية نصٌّ من المصدر. الروبرك وإرشادات التقييم أسفلها إضافة من المعلم.</p>
+        <p className="mb-2 text-xs font-bold text-[#4a6070]">المتطلبات التالية نصٌّ من المصدر. الروبرك وإرشادات التقييم أسفلها إضافة من المعلم.</p>
         <ol className="list-decimal space-y-1 ps-5 text-sm leading-6 text-[#304750]">{FINAL_BOSS_REQUIREMENTS_35.map((line, index) => <li key={index}><Rich text={line} /></li>)}</ol>
         <Sub35 title="مؤشرات تقييم تكويني — من إعداد المعلم">
           <ul className="list-disc space-y-1 ps-5 text-sm leading-6 text-[#465962]">
@@ -118,14 +118,14 @@ export default function TeacherArea35({ unlocked, onUnlockChange, onGoSolutions 
 
       <Card35 eyebrow="Source ledger · verbatim" title="فهرس المصدر الحرفي">
         <p className="mb-2 text-xs leading-5 text-[#657576]">كل قسم قابل للفتح. أسطر «reveal» التي قد تكون مفاتيح مصدر تظهر هنا للمعلم فقط؛ مفاتيح اختبار §34 في منطقة الحلول موضحة بأنها إعداد المعلم.</p>
-        <ol className="space-y-1">{SOURCE_SECTIONS_35.map((section) => <li key={section.id}><details className="rounded-xl border border-[#e0dbd1] bg-white"><summary className={`${FOCUS_35} cursor-pointer px-3 py-2 text-sm font-black text-[#304750]`}><Rich text={section.title} /></summary><div className="space-y-1 border-t border-[#e9e3d7] px-3 py-2">{section.units.map((line, index) => <p key={index} dir="auto" className="text-sm leading-6 text-[#465962]"><Rich text={line} /></p>)}{section.revealUnits?.length ? <div className="mt-2 rounded-xl bg-[#f0f5ef] p-2"><div className="mb-1 text-[10px] font-black text-[#60756f]">مفتاح أصلي وارد في المصدر</div>{section.revealUnits.map((line, index) => <p key={index} dir="auto" className="text-sm leading-6 text-[#465962]"><Rich text={line} /></p>)}</div> : null}</div></details></li>)}</ol>
+        <ol className="space-y-1">{SOURCE_SECTIONS_35.map((section) => <li key={section.id}><details className="rounded-xl border border-[#dbe4ed] bg-white"><summary className={`${FOCUS_35} cursor-pointer px-3 py-2 text-sm font-black text-[#304750]`}><Rich text={section.title} /></summary><div className="space-y-1 border-t border-[#e3ecf3] px-3 py-2">{section.units.map((line, index) => <p key={index} dir="auto" className="text-sm leading-6 text-[#465962]"><Rich text={line} /></p>)}{section.revealUnits?.length ? <div className="mt-2 rounded-xl bg-[#f0f5ef] p-2"><div className="mb-1 text-[10px] font-black text-[#60756f]">مفتاح أصلي وارد في المصدر</div>{section.revealUnits.map((line, index) => <p key={index} dir="auto" className="text-sm leading-6 text-[#465962]"><Rich text={line} /></p>)}</div> : null}</div></details></li>)}</ol>
       </Card35>
     </div>
   );
 }
 
 function PracticeKey35({ title, items }: { title: string; items: { n: number; prompt: string; answer: string; explanation: string }[] }) {
-  return <Card35 eyebrow="Source exercise key · teacher only" title={title}><p className="mb-2 text-xs font-bold text-[#53676a]">الإجابات منقولة من مفتاح المصدر. التعليل القصير موسوم بأنه تفسير تعليمي من المعلم.</p>{items.map((item) => <div key={item.n} className="mb-2 rounded-xl border border-[#ded9e9] bg-white p-3"><p className="text-sm font-bold leading-6 text-[#304750]">{item.n}. <Rich text={item.prompt} /></p><p className="mt-1 text-sm font-black text-[#5d4c7d]" dir="auto">المفتاح الأصلي: <Rich text={item.answer} /></p><p className="mt-1 text-xs leading-5 text-[#66777a]"><PlatformTag text="تعليل تعليمي من إعداد المعلم" /> <Rich text={item.explanation} /></p></div>)}</Card35>;
+  return <Card35 eyebrow="Source exercise key · teacher only" title={title}><p className="mb-2 text-xs font-bold text-[#4a6070]">الإجابات منقولة من مفتاح المصدر. التعليل القصير موسوم بأنه تفسير تعليمي من المعلم.</p>{items.map((item) => <div key={item.n} className="mb-2 rounded-xl border border-[#ded9e9] bg-white p-3"><p className="text-sm font-bold leading-6 text-[#304750]">{item.n}. <Rich text={item.prompt} /></p><p className="mt-1 text-sm font-black text-[#5d4c7d]" dir="auto">المفتاح الأصلي: <Rich text={item.answer} /></p><p className="mt-1 text-xs leading-5 text-[#66777a]"><PlatformTag text="تعليل تعليمي من إعداد المعلم" /> <Rich text={item.explanation} /></p></div>)}</Card35>;
 }
 
 function Sub35({ title, children }: { title: string; children: ReactNode }) {

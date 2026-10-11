@@ -66,3 +66,38 @@
 | RTL/LTR and route/interactions | Pass — native navigation, keyboard-operable controls, hash route, isolated LTR English, and shared FinalTest verified |
 | `npm run audit:lesson35` | Pass — 229 assertions |
 | Requested repository checks | Pass — production build, English-direction check, Lesson 35 navigation audit, full English-direction audit, and `git diff --check` |
+
+## Redesign record — Future Lab "Mission Control" visual system (follow-up to merged PR #46)
+
+**Status:** implemented and verified on top of `main` commit `84dd052` (PR #46 merge). Scope is limited to Lesson 35 surfaces (`src/lessons/lesson35/`) and this document. No source content was added, removed, reordered, or relabeled; every ledger unit, exercise key, test question, solution, and teacher note is preserved exactly as recorded above.
+
+### Visual redesign
+
+- **Shell:** the cream paper theme is replaced by a Mission Control identity scoped to `[data-lesson="35"]`: deep-space gradient backdrop with a CSS-only twinkling starfield and aurora accents, all decorative layers `aria-hidden` and `pointer-events-none`.
+- **Mission Deck sidebar:** dark navigation deck with scene icons, letter badges, per-scene completion counters (`n/m`, ✓ when complete), visited-step dots, and glowing active states. Desktop rail and mobile sheet share the same nav node.
+- **Mission HUD header:** per-area header with scene icon/name, step counter, gradient progress bar, visited-step mission-log line, and an SVG progress ring (teal→amber gradient) for step X/39.
+- **Step headers:** navy→teal gradient banner per step with orbit-ring decorations, scene code eyebrow, and traceability chips: step position (الخطوة n من 39), source section reference (المصدر §n), and scene code.
+- **Kit primitives (`kit35.tsx`):** source panels now carry a navy header strip with an amber "نص الدرس المورّد" label and § badge; cards/tables/buttons/sentence rows moved to a cool lab palette (teal `#0d8f7f`, navy `#0d2b46`, amber `#f5b64a`) with soft blue-grey borders. Semantic correct/incorrect tints are unchanged.
+- **Step transitions:** each step enters with a short rise/fade animation; all new motion (starfield twinkle, orbit spin, entry rise) is disabled under `prefers-reduced-motion: reduce`.
+- **Readability contract:** the existing mobile readability override (`READABILITY_CSS_35`) and LTR isolation are kept verbatim; content surfaces remain light for Arabic-first reading.
+
+### Educational innovations (additive, around the supplied content)
+
+1. **Mission log:** visited steps persist in `localStorage` (`l35-future-lab-mission-log-v1`, guarded with try/catch). The sidebar shows visited dots, per-scene completion counts, and the HUD shows total visited steps — supporting multi-session study without altering any exercise gating.
+2. **Keyboard navigation:** RTL-aware arrow-key navigation in the lesson area (ArrowLeft = next, ArrowRight = previous, Home/End jump). Ignored while typing in inputs/textareas/selects and while modifier keys are held; no effect on the test/solutions/teacher areas.
+3. **Progress ring + dual progress display:** the SVG ring complements the linear bar, reinforcing position within the 39 source-ordered steps.
+4. **Source traceability chips:** every step visibly cites its source section (§n) and scene code, strengthening the ledger-to-step lineage documented above.
+5. **Scene identity system:** the thirteen scenes gained icons and consistent mission codes (`SCENE_META_35` in `data.ts`), decoration only — scene membership and order are unchanged.
+
+### Verification (post-redesign)
+
+| Check | Result |
+|---|---|
+| `npm run audit:lesson35` | Pass — 229 assertions unchanged |
+| `npm run build` (production) | Pass |
+| `npm run check:english-direction` | Pass — 59/59 BIDI assertions |
+| `npm run audit:lesson-navigation` | Pass — 99 checks |
+| `npm run audit:english-direction` (full suite incl. final-test, source-reveal, BIDI) | Pass |
+| Dev-server inspection of `#/lesson/35` (Vite transform + mounted-shell checks) | Pass — HUD ring, starfield, keyboard nav (←/→/Home/End), mission-log persistence |
+
+Unchanged by design: `App.tsx`, shared components, all other lessons, both existing branches, and merged PR #46.

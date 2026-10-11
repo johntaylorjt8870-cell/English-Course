@@ -31,6 +31,7 @@ import Lesson29 from "./lessons/lesson29/Lesson29";
 import Lesson30 from "./lessons/lesson30/Lesson30";
 import Lesson31 from "./lessons/lesson31/Lesson31";
 import Lesson32 from "./lessons/lesson32/Lesson32";
+import Lesson33 from "./lessons/lesson33/Lesson33";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -385,6 +386,15 @@ const CARDS: Card[] = [
     href: "#/lesson/32",
     grad: "from-emerald-600 to-amber-500",
   },
+  {
+    n: 33,
+    title: "الدرس 33: The Four Present Tenses — المراجعة الشاملة",
+    en: "The Four Present Tenses — Present Tenses Mastery",
+    emoji: "🧭",
+    stats: "24 قسمًا مرقّمًا · 26 خطوة · بوصلة الحاضر والمواجهات الثلاث · اختبار 25 سؤالًا · IQ200",
+    href: "#/lesson/33",
+    grad: "from-amber-600 to-rose-600",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -498,6 +508,7 @@ export default function App() {
   else if (route === 30) page = <Lesson30 onExit={goHome} />;
   else if (route === 31) page = <Lesson31 onExit={goHome} />;
   else if (route === 32) page = <Lesson32 onExit={goHome} />;
+  else if (route === 33) page = <Lesson33 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

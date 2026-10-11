@@ -248,6 +248,93 @@ for (const s of SLIDES) {
 }
 
 // ============================================================
+// 3b) Restored source passages must reach the rendered student UI
+//     (not merely exist in the ledger). Uses normalized SSR text so the
+//     check survives <En>/<Rich> LTR-run splitting and React's
+//     <!-- --> separators.
+// ============================================================
+{
+  const plain = (h) =>
+    h
+      .replace(/<!--[\s\S]*?-->/g, "")
+      .replace(/<[^>]+>/g, "")
+      .replace(/&#x27;/g, "'")
+      .replace(/&#39;/g, "'")
+      .replace(/&quot;/g, '"')
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&amp;/g, "&")
+      .replace(/\s+/g, " ")
+      .trim();
+  const probePlain = (sid) => {
+    const s = SLIDES.find((x) => x.id === sid);
+    return plain(
+      m.renderToString(
+        m.React.createElement(m.SlideView34, {
+          id: s.id, title: s.title, lead: s.lead, tip: s.tip, step: s.step, mascot: s.mascot, section: s.section,
+          onGoTest: () => {}, onGoSolutions: () => {},
+        }),
+      ),
+    );
+  };
+  const countOf = (h, n) => h.split(n).length - 1;
+
+  // A) the cover must not truncate the source enumeration
+  const cover = probePlain("cover");
+  ok(
+    cover.includes("عندما يتخذ قرارًا، أو يقدم وعدًا، أو يتوقع حدوث شيء، أو يعرض المساعدة على شخص آخر."),
+    "cover: source enumeration rendered in full (no truncation)",
+  );
+  // B) the cover must render the teaching-approach passage
+  ok(
+    cover.includes("سنحافظ على أسلوبنا التعليمي: شرح متدرج، أمثلة متنوعة، مقارنة دقيقة، اكتشاف الأخطاء، تدريبات تطبيقية، وتحديات IQ200."),
+    "cover: teaching-approach passage rendered on the cover",
+  );
+  // C) the objectives step must render the source introduction before the nine objectives
+  const objectives = probePlain("objectives");
+  ok(objectives.includes("بنهاية الدرس ستكون قادرًا على:"), "objectives: source introduction rendered before the objectives");
+  ok(
+    objectives.indexOf("بنهاية الدرس ستكون قادرًا على:") < objectives.indexOf("فهم معنى Future Simple"),
+    "objectives: introduction precedes the first objective",
+  );
+
+  // ---- progressive disclosure must start collapsed ----
+  // SentenceList34 renders a "touch to reveal" placeholder per item while closed;
+  // if `open` ever defaults to true the placeholders vanish (and answers leak).
+  const REVEAL_PH = "المس لكشف الترجمة";
+  const s8 = probePlain("s8");
+  const s8Items = D.PROMISE_EXAMPLES_S8.length + D.PROMISE_PHRASES_S8.length + D.PROMISE_USES_S8.length;
+  ok(countOf(s8, REVEAL_PH) === s8Items, `disclosure: s8 sentence lists start collapsed (${s8Items} placeholders, got ${countOf(s8, REVEAL_PH)})`);
+  for (const [sid, items] of [
+    ["s9", D.PREDICTION_EXAMPLES_S9],
+    ["s11", D.OFFER_EXAMPLES_S11],
+    ["s15", D.NEG_EXAMPLES_S15],
+    ["s17", D.QUESTION_EXAMPLES_S17],
+    ["s25", D.BE_EXAMPLES_S25],
+  ]) {
+    const t = probePlain(sid);
+    ok(countOf(t, REVEAL_PH) === items.length, `disclosure: ${sid} sentence list starts collapsed (${items.length} placeholders, got ${countOf(t, REVEAL_PH)})`);
+  }
+
+  // FlipCards34 shows the card face while closed and the answer back once flipped;
+  // if `flipped` ever defaults to true the answers leak into the first render.
+  const s37 = probePlain("s37");
+  ok(
+    D.GOLDEN_FLIPS_S37.every((c) => s37.includes(c.face)),
+    "disclosure: s37 golden-flip faces are rendered",
+  );
+  ok(
+    D.GOLDEN_FLIPS_S37.filter((c) => !/^الإجابة القصيرة$/.test(c.back)).every((c) => !s37.includes(c.back)),
+    "disclosure: s37 golden-flip answers hidden until the card is flipped",
+  );
+  const s34 = probePlain("s34");
+  ok(
+    D.LEVELS_S34.every((c) => !s34.includes(c.back)),
+    "disclosure: s34 master-test level answers hidden until the card is flipped",
+  );
+}
+
+// ============================================================
 // 4–5) DOM-driven completion (interaction walks)
 // ============================================================
 const mountStep = async (s) =>

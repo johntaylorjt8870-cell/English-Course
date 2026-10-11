@@ -174,7 +174,10 @@ function StepCover34() {
             المستقبل البسيط باستخدام <En className="font-bold">WILL</En> · <En className="font-bold">The Future Starts Here!</En> · 🔥 <En className="font-bold">IQ200</En>
           </p>
           <p className="mx-auto mt-2 max-w-xl rounded-2xl bg-stone-50 px-4 py-2 text-[12px] leading-6 text-stone-700">
-            <Rich text="بعد أن أكملنا منظومتي الحاضر والماضي، وصلنا إلى مرحلة جديدة: التعبير عن المستقبل باللغة الإنجليزية. هدفنا ليس حفظ قاعدة واحدة فقط، بل فهم طريقة تفكير المتحدث الإنجليزي." />
+            <Rich text="بعد أن أكملنا منظومتي الحاضر والماضي، وصلنا إلى مرحلة جديدة: التعبير عن المستقبل باللغة الإنجليزية. هدفنا ليس حفظ قاعدة واحدة فقط، بل فهم طريقة تفكير المتحدث الإنجليزي عندما يتخذ قرارًا، أو يقدم وعدًا، أو يتوقع حدوث شيء، أو يعرض المساعدة على شخص آخر." />
+          </p>
+          <p className="mx-auto mt-2 max-w-xl rounded-2xl border border-teal-100 bg-teal-50/70 px-4 py-2 text-[12px] font-bold leading-6 text-teal-900">
+            <Rich text="سنحافظ على أسلوبنا التعليمي: شرح متدرج، أمثلة متنوعة، مقارنة دقيقة، اكتشاف الأخطاء، تدريبات تطبيقية، وتحديات IQ200." />
           </p>
         </div>
         <BoardTitle34>
@@ -202,6 +205,9 @@ function StepObjectives34() {
         <BoardTitle34>
           <Rich text="🎯 تسعة أهداف — علّم كل هدف أتقنتَه:" />
         </BoardTitle34>
+        <p className="mb-2 text-[13px] font-bold leading-6 text-stone-700">
+          <Rich text="بنهاية الدرس ستكون قادرًا على:" />
+        </p>
         <ObjectivesChecklist34 items={OBJECTIVES_34} drv={drv} />
         <GateFlag34 done={drv.complete >= drv.total} sid="objectives" />
       </div>

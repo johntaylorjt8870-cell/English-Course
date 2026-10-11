@@ -175,7 +175,7 @@ for (const n of LESSON_IDS) {
   ok(src.includes("<FinalTest"), `L${n}: الاختبار النهائي مرندر في الدرس`);
   ok(src.includes("FINAL_TESTS[" + n + "]") || src.includes(`FINAL_TESTS[${n}]`), `L${n}: يستخدم بيانات البنك المركزي`);
   ok(!src.includes("FinalQuiz"), `L${n}: لا نسخة ثانية من الاختبار القديم`);
-  ok(/index === (total|SLIDE_COUNT|SLIDE_COUNT_32|SLIDE_COUNT_33|SLIDE_COUNT_34|SLIDE_COUNT_\d+) - 1|slideIdx === total - 1/.test(src), `L${n}: الاختبار النهائي مربوط بآخر خطوة`);
+  ok(/index === (total|SLIDE_COUNT|SLIDE_COUNT_32|SLIDE_COUNT_33|SLIDE_COUNT_34) - 1|slideIdx === total - 1/.test(src), `L${n}: الاختبار النهائي مربوط بآخر خطوة`);
   const keySrc = n >= 32 ? readFileSync(join(root, `src/lessons/lesson${n}/TeacherArea${n}.tsx`), "utf8") : src;
   ok(keySrc.includes("FinalTestAnswerKey"), `L${n}: مفتاح الإجابات داخل منطقة المعلم`);
 }

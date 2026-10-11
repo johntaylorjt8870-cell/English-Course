@@ -35,14 +35,14 @@ const esbuild = req("esbuild");
 const { JSDOM } = req("jsdom");
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BASELINE_FILE = join(root, "scripts", "bidi-baseline.json");
-const STRICT = new Set([6, 27, 28, 29, 30, 31, 32, 33]);
+const STRICT = new Set([6, 27, 28, 29, 30, 31, 32, 33, 34]);
 // Known heuristic false positives (rendered as separate pill boxes, not
 // mixed text). Keyed by "<lesson>|<latin>|<arabic>". Keep this list short.
 const ALLOWLIST = new Set([
   "L6|plaies|قبل y حرف علة (a) ← نضيف s فقط: plays",
   "L6|I usually play football every day|لكن في الكلام الطبيعي يكفي أحدهما حسب المعنى",
 ]);
-const LESSONS = process.env.ONLY ? process.env.ONLY.split(",").map(Number) : Array.from({ length: 33 }, (_, i) => i + 1);
+const LESSONS = process.env.ONLY ? process.env.ONLY.split(",").map(Number) : Array.from({ length: 34 }, (_, i) => i + 1);
 const WRITE = process.argv.includes("--write-baseline");
 
 // ---------------- crawler ----------------

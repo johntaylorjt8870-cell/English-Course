@@ -60,10 +60,11 @@ import Lesson30 from ${JSON.stringify(join(root, "src/lessons/lesson30/Lesson30.
 import Lesson31 from ${JSON.stringify(join(root, "src/lessons/lesson31/Lesson31.tsx"))};
 import Lesson32 from ${JSON.stringify(join(root, "src/lessons/lesson32/Lesson32.tsx"))};
 import Lesson33 from ${JSON.stringify(join(root, "src/lessons/lesson33/Lesson33.tsx"))};
+import Lesson34 from ${JSON.stringify(join(root, "src/lessons/lesson34/Lesson34.tsx"))};
 import * as FINAL from ${JSON.stringify(join(root, "src/shared/finalTest.tsx"))};
 import { FINAL_TESTS, FINAL_TEST_MIN, FINAL_TEST_MAX, finalTestFor, finalTestLessons } from ${JSON.stringify(join(root, "src/shared/finalTestBank.ts"))};
 import { QUIZZES } from ${JSON.stringify(join(root, "src/shared/quizBank.ts"))};
-export { React, createRoot, Lesson27, Lesson28, Lesson29, Lesson30, Lesson31, Lesson32, Lesson33, FINAL, FINAL_TESTS, FINAL_TEST_MIN, FINAL_TEST_MAX, finalTestFor, finalTestLessons, QUIZZES };
+export { React, createRoot, Lesson27, Lesson28, Lesson29, Lesson30, Lesson31, Lesson32, Lesson33, Lesson34, FINAL, FINAL_TESTS, FINAL_TEST_MIN, FINAL_TEST_MAX, finalTestFor, finalTestLessons, QUIZZES };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -91,9 +92,9 @@ const setNativeValue = (el, value) => {
 };
 
 // ---------------- 1) نموذج البيانات ----------------
-const LESSON_IDS = [27, 28, 29, 30, 31, 32, 33];
+const LESSON_IDS = [27, 28, 29, 30, 31, 32, 33, 34];
 ok(m.FINAL_TEST_MIN === 12 && m.FINAL_TEST_MAX === 15, `حدود عدد الأسئلة 12–15 (got ${m.FINAL_TEST_MIN}..${m.FINAL_TEST_MAX})`);
-ok(m.finalTestLessons().join(",") === LESSON_IDS.join(","), `بنك الاختبارات يغطي الدروس 27–33 (got ${m.finalTestLessons().join(",")})`);
+ok(m.finalTestLessons().join(",") === LESSON_IDS.join(","), `بنك الاختبارات يغطي الدروس 27–34 (got ${m.finalTestLessons().join(",")})`);
 
 for (const n of LESSON_IDS) {
   const qs = m.finalTestFor(n);
@@ -134,7 +135,7 @@ for (const n of LESSON_IDS) {
       ok(Array.isArray(q.accept) && q.accept.length >= 1 && q.accept.every((a) => a.trim().length > 0), `${tag}: إجابات مقبولة موجودة`);
       ok(typeof q.before === "string" && typeof q.after === "string" && (q.before.trim() || q.after.trim()), `${tag}: سياق الإجابة المكتوبة موجود`);
       // قاعدة دائمة: الفراغ المكتوب يجب أن يسمّي الفعل/الصيغة المطلوبة بين قوسين،
-      // وإلا صار السؤال تخمينًا للمفردة لا قياسًا للصيغة (عيب تحقّق في بنك 27–33).
+      // وإلا صار السؤال تخمينًا للمفردة لا قياسًا للصيغة (عيب تحقّق في بنك 27–34).
       ok(/\([^)]{2,}\)/.test(q.ar), `${tag}: سؤال الإجابة المكتوبة يسمّي الفعل المطلوب بين قوسين`);
     } else {
       ok(false, `${tag}: نوع سؤال غير معروف (${q.type})`);
@@ -174,7 +175,7 @@ for (const n of LESSON_IDS) {
   ok(src.includes("<FinalTest"), `L${n}: الاختبار النهائي مرندر في الدرس`);
   ok(src.includes("FINAL_TESTS[" + n + "]") || src.includes(`FINAL_TESTS[${n}]`), `L${n}: يستخدم بيانات البنك المركزي`);
   ok(!src.includes("FinalQuiz"), `L${n}: لا نسخة ثانية من الاختبار القديم`);
-  ok(/index === (total|SLIDE_COUNT|SLIDE_COUNT_32|SLIDE_COUNT_33) - 1|slideIdx === total - 1/.test(src), `L${n}: الاختبار النهائي مربوط بآخر خطوة`);
+  ok(/index === (total|SLIDE_COUNT|SLIDE_COUNT_32|SLIDE_COUNT_33|SLIDE_COUNT_34|SLIDE_COUNT_\d+) - 1|slideIdx === total - 1/.test(src), `L${n}: الاختبار النهائي مربوط بآخر خطوة`);
   const keySrc = n >= 32 ? readFileSync(join(root, `src/lessons/lesson${n}/TeacherArea${n}.tsx`), "utf8") : src;
   ok(keySrc.includes("FinalTestAnswerKey"), `L${n}: مفتاح الإجابات داخل منطقة المعلم`);
 }
@@ -260,7 +261,7 @@ async function answerAll(host, n, mode) {
 }
 
 for (const n of LESSON_IDS) {
-  const Comp = { 27: m.Lesson27, 28: m.Lesson28, 29: m.Lesson29, 30: m.Lesson30, 31: m.Lesson31, 32: m.Lesson32, 33: m.Lesson33 }[n];
+  const Comp = { 27: m.Lesson27, 28: m.Lesson28, 29: m.Lesson29, 30: m.Lesson30, 31: m.Lesson31, 32: m.Lesson32, 33: m.Lesson33, 34: m.Lesson34 }[n];
   const { host, unmount } = await mountLesson(n, Comp);
   const qs = m.finalTestFor(n);
   ok(!host.querySelector(`[data-final-test="${n}"]`), `L${n}: لا اختبار نهائي في أول خطوة (نهاية الدرس فقط)`);
@@ -386,7 +387,7 @@ async function unlockTeacher(host) {
 }
 
 for (const n of LESSON_IDS) {
-  const Comp = { 27: m.Lesson27, 28: m.Lesson28, 29: m.Lesson29, 30: m.Lesson30, 31: m.Lesson31, 32: m.Lesson32, 33: m.Lesson33 }[n];
+  const Comp = { 27: m.Lesson27, 28: m.Lesson28, 29: m.Lesson29, 30: m.Lesson30, 31: m.Lesson31, 32: m.Lesson32, 33: m.Lesson33, 34: m.Lesson34 }[n];
   const { host, unmount } = await mountLesson(n, Comp);
   // مقفلة: لا مفتاح في الـ DOM
   ok(host.querySelectorAll("[data-ft-key-item]").length === 0, `L${n}: المفتاح غير موجود قبل كلمة المرور`);
@@ -422,6 +423,7 @@ for (const n of LESSON_IDS) {
     31: ["src/lessons/lesson31/Lesson31.tsx"],
     32: ["src/lessons/lesson32/Lesson32.tsx", "src/lessons/lesson32/TeacherArea32.tsx"],
     33: ["src/lessons/lesson33/Lesson33.tsx", "src/lessons/lesson33/TeacherArea33.tsx"],
+    34: ["src/lessons/lesson34/Lesson34.tsx", "src/lessons/lesson34/TeacherArea34.tsx"],
   };
   for (const n of LESSON_IDS) {
     const files = lessonFiles[n];
@@ -438,7 +440,7 @@ for (const n of LESSON_IDS) {
   ok(Object.keys(pkg.dependencies).sort().join(",") === "clsx,react,react-dom,tailwind-merge", "deps: لا مكتبات جديدة");
   // الدروس القديمة 1–26 تحتفظ بنظامها الأصلي (لا تكرار ولا حذف)
   ok(Object.keys(m.QUIZZES).length === 26, `نظام الدروس 1–26 كما هو (${Object.keys(m.QUIZZES).length} اختبارًا)`);
-  ok(LESSON_IDS.every((n) => typeof m.QUIZZES[n] === "undefined"), "لا تعارض بين البنكين (1–26 و27–33)");
+  ok(LESSON_IDS.every((n) => typeof m.QUIZZES[n] === "undefined"), "لا تعارض بين البنكين (1–26 و27–34)");
 }
 
 if (failures.length) {

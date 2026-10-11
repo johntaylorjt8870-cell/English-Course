@@ -32,6 +32,7 @@ import Lesson30 from "./lessons/lesson30/Lesson30";
 import Lesson31 from "./lessons/lesson31/Lesson31";
 import Lesson32 from "./lessons/lesson32/Lesson32";
 import Lesson33 from "./lessons/lesson33/Lesson33";
+import Lesson34 from "./lessons/lesson34/Lesson34";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -395,6 +396,15 @@ const CARDS: Card[] = [
     href: "#/lesson/33",
     grad: "from-amber-600 to-rose-600",
   },
+  {
+    n: 34,
+    title: "الدرس 34: Future Simple — المستقبل البسيط باستخدام WILL",
+    en: "Future Simple — The Future Starts Here!",
+    emoji: "🚀",
+    stats: "38 قسمًا مرقّمًا · 40 خطوة · محرك المستقبل والوظائف الست · اختبار 25 سؤالًا · IQ200",
+    href: "#/lesson/34",
+    grad: "from-teal-600 to-sky-600",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -509,6 +519,7 @@ export default function App() {
   else if (route === 31) page = <Lesson31 onExit={goHome} />;
   else if (route === 32) page = <Lesson32 onExit={goHome} />;
   else if (route === 33) page = <Lesson33 onExit={goHome} />;
+  else if (route === 34) page = <Lesson34 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

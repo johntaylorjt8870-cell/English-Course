@@ -116,7 +116,7 @@ function arrows(nav) {
 }
 
 async function main() {
-  const LESSONS_31 = Array.from({ length: 31 }, (_, i) => ({ n: i + 1 }));
+  const LESSONS_ALL = Array.from({ length: 34 }, (_, i) => ({ n: i + 1 }));
 
   // ============================================================
   // 1) الصفحة الرئيسية — الحالة الأولية
@@ -185,7 +185,7 @@ async function main() {
   ok(nums.join(",") === "2,3,4,5,6,7,8,9,10,11", `hub: نقرة يسار واحدة ترجع خطوة (got ${nums.join(" ")})`);
 
   // ============================================================
-  // 3) النهاية: 24–33 وتعطيل السهم الأيمن (33 درسًا — الدرس 33 أُضيف بعد الدرس 32)
+  // 3) النهاية: 25–34 وتعطيل السهم الأيمن (34 درسًا — الدرس 34 أُضيف بعد الدرس 33)
   // ============================================================
   for (let i = 0; i < 40; i++) {
     next.click();
@@ -194,12 +194,12 @@ async function main() {
   nums = visibleNumbers(nav);
   ({ prev, next } = arrows(nav));
   ok(nums.length === 10, `hub: عند النهاية يبقى العدد 10 (got ${nums.length})`);
-  ok(nums.join(",") === "24,25,26,27,28,29,30,31,32,33", `hub: النافذة الأخيرة 24–33 (got ${nums.join(" ")})`);
+  ok(nums.join(",") === "25,26,27,28,29,30,31,32,33,34", `hub: النافذة الأخيرة 25–34 (got ${nums.join(" ")})`);
   ok(next.disabled === true, "hub: السهم الأيمن معطّل في النافذة الأخيرة");
   ok(prev.disabled === false, "hub: السهم الأيسر مفعّل في النافذة الأخيرة");
   next.click();
   await tick();
-  ok(visibleNumbers(nav).join(",") === "24,25,26,27,28,29,30,31,32,33", "hub: النقر على سهم معطّل لا يغيّر النافذة");
+  ok(visibleNumbers(nav).join(",") === "25,26,27,28,29,30,31,32,33,34", "hub: النقر على سهم معطّل لا يغيّر النافذة");
 
   // رجوع خطوة بخطوة حتى البداية
   for (let i = 0; i < 40; i++) {
@@ -250,7 +250,7 @@ async function main() {
     [31, "22,23,24,25,26,27,28,29,30,31", "22–31"],
   ];
   for (const [current, expected, label] of cases) {
-    const { host, root: r } = mount(M.React.createElement(M.LessonNumberNav, { items: LESSONS_31, current }));
+    const { host, root: r } = mount(M.React.createElement(M.LessonNumberNav, { items: LESSONS_ALL, current }));
     await tick(20);
     const n2 = host.querySelector(NAV_SELECTOR);
     const vis = visibleNumbers(n2);
@@ -266,12 +266,12 @@ async function main() {
 
   // تغيّر الدرس الحالي أثناء وجود نفس الشريط (تنقل بين الدروس)
   {
-    const { host, root: r } = mount(M.React.createElement(M.LessonNumberNav, { items: LESSONS_31, current: 1 }));
+    const { host, root: r } = mount(M.React.createElement(M.LessonNumberNav, { items: LESSONS_ALL, current: 1 }));
     await tick(20);
     const n2 = host.querySelector(NAV_SELECTOR);
     n2.querySelectorAll("button")[1].click(); // يحرّك المستخدم النافذة يدويًا
     await tick(10);
-    r.render(M.React.createElement(M.LessonNumberNav, { items: LESSONS_31, current: 22 }));
+    r.render(M.React.createElement(M.LessonNumberNav, { items: LESSONS_ALL, current: 22 }));
     await tick(20);
     ok(visibleNumbers(n2).join(",") === "13,14,15,16,17,18,19,20,21,22", "تغيّر الدرس الحالي يزحزح النافذة تلقائيًا لتضمّه");
     r.unmount();
@@ -325,7 +325,7 @@ async function main() {
   // 7) تمييز الحالة المعطّلة بغير اللون + وسم النطاق
   // ============================================================
   {
-    const { host, root: r } = mount(M.React.createElement(M.LessonNumberNav, { items: LESSONS_31 }));
+    const { host, root: r } = mount(M.React.createElement(M.LessonNumberNav, { items: LESSONS_ALL }));
     await tick(20);
     const n2 = host.querySelector(NAV_SELECTOR);
     const [p2, nx2] = n2.querySelectorAll("button");
@@ -341,7 +341,7 @@ async function main() {
   // 8) فائض أفقي: ثوابت البنية + ميزانية عرض محسوبة عند 1280/1024/768/375
   // ============================================================
   {
-    const { host, root: r } = mount(M.React.createElement(M.LessonNumberNav, { items: LESSONS_31, current: 17 }));
+    const { host, root: r } = mount(M.React.createElement(M.LessonNumberNav, { items: LESSONS_ALL, current: 17 }));
     await tick(20);
     const n2 = host.querySelector(NAV_SELECTOR);
     const bar = n2.firstElementChild;

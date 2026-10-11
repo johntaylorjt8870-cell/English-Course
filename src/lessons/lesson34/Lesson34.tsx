@@ -18,6 +18,56 @@ import { FOCUS34 } from "./kit34";
 
 type Area34 = "lesson" | "test" | "solutions" | "teacher";
 
+// This override is intentionally limited to Lesson 34's student lesson, test,
+// and solutions panels. The teacher area and every other lesson keep their
+// existing typography. Only font-size changes; direction and layout stay intact.
+const STUDENT_CONTENT_34 =
+  '[data-lesson="34"] main:is([data-area="l34-lesson"], [data-area="l34-test"], [data-area="l34-solutions"])';
+const READABILITY_CSS_34 = `
+  @media (min-width: 768px) {
+    ${STUDENT_CONTENT_34} [class~="text-[13px]"],
+    ${STUDENT_CONTENT_34} [class~="text-[14px]"] { font-size: 1.125rem; }
+    ${STUDENT_CONTENT_34} [class~="text-[12px]"] { font-size: 1rem; }
+    ${STUDENT_CONTENT_34} [class~="text-[11px]"],
+    ${STUDENT_CONTENT_34} [class~="text-xs"] { font-size: 0.875rem; }
+    ${STUDENT_CONTENT_34} [class~="text-[10px]"] { font-size: 0.75rem; }
+    ${STUDENT_CONTENT_34} [class~="text-[15px]"],
+    ${STUDENT_CONTENT_34} [class~="text-sm"] { font-size: 1rem; }
+  }
+
+  @media (max-width: 767px) {
+    ${STUDENT_CONTENT_34} [class~="text-[13px]"],
+    ${STUDENT_CONTENT_34} [class~="text-[14px]"],
+    ${STUDENT_CONTENT_34} [class~="text-[15px]"],
+    ${STUDENT_CONTENT_34} [class~="text-sm"] { font-size: 1rem; }
+    ${STUDENT_CONTENT_34} [class~="text-[12px]"] { font-size: 0.9375rem; }
+    ${STUDENT_CONTENT_34} [class~="text-[11px]"],
+    ${STUDENT_CONTENT_34} [class~="text-xs"] { font-size: 0.875rem; }
+    ${STUDENT_CONTENT_34} [class~="text-[10px]"] { font-size: 0.75rem; }
+  }
+
+  /* Keep interactive labels and typed-answer fields at a comfortable 16px. */
+  ${STUDENT_CONTENT_34} :is(button, label, input, select, textarea)[class~="text-[11px]"],
+  ${STUDENT_CONTENT_34} :is(button, label, input, select, textarea)[class~="text-[12px]"],
+  ${STUDENT_CONTENT_34} :is(button, label, input, select, textarea)[class~="text-[13px]"],
+  ${STUDENT_CONTENT_34} :is(button, label, input, select, textarea)[class~="text-[14px]"],
+  ${STUDENT_CONTENT_34} :is(button, label, input, select, textarea)[class~="text-[15px]"],
+  ${STUDENT_CONTENT_34} :is(button, label) [class~="text-[11px]"],
+  ${STUDENT_CONTENT_34} :is(button, label) [class~="text-[12px]"],
+  ${STUDENT_CONTENT_34} :is(button, label) [class~="text-[13px]"],
+  ${STUDENT_CONTENT_34} :is(button, label) [class~="text-[14px]"],
+  ${STUDENT_CONTENT_34} :is(button, label) [class~="text-[15px]"] { font-size: 1rem; }
+
+  /* Make the lesson rail readable without changing its navigation behavior. */
+  [data-lesson="34"] nav [class~="text-[11px]"],
+  [data-lesson="34"] nav [class~="text-[12px]"] { font-size: 0.875rem; }
+  [data-lesson="34"] nav button[class~="truncate"] {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+  }
+`;
+
 type SlideView34Props = {
   id: string;
   title: string;
@@ -279,6 +329,7 @@ export default function Lesson34(_props: { onExit?: () => void }) {
       data-area="l34-lesson"
       data-lesson="34"
     >
+      <style>{READABILITY_CSS_34}</style>
       <aside className="sticky top-4 hidden max-h-[90vh] w-64 shrink-0 overflow-y-auto rounded-3xl border border-teal-200 bg-white/90 p-3 shadow-sm lg:block">
         {rail}
       </aside>

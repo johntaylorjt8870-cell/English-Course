@@ -1,5 +1,5 @@
 // ============================================================
-// Final Test coverage audit — جدول تحقيق لكل درس من 1 إلى 32
+// Final Test coverage audit — جدول تحقيق لكل درس من 1 إلى 33
 //
 // يدقّق الشروط العشرة لكل درس على حدة (لا الاعتماد على مجاميع عامة):
 //   1  اختبار نهائي واحد فقط في الدرس.
@@ -29,7 +29,7 @@ const require = createRequire(import.meta.url);
 const esbuild = require("esbuild");
 const root = dirname(fileURLToPath(import.meta.url));
 
-const LESSONS = process.env.ONLY ? process.env.ONLY.split(",").map(Number) : Array.from({ length: 32 }, (_, i) => i + 1);
+const LESSONS = process.env.ONLY ? process.env.ONLY.split(",").map(Number) : Array.from({ length: 33 }, (_, i) => i + 1);
 const LEGACY = LESSONS.filter((n) => n <= 26);
 const MODERN = LESSONS.filter((n) => n >= 27);
 
@@ -226,10 +226,10 @@ for (const n of MODERN) {
     sigSeen.set(sig, n);
   }
 }
-ok(true, `لا تكرار حرفي للأسئلة عبر دروس 27–32 (${sigSeen.size} سؤالًا فريدًا)`);
+ok(true, `لا تكرار حرفي للأسئلة عبر دروس 27–33 (${sigSeen.size} سؤالًا فريدًا)`);
 
 // no lesson id lives in both banks
-ok(M.finalTestLessons().every((n) => typeof M.QUIZZES[n] === "undefined"), "لا تداخل بين البنكين: الدروس 1–26 قديم و27–32 جديد (لا نسخ)");
+ok(M.finalTestLessons().every((n) => typeof M.QUIZZES[n] === "undefined"), "لا تداخل بين البنكين: الدروس 1–26 قديم و27–33 جديد (لا نسخ)");
 ok(Object.keys(M.QUIZZES).length === 26, `بنك الدروس القديمة كما هو: 26 درسًا (${Object.keys(M.QUIZZES).length})`);
 
 // ---------------- 2) behavioural: reachability + state machine ----------------
@@ -556,7 +556,7 @@ for (const n of LESSONS) {
 // ---------------- table ----------------
 const mark = (v, w = 8) => pad(v === true ? "PASS" : v === false ? "FAIL" : String(v ?? "—"), w);
 const pad = (s, w) => { const t = String(s); let width = 0; for (const ch of t) width += /[\u0600-\u06FF\u06F0-\u06F9]/.test(ch) ? 1 : 1; return t + " ".repeat(Math.max(0, w - t.length)); };
-console.log("\n================ per-lesson Final Test audit (1–32) ================");
+console.log("\n================ per-lesson Final Test audit (1–33) ================");
 console.log(
   ["L", "system", "Qs", "step (test/total)", "1 mount", "2 at-end", "3 count", "4 key", "5 relevance", "6 no-leak", "7 reveals", "8 reset", "9 teacher", "10 test-area"]
     .map((h, i) => pad(h, [4, 18, 4, 18, 9, 10, 9, 7, 13, 11, 11, 9, 13, 22][i])).join("")
@@ -591,4 +591,4 @@ if (failures.length) {
   console.error(`\n✕ Final Test coverage audit FAILED (${failures.length}/${checks})\n` + failures.map((f) => `  - ${f}`).join("\n"));
   process.exit(1);
 }
-console.log(`\n✓ Final Test coverage audit passed (${checks} checks): كل درس من 1 إلى 32 له اختبار نهائي واحد في نهاية الدرس، 12–15 سؤالًا بمفاتيح صالحة، بلا كشف قبل التصحيح، مع مفتاح المعلم ومنطقة اختبار منفصلة.`);
+console.log(`\n✓ Final Test coverage audit passed (${checks} checks): كل درس من 1 إلى 33 له اختبار نهائي واحد في نهاية الدرس، 12–15 سؤالًا بمفاتيح صالحة، بلا كشف قبل التصحيح، مع مفتاح المعلم ومنطقة اختبار منفصلة.`);

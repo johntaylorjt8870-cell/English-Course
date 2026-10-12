@@ -4,6 +4,7 @@ import { SOURCE_SECTIONS_35 } from "./ledger35";
 import { DECISION_PRACTICE_ITEMS_35, DETECTIVE_ITEMS_35, AUXILIARY_ITEMS_35, TRANSFORMATION_ITEMS_35, FINAL_BOSS_REQUIREMENTS_35, type PracticeItem35 } from "./practiceData";
 import { normalizeAnswer35 } from "./testData";
 import type { Slide35 } from "./data";
+import { SECTIONS_35, SLIDE_COUNT_35, SCENE_META_35 } from "./data";
 import { Card35, ChoiceButton35, English35, FOCUS_35, LtrSentence35, PlatformNote35, SourcePanel35, SourceTable35, SourceUnit35 } from "./kit35";
 
 const source = (id: string) => SOURCE_SECTIONS_35.find((section) => section.id === id)!;
@@ -21,33 +22,40 @@ function SourceList35({ id, units, offset = 0, className = "" }: { id: string; u
 
 function SourceReveal35({ id, units, revealed, offset }: { id: string; units: string[]; revealed: boolean; offset: number }) {
   return (
-    <div data-answer-feedback={id} className="rounded-2xl border border-dashed border-[#d4ddd6] bg-[#f7faf6] p-3">
+    <div data-answer-feedback={id} className="rounded-2xl border border-dashed border-[#d3e3da] bg-[#f7faf6] p-3">
       {revealed ? <div className="space-y-1"><div className="mb-2 rounded-full bg-[#dcebe0] px-3 py-1 text-xs font-black text-[#315d4e]">مفتاح المصدر — بعد المحاولة</div>{units.map((text, index) => <SourceUnit35 key={index} text={text} index={offset + index} />)}</div> : <p className="text-sm font-bold text-[#60716d]">🔒 مفتاح المصدر محفوظ حتى تتحقق من كل الإجابات.</p>}
     </div>
   );
 }
 
 function SceneEyebrow35({ slide }: { slide: Slide35 }) {
-  const section = ({
-    ARRIVE: ["A", "ENTER FUTURE LAB"], DISCOVER: ["B", "DISCOVER"], AUXILIARY: ["C", "SELECTOR"], BUILD: ["D", "BUILD"],
-    PLANS: ["E", "INTENTIONS"], CONVERSATION: ["F", "CONVERSATION STUDIO"], EVIDENCE: ["G", "EVIDENCE LAB"], CONTROL: ["H", "CONTROL ROOM"],
-    SIMULATOR: ["I", "DECISION SIMULATOR"], PRACTICE: ["J", "GUIDED PRACTICE"], READING: ["K", "READING STUDIO"], TEST: ["L", "MASTER TEST"], MISSION: ["M", "FINAL MISSION"],
-  } as const)[slide.section];
+  const scene = SECTIONS_35.find((candidate) => candidate.id === slide.section)!;
   return (
-    <div className="flex flex-wrap items-center justify-between gap-2 text-[10px] font-black uppercase tracking-[.16em] text-[#d9b77f]">
-      <span><span className="mr-2 inline-grid h-6 w-6 place-items-center rounded-full bg-white/10 text-white">{section[0]}</span> {section[1]}</span>
+    <div className="flex flex-wrap items-center justify-between gap-2 text-[10px] font-black uppercase tracking-[.16em] text-[#f5b64a]">
+      <span><span className="ml-2 inline-grid h-6 w-6 place-items-center rounded-full bg-white/10 text-white ring-1 ring-[#2fc4ae]/40">{scene.scene}</span> {SCENE_META_35[slide.section].code}</span>
       <span className="rounded-full border border-white/20 px-2.5 py-1 text-white/75">Future Lab · Lesson 35</span>
     </div>
   );
 }
 
 function StepFrame35({ slide, children }: { slide: Slide35; children: ReactNode }) {
+  const meta = SCENE_META_35[slide.section];
   return (
-    <article data-step-id={slide.id} data-source-id={slide.sourceId} className="space-y-4">
-      <header className="rounded-3xl bg-[#142e43] p-4 text-white shadow-[0_16px_38px_-25px_rgba(11,34,51,.75)] sm:p-6">
-        <SceneEyebrow35 slide={slide} />
-        <h2 className="mt-3 text-xl font-black leading-tight sm:text-2xl md:text-[1.75rem]"><Rich text={slide.title} /></h2>
-        {slide.lead ? <p className="mt-2 max-w-3xl text-sm leading-6 text-[#e6e2d8] sm:text-base"><Rich text={slide.lead} /></p> : null}
+    <article data-step-id={slide.id} data-source-id={slide.sourceId} className="fl35-enter space-y-4">
+      <header className="relative overflow-hidden rounded-3xl bg-[#0d2b46] p-4 text-white shadow-[0_18px_44px_-26px_rgba(4,20,36,.9)] ring-1 ring-white/10 sm:p-6">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(520px_200px_at_88%_-30%,rgba(47,196,174,.30),transparent_60%),radial-gradient(420px_180px_at_8%_130%,rgba(245,182,74,.16),transparent_55%)]" />
+        <div aria-hidden="true" className="fl35-orbit pointer-events-none absolute -top-24 -left-20 h-56 w-56 rounded-full border border-white/10" />
+        <div aria-hidden="true" className="fl35-orbit-slow pointer-events-none absolute -top-14 -left-10 h-36 w-36 rounded-full border border-dashed border-[#2fc4ae]/30" />
+        <div className="relative">
+          <SceneEyebrow35 slide={slide} />
+          <h2 className="mt-3 text-xl font-black leading-tight sm:text-2xl md:text-[1.75rem]"><Rich text={slide.title} /></h2>
+          {slide.lead ? <p className="mt-2 max-w-3xl text-sm leading-6 text-[#dfe9f2] sm:text-base"><Rich text={slide.lead} /></p> : null}
+          <div className="mt-3 flex flex-wrap items-center gap-2 text-[10px] font-black">
+            <span className="rounded-full bg-white/10 px-2.5 py-1 text-white/85">الخطوة {slide.step} من {SLIDE_COUNT_35}</span>
+            {slide.sourceId !== "cover" ? <span className="rounded-full bg-[#f5b64a]/15 px-2.5 py-1 text-[#f5b64a]">المصدر §{slide.step - 1}</span> : null}
+            <span className="rounded-full bg-[#2fc4ae]/15 px-2.5 py-1 text-[#8fe8d8]">{meta.icon} {meta.code}</span>
+          </div>
+        </div>
       </header>
       {children}
     </article>
@@ -65,7 +73,7 @@ function ClickableSentence35() {
   ];
   return (
     <Card35 eyebrow="Guided reveal" title="افحص الجملة — لا تخمّن القاعدة">
-      <div dir="ltr" className="ltr-row flex flex-wrap items-center gap-x-2 gap-y-2 rounded-2xl border border-[#d8e1dd] bg-white px-4 py-4 text-lg font-black text-[#17354a] sm:text-xl">
+      <div dir="ltr" className="ltr-row flex flex-wrap items-center gap-x-2 gap-y-2 rounded-2xl border border-[#d5e3e8] bg-white px-4 py-4 text-lg font-black text-[#0d2b46] sm:text-xl">
         <span className="inline-flex items-center" aria-label="Subject and contraction">
           {[0, 1].map((index) => <button key={parts[index].text} type="button" aria-pressed={active === index} onClick={() => setActive(index)} className={`${FOCUS_35} rounded-lg px-1 py-1 ${active === index ? "bg-[#dcebe5] text-[#164c4a]" : "hover:bg-[#f3f5ef]"}`}><En>{parts[index].text}</En></button>)}
         </span>
@@ -74,8 +82,8 @@ function ClickableSentence35() {
           return <button key={part.text} type="button" aria-pressed={active === index} onClick={() => setActive(index)} className={`${FOCUS_35} rounded-lg px-1.5 py-1 ${active === index ? "bg-[#dcebe5] text-[#164c4a]" : "hover:bg-[#f3f5ef]"}`}><En>{part.text}</En></button>;
         })}
       </div>
-      <div className="mt-3 min-h-12 rounded-2xl border border-[#d8d2c5] bg-[#f8f5ed] p-3 text-sm font-bold leading-6 text-[#31464e]" aria-live="polite">
-        {active === null ? "اختر أي جزء لترى دوره. الشرح الكامل متاح أدناه؛ لا تحتاج إلى استنتاجه وحدك." : <><span className="ml-2 rounded-full bg-[#17354a] px-2 py-1 text-xs text-white"><En>{parts[active].text}</En></span><Rich text={parts[active].role} /></>}
+      <div className="mt-3 min-h-12 rounded-2xl border border-[#d6e1ea] bg-[#eef4fa] p-3 text-sm font-bold leading-6 text-[#31464e]" aria-live="polite">
+        {active === null ? "اختر أي جزء لترى دوره. الشرح الكامل متاح أدناه؛ لا تحتاج إلى استنتاجه وحدك." : <><span className="ml-2 rounded-full bg-[#0d2b46] px-2 py-1 text-xs text-white"><En>{parts[active].text}</En></span><Rich text={parts[active].role} /></>}
       </div>
       <SourcePanel35 id="s2" />
     </Card35>
@@ -98,11 +106,11 @@ function AuxiliarySelector35() {
             </ChoiceButton35>
           ))}
         </div>
-        <div className="mt-3 min-h-14 rounded-2xl border border-[#cddbd4] bg-[#f1f6f0] p-3" aria-live="polite">
+        <div className="mt-3 min-h-14 rounded-2xl border border-[#c8dcd8] bg-[#edf6f1] p-3" aria-live="polite">
           {selected === null ? <span className="text-sm font-bold text-[#62716f]">اختر أحد الضمائر لرؤية الصيغة.</span> : (
             <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full bg-[#245f62] px-3 py-1 text-xs font-black text-white">الفعل المساعد: <En>{forms[selected]}</En></span>
-              <English35 className="text-lg font-black text-[#17354a]">{examples[selected]}</English35>
+              <span className="rounded-full bg-[#0d8f7f] px-3 py-1 text-xs font-black text-white">الفعل المساعد: <En>{forms[selected]}</En></span>
+              <English35 className="text-lg font-black text-[#0d2b46]">{examples[selected]}</English35>
             </div>
           )}
         </div>
@@ -116,7 +124,7 @@ function AuxiliarySelector35() {
           sourceUnitOffset={1}
         />
         <div className="rounded-2xl border border-[#dce4dc] bg-white p-3">
-          <div className="mb-2 text-xs font-black text-[#53676a]">أمثلة المصدر + ثبات V1</div>
+          <div className="mb-2 text-xs font-black text-[#4a6070]">أمثلة المصدر + ثبات V1</div>
           {section.units.slice(17).map((text, index) => <SourceUnit35 key={index} text={text} index={17 + index} />)}
         </div>
       </SourceRoot35>
@@ -148,37 +156,37 @@ function SentenceBuilder35() {
     setResult(`${subject} ${aux} going to ${verb} ${rest}.`);
   };
   const reset = () => { setSubject(""); setAux(""); setVerb(""); setRest(""); setResult(""); setError(""); };
-  const selectClass = `${FOCUS_35} min-h-11 w-full rounded-xl border border-[#cfc8bb] bg-white px-3 text-sm font-bold text-[#17354a]`;
+  const selectClass = `${FOCUS_35} min-h-11 w-full rounded-xl border border-[#c8d6e0] bg-white px-3 text-sm font-bold text-[#0d2b46]`;
   return (
     <div className="space-y-4">
       <Card35 eyebrow="Sentence builder" title="رتّب أجزاء الجملة بنفسك">
         <p className="text-sm leading-6 text-[#56686b]">اختر كل جزء بالترتيب. لن تظهر الجملة النهائية حتى تضغط «ابنِ الجملة».</p>
         <div dir="ltr" className="ltr-row mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          <label className="block text-left text-xs font-black text-[#53676a]">Subject
+          <label className="block text-left text-xs font-black text-[#4a6070]">Subject
             <select aria-label="Subject" className={selectClass} value={subject} onChange={(event) => { setSubject(event.target.value); setError(""); setResult(""); }}>
               <option value="">Choose…</option>{Object.keys(subjectAux).map((item) => <option key={item} value={item}>{item}</option>)}
             </select>
           </label>
-          <label className="block text-left text-xs font-black text-[#53676a]">am / is / are
+          <label className="block text-left text-xs font-black text-[#4a6070]">am / is / are
             <select aria-label="am is are" className={selectClass} value={aux} onChange={(event) => { setAux(event.target.value); setError(""); setResult(""); }}>
               <option value="">Choose…</option>{["am", "is", "are"].map((item) => <option key={item}>{item}</option>)}
             </select>
           </label>
-          <div className="rounded-xl border border-[#d9e1dd] bg-[#f2f5ef] px-3 py-2 text-left text-xs font-black text-[#53676a]">going to<div className="mt-2 rounded-lg bg-white px-2 py-1 text-sm text-[#17354a]" dir="ltr"><En>going to</En></div></div>
-          <label className="block text-left text-xs font-black text-[#53676a]">Base verb — V1
+          <div className="rounded-xl border border-[#d6e4e8] bg-[#eef5f3] px-3 py-2 text-left text-xs font-black text-[#4a6070]">going to<div className="mt-2 rounded-lg bg-white px-2 py-1 text-sm text-[#0d2b46]" dir="ltr"><En>going to</En></div></div>
+          <label className="block text-left text-xs font-black text-[#4a6070]">Base verb — V1
             <select aria-label="Base verb V1" className={selectClass} value={verb} onChange={(event) => { setVerb(event.target.value); setError(""); setResult(""); }}>
               <option value="">Choose…</option>{verbs.map((item) => <option key={item}>{item}</option>)}
             </select>
           </label>
-          <label className="block text-left text-xs font-black text-[#53676a]">Rest of sentence
+          <label className="block text-left text-xs font-black text-[#4a6070]">Rest of sentence
             <select aria-label="Rest of sentence" className={selectClass} value={rest} onChange={(event) => { setRest(event.target.value); setError(""); setResult(""); }}>
               <option value="">Choose…</option>{rests.map((item) => <option key={item}>{item}</option>)}
             </select>
           </label>
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
-          <button type="button" onClick={assemble} className={`${FOCUS_35} rounded-xl bg-[#245f62] px-4 py-2.5 text-sm font-black text-white hover:bg-[#1d5053]`}>ابنِ الجملة</button>
-          <button type="button" onClick={reset} className={`${FOCUS_35} rounded-xl border border-[#cfc8bb] bg-white px-4 py-2.5 text-sm font-bold text-[#53676a] hover:bg-[#f7f3ea]`}>إعادة الاختيار</button>
+          <button type="button" onClick={assemble} className={`${FOCUS_35} rounded-xl bg-[#0d8f7f] px-4 py-2.5 text-sm font-black text-white hover:bg-[#0a7466]`}>ابنِ الجملة</button>
+          <button type="button" onClick={reset} className={`${FOCUS_35} rounded-xl border border-[#c8d6e0] bg-white px-4 py-2.5 text-sm font-bold text-[#4a6070] hover:bg-[#edf3f9]`}>إعادة الاختيار</button>
         </div>
         {error ? <p role="status" className="mt-3 rounded-xl border border-[#e2c695] bg-[#fbf4e7] p-3 text-sm font-bold text-[#78582d]">{error}</p> : null}
         {result ? <div aria-live="polite"><LtrSentence35 className="mt-3 text-xl"><En>{result}</En></LtrSentence35></div> : null}
@@ -203,7 +211,7 @@ function ContractionStudio35() {
           ))}
         </div>
         {selected !== null ? (
-          <div className="mt-3 grid gap-2 rounded-2xl border border-[#d4dfd6] bg-[#f4f6f0] p-3 sm:grid-cols-2" aria-live="polite">
+          <div className="mt-3 grid gap-2 rounded-2xl border border-[#d4dfd6] bg-[#f0f6f2] p-3 sm:grid-cols-2" aria-live="polite">
             <LtrSentence35><En>{pairs[selected][0]}</En></LtrSentence35>
             <LtrSentence35><En>{pairs[selected][1]}</En></LtrSentence35>
           </div>
@@ -225,13 +233,13 @@ function IntentionTimeline35() {
     <Card35 eyebrow="Decision history" title="الفكرة سبقت لحظة الكلام">
       <div dir="ltr" className="ltr-row grid gap-3 md:grid-cols-3">
         {stops.map((stop, index) => (
-          <button type="button" key={stop.label} onClick={() => setActive(index)} aria-pressed={active === index} className={`${FOCUS_35} rounded-2xl border-2 p-3 text-left transition ${active === index ? "border-[#245f62] bg-[#eef5f0]" : "border-[#ded8cd] bg-white hover:border-[#72938b]"}`}>
-            <div className="text-[10px] font-black tracking-[.14em] text-[#9a7345]">{stop.label}</div>
+          <button type="button" key={stop.label} onClick={() => setActive(index)} aria-pressed={active === index} className={`${FOCUS_35} rounded-2xl border-2 p-3 text-left transition ${active === index ? "border-[#0d8f7f] bg-[#eef5f0]" : "border-[#d8e2ea] bg-white hover:border-[#4d9c8b]"}`}>
+            <div className="text-[10px] font-black tracking-[.14em] text-[#b57f22]">{stop.label}</div>
             <div className="mt-2 text-sm font-bold leading-6 text-[#304750]" dir={index === 2 ? "ltr" : "rtl"}>{index === 2 ? <En>{stop.text}</En> : stop.text}</div>
           </button>
         ))}
       </div>
-      <div className="mt-3 min-h-12 rounded-xl bg-[#f7f3ea] p-3 text-sm font-bold text-[#53676a]" aria-live="polite">
+      <div className="mt-3 min-h-12 rounded-xl bg-[#edf3f9] p-3 text-sm font-bold text-[#4a6070]" aria-live="polite">
         {active === null ? "اختر محطة على الخط الزمني لرؤية ما حدث قبل لحظة الحديث." : <Rich text={stops[active].text} />}
       </div>
     </Card35>
@@ -249,7 +257,7 @@ function CertaintyCheckpoint35() {
         <ChoiceButton35 selected={choice === "guarantee"} onClick={() => { setChoice("guarantee"); setChecked(false); }}>ضمان مطلق</ChoiceButton35>
         <ChoiceButton35 selected={choice === "intention"} onClick={() => { setChoice("intention"); setChecked(false); }}>نية مسبقة، والنتيجة ليست مضمونة</ChoiceButton35>
       </div>
-      <button type="button" disabled={!choice} onClick={() => setChecked(true)} className={`${FOCUS_35} mt-3 rounded-xl bg-[#17354a] px-4 py-2 text-sm font-black text-white disabled:opacity-40`}>تحقق من فهمك</button>
+      <button type="button" disabled={!choice} onClick={() => setChecked(true)} className={`${FOCUS_35} mt-3 rounded-xl bg-[#0d2b46] px-4 py-2 text-sm font-black text-white disabled:opacity-40`}>تحقق من فهمك</button>
       {checked ? <p role="status" className="mt-3 rounded-xl border border-[#d9c49a] bg-[#fbf4e7] p-3 text-sm font-bold text-[#694e2d]">{choice === "intention" ? "صحيح: الخطة تعبّر عن نية، ولا تضمن وقوع الحدث." : "ليست ضمانًا مطلقًا؛ قد تمنع الظروف تنفيذ الخطة."}</p> : null}
     </Card35>
   );
@@ -270,30 +278,30 @@ function ConversationStudio35() {
           <div className="mb-1 flex flex-wrap gap-2">
             <ChoiceButton35 selected={highlight === 0} onClick={() => setHighlight(0)}>Nora</ChoiceButton35>
             <ChoiceButton35 selected={highlight === 1} onClick={() => setHighlight(1)}>Adam</ChoiceButton35>
-            <button type="button" onClick={() => { const next = (turn + 1) % dialogue.length; setTurn(next); setHighlight(dialogue[next].startsWith("Nora:") ? 0 : 1); }} className={`${FOCUS_35} rounded-xl border border-[#d6d1c7] bg-white px-3 py-2 text-sm font-bold text-[#304750] hover:bg-[#f3f6f0]`}>أبرز السطر التالي</button>
+            <button type="button" onClick={() => { const next = (turn + 1) % dialogue.length; setTurn(next); setHighlight(dialogue[next].startsWith("Nora:") ? 0 : 1); }} className={`${FOCUS_35} rounded-xl border border-[#cfdce5] bg-white px-3 py-2 text-sm font-bold text-[#304750] hover:bg-[#eff6f2]`}>أبرز السطر التالي</button>
           </div>
           <div className="space-y-2" dir="ltr">
             {dialogue.map((line, index) => {
               const nora = line.startsWith("Nora:");
               const speaker = nora ? 0 : 1;
               return (
-                <button type="button" key={line} data-source-unit={index + 1} onClick={() => { setHighlight(speaker); setTurn(index); }} className={`${FOCUS_35} block w-full rounded-2xl border px-3 py-3 text-left transition ${speaker === 0 ? "border-[#d7dedc] bg-white" : "border-[#c7d9d5] bg-[#edf4f1]"} ${highlight === speaker || turn === index ? "ring-2 ring-[#7fa39a]" : ""}`}>
-                  <En className="text-sm font-bold text-[#17354a]">{line}</En>
+                <button type="button" key={line} data-source-unit={index + 1} onClick={() => { setHighlight(speaker); setTurn(index); }} className={`${FOCUS_35} block w-full rounded-2xl border px-3 py-3 text-left transition ${speaker === 0 ? "border-[#d7dedc] bg-white" : "border-[#c7d9d5] bg-[#edf4f1]"} ${highlight === speaker || turn === index ? "ring-2 ring-[#57ab98]" : ""}`}>
+                  <En className="text-sm font-bold text-[#0d2b46]">{line}</En>
                 </button>
               );
             })}
           </div>
-          <div className="mt-4 border-t border-[#e4ded3] pt-3">
+          <div className="mt-4 border-t border-[#dfe8f0] pt-3">
             <SourceUnit35 text={section.units[7]} index={7} />
             <div className="mt-2 space-y-1">{arabic.map((line, index) => <SourceUnit35 key={index} text={line} index={8 + index} />)}</div>
           </div>
-          <div className="mt-4 rounded-2xl border border-[#d8d2c5] bg-[#f8f5ed] p-3">
+          <div className="mt-4 rounded-2xl border border-[#d6e1ea] bg-[#eef4fa] p-3">
             <SourceUnit35 text={section.units[14]} index={14} />
             <div className="mt-2 grid gap-2 sm:grid-cols-2">
               {Array.from({ length: 4 }, (_, index) => (
                 <div key={index} className="rounded-xl bg-white p-2" data-source-unit={15 + index * 2}>
-                  <div dir="ltr" className="font-en text-sm font-black text-[#17354a]">{analysis[index * 2]}</div>
-                  <div data-source-unit={16 + index * 2} className="mt-1 text-sm text-[#53676a]">{analysis[index * 2 + 1]}</div>
+                  <div dir="ltr" className="font-en text-sm font-black text-[#0d2b46]">{analysis[index * 2]}</div>
+                  <div data-source-unit={16 + index * 2} className="mt-1 text-sm text-[#4a6070]">{analysis[index * 2 + 1]}</div>
                 </div>
               ))}
             </div>
@@ -317,14 +325,14 @@ function EvidenceScene35({ id }: { id: "s11" | "s12" }) {
         <Card35 eyebrow="Evidence → prediction" title="انظر أولًا إلى الدليل الحاضر">
           <div className="grid gap-3 md:grid-cols-2">
             {cases.map((item, index) => (
-              <button key={item.sentence} type="button" onClick={() => setOpen(open === index ? null : index)} aria-expanded={open === index} className={`${FOCUS_35} rounded-2xl border-2 border-[#d8d2c5] bg-white p-3 text-right transition hover:border-[#7fa39a]`}>
-                <div className="text-[10px] font-black uppercase tracking-[.14em] text-[#9a7345]">Present evidence</div>
+              <button key={item.sentence} type="button" onClick={() => setOpen(open === index ? null : index)} aria-expanded={open === index} className={`${FOCUS_35} rounded-2xl border-2 border-[#d6e1ea] bg-white p-3 text-right transition hover:border-[#57ab98]`}>
+                <div className="text-[10px] font-black uppercase tracking-[.14em] text-[#b57f22]">Present evidence</div>
                 <div className="mt-1 text-sm leading-6 text-[#344b52]">{item.evidence}</div>
-                {open === index ? <div className="mt-3 border-t border-[#e5dfd4] pt-3"><div dir="ltr" className="font-en text-left font-black text-[#17354a]">{item.sentence}</div><div className="mt-1 text-sm text-[#53676a]">{item.translation}</div></div> : <div className="mt-2 text-xs font-black text-[#245f62]">Reveal the prediction ↓</div>}
+                {open === index ? <div className="mt-3 border-t border-[#e5dfd4] pt-3"><div dir="ltr" className="font-en text-left font-black text-[#0d2b46]">{item.sentence}</div><div className="mt-1 text-sm text-[#4a6070]">{item.translation}</div></div> : <div className="mt-2 text-xs font-black text-[#0d8f7f]">Reveal the prediction ↓</div>}
               </button>
             ))}
           </div>
-          <div className="mt-3 rounded-xl bg-[#f7f3ea] px-3 py-2 text-sm font-black text-[#394f54]">Present evidence <span className="px-1 text-[#b57a3b]">→</span> Reasonable prediction about the future</div>
+          <div className="mt-3 rounded-xl bg-[#edf3f9] px-3 py-2 text-sm font-black text-[#394f54]">Present evidence <span className="px-1 text-[#d08a24]">→</span> Reasonable prediction about the future</div>
         </Card35>
         <SourcePanel35 id="s11" />
       </div>
@@ -341,11 +349,11 @@ function EvidenceScene35({ id }: { id: "s11" | "s12" }) {
       <Card35 eyebrow="Present evidence" title="اضغط على كل دليل، ثم اقرأ النتيجة المحتملة">
         <div className="grid gap-3 sm:grid-cols-2">
           {groups.map((group, index) => (
-            <button type="button" key={group.prediction} onClick={() => setOpen(open === index ? null : index)} aria-expanded={open === index} className={`${FOCUS_35} rounded-2xl border border-[#d8d2c5] bg-white p-3 text-right hover:border-[#7fa39a]`}>
-              <div className="text-xs font-black text-[#9a7345]">Evidence</div>
-              <div dir="ltr" className="mt-1 text-left font-en text-sm font-black text-[#17354a]">{group.evidence}</div>
-              <div className="mt-1 text-sm text-[#53676a]">{group.translation}</div>
-              {open === index ? <div className="mt-3 rounded-xl bg-[#eef4f0] p-2"><div dir="ltr" className="font-en text-left font-black text-[#245f62]">{group.prediction}</div><div className="mt-1 text-sm text-[#53676a]">{group.predictionAr}</div></div> : <div className="mt-2 text-xs font-black text-[#245f62]">Reveal prediction</div>}
+            <button type="button" key={group.prediction} onClick={() => setOpen(open === index ? null : index)} aria-expanded={open === index} className={`${FOCUS_35} rounded-2xl border border-[#d6e1ea] bg-white p-3 text-right hover:border-[#57ab98]`}>
+              <div className="text-xs font-black text-[#b57f22]">Evidence</div>
+              <div dir="ltr" className="mt-1 text-left font-en text-sm font-black text-[#0d2b46]">{group.evidence}</div>
+              <div className="mt-1 text-sm text-[#4a6070]">{group.translation}</div>
+              {open === index ? <div className="mt-3 rounded-xl bg-[#eef4f0] p-2"><div dir="ltr" className="font-en text-left font-black text-[#0d8f7f]">{group.prediction}</div><div className="mt-1 text-sm text-[#4a6070]">{group.predictionAr}</div></div> : <div className="mt-2 text-xs font-black text-[#0d8f7f]">Reveal prediction</div>}
             </button>
           ))}
         </div>
@@ -364,7 +372,7 @@ function NuanceCheck35() {
         <ChoiceButton35 selected={selected === "forbidden"} onClick={() => { setSelected("forbidden"); setChecked(false); }}>نعم، الدليل يمنع WILL دائمًا</ChoiceButton35>
         <ChoiceButton35 selected={selected === "overlap"} onClick={() => { setSelected("overlap"); setChecked(false); }}>لا؛ يمكن أن تتداخل الصيغتان بحسب المقصود</ChoiceButton35>
       </div>
-      <button type="button" disabled={!selected} onClick={() => setChecked(true)} className={`${FOCUS_35} mt-3 rounded-xl bg-[#17354a] px-4 py-2 text-sm font-black text-white disabled:opacity-40`}>تحقق</button>
+      <button type="button" disabled={!selected} onClick={() => setChecked(true)} className={`${FOCUS_35} mt-3 rounded-xl bg-[#0d2b46] px-4 py-2 text-sm font-black text-white disabled:opacity-40`}>تحقق</button>
       {checked ? <div role="status" className="mt-3 rounded-xl border border-[#c9d8d2] bg-[#eef4f0] p-3 text-sm font-bold text-[#31524f]">{selected === "overlap" ? "صحيح: هذا تمييز تعليمي مفيد، وليس قانونًا يمنع will عند وجود دليل. يغيّر السياق وما يريد المتحدث إبرازه الاختيار." : "هذا تعميم أقوى من القاعدة. قد تتداخل الصيغتان في اللغة الطبيعية؛ السياق والتركيز هما المهمان."}</div> : null}
     </Card35>
   );
@@ -380,8 +388,8 @@ function NegativePosition35() {
         <ChoiceButton35 selected={choice === "after-aux"} onClick={() => { setChoice("after-aux"); setChecked(false); }}>بعد am / is / are</ChoiceButton35>
         <ChoiceButton35 selected={choice === "before-going"} onClick={() => { setChoice("before-going"); setChecked(false); }}>قبل going to</ChoiceButton35>
       </div>
-      <button type="button" disabled={!choice} onClick={() => setChecked(true)} className={`${FOCUS_35} mt-3 rounded-xl bg-[#17354a] px-4 py-2 text-sm font-black text-white disabled:opacity-40`}>حوّل الجملة</button>
-      {checked ? <div className="mt-3 space-y-2" role="status"><LtrSentence35 className={choice === "after-aux" ? "border-[#98b9aa] bg-[#eef5f0]" : "border-[#d8d2c5]"}><En>She is not going to attend the workshop.</En></LtrSentence35><p className="text-sm font-bold text-[#53676a]">ضع not بعد الفعل المساعد، ولا نحتاج do أو does.</p></div> : null}
+      <button type="button" disabled={!choice} onClick={() => setChecked(true)} className={`${FOCUS_35} mt-3 rounded-xl bg-[#0d2b46] px-4 py-2 text-sm font-black text-white disabled:opacity-40`}>حوّل الجملة</button>
+      {checked ? <div className="mt-3 space-y-2" role="status"><LtrSentence35 className={choice === "after-aux" ? "border-[#98b9aa] bg-[#eef5f0]" : "border-[#d6e1ea]"}><En>She is not going to attend the workshop.</En></LtrSentence35><p className="text-sm font-bold text-[#4a6070]">ضع not بعد الفعل المساعد، ولا نحتاج do أو does.</p></div> : null}
     </Card35>
   );
 }
@@ -396,8 +404,8 @@ function QuestionInversion35() {
         <ChoiceButton35 selected={choice === "aux-first"} onClick={() => { setChoice("aux-first"); setChecked(false); }}><En>Is she going to attend the workshop?</En></ChoiceButton35>
         <ChoiceButton35 selected={choice === "subject-first"} onClick={() => { setChoice("subject-first"); setChecked(false); }}><En>She is going to attend the workshop?</En></ChoiceButton35>
       </div>
-      <button type="button" disabled={!choice} onClick={() => setChecked(true)} className={`${FOCUS_35} mt-3 rounded-xl bg-[#17354a] px-4 py-2 text-sm font-black text-white disabled:opacity-40`}>اعرض التحويل</button>
-      {checked ? <div className="mt-3 rounded-xl bg-[#eef4f0] p-3"><LtrSentence35><En>Is she going to attend the workshop?</En></LtrSentence35><p className="mt-2 text-sm font-bold text-[#53676a]">تبدأ الصيغة بـ Am/Is/Are، ثم الفاعل، ثم going to + V1.</p></div> : null}
+      <button type="button" disabled={!choice} onClick={() => setChecked(true)} className={`${FOCUS_35} mt-3 rounded-xl bg-[#0d2b46] px-4 py-2 text-sm font-black text-white disabled:opacity-40`}>اعرض التحويل</button>
+      {checked ? <div className="mt-3 rounded-xl bg-[#eef4f0] p-3"><LtrSentence35><En>Is she going to attend the workshop?</En></LtrSentence35><p className="mt-2 text-sm font-bold text-[#4a6070]">تبدأ الصيغة بـ Am/Is/Are، ثم الفاعل، ثم going to + V1.</p></div> : null}
     </Card35>
   );
 }
@@ -413,7 +421,7 @@ function ShortAnswerMatcher35() {
         <ChoiceButton35 selected={choice === "wrong"} onClick={() => { setChoice("wrong"); setChecked(false); }}><En>Yes, I will.</En></ChoiceButton35>
         <ChoiceButton35 selected={choice === "negative"} onClick={() => { setChoice("negative"); setChecked(false); }}><En>No, I'm not.</En></ChoiceButton35>
       </div>
-      <button type="button" disabled={!choice} onClick={() => setChecked(true)} className={`${FOCUS_35} mt-3 rounded-xl bg-[#17354a] px-4 py-2 text-sm font-black text-white disabled:opacity-40`}>تحقق من المطابقة</button>
+      <button type="button" disabled={!choice} onClick={() => setChecked(true)} className={`${FOCUS_35} mt-3 rounded-xl bg-[#0d2b46] px-4 py-2 text-sm font-black text-white disabled:opacity-40`}>تحقق من المطابقة</button>
       {checked ? <p role="status" className="mt-3 rounded-xl border border-[#c9d8d2] bg-[#eef4f0] p-3 text-sm font-bold text-[#31524f]">مع “Are you…?” تكون الإجابة القصيرة “Yes, I am.” أو “No, I'm not.” — أما “Yes, I will.” فليست الإجابة القصيرة النحوية المباشرة المطلوبة هنا.</p> : null}
     </Card35>
   );
@@ -430,7 +438,7 @@ function WhoComparison35() {
       <div className="grid gap-2 sm:grid-cols-2">
         {rows.map((row, index) => <ChoiceButton35 key={row.q} selected={active === index} onClick={() => setActive(index)}><En>{row.q}</En></ChoiceButton35>)}
       </div>
-      {active !== null ? <div className="mt-3 rounded-xl bg-[#f4f6f0] p-3" aria-live="polite"><LtrSentence35><En>{rows[active].q}</En></LtrSentence35><p className="mt-2 text-sm font-bold text-[#42595c]">{rows[active].answer}</p></div> : null}
+      {active !== null ? <div className="mt-3 rounded-xl bg-[#f0f6f2] p-3" aria-live="polite"><LtrSentence35><En>{rows[active].q}</En></LtrSentence35><p className="mt-2 text-sm font-bold text-[#42595c]">{rows[active].answer}</p></div> : null}
     </Card35>
   );
 }
@@ -453,7 +461,7 @@ function BeInspection35() {
   return (
     <Card35 eyebrow="GOING TO + BE" title="افتح دور be بعد going to">
       <LtrSentence35><En>I'm going to be a doctor.</En></LtrSentence35>
-      <button type="button" aria-expanded={open} onClick={() => setOpen(!open)} className={`${FOCUS_35} mt-3 rounded-xl border border-[#b8cbc2] bg-white px-4 py-2 text-sm font-black text-[#245f62] hover:bg-[#f1f6f0]`}>{open ? "إخفاء التحليل" : "افحص be"}</button>
+      <button type="button" aria-expanded={open} onClick={() => setOpen(!open)} className={`${FOCUS_35} mt-3 rounded-xl border border-[#a9d4c7] bg-white px-4 py-2 text-sm font-black text-[#0d8f7f] hover:bg-[#edf6f1]`}>{open ? "إخفاء التحليل" : "افحص be"}</button>
       {open ? <div className="mt-3 rounded-xl border border-[#c9d8d2] bg-[#eef4f0] p-3"><p className="text-sm font-bold text-[#31524f]">be هو الفعل الأساسي V1 بعد going to. لا نكرر is أو am بعد going to.</p><LtrSentence35 className="mt-2"><En>She is going to be happy.</En></LtrSentence35></div> : null}
     </Card35>
   );
@@ -466,14 +474,14 @@ function ExistenceForms35() {
     <Card35 eyebrow="Future existence" title="وجود شيء واحد أو أشياء متعددة في المستقبل">
       <div className="grid gap-2 sm:grid-cols-2">
         {rows.map((line, index) => (
-          <div key={index} className={`rounded-xl border p-3 ${index === 0 || index === 2 ? "border-[#c7d8d3] bg-[#eef4f0]" : "border-[#ded8cd] bg-white"}`}>
-            {index % 2 === 0 ? <div dir="ltr" className="font-en text-left text-sm font-black text-[#17354a]">{line}</div> : <div className="mt-1 text-sm text-[#53676a]">{line}</div>}
+          <div key={index} className={`rounded-xl border p-3 ${index === 0 || index === 2 ? "border-[#c7d8d3] bg-[#eef4f0]" : "border-[#d8e2ea] bg-white"}`}>
+            {index % 2 === 0 ? <div dir="ltr" className="font-en text-left text-sm font-black text-[#0d2b46]">{line}</div> : <div className="mt-1 text-sm text-[#4a6070]">{line}</div>}
           </div>
         ))}
       </div>
       <div className="mt-3 flex flex-wrap gap-2">
-        <span className="rounded-full bg-[#17354a] px-3 py-1 text-xs font-black text-white"><En>There is going to be…</En></span>
-        <span className="rounded-full bg-[#245f62] px-3 py-1 text-xs font-black text-white"><En>There are going to be…</En></span>
+        <span className="rounded-full bg-[#0d2b46] px-3 py-1 text-xs font-black text-white"><En>There is going to be…</En></span>
+        <span className="rounded-full bg-[#0d8f7f] px-3 py-1 text-xs font-black text-white"><En>There are going to be…</En></span>
       </div>
     </Card35>
   );
@@ -494,7 +502,7 @@ function WillGoingToTable35() {
           <SourceUnit35 text={section.units[15]} index={15} />
         </SourceRoot35>
         <div className="mt-4">
-          <div className="mb-2 text-xs font-black text-[#53676a]">اختر دافع المتحدث لرؤية الصيغة النموذجية</div>
+          <div className="mb-2 text-xs font-black text-[#4a6070]">اختر دافع المتحدث لرؤية الصيغة النموذجية</div>
           <div className="grid gap-2 sm:grid-cols-2">
             {sourceExamples.map((label, index) => <ChoiceButton35 key={label} selected={selected === index} onClick={() => setSelected(index)}><Rich text={label} /></ChoiceButton35>)}
           </div>
@@ -517,14 +525,14 @@ function BakerySimulator35() {
         <p className="text-sm leading-6 text-[#59696b]">اقرأ المشهد، ثم اختر ما إذا كان القرار وليد اللحظة أو نية سابقة. بعد اختيارك يظهر الرد الأصلي.</p>
         <div className="mt-3 grid gap-3 md:grid-cols-2">
           {groups.map((lines, index) => (
-            <button key={index} type="button" aria-pressed={selected === index} onClick={() => setSelected(index)} className={`${FOCUS_35} rounded-2xl border-2 p-3 text-right transition ${selected === index ? "border-[#245f62] bg-[#eef4f0]" : "border-[#d8d2c5] bg-white hover:border-[#7fa39a]"}`}>
-              <div className="text-[10px] font-black uppercase tracking-[.14em] text-[#9a7345]">{index === 0 ? "Decision now" : "Prior plan"}</div>
-              {lines.filter((line) => /[A-Za-z]/.test(line)).slice(0, 2).map((line) => <div key={line} dir="ltr" className="mt-2 text-left font-en text-sm font-black text-[#17354a]">{line}</div>)}
+            <button key={index} type="button" aria-pressed={selected === index} onClick={() => setSelected(index)} className={`${FOCUS_35} rounded-2xl border-2 p-3 text-right transition ${selected === index ? "border-[#0d8f7f] bg-[#eef4f0]" : "border-[#d6e1ea] bg-white hover:border-[#57ab98]"}`}>
+              <div className="text-[10px] font-black uppercase tracking-[.14em] text-[#b57f22]">{index === 0 ? "Decision now" : "Prior plan"}</div>
+              {lines.filter((line) => /[A-Za-z]/.test(line)).slice(0, 2).map((line) => <div key={line} dir="ltr" className="mt-2 text-left font-en text-sm font-black text-[#0d2b46]">{line}</div>)}
               {selected === index ? <div className="mt-2 space-y-1">{lines.map((line, li) => <SourceUnit35 key={li} text={line} index={index === 0 ? li : 10 + li} />)}</div> : null}
             </button>
           ))}
         </div>
-        {selected !== null ? <p className="mt-3 rounded-xl bg-[#f7f3ea] p-3 text-sm font-bold text-[#4a5e60]">{selected === 0 ? "سياق طارئ وقرار فوري → الصيغة النموذجية: WILL." : "النية موجودة منذ الصباح → الصيغة النموذجية: BE GOING TO."}</p> : null}
+        {selected !== null ? <p className="mt-3 rounded-xl bg-[#edf3f9] p-3 text-sm font-bold text-[#4a5e60]">{selected === 0 ? "سياق طارئ وقرار فوري → الصيغة النموذجية: WILL." : "النية موجودة منذ الصباح → الصيغة النموذجية: BE GOING TO."}</p> : null}
       </Card35>
       <SourcePanel35 id="s25" />
     </div>
@@ -546,7 +554,7 @@ function PredictionSimulator35() {
             <ChoiceButton35 key={item.title} selected={selected === index} onClick={() => setSelected(index)} className="min-h-16"><En>{item.title}</En></ChoiceButton35>
           ))}
         </div>
-        {selected !== null ? <div className="mt-3 rounded-2xl bg-[#f4f6f0] p-3"><div className="space-y-1">{cases[selected].lines.map((line, index) => <SourceUnit35 key={index} text={line} index={selected === 0 ? index + 1 : index + 6} />)}</div><p role="status" className="mt-3 font-black text-[#245f62]">{cases[selected].form}</p></div> : null}
+        {selected !== null ? <div className="mt-3 rounded-2xl bg-[#f0f6f2] p-3"><div className="space-y-1">{cases[selected].lines.map((line, index) => <SourceUnit35 key={index} text={line} index={selected === 0 ? index + 1 : index + 6} />)}</div><p role="status" className="mt-3 font-black text-[#0d8f7f]">{cases[selected].form}</p></div> : null}
       </Card35>
       <SourcePanel35 id="s26" />
     </div>
@@ -566,12 +574,12 @@ function MotionOrFuture35() {
         <p className="text-sm leading-6 text-[#59696b]">اختَر ما إذا كانت العبارة تصف وجهة حركة أم تركيبًا مستقبليًا.</p>
         <div className="mt-3 space-y-3">
           {lines.map((line, index) => (
-            <div key={line} className="rounded-2xl border border-[#d8d2c5] bg-white p-3">
-              <div dir="ltr" className="font-en text-left font-black text-[#17354a]">{line}</div>
+            <div key={line} className="rounded-2xl border border-[#d6e1ea] bg-white p-3">
+              <div dir="ltr" className="font-en text-left font-black text-[#0d2b46]">{line}</div>
               <div className="mt-2 flex flex-wrap gap-2">
                 <ChoiceButton35 selected={answers[index] === "movement"} onClick={() => { setAnswers((old) => ({ ...old, [index]: "movement" })); setChecked((old) => ({ ...old, [index]: false })); }}>وجهة حركة</ChoiceButton35>
                 <ChoiceButton35 selected={answers[index] === "future"} onClick={() => { setAnswers((old) => ({ ...old, [index]: "future" })); setChecked((old) => ({ ...old, [index]: false })); }}>going to + V1 (مستقبل)</ChoiceButton35>
-                <button type="button" disabled={!answers[index]} onClick={() => setChecked((old) => ({ ...old, [index]: true }))} className={`${FOCUS_35} rounded-xl bg-[#17354a] px-3 py-2 text-xs font-black text-white disabled:opacity-40`}>تحقق</button>
+                <button type="button" disabled={!answers[index]} onClick={() => setChecked((old) => ({ ...old, [index]: true }))} className={`${FOCUS_35} rounded-xl bg-[#0d2b46] px-3 py-2 text-xs font-black text-white disabled:opacity-40`}>تحقق</button>
               </div>
               {checked[index] ? <p role="status" className={`mt-2 rounded-lg p-2 text-sm font-bold ${answers[index] === correct[index] ? "bg-[#eef4f0] text-[#31524f]" : "bg-[#fbf4e7] text-[#78582d]"}`}>{answers[index] === correct[index] ? "صحيح. " : `المعنى الأنسب هنا: ${correct[index] === "movement" ? "وجهة حركة" : "تعبير مستقبلي"}. `}{translations[index]}</p> : null}
             </div>
@@ -612,25 +620,25 @@ function PracticeLab35({
           const value = answers[item.n] ?? "";
           const ok = acceptedFor(item).some((answer) => normalizeAnswer35(answer) === normalizeAnswer35(value));
           return (
-            <div key={item.n} className="mt-3 rounded-2xl border border-[#d8d2c5] bg-white p-3" data-practice-item={item.n}>
+            <div key={item.n} className="mt-3 rounded-2xl border border-[#d6e1ea] bg-white p-3" data-practice-item={item.n}>
               <SourceUnit35 text={item.prompt} index={item.n} />
               <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center">
                 <label className="sr-only" htmlFor={`${id}-answer-${item.n}`}>إجابتك للسؤال {item.n}</label>
-                <input id={`${id}-answer-${item.n}`} type="text" dir="ltr" value={value} onChange={(event) => { setAnswers((old) => ({ ...old, [item.n]: event.target.value })); setChecked((old) => ({ ...old, [item.n]: false })); }} className={`${FOCUS_35} min-w-0 flex-1 rounded-xl border border-[#cfc8bb] bg-white px-3 py-2 text-base font-en text-[#17354a]`} placeholder={mode === "word" ? "am / is / are" : "Type your answer"} />
-                <button type="button" disabled={!value.trim() || checked[item.n]} onClick={() => checkOne(item)} className={`${FOCUS_35} rounded-xl bg-[#245f62] px-4 py-2 text-sm font-black text-white disabled:cursor-not-allowed disabled:opacity-40`}>تحقق</button>
+                <input id={`${id}-answer-${item.n}`} type="text" dir="ltr" value={value} onChange={(event) => { setAnswers((old) => ({ ...old, [item.n]: event.target.value })); setChecked((old) => ({ ...old, [item.n]: false })); }} className={`${FOCUS_35} min-w-0 flex-1 rounded-xl border border-[#c8d6e0] bg-white px-3 py-2 text-base font-en text-[#0d2b46]`} placeholder={mode === "word" ? "am / is / are" : "Type your answer"} />
+                <button type="button" disabled={!value.trim() || checked[item.n]} onClick={() => checkOne(item)} className={`${FOCUS_35} rounded-xl bg-[#0d8f7f] px-4 py-2 text-sm font-black text-white disabled:cursor-not-allowed disabled:opacity-40`}>تحقق</button>
               </div>
               {checked[item.n] ? (
                 <div role="status" className={`mt-3 rounded-xl border p-3 ${ok ? "border-[#c9d8d2] bg-[#eef4f0]" : "border-[#e2c695] bg-[#fbf4e7]"}`}>
                   <div className={`text-sm font-black ${ok ? "text-[#31524f]" : "text-[#78582d]"}`}>{ok ? "إجابة صحيحة" : "راجع الصيغة المناسبة"}</div>
                   <div className="mt-1 text-xs font-black text-[#66777a]">الإجابة من مفتاح المصدر:</div>
-                  <div dir="ltr" className="mt-1 font-en font-black text-[#17354a]">{item.answer}</div>
-                  <div className="mt-1 text-sm leading-6 text-[#53676a]"><PlatformTag text="تفسير تعليمي من إعداد المنصة" /> <Rich text={item.explanation} /></div>
+                  <div dir="ltr" className="mt-1 font-en font-black text-[#0d2b46]">{item.answer}</div>
+                  <div className="mt-1 text-sm leading-6 text-[#4a6070]"><PlatformTag text="تفسير تعليمي من إعداد المنصة" /> <Rich text={item.explanation} /></div>
                 </div>
               ) : null}
             </div>
           );
         })}
-        {allFilled && !allChecked ? <p className="mt-3 rounded-xl bg-[#f7f3ea] p-3 text-sm font-bold text-[#53676a]">تحقّق من كل بند لرؤية مفتاح المصدر كاملًا.</p> : null}
+        {allFilled && !allChecked ? <p className="mt-3 rounded-xl bg-[#edf3f9] p-3 text-sm font-bold text-[#4a6070]">تحقّق من كل بند لرؤية مفتاح المصدر كاملًا.</p> : null}
       </Card35>
       <SourceReveal35 id={id} units={section.revealUnits ?? []} revealed={allChecked} offset={section.units.length} />
     </SourceRoot35>
@@ -654,16 +662,16 @@ function DecisionPractice35() {
             const isCorrect = choice === item.family;
             const start = item.n === 1 ? 1 : item.n === 2 ? 3 : item.n === 3 ? 4 : item.n === 4 ? 5 : item.n === 5 ? 7 : item.n === 6 ? 8 : item.n === 7 ? 9 : 10;
             return (
-              <div key={item.n} className="rounded-2xl border border-[#d8d2c5] bg-white p-3" data-practice-item={item.n}>
+              <div key={item.n} className="rounded-2xl border border-[#d6e1ea] bg-white p-3" data-practice-item={item.n}>
                 {item.promptLines.map((line, index) => <SourceUnit35 key={index} text={line} index={start + index} />)}
                 <div className="mt-2 flex flex-wrap gap-2">
                   {choiceLabels.map((label) => <ChoiceButton35 key={label} selected={choice === (label === "be going to" ? "going-to" : label === "won't" ? "wont" : "will")} onClick={() => { setChoices((old) => ({ ...old, [item.n]: label === "be going to" ? "going-to" : label === "won't" ? "wont" : "will" })); setChecked((old) => ({ ...old, [item.n]: false })); }}><En>{label}</En></ChoiceButton35>)}
-                  <button type="button" disabled={!choice || checked[item.n]} onClick={() => setChecked((old) => ({ ...old, [item.n]: true }))} className={`${FOCUS_35} rounded-xl bg-[#17354a] px-3 py-2 text-xs font-black text-white disabled:opacity-40`}>تحقق</button>
+                  <button type="button" disabled={!choice || checked[item.n]} onClick={() => setChecked((old) => ({ ...old, [item.n]: true }))} className={`${FOCUS_35} rounded-xl bg-[#0d2b46] px-3 py-2 text-xs font-black text-white disabled:opacity-40`}>تحقق</button>
                 </div>
                 {checked[item.n] ? <div role="status" className={`mt-3 rounded-xl border p-3 ${isCorrect ? "border-[#c9d8d2] bg-[#eef4f0]" : "border-[#e2c695] bg-[#fbf4e7]"}`}>
                   <div className="text-xs font-black text-[#66777a]">الإجابة النموذجية في المصدر</div>
-                  <div dir="ltr" className="mt-1 font-en font-black text-[#17354a]">{item.answer}</div>
-                  <div className="mt-2 text-sm font-bold leading-6 text-[#53676a]"><PlatformTag text="شرح المصدر" /> <Rich text={item.explanation} /></div>
+                  <div dir="ltr" className="mt-1 font-en font-black text-[#0d2b46]">{item.answer}</div>
+                  <div className="mt-2 text-sm font-bold leading-6 text-[#4a6070]"><PlatformTag text="شرح المصدر" /> <Rich text={item.explanation} /></div>
                   {!isCorrect ? <p className="mt-1 text-xs font-bold text-[#78582d]">الاختيار الذي حددته ليس الأنسب للقرينة الواردة؛ هذا لا يعني أن الصيغتين لا تتداخلان في سياقات أخرى.</p> : null}
                 </div> : null}
               </div>
@@ -687,7 +695,7 @@ function BothFormsPanel35() {
         <div className="grid gap-2 md:grid-cols-3">
           {examples.map((example, index) => <ChoiceButton35 key={example} selected={selected === index} onClick={() => setSelected(index)}><En>{meanings[index]}</En></ChoiceButton35>)}
         </div>
-        {selected !== null ? <div className="mt-3 rounded-2xl border border-[#cad8d2] bg-[#eef4f0] p-3" aria-live="polite"><LtrSentence35><En>{examples[selected]}</En></LtrSentence35><p className="mt-2 text-sm font-bold text-[#31524f]">{meanings[selected]}: قد تكون الجملة مناسبة في هذا السياق. الصيغتان ليستا متعارضتين في كل استعمال.</p></div> : null}
+        {selected !== null ? <div className="mt-3 rounded-2xl border border-[#c2dbd2] bg-[#eef4f0] p-3" aria-live="polite"><LtrSentence35><En>{examples[selected]}</En></LtrSentence35><p className="mt-2 text-sm font-bold text-[#31524f]">{meanings[selected]}: قد تكون الجملة مناسبة في هذا السياق. الصيغتان ليستا متعارضتين في كل استعمال.</p></div> : null}
       </Card35>
       <SourcePanel35 id="s32" />
     </div>
@@ -708,24 +716,24 @@ function ReadingStudio35() {
         <div className="space-y-2">
           {textUnits.map((line, index) => {
             const speaker = line.startsWith("Maya ") || line.startsWith("Daniel ") || line.startsWith("Their teacher ");
-            return <div key={index} className={`rounded-xl ${speaker ? "border-r-4 border-[#b57a3b] bg-[#fbf7ee]" : ""}`}><SourceUnit35 text={line} index={index + 1} /></div>;
+            return <div key={index} className={`rounded-xl ${speaker ? "border-r-4 border-[#d08a24] bg-[#fbf7ee]" : ""}`}><SourceUnit35 text={line} index={index + 1} /></div>;
           })}
         </div>
       </Card35>
       <Card35 eyebrow="Comprehension · attempt before reveal" title="أجب عن الأسئلة السبعة، ثم قارن بمفتاح المصدر">
         <SourceUnit35 text={section.units[18]} index={18} />
         {section.units.slice(questionStart, questionStart + 7).map((question, index) => (
-          <div key={question} className="mt-3 rounded-2xl border border-[#d8d2c5] bg-white p-3">
+          <div key={question} className="mt-3 rounded-2xl border border-[#d6e1ea] bg-white p-3">
             <SourceUnit35 text={question} index={questionStart + index} />
             <label className="sr-only" htmlFor={`l35-reading-${index}`}>إجابتك عن السؤال {index + 1}</label>
-            <textarea id={`l35-reading-${index}`} dir="auto" rows={2} disabled={revealed} value={answers[index]} onChange={(event) => setAnswers((current) => current.map((value, answerIndex) => answerIndex === index ? event.target.value : value))} className={`${FOCUS_35} mt-2 w-full resize-y rounded-xl border border-[#cfc8bb] bg-[#fffefa] px-3 py-2 text-sm leading-6 text-[#17354a]`} placeholder="اكتب إجابتك هنا…" />
+            <textarea id={`l35-reading-${index}`} dir="auto" rows={2} disabled={revealed} value={answers[index]} onChange={(event) => setAnswers((current) => current.map((value, answerIndex) => answerIndex === index ? event.target.value : value))} className={`${FOCUS_35} mt-2 w-full resize-y rounded-xl border border-[#c8d6e0] bg-[#fdfeff] px-3 py-2 text-sm leading-6 text-[#0d2b46]`} placeholder="اكتب إجابتك هنا…" />
           </div>
         ))}
-        <button type="button" disabled={!allAnswered || revealed} onClick={() => setRevealed(true)} className={`${FOCUS_35} mt-3 rounded-xl bg-[#245f62] px-4 py-2.5 text-sm font-black text-white disabled:opacity-40`}>تحقق من الفهم واعرض الإجابات</button>
+        <button type="button" disabled={!allAnswered || revealed} onClick={() => setRevealed(true)} className={`${FOCUS_35} mt-3 rounded-xl bg-[#0d8f7f] px-4 py-2.5 text-sm font-black text-white disabled:opacity-40`}>تحقق من الفهم واعرض الإجابات</button>
         {revealed ? <div className="mt-4 space-y-3" data-answer-feedback="s33">
           <div className="rounded-full bg-[#dcebe0] px-3 py-1 text-xs font-black text-[#315d4e]">الإجابات والتحليل النحوي — من المصدر</div>
           {section.revealUnits!.map((line, index) => <SourceUnit35 key={index} text={line} index={section.units.length + index} />)}
-          <p className="rounded-xl bg-[#f7f3ea] p-3 text-sm font-bold text-[#53676a]">قارن المعنى في إجابتك بالمفتاح؛ لا يلزم أن تستخدم الكلمات نفسها حرفيًا.</p>
+          <p className="rounded-xl bg-[#edf3f9] p-3 text-sm font-bold text-[#4a6070]">قارن المعنى في إجابتك بالمفتاح؛ لا يلزم أن تستخدم الكلمات نفسها حرفيًا.</p>
         </div> : <p className="mt-2 text-xs font-bold text-[#718080]">املأ الأسطر السبعة لتفتح الإجابات والتحليل.</p>}
       </Card35>
     </SourceRoot35>
@@ -751,17 +759,17 @@ function FinalBossWorkspace35() {
       <Card35 eyebrow="Final Boss · your own writing" title="My Future Plans and Predictions">
         <p className="text-sm font-bold leading-6 text-[#59696b]">اكتب فقرتك بنفسك. مساحة الكتابة فارغة عمدًا؛ لن نملأها نيابةً عنك.</p>
         <label className="sr-only" htmlFor="l35-final-boss-writing">My Future Plans and Predictions</label>
-        <textarea id="l35-final-boss-writing" dir="ltr" rows={9} value={paragraph} onChange={(event) => setParagraph(event.target.value)} className={`${FOCUS_35} mt-3 w-full resize-y rounded-2xl border border-[#cfc8bb] bg-[#fffefa] p-4 text-base leading-7 text-[#17354a]`} placeholder="Write your own 12–15 sentence paragraph here…" />
+        <textarea id="l35-final-boss-writing" dir="ltr" rows={9} value={paragraph} onChange={(event) => setParagraph(event.target.value)} className={`${FOCUS_35} mt-3 w-full resize-y rounded-2xl border border-[#c8d6e0] bg-[#fdfeff] p-4 text-base leading-7 text-[#0d2b46]`} placeholder="Write your own 12–15 sentence paragraph here…" />
         <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs font-bold text-[#66777a]">
           <span aria-live="polite">الجمل المكتوبة: {sentenceCount} / 12–15</span>
-          <button type="button" onClick={() => setParagraph("")} className={`${FOCUS_35} rounded-lg border border-[#d7d1c5] bg-white px-3 py-1.5 hover:bg-[#f7f3ea]`}>مسح النص</button>
+          <button type="button" onClick={() => setParagraph("")} className={`${FOCUS_35} rounded-lg border border-[#d5dfe9] bg-white px-3 py-1.5 hover:bg-[#edf3f9]`}>مسح النص</button>
         </div>
-        <div className="mt-4 rounded-2xl border border-[#d8d2c5] bg-[#faf8f2] p-3">
-          <div className="mb-2 text-sm font-black text-[#17354a]">خطة إنجاز تفاعلية</div>
+        <div className="mt-4 rounded-2xl border border-[#d6e1ea] bg-[#f0f5fa] p-3">
+          <div className="mb-2 text-sm font-black text-[#0d2b46]">خطة إنجاز تفاعلية</div>
           <div className="grid gap-2 sm:grid-cols-2">
             {requirementLabels.map((label, index) => (
-              <label key={label} className="flex cursor-pointer items-start gap-2 rounded-xl border border-[#e0dbd1] bg-white p-2.5 text-sm font-bold leading-5 text-[#344b52]">
-                <input type="checkbox" checked={checked[index]} onChange={(event) => setChecked((current) => current.map((value, i) => i === index ? event.target.checked : value))} className="mt-1 h-4 w-4 accent-[#245f62]" />
+              <label key={label} className="flex cursor-pointer items-start gap-2 rounded-xl border border-[#dbe4ed] bg-white p-2.5 text-sm font-bold leading-5 text-[#344b52]">
+                <input type="checkbox" checked={checked[index]} onChange={(event) => setChecked((current) => current.map((value, i) => i === index ? event.target.checked : value))} className="mt-1 h-4 w-4 accent-[#0d8f7f]" />
                 <span>{label}</span>
               </label>
             ))}
@@ -788,15 +796,15 @@ function LessonMap35() {
             { title: "منظومة الماضي", units: past },
             { title: "منظومة المستقبل", units: future },
           ].map((group) => (
-            <div key={group.title} className="rounded-2xl border border-[#d8d2c5] bg-white p-3">
-              <h4 className="font-black text-[#17354a]">{group.title}</h4>
-              <ul className="mt-2 space-y-1 text-sm font-bold text-[#53676a]">{group.units.map((unit) => <li key={unit}><Rich text={unit} /></li>)}</ul>
+            <div key={group.title} className="rounded-2xl border border-[#d6e1ea] bg-white p-3">
+              <h4 className="font-black text-[#0d2b46]">{group.title}</h4>
+              <ul className="mt-2 space-y-1 text-sm font-bold text-[#4a6070]">{group.units.map((unit) => <li key={unit}><Rich text={unit} /></li>)}</ul>
             </div>
           ))}
         </div>
         <div className="mt-3 rounded-2xl border border-[#c7d8d3] bg-[#eef4f0] p-3">
           <div className="text-xs font-black uppercase tracking-[.14em] text-[#5c7772]">Next · Lesson 36</div>
-          <div className="mt-1 font-black text-[#17354a]"><En>WILL vs BE GOING TO — Mastering Future Decisions & Predictions</En></div>
+          <div className="mt-1 font-black text-[#0d2b46]"><En>WILL vs BE GOING TO — Mastering Future Decisions & Predictions</En></div>
           <p className="mt-1 text-sm leading-6 text-[#42595c]">مقارنة شاملة وتطبيق في المواقف الحقيقية، مع توسيع فهم الحالات التي تصلح فيها الصيغتان واختلاف المعنى والحوار الطبيعي.</p>
         </div>
       </Card35>
@@ -859,15 +867,15 @@ function CoverScene35() {
   ];
   return (
     <div className="space-y-4">
-      <Card35 className="border-[#213e52] bg-[#17354a] text-white" eyebrow="The central question" title={<span className="text-white">كيف نختار الطريقة الصحيحة للحديث عن المستقبل؟</span>}>
-        <p className="mt-2 font-en text-base font-black text-[#e7dec9]" dir="ltr">How do we choose the right way to talk about the future?</p>
+      <Card35 className="border-[#1b4160] bg-[#0d2b46] text-white" eyebrow="The central question" title={<span className="text-white">كيف نختار الطريقة الصحيحة للحديث عن المستقبل؟</span>}>
+        <p className="mt-2 font-en text-base font-black text-[#f2d9a8]" dir="ltr">How do we choose the right way to talk about the future?</p>
         <div className="mt-4 grid gap-2 md:grid-cols-3">
-          {lenses.map((lens, index) => <button key={lens.en} type="button" onClick={() => setActive(index)} aria-pressed={active === index} className={`${FOCUS_35} min-h-24 rounded-2xl border p-3 text-right transition ${active === index ? "border-[#d9b77f] bg-[#213f54]" : "border-white/15 bg-white/[.04] hover:bg-white/[.08]"}`}>
-            <div className="text-[10px] font-black uppercase tracking-[.12em] text-[#d9b77f]">{lens.en}</div>
+          {lenses.map((lens, index) => <button key={lens.en} type="button" onClick={() => setActive(index)} aria-pressed={active === index} className={`${FOCUS_35} min-h-24 rounded-2xl border p-3 text-right transition ${active === index ? "border-[#f5b64a] bg-[#1d4766]" : "border-white/15 bg-white/[.04] hover:bg-white/[.08]"}`}>
+            <div className="text-[10px] font-black uppercase tracking-[.12em] text-[#f5b64a]">{lens.en}</div>
             <div className="mt-2 text-sm font-bold text-white">{lens.ar}</div>
           </button>)}
         </div>
-        {active !== null ? <div role="status" className="mt-3 rounded-xl border border-white/15 bg-white/[.06] p-3 text-sm font-bold leading-6 text-[#f5f0e5]"><En>{lenses[active].answer}</En> <span className="mx-1 text-[#d9b77f]">·</span>{lenses[active].ar}</div> : null}
+        {active !== null ? <div role="status" className="mt-3 rounded-xl border border-white/15 bg-white/[.06] p-3 text-sm font-bold leading-6 text-[#eef3f8]"><En>{lenses[active].answer}</En> <span className="mx-1 text-[#f5b64a]">·</span>{lenses[active].ar}</div> : null}
         <div className="mt-3 text-[10px] font-bold text-white/50">Future Lab framing · الإطار التمهيدي من إعداد المنصة</div>
       </Card35>
       <SourcePanel35 id="cover" />
@@ -884,7 +892,7 @@ function FormulaScene35() {
     <div className="space-y-4">
       <Card35 eyebrow="The construction" title="اكشف التركيب من اليسار إلى اليمين">
         <div dir="ltr" className="ltr-row flex flex-wrap items-center gap-2">
-          {roles.map(([english, arabic], index) => <span key={english} className={`rounded-xl px-3 py-2 text-sm font-black ${index === 2 ? "bg-[#245f62] text-white" : "border border-[#d8d2c5] bg-white text-[#17354a]"}`}><En>{english}</En></span>)}
+          {roles.map(([english, arabic], index) => <span key={english} className={`rounded-xl px-3 py-2 text-sm font-black ${index === 2 ? "bg-[#0d8f7f] text-white" : "border border-[#d6e1ea] bg-white text-[#0d2b46]"}`}><En>{english}</En></span>)}
         </div>
         <LtrSentence35 className="mt-3"><En>{section.units[1]}</En></LtrSentence35>
         <PlatformNote35><Rich text="ترتيب الصيغة ثابت: الفاعل، ثم am/is/are، ثم going to، ثم الفعل الأساسي V1." /></PlatformNote35>
@@ -905,7 +913,7 @@ function ErrorContrast35() {
             [section.units[2], section.units[3]],
             [section.units[4], section.units[5]],
           ].map((pair, index) => (
-            <div key={index} className="space-y-2 rounded-2xl border border-[#d8d2c5] bg-white p-3">
+            <div key={index} className="space-y-2 rounded-2xl border border-[#d6e1ea] bg-white p-3">
               <div className="rounded-xl bg-[#fbefed] p-2 text-sm font-bold text-[#8d433b]"><En>{pair[0]}</En></div>
               <div className="rounded-xl bg-[#edf5ee] p-2 text-sm font-bold text-[#315d4e]"><En>{pair[1]}</En></div>
             </div>
@@ -942,10 +950,10 @@ function TestOverview35({ onGoTest }: { onGoTest: () => void }) {
     <div className="space-y-4">
       <Card35 eyebrow="Separate Test Area" title="Future Plans Master Test · 25 سؤالًا">
         <SourceList35 id="s34" units={section.units.slice(0, 2)} />
-        <div className="mt-4 rounded-2xl border border-[#d2ddd6] bg-[#eef4f0] p-4">
-          <div className="text-sm font-black text-[#17354a]">خمسة مستويات · 25 سؤالًا كاملًا</div>
-          <p className="mt-1 text-sm leading-6 text-[#53676a]">الاختبار منفصل عن خطوات الشرح. أجب عن الأسئلة كلها، ثم أرسلها دفعة واحدة؛ لن تظهر الدرجة أو الإجابات قبل الإرسال.</p>
-          <button type="button" onClick={onGoTest} className={`${FOCUS_35} mt-3 rounded-xl bg-[#245f62] px-5 py-2.5 text-sm font-black text-white hover:bg-[#1d5053]`}>افتح منطقة الاختبار</button>
+        <div className="mt-4 rounded-2xl border border-[#cfe0d8] bg-[#eef4f0] p-4">
+          <div className="text-sm font-black text-[#0d2b46]">خمسة مستويات · 25 سؤالًا كاملًا</div>
+          <p className="mt-1 text-sm leading-6 text-[#4a6070]">الاختبار منفصل عن خطوات الشرح. أجب عن الأسئلة كلها، ثم أرسلها دفعة واحدة؛ لن تظهر الدرجة أو الإجابات قبل الإرسال.</p>
+          <button type="button" onClick={onGoTest} className={`${FOCUS_35} mt-3 rounded-xl bg-[#0d8f7f] px-5 py-2.5 text-sm font-black text-white hover:bg-[#0a7466]`}>افتح منطقة الاختبار</button>
         </div>
       </Card35>
     </div>
@@ -958,7 +966,7 @@ function SolutionsSourceNote35({ onGoSolutions }: { onGoSolutions: () => void })
       <SourcePanel35 id="s35" />
       <Card35 eyebrow="Source note" title="تمييز المصدر عن الحلول المؤلّفة">
         <p className="text-sm leading-7 text-[#465b60]">النص المورّد في القسم 35 يقدّم عنوان الحلول التفصيلية وتعليمات فتحها، لكنه لا يتضمن إجابات الأسئلة الخمسة والعشرين أو شروحها. الإجابات النموذجية في منطقة الحلول/المعلم أُعدّت من أسئلة القسم 34 وقواعد الدرس، ولا تُنسب إلى المصدر الأصلي.</p>
-        <button type="button" onClick={onGoSolutions} className={`${FOCUS_35} mt-3 rounded-xl border border-[#245f62] bg-white px-4 py-2 text-sm font-black text-[#245f62] hover:bg-[#eef4f0]`}>انتقل إلى منطقة الحلول</button>
+        <button type="button" onClick={onGoSolutions} className={`${FOCUS_35} mt-3 rounded-xl border border-[#0d8f7f] bg-white px-4 py-2 text-sm font-black text-[#0d8f7f] hover:bg-[#eef4f0]`}>انتقل إلى منطقة الحلول</button>
       </Card35>
     </div>
   );
@@ -971,15 +979,15 @@ function GoldenSummary35() {
       <Card35 eyebrow="Golden reference" title="ثبّت الصيغ الأساسية، ثم عد إلى المعنى">
         <div className="grid gap-3 md:grid-cols-2">
           {[
-            { title: "Affirmative", formula: section.units[2], example: section.units[4], tone: "border-[#c8d9d3] bg-[#eff5f0]" },
-            { title: "Negative", formula: section.units[6], example: section.units[8], tone: "border-[#d7d2c8] bg-[#faf8f2]" },
-            { title: "Yes/No question", formula: section.units[10], example: section.units[12], tone: "border-[#d7d2c8] bg-white" },
-            { title: "WH question", formula: section.units[17], example: section.units[19], tone: "border-[#c8d9d3] bg-[#eff5f0]" },
-          ].map((card) => <div key={card.title} className={`rounded-2xl border p-3 ${card.tone}`}><div className="text-xs font-black uppercase tracking-[.12em] text-[#8b663c]">{card.title}</div><div dir="ltr" className="mt-2 font-en text-sm font-black text-[#17354a]">{card.formula}</div><div dir="ltr" className="mt-1 font-en text-sm text-[#53676a]">{card.example}</div></div>)}
+            { title: "Affirmative", formula: section.units[2], example: section.units[4], tone: "border-[#c3dcd3] bg-[#eff5f0]" },
+            { title: "Negative", formula: section.units[6], example: section.units[8], tone: "border-[#d5dee8] bg-[#f0f5fa]" },
+            { title: "Yes/No question", formula: section.units[10], example: section.units[12], tone: "border-[#d5dee8] bg-white" },
+            { title: "WH question", formula: section.units[17], example: section.units[19], tone: "border-[#c3dcd3] bg-[#eff5f0]" },
+          ].map((card) => <div key={card.title} className={`rounded-2xl border p-3 ${card.tone}`}><div className="text-xs font-black uppercase tracking-[.12em] text-[#a06f1a]">{card.title}</div><div dir="ltr" className="mt-2 font-en text-sm font-black text-[#0d2b46]">{card.formula}</div><div dir="ltr" className="mt-1 font-en text-sm text-[#4a6070]">{card.example}</div></div>)}
         </div>
         <div className="mt-3 grid gap-2 sm:grid-cols-2">
-          <div className="rounded-xl bg-[#17354a] p-3 text-white"><div className="text-xs font-black">PLAN / PRIOR INTENTION</div><div dir="ltr" className="mt-1 font-en font-bold">We're going to build a new website.</div></div>
-          <div className="rounded-xl bg-[#245f62] p-3 text-white"><div className="text-xs font-black">PRESENT EVIDENCE</div><div dir="ltr" className="mt-1 font-en font-bold">Look at those clouds! It's going to rain.</div></div>
+          <div className="rounded-xl bg-[#0d2b46] p-3 text-white"><div className="text-xs font-black">PLAN / PRIOR INTENTION</div><div dir="ltr" className="mt-1 font-en font-bold">We're going to build a new website.</div></div>
+          <div className="rounded-xl bg-[#0d8f7f] p-3 text-white"><div className="text-xs font-black">PRESENT EVIDENCE</div><div dir="ltr" className="mt-1 font-en font-bold">Look at those clouds! It's going to rain.</div></div>
         </div>
       </Card35>
       <SourcePanel35 id="s37" />

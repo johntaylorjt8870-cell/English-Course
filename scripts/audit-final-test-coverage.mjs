@@ -14,8 +14,11 @@
 //  10  منطقة الاختبار الحديثة (20 سؤالًا) منفصلة وسليمة.
 //
 // الدروس 1–26 تستخدم النظام القديم المشترك (FinalQuiz + QUIZZES) كما هو —
-// لا يُعاد بناؤه ولا يُنسخ؛ يُدقَّق فقط. والدروس 27–35 تستخدم المحرّك الجديد
-// (FinalTest + FINAL_TESTS). الدروس 33–35 تضيف مناطق اختبارٍ منفصلة. الفحص سلوكي على DOM الحقيقي لكل درس.
+// لا يُعاد بناؤه ولا يُنسخ؛ يُدقَّق فقط. والدروس 27–35 تستخدم المحرّك المشترك
+// (FinalTest + FINAL_TESTS). الدروس 33–35 تضيف مناطق اختبارٍ منفصلة. الدرس 36
+// يستخدم Master Test مستقلًا من 25 سؤالًا (وليس FinalTest من 12–15 سؤالًا)،
+// وتُفحص تغطيته وتفاعلاته في scripts/audit-lesson36.mjs. الفحص هنا سلوكي
+// على DOM الحقيقي لكل درس من 1–35.
 //
 //   node scripts/audit-final-test-coverage.mjs
 //   ONLY=1,24,27 node scripts/audit-final-test-coverage.mjs   (عيّنة سريعة)
@@ -591,4 +594,4 @@ if (failures.length) {
   console.error(`\n✕ Final Test coverage audit FAILED (${failures.length}/${checks})\n` + failures.map((f) => `  - ${f}`).join("\n"));
   process.exit(1);
 }
-console.log(`\n✓ Final Test coverage audit passed (${checks} checks): كل درس من 1 إلى 35 له اختبار نهائي واحد في نهاية الدرس، 12–15 سؤالًا بمفاتيح صالحة، بلا كشف قبل التصحيح، مع مفتاح المعلم ومنطقة اختبار منفصلة.`);
+console.log(`\n✓ Final Test coverage audit passed (${checks} checks): الدروس 1–35 لها FinalTest واحد مناسب لبنيتها، 12–15 سؤالًا بمفاتيح صالحة، بلا كشف قبل التصحيح؛ واختبار الدرس 36 المستقل (25 سؤالًا) له تدقيق تفاعلي منفصل.`);

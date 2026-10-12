@@ -84,8 +84,8 @@ for (const [re, label] of banned) {
 // ---------------- 2) <details>/<summary> للمصدر في واجهة المعلم وحدها --------
 {
   const lessonFiles = walk(join(root, "src/lessons")).filter((f) => /\.tsx$/.test(f));
-  const teacherFiles = lessonFiles.filter((f) => /TeacherArea\d+\.tsx$/.test(f));
-  const studentFiles = lessonFiles.filter((f) => !/TeacherArea\d+\.tsx$/.test(f));
+  const teacherFiles = lessonFiles.filter((f) => /Teacher(?:Area|Guide)\d+\.tsx$/.test(f));
+  const studentFiles = lessonFiles.filter((f) => !/Teacher(?:Area|Guide)\d+\.tsx$/.test(f));
   const studentHits = studentFiles.filter((f) => /<details|<summary/.test(read(f))).map(rel);
   ok(studentHits.length === 0, `لا <details>/<summary> في ملفات الطالب (${studentHits.join(", ") || "نظيف"})`);
   const teacherIndex = teacherFiles.filter((f) => /<details/.test(read(f))).map(rel);

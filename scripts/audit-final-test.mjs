@@ -5,7 +5,7 @@
 //   1) نموذج البيانات: كل درس له اختبار من 12–15 سؤالًا، وكل سؤال مكتمل
 //      (نص · إجابة صحيحة · سبب · مفهوم · فخ) وصالح لكل نوع.
 //   2) البنية القابلة لإعادة الاستخدام: محرّك واحد مشترك + بنك مركزي،
-//      وكل درس 1–35 له اختبار نهائي (قديم للدروس 1–26، جديد لـ 27–35).
+//      الدروس 1–35 لها FinalTest (قديم 1–26، جديد 27–35)؛ والدرس 36 له Master Test مستقل من 25 سؤالًا.
 //   3) السلوك المرندر في jsdom: لا كشف قبل «تصحيح الاختبار»، التصحيح
 //      يكشف النتيجة والصواب والشرح، وإعادة الاختبار تمسح كل شيء.
 //   4) انتقالات الحالة على درس ممثل (27): فريش → جزئي → مكتمل غير مصحّح
@@ -162,12 +162,17 @@ ok(!/Unicode bidi control|\\u2066|\\u202A/.test(finalTestSrc), "لا أحرف ت
 ok(!/localStorage|sessionStorage/.test(finalTestSrc), "لا حالة خارجية مخبأة (كل الحالة في React)");
 
 const appSrc = readFileSync(join(root, "src/App.tsx"), "utf8");
+const lesson36TestData = readFileSync(join(root, "src/lessons/lesson36/testData36.ts"), "utf8");
+const lesson36TestArea = readFileSync(join(root, "src/lessons/lesson36/TestArea36.tsx"), "utf8");
+const lesson36DedicatedAssessment = lesson36TestData.includes("TEST_COUNT_36 = TEST_36.length") && lesson36TestData.includes("TEST_LEVEL_COUNT_36 = TEST_LEVELS_36.length") && lesson36TestArea.includes("TEST_LEVELS_36") && lesson36TestArea.includes("TEST_COUNT_36");
+ok(lesson36DedicatedAssessment, "الدرس 36: اختبار Master Test مستقلّ ومفصول عن محرّك FinalTest المشترك");
 const appLessons = [...new Set([...appSrc.matchAll(/route === (\d+)/g)].map((x) => Number(x[1])))].sort((a, b) => a - b);
-ok(appLessons.length >= 33, `كل دروس التطبيق مسجلة (${appLessons.length})`);
+ok(appLessons.length >= 36, `كل دروس التطبيق مسجلة (${appLessons.length})`);
 for (const n of appLessons) {
   const legacy = (m.QUIZZES[n] || []).length >= 12;
   const modern = m.finalTestLessons().includes(n);
-  ok(legacy || modern, `الدرس ${n}: له اختبار نهائي (قديم أو جديد)`);
+  const dedicated = n === 36 && lesson36DedicatedAssessment;
+  ok(legacy || modern || dedicated, `الدرس ${n}: له اختبار نهائي (قديم أو جديد أو Master Test مستقل)`);
 }
 
 const lessonSources = Object.fromEntries(

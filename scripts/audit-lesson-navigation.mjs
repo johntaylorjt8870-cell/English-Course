@@ -1,7 +1,7 @@
 /**
  * اختبار تفاعلي (jsdom) لشريط أرقام الدروس `LessonNumberNav`:
  *   1) لا يظهر أكثر من 10 أرقام في النافذة أبدًا (في كل الحالات).
- *   2) النافذة الأولى 1–10، والأخيرة 27–36 بعد إضافة Lesson 36، والسهمان يتحرّكان رقمًا واحدًا.
+ *   2) النافذة الأولى 1–10، والأخيرة 28–37 بعد إضافة Lesson 37، والسهمان يتحرّكان رقمًا واحدًا.
  *   3) تعطيل السهم الأيسر في البداية والأيمن في النهاية.
  *   4) الأسهم لا تنقل الطالب إلى أي درس (لا يتغيّر الـ hash).
  *   5) النقر على رقم الدرس يحفظ التوجيه الحالي (#/lesson/N) فعليًا.
@@ -118,7 +118,7 @@ function arrows(nav) {
 }
 
 async function main() {
-  const LESSONS_ALL = Array.from({ length: 36 }, (_, i) => ({ n: i + 1 }));
+  const LESSONS_ALL = Array.from({ length: 37 }, (_, i) => ({ n: i + 1 }));
 
   // ============================================================
   // 1) الصفحة الرئيسية — الحالة الأولية
@@ -187,7 +187,7 @@ async function main() {
   ok(nums.join(",") === "2,3,4,5,6,7,8,9,10,11", `hub: نقرة يسار واحدة ترجع خطوة (got ${nums.join(" ")})`);
 
   // ============================================================
-  // 3) النهاية: 27–36 وتعطيل السهم الأيمن (36 درسًا — أضيف الدرس 36)
+  // 3) النهاية: 28–37 وتعطيل السهم الأيمن (37 درسًا — أضيف الدرس 37)
   // ============================================================
   for (let i = 0; i < 40; i++) {
     next.click();
@@ -196,12 +196,12 @@ async function main() {
   nums = visibleNumbers(nav);
   ({ prev, next } = arrows(nav));
   ok(nums.length === 10, `hub: عند النهاية يبقى العدد 10 (got ${nums.length})`);
-  ok(nums.join(",") === "27,28,29,30,31,32,33,34,35,36", `hub: النافذة الأخيرة 27–36 (got ${nums.join(" ")})`);
+  ok(nums.join(",") === "28,29,30,31,32,33,34,35,36,37", `hub: النافذة الأخيرة 28–37 (got ${nums.join(" ")})`);
   ok(next.disabled === true, "hub: السهم الأيمن معطّل في النافذة الأخيرة");
   ok(prev.disabled === false, "hub: السهم الأيسر مفعّل في النافذة الأخيرة");
   next.click();
   await tick();
-  ok(visibleNumbers(nav).join(",") === "27,28,29,30,31,32,33,34,35,36", "hub: النقر على سهم معطّل لا يغيّر النافذة");
+  ok(visibleNumbers(nav).join(",") === "28,29,30,31,32,33,34,35,36,37", "hub: النقر على سهم معطّل لا يغيّر النافذة");
 
   // رجوع خطوة بخطوة حتى البداية
   for (let i = 0; i < 40; i++) {
@@ -259,11 +259,22 @@ async function main() {
   nav = app.host.querySelector(NAV_SELECTOR);
   ok(visibleNumbers(nav).join(",") === "27,28,29,30,31,32,33,34,35,36", "hub: العودة بعد الدرس 36 تُظهر النافذة الأخيرة 27–36");
   ok(nav.querySelector('a[href="#/lesson/36"]').getAttribute("aria-current") === "true", "hub: الدرس 36 ظاهر ومميّز بعد العودة");
+
+  // Lesson 37 route, hub card, and newest course window
+  win.location.hash = "#/lesson/37";
+  await tick(120);
+  ok(!app.host.querySelector(NAV_SELECTOR), "hub: فتح الدرس 37 يغادر الصفحة الرئيسية عبر الراوتر");
+  ok(app.host.querySelector('[data-lesson="37"]') && app.host.textContent.includes("Future Continuous"), "hub: مسار الدرس 37 يرسم درس المستقبل المستمر");
+  win.location.hash = "#/";
+  await tick(100);
+  nav = app.host.querySelector(NAV_SELECTOR);
+  ok(visibleNumbers(nav).join(",") === "28,29,30,31,32,33,34,35,36,37", "hub: العودة بعد الدرس 37 تُظهر النافذة الأخيرة 28–37");
+  ok(nav.querySelector('a[href="#/lesson/37"]').getAttribute("aria-current") === "true", "hub: الدرس 37 ظاهر ومميّز بعد العودة");
   app.root.unmount();
   document.body.innerHTML = "";
 
   // ============================================================
-  // 5) إزاحة النافذة تلقائيًا لكل درس حالي (1، 10، 11، 17، 22، 31، 35، 36)
+  // 5) إزاحة النافذة تلقائيًا لكل درس حالي (1، 10، 11، 17، 22، 31، 35، 36، 37)
   // ============================================================
   const cases = [
     [1, "1,2,3,4,5,6,7,8,9,10", "1–10"],
@@ -274,6 +285,7 @@ async function main() {
     [31, "22,23,24,25,26,27,28,29,30,31", "22–31"],
     [35, "26,27,28,29,30,31,32,33,34,35", "26–35"],
     [36, "27,28,29,30,31,32,33,34,35,36", "27–36"],
+    [37, "28,29,30,31,32,33,34,35,36,37", "28–37"],
   ];
   for (const [current, expected, label] of cases) {
     const { host, root: r } = mount(M.React.createElement(M.LessonNumberNav, { items: LESSONS_ALL, current }));

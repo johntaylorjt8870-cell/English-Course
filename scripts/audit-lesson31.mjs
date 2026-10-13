@@ -826,9 +826,9 @@ try {
       ok(app.includes(`#/lesson/${n}`), `Lesson ${n} hub card remains`);
     }
     const dirCheck = readFileSync(join(root, "scripts", "check-english-direction.mjs"), "utf8");
-    ok(dirCheck.includes("lessons.length === 36"), "direction check inventory covers 36 lessons");
+    ok(dirCheck.includes("lessons.length === 37"), "direction check inventory covers 37 lessons (Lesson 37 added)");
     const renderCheck = readFileSync(join(root, "scripts", "audit-render-direction.mjs"), "utf8");
-    ok(renderCheck.includes("lessonFolders.length === 36") && renderCheck.includes("n <= 36"), "render audit covers 36 lesson folders");
+    ok(renderCheck.includes("lessonFolders.length === 37") && renderCheck.includes("n <= 37"), "render audit covers 37 lesson folders (Lesson 37 added)");
   }
 } catch (err) {
   ok(false, err.stack || String(err));

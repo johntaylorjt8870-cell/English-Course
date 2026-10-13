@@ -527,6 +527,19 @@ for (const id of ["s28", "s29", "s30", "s31", "s32"]) {
   }
   ok(numbers.size === 25 && [...numbers].sort((a, b) => a - b).every((n, index) => n === index + 1), "after unlock, Solutions Area exposes all 25 solutions across its five level tabs");
   ok([...el.querySelectorAll("[data-source-status]")].every((node) => node.getAttribute("data-source-status") === "platform-authored-teacher-addition"), "every solution card is marked as a platform/teacher addition");
+  const firstCard = el.querySelector("[data-solution]");
+  ok(!!firstCard && firstCard.querySelectorAll("[data-solution-details]").length === 0 && normalize(firstCard.textContent).includes("الإجابة النموذجية"), "solution cards start collapsed with the answer visible and the explanation behind an expandable section");
+  const cardToggle = firstCard ? findButton(firstCard, "إظهار الشرح والبدائل") : null;
+  ok(!!cardToggle && cardToggle.getAttribute("aria-expanded") === "false" && cardToggle.getAttribute("aria-controls") === `solution-37-details-${firstCard.getAttribute("data-solution")}`, "each solution card has an accessible expand control bound to its own details block");
+  click(cardToggle);
+  await tick(3);
+  ok(firstCard.querySelectorAll("[data-solution-details]").length === 1 && normalize(firstCard.textContent).includes("التفسير:") && cardToggle.getAttribute("aria-expanded") === "true", "expanding one card reveals its explanation and alternatives only");
+  click(cardToggle);
+  await tick(3);
+  ok(firstCard.querySelectorAll("[data-solution-details]").length === 0, "the same control collapses the card again");
+  click(findButton(el, "فتح كل الشروح"));
+  await tick(3);
+  ok([...el.querySelectorAll("[data-solution]")].every((card) => card.querySelector("[data-solution-details]")), "the level control expands every card in the current level at once");
   ok(el.textContent.includes("بدائل مقبولة / توضيح السياق") && el.textContent.includes("إضافات تعليمية من إعداد المنصة"), "Solutions Area labels platform content and contextual alternatives");
   const kindText = normalize(el.textContent);
   ok(kindText.includes("نموذج إجابة مفتوحة — إعداد المنصة/المعلم"), "Solutions Area marks the open-ended models as models");

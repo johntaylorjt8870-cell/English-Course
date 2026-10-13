@@ -22,6 +22,7 @@ export default function SolutionsArea37({
   onGoTeacher: () => void;
 }) {
   const [level, setLevel] = useState<1 | 2 | 3 | 4 | 5>(1);
+  const [openCards, setOpenCards] = useState<Record<number, boolean>>({});
   const section = sourceSection37("s35");
 
   if (!unlocked) {
@@ -36,6 +37,14 @@ export default function SolutionsArea37({
   }
 
   const visible = TEST_SOLUTIONS_37.filter((solution) => solution.level === level);
+  const allOpen = visible.every((solution) => openCards[solution.n]);
+  const toggleCard = (n: number) => setOpenCards((current) => ({ ...current, [n]: !current[n] }));
+  const toggleAll = () =>
+    setOpenCards((current) => {
+      const next = { ...current };
+      for (const solution of visible) next[solution.n] = !allOpen;
+      return next;
+    });
   return (
     <div data-area="lesson37-solutions" data-solution-count={TEST_SOLUTIONS_37.length} className="space-y-4">
       <Card37 eyebrow="Solutions Area · separate from test-taking" title="مفتاح تصحيح الاختبار النهائي — الدرس 37">
@@ -75,6 +84,20 @@ export default function SolutionsArea37({
         ))}
       </nav>
 
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p className="text-sm font-bold text-[#43575a]">
+          كل بطاقة تبدأ مختصرة: الإجابة ظاهرة، والشرح والبدائل داخل قسم قابل للفتح.
+        </p>
+        <button
+          type="button"
+          aria-pressed={allOpen}
+          onClick={toggleAll}
+          className={`${FOCUS_37} min-h-11 rounded-xl border border-[#cfd8d2] bg-white px-3 py-2 text-sm font-black text-[#17354a] transition-colors hover:bg-[#eef4f0] motion-reduce:transition-none`}
+        >
+          {allOpen ? "طيّ كل الشروح" : "فتح كل الشروح"}
+        </button>
+      </div>
+
       <section aria-label={solutionLevels[level - 1].title} className="space-y-3">
         {visible.map((solution) => (
           <article
@@ -101,22 +124,35 @@ export default function SolutionsArea37({
                   <Rich text={solution.answer} />
                 </span>
               </p>
-              <p>
-                <strong className="text-[#17354a]">التفسير: </strong>
-                <span dir="auto">
-                  <Rich text={solution.explanation} />
-                </span>
-              </p>
-              {solution.alternatives?.length ? (
-                <div className="rounded-xl border border-[#dce3dd] bg-[#f7faf8] p-3">
-                  <h3 className="text-sm font-black text-[#28533b]">بدائل مقبولة / توضيح السياق</h3>
-                  <ul className="mt-1 list-disc space-y-1 ps-5 text-sm leading-6 text-[#24343b]">
-                    {solution.alternatives.map((line) => (
-                      <li key={line} dir="auto">
-                        <Rich text={line} />
-                      </li>
-                    ))}
-                  </ul>
+              <button
+                type="button"
+                aria-expanded={openCards[solution.n] === true}
+                aria-controls={`solution-37-details-${solution.n}`}
+                onClick={() => toggleCard(solution.n)}
+                className={`${FOCUS_37} min-h-11 rounded-xl border border-[#cfd8d2] bg-[#fbfdfc] px-3 py-2 text-sm font-black text-[#17354a] transition-colors hover:bg-[#eef4f0] motion-reduce:transition-none`}
+              >
+                {openCards[solution.n] ? "إخفاء الشرح والبدائل" : "إظهار الشرح والبدائل"}
+              </button>
+              {openCards[solution.n] ? (
+                <div id={`solution-37-details-${solution.n}`} data-solution-details={solution.n} className="space-y-2">
+                  <p>
+                    <strong className="text-[#17354a]">التفسير: </strong>
+                    <span dir="auto">
+                      <Rich text={solution.explanation} />
+                    </span>
+                  </p>
+                  {solution.alternatives?.length ? (
+                    <div className="rounded-xl border border-[#dce3dd] bg-[#f7faf8] p-3">
+                      <h3 className="text-sm font-black text-[#28533b]">بدائل مقبولة / توضيح السياق</h3>
+                      <ul className="mt-1 list-disc space-y-1 ps-5 text-sm leading-6 text-[#24343b]">
+                        {solution.alternatives.map((line) => (
+                          <li key={line} dir="auto">
+                            <Rich text={line} />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
                 </div>
               ) : null}
             </div>

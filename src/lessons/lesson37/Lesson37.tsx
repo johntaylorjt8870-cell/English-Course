@@ -224,6 +224,16 @@ export default function Lesson37({ onExit }: { onExit?: () => void }) {
           <section className={area === "student" ? "mt-4 space-y-4" : "hidden"} aria-hidden={area !== "student"} data-area="lesson37-student">
             <div className="rounded-2xl border border-[#d8d2c5] bg-white px-3 py-2 text-sm font-bold text-[#43575a] lg:hidden">
               <Rich text={`Step ${index + 1} of ${STEP_COUNT_37} · ${slide.title}`} />
+              <div
+                role="progressbar"
+                aria-label="التقدم بين خطوات الدرس"
+                aria-valuemin={1}
+                aria-valuemax={STEP_COUNT_37}
+                aria-valuenow={index + 1}
+                className="mt-2 h-1.5 overflow-hidden rounded-full bg-[#ece9e1]"
+              >
+                <div className="h-full bg-[#245f62]" style={{ width: `${((index + 1) / STEP_COUNT_37) * 100}%` }} />
+              </div>
             </div>
             <StepView37
               key={slide.id}

@@ -672,6 +672,20 @@ ok(contrastFailures.length === 0, `audited text/background palette pairs meet WC
 ok(contrast("#17354a", "#ffffff") >= 3 && contrast("#17354a", "#fffdf8") >= 3, "focus indicator contrast is at least 3:1 against both light surfaces");
 ok(["\u200f", "\u200e"].every((mark) => directionSources.includes(mark) === false), "no stray LRM/RLM marks were needed in the lesson sources");
 
+// 13b) Responsive/overflow contract (structural, not a visual review).
+{
+  const read37 = (file) => readFileSync(join(root, "src", "lessons", "lesson37", file), "utf8");
+  for (const file of ["Lesson37.tsx", "Steps37.tsx", "labs37.tsx", "TestArea37.tsx", "SolutionsArea37.tsx", "TeacherGuide37.tsx", "kit37.tsx"]) {
+    ok(/sm:|lg:|md:/.test(read37(file)), `${file}: reflows at a breakpoint instead of one fixed desktop layout`);
+  }
+  ok(read37("kit37.tsx").includes("overflow-x-auto") && read37("TeacherGuide37.tsx").includes("overflow-x-auto"), "wide source/coverage tables live inside horizontally scrollable containers");
+  ok(["Lesson37.tsx", "kit37.tsx", "labs37.tsx", "Steps37.tsx"].every((file) => read37(file).includes("min-w-0")), "flex rows carrying long mixed text can shrink (min-w-0)");
+  ok(!/w-\[\d{3,}px\]/.test(directionSources) && !/whitespace-nowrap/.test(directionSources), "no fixed pixel width and no nowrap rule can force horizontal overflow");
+  const shell = read37("Lesson37.tsx");
+  ok(/role="progressbar"/.test(shell) && /aria-valuemax=\{STEP_COUNT_37\}/.test(shell), "the student shell exposes a real progress indicator bound to the step index on both layouts");
+  ok((shell.match(/role="progressbar"/g) || []).length >= 2, "the progress indicator is present in both the desktop rail and the mobile header");
+}
+
 // 14) Registration, documentation, and the project-level audit contracts.
 {
   const appText = readFileSync(join(root, "src/App.tsx"), "utf8");

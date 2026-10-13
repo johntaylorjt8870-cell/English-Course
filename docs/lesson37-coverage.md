@@ -126,6 +126,12 @@
 - All 25 detailed solutions are platform-authored teacher additions with an explicit `sourceStatus`. Each one states the answer, the reasoning, and — where the context allows more than one grammatical answer — the accepted alternatives and whether the alternative is *wrong*, *possible but less natural*, or *correct with a different focus*.
 - Q16–Q20 are semantic/open answers: the key gives models and acceptance criteria, not a single mandatory wording.
 
+## الاتجاه (RTL/LTR) والتباين — ما يقيسه التدقيق فعلًا
+
+- **العزل الاتجاهي:** كل نص إنجليزي أو صيغة (`Subject + will + be + V-ing`) يمرّ عبر `Rich`/`LatinRuns` أو `dir="ltr"` + `font-en`؛ لا توجد محارف Unicode خفية ولا قاعدة `direction: rtl` شاملة.
+- **مُحلِّل BIDI:** يُشغَّل على HTML المصيَّر لكل الخطوات الـ39، ثم **بعد التفاعلات** (الخط الزمني، الكاميرا، بانِي الصيغة، الحوار، ورشة `-ing`، بواني النفي/السؤال، ومفاتيح §28–§32)، وكذلك على منطقة الاختبار ومنطقة الحلول والتبويبات الأربعة لدليل المعلم → **صفر مخالفة**.
+- **التباين (مُقاس لا مُقدَّر):** التدقيق يبني «اللون المحسوب» لكل عنصر نصّي في HTML المصيَّر (أقرب لون نص من الأسلاف + أقرب خلفية، مع دمج الطبقات الشفافة مثل `bg-white/15` فوق الشريط الكحلي/البني) ويقيس النسبة: **5810 عنصرًا نصيًا · 0 عنصر دون 4.5:1**. يُضاف إليه إغلاق اللوحة (كل لون نص/خلفية مستخدم في الدرس له زوج مُدقَّق)، ومنع النص الباهت (لا درجات لوحة فاتحة، ولا نص أبيض/أسود شفاف، ولا `opacity`)، وإثبات أن كل فئة ألوان يستعملها الدرس مُصدَّرة فعلًا في CSS المبنية.
+
 ## Planned audit contract
 
 `scripts/audit-lesson37.mjs` verifies the ledger (39 sections, 38 numbered, one-to-one step mapping), exact source counts and representative source strings, the rebuilt tables, the §34 line-consumption contract, the 25-question/five-level structure, the 25 platform-authored solutions, per-step rendering and traceability attributes, reveal-after-attempt gating in §28–§32, the interactive labs (timeline, formula builder, parts analysis, conjugation, camera, dialogue, -ing, negative/question builders, detective, IQ30, reading, writing, summary, curriculum preview), Test Area neutrality, Solutions gating, the teacher gate and guide tabs, shell navigation (areas, aria-expanded, keyboard arrows), English-direction isolation (rendered-markup BIDI oracle), WCAG AA contrast pairs, and route/docs registration. It renders and exercises the interactions instead of treating headings alone as proof of coverage.

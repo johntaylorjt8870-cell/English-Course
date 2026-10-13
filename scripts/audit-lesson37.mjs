@@ -1,7 +1,7 @@
 // Lesson 37 — source coverage, area separation, interactions, direction, contrast tokens, and route audit.
 // Run: npm run audit:lesson37
 import { createRequire } from "node:module";
-import { existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -641,12 +641,14 @@ for (const id of ["s28", "s29", "s30", "s31", "s32"]) {
 }
 
 // 13) English-direction isolation, BIDI oracle on real markup, and contrast tokens.
+let renderedSnapshots = [];
 const directionSources = ["kit37.tsx", "TestArea37.tsx", "SolutionsArea37.tsx", "TeacherGuide37.tsx", "TeacherArea37.tsx", "Steps37.tsx", "Lesson37.tsx", "labs37.tsx", "ledger37.ts", "practiceData37.ts", "testData37.ts", "solutionsData37.ts", "coverage37.ts"].map((file) => readFileSync(join(root, "src", "lessons", "lesson37", file), "utf8")).join("\n");
 ok(directionSources.includes('dir={pureEnglish ? "ltr" : "auto"}') || directionSources.includes('dir="ltr"') && directionSources.includes("font-en"), "Lesson 37 isolates English/formulas LTR and keeps mixed runs direction-aware");
 ok(!/unicode-bidi\s*:\s*[^;]*override|direction\s*:\s*rtl\s*!important/i.test(directionSources), "Lesson 37 adds no blanket BIDI override rules");
 ok(!/[\u2066\u2067\u2068\u2069\u202A\u202B\u202C\u202D\u202E]/.test(directionSources), "Lesson 37 data carries no raw Unicode bidi control characters");
 {
   const snapshots = [...initialStepHtml.values(), ...interactedHtml, testPreHtml, M.renderToString(M.React.createElement(M.SolutionsArea37, { unlocked: true, onGoTest() {}, onGoTeacher() {} })), M.renderToString(M.React.createElement(M.TeacherGuide37, { onGoSolutions() {}, onLock() {} }))];
+  renderedSnapshots = snapshots;
   const violations = [];
   for (const html of snapshots) {
     for (const paragraph of analyzeHtml(html)) {
@@ -679,11 +681,132 @@ const contrastPairs = [
   ["#f0ddb6", "#17354a", "pale accent on navy header"], ["#596965", "#f5f5f2", "disabled button text"],
   ["#596965", "#ece9e1", "disabled primary-button text"], ["#24343b", "#f4e8c3", "highlighted reading text"],
   ["#17354a", "#ffffff", "focus ring on white"],
+  // الحالات التفاعلية والأسطح الإضافية التي يستخدمها الدرس فعليًا (المصادر تُثبت التغطية أدناه)
+  ["#ffffff", "#1d5053", "white on the primary-button hover surface"],
+  ["#ffffff", "#7a5516", "white on the amber camera band"],
+  ["#fdf1d8", "#7a5516", "pale chip text on the amber camera band"],
+  ["#245f62", "#ffffff", "accent text on white"],
+  ["#245f62", "#eef4f0", "accent text on pale green hover"],
+  ["#6a4d16", "#fbf6eb", "amber text on amber surface"],
+  ["#24343b", "#e6ebe7", "main text on neutral surface hover"],
+  ["#24343b", "#e8e5dc", "main text on warm divider surface"],
+  ["#24343b", "#edf2ee", "main text on pale mint surface"],
+  ["#24343b", "#eef2f6", "main text on pale blue surface"],
+  ["#24343b", "#fbefed", "main text on pale rose surface"],
+  ["#24343b", "#fffdf6", "main text on warm cream surface"],
+  ["#28533b", "#b8d6c0", "success text on progress track"],
+  ["#28533b", "#d9eadc", "success text on pale green chip"],
+  ["#43575a", "#edf2ee", "secondary text on pale mint surface"],
 ];
 const contrastFailures = contrastPairs.filter(([fg, bg]) => contrast(fg, bg) < 4.5);
 ok(contrastFailures.length === 0, `audited text/background palette pairs meet WCAG AA 4.5:1 (${contrastFailures.map(([fg, bg, label]) => `${label} ${contrast(fg, bg).toFixed(2)}:1`).join(", ")})`);
 ok(contrast("#17354a", "#ffffff") >= 3 && contrast("#17354a", "#fffdf8") >= 3, "focus indicator contrast is at least 3:1 against both light surfaces");
 ok(["\u200f", "\u200e"].every((mark) => directionSources.includes(mark) === false), "no stray LRM/RLM marks were needed in the lesson sources");
+// 13a) إغلاق لوحة الألوان: كل لون نص/خلفية يستخدمه الدرس مُغطّى بزوج تدقيق،
+//      ولا يوجد نص باهت، وكل فئة ألوان يستعملها الدرس مُصدَّرة فعلًا في CSS المبنية.
+{
+  const uiFiles = ["Lesson37.tsx", "Steps37.tsx", "labs37.tsx", "kit37.tsx", "TestArea37.tsx", "SolutionsArea37.tsx", "TeacherGuide37.tsx", "TeacherArea37.tsx"];
+  const uiSources = uiFiles.map((file) => readFileSync(join(root, "src", "lessons", "lesson37", file), "utf8"));
+  const hexes = (source, kind) => [...source.matchAll(new RegExp(`${kind}-\\[#([0-9a-fA-F]{6})\\]`, "g"))].map((match) => "#" + match[1].toLowerCase());
+  const textColors = new Set(uiSources.flatMap((source) => hexes(source, "text")));
+  const bgColors = new Set(uiSources.flatMap((source) => hexes(source, "bg")));
+  if (uiSources.some((source) => /text-white/.test(source))) textColors.add("#ffffff");
+  const auditedForegrounds = new Set(contrastPairs.map(([fg]) => fg));
+  const auditedBackgrounds = new Set(contrastPairs.map(([, bg]) => bg));
+  const missingText = [...textColors].filter((color) => !auditedForegrounds.has(color));
+  const missingBg = [...bgColors].filter((color) => !auditedBackgrounds.has(color));
+  ok(missingText.length === 0, `every text colour used in the lesson is covered by an audited contrast pair (${missingText.join(", ") || "complete"})`);
+  ok(missingBg.length === 0, `every background colour used in the lesson is covered by an audited contrast pair (${missingBg.join(", ") || "complete"})`);
+  const faint = uiSources.filter((source) => /text-(?:slate|gray|zinc|neutral|stone)-(?:200|300|400)\b|text-(?:white|black)\/\d+|opacity-\d+/.test(source)).length;
+  ok(faint === 0, "the lesson uses no faint text (no pale palette step, no translucent white/black text, no opacity dimming)");
+  const classChunks = [];
+  for (const source of uiSources) {
+    for (const match of source.matchAll(/className=\{?"([^"]+)"/g)) classChunks.push(match[1]);
+    for (const match of source.matchAll(/className=\{`([^`]+)`\}/g)) classChunks.push(match[1]);
+    for (const match of source.matchAll(/"([^"`]*?(?:text|bg|border|ring|from|to)-\[#[0-9a-fA-F]{6}\][^"`]*?)"/g)) classChunks.push(match[1]);
+  }
+  const colorClasses = new Set();
+  for (const chunk of classChunks) {
+    for (const token of chunk.split(/\s+/)) {
+      if (/(?:^|:)(?:text|bg|border|ring|from|to)-\[#[0-9a-fA-F]{6}\]$/.test(token)) colorClasses.add(token);
+    }
+  }
+  // فحص محسوب فعليًا: لكل عنصر في HTML المصيَّر يحمل نصًا مباشرًا، نأخذ أقرب لون نص
+  // وأقرب خلفية من الأسلاف ونقيس التباين — تقريب وثيق لما يحسبه المتصفح دون متصفح.
+  {
+    // رموز لوحة المشترك (lessonKit) التي تظهر في وسم PlatformTag — القيم القياسية لـ Tailwind.
+    const PALETTE = { "slate-900": "#0f172a" };
+    const colorOf = (token) => {
+      const palette = token.match(/(?:^|:)(?:text|bg)-([a-z]+-\d{2,3})$/);
+      if (palette && PALETTE[palette[1]]) return PALETTE[palette[1]];
+      const hex = token.match(/(?:^|:)(?:text|bg)-\[#([0-9a-fA-F]{6})\]/);
+      if (hex) return "#" + hex[1].toLowerCase();
+      if (/(?:^|:)text-white$/.test(token)) return "#ffffff";
+      if (/(?:^|:)bg-white$/.test(token)) return "#ffffff";
+      return null;
+    };
+    const alphaOf = (token) => token.match(/(?:^|:)bg-(white|black)\/(\d+)$/);
+    const nearest = (element, kind, stop) => {
+      let node = element;
+      while (node && node !== stop) {
+        const tokens = String(node.className || "").split(/\s+/);
+        // الحالة الأساسية أولًا (بلا بادئة حالة مثل hover: أو disabled:)، ثم البوادئ كاحتياط.
+        for (const pass of [false, true]) {
+          for (const token of tokens) {
+            if (token.includes(":") !== pass) continue;
+            const value = colorOf(token);
+            if (value && (kind === "text" ? /(?:^|:)text-/.test(token) : /(?:^|:)bg-/.test(token))) return { value, token, node };
+          }
+        }
+        node = node.parentElement;
+      }
+      return null;
+    };
+    const measured = [];
+    for (const snapshotHtml of renderedSnapshots) {
+      const holder = win.document.createElement("div");
+      holder.innerHTML = snapshotHtml;
+      for (const element of holder.querySelectorAll("*")) {
+        const directText = [...element.childNodes].some((node) => node.nodeType === 3 && node.textContent.trim().length > 1);
+        if (!directText) continue;
+        if (element.closest("svg") || element.getAttribute("aria-hidden") === "true") continue;
+        const text = nearest(element, "text", holder);
+        let bg = nearest(element, "bg", holder);
+        if (!text || !bg) continue;
+        const alpha = alphaOf(bg.token);
+        if (alpha && bg.node.parentElement) {
+          const under = nearest(bg.node.parentElement, "bg", holder);
+          if (under) {
+            const ratio = Number(alpha[2]) / 100;
+            const blend = (fgHex, bgHex) => {
+              const parse = (hex) => [1, 3, 5].map((index) => parseInt(hex.slice(index, index + 2), 16));
+              const [r1, g1, b1] = parse(fgHex);
+              const [r2, g2, b2] = parse(bgHex);
+              return "#" + [r1, g1, b1].map((value, index) => Math.round(value * ratio + [r2, g2, b2][index] * (1 - ratio)).toString(16).padStart(2, "0")).join("");
+            };
+            bg = { value: blend(alpha[1] === "white" ? "#ffffff" : "#000000", under.value), token: bg.token, node: bg.node };
+          }
+        }
+        const pair = [text.value, bg.value];
+        const value = contrast(pair[0], pair[1]);
+        measured.push({ value, text: text.value, bg: bg.value, token: text.token + " / " + bg.token, sample: (element.textContent || "").trim().slice(0, 48) });
+      }
+    }
+    const computedFailures = measured.filter((record) => record.value < 4.5);
+    console.log(`  ↳ فحص التباين المحسوب على HTML المصيَّر: ${measured.length} عنصرًا نصيًا · ${computedFailures.length} دون 4.5`);
+    for (const record of computedFailures.slice(0, 12)) console.log(`      ${record.value.toFixed(2)}:1 · ${record.token} · «${record.sample}»`);
+    ok(computedFailures.length === 0, `computed-style contrast over the rendered lesson markup: every direct text node reaches 4.5:1 against the nearest background (${computedFailures.length} below, ${measured.length} measured)`);
+  }
+  const distDir = join(root, "dist", "assets");
+  if (existsSync(distDir)) {
+    const css = readdirSync(distDir).filter((file) => file.endsWith(".css")).map((file) => readFileSync(join(distDir, file), "utf8")).join("\n");
+    const escaping = (token) => token.split("").map((char) => ("[]#.:/%(),\"'".includes(char) ? "\\" + char : char)).join("");
+    const notEmitted = [...colorClasses].filter((token) => !css.includes("." + escaping(token)));
+    ok(notEmitted.length === 0, `every colour utility the lesson uses exists in the built CSS (${notEmitted.join(", ") || colorClasses.size + " classes verified"})`);
+  } else {
+    console.log("  ↳ dist/assets غير موجود — تُخطّى مقارنة فئات الألوان مع CSS المبنية (شغّل npm run build أولًا)");
+  }
+}
 
 // 13b) Responsive/overflow contract (structural, not a visual review).
 {

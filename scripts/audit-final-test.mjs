@@ -195,12 +195,22 @@ const lesson39DedicatedAssessment =
   lesson39TestArea.includes("TEST_COUNT_39") &&
   !lesson39TestArea.includes("solutionsData39");
 ok(lesson39DedicatedAssessment, "الدرس 39: اختبار Master Test مستقلّ (25 سؤالًا/5 مستويات) ومفصول عن محرّك FinalTest وعن ملفّ الحلول");
+// الدرس 40: Grand Exam مستقل من 25 سؤالًا على خمسة مستويات، ومفصول عن الحلول
+const lesson40TestData = readFileSync(join(root, "src/lessons/lesson40/testData40.ts"), "utf8");
+const lesson40TestArea = readFileSync(join(root, "src/lessons/lesson40/TestArea40.tsx"), "utf8");
+const lesson40DedicatedAssessment =
+  lesson40TestData.includes("TEST_QUESTION_COUNT_40 = TEST_QUESTIONS_40.length") &&
+  lesson40TestData.includes("TEST_LEVELS_40") &&
+  lesson40TestArea.includes("TEST_LEVELS_40") &&
+  lesson40TestArea.includes("TEST_QUESTION_COUNT_40") &&
+  !lesson40TestArea.includes("solutionsData40");
+ok(lesson40DedicatedAssessment, "الدرس 40: اختبار Grand Exam مستقلّ (25 سؤالًا/5 مستويات) ومفصول عن محرّك FinalTest وعن ملفّ الحلول");
 const appLessons = [...new Set([...appSrc.matchAll(/route === (\d+)/g)].map((x) => Number(x[1])))].sort((a, b) => a - b);
-ok(appLessons.length >= 39, `كل دروس التطبيق مسجلة (${appLessons.length})`);
+ok(appLessons.length >= 40, `كل دروس التطبيق مسجلة (${appLessons.length})`);
 for (const n of appLessons) {
   const legacy = (m.QUIZZES[n] || []).length >= 12;
   const modern = m.finalTestLessons().includes(n);
-  const dedicated = (n === 36 && lesson36DedicatedAssessment) || (n === 37 && lesson37DedicatedAssessment) || (n === 38 && lesson38DedicatedAssessment) || (n === 39 && lesson39DedicatedAssessment);
+  const dedicated = (n === 36 && lesson36DedicatedAssessment) || (n === 37 && lesson37DedicatedAssessment) || (n === 38 && lesson38DedicatedAssessment) || (n === 39 && lesson39DedicatedAssessment) || (n === 40 && lesson40DedicatedAssessment);
   ok(legacy || modern || dedicated, `الدرس ${n}: له اختبار نهائي (قديم أو جديد أو Master Test مستقل)`);
 }
 

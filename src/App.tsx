@@ -38,6 +38,7 @@ import Lesson36 from "./lessons/lesson36/Lesson36";
 import Lesson37 from "./lessons/lesson37/Lesson37";
 import Lesson38 from "./lessons/lesson38/Lesson38";
 import Lesson39 from "./lessons/lesson39/Lesson39";
+import Lesson40 from "./lessons/lesson40/Lesson40";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -455,6 +456,15 @@ const CARDS: Card[] = [
     href: "#/lesson/39",
     grad: "from-[#17354a] to-[#245f62]",
   },
+  {
+    n: 40,
+    title: "الدرس 40: Future Tenses Master Review — المراجعة الشاملة وإتقان أزمنة المستقبل",
+    en: "The Future Tenses Grand Challenge 🚀",
+    emoji: "🚀",
+    stats: "29 قسمًا مرقّمًا · 30 خطوة · 10 مختبرات شاملة · اختبار 25 سؤالًا · IQ200",
+    href: "#/lesson/40",
+    grad: "from-[#17354a] to-[#245f62]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -575,6 +585,7 @@ export default function App() {
   else if (route === 37) page = <Lesson37 onExit={goHome} />;
   else if (route === 38) page = <Lesson38 onExit={goHome} />;
   else if (route === 39) page = <Lesson39 onExit={goHome} />;
+  else if (route === 40) page = <Lesson40 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

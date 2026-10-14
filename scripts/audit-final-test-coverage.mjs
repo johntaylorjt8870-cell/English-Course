@@ -594,4 +594,4 @@ if (failures.length) {
   console.error(`\n✕ Final Test coverage audit FAILED (${failures.length}/${checks})\n` + failures.map((f) => `  - ${f}`).join("\n"));
   process.exit(1);
 }
-console.log(`\n✓ Final Test coverage audit passed (${checks} checks): الدروس 1–35 لها FinalTest واحد مناسب لبنيتها، 12–15 سؤالًا بمفاتيح صالحة، بلا كشف قبل التصحيح؛ واختبارات الدروس 36 و37 و38 المستقلة (25 سؤالًا لكلٍّ، بخمسة مستويات) لها تدقيق تفاعلي منفصل.`);
+console.log(`\n✓ Final Test coverage audit passed (${checks} checks): الدروس 1–35 لها FinalTest واحد مناسب لبنيتها، 12–15 سؤالًا بمفاتيح صالحة، بلا كشف قبل التصحيح؛ واختبارات الدروس 36 و37 و38 و39 المستقلة (25 سؤالًا لكلٍّ، بخمسة مستويات) لها تدقيق تفاعلي منفصل.`);

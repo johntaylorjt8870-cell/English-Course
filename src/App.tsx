@@ -36,6 +36,7 @@ import Lesson34 from "./lessons/lesson34/Lesson34";
 import Lesson35 from "./lessons/lesson35/Lesson35";
 import Lesson36 from "./lessons/lesson36/Lesson36";
 import Lesson37 from "./lessons/lesson37/Lesson37";
+import Lesson38 from "./lessons/lesson38/Lesson38";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -435,6 +436,15 @@ const CARDS: Card[] = [
     href: "#/lesson/37",
     grad: "from-[#17354a] to-[#245f62]",
   },
+  {
+    n: 38,
+    title: "الدرس 38: Future Perfect — المستقبل التام",
+    en: "By Tomorrow, I Will Have Finished!",
+    emoji: "✅",
+    stats: "36 قسمًا مرقّمًا · 37 خطوة · خط الإنجاز وby · اختبار 25 سؤالًا · IQ200",
+    href: "#/lesson/38",
+    grad: "from-[#17354a] to-[#245f62]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -553,6 +563,7 @@ export default function App() {
   else if (route === 35) page = <Lesson35 onExit={goHome} />;
   else if (route === 36) page = <Lesson36 onExit={goHome} />;
   else if (route === 37) page = <Lesson37 onExit={goHome} />;
+  else if (route === 38) page = <Lesson38 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

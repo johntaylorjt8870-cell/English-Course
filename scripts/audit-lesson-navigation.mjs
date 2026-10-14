@@ -1,7 +1,7 @@
 /**
  * اختبار تفاعلي (jsdom) لشريط أرقام الدروس `LessonNumberNav`:
  *   1) لا يظهر أكثر من 10 أرقام في النافذة أبدًا (في كل الحالات).
- *   2) النافذة الأولى 1–10، والأخيرة 28–37 بعد إضافة Lesson 37، والسهمان يتحرّكان رقمًا واحدًا.
+ *   2) النافذة الأولى 1–10، والأخيرة 29–38 بعد إضافة Lesson 38، والسهمان يتحرّكان رقمًا واحدًا.
  *   3) تعطيل السهم الأيسر في البداية والأيمن في النهاية.
  *   4) الأسهم لا تنقل الطالب إلى أي درس (لا يتغيّر الـ hash).
  *   5) النقر على رقم الدرس يحفظ التوجيه الحالي (#/lesson/N) فعليًا.
@@ -118,7 +118,7 @@ function arrows(nav) {
 }
 
 async function main() {
-  const LESSONS_ALL = Array.from({ length: 37 }, (_, i) => ({ n: i + 1 }));
+  const LESSONS_ALL = Array.from({ length: 38 }, (_, i) => ({ n: i + 1 }));
 
   // ============================================================
   // 1) الصفحة الرئيسية — الحالة الأولية
@@ -164,7 +164,7 @@ async function main() {
   const navCopy = nav.cloneNode(true);
   navCopy.querySelectorAll(".sr-only").forEach((el) => el.remove());
   const navText = navCopy.textContent.replace(/\s+/g, " ").trim();
-  ok(!/\b(1[1-9]|2\d|3[0-6])\b/.test(navText), `hub: لا يظهر أي رقم فوق 10 في الشريط المرئي (نصه: ${navText})`);
+  ok(!/\b(1[1-9]|2\d|3[0-8])\b/.test(navText), `hub: لا يظهر أي رقم فوق 10 في الشريط المرئي (نصه: ${navText})`);
 
   // ============================================================
   // 2) الأسهم: حركة رقم واحد + عدم الانتقال إلى درس
@@ -187,7 +187,7 @@ async function main() {
   ok(nums.join(",") === "2,3,4,5,6,7,8,9,10,11", `hub: نقرة يسار واحدة ترجع خطوة (got ${nums.join(" ")})`);
 
   // ============================================================
-  // 3) النهاية: 28–37 وتعطيل السهم الأيمن (37 درسًا — أضيف الدرس 37)
+  // 3) النهاية: 29–38 وتعطيل السهم الأيمن (38 درسًا — أضيف الدرس 38)
   // ============================================================
   for (let i = 0; i < 40; i++) {
     next.click();
@@ -196,12 +196,12 @@ async function main() {
   nums = visibleNumbers(nav);
   ({ prev, next } = arrows(nav));
   ok(nums.length === 10, `hub: عند النهاية يبقى العدد 10 (got ${nums.length})`);
-  ok(nums.join(",") === "28,29,30,31,32,33,34,35,36,37", `hub: النافذة الأخيرة 28–37 (got ${nums.join(" ")})`);
+  ok(nums.join(",") === "29,30,31,32,33,34,35,36,37,38", `hub: النافذة الأخيرة 29–38 (got ${nums.join(" ")})`);
   ok(next.disabled === true, "hub: السهم الأيمن معطّل في النافذة الأخيرة");
   ok(prev.disabled === false, "hub: السهم الأيسر مفعّل في النافذة الأخيرة");
   next.click();
   await tick();
-  ok(visibleNumbers(nav).join(",") === "28,29,30,31,32,33,34,35,36,37", "hub: النقر على سهم معطّل لا يغيّر النافذة");
+  ok(visibleNumbers(nav).join(",") === "29,30,31,32,33,34,35,36,37,38", "hub: النقر على سهم معطّل لا يغيّر النافذة");
 
   // رجوع خطوة بخطوة حتى البداية
   for (let i = 0; i < 40; i++) {
@@ -270,11 +270,22 @@ async function main() {
   nav = app.host.querySelector(NAV_SELECTOR);
   ok(visibleNumbers(nav).join(",") === "28,29,30,31,32,33,34,35,36,37", "hub: العودة بعد الدرس 37 تُظهر النافذة الأخيرة 28–37");
   ok(nav.querySelector('a[href="#/lesson/37"]').getAttribute("aria-current") === "true", "hub: الدرس 37 ظاهر ومميّز بعد العودة");
+
+  // Lesson 38 route, hub card, and newest course window
+  win.location.hash = "#/lesson/38";
+  await tick(120);
+  ok(!app.host.querySelector(NAV_SELECTOR), "hub: فتح الدرس 38 يغادر الصفحة الرئيسية عبر الراوتر");
+  ok(app.host.querySelector('[data-lesson="38"]') && app.host.textContent.includes("Future Perfect"), "hub: مسار الدرس 38 يرسم درس المستقبل التام");
+  win.location.hash = "#/";
+  await tick(100);
+  nav = app.host.querySelector(NAV_SELECTOR);
+  ok(visibleNumbers(nav).join(",") === "29,30,31,32,33,34,35,36,37,38", "hub: العودة بعد الدرس 38 تُظهر النافذة الأخيرة 29–38");
+  ok(nav.querySelector('a[href="#/lesson/38"]').getAttribute("aria-current") === "true", "hub: الدرس 38 ظاهر ومميّز بعد العودة");
   app.root.unmount();
   document.body.innerHTML = "";
 
   // ============================================================
-  // 5) إزاحة النافذة تلقائيًا لكل درس حالي (1، 10، 11، 17، 22، 31، 35، 36، 37)
+  // 5) إزاحة النافذة تلقائيًا لكل درس حالي (1، 10، 11، 17، 22، 31، 35، 36، 37، 38)
   // ============================================================
   const cases = [
     [1, "1,2,3,4,5,6,7,8,9,10", "1–10"],
@@ -286,6 +297,7 @@ async function main() {
     [35, "26,27,28,29,30,31,32,33,34,35", "26–35"],
     [36, "27,28,29,30,31,32,33,34,35,36", "27–36"],
     [37, "28,29,30,31,32,33,34,35,36,37", "28–37"],
+    [38, "29,30,31,32,33,34,35,36,37,38", "29–38"],
   ];
   for (const [current, expected, label] of cases) {
     const { host, root: r } = mount(M.React.createElement(M.LessonNumberNav, { items: LESSONS_ALL, current }));

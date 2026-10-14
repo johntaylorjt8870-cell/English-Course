@@ -5,7 +5,7 @@
 //   1) نموذج البيانات: كل درس له اختبار من 12–15 سؤالًا، وكل سؤال مكتمل
 //      (نص · إجابة صحيحة · سبب · مفهوم · فخ) وصالح لكل نوع.
 //   2) البنية القابلة لإعادة الاستخدام: محرّك واحد مشترك + بنك مركزي،
-//      الدروس 1–35 لها FinalTest (قديم 1–26، جديد 27–35)؛ والدروس 36 و37 لها Master Test مستقل من 25 سؤالًا.
+//      الدروس 1–35 لها FinalTest (قديم 1–26، جديد 27–35)؛ والدروس 36 و37 و38 لها Master Test مستقل من 25 سؤالًا.
 //   3) السلوك المرندر في jsdom: لا كشف قبل «تصحيح الاختبار»، التصحيح
 //      يكشف النتيجة والصواب والشرح، وإعادة الاختبار تمسح كل شيء.
 //   4) انتقالات الحالة على درس ممثل (27): فريش → جزئي → مكتمل غير مصحّح
@@ -176,12 +176,21 @@ const lesson37DedicatedAssessment =
   lesson37TestArea.includes("TEST_COUNT_37") &&
   !lesson37TestArea.includes("solutionsData37");
 ok(lesson37DedicatedAssessment, "الدرس 37: اختبار Master Test مستقلّ (25 سؤالًا/5 مستويات) ومفصول عن محرّك FinalTest وعن ملفّ الحلول");
+const lesson38TestData = readFileSync(join(root, "src/lessons/lesson38/testData38.ts"), "utf8");
+const lesson38TestArea = readFileSync(join(root, "src/lessons/lesson38/TestArea38.tsx"), "utf8");
+const lesson38DedicatedAssessment =
+  lesson38TestData.includes("TEST_COUNT_38 = TEST_38.length") &&
+  lesson38TestData.includes("TEST_LEVEL_COUNT_38 = TEST_LEVELS_38.length") &&
+  lesson38TestArea.includes("TEST_LEVELS_38") &&
+  lesson38TestArea.includes("TEST_COUNT_38") &&
+  !lesson38TestArea.includes("solutionsData38");
+ok(lesson38DedicatedAssessment, "الدرس 38: اختبار Master Test مستقلّ (25 سؤالًا/5 مستويات) ومفصول عن محرّك FinalTest وعن ملفّ الحلول");
 const appLessons = [...new Set([...appSrc.matchAll(/route === (\d+)/g)].map((x) => Number(x[1])))].sort((a, b) => a - b);
-ok(appLessons.length >= 37, `كل دروس التطبيق مسجلة (${appLessons.length})`);
+ok(appLessons.length >= 38, `كل دروس التطبيق مسجلة (${appLessons.length})`);
 for (const n of appLessons) {
   const legacy = (m.QUIZZES[n] || []).length >= 12;
   const modern = m.finalTestLessons().includes(n);
-  const dedicated = (n === 36 && lesson36DedicatedAssessment) || (n === 37 && lesson37DedicatedAssessment);
+  const dedicated = (n === 36 && lesson36DedicatedAssessment) || (n === 37 && lesson37DedicatedAssessment) || (n === 38 && lesson38DedicatedAssessment);
   ok(legacy || modern || dedicated, `الدرس ${n}: له اختبار نهائي (قديم أو جديد أو Master Test مستقل)`);
 }
 

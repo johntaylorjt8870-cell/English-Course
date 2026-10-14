@@ -156,7 +156,7 @@ I / You / He / She / We / They → `will have been studying.` · It → `It will
 
 ## الاتجاه والتباين
 
-English examples, formulas, and tables go through `Rich` / `LatinRuns` or `dir="ltr"` + `font-en`. No Unicode bidi control characters, no blanket `direction: rtl !important`. Contrast is computed on rendered markup inside `scripts/audit-lesson39.mjs` (the same oracle used for Lesson 38): 6999 rendered text elements, 0 below 4.5:1 across default/hover/focus/selected/disabled/correct/incorrect/locked/revealed states. Arabic prose keeps short Latin runs so the bidi oracle stays deterministic.
+English examples, formulas, and tables go through `Rich` / `LatinRuns`, through the shared `EnAr` pair wrapper (English label + Arabic gloss as one LTR unit), or through `dir="ltr"` + `font-en`. No Unicode bidi control characters, no blanket `direction: rtl !important`. Contrast is computed on rendered markup inside `scripts/audit-lesson39.mjs` (the same oracle used for Lesson 38): 7019 rendered text elements, 0 below 4.5:1 across default/hover/focus/selected/disabled/correct/incorrect/locked/revealed states. The rendered markup also passes the shared BIDI oracle with zero violations (`ONLY=39 node scripts/audit-bidi-mixed.mjs` reports `{"L39":0}` for the pair oracle and `{"alts":{"L39":0}}` for the alternatives oracle), so no "English = عربي" pair can render reversed.
 
 ## File list
 

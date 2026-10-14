@@ -545,6 +545,36 @@ export const ERROR_ITEMS_38: ChoiceItem38[] = [
     feedback: "③ They will have gone home. ✅",
   },
   {
+    id: "e4",
+    prompt: "He won't has arrived.",
+    choices: [
+      { value: "a", label: "الخطأ: has بعد won't. الصحيح: He won't have arrived." },
+      { value: "b", label: "الخطأ: won't. الصحيح: isn't." },
+    ],
+    accepted: ["a"],
+    feedback: "④ He won't have arrived. ✅ — بعد won't يأتي have لا has.",
+  },
+  {
+    id: "e5",
+    prompt: "Will she has completed the work?",
+    choices: [
+      { value: "a", label: "الخطأ: has بعد الفاعل. الصحيح: Will she have completed the work?" },
+      { value: "b", label: "الخطأ: Will. الصحيح: Does." },
+    ],
+    accepted: ["a"],
+    feedback: "⑤ Will she have completed the work? ✅ — في السؤال أيضًا have لا has.",
+  },
+  {
+    id: "e6",
+    prompt: "By the time you will arrive, I will have finished.",
+    choices: [
+      { value: "a", label: "الخطأ: will داخل جملة by the time. الصحيح: By the time you arrive, I will have finished." },
+      { value: "b", label: "الخطأ: will have finished. الصحيح: will finish." },
+    ],
+    accepted: ["a"],
+    feedback: "⑥ By the time you arrive, I will have finished. ✅ — بعد by the time نستخدم Present Simple.",
+  },
+  {
     id: "e7",
     prompt: "I will have be ready.",
     choices: [

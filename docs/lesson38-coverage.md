@@ -142,11 +142,11 @@ English/formulas go through `Rich` / `LatinRuns` or `dir="ltr"` + `font-en`. No 
 
 ## Validation (jsdom / Node — not a visual browser)
 
-- `npm run audit:lesson38` — 266 assertions (source coverage, 25×5 test, 25 solutions, labs, BIDI, contrast, CSS utilities).
+- `npm run audit:lesson38` — 267 assertions (source coverage, 25×5 test, 25 solutions, seven §25 error diagnoses, labs, BIDI, contrast, CSS utilities).
 - `node scripts/check-english-direction.mjs` — 38 lessons.
 - `node scripts/audit-lesson-navigation.mjs` — hub window 29–38.
 - `node scripts/audit-final-test.mjs` — dedicated Lesson 38 Master Test.
 - `ONLY=38 node scripts/audit-bidi-mixed.mjs` — 0 violations.
 - `npm run build` — production Vite build.
 
-No real-browser visual review was performed in this environment. HTTP 200 / build / jsdom ≠ visual verification.
+No real-browser visual review was performed in this environment. HTTP 200 / build / jsdom ≠ visual verification. The §25 interactive lab now diagnoses all seven source error pairs (④ won't has · ⑤ Will she has · ⑥ by the time you will were previously missing from the lab, though they remained in the source card).

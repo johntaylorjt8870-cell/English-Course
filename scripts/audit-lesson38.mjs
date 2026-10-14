@@ -80,7 +80,7 @@ const { TEST_SOLUTIONS_38 } = M.SOLUTIONS;
 const {
   OBJECTIVES_38, EXERCISE27_ITEMS_38, FILL28_ITEMS_38, TENSE29_ITEMS_38, DETECTIVE30_ITEMS_38,
   READING32_QUESTIONS_38, READING32_ANALYSIS_38, WRITING35_CRITERIA_38, WRITING35_MODEL_38,
-  DIALOGUE_LINES_38, DIALOGUE2_LINES_38, V3_ITEMS_38,
+  DIALOGUE_LINES_38, DIALOGUE2_LINES_38, V3_ITEMS_38, ERROR_ITEMS_38,
 } = M.PRACTICE;
 const { COVERAGE_38, COVERAGE_SECTION_COUNT_38, COVERAGE_ACCURACY_NOTES_38 } = M.COVERAGE;
 const tick = (ms = 25) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -154,6 +154,7 @@ ok(source("s19").units.some((line) => line.includes("I will have wrote the repor
 ok(FUTURE_ROWS_38.map((row) => row[1]).join("|") === "will + V1|will be + V-ing|will have + V3", "§22 comparison table keeps the three future forms");
 ok(PERFECT_ROWS_38.map((row) => row[1]).join("|") === "have/has + V3|had + V3|will have + V3", "§24 perfect map keeps the three perfect forms");
 ok(source("s25").units.filter((line) => line.includes("❌")).length === 7 && source("s25").units.filter((line) => line.includes("✅")).length === 7, "§25 keeps all seven error pairs");
+ok(ERROR_ITEMS_38.length === 7 && ERROR_ITEMS_38.map((item) => item.prompt).join("|") === "She will has finished.|I will have finish.|They will have went home.|He won't has arrived.|Will she has completed the work?|By the time you will arrive, I will have finished.|I will have be ready.", "§25 diagnosis lab covers all seven source error sentences in order");
 ok(DIALOGUE2_LINES_38.length === 9 && source("s26").units.some((line) => line.includes("I'll be checking the sound system.")), "§26 keeps the nine-turn festival dialogue including Future Continuous");
 ok(EXERCISE27_ITEMS_38.length === 6 && EXERCISE27_ITEMS_38.every((item, index) => item.n === index + 1 && item.answer && item.options.length === 3), "§27 keeps all six multiple-choice items");
 ok(FILL28_ITEMS_38.length === 6 && FILL28_ITEMS_38[4].answer === "Will you have saved", "§28 keeps all six completions including the question form");

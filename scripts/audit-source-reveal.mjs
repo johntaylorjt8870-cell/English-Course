@@ -199,9 +199,11 @@ for (const [n, seqs] of [
   ok(SOURCE_NUMBERED === 36, `دفتر المصدر يوسم 36 قسمًا مرقّمًا (${SOURCE_NUMBERED})`);
   ok(/SECTIONS_32/.test(data32) && /source:\s*\[/.test(data32), "ربط أقسام المصدر بخطوات الدرس 32 باقٍ (SECTIONS_32 + source في كل خطوة)");
   ok(/sourceTag/.test(kit) && /data-source-section/.test(kit), "شارة تتبّع القسم المصدري باقية في إطار الدرس المشترك");
-  for (const doc of ["docs/lesson32-source-audit.md", "docs/lesson32-coverage.md", "docs/english-direction.md"]) {
+  for (const doc of ["docs/lesson32-source-audit.md", "docs/lesson32-coverage.md", "docs/lesson40-source-audit.md", "docs/lesson40-coverage.md", "docs/english-direction.md"]) {
     ok(read(join(root, doc)).length > 200, `وثيقة «${doc}» باقية`);
   }
+  const ledger40 = read(join(root, "src/lessons/lesson40/ledger40.ts"));
+  ok(/SOURCE_LEDGER_COUNT_40/.test(ledger40) && /SOURCE_NUMBERED_COUNT_40/.test(ledger40), "دفتر مصدر الدرس 40 موجود ويعدّ أقسامه");
   const audit32 = read(join(root, "scripts/audit-lesson32.mjs"));
   ok(/SOURCE_LEDGER_COUNT_32|SOURCE_SECTIONS/.test(audit32), "تدقيق الدرس 32 ما زال يتحقق من مطابقة دفتر المصدر");
   ok(/REVEAL_BANNED/.test(audit32), "تدقيق الدرس 32 يمنع كشف المصدر في كل خطوة");

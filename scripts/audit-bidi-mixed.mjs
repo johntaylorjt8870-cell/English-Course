@@ -36,18 +36,18 @@ const esbuild = req("esbuild");
 const { JSDOM } = req("jsdom");
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BASELINE_FILE = join(root, "scripts", "bidi-baseline.json");
-const STRICT = new Set([6, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39]);
+const STRICT = new Set([6, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40]);
 // Known heuristic false positives (rendered as separate pill boxes, not
 // mixed text). Keyed by "<lesson>|<latin>|<arabic>". Keep this list short.
 const ALLOWLIST = new Set([
   "L6|plaies|قبل y حرف علة (a) ← نضيف s فقط: plays",
   "L6|I usually play football every day|لكن في الكلام الطبيعي يكفي أحدهما حسب المعنى",
 ]);
-// 1–34 as before, plus lessons 37–39. Lessons 35–36 are not crawled
+// 1–34 as before, plus lessons 37–40. Lessons 35–36 are not crawled
 // here: their own audits cover them and the ratchet file has no bounds for them.
 const LESSONS = process.env.ONLY
   ? process.env.ONLY.split(",").map(Number)
-  : [...Array.from({ length: 34 }, (_, i) => i + 1), 37, 38, 39];
+  : [...Array.from({ length: 34 }, (_, i) => i + 1), 37, 38, 39, 40];
 const WRITE = process.argv.includes("--write-baseline");
 
 // ---------------- crawler ----------------

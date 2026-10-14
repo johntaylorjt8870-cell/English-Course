@@ -162,11 +162,11 @@ ok(!sourceSection39("s40"), "no fabricated section beyond the supplied 39");
 ok(COVERAGE_39.length === 40 && COVERAGE_SECTION_COUNT_39 === 39, "coverage ledger row exists for the opening plus all 39 numbered sections");
 ok(COVERAGE_ACCURACY_NOTES_39.length >= 6 && COVERAGE_PLATFORM_ADDITIONS_39.length >= 30, "coverage ledger records the source-accuracy notes and the platform additions");
 {
-  // Lesson 40 is named in §39 as planned only — it must not exist or be linked.
-  ok(!existsSync(join(root, "src/lessons/lesson40")), "Lesson 40 is not implemented in this change");
+  // Lesson 39's own §39 remains unchanged and Lesson 41 is not implemented.
+  ok(!existsSync(join(root, "src/lessons/lesson41")), "Lesson 41 is not implemented");
   const appText = readFileSync(join(root, "src/App.tsx"), "utf8");
-  ok(!appText.includes("#/lesson/40") && !/route === 40/.test(appText), "no route or hub card points at the planned Lesson 40");
-  ok(NEXT_LESSON_39.status === "planned-not-implemented" && NEXT_LESSON_39.label.includes("الدرس 40"), "§39 keeps Lesson 40 as a planned, not implemented, next station");
+  ok(!appText.includes("#/lesson/41") && !/route === 41/.test(appText), "no route or hub card points at the planned Lesson 41");
+  ok(NEXT_LESSON_39.status === "planned-not-implemented" && NEXT_LESSON_39.label.includes("الدرس 40"), "§39 keeps Lesson 40 as a planned, not implemented, next station in Lesson 39's untouched data");
   const curriculumHtml = renderStep(SLIDES_39.find((slide) => slide.id === "s39"));
   const curriculumText = textOf(curriculumHtml);
   ok(
@@ -1212,8 +1212,8 @@ ok(["\u200f", "\u200e"].every((mark) => directionSources.includes(mark) === fals
   ok(pkg.scripts["audit:lesson39"] === "node scripts/audit-lesson39.mjs", "package.json exposes audit:lesson39");
   const chain = pkg.scripts["audit:english-direction"];
   ok(chain.includes("audit-lesson39.mjs"), "audit:english-direction runs the Lesson 39 audit");
-  ok(readFileSync(join(root, "scripts/check-english-direction.mjs"), "utf8").includes("lessons.length === 39"), "direction-check inventory covers 39 lessons");
-  ok(readFileSync(join(root, "scripts/audit-render-direction.mjs"), "utf8").includes("lessonFolders.length === 39"), "render audit covers 39 lesson folders");
+  ok(readFileSync(join(root, "scripts/check-english-direction.mjs"), "utf8").includes("lessons.length === 40"), "direction-check inventory covers 40 lessons");
+  ok(readFileSync(join(root, "scripts/audit-render-direction.mjs"), "utf8").includes("lessonFolders.length === 40"), "render audit covers 40 lesson folders");
   ok(readFileSync(join(root, "scripts/audit-lesson-navigation.mjs"), "utf8").includes('"#/lesson/39"'), "navigation audit covers the Lesson 39 route");
   ok(readFileSync(join(root, "scripts/audit-final-test.mjs"), "utf8").includes("lesson39DedicatedAssessment"), "final-test audit recognises the Lesson 39 dedicated assessment");
   ok(

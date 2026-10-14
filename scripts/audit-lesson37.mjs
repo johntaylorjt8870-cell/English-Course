@@ -834,8 +834,8 @@ ok(["\u200f", "\u200e"].every((mark) => directionSources.includes(mark) === fals
   ok(pkg.scripts["audit:lesson37"] === "node scripts/audit-lesson37.mjs", "package.json exposes audit:lesson37");
   const chain = pkg.scripts["audit:english-direction"];
   ok(chain.includes("audit-lesson37.mjs"), "audit:english-direction runs the Lesson 37 audit");
-  ok(readFileSync(join(root, "scripts/check-english-direction.mjs"), "utf8").includes("lessons.length === 39"), "direction-check inventory covers 39 lessons");
-  ok(readFileSync(join(root, "scripts/audit-render-direction.mjs"), "utf8").includes("lessonFolders.length === 39"), "render audit covers 39 lesson folders");
+  ok(readFileSync(join(root, "scripts/check-english-direction.mjs"), "utf8").includes("lessons.length === 40"), "direction-check inventory covers 40 lessons");
+  ok(readFileSync(join(root, "scripts/audit-render-direction.mjs"), "utf8").includes("lessonFolders.length === 40"), "render audit covers 40 lesson folders");
   ok(readFileSync(join(root, "scripts/audit-lesson-navigation.mjs"), "utf8").includes('"#/lesson/37"'), "navigation audit covers the Lesson 37 route");
   ok(readFileSync(join(root, "scripts/audit-final-test.mjs"), "utf8").includes("lesson37DedicatedAssessment"), "final-test audit recognises the Lesson 37 dedicated assessment");
   ok(existsSync(join(root, "src/lessons/lesson37/ledger37.ts")) && existsSync(join(root, "src/lessons/lesson37/solutionsData37.ts")) && existsSync(join(root, "docs/lesson37-coverage.md")), "Lesson 37 source ledger, separate solution data, and coverage document exist");

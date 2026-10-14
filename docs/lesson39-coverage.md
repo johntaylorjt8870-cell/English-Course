@@ -182,7 +182,7 @@ English examples, formulas, and tables go through `Rich` / `LatinRuns`, through 
 
 ## Validation (jsdom / Node — not a visual browser)
 
-- `npm run audit:lesson39` — 353 assertions: source coverage, 25×5 test, 25 solutions, labs, BIDI, contrast, CSS utilities, registration, and a clean console (no React/jsdom warnings while every area is rendered and driven).
+- `npm run audit:lesson39` — 357 assertions: source coverage, 25×5 test, 25 solutions, labs, BIDI, contrast, CSS utilities, registration, a clean console (no React/jsdom warnings while every area is rendered and driven), and an accessibility/reference-integrity sweep of 86 rendered surfaces (unique ids, `aria-controls`/`aria-labelledby`/`aria-describedby`/`label[for]` targets, named controls and buttons, radio grouping, progressbar semantics, heading order, no positive `tabindex`, and no text node that mixes Arabic with Latin inside an LTR box).
 - `npm run build` — production Vite build (lazy chunks `solutionsData39`, `TeacherGuide39`).
 - `node scripts/check-english-direction.mjs` — 39 lessons.
 - `node scripts/audit-render-direction.mjs` — 39 lesson folders.

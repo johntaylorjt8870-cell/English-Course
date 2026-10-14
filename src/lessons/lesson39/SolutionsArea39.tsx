@@ -129,7 +129,7 @@ export default function SolutionsArea39({
               <button
                 type="button"
                 aria-expanded={openCards[solution.n] === true}
-                aria-controls={`solution-39-details-${solution.n}`}
+                aria-controls={openCards[solution.n] ? `solution-39-details-${solution.n}` : undefined}
                 onClick={() => toggleCard(solution.n)}
                 className={`${FOCUS_39} min-h-11 rounded-xl border border-[#cfd8d2] bg-[#fbfdfc] px-3 py-2 text-sm font-black text-[#17354a] transition-colors hover:bg-[#eef4f0] motion-reduce:transition-none`}
               >

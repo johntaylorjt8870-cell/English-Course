@@ -401,7 +401,7 @@ export default function TeacherGuide39({ onGoSolutions, onLock }: { onGoSolution
                 </li>
               ))}
             </ul>
-            <h4 className="mt-3 text-sm font-black text-[#17354a]">ساعة الرحلة — تحقق من الحساب</h4>
+            <h3 className="mt-3 text-sm font-black text-[#17354a]">ساعة الرحلة — تحقق من الحساب</h3>
             <ul className="mt-1 space-y-1 text-sm leading-6 text-[#24343b]">
               {READING34_JOURNEY_39.map((stop) => (
                 <li key={stop.clock}>
@@ -413,7 +413,7 @@ export default function TeacherGuide39({ onGoSolutions, onLock }: { onGoSolution
                 </li>
               ))}
             </ul>
-            <h4 className="mt-3 text-sm font-black text-[#17354a]">تحليل الصيغ في النص — إضافة من المنصة</h4>
+            <h3 className="mt-3 text-sm font-black text-[#17354a]">تحليل الصيغ في النص — إضافة من المنصة</h3>
             <ul className="mt-1 space-y-2 text-sm leading-6 text-[#24343b]">
               {READING34_ANALYSIS_39.map((entry) => (
                 <li key={entry.line}>
@@ -436,7 +436,7 @@ export default function TeacherGuide39({ onGoSolutions, onLock }: { onGoSolution
               {DIALOGUE_LINES_39.map((line) => (
                 <li key={line.id}>
                   <p dir="ltr" className="font-en text-left">
-                    {line.speaker}: {line.en}
+                    <span dir="auto">{line.speaker}</span>: {line.en}
                   </p>
                   <p dir="rtl">
                     <Rich text={line.ar} />
@@ -461,7 +461,7 @@ export default function TeacherGuide39({ onGoSolutions, onLock }: { onGoSolution
               {DIALOGUE2_LINES_39.map((line) => (
                 <li key={line.id}>
                   <p dir="ltr" className="font-en text-left">
-                    {line.speaker}: {line.en}
+                    <span dir="auto">{line.speaker}</span>: {line.en}
                   </p>
                   <p dir="rtl">
                     <Rich text={line.ar} />
@@ -587,8 +587,8 @@ export default function TeacherGuide39({ onGoSolutions, onLock }: { onGoSolution
             <ul className="mt-2 space-y-2 text-sm leading-6 text-[#24343b]">
               {MISCONCEPTIONS_39.map((item) => (
                 <li key={item.id} data-misconception={item.id} className="rounded-xl border border-[#e2e4de] bg-[#fdfcf8] p-3">
-                  <p dir="ltr" className="font-en text-left font-black text-[#8d3832]">
-                    ✗ {item.wrong}
+                  <p dir="auto" className="font-black text-[#8d3832]">
+                    ✗ <Rich text={item.wrong} />
                   </p>
                   <p dir="auto" className="mt-1 font-black text-[#28533b]">
                     <Rich text={item.right} />

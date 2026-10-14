@@ -851,13 +851,20 @@ for (const id of ["s29", "s30", "s31", "s32", "s34"]) {
   ok(!!firstCard && firstCard.querySelectorAll("[data-solution-details]").length === 0 && normalize(firstCard.textContent).includes("الإجابة النموذجية"), "solution cards start collapsed with the answer visible");
   const cardToggle = firstCard ? findButton(firstCard, "إظهار الشرح والبدائل") : null;
   ok(
-    !!cardToggle && cardToggle.getAttribute("aria-expanded") === "false" &&
-      cardToggle.getAttribute("aria-controls") === `solution-39-details-${firstCard.getAttribute("data-solution")}`,
-    "each solution card has an accessible expand control",
+    !!cardToggle && cardToggle.getAttribute("aria-expanded") === "false" && !cardToggle.hasAttribute("aria-controls"),
+    "each solution card has an accessible expand control that points at no panel while the explanation is out of the DOM",
   );
   click(cardToggle);
   await tick(3);
-  ok(firstCard.querySelectorAll("[data-solution-details]").length === 1 && normalize(firstCard.textContent).includes("التفسير:") && cardToggle.getAttribute("aria-expanded") === "true", "expanding one card reveals its explanation");
+  const detailsId = `solution-39-details-${firstCard.getAttribute("data-solution")}`;
+  ok(
+    firstCard.querySelectorAll("[data-solution-details]").length === 1 &&
+      normalize(firstCard.textContent).includes("التفسير:") &&
+      cardToggle.getAttribute("aria-expanded") === "true" &&
+      cardToggle.getAttribute("aria-controls") === detailsId &&
+      !!document.getElementById(detailsId),
+    "expanding one card reveals its explanation and resolves aria-controls to the mounted panel",
+  );
   click(cardToggle);
   await tick(3);
   ok(firstCard.querySelectorAll("[data-solution-details]").length === 0, "the same control collapses the card again");
@@ -907,10 +914,12 @@ for (const id of ["s29", "s30", "s31", "s32", "s34"]) {
 }
 
 // 12) Integrated shell.
+const shellSnapshots = [];
 {
   const { el: shell, root: shellRoot } = M.mount(M.React.createElement(M.Lesson39, { onExit() {} }));
   await tick();
   ok(!!shell.querySelector('[data-lesson="39"] [data-area="lesson39-student"]'), "integrated Lesson 39 shell starts in the Student Area");
+  shellSnapshots.push(["student", shell.innerHTML]);
   const mobileToggle = findButton(shell, "محتويات الدرس");
   const mobilePanel = shell.querySelector("#lesson39-mobile-nav");
   ok(mobileToggle?.getAttribute("aria-expanded") === "false" && mobilePanel?.hidden, "mobile navigation exposes a controlled, initially collapsed panel");
@@ -922,6 +931,16 @@ for (const id of ["s29", "s30", "s31", "s32", "s34"]) {
   ok(mobileToggle?.getAttribute("aria-expanded") === "false" && mobilePanel?.hidden, "mobile navigation closes");
   const stepButtons = [...shell.querySelectorAll("[data-step-nav]")];
   ok(stepButtons.length > 0 && stepButtons.some((button) => button.getAttribute("data-step-nav") === "cover"), "chapter navigation exposes step buttons for the opening step");
+  const chapterToggles = [...shell.querySelectorAll('nav[aria-label="محتويات الدرس 39"] button[aria-expanded]')];
+  ok(
+    chapterToggles.length >= CHAPTERS_39.length &&
+      chapterToggles.length % CHAPTERS_39.length === 0 &&
+      chapterToggles.every((button) => {
+        const controls = button.getAttribute("aria-controls");
+        return controls ? !!shell.querySelector(`#${controls}`) : button.getAttribute("aria-expanded") === "false";
+      }),
+    `every chapter disclosure in both navigation rails (${chapterToggles.length} toggles) names only a panel that is actually mounted`,
+  );
   M.act(() => document.body.dispatchEvent(new win.KeyboardEvent("keydown", { key: "ArrowLeft", bubbles: true, cancelable: true })));
   await tick(5);
   ok(!!shell.querySelector('[data-area="lesson39-student"] [data-step-id="s01"]'), "Student Area supports keyboard next-step navigation (ArrowLeft moves forward in RTL)");
@@ -938,6 +957,7 @@ for (const id of ["s29", "s30", "s31", "s32", "s34"]) {
   click(findButton(shell, "منطقة الاختبار"));
   await tick();
   const shellTest = shell.querySelector('[data-area="lesson39-test"]');
+  shellSnapshots.push(["test", shell.innerHTML]);
   const shellQuestions = [...shellTest.querySelectorAll("[data-test-question]")];
   ok(shellQuestions.length === 25, "integrated Test Area renders the 25 formal questions");
   const submit = findButton(shellTest, "إرسال الاختبار");
@@ -953,10 +973,12 @@ for (const id of ["s29", "s30", "s31", "s32", "s34"]) {
   await tick(10);
   ok(normalize(shellTest.textContent).includes("لا يوجد تصحيح فوري"), "after submission the Test Area states that there is no immediate correction");
   ok(shellTest.querySelectorAll("[data-test-feedback]").length === 0 && !shellTest.querySelector("[data-solution]"), "even after submission the Test Area contains no score, key, or explanation");
+  shellSnapshots.push(["test-submitted", shell.innerHTML]);
   ok(findButton(shell, "منطقة الحلول")?.disabled === false, "submitting the test unlocks the Solutions Area");
   click(findButton(shell, "منطقة الحلول"));
   await M.act(async () => { await tick(120); });
   ok(shell.querySelectorAll('[data-area="lesson39-solutions"] [data-solution]').length === 5, "integrated Solutions Area lazy-loads the first level after submission");
+  shellSnapshots.push(["solutions", shell.innerHTML]);
   click(findButton(shell, "منطقة المعلم"));
   await tick();
   const teacherForm = shell.querySelector('form[data-area="lesson39-teacher"]');
@@ -967,11 +989,13 @@ for (const id of ["s29", "s30", "s31", "s32", "s34"]) {
   await tick(5);
   ok(!!teacherForm.querySelector('[role="alert"]'), "Teacher Area reports an accessible error for an incorrect password");
   ok(!shell.querySelector('[data-area="lesson39-teacher"] nav[aria-label="أقسام دليل المعلم"]'), "a wrong password does not load the teacher guide");
+  shellSnapshots.push(["teacher-locked", shell.innerHTML]);
   setNative(passwordField, "somer173");
   await tick(5);
   M.act(() => teacherForm.dispatchEvent(new win.Event("submit", { bubbles: true, cancelable: true })));
   await M.act(async () => { await tick(150); });
   ok(!!shell.querySelector('[data-area="lesson39-teacher"] nav[aria-label="أقسام دليل المعلم"]'), "the shared teacher password loads the separate Teacher Area");
+  shellSnapshots.push(["teacher-unlocked", shell.innerHTML]);
   shellRoot.unmount();
   shell.remove();
 }
@@ -1197,6 +1221,79 @@ ok(["\u200f", "\u200e"].every((mark) => directionSources.includes(mark) === fals
       existsSync(join(root, "docs/lesson39-coverage.md")) && existsSync(join(root, "docs/lesson39-source-audit.md")),
     "Lesson 39 source ledger, separate solution data, and both documents exist",
   );
+}
+
+// 15) Accessibility and reference integrity over every rendered surface.
+{
+  const a11yDom = new JSDOM("<!doctype html><html><body></body></html>");
+  const adoc = a11yDom.window.document;
+  const ARABIC = /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/;
+  const LATIN = /[A-Za-z]/;
+  const problems = [];
+  const note = (message) => { if (problems.length < 60) problems.push(message); };
+  const sweep = (html, label) => {
+    adoc.body.innerHTML = html;
+    const all = (selector) => [...adoc.body.querySelectorAll(selector)];
+    const ids = all("[id]").map((el) => el.id);
+    const idset = new Set(ids);
+    ids.forEach((id, index) => { if (ids.indexOf(id) !== index) note(`${label}: duplicate id #${id}`); });
+    for (const attribute of ["aria-controls", "aria-labelledby", "aria-describedby"]) {
+      for (const el of all(`[${attribute}]`)) {
+        for (const token of el.getAttribute(attribute).split(/\s+/)) {
+          if (token && !idset.has(token)) note(`${label}: ${attribute}="${token}" resolves to nothing`);
+        }
+      }
+    }
+    for (const el of all("label[for]")) if (!idset.has(el.getAttribute("for"))) note(`${label}: label[for="${el.getAttribute("for")}"] resolves to nothing`);
+    for (const el of all("input,textarea,select")) {
+      const named =
+        el.getAttribute("aria-label") || el.getAttribute("aria-labelledby") || el.getAttribute("title") ||
+        el.closest("label") || (el.id && adoc.body.querySelector(`label[for="${el.id}"]`));
+      if (!named) note(`${label}: unnamed ${el.tagName.toLowerCase()}[type=${el.getAttribute("type") || "-"}][name=${el.getAttribute("name") || "-"}]`);
+    }
+    for (const el of all("button")) {
+      if (!(el.textContent || "").trim() && !el.getAttribute("aria-label") && !el.getAttribute("title")) note(`${label}: unnamed button`);
+    }
+    for (const el of all("img")) if (!el.hasAttribute("alt")) note(`${label}: img without alt`);
+    for (const el of all("[tabindex]")) if (Number(el.getAttribute("tabindex")) > 0) note(`${label}: positive tabindex=${el.getAttribute("tabindex")}`);
+    for (const el of all('input[type="radio"]')) {
+      if (!el.getAttribute("name")) note(`${label}: radio without a name`);
+      const group = el.closest("fieldset,[role=radiogroup]");
+      if (!group) note(`${label}: radio outside any group`);
+      else if (!group.querySelector("legend") && !group.getAttribute("aria-label") && !group.getAttribute("aria-labelledby")) note(`${label}: radio group without an accessible name`);
+    }
+    for (const el of all('[role="progressbar"]')) {
+      if (!el.getAttribute("aria-valuenow") || !el.getAttribute("aria-valuemin") || !el.getAttribute("aria-valuemax")) note(`${label}: progressbar without value semantics`);
+      if (!el.getAttribute("aria-label") && !el.getAttribute("aria-labelledby")) note(`${label}: progressbar without an accessible name`);
+    }
+    const levels = all("h1,h2,h3,h4,h5,h6").map((el) => Number(el.tagName[1]));
+    for (let index = 1; index < levels.length; index++) {
+      if (levels[index] - levels[index - 1] > 1) note(`${label}: heading jump h${levels[index - 1]} to h${levels[index]}`);
+    }
+    // A dir="ltr" box may hold a pure-Arabic label (the shared PlatformTag pill does),
+    // but a single text node mixing Arabic and Latin letters inside LTR is an ordering bug.
+    const nearestDir = (element) => {
+      for (let el = element; el && el !== adoc.body; el = el.parentElement) {
+        const dir = el.getAttribute ? el.getAttribute("dir") : null;
+        if (dir) return dir;
+      }
+      return "rtl";
+    };
+    const walker = adoc.createTreeWalker(adoc.body, 4);
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      if (nearestDir(node.parentElement) !== "ltr") continue;
+      const value = node.nodeValue || "";
+      if (ARABIC.test(value) && LATIN.test(value)) note(`${label}: mixed text node inside dir="ltr": ${value.trim().slice(0, 60)}`);
+    }
+  };
+  for (const html of renderedSnapshots) sweep(html, "snapshot");
+  for (const [label, html] of shellSnapshots) sweep(html, `shell:${label}`);
+  ok(
+    problems.length === 0,
+    `every rendered Lesson 39 surface keeps ids, ARIA references, control names, radio grouping, heading order, and LTR text nodes consistent — ${problems.length} problems: ${problems.slice(0, 6).join(" | ") || "none"}`,
+  );
+  ok(shellSnapshots.length >= 6, `the integrated shell was swept in ${shellSnapshots.length} states (student, test, submitted, solutions, teacher locked, teacher unlocked)`);
+  ok(shellSnapshots.every(([, html]) => /<h1/.test(html)), "every integrated area state keeps the lesson h1 in view");
 }
 
 ok(

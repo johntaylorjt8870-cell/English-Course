@@ -88,7 +88,7 @@ export default function Lesson39({ onExit }: { onExit?: () => void }) {
             <button
               type="button"
               aria-expanded={expanded}
-              aria-controls={`${prefix}-chapter-${chapter.id}`}
+              aria-controls={expanded ? `${prefix}-chapter-${chapter.id}` : undefined}
               onClick={() => setOpenChapters((current) => ({ ...current, [chapter.id]: !current[chapter.id] }))}
               className={`${FOCUS_39} flex min-h-12 w-full items-center justify-between gap-2 rounded-xl px-3 py-2 text-right ${
                 active ? "bg-[#eef4f0] text-[#17354a]" : "text-[#24343b] hover:bg-[#f7f8f5]"

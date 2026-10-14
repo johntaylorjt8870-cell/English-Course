@@ -112,6 +112,7 @@ Dialogue provenance is tracked on **two** axes, because the two dialogues differ
 | Test neutrality and isolation | §6, §12 | no answer leakage, no solutions import in Test Area |
 | Direction, BIDI, contrast | §13, §13b | computed contrast on rendered markup, overflow/responsive checks |
 | Clean console | §14 | zero React/jsdom `console.error`/`warn` messages while rendering and driving every area (no duplicate-key, DOM-nesting, act, or controlled-input warnings) |
+| Accessibility and reference integrity | §15 | 86 rendered surfaces (40 steps, 37 driven lab states, test, solutions, teacher guide, and 6 integrated shell states): unique ids, every ARIA reference resolves, every control and button has an accessible name, radios grouped and named, progressbar semantics, no heading-level jumps, no positive `tabindex`, and no Arabic+Latin mixed text node inside a `dir="ltr"` box |
 | Registration | §14 | `App.tsx`, `package.json`, global direction/navigation/final-test audits, both docs |
 
 **Not verified:** real-browser visual rendering. This environment has no browser; build success, HTTP 200, and jsdom rendering are **not** visual verification, and no screenshots were produced or fabricated. Mobile/desktop layout is checked programmatically (overflow, wrap, tap-target sizes), not visually.

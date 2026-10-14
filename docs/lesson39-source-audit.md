@@ -111,6 +111,7 @@ Dialogue provenance is tracked on **two** axes, because the two dialogues differ
 | Rendered DOM of every step and area | §5, §7, §8, §10–§12 | jsdom render of Student/Test/Solutions/Teacher |
 | Test neutrality and isolation | §6, §12 | no answer leakage, no solutions import in Test Area |
 | Direction, BIDI, contrast | §13, §13b | computed contrast on rendered markup, overflow/responsive checks |
+| Clean console | §14 | zero React/jsdom `console.error`/`warn` messages while rendering and driving every area (no duplicate-key, DOM-nesting, act, or controlled-input warnings) |
 | Registration | §14 | `App.tsx`, `package.json`, global direction/navigation/final-test audits, both docs |
 
 **Not verified:** real-browser visual rendering. This environment has no browser; build success, HTTP 200, and jsdom rendering are **not** visual verification, and no screenshots were produced or fabricated. Mobile/desktop layout is checked programmatically (overflow, wrap, tap-target sizes), not visually.

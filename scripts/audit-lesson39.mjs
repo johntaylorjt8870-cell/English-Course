@@ -15,6 +15,16 @@ mkdirSync(outDir, { recursive: true });
 const outFile = join(outDir, "stdin.mjs");
 const failures = [];
 let assertions = 0;
+// Capture React/jsdom console noise (duplicate keys, DOM nesting, act warnings,
+// controlled-input warnings) so a clean console is an asserted contract, not luck.
+const consoleNoise = [];
+for (const level of ["error", "warn"]) {
+  const original = console[level].bind(console);
+  console[level] = (...args) => {
+    consoleNoise.push(`${level}: ${args.map((value) => String(value)).join(" ").slice(0, 220)}`);
+    original(...args);
+  };
+}
 const ok = (condition, message) => {
   assertions++;
   if (!condition) failures.push(message);
@@ -1188,6 +1198,11 @@ ok(["\u200f", "\u200e"].every((mark) => directionSources.includes(mark) === fals
     "Lesson 39 source ledger, separate solution data, and both documents exist",
   );
 }
+
+ok(
+  consoleNoise.length === 0,
+  `Lesson 39 renders and interacts with a clean console (no React key/nesting/act warnings) — got ${consoleNoise.length}: ${consoleNoise.slice(0, 4).join(" | ") || "none"}`,
+);
 
 rmSync(outDir, { recursive: true, force: true });
 

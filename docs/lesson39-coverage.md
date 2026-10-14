@@ -182,7 +182,7 @@ English examples, formulas, and tables go through `Rich` / `LatinRuns`, through 
 
 ## Validation (jsdom / Node — not a visual browser)
 
-- `npm run audit:lesson39` — source coverage, 25×5 test, 25 solutions, labs, BIDI, contrast, CSS utilities, registration.
+- `npm run audit:lesson39` — 353 assertions: source coverage, 25×5 test, 25 solutions, labs, BIDI, contrast, CSS utilities, registration, and a clean console (no React/jsdom warnings while every area is rendered and driven).
 - `npm run build` — production Vite build (lazy chunks `solutionsData39`, `TeacherGuide39`).
 - `node scripts/check-english-direction.mjs` — 39 lessons.
 - `node scripts/audit-render-direction.mjs` — 39 lesson folders.

@@ -1,0 +1,248 @@
+[
+  {
+    "id": "cover",
+    "title": "الدرس 41: Master Auxiliary Verbs",
+    "units": 19,
+    "sha256": "30a8689ca35a6e51b89051410b846295ed35681895f8b982f8cdb08b05edcb4f"
+  },
+  {
+    "id": "s01",
+    "title": "أهداف الدرس",
+    "units": 11,
+    "sha256": "03421612d68b5ff5eec742a456d4e9fee2be913bd218f50ac01e47be18a380f9"
+  },
+  {
+    "id": "s02",
+    "title": "ما الفعل المساعد أصلًا؟",
+    "units": 29,
+    "sha256": "630e61c004a5d210d4e0b4fcb5d6b9a6cb91ad53f9face116dcb763d076c3e4b"
+  },
+  {
+    "id": "s03",
+    "title": "Main Verb vs Auxiliary Verb",
+    "units": 27,
+    "sha256": "33cfc3884bf7a3887d467363cf9d464d5c7796f1e39bdc7cfe2d4cb5f4fadb00"
+  },
+  {
+    "id": "s04",
+    "title": "المحركات الثلاثة الكبرى",
+    "units": 8,
+    "sha256": "b1cadc35136ac222e2df1b7547b47b89a6694c20839270997a8b9901cef22bd9"
+  },
+  {
+    "id": "s05",
+    "title": "عائلة BE الكاملة",
+    "units": 27,
+    "sha256": "551a78086036104a00b100db578558523a99ac9647ff5c61e2d77e92b679ef43"
+  },
+  {
+    "id": "s06",
+    "title": "الوظيفة الأولى: BE بوصفه فعلًا رئيسيًا",
+    "units": 20,
+    "sha256": "fb60798e488ff21965bc33c469ef7b46acfcbbb139821bc628894eee38f935b1"
+  },
+  {
+    "id": "s07",
+    "title": "الوظيفة الثانية: BE بوصفه فعلًا مساعدًا في الأزمنة المستمرة",
+    "units": 24,
+    "sha256": "a19ca12c201c0eef7909b0ca2b0a5d8e7d33e5010f4316fbfbf697986e4f11be"
+  },
+  {
+    "id": "s08",
+    "title": "لماذا نقول IS STUDYING وليس IS STUDY؟",
+    "units": 11,
+    "sha256": "cf21c76b7bf3e2a3c96f476fdb481da02133e07a5161e0e7cf7f4c7dbf34396e"
+  },
+  {
+    "id": "s09",
+    "title": "لا تستخدم DO مع BE في الأسئلة العادية",
+    "units": 19,
+    "sha256": "8ce86cc26ab29bce800635e8d364ed0c3a0def248b5e0ec4594e95c784d9a0be"
+  },
+  {
+    "id": "s10",
+    "title": "الوظيفة الثالثة: BE في المبني للمجهول — نظرة تمهيدية",
+    "units": 17,
+    "sha256": "db716710b7f1db598c37244143d22c294eb1839c0883c919894030eb959c126f"
+  },
+  {
+    "id": "s11",
+    "title": "عائلة DO",
+    "units": 11,
+    "sha256": "d8d88cf1305acfa0e302bc96470943f4ebdbd4ee7675b20913af095db95ad684"
+  },
+  {
+    "id": "s12",
+    "title": "الوظيفة الأولى: DO في أسئلة Present Simple",
+    "units": 23,
+    "sha256": "a640f598e2e5079bf74c00e8b4decf6c103f9be2c6586e7db3147819c603e171"
+  },
+  {
+    "id": "s13",
+    "title": "الوظيفة الثانية: DO في نفي Present Simple",
+    "units": 19,
+    "sha256": "7c9fb4cc3cded4c872c20f90fa371466dfcb7cb08a1c819a5afc0c0c9ceb4f32"
+  },
+  {
+    "id": "s14",
+    "title": "DID في الماضي البسيط",
+    "units": 21,
+    "sha256": "8f024ec9a3162574749edb767681f827105156d45ce69fff3a5ebc5c8e7dda8a"
+  },
+  {
+    "id": "s15",
+    "title": "لماذا لا نستخدم DO في جميع الأسئلة؟",
+    "units": 22,
+    "sha256": "86905b3ce58bf41ac1e96338aca51b90b4747786850763c985466e65849ee485"
+  },
+  {
+    "id": "s16",
+    "title": "الوظيفة الثالثة: DO للتأكيد — Emphatic DO",
+    "units": 27,
+    "sha256": "39e21b2660b734930b620ecb87e3d1bd2dead02ce8b8d7dc75d1ec3c104d09b3"
+  },
+  {
+    "id": "s17",
+    "title": "DO بوصفه فعلًا رئيسيًا",
+    "units": 24,
+    "sha256": "74be629627d7017781ebc03ab44cfb2d710dae1920b0a9e1b2d5eed28411207e"
+  },
+  {
+    "id": "s18",
+    "title": "عائلة HAVE",
+    "units": 9,
+    "sha256": "a1435f322c06e14634ada688d5f24ffda175689ad5749dfddcb0a1a1edd98157"
+  },
+  {
+    "id": "s19",
+    "title": "الوظيفة الأولى: HAVE في الأزمنة التامة",
+    "units": 21,
+    "sha256": "d5df0600cc52dc4d5cf933dcb45cfaf932e4217d83b71a4d3f19004ee518784a"
+  },
+  {
+    "id": "s20",
+    "title": "HAVE في الأزمنة التامة المستمرة",
+    "units": 18,
+    "sha256": "0acb1dcb2c13dbd7c24a4b01e35b90cabd6f310c9887e03d8726d19e7c6964cd"
+  },
+  {
+    "id": "s21",
+    "title": "HAVE بوصفه فعلًا رئيسيًا",
+    "units": 20,
+    "sha256": "af67da108f5e9db23ebcdf98b17868c2df907d152c03bf93f4d202b22c674231"
+  },
+  {
+    "id": "s22",
+    "title": "السؤال والنفي مع HAVE: الفرق المهم",
+    "units": 21,
+    "sha256": "b5aa1dd529402f82cc1acf05502f5fb691240dec670617773b9a63ae4ba894e0"
+  },
+  {
+    "id": "s23",
+    "title": "مختبر التمييز: HAVE رئيسي أم مساعد؟",
+    "units": 14,
+    "sha256": "298eb8d304a026657c4e228bbd0710de4401b3609516a1fe9089678ccd7875bc"
+  },
+  {
+    "id": "s24",
+    "title": "هل يمكن أن تحتوي الجملة على أكثر من فعل مساعد؟",
+    "units": 17,
+    "sha256": "094e7db89b2987fedcef9c570e49e940456ebbdc68d5325bd792da1b65ff7804"
+  },
+  {
+    "id": "s25",
+    "title": "قاعدة الفعل المساعد الأول — The First Auxiliary Rule",
+    "units": 24,
+    "sha256": "db7d96303bb5672ce94c63f83b7ebff0dae721f47306dcc1b7d7e636bb8b09b6"
+  },
+  {
+    "id": "s26",
+    "title": "المقارنة الكبرى: خمس جمل، خمسة أسئلة",
+    "units": 11,
+    "sha256": "36c9327e8645da17f368385c6ea29df678ce8b2944aba14baf90525edac16923"
+  },
+  {
+    "id": "s27",
+    "title": "خوارزمية اختيار الفعل المساعد الصحيح",
+    "units": 24,
+    "sha256": "6daf4d4f6e506fd8bdc2a4f938d248652042ef1042de580a938a896917ba94ee"
+  },
+  {
+    "id": "s28",
+    "title": "حوار تطبيقي: The Grammar Detective Club",
+    "units": 30,
+    "sha256": "632354f449051a35ca2d0c120eca322ce1787d0fe87ac67f5452a2b8645326f5"
+  },
+  {
+    "id": "s29",
+    "title": "الأخطاء العشرة الأكثر شيوعًا",
+    "units": 20,
+    "sha256": "69f0ee218cb571270d19aecf772ec6c35cc8c2fc7d675eb02406dd6be6bfb7bf"
+  },
+  {
+    "id": "s30",
+    "title": "التدريب الأول: حدد الفعل المساعد",
+    "units": 19,
+    "sha256": "bb3bbe72ca9c80d09148104f97b0c38559f7e9c5dab9090e5f69a554a893c3b6"
+  },
+  {
+    "id": "s31",
+    "title": "التدريب الثاني: اختر الفعل المساعد الصحيح",
+    "units": 41,
+    "sha256": "5db89a7d2f3ac28d42ff4fb016b51d8845325fe22564762514a98f2b93cee43c"
+  },
+  {
+    "id": "s32",
+    "title": "التدريب الثالث: حوّل الجمل إلى أسئلة",
+    "units": 17,
+    "sha256": "987458f7ea79e7b38094f2924371237a6d5d808d7ae19b9243762f17ed3a34e0"
+  },
+  {
+    "id": "s33",
+    "title": "التدريب الرابع: حوّل الجمل إلى النفي",
+    "units": 17,
+    "sha256": "6ce2ea310d4a95fb7f2f6654f6c8690500defd94c9baacdaf710d2ce73db9b70"
+  },
+  {
+    "id": "s34",
+    "title": "التدريب الخامس: الفعل الرئيسي أم الفعل المساعد؟",
+    "units": 18,
+    "sha256": "fe6fd93e85f88e44ae2ff22646d32dacc48ff59e529eecea789e64182c424224"
+  },
+  {
+    "id": "s35",
+    "title": "Reading Challenge — A Busy School Week",
+    "units": 39,
+    "sha256": "80dc84abf3a7f92b428ea0c114d5b2359960ac0447d8a1c4718ce41532edbc1b"
+  },
+  {
+    "id": "s36",
+    "title": "الاختبار النهائي — Auxiliary Verbs Master Test",
+    "units": 70,
+    "sha256": "7c18e7f17b46827fad018838c700cc6c099d043020497a678fcd0c7d754ec9a2"
+  },
+  {
+    "id": "s37",
+    "title": "مساحة المعلم — الحلول التفصيلية للاختبار",
+    "units": 3,
+    "sha256": "4972481737f56888f98f941f1f18485e15aba7348bb85bf749e5c1c95a390290"
+  },
+  {
+    "id": "s38",
+    "title": "Writing Mission — The Auxiliary Challenge",
+    "units": 23,
+    "sha256": "b40d3b599a5df7796e5775d1028aae57bd52942c8f153d3e601c53c6109c1aad"
+  },
+  {
+    "id": "s39",
+    "title": "الملخص الذهبي — The Three Engines",
+    "units": 32,
+    "sha256": "577fbf51789409299f1cca98c555cfb7c27a9dffc36f90da49e70e4d623ee876"
+  },
+  {
+    "id": "s40",
+    "title": "خريطة التقدم والمحطة القادمة",
+    "units": 16,
+    "sha256": "156f43e8e5d3d5a4b5e4c16bfac0418e670dc7590b9e45100571b4feb745996d"
+  }
+]

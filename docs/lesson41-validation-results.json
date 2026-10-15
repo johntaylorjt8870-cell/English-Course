@@ -1,0 +1,202 @@
+{
+  "results": [
+    {
+      "name": "lesson41",
+      "command": "npm run audit:lesson41",
+      "exit": 0,
+      "summary": [
+        "Lesson 41 static/data audit passed: 460 assertions; 41 sections, 66 practice items, 25 test questions, 26 test fields. Browser interaction/render checks run separately.",
+        "Lesson 41 DOM/BIDI audit passed: 1231 assertions; 41-step navigation, labels/ARIA, interactive feedback, complete-test submission/reset, locked teacher access and ten targeted BIDI cases."
+      ]
+    },
+    {
+      "name": "direction",
+      "command": "npm run check:english-direction",
+      "exit": 0,
+      "summary": [
+        "✓ English-direction check passed (1680 assertions, 41 lessons).",
+        "59/59 BIDI rendering assertions passed"
+      ]
+    },
+    {
+      "name": "navigation",
+      "command": "npm run audit:lesson-navigation",
+      "exit": 0,
+      "summary": [
+        "Lesson navigation audit: 152 passed, 0 failed"
+      ]
+    },
+    {
+      "name": "render-direction",
+      "command": "node scripts/audit-render-direction.mjs",
+      "exit": 0,
+      "summary": [
+        "✓ Render audit passed (1463 assertions): Subject → Verb → Object, I → am → a → student."
+      ]
+    },
+    {
+      "name": "source-reveal",
+      "command": "node scripts/audit-source-reveal.mjs",
+      "exit": 0,
+      "summary": [
+        "✓ Source-reveal audit passed (63 checks): لا لوحة «نص المصدر الحرفي — اضغط للعرض» ولا أي مكافئ لها، وأسطر المصدر المقرونة بالمحاولة محفوظة، ودفتر المصدر والوثائق وفهرس المعلم سليمة."
+      ]
+    },
+    {
+      "name": "final-test",
+      "command": "node scripts/audit-final-test.mjs",
+      "exit": 0,
+      "summary": [
+        "✓ Final Test audit passed (1248 checks): 9 modern lessons ✕ 12–15 questions, no reveal before the single correction, reset clears everything, existing teacher password gate."
+      ]
+    },
+    {
+      "name": "final-test-coverage",
+      "command": "node scripts/audit-final-test-coverage.mjs",
+      "exit": 0,
+      "summary": [
+        "✓ Final Test coverage audit passed (633 checks): الدروس 1–35 لها FinalTest واحد مناسب لبنيتها، 12–15 سؤالًا بمفاتيح صالحة، بلا كشف قبل التصحيح؛ واختبارات الدروس 36 و37 و38 و39 و40 المستقلة (25 سؤالًا لكلٍّ، بخمسة مستويات) لها تدقيق تفاعلي منفصل."
+      ]
+    },
+    {
+      "name": "mixed-bidi",
+      "command": "node scripts/audit-bidi-mixed.mjs",
+      "exit": 0,
+      "summary": [
+        "BIDI audit passed"
+      ]
+    },
+    {
+      "name": "lesson38",
+      "command": "npm run audit:lesson38",
+      "exit": 0,
+      "summary": [
+        "✓ Lesson 38 audit passed: 267 assertions; 36 numbered source sections + opening; 25 questions in five levels; 25 separate platform-authored solutions; timeline/formula/builder/reading/writing interactions; source/route/direction/contrast contracts."
+      ]
+    },
+    {
+      "name": "lesson39",
+      "command": "npm run audit:lesson39",
+      "exit": 0,
+      "summary": [
+        "✓ Lesson 39 audit passed: 357 assertions; 39 numbered source sections + opening; 62 exercise items incl. a 25-question test in five levels; 25 separate platform-authored solutions; timeline/formula/duration/builder/dialogue/stative/reading/writing interactions; source/route/direction/contrast contracts."
+      ]
+    },
+    {
+      "name": "lesson40",
+      "command": "npm run audit:lesson40",
+      "exit": 0,
+      "summary": [
+        "PASS audit-lesson40 (1055 assertions, 30 steps, 57 student items, 25 exam questions, 0 console errors)"
+      ]
+    },
+    {
+      "name": "build",
+      "command": "npm run build",
+      "exit": 0,
+      "summary": [
+        "✓ built in 7.81s"
+      ]
+    },
+    {
+      "name": "scoped-typescript",
+      "command": "npx tsc --noEmit --jsx react-jsx --module esnext --target es2022 --moduleResolution bundler --allowSyntheticDefaultImports --skipLibCheck src/lessons/lesson41/Lesson41.tsx",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "name": "whole-typescript",
+      "command": "npx tsc --noEmit --jsx react-jsx --module esnext --target es2022 --moduleResolution bundler --allowSyntheticDefaultImports --skipLibCheck src/main.tsx",
+      "exit": 2,
+      "summary": []
+    },
+    {
+      "name": "full-audit-chain",
+      "command": "npm run audit:english-direction",
+      "exit": 0,
+      "summary": [
+        "✓ Final Test audit passed (1248 checks): 9 modern lessons ✕ 12–15 questions, no reveal before the single correction, reset clears everything, existing teacher password gate.",
+        "✓ Final Test coverage audit passed (633 checks): الدروس 1–35 لها FinalTest واحد مناسب لبنيتها، 12–15 سؤالًا بمفاتيح صالحة، بلا كشف قبل التصحيح؛ واختبارات الدروس 36 و37 و38 و39 و40 المستقلة (25 سؤالًا لكلٍّ، بخمسة مستويات) لها تدقيق تفاعلي منفصل.",
+        "✓ Source-reveal audit passed (63 checks): لا لوحة «نص المصدر الحرفي — اضغط للعرض» ولا أي مكافئ لها، وأسطر المصدر المقرونة بالمحاولة محفوظة، ودفتر المصدر والوثائق وفهرس المعلم سليمة.",
+        "BIDI audit passed"
+      ]
+    },
+    {
+      "name": "browser",
+      "command": "node scripts/audit-lesson41-browser.mjs",
+      "exit": 0,
+      "summary": [
+        "Real Chromium Lesson 41: 347 checks, 0 failures."
+      ]
+    },
+    {
+      "name": "diff-check",
+      "command": "git diff --check",
+      "exit": 0,
+      "summary": []
+    }
+  ],
+  "typescriptComparison": {
+    "baselineErrors": 179,
+    "currentErrors": 179,
+    "identical": true
+  },
+  "initialIntegrationFailures": [
+    {
+      "name": "direction",
+      "command": "npm run check:english-direction",
+      "exit": 0,
+      "summary": [
+        "✓ English-direction check passed (1680 assertions, 41 lessons).",
+        "59/59 BIDI rendering assertions passed"
+      ]
+    },
+    {
+      "name": "navigation",
+      "command": "npm run audit:lesson-navigation",
+      "exit": 0,
+      "summary": [
+        "Lesson navigation audit: 152 passed, 0 failed"
+      ]
+    },
+    {
+      "name": "render-direction",
+      "command": "node scripts/audit-render-direction.mjs",
+      "exit": 0,
+      "summary": [
+        "✓ Render audit passed (1462 assertions): Subject → Verb → Object, I → am → a → student."
+      ]
+    },
+    {
+      "name": "final-test",
+      "command": "node scripts/audit-final-test.mjs",
+      "exit": 0,
+      "summary": [
+        "✓ Final Test audit passed (1248 checks): 9 modern lessons ✕ 12–15 questions, no reveal before the single correction, reset clears everything, teacher key behind somer173."
+      ]
+    },
+    {
+      "name": "lesson39",
+      "command": "npm run audit:lesson39",
+      "exit": 0,
+      "summary": [
+        "✓ Lesson 39 audit passed: 357 assertions; 39 numbered source sections + opening; 62 exercise items incl. a 25-question test in five levels; 25 separate platform-authored solutions; timeline/formula/duration/builder/dialogue/stative/reading/writing interactions; source/route/direction/contrast contracts."
+      ]
+    },
+    {
+      "name": "lesson40",
+      "command": "npm run audit:lesson40",
+      "exit": 0,
+      "summary": [
+        "PASS audit-lesson40 (1055 assertions, 30 steps, 57 student items, 25 exam questions, 0 console errors)"
+      ]
+    }
+  ],
+  "resolvedInventoryFailures": [
+    "Initial lesson count = 40 assumptions updated to 41 in inventory/meta-audits.",
+    "Old prohibition on Lesson 41 moved to Lesson 42; old source roadmaps stay untouched.",
+    "Navigation retains Lesson 40 window and adds Lesson 41 route/current-window cases.",
+    "Final-test registry recognizes independent Lesson 41 assessment.",
+    "Aggregate first stopped at Lesson 31 inventory assertion; updated the two inventory assertions only."
+  ]
+}

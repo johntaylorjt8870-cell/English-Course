@@ -435,7 +435,7 @@ ok(
 mounted.root.unmount();
 
 // ============================================================
-// 6. WCAG AA Contrast & App Registration Audit (No Lesson 41 Route)
+// 6. WCAG AA Contrast & App Registration Audit (No Lesson 42 Route; Lesson 41 added independently)
 // ============================================================
 function hexToRgb(hex) {
   const clean = hex.replace("#", "");
@@ -533,13 +533,13 @@ const appCode = readFileSync(join(root, "src/App.tsx"), "utf8");
 ok(appCode.includes('import Lesson40 from "./lessons/lesson40/Lesson40"'), "App.tsx must import Lesson40");
 ok(appCode.includes('href: "#/lesson/40"'), "App.tsx must include card href #/lesson/40");
 ok(appCode.includes("route === 40"), "App.tsx must route #/lesson/40");
-ok(!appCode.includes("lesson41") && !appCode.includes("#/lesson/41") && !existsSync(join(root, "src/lessons/lesson41")), "Lesson 41 must not be created or routed");
+ok(!appCode.includes("lesson42") && !appCode.includes("#/lesson/42") && !existsSync(join(root, "src/lessons/lesson42")), "Lesson 42 must not be created or routed; Lesson 40 source roadmap stays untouched");
 
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 ok(pkg.scripts["audit:lesson40"] === "node scripts/audit-lesson40.mjs", "package.json exposes audit:lesson40");
 ok((pkg.scripts["audit:english-direction"] || "").includes("audit-lesson40.mjs"), "audit:english-direction runs the Lesson 40 audit");
-ok(readFileSync(join(root, "scripts/check-english-direction.mjs"), "utf8").includes("lessons.length === 40"), "direction-check inventory covers 40 lessons");
-ok(readFileSync(join(root, "scripts/audit-render-direction.mjs"), "utf8").includes("lessonFolders.length === 40"), "render audit covers 40 lesson folders");
+ok(readFileSync(join(root, "scripts/check-english-direction.mjs"), "utf8").includes("lessons.length === 41"), "direction-check inventory covers 41 lessons");
+ok(readFileSync(join(root, "scripts/audit-render-direction.mjs"), "utf8").includes("lessonFolders.length === 41"), "render audit covers 41 lesson folders");
 ok(readFileSync(join(root, "scripts/audit-lesson-navigation.mjs"), "utf8").includes('"#/lesson/40"'), "navigation audit covers the Lesson 40 route");
 ok(readFileSync(join(root, "scripts/audit-final-test.mjs"), "utf8").includes("lesson40DedicatedAssessment"), "final-test audit recognises the Lesson 40 dedicated assessment");
 ok(readFileSync(join(root, "scripts/audit-bidi-mixed.mjs"), "utf8").includes("39, 40"), "bidi-mixed audit includes Lesson 40 in STRICT and LESSONS");

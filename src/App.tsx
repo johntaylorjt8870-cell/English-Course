@@ -39,6 +39,7 @@ import Lesson37 from "./lessons/lesson37/Lesson37";
 import Lesson38 from "./lessons/lesson38/Lesson38";
 import Lesson39 from "./lessons/lesson39/Lesson39";
 import Lesson40 from "./lessons/lesson40/Lesson40";
+import Lesson41 from "./lessons/lesson41/Lesson41";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -465,6 +466,15 @@ const CARDS: Card[] = [
     href: "#/lesson/40",
     grad: "from-[#17354a] to-[#245f62]",
   },
+  {
+    n: 41,
+    title: "الدرس 41: Master Auxiliary Verbs — الإتقان الشامل للأفعال المساعدة",
+    en: "The Hidden Engines of English Sentences",
+    emoji: "⚙️",
+    stats: "40 قسمًا · 41 خطوة · BE / DO / HAVE · اختبار 25 سؤالًا",
+    href: "#/lesson/41",
+    grad: "from-[#101c32] to-[#4338a5]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -586,6 +596,7 @@ export default function App() {
   else if (route === 38) page = <Lesson38 onExit={goHome} />;
   else if (route === 39) page = <Lesson39 onExit={goHome} />;
   else if (route === 40) page = <Lesson40 onExit={goHome} />;
+  else if (route === 41) page = <Lesson41 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

@@ -205,12 +205,22 @@ const lesson40DedicatedAssessment =
   lesson40TestArea.includes("TEST_QUESTION_COUNT_40") &&
   !lesson40TestArea.includes("solutionsData40");
 ok(lesson40DedicatedAssessment, "الدرس 40: اختبار Grand Exam مستقلّ (25 سؤالًا/5 مستويات) ومفصول عن محرّك FinalTest وعن ملفّ الحلول");
+// Lesson 41: independent 25-question / five-level assessment; detailed behavioral checks in audit:lesson41.
+const lesson41TestData = readFileSync(join(root, "src/lessons/lesson41/testData41.ts"), "utf8");
+const lesson41TestArea = readFileSync(join(root, "src/lessons/lesson41/TestArea41.tsx"), "utf8");
+const lesson41DedicatedAssessment =
+  (lesson41TestData.match(/"id": "q\d+"/g) || []).length === 25 &&
+  (lesson41TestData.match(/"level": [1-5]/g) || []).length === 5 &&
+  lesson41TestArea.includes("testComplete41") &&
+  lesson41TestArea.includes("TEST_LEVELS_41") &&
+  !lesson41TestArea.includes("solutionsData41") && !lesson41TestData.includes("solutionsData41");
+ok(lesson41DedicatedAssessment, "Lesson 41: 25 questions, five levels, independent test without solution imports");
 const appLessons = [...new Set([...appSrc.matchAll(/route === (\d+)/g)].map((x) => Number(x[1])))].sort((a, b) => a - b);
-ok(appLessons.length >= 40, `كل دروس التطبيق مسجلة (${appLessons.length})`);
+ok(appLessons.length >= 41, `كل دروس التطبيق مسجلة (${appLessons.length})`);
 for (const n of appLessons) {
   const legacy = (m.QUIZZES[n] || []).length >= 12;
   const modern = m.finalTestLessons().includes(n);
-  const dedicated = (n === 36 && lesson36DedicatedAssessment) || (n === 37 && lesson37DedicatedAssessment) || (n === 38 && lesson38DedicatedAssessment) || (n === 39 && lesson39DedicatedAssessment) || (n === 40 && lesson40DedicatedAssessment);
+  const dedicated = (n === 36 && lesson36DedicatedAssessment) || (n === 37 && lesson37DedicatedAssessment) || (n === 38 && lesson38DedicatedAssessment) || (n === 39 && lesson39DedicatedAssessment) || (n === 40 && lesson40DedicatedAssessment) || (n === 41 && lesson41DedicatedAssessment);
   ok(legacy || modern || dedicated, `الدرس ${n}: له اختبار نهائي (قديم أو جديد أو Master Test مستقل)`);
 }
 

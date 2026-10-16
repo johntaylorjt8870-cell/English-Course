@@ -1,8 +1,8 @@
 # Lesson 42 — CAN & COULD · implementation report
 
 - **Branch:** `arena/298cfecf-english-course` (this session's branch, off `main` @ `9d81faf`)
-- **Pull request:** `feat: add Lesson 42 — CAN & COULD Interactive Language Lab` — opened from this branch, **left open and unmerged**. The branch is not merged, closed or deleted.
-- **Final commit:** the implementation commit on the branch (SHA recorded in the follow-up documentation commit that adds this PR link); `git log` on the branch lists both.
+- **Pull request:** [#54 — feat: add Lesson 42 — CAN & COULD Interactive Language Lab](https://github.com/johntaylorjt8870-cell/English-Course/pull/54) — opened from this branch, **left open and unmerged**. The branch is not merged, closed or deleted.
+- **Final commit:** `ceb8647be92c2f8f3a17e2d9bada283b6c5e31f3` (`feat: add Lesson 42 — CAN & COULD Interactive Language Lab`) is the implementation commit; the follow-up documentation commit on the same branch records this PR link. `git log` on the branch lists both.
 
 ## 1. Full visual identity — "Language Control Lab"
 
@@ -69,7 +69,7 @@ Known pre-existing observations (not caused by this work, not fixed): 182 TypeSc
 
 ## 10. Delivery constraints
 
-- PR opened from `arena/298cfecf-english-course` and **left open and unmerged**; the branch is not merged, closed or deleted.
+- PR [#54](https://github.com/johntaylorjt8870-cell/English-Course/pull/54) opened from `arena/298cfecf-english-course` and **left open and unmerged**; the branch is not merged, closed or deleted.
 - **Lesson 43 is not implemented.** It exists only as §44 roadmap prose; `NEXT_LESSON_42.status` is `planned-not-implemented`, no `src/lessons/lesson43` exists, and no route points at it. The guards that previously asserted "no Lesson 42" now assert "no Lesson 43".
 - No redesign of Lessons 1–41: only registry/audit inventory files were touched (`package.json`, `src/App.tsx`, and the audit scripts whose lesson-count assertions had to move from 41 to 42).
 - No fabricated answer keys, no automatic scoring claims for free writing, no correct-answer reveal before an attempt, and no platform-authored text presented as textbook content.

@@ -1,0 +1,31 @@
+// Loaded only by the gated Solutions Area / Teacher Guide.
+// Every key below is the §41 source key; the reasoning sentence is platform-authored
+// and explains the rule and the context behind the source key.
+export const TEST_SOLUTIONS_42 = [
+  ['A — can', 'Source key: A. She can speak English very well now. السبب: التعبير عن القدرة الحالية. now plus a present skill takes can, and speak stays V1.'],
+  ['B — could', 'Source key: B. When I was five, I could ride a bicycle. السبب: قدرة عامة في الماضي. The past time frame marks general past ability.'],
+  ['B — Could', 'Source key: B. ______ you help me, please? السبب: طلب مهذب. Could you...؟ is a present request; could is not past here.'],
+  ["A — couldn't", "Source key: A. I couldn't swim when I was little, but I can swim now. السبب: عدم القدرة في الماضي. The contrast with now confirms the past negative."],
+  ['B — be able to', 'Source key: B. After more practice, I will be able to solve these problems. السبب: بعد will نستخدم be able to للتعبير عن القدرة المستقبلية. will can is impossible: two modals cannot be stacked.'],
+  ["can't", "Source key: ⑥ can't. She can't drive a car. Negate the modal itself: can + not + V1 drive. does not can and can nots are both wrong."],
+  ['Can / play — Can you play the piano?', 'Source key: ⑦ Can you play. Can you play the piano؟ Move can before you and keep play as V1; no do-support.'],
+  ['could', 'Source key: ⑧ could. When my father was young, he could run very fast. General past ability.'],
+  ['were able to', 'Source key: ⑨ were able to. The task was difficult, but we were able to finish it yesterday. السبب: نجاح في موقف ماضٍ محدد. One specific task in the past is highlighted, so the affirmative takes were able to rather than could.'],
+  ['will be able to', 'Source key: ⑩ will be able to. Next year, I will be able to speak English more confidently. Future ability is built with will be able to + V1.'],
+  ['He can swim very well.', 'Source key: ⑪. cans → can: the modal never takes -s, and swim stays V1.'],
+  ['Can you help me?', 'Source key: ⑫. Can is itself the auxiliary, so delete Do and invert Can + you + help.'],
+  ['She could play the piano when she was young.', 'Source key: ⑬. After could the verb is V1: played → play.'],
+  ['I will be able to finish the project tomorrow.', 'Source key: ⑭. will can is not possible; future ability uses will be able to + V1.'],
+  ['Could you repeat the question?', 'Source key: ⑮. After Could you the base verb follows directly; remove to.'],
+  ['I can swim = قدرة حالية. I could swim when I was six = قدرة عامة في الماضي.', 'Source key: ⑯ الأولى تعبّر عن قدرة حالية، والثانية عن قدرة عامة في الماضي. The past time clause is what licenses could.'],
+  ['طلب مهذب', 'Source key: ⑰ طلب مهذب. Could you open the door, please؟ asks the listener to act now; could is not past here.'],
+  ['احتمال مستقبلي', 'Source key: ⑱ احتمال مستقبلي. It could rain tomorrow expresses possibility, not certainty and not ability.'],
+  ['لأن الجملة تبرز نجاحها في حل مشكلة محددة في الماضي، وليس مجرد امتلاك قدرة عامة.', 'Source key: ⑲. One difficult problem, one success: was able to highlights a specific past achievement.'],
+  ['نعم. السياق هو الذي يحدد المعنى.', 'Source key: ⑳ نعم. قد يكون السؤال عن القدرة إذا كنا نريد معرفة ما إذا كان الشخص يستطيع فتح الباب، وقد يكون طلبًا إذا كنا نريده أن يفتح الباب لنا.'],
+  ['Can', 'Source key: ㉑ Can. Can you design a simple robot؟ asks about a present ability, and Omar answers Yes, I can.'],
+  ["couldn't", "Source key: ㉒ couldn't. But when I was younger, I couldn't understand electronic circuits. Negative past ability."],
+  ['Could', 'Source key: ㉓ Could. Could you help me build a small robot, please؟ is a polite present request.'],
+  ['could', 'Source key: ㉔ could. We could work together after school. That\'s one idea. — could introduces a suggestion.'],
+  ['will be able to', 'Source key: ㉕ will be able to. I think I will be able to build more advanced robots. Future ability after a few months of practice.'],
+].map(([answer, reason], i) => ({ id:`q${i+1}`, number:i+1, answer, reason,
+  provenance: i < 25 ? 'مفتاح من §41 المصدر — الشرح من إعداد المنصة' : 'Platform-authored' }));

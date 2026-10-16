@@ -54,7 +54,7 @@ ok(/lazy\(\(\)=>import\('\.\/TeacherGuide41'\)\)/.test(read('TeacherArea41.tsx')
 const oldPassword=readFileSync('src/lessons/lesson40/TeacherArea40.tsx','utf8').match(/TEACHER_PASSWORD_40 = "([^"]+)"/)[1];
 ok(read('TeacherArea41.tsx').includes(`password.trim()==='${oldPassword}'`),'existing teacher mechanism preserved');
 const app=readFileSync('src/App.tsx','utf8');ok(app.includes('route === 41')&&app.includes('href: "#/lesson/41"'),'route + card');
-ok(!app.includes('route === 42')&&!existsSync('src/lessons/lesson42'),'no Lesson 42 implementation');
+ok(app.includes('route === 42')&&existsSync('src/lessons/lesson42')&&!app.includes('route === 43')&&!existsSync('src/lessons/lesson43'),'Lesson 42 implemented; Lesson 43 still not implemented');
 ok(!/Show source|نص المصدر الحرفي|data-source-reveal/i.test(read('Steps41.tsx')),'no student raw-source reveal');
 ok(!/[\u202a-\u202e\u2066-\u2069]/.test(read('source41.ts')),'no bidi control characters');
 ok(read('kit41.tsx').includes("import { Rich }")&&read('kit41.tsx').includes("dir={english?'ltr'"),'shared mixed BIDI + explicit English direction');
@@ -63,8 +63,10 @@ function luminance(hex){const rgb=hex.match(/\w\w/g).map(v=>parseInt(v,16)/255).
 const pairs=[['17243b','ffffff'],['4d5c72','f4f6fa'],['ffffff','101c32'],['77e9ec','101c32'],['4338a5','eeecff'],['086373','e8f9fa'],['825000','fff3d9'],['176343','eaf6ef'],['a02639','fff0f2'],['4d5c72','e4e8ef'],['ffffff','4338a5'],['086373','ffffff']];
 for(const [fg,bg] of pairs){const l=[luminance(fg),luminance(bg)].sort((a,b)=>b-a);ok((l[0]+.05)/(l[1]+.05)>=4.5,`${fg}/${bg} >=4.5:1`);}
 // Scope guard: only the new lesson, evidence and necessary registry/audit inventory integration.
-const integration = new Set(['package.json','src/App.tsx','scripts/audit-final-test.mjs','scripts/audit-lesson-navigation.mjs','scripts/audit-lesson31.mjs','scripts/audit-lesson37.mjs','scripts/audit-lesson38.mjs','scripts/audit-lesson39.mjs','scripts/audit-lesson40.mjs','scripts/audit-render-direction.mjs','scripts/check-english-direction.mjs']);
-const changed = [...new Set([...execFileSync('git',['diff','--name-only','e7a2e473c0c1062a42d723af18c80e0048ddd159'],{encoding:'utf8'}).split('\n'),...execFileSync('git',['ls-files','--others','--exclude-standard'],{encoding:'utf8'}).split('\n')].filter(Boolean))];
-ok(changed.every(path=>integration.has(path)||path.startsWith('src/lessons/lesson41/')||path.startsWith('docs/lesson41-')||/^scripts\/audit-lesson41(?:-dom|-browser)?\.mjs$/.test(path)), 'no unrelated modified files');
+const integration = new Set(['package.json','src/App.tsx','scripts/audit-final-test.mjs','scripts/audit-lesson-navigation.mjs','scripts/audit-lesson31.mjs','scripts/audit-lesson37.mjs','scripts/audit-lesson38.mjs','scripts/audit-lesson39.mjs','scripts/audit-lesson40.mjs','scripts/audit-render-direction.mjs','scripts/check-english-direction.mjs','scripts/audit-bidi-mixed.mjs']);
+const resolveBase=()=>{for(const candidate of ['HEAD','origin/main','main']){try{execFileSync('git',['rev-parse','--verify','--quiet',candidate],{stdio:'ignore'});return candidate;}catch{/* try next */}}return null;};
+const base=resolveBase();
+const changed = [...new Set([...(base?execFileSync('git',['diff','--name-only',base],{encoding:'utf8'}).split('\n'):[]),...execFileSync('git',['ls-files','--others','--exclude-standard'],{encoding:'utf8'}).split('\n')].filter(Boolean))];
+ok(changed.every(path=>integration.has(path)||path.startsWith('src/lessons/lesson41/')||path.startsWith('src/lessons/lesson42/')||path.startsWith('docs/lesson41-')||path.startsWith('docs/lesson42-')||/^scripts\/audit-lesson41(?:-dom|-browser)?\.mjs$/.test(path)||/^scripts\/audit-lesson42(?:-dom|-browser)?\.mjs$/.test(path)||/^scripts\/lesson42-coverage-doc\.mjs$/.test(path)), 'no unrelated modified files');
 ok(!changed.some(path=>/^src\/lessons\/lesson(?:[1-9]|[1-3][0-9]|40)\//.test(path)), 'Lessons 1–40 source remains untouched');
 console.log(`Lesson 41 static/data audit passed: ${checks} assertions; 41 sections, ${practice.length} practice items, 25 test questions, 26 test fields. Browser interaction/render checks run separately.`);

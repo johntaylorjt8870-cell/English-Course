@@ -6,7 +6,7 @@
 
 ## 1. Full visual identity — "Language Control Lab"
 
-Lesson 42 ships its own identity, distinct from Lesson 41's "Sentence Engine Studio": a warm-paper canvas (`#F4F1EA`), dark instrument panels (`#14110D`), monospace readouts, and two semantic signal channels — orange **CAN** (`#C2410C`) and fuchsia **COULD** (`#A21CAF`). All selectors are scoped beneath `.lesson42`; shared components, global typography and Lessons 1–41 are untouched. Ten stations, per-station section navigation, panel tones per pedagogical function, and responsive behaviour at 1024 / 850 / 500px. Details and the full token table: `docs/lesson42-design.md`.
+Lesson 42 ships its own identity, distinct from Lesson 41's "Sentence Engine Studio": a warm-paper canvas (`#F4F1EA`), dark instrument panels (`#14110D`), monospace readouts, and two semantic signal channels — orange **CAN** (`#C2410C`) and fuchsia **COULD** (`#A21CAF`). All selectors are scoped beneath `.lesson42`; shared components, global typography and Lessons 1–41 are untouched. Ten stations, per-station section navigation, panel tones per pedagogical function, and responsive behaviour at 1200 / 850 / 500px. Details and the full token table: `docs/lesson42-design.md`.
 
 ## 2. All 44 source sections covered
 
@@ -59,13 +59,13 @@ Every modal rule was checked against the supplied source and against standard us
 
 | Check | Command | Result |
 |---|---|---|
-| TypeScript (strict) | `./node_modules/.bin/tsc --noEmit … src/App.tsx` | **182 errors — the pre-existing baseline**, none in `lesson42` (no `tsconfig.json` exists; flags mirror the earlier baseline run) |
+| TypeScript (strict) | `./node_modules/.bin/tsc --noEmit … src/App.tsx` | **182 errors, none in `lesson42` and none in `src/App.tsx`** — all in pre-existing lessons (`lesson21/data.ts` alone accounts for 152). The stored baseline file records 179; the 3-error difference sits in `lesson10`, `lesson18` and `lesson20`, all byte-identical to the parent commit, so it pre-dates this work. No `tsconfig.json` exists; the flags mirror the earlier baseline run. |
 | ESLint | — | **not available**: the repository has no ESLint config or script; nothing was claimed |
 | Unit/behaviour tests | `npm run audit:english-direction`, `npm run audit:lesson-navigation`, `npm run check:english-direction` | all pass, including Lesson 42 static (418) and DOM (1892) audits |
 | Production build | `npm run build` | success in ~7.3s; `SolutionsArea42` and `TeacherGuide42` split into lazy chunks |
 | Browser verification | `node scripts/audit-lesson42-browser.mjs` | 334 checks, 0 failures (see §8) |
 
-Known pre-existing observations (not caused by this work, not fixed): 182 TypeScript errors across the repo; a Google Fonts request fails in this sandbox (no outbound access) and falls back to local fonts; no ESLint configuration exists; the teacher gate is a client-side lock.
+Known pre-existing observations (not caused by this work, not fixed): 182 TypeScript errors across the repo (179 in the stored baseline, the extra 3 in files unchanged since the parent commit); a Google Fonts request fails in this sandbox (no outbound access) and falls back to local fonts; no ESLint configuration exists; the teacher gate is a client-side lock.
 
 ## 10. Delivery constraints
 

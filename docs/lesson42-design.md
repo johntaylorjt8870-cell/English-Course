@@ -40,9 +40,9 @@ Normal text targets at least 4.5:1. 33 static token pairings are asserted in `sc
 
 ## Responsive behaviour
 
-- Desktop ≥ 1024px: sidebar rail + content column.
-- 850px: the rail collapses into the mobile toggle; panels stack.
-- 500px: dial rows, option grids, checklist and writing surfaces become single-column; minimum 46px control height is preserved.
+- ≥ 1200px: cover splits into two columns; the lesson body is a grid with a sticky station rail beside the content column.
+- ≤ 850px: the body collapses to one column and the station rail moves behind the mobile toggle; panels stack.
+- ≤ 500px: dial rows, option grids, the checklist and the writing surface become single-column; the 46px minimum control height is preserved.
 - Verified in Chromium at 1280×900 and 375×812 with no horizontal overflow in any of the 99 measured states.
 
 ## Accessibility

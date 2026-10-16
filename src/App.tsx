@@ -42,6 +42,7 @@ import Lesson40 from "./lessons/lesson40/Lesson40";
 import Lesson41 from "./lessons/lesson41/Lesson41";
 import Lesson42 from "./lessons/lesson42/Lesson42";
 import Lesson43 from "./lessons/lesson43/Lesson43";
+import Lesson44 from "./lessons/lesson44/Lesson44";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -495,6 +496,15 @@ const CARDS: Card[] = [
     href: "#/lesson/43",
     grad: "from-[#0E7C7B] to-[#B45309]",
   },
+  {
+    n: 44,
+    title: "الدرس 44: MUST & HAVE TO — الضرورة، والإلزام، والقواعد، والمسؤوليات",
+    en: "Obligation Lab · The Language of Necessity & Obligation",
+    emoji: "⚖️",
+    stats: "38 قسمًا · 39 خطوة · باني الضرورة وآلة الأزمنة · اختبار 25 سؤالًا",
+    href: "#/lesson/44",
+    grad: "from-[#0891B2] to-[#0EA5E9]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -619,6 +629,7 @@ export default function App() {
   else if (route === 41) page = <Lesson41 onExit={goHome} />;
   else if (route === 42) page = <Lesson42 onExit={goHome} />;
   else if (route === 43) page = <Lesson43 onExit={goHome} />;
+  else if (route === 44) page = <Lesson44 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

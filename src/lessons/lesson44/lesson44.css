@@ -1,0 +1,277 @@
+/* The Obligation Lab — scoped exclusively to Lesson 44.
+   Bright, vibrant identity: sky-blue canvas, white cards,
+   cyan MUST, amber HAVE TO, coral MUSTN'T, emerald don't-have-to,
+   purple HAD TO, teal WILL HAVE TO. NO dark backgrounds. */
+.lesson44{
+  --lab-canvas:#F0F9FF;--lab-surface:#FFFFFF;--lab-ink:#1E293B;--lab-muted:#64748B;
+  --lab-line:#CBD5E1;--lab-line-strong:#94A3B8;
+  --lab-must:#0891B2;--lab-must-ink:#0E7490;--lab-must-soft:#ECFEFF;
+  --lab-haveto:#D97706;--lab-haveto-ink:#92400E;--lab-haveto-soft:#FFFBEB;
+  --lab-prohibit:#EF4444;--lab-prohibit-ink:#B91C1C;--lab-prohibit-soft:#FEF2F2;
+  --lab-unnecessary:#10B981;--lab-unnecessary-ink:#065F46;--lab-unnecessary-soft:#ECFDF5;
+  --lab-past:#8B5CF6;--lab-past-ink:#6D28D9;--lab-past-soft:#F5F3FF;
+  --lab-future:#06B6D4;--lab-future-ink:#0E7490;--lab-future-soft:#ECFEFF;
+  --lab-signal:#F59E0B;--lab-signal-soft:#FEF3C7;
+  --lab-ok:#10B981;--lab-ok-soft:#ECFDF5;--lab-bad:#EF4444;--lab-bad-soft:#FEF2F2;
+  --lab-note:#475569;--lab-note-soft:#F1F5F9;
+  --lab-accent:#EC4899;
+  --radius:18px;--radius-sm:12px;
+  background:
+    radial-gradient(900px 400px at 90% -5%, #E0F2FE 0%, transparent 55%),
+    radial-gradient(800px 350px at -5% 15%, #FEF3C7 0%, transparent 50%),
+    var(--lab-canvas);
+  color:var(--lab-ink);
+  font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;
+  font-size:17px;line-height:1.85;min-height:100vh;overflow-wrap:anywhere;
+}
+.lesson44 *{box-sizing:border-box}
+.lesson44 h1,.lesson44 h2,.lesson44 h3,.lesson44 h4,.lesson44 p,.lesson44 figure{margin:0}
+.lesson44 h1{font-size:clamp(26px,3.4vw,42px);line-height:1.25;letter-spacing:-.02em;font-weight:800}
+.lesson44 h2{font-size:clamp(22px,2.6vw,31px);font-weight:750;line-height:1.5}
+.lesson44 h3{font-size:21px;font-weight:755;margin-bottom:16px;line-height:1.6}
+.lesson44 h4{font-size:18px;font-weight:700;margin:14px 0 6px}
+.lesson44 p+p{margin-top:10px}
+.lesson44 .source44-line{border-inline-start:3px solid var(--lab-must);background:var(--lab-must-soft);color:var(--lab-must-ink);padding:8px 12px;border-radius:8px;font-weight:600}
+.lesson44 .en44{display:inline-block;unicode-bidi:isolate;direction:ltr;text-align:left}
+.lesson44 .font-en{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}
+.lesson44 button,.lesson44 input,.lesson44 select,.lesson44 textarea{font:inherit}
+.lesson44 button{border:1px solid var(--lab-line-strong);border-radius:var(--radius-sm);padding:10px 16px;color:var(--lab-ink);background:var(--lab-surface);font-weight:700;cursor:pointer;line-height:1.5;min-height:46px;transition:background-color .15s,border-color .15s,color .15s,box-shadow .15s}
+.lesson44 button:hover:not(:disabled){border-color:var(--lab-must);background:var(--lab-must-soft);color:var(--lab-must-ink);box-shadow:0 2px 8px rgba(8,145,178,.12)}
+.lesson44 button:active:not(:disabled){background:var(--lab-must-soft)}
+.lesson44 button[aria-pressed=true],.lesson44 button[aria-current=step]{background:var(--lab-must-soft);border-color:var(--lab-must);color:var(--lab-must-ink)}
+.lesson44 button:disabled{background:var(--lab-note-soft);color:var(--lab-muted);border-color:var(--lab-line);cursor:not-allowed}
+.lesson44 :is(button,a,input,select,textarea,summary):focus-visible{outline:3px solid var(--lab-signal);outline-offset:3px}
+.lesson44 .primary44{background:var(--lab-must);border-color:var(--lab-must);color:#FFFFFF}
+.lesson44 .primary44:hover:not(:disabled){background:var(--lab-must-ink);border-color:var(--lab-must-ink);color:#FFFFFF;box-shadow:0 4px 12px rgba(8,145,178,.2)}
+.lesson44 a{text-decoration:underline;text-underline-offset:5px;color:var(--lab-must-ink)}
+.lesson44 a:focus-visible{outline-color:var(--lab-signal)}
+
+/* ---------- masthead ---------- */
+.lesson44 .masthead44{background:linear-gradient(135deg,#0891B2 0%,#06B6D4 50%,#0EA5E9 100%);color:#FFFFFF;border-bottom:3px solid var(--lab-signal)}
+.lesson44 .mastheadInner44{max-width:1280px;margin:auto;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.lesson44 .masthead44 a{color:#FFFFFF}
+.lesson44 .masthead44 a:hover{background:rgba(255,255,255,.15);color:#FFFFFF}
+.lesson44 .masthead44 a:last-child{font-size:14px;font-weight:700}
+.lesson44 .brand44{display:flex;gap:12px;align-items:center;text-decoration:none;font-size:18px;font-weight:bold;color:#FFFFFF}
+.lesson44 .brand44 small{display:block;font-size:10px;letter-spacing:2px;color:var(--lab-signal-soft);font-family:ui-monospace,Consolas,monospace}
+.lesson44 .brandMark44{border:2px solid var(--lab-signal);color:var(--lab-signal);background:rgba(255,255,255,.15);width:44px;height:44px;display:grid;place-items:center;border-radius:50%;line-height:1;font-family:ui-monospace,Consolas,monospace;font-weight:700}
+.lesson44 .lessonTop44{max-width:1280px;margin:auto;padding:36px 32px 26px;display:flex;justify-content:space-between;gap:30px;align-items:center;flex-wrap:wrap}
+.lesson44 .lessonTop44 h1{color:var(--lab-ink)}
+.lesson44 .lessonTop44 p{color:var(--lab-muted)}
+.lesson44 .eyebrow44{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--lab-must-ink);margin-bottom:12px;font-family:ui-monospace,Consolas,monospace}
+.lesson44 .lessonMetric44{min-width:190px;max-width:230px}
+.lesson44 .lessonMetric44 b{font-size:34px;display:block;direction:ltr;text-align:right;font-weight:800;font-family:ui-monospace,Consolas,monospace;color:var(--lab-must)}
+.lesson44 .lessonMetric44 b span{font-size:18px;color:var(--lab-muted);margin-left:6px}
+.lesson44 .lessonMetric44 small{display:block;font-size:12px;color:var(--lab-muted);margin-top:4px}
+.lesson44 progress{width:100%;height:8px;accent-color:var(--lab-must);border:0;border-radius:8px;overflow:hidden;background:#E2E8F0;margin-top:8px}
+.lesson44 progress::-webkit-progress-bar{background:#E2E8F0}
+.lesson44 progress::-webkit-progress-value{background:linear-gradient(90deg,var(--lab-must),var(--lab-unnecessary))}
+.lesson44 .areas44{max-width:1216px;margin:0 auto 30px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;border-bottom:2px solid #E2E8F0;padding-bottom:12px}
+.lesson44 .areas44 button{border:0;background:transparent;color:var(--lab-ink);border-radius:var(--radius-sm);display:flex;gap:12px;align-items:center;justify-content:center;font-size:15px;font-weight:600}
+.lesson44 .areas44 button span{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--lab-must)}
+.lesson44 .areas44 button[aria-current=page]{background:var(--lab-must-soft);color:var(--lab-must-ink);border:1px solid var(--lab-must)}
+.lesson44 .areas44 button:disabled{color:var(--lab-muted)}
+.lesson44 .layout44{max-width:1280px;margin:auto;padding:0 32px;display:grid;grid-template-columns:232px minmax(0,1fr);gap:32px;align-items:start}
+.lesson44 .areaLayout44{max-width:1000px;margin:auto;padding:0 32px}
+.lesson44 main{min-width:0}
+
+/* ---------- station rail ---------- */
+.lesson44 .sidebar44{position:sticky;top:20px}
+.lesson44 .station44{margin-bottom:6px}
+.lesson44 .station44>button{width:100%;display:flex;text-align:right;gap:12px;border:0;background:transparent;color:var(--lab-ink);padding:12px 8px;align-items:center;border-radius:var(--radius-sm);font-weight:600}
+.lesson44 .station44>button[aria-pressed=true]{background:var(--lab-must-soft);border:1px solid var(--lab-must)}
+.lesson44 .station44 small{display:block;font-size:10px;letter-spacing:.08em;color:var(--lab-muted);font-family:ui-monospace,Consolas,monospace}
+.lesson44 .stationIndex44{font:14px ui-monospace,Consolas,monospace;color:var(--lab-must);border:1px solid var(--lab-must);border-radius:50%;width:32px;height:32px;display:grid;place-items:center;flex-shrink:0;background:var(--lab-surface)}
+.lesson44 .sectionsNav44{border-inline-end:2px solid var(--lab-must);margin:4px 23px 14px 0;padding-inline-end:12px;display:grid;gap:4px}
+.lesson44 .sectionsNav44 button{font-size:13px;text-align:right;padding:8px;min-height:40px;display:flex;gap:9px;border:1px solid transparent;background:transparent;color:var(--lab-muted);font-weight:500;border-radius:8px}
+.lesson44 .station44>button:hover:not(:disabled),.lesson44 .sectionsNav44 button:hover:not(:disabled){background:var(--lab-must-soft);border-color:var(--lab-must);color:var(--lab-must-ink)}
+.lesson44 .sectionsNav44 button[aria-current=step]{background:var(--lab-must);border-color:var(--lab-must);color:#FFFFFF}
+.lesson44 .sectionsNav44 button span:first-child{flex-shrink:0;font-family:ui-monospace,Consolas,monospace;color:var(--lab-muted)}
+.lesson44 .sidebarNote44{margin:22px 8px;color:var(--lab-muted);font-size:13px;border-top:1px solid #E2E8F0;padding-top:16px}
+.lesson44 .mobileToggle44{display:none}
+.lesson44 .step44{display:grid;gap:22px;color:var(--lab-ink)}
+.lesson44 .stepHeading44{display:flex;gap:16px;align-items:center;padding:6px 0 2px}
+.lesson44 .stepHeading44 .eyebrow44{margin-bottom:4px;color:var(--lab-accent)}
+.lesson44 .sectionNumber44{font:700 56px/1 ui-monospace,Consolas,monospace;color:var(--lab-must);flex-shrink:0;min-width:2ch;white-space:nowrap}
+
+/* ---------- panels by function ---------- */
+.lesson44 .panel44{background:var(--lab-surface);border:1px solid var(--lab-line);border-radius:var(--radius);padding:26px;margin-bottom:22px;position:relative;overflow:hidden;color:var(--lab-ink);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.lesson44 .step44>.panel44{margin-bottom:0}
+.lesson44 .panel44::before{content:"";position:absolute;inset-block-start:0;inset-inline-start:0;width:100%;height:4px;background:var(--lab-line)}
+.lesson44 .panel44>p{margin-bottom:14px}
+.lesson44 .panel44.rule::before{background:linear-gradient(90deg,var(--lab-must),var(--lab-future))}
+.lesson44 .panel44.example::before{background:var(--lab-haveto)}
+.lesson44 .panel44.compare::before{background:linear-gradient(90deg,var(--lab-must),var(--lab-haveto))}
+.lesson44 .panel44.dialog::before{background:var(--lab-accent)}
+.lesson44 .panel44.drill::before{background:var(--lab-unnecessary)}
+.lesson44 .panel44.challenge::before{background:linear-gradient(90deg,var(--lab-signal),var(--lab-accent))}
+.lesson44 .panel44.lab::before{background:linear-gradient(90deg,var(--lab-must),var(--lab-unnecessary),var(--lab-haveto))}
+.lesson44 .panel44.read::before{background:var(--lab-past)}
+.lesson44 .panel44.write::before{background:var(--lab-accent)}
+.lesson44 .panel44.prohibit::before{background:var(--lab-prohibit)}
+.lesson44 .panel44.unnecessary::before{background:var(--lab-unnecessary)}
+.lesson44 .panelTag44{position:absolute;top:14px;inset-inline-end:14px;font:700 10px/1 ui-monospace,Consolas,monospace;color:var(--lab-must-ink);background:var(--lab-must-soft);border:1px solid var(--lab-must);border-radius:6px;padding:4px 8px;letter-spacing:.06em}
+
+/* ---------- source text ---------- */
+.lesson44 .source44{display:grid;gap:6px;margin:10px 0}
+.lesson44 .source44 .line44{color:var(--lab-ink);padding:2px 0;font-size:17px}
+.lesson44 .source44 .example44{background:var(--lab-must-soft);color:var(--lab-must-ink);border-inline-start:3px solid var(--lab-must);border-radius:0 8px 8px 0;padding:8px 14px;font-size:16px;font-weight:600;direction:ltr;text-align:left;margin:4px 0}
+.lesson44 .table44{overflow-x:auto;margin:14px 0}
+.lesson44 table{width:100%;border-collapse:collapse;border:1px solid var(--lab-line);border-radius:var(--radius-sm);overflow:hidden}
+.lesson44 th{background:var(--lab-must);color:#FFFFFF;padding:12px 16px;text-align:right;font-weight:700;font-size:15px}
+.lesson44 td{padding:12px 16px;border-top:1px solid var(--lab-line);font-size:16px;color:var(--lab-ink)}
+.lesson44 tr:nth-child(even){background:var(--lab-note-soft)}
+
+/* ---------- tokens ---------- */
+.lesson44 .token44{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--lab-line-strong);border-radius:8px;padding:8px 12px;font:700 17px/1 ui-monospace,Consolas,monospace;background:var(--lab-surface)}
+.lesson44 .token44 small{font-size:10px;font-weight:600;color:var(--lab-muted);letter-spacing:.04em}
+.lesson44 .token44.subject{border-color:var(--lab-must);background:var(--lab-must-soft);color:var(--lab-must-ink)}
+.lesson44 .token44.must{border-color:var(--lab-must);background:var(--lab-must-soft);color:var(--lab-must-ink)}
+.lesson44 .token44.haveto{border-color:var(--lab-haveto);background:var(--lab-haveto-soft);color:var(--lab-haveto-ink)}
+.lesson44 .token44.hadto{border-color:var(--lab-past);background:var(--lab-past-soft);color:var(--lab-past-ink)}
+.lesson44 .token44.mustnt{border-color:var(--lab-prohibit);background:var(--lab-prohibit-soft);color:var(--lab-prohibit-ink)}
+.lesson44 .token44.verb{border-color:var(--lab-unnecessary);background:var(--lab-unnecessary-soft);color:var(--lab-unnecessary-ink)}
+
+/* ---------- exercises ---------- */
+.lesson44 .exercise44{background:var(--lab-surface);border:1px solid var(--lab-line);border-radius:var(--radius-sm);padding:18px;margin:14px 0;position:relative}
+.lesson44 .exercise44 .label44{position:absolute;top:12px;inset-inline-end:12px;font:700 12px/1 ui-monospace,Consolas,monospace;color:var(--lab-must);background:var(--lab-must-soft);border-radius:6px;padding:4px 8px}
+.lesson44 .feedback44{margin-top:14px;padding:14px;border-radius:var(--radius-sm);background:var(--lab-ok-soft);border:1px solid var(--lab-ok);color:var(--lab-unnecessary-ink)}
+.lesson44 .feedback44.error{background:var(--lab-bad-soft);border-color:var(--lab-prohibit);color:var(--lab-prohibit-ink)}
+.lesson44 .formula44{font:700 18px/1.6 ui-monospace,Consolas,monospace;background:var(--lab-note-soft);padding:10px 16px;border-radius:8px;margin:10px 0;color:var(--lab-ink);direction:ltr;text-align:left}
+.lesson44 .actions44{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.lesson44 .field44{display:block;margin:12px 0}
+.lesson44 .field44 textarea,.lesson44 .field44 input,.lesson44 .field44 select{width:100%;border:1px solid var(--lab-line-strong);border-radius:var(--radius-sm);padding:10px 14px;font-size:16px;background:var(--lab-surface);color:var(--lab-ink);margin-top:6px}
+.lesson44 .field44 textarea:focus,.lesson44 .field44 input:focus{border-color:var(--lab-must);outline:none;box-shadow:0 0 0 3px var(--lab-must-soft)}
+.lesson44 .label44{font-size:13px;color:var(--lab-muted);margin:8px 0}
+.lesson44 .reference44{margin:14px 0;padding:14px;background:var(--lab-haveto-soft);border:1px solid var(--lab-haveto);border-radius:var(--radius-sm)}
+.lesson44 .reference44 .example44{color:var(--lab-ink);background:var(--lab-surface)}
+.lesson44 .checklist44{margin:18px 0;border-top:1px solid var(--lab-line);border-bottom:1px solid var(--lab-line);list-style:none;padding:14px 0;display:grid;gap:10px}
+.lesson44 .checklist44 label{display:flex;align-items:flex-start;gap:12px;padding:11px 0;cursor:pointer;font-size:16px}
+.lesson44 .checklist44 input{margin-top:5px}
+.lesson44 .options44{display:grid;gap:10px;margin-top:14px}
+.lesson44 .option44{display:flex;align-items:center;gap:12px;border:1px solid var(--lab-line-strong);border-radius:var(--radius-sm);padding:13px;cursor:pointer;direction:ltr}
+.lesson44 .option44:has(input:checked){border-color:var(--lab-must);background:var(--lab-must-soft);color:var(--lab-must-ink)}
+.lesson44 fieldset:disabled{opacity:.6}
+
+/* ---------- choice grid ---------- */
+.lesson44 .choiceGrid44{display:grid;gap:14px;margin:14px 0}
+
+/* ---------- dial / builder ---------- */
+.lesson44 .dialRow44{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin:14px 0}
+.lesson44 .dialGroup44{background:var(--lab-surface);border:1px solid var(--lab-line);border-radius:var(--radius-sm);padding:14px}
+.lesson44 .dialGroup44 .actions44{margin:0}
+.lesson44 .readout44{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0;padding:14px;background:var(--lab-note-soft);border-radius:var(--radius-sm)}
+.lesson44 .channelMust44{background:var(--lab-must-soft)!important;border-color:var(--lab-must)!important;color:var(--lab-must-ink)!important}
+.lesson44 .channelHaveto44{background:var(--lab-haveto-soft)!important;border-color:var(--lab-haveto)!important;color:var(--lab-haveto-ink)!important}
+
+/* ---------- tense cards ---------- */
+.lesson44 .tenseGrid44{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
+.lesson44 .tenseCard44{padding:14px;border-radius:var(--radius-sm);border:1px solid var(--lab-line)}
+.lesson44 .tenseCard44 b{display:block;margin-bottom:8px;font-size:14px}
+.lesson44 .tenseCard44 p{font:600 16px/1.5 ui-monospace,Consolas,monospace}
+.lesson44 .tenseCard44.aff{background:var(--lab-must-soft);border-color:var(--lab-must)}
+.lesson44 .tenseCard44.neg{background:var(--lab-prohibit-soft);border-color:var(--lab-prohibit)}
+.lesson44 .tenseCard44.q{background:var(--lab-haveto-soft);border-color:var(--lab-haveto)}
+
+/* ---------- prohibition / unnecessary buttons ---------- */
+.lesson44 .prohibit44{color:var(--lab-prohibit-ink)!important;font-weight:700}
+.lesson44 button.prohibit44[aria-pressed=true]{background:var(--lab-prohibit-soft)!important;border-color:var(--lab-prohibit)!important}
+.lesson44 .unnecessary44{color:var(--lab-unnecessary-ink)!important;font-weight:700}
+.lesson44 button.unnecessary44[aria-pressed=true]{background:var(--lab-unnecessary-soft)!important;border-color:var(--lab-unnecessary)!important}
+
+/* ---------- goals ---------- */
+.lesson44 .goalGrid44{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.lesson44 .goal44{display:flex;gap:14px;align-items:flex-start;background:var(--lab-surface);border:1px solid var(--lab-line);border-inline-start:4px solid var(--lab-must);border-radius:var(--radius-sm);padding:16px;color:var(--lab-ink)}
+.lesson44 .goalIndex44{font:800 15px/1 ui-monospace,Consolas,monospace;color:var(--lab-must-ink);background:var(--lab-must-soft);border-radius:8px;padding:8px 9px;flex-shrink:0}
+
+/* ---------- dialog ---------- */
+.lesson44 .dialog44{display:grid;gap:10px;margin:14px 0}
+.lesson44 .turn44{display:flex;gap:12px;align-items:flex-start;background:var(--lab-surface);border:1px solid var(--lab-line);border-radius:var(--radius-sm);padding:12px 14px}
+.lesson44 .speaker44{font-weight:800;color:var(--lab-must-ink);background:var(--lab-must-soft);border-radius:999px;padding:2px 12px;flex-shrink:0;font-size:15px}
+.lesson44 .said44{flex:1;min-width:0}
+
+/* ---------- summary ---------- */
+.lesson44 .summaryGrid44{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.lesson44 .summaryCard44{background:var(--lab-surface);border:1px solid var(--lab-line);border-radius:var(--radius-sm);padding:20px}
+.lesson44 .summaryCard44:nth-child(5n+1){border-top:4px solid var(--lab-must)}
+.lesson44 .summaryCard44:nth-child(5n+2){border-top:4px solid var(--lab-haveto)}
+.lesson44 .summaryCard44:nth-child(5n+3){border-top:4px solid var(--lab-past)}
+.lesson44 .summaryCard44:nth-child(5n+4){border-top:4px solid var(--lab-unnecessary)}
+.lesson44 .summaryCard44:nth-child(5n){border-top:4px solid var(--lab-accent)}
+
+.lesson44 .teacherList44{padding-inline-start:24px;display:grid;gap:14px}
+.lesson44 details{border-top:1px solid var(--lab-line);padding:14px 0}
+.lesson44 summary{cursor:pointer;font-weight:700}
+.lesson44 details[open]>summary{margin-bottom:14px}
+
+/* ---------- cover ---------- */
+.lesson44 .cover44{background:linear-gradient(135deg,#0891B2 0%,#06B6D4 40%,#0EA5E9 100%);color:#FFFFFF;border-radius:24px;overflow:hidden;padding:34px;display:grid;gap:26px;border:1px solid #0E7490}
+.lesson44 .cover44 .eyebrow44{color:var(--lab-signal);font-size:11px}
+.lesson44 .cover44 h2{font-size:clamp(30px,4vw,50px);line-height:1.12;letter-spacing:-.03em;font-weight:800;text-align:left;margin-bottom:18px;font-family:ui-monospace,Consolas,monospace;color:#FFFFFF}
+.lesson44 .cover44 em{font-style:normal;color:var(--lab-signal);font-size:.52em;display:block;margin-top:10px;letter-spacing:0}
+.lesson44 .cover44 .source44{color:#FFFFFF}
+.lesson44 .cover44 .source44 .example44{background:rgba(255,255,255,.15);color:#FFFFFF;border-color:var(--lab-signal)}
+.lesson44 .cover44 .source44 .line44{color:rgba(255,255,255,.85)}
+.lesson44 .coverSignals44{display:flex;margin:24px 0 18px;gap:18px;flex-wrap:wrap}
+.lesson44 .coverSignal44{flex:1;min-width:150px;font:800 34px/1.1 ui-monospace,Consolas,monospace;border-top:3px solid var(--lab-signal);padding-top:12px}
+.lesson44 .coverSignal44 small{display:block;color:var(--lab-signal);font-size:11px;letter-spacing:1px;margin-top:10px;font-family:ui-monospace,Consolas,monospace}
+.lesson44 .coverSignal44.must-sig{color:#A5F3FC}
+.lesson44 .coverSignal44.haveto-sig{color:var(--lab-signal)}
+.lesson44 .coverCaption44{font-size:14px;color:rgba(255,255,255,.8)}
+.lesson44 .coverContext44{border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:22px;background:rgba(255,255,255,.1)}
+.lesson44 .coverContext44 .eyebrow44{color:var(--lab-signal)}
+
+/* ---------- progress ---------- */
+.lesson44 .progressBar44{height:12px;background:#E2E8F0;border-radius:12px;overflow:hidden;margin:14px 0}
+.lesson44 .progressFill44{height:100%;background:linear-gradient(90deg,var(--lab-must),var(--lab-unnecessary),var(--lab-haveto));border-radius:12px;transition:width .3s}
+.lesson44 .nextLesson44{margin-top:18px;padding:16px;background:var(--lab-signal-soft);border:1px solid var(--lab-signal);border-radius:var(--radius-sm)}
+
+/* ---------- navigation and footer ---------- */
+.lesson44 .bottomNav44{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:2px solid #E2E8F0;margin-top:28px;padding:22px 0;flex-wrap:wrap}
+.lesson44 .bottomNav44>span{font-size:14px;color:var(--lab-muted);direction:ltr;font-family:ui-monospace,Consolas,monospace}
+.lesson44 .back44{margin:22px 0}
+.lesson44 .footer44{max-width:1216px;margin:44px auto 0;padding:30px 32px;border-top:2px solid #E2E8F0;display:flex;align-items:center;justify-content:space-between;gap:20px;color:var(--lab-muted);font-size:14px;flex-wrap:wrap}
+.lesson44 .footer44>span{font-size:18px;font-weight:800;color:var(--lab-must);font-family:ui-monospace,Consolas,monospace}
+
+/* ---------- responsive ---------- */
+@media(min-width:1200px){.lesson44 .cover44{grid-template-columns:1.15fr 1fr;align-items:center;padding:32px}}
+@media(max-width:850px){
+  .lesson44 .layout44{grid-template-columns:1fr;gap:20px;padding:0 20px}
+  .lesson44 .sidebar44{position:static}
+  .lesson44 .mobileToggle44{display:block;width:100%;text-align:right;background:var(--lab-surface);border:1px solid var(--lab-line)}
+  .lesson44 .navContent44{display:none}
+  .lesson44 .navContent44.open{display:block;border:1px solid var(--lab-line);border-radius:var(--radius-sm);padding:18px;margin-top:10px;background:var(--lab-surface)}
+  .lesson44 .areas44{margin:0 20px 24px}
+  .lesson44 .lessonTop44{padding:26px 20px}
+  .lesson44 .mastheadInner44{padding:16px 20px}
+  .lesson44 .areaLayout44{padding:0 20px}
+}
+@media(max-width:500px){
+  .lesson44{font-size:16px}
+  .lesson44 .lessonTop44{display:block}
+  .lesson44 .lessonMetric44{max-width:none;margin-top:18px}
+  .lesson44 .lessonMetric44 b{font-size:26px}
+  .lesson44 .areas44{grid-template-columns:repeat(2,1fr)}
+  .lesson44 .areas44 button{justify-content:flex-start;padding:12px;gap:9px;font-size:14px}
+  .lesson44 .panel44{padding:18px 14px;border-radius:16px}
+  .lesson44 .cover44{padding:22px 16px}
+  .lesson44 .cover44 h2{font-size:30px}
+  .lesson44 .coverSignal44{font-size:26px}
+  .lesson44 .token44{font-size:16px;padding:8px 10px}
+  .lesson44 .choiceGrid44,.lesson44 .goalGrid44,.lesson44 .summaryGrid44,.lesson44 .dialRow44,.lesson44 .tenseGrid44{grid-template-columns:1fr}
+  .lesson44 .exercise44{padding:15px 13px}
+  .lesson44 .stepHeading44{gap:12px}
+  .lesson44 .sectionNumber44{font-size:40px}
+  .lesson44 .stepHeading44 h2{font-size:21px}
+  .lesson44 .footer44{margin-top:26px;padding:22px 20px}
+  .lesson44 .brand44{font-size:16px;gap:9px}
+  .lesson44 .source44 .example44{padding:10px;font-size:16px}
+  .lesson44 .bottomNav44 button{padding:10px 14px}
+  .lesson44 td,.lesson44 th{padding:10px;min-width:96px;font-size:14px}
+  .lesson44 .turn44{flex-direction:column;gap:6px}
+  .lesson44 .formula44{font-size:17px}
+}
+@media(prefers-reduced-motion:reduce){.lesson44 *{transition:none!important;scroll-behavior:auto!important}}
+.lesson44 .lessonTop44 b[dir="ltr"]{display:inline-block;white-space:nowrap}
+.lesson44 .nextStation44{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:8px 0}
+.lesson44 .navLabel44{display:inline-flex;align-items:center;gap:6px;width:100%}

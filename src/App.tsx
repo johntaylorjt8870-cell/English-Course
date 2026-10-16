@@ -41,6 +41,7 @@ import Lesson39 from "./lessons/lesson39/Lesson39";
 import Lesson40 from "./lessons/lesson40/Lesson40";
 import Lesson41 from "./lessons/lesson41/Lesson41";
 import Lesson42 from "./lessons/lesson42/Lesson42";
+import Lesson43 from "./lessons/lesson43/Lesson43";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -485,6 +486,15 @@ const CARDS: Card[] = [
     href: "#/lesson/42",
     grad: "from-[#C2410C] to-[#A21CAF]",
   },
+  {
+    n: 43,
+    title: "الدرس 43: MAY & MIGHT — الاحتمال، وعدم اليقين، والاستئذان",
+    en: "The Probability Observatory · Certainty, Uncertainty & Permission",
+    emoji: "🔭",
+    stats: "37 قسمًا · 38 خطوة · مستكشف الاحتمال وباني الجمل · اختبار 25 سؤالًا",
+    href: "#/lesson/43",
+    grad: "from-[#0E7C7B] to-[#B45309]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -608,6 +618,7 @@ export default function App() {
   else if (route === 40) page = <Lesson40 onExit={goHome} />;
   else if (route === 41) page = <Lesson41 onExit={goHome} />;
   else if (route === 42) page = <Lesson42 onExit={goHome} />;
+  else if (route === 43) page = <Lesson43 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

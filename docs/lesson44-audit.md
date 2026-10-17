@@ -149,11 +149,11 @@ observed at 1280 or 375.
 
 | Check | Result |
 |---|---|
-| `npm run build` | ✓ 8.87 s |
+| `npm run build` | ✓ 9.09 s |
 | `node scripts/audit-lesson44.mjs` | ✓ 91 assertions · 39 sections / 761 lines · 13 chapters · 25 practice / 25 test / 25 solutions |
 | `node scripts/audit-lesson44-dom.mjs` | ✓ 1 692 assertions · 39 steps · 761 `data-source-unit`s · 25-question submit · 25 solutions · password-gated teacher guide · 47 BIDI snapshots |
 | `node scripts/audit-lesson44-browser.mjs` | ✓ 69 checks · 32 screenshots · 25 contrast snapshots · lowest 3.46:1 (large folio numerals only) · no horizontal overflow at 1280 / 1024 / 768 / 390 |
-| `npm run audit:english-direction` | ✓ EXIT 0 (316 s), including lessons 24–44, BIDI mixed, final-test coverage, navigation |
+| `npm run audit:english-direction` | ✓ EXIT 0 (final run, 39 lessons + BIDI), including lessons 24–44, BIDI mixed, final-test coverage, navigation |
 | `audit-bidi-mixed` for Lesson 44 | ✓ 0 classic + 0 alternative violations (site total unchanged: 785 unique, 2 allowlisted) |
 
 The browser report is `docs/lesson44-visual-after/browser-report.json`; screenshots are in
@@ -198,7 +198,7 @@ draft, test submit locked/unlocked, wrong teacher password, teacher guide open.
   the comparison visible; the lines wrap but nothing overflows.
 - The source-key line under each solution is 11 px mono (5.05:1 contrast); it is metadata,
   not the explanation.
-- Some steps are still long (step 3 1 939 px, step 20 2 002 px, step 33 2 615 px at
+- Some steps are still long (step 3 1 931 px, step 20 2 002 px, step 33 2 615 px at
   1280×900); they are shorter than before (e.g. §33 was 8 935 px) but not uniform.
 - The teacher practice-key table scrolls horizontally below ~860 px; it is deliberately
   `min-width: 720px` to keep five columns readable.

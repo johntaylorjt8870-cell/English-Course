@@ -1,0 +1,297 @@
+/* Lesson 30 only — a warm, bright continuation of Lesson 1's style-b classroom. */
+.lesson30 {
+  --l30-ink: #2b2440;
+  --l30-paper: #f4f6fb;
+  --l30-navy: #2b2440;
+  --l30-violet: #6652b8;
+  --l30-violet-soft: #f3efff;
+  --l30-sky-soft: #eef7ff;
+  min-height: 0;
+  color: var(--l30-ink);
+}
+
+.lesson30 .l30-desktop-rail {
+  box-shadow: 8px 0 32px -30px rgba(43, 36, 64, 0.4);
+}
+
+.lesson30 .l30-rail-content {
+  min-height: 0;
+}
+
+.lesson30 .l30-rail-item {
+  min-height: 2.5rem;
+}
+
+.lesson30 .l30-rail-item[aria-current="step"] {
+  background-color: var(--l30-navy);
+  color: #fff;
+}
+
+.lesson30 .l30-rail-item:focus-visible,
+.lesson30 .l30-area-tab:focus-visible,
+.lesson30 .l30-floating-nav button:focus-visible,
+.lesson30 .l30-cover-page button:focus-visible,
+.lesson30 .l30-mobile-drawer button:focus-visible,
+.lesson30 .l30-frame-wrap button:focus-visible,
+.lesson30 .l30-area-content button:focus-visible,
+.lesson30 .l30-area-content input:focus-visible,
+.lesson30 .l30-area-content textarea:focus-visible {
+  outline: 3px solid #7258c8;
+  outline-offset: 3px;
+}
+
+.lesson30 .l30-area-tab {
+  min-height: 2.75rem;
+}
+
+.lesson30 .l30-progress-row {
+  min-height: 2.6rem;
+  border-radius: 999px;
+}
+
+.lesson30 .l30-scroll {
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.lesson30 .l30-content {
+  padding-bottom: 0.5rem;
+}
+
+.lesson30 .l30-frame-wrap > section {
+  border: 1px solid #e1e6ef;
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.98);
+  padding: clamp(1.25rem, 2.5vw, 2.5rem);
+  box-shadow: 0 10px 40px -15px rgba(30, 27, 75, 0.15);
+}
+
+.lesson30 .l30-frame-wrap > section > .pointer-events-none.absolute {
+  top: 1.25rem;
+  left: 1.5rem;
+  font-size: 3.5rem;
+}
+
+.lesson30 .l30-frame-wrap > section > h2 {
+  max-width: 88%;
+  line-height: 1.25;
+}
+
+.lesson30 .l30-frame-wrap > section > p {
+  max-width: 88%;
+  line-height: 1.75;
+}
+
+.lesson30 .l30-frame-wrap [data-source-section] {
+  border: 1px solid #e7eaf1;
+  background: #f8f9fc;
+  line-height: 1.5;
+}
+
+.lesson30 .l30-lab {
+  border-color: #dce9f5;
+  background-image: linear-gradient(135deg, #ffffff 0%, #f1f8ff 58%, #fff6eb 100%);
+  box-shadow: 0 6px 22px -19px rgba(43, 36, 64, 0.55);
+}
+
+.lesson30 .l30-lab-head {
+  border-color: #e5eef8;
+  box-shadow: 0 1px 5px rgba(43, 36, 64, 0.04);
+}
+
+.lesson30 .l30-lab-head .text-teal-700 {
+  color: #6652b8;
+}
+
+.lesson30 .l30-platform-panel {
+  line-height: 1.7;
+}
+
+.lesson30 .l30-completion-note {
+  line-height: 1.7;
+}
+
+.lesson30 .l30-time-track-bar {
+  min-height: 3.5rem;
+  align-items: stretch;
+}
+
+.lesson30 .l30-time-track-bar > [data-lens] {
+  border: 1px solid rgba(43, 36, 64, 0.08);
+}
+
+.lesson30 .l30-cover-hero {
+  isolation: isolate;
+}
+
+.lesson30 .l30-cover-hero h1 {
+  text-wrap: balance;
+}
+
+.lesson30 .l30-cover-tip {
+  box-shadow: 0 10px 25px -20px rgba(30, 27, 75, 0.7);
+}
+
+.lesson30 .l30-area-content > * + * {
+  margin-top: 1rem;
+}
+
+.lesson30 .l30-test-content [data-test-q] {
+  scroll-margin-top: 1rem;
+}
+
+.lesson30 .l30-mobile-drawer {
+  overscroll-behavior: contain;
+}
+
+/* Reinterpret the old teal utility accent as Lesson 1's ink/violet accent,
+   without touching any shared stylesheet or another lesson. */
+.lesson30 .bg-teal-800 {
+  background-color: #211d32;
+}
+
+.lesson30 .bg-teal-700 {
+  background-color: var(--l30-navy);
+}
+
+.lesson30 .bg-teal-600 {
+  background-color: #6652b8;
+}
+
+.lesson30 .bg-teal-500 {
+  background-color: #806bd0;
+}
+
+.lesson30 .bg-teal-200 {
+  background-color: #ddd5f7;
+}
+
+.lesson30 .bg-teal-100 {
+  background-color: #eee9fb;
+}
+
+.lesson30 .bg-teal-50 {
+  background-color: #f7f4ff;
+}
+
+.lesson30 .text-teal-900 {
+  color: #352b59;
+}
+
+.lesson30 .text-teal-800 {
+  color: #493b78;
+}
+
+.lesson30 .text-teal-700 {
+  color: #6652a6;
+}
+
+.lesson30 .text-teal-600 {
+  color: #6652b8;
+}
+
+.lesson30 .text-teal-200 {
+  color: #e5def9;
+}
+
+.lesson30 .text-teal-100 {
+  color: #f1edfc;
+}
+
+.lesson30 .border-teal-700,
+.lesson30 .border-teal-600,
+.lesson30 .border-teal-500 {
+  border-color: #7561bf;
+}
+
+.lesson30 .border-teal-400,
+.lesson30 .border-teal-300 {
+  border-color: #c8bcea;
+}
+
+.lesson30 .border-teal-200,
+.lesson30 .border-teal-100 {
+  border-color: #e1dbf2;
+}
+
+.lesson30 .ring-teal-300 {
+  --tw-ring-color: #c9bdef;
+}
+
+.lesson30 .hover\:bg-teal-800:hover {
+  background-color: #211d32;
+}
+
+.lesson30 .hover\:bg-teal-700:hover {
+  background-color: #41365f;
+}
+
+.lesson30 .hover\:border-teal-300:hover {
+  border-color: #a99ad9;
+}
+
+@media (max-width: 639px) {
+  .lesson30 .l30-header {
+    min-height: 3.5rem;
+  }
+
+  .lesson30 .l30-header > div {
+    min-width: 0;
+  }
+
+  .lesson30 .l30-mobile-exit {
+    min-width: 3.25rem;
+  }
+
+  .lesson30 .l30-frame-wrap > section {
+    border-radius: 1.5rem;
+    padding: 1.25rem;
+  }
+
+  .lesson30 .l30-frame-wrap > section > .pointer-events-none.absolute {
+    top: 0.75rem;
+    left: 0.75rem;
+    font-size: 2.5rem;
+  }
+
+  .lesson30 .l30-frame-wrap > section > h2,
+  .lesson30 .l30-frame-wrap > section > p {
+    max-width: 100%;
+  }
+
+  .lesson30 .l30-frame-wrap > section > h2 {
+    padding-left: 2.5rem;
+    font-size: 1.65rem;
+  }
+
+  .lesson30 .l30-time-track {
+    padding: 0.5rem;
+  }
+
+  .lesson30 .l30-time-track-bar {
+    min-height: 4.25rem;
+  }
+
+  .lesson30 .l30-time-track-bar > [data-lens] {
+    padding: 0.4rem 0.2rem;
+  }
+
+  .lesson30 .l30-time-track-bar > [data-lens] > span:first-of-type {
+    font-size: 0.55rem;
+  }
+
+  .lesson30 .l30-time-track-bar > [data-lens] > span:last-child {
+    font-size: 0.48rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lesson30 *,
+  .lesson30 *::before,
+  .lesson30 *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

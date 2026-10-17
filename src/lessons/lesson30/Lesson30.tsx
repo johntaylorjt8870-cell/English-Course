@@ -12,7 +12,8 @@
 // - المناطق الأربع: الدرس (46 خطوة) | الاختبار (20) | الحلول | المعلم
 // ============================================================
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import "./lesson30.css";
 import {
   SLIDES as DATA_SLIDES,
   SOURCE_SECTIONS,
@@ -68,10 +69,10 @@ import FinalTest, { FinalTestAnswerKey } from "../../shared/finalTest";
 import { FINAL_TESTS } from "../../shared/finalTestBank";
 
 const ACCENT30: FrameAccent = {
-  step: "bg-teal-700",
-  badge: "bg-teal-100 text-teal-800",
-  tip: "from-teal-700 to-indigo-600",
-  shadow: "shadow-[0_16px_44px_-24px_rgba(13,148,136,0.45)]",
+  step: "bg-slate-900",
+  badge: "bg-violet-100 text-violet-800",
+  tip: "from-slate-900 to-violet-700",
+  shadow: "shadow-[0_10px_40px_-15px_rgba(30,27,75,0.15)]",
 };
 
 // ---------------- سجل الشرائح (من data.ts) ----------------
@@ -108,10 +109,10 @@ const P = (text: string, role: string): Part => ({ text, role });
 // ---------------- العدسات الأربع (نظام بصري موحّد) ----------------
 export type Lens30 = "ps" | "pc" | "pp" | "ppc";
 const LENS_META: Record<Lens30, { emoji: string; tag: string; ar: string; q: string; qEn: string; chip: string; soft: string; text: string; ring: string; bar: string }> = {
-  ps: { emoji: "📸", tag: "PAST SIMPLE", ar: "الماضي البسيط", q: "ماذا حدث؟", qEn: "What happened?", chip: "bg-orange-500 text-white", soft: "border-orange-200 bg-orange-50", text: "text-orange-900", ring: "ring-orange-300", bar: "bg-orange-400" },
-  pc: { emoji: "🎥", tag: "PAST CONTINUOUS", ar: "الماضي المستمر", q: "ماذا كان يحدث؟", qEn: "What was happening?", chip: "bg-sky-600 text-white", soft: "border-sky-200 bg-sky-50", text: "text-sky-900", ring: "ring-sky-300", bar: "bg-sky-500" },
-  pp: { emoji: "⏪", tag: "PAST PERFECT", ar: "الماضي التام", q: "ماذا كان قد حدث قبل ذلك؟", qEn: "What had happened?", chip: "bg-violet-700 text-white", soft: "border-violet-200 bg-violet-50", text: "text-violet-900", ring: "ring-violet-300", bar: "bg-violet-500" },
-  ppc: { emoji: "⏪🎥", tag: "PAST PERFECT CONTINUOUS", ar: "الماضي التام المستمر", q: "ماذا كان مستمرًا لفترة قبل ذلك؟", qEn: "What had been happening?", chip: "bg-teal-600 text-white", soft: "border-teal-200 bg-teal-50", text: "text-teal-900", ring: "ring-teal-300", bar: "bg-teal-500" },
+  ps: { emoji: "📸", tag: "PAST SIMPLE", ar: "الماضي البسيط", q: "ماذا حدث؟", qEn: "What happened?", chip: "border-orange-300 bg-orange-100 text-orange-900", soft: "border-orange-200 bg-orange-50", text: "text-orange-900", ring: "ring-orange-300", bar: "bg-orange-100" },
+  pc: { emoji: "🎥", tag: "PAST CONTINUOUS", ar: "الماضي المستمر", q: "ماذا كان يحدث؟", qEn: "What was happening?", chip: "border-sky-300 bg-sky-100 text-sky-900", soft: "border-sky-200 bg-sky-50", text: "text-sky-900", ring: "ring-sky-300", bar: "bg-sky-100" },
+  pp: { emoji: "⏪", tag: "PAST PERFECT", ar: "الماضي التام", q: "ماذا كان قد حدث قبل ذلك؟", qEn: "What had happened?", chip: "border-violet-300 bg-violet-100 text-violet-900", soft: "border-violet-200 bg-violet-50", text: "text-violet-900", ring: "ring-violet-300", bar: "bg-violet-100" },
+  ppc: { emoji: "⏪🎥", tag: "PAST PERFECT CONTINUOUS", ar: "الماضي التام المستمر", q: "ماذا كان مستمرًا لفترة قبل ذلك؟", qEn: "What had been happening?", chip: "border-emerald-300 bg-emerald-100 text-emerald-900", soft: "border-emerald-200 bg-emerald-50", text: "text-emerald-900", ring: "ring-emerald-300", bar: "bg-emerald-100" },
 };
 const LENSES: Lens30[] = ["ps", "pc", "pp", "ppc"];
 
@@ -151,8 +152,8 @@ function LensChip({ lens, active, onClick, size = "md" }: { lens: Lens30; active
 /** مختبر بصري تفاعلي — يحمل هوية data-en-seq للتدقيق. */
 function Lab({ emoji, label, ar, children, seq }: { emoji: string; label: string; ar?: string; children: ReactNode; seq?: string }) {
   return (
-    <div data-en-seq={seq} className="rounded-3xl border-2 border-teal-200 bg-gradient-to-br from-teal-50 via-sky-50 to-amber-50/70 p-3.5 sm:p-4">
-      <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-teal-100 bg-white px-3 py-2">
+    <div data-en-seq={seq} className="l30-lab rounded-3xl border-2 border-sky-200 bg-gradient-to-br from-white via-sky-50 to-orange-50/70 p-3.5 sm:p-4">
+      <div className="l30-lab-head mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-sky-100 bg-white px-3 py-2">
         <span className="text-xl" aria-hidden>{emoji}</span>
         <EnAr en={label} ar={ar} enClassName="text-[11px] font-black uppercase tracking-[0.16em] text-teal-700" arClassName="text-sm font-bold text-slate-600" />
       </div>
@@ -164,7 +165,7 @@ function Lab({ emoji, label, ar, children, seq }: { emoji: string; label: string
 /** شرح إضافي من المنصة — يُوسم دائمًا بشارة Platform Explanation. */
 function PlatformPanel({ title, children }: { title?: string; children: ReactNode }) {
   return (
-    <div className="space-y-1.5 rounded-3xl border-2 border-amber-300 bg-amber-50 p-3.5">
+    <div className="l30-platform-panel space-y-1.5 rounded-3xl border-2 border-amber-300 bg-amber-50 p-3.5">
       <div dir="ltr" className="ltr-pair flex flex-wrap items-center gap-2">
         <PlatformTag />
         {title && (
@@ -181,7 +182,7 @@ function PlatformPanel({ title, children }: { title?: string; children: ReactNod
 /** رقعة كشف — تظهر بعد إتمام المحاولة (ملخص المصدر الحرفي). */
 function SourceReveal({ seq, children }: { seq: string; children: ReactNode }) {
   return (
-    <div data-reveal-block={seq} className="space-y-1.5 rounded-3xl border-2 border-emerald-200 bg-emerald-50/60 p-3">
+    <div data-reveal-block={seq} className="l30-completion-note space-y-1.5 rounded-3xl border-2 border-emerald-200 bg-emerald-50/60 p-3">
       {children}
     </div>
   );
@@ -212,11 +213,12 @@ function FormulaStrip({ items, tone = "teal" }: { items: readonly string[]; tone
 /** مسار زمني بصري — من الماضي الأقدم إلى NOW. */
 function TimeTrack({ segs }: { segs: { lens: Lens30; label: string; wide?: boolean }[] }) {
   return (
-    <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row rounded-2xl border-2 border-slate-200 bg-white p-2.5">
-      <div className="flex h-9 gap-1">
+    <div dir="ltr" style={{ direction: "ltr" }} className="l30-time-track ltr-row rounded-2xl border-2 border-slate-200 bg-white p-2.5">
+      <div className="l30-time-track-bar flex gap-1">
         {segs.map((s, i) => (
-          <div key={i} className={`relative flex ${s.wide ? "flex-[2]" : "flex-1"} items-center justify-center overflow-hidden rounded-lg ${LENS_META[s.lens].bar}`}>
-            <span className="px-1 text-center text-[10px] font-black leading-tight text-white">{s.label}</span>
+          <div key={i} data-lens={s.lens} className={`relative flex ${s.wide ? "flex-[2]" : "flex-1"} min-w-0 flex-col items-center justify-center overflow-hidden rounded-lg px-1.5 py-2 ${LENS_META[s.lens].bar}`}>
+            <En className="block max-w-full break-words text-center text-[10px] font-black leading-tight text-slate-800">{s.label}</En>
+            <span className="mt-0.5 text-center text-[9px] font-extrabold leading-tight text-slate-700">{LENS_META[s.lens].tag}</span>
           </div>
         ))}
       </div>
@@ -602,7 +604,7 @@ function StoryLive({ seq, mode }: { seq: string; mode: "boss" | "challenge" }) {
 // خطوات الدرس — البداية والنظام والأزمنة والطبقات والمقارنات
 // ============================================================
 
-function CoverStep() {
+function CoverStep({ slide }: { slide: Slide30 }) {
   const [lens, setLens] = useState<Lens30>("ps");
   const examples: Record<Lens30, { en: string; ar: string }> = {
     ps: { en: "I opened the door.", ar: "فتحت الباب." },
@@ -610,20 +612,32 @@ function CoverStep() {
     pp: { en: "I had opened the door before the lights went out.", ar: "كنت قد فتحت الباب قبل أن تنطفئ الأضواء." },
     ppc: { en: "I had been opening boxes for an hour before the lights went out.", ar: "كنت أفتح الصناديق لمدة ساعة قبل أن تنطفئ الأضواء." },
   };
+  const sectionLabel = SECTIONS_30.find((section) => section.id === slide.section)?.label ?? slide.section;
   return (
-    <div className="space-y-4">
-      <div className="rounded-3xl border-2 border-teal-100 bg-gradient-to-br from-teal-600 via-cyan-700 to-indigo-800 p-6 text-center text-white shadow-lg md:p-10">
-        <div className="text-5xl anim-drift md:text-6xl">🎛️</div>
-        <En className="mt-3 block text-2xl font-black uppercase tracking-widest text-teal-200 md:text-3xl">{LAB_NAME_30}</En>
-        <h1 className="font-head mt-2 text-2xl font-black md:text-4xl">{LESSON_TITLE_30}</h1>
-        <p className="mt-3 text-base font-semibold text-teal-100 md:text-xl">{LESSON_SUBTITLE_30}</p>
-        <div dir="ltr" className="ltr-row mx-auto mt-4 max-w-2xl rounded-2xl bg-white/10 p-3">
-          <En className="text-sm font-bold text-white md:text-base">{LAB_MOTTO_30}</En>
-        </div>
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm font-black">
-          <span className="rounded-full bg-white/15 px-4 py-1.5">📄 46 خطوة</span>
-          <span className="rounded-full bg-white/15 px-4 py-1.5">🧪 20 سؤال اختبار</span>
-          <span className="rounded-full bg-white/15 px-4 py-1.5">🎛️ 4 مناطق</span>
+    <section className="l30-cover-page space-y-4" data-source-section={sourceTitleFor(slide)}>
+      <div className="l30-cover-hero relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-6 text-center shadow-[0_10px_40px_-15px_rgba(30,27,75,0.15)] md:p-10">
+        <div aria-hidden className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 rounded-full bg-sky-100/80 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -bottom-12 -right-10 h-48 w-48 rounded-full bg-orange-100/90 blur-3xl" />
+        <div className="relative">
+          <div className="mb-3 flex flex-wrap items-center justify-center gap-2">
+            <span className="rounded-full bg-slate-900 px-4 py-1.5 text-sm font-black text-white"><Rich text={`الدرس 30 · ${sectionLabel}`} /></span>
+            <span className="rounded-full bg-violet-100 px-4 py-1.5 text-sm font-black text-violet-800">{slide.step}</span>
+            <span className="rounded-full bg-white/90 px-3 py-1.5 text-xs font-bold text-slate-500" title={sourceTitleFor(slide)}>📜 <Rich text={sourceTitleFor(slide)} /></span>
+          </div>
+          <div className="pop anim-drift text-6xl md:text-7xl" aria-hidden>{slide.mascot}</div>
+          <En className="mt-2 block text-sm font-black uppercase tracking-[0.18em] text-violet-700 md:text-base">{LAB_NAME_30}</En>
+          <p className="mt-2 text-base font-bold text-slate-500 md:text-lg">{LESSON_TITLE_30}</p>
+          <h1 className="font-head mt-1 text-3xl font-black leading-tight text-slate-900 md:text-5xl">{slide.title}</h1>
+          <p className="mx-auto mt-3 max-w-2xl text-lg leading-relaxed text-slate-600 md:text-xl">{slide.lead}</p>
+          <p dir="ltr" className="ltr-pair mt-3 text-sm font-bold text-slate-500 md:text-base"><LatinRuns text={LESSON_SUBTITLE_30} /></p>
+          <div dir="ltr" className="ltr-row mx-auto mt-4 max-w-2xl rounded-2xl border border-sky-100 bg-white/85 p-3 shadow-sm">
+            <En className="block text-sm font-bold leading-relaxed text-slate-700 md:text-base">{LAB_MOTTO_30}</En>
+          </div>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm font-black">
+            <span className="rounded-full border border-sky-200 bg-sky-50 px-4 py-1.5 text-sky-900">📄 46 خطوة</span>
+            <span className="rounded-full border border-orange-200 bg-orange-50 px-4 py-1.5 text-orange-900">🧪 20 سؤال اختبار</span>
+            <span className="rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-emerald-900">🎛️ 4 مناطق</span>
+          </div>
         </div>
       </div>
       <Lab emoji="🎥" label="Four Lenses Preview" ar="العدسات الأربع — بدّل بينها لتشاهد النظام" seq="l30-cover">
@@ -631,14 +645,21 @@ function CoverStep() {
           {LENSES.map((l) => <LensChip key={l} lens={l} active={lens === l} onClick={() => setLens(l)} />)}
         </div>
         <div className={`mt-3 rounded-2xl border-2 p-4 text-center transition ${LENS_META[lens].soft}`}>
-          <div className="text-3xl">{LENS_META[lens].emoji}</div>
-          <En className={`mt-1 block text-xl font-black ${LENS_META[lens].text}`}>{examples[lens].en}</En>
-          <Rich text={examples[lens].ar} className="mt-1 block text-sm font-bold text-slate-600" />
+          <div className="text-3xl" aria-hidden>{LENS_META[lens].emoji}</div>
+          <LensChip lens={lens} />
+          <En className={`mt-2 block text-xl font-black ${LENS_META[lens].text}`}>{examples[lens].en}</En>
+          <Rich text={examples[lens].ar} className="mt-1 block text-base font-bold text-slate-600" />
           <div className="mt-2 text-sm font-black text-slate-700"><EnAr en={LENS_META[lens].qEn} sep="—" ar={LENS_META[lens].q} enClassName="font-black" /></div>
         </div>
       </Lab>
-      <SignatureGhost />
-    </div>
+      <p className="l30-source-meta text-center text-xs font-bold leading-relaxed text-slate-400">
+        📜 المصدر: {SOURCE_NUMBERED_COUNT} قسمًا مرقّمًا · {SOURCE_LEDGER_COUNT} وحدة في السجل · العرض دلالي تفاعلي — لا نص خام
+      </p>
+      <div className="l30-cover-tip flex items-center gap-3 rounded-2xl bg-slate-900 p-4 text-white">
+        <span className="text-3xl" aria-hidden>🦉</span>
+        <Rich text={slide.tip ?? ""} className="text-base font-semibold md:text-lg" />
+      </div>
+    </section>
   );
 }
 
@@ -1950,7 +1971,6 @@ function FinalStep({ onGoTest }: { onGoTest?: () => void }) {
           🧪 انتقل إلى الاختبار النهائي — 20 سؤالًا
         </button>
       )}
-      <Signature />
     </div>
   );
 }
@@ -1961,7 +1981,7 @@ function FinalStep({ onGoTest }: { onGoTest?: () => void }) {
 
 function SlideBody({ s, onGoTest }: { s: Slide30; onGoTest?: () => void }) {
   switch (s.id) {
-    case "cover": return <CoverStep />;
+    case "cover": return <CoverStep slide={s} />;
     case "opening": return <OpeningStep />;
     case "objectives": return <ObjectivesStep />;
     case "s1": return <S1_SystemStep />;
@@ -2012,19 +2032,22 @@ function SlideBody({ s, onGoTest }: { s: Slide30; onGoTest?: () => void }) {
 }
 
 export function SlideView30({ s, onGoTest }: { s: Slide30; onGoTest?: () => void }) {
+  if (s.id === "cover") return <CoverStep slide={s} />;
   return (
-    <Frame
-      mascot={s.mascot}
-      step={s.step}
-      badge={s.section}
-      title={<Rich text={s.title} />}
-      lead={s.lead ? <Rich text={s.lead} /> : undefined}
-      tip={s.tip}
-      accent={ACCENT30}
-      sourceTag={sourceTitleFor(s)}
-    >
-      <SlideBody s={s} onGoTest={onGoTest} />
-    </Frame>
+    <div className="l30-frame-wrap">
+      <Frame
+        mascot={s.mascot}
+        step={s.step}
+        badge={s.section}
+        title={<Rich text={s.title} />}
+        lead={s.lead ? <Rich text={s.lead} /> : undefined}
+        tip={s.tip}
+        accent={ACCENT30}
+        sourceTag={sourceTitleFor(s)}
+      >
+        <SlideBody s={s} onGoTest={onGoTest} />
+      </Frame>
+    </div>
   );
 }
 
@@ -2542,142 +2565,259 @@ export default function Lesson30({ onExit }: { onExit: () => void }) {
   const [teacherOk, setTeacherOk] = useState(false);
   const solutionsUnlocked = testChecked || teacherOk;
   const slide = SLIDES[index];
+  const scrollRef = useRef<HTMLElement | null>(null);
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+  const drawerRef = useRef<HTMLElement | null>(null);
+
+  const groups = useMemo(
+    () => SECTIONS_30.map((section) => ({ ...section, slides: SLIDES.map((s, i) => ({ s, i })).filter(({ s }) => s.section === section.id) })),
+    []
+  );
+  const progress = Math.round(((index + 1) / SLIDE_COUNT) * 100);
+  const areaLabel = AREAS.find((item) => item.id === area)?.ar ?? "الدرس";
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (area !== "lesson") return;
-      const tag = (e.target as HTMLElement)?.tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA") return;
-      if (e.key === "ArrowLeft") setIndex((i) => Math.min(SLIDES.length - 1, i + 1));
-      if (e.key === "ArrowRight") setIndex((i) => Math.max(0, i - 1));
+    const onKey = (event: KeyboardEvent) => {
+      if (area !== "lesson" || drawer) return;
+      const target = event.target as HTMLElement | null;
+      if (target?.closest("input, textarea, select, [contenteditable='true']")) return;
+      if (event.key === "ArrowLeft") setIndex((i) => Math.min(SLIDES.length - 1, i + 1));
+      if (event.key === "ArrowRight") setIndex((i) => Math.max(0, i - 1));
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [area]);
+  }, [area, drawer]);
 
-  const goSlide = (i: number) => { setIndex(i); setArea("lesson"); setDrawer(false); };
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+  }, [area, index]);
 
-  const rail = (
-    <div className="space-y-3">
-      {SECTIONS_30.map((sec) => {
-        const items = SLIDES.map((s, i) => ({ s, i })).filter(({ s }) => s.section === sec.id);
-        if (items.length === 0) return null;
-        return (
-          <div key={sec.id}>
-            <p className="mb-1.5 px-1 text-xs font-black text-slate-400"><Rich text={sec.label} /></p>
-            <div className="space-y-1">
-              {items.map(({ s, i }) => (
+  useEffect(() => {
+    if (!drawer) return;
+    const dialog = drawerRef.current;
+    const returnFocus = menuButtonRef.current;
+    const focusable = () => dialog
+      ? [...dialog.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')]
+        .filter((element) => element.getAttribute("aria-hidden") !== "true")
+      : [];
+    focusable()[0]?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setDrawer(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const items = focusable();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === dialog)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      if (returnFocus?.isConnected) returnFocus.focus();
+    };
+  }, [drawer]);
+
+  const goSlide = (nextIndex: number) => {
+    setIndex(Math.max(0, Math.min(SLIDES.length - 1, nextIndex)));
+    setArea("lesson");
+    setDrawer(false);
+  };
+
+  const rail = (mobile = false) => (
+    <div className="l30-rail-content flex h-full flex-col">
+      <div className="border-b border-slate-100 p-5">
+        <div className="flex items-start justify-between gap-3">
+          {mobile && (
+            <button type="button" onClick={() => setDrawer(false)} aria-label="إغلاق فهرس خطوات الدرس" className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-slate-200 bg-white text-lg text-slate-600 shadow-sm transition hover:bg-slate-50">
+              ×
+            </button>
+          )}
+          <div className="min-w-0 flex-1">
+            <button type="button" onClick={onExit} className="text-sm font-semibold text-slate-400 transition hover:text-slate-800">
+              → جميع الدروس
+            </button>
+            <div className="font-head mt-2 text-xl font-bold text-slate-900">الدرس 30 · مراجعة الماضي</div>
+            <En className="text-xs font-semibold text-slate-400">Past Simple · Past Continuous · Past Perfect</En>
+          </div>
+        </div>
+      </div>
+      <nav id={mobile ? "l30-mobile-step-navigation" : "l30-desktop-navigation"} aria-label="مسار خطوات الدرس" className="flex-1 overflow-y-auto p-3">
+        {groups.map((group) => (
+          <div key={group.id} className="l30-rail-group mb-3">
+            <div className="l30-rail-heading px-3 py-1 text-xs font-bold text-slate-400"><Rich text={group.label} /></div>
+            {group.slides.map(({ s, i }) => {
+              const active = i === index && area === "lesson";
+              return (
                 <button
                   key={s.id}
                   type="button"
                   onClick={() => goSlide(i)}
-                  aria-current={i === index && area === "lesson" ? "true" : undefined}
-                  className={`flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-right text-sm font-bold transition ${
-                    i === index && area === "lesson" ? "bg-teal-700 text-white shadow" : "text-slate-600 hover:bg-teal-50"
+                  aria-current={active ? "step" : undefined}
+                  className={`l30-rail-item flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-right text-sm transition ${
+                    active ? "bg-slate-900 text-white shadow" : "text-slate-600 hover:bg-sky-50"
                   }`}
                 >
-                  <span aria-hidden>{s.mascot}</span>
-                  <span className="min-w-0 flex-1 truncate"><Rich text={s.title} /></span>
-                  <span className={`text-[11px] font-black ${i === index && area === "lesson" ? "text-teal-200" : "text-slate-300"}`}>{s.no}</span>
+                  <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"}`}>{s.no}</span>
+                  <span className="min-w-0 flex-1 truncate font-semibold"><Rich text={s.title} /></span>
+                  <span className="text-base" aria-hidden>{s.mascot}</span>
                 </button>
-              ))}
-            </div>
+              );
+            })}
           </div>
-        );
-      })}
+        ))}
+      </nav>
+      <div className="border-t border-slate-100 p-4 text-xs text-slate-400">التنقل: الأسهم ← →</div>
     </div>
   );
 
   return (
-    <div className="mx-auto max-w-6xl space-y-4 p-3 sm:p-4">
-      <div className="flex flex-wrap items-center gap-2">
-        <button type="button" onClick={onExit} className="rounded-xl bg-slate-100 px-3 py-2 text-sm font-black text-slate-600 transition hover:bg-slate-200">
-          → خروج
-        </button>
-        <button type="button" onClick={() => setDrawer((d) => !d)} className="rounded-xl bg-teal-700 px-3 py-2 text-sm font-black text-white transition hover:bg-teal-800 lg:hidden">
-          ☰ الخطوات
-        </button>
-        <div className="min-w-0 flex-1">
-          <h1 className="font-head truncate text-lg font-black text-slate-900 md:text-xl">{LESSON_TITLE_30}</h1>
-          <p className="truncate text-xs font-bold text-slate-500"><LatinRuns text={LESSON_SUBTITLE_30} /></p>
-        </div>
-      </div>
+    <div className="lesson30 style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#f4f6fb] text-slate-800" data-lesson="30">
+      <Signature />
+      <div className="relative flex min-h-0 flex-1">
+        <SignatureGhost />
 
-      <div className="flex flex-wrap gap-2">
-        {AREAS.map((a) => (
-          <button
-            key={a.id}
-            type="button"
-            onClick={() => setArea(a.id)}
-            aria-pressed={area === a.id}
-            className={`flex-1 rounded-2xl border-2 px-3 py-2.5 text-sm font-black transition active:scale-[0.98] sm:flex-none sm:px-6 ${
-              area === a.id ? "border-teal-600 bg-teal-700 text-white shadow" : "border-slate-200 bg-white text-slate-600 hover:border-teal-300"
-            }`}
-          >
-            {a.emoji} {a.ar}
-            {a.id === "solutions" && !solutionsUnlocked && " 🔒"}
-          </button>
-        ))}
-      </div>
-
-      {area === "lesson" && (
-        <div className="flex items-center gap-2 rounded-2xl border-2 border-teal-100 bg-white px-3 py-2">
-          <span className="text-xs font-black text-teal-800"><Rich text={`خطوة ${slide.no} من ${SLIDE_COUNT}`} /></span>
-          <div className="h-2 min-w-0 flex-1 overflow-hidden rounded-full bg-slate-100">
-            <div className="h-2 rounded-full bg-teal-600 transition-all" style={{ width: `${Math.round(((index + 1) / SLIDE_COUNT) * 100)}%` }} />
-          </div>
-          <span className="text-xs font-black text-slate-400"><Rich text={`${Math.round(((index + 1) / SLIDE_COUNT) * 100)}٪`} /></span>
-        </div>
-      )}
-
-      {drawer && (
-        <div className="rounded-3xl border-2 border-slate-200 bg-white p-3 lg:hidden">
-          {rail}
-        </div>
-      )}
-
-      <div className="grid gap-4 lg:grid-cols-[280px_minmax(0,1fr)]">
-        <aside className="hidden max-h-[80vh] overflow-y-auto rounded-3xl border-2 border-slate-200 bg-white p-3 lg:block">
-          {rail}
+        <aside aria-label="مسار الدرس" className="l30-desktop-rail relative z-10 hidden w-72 shrink-0 border-l border-slate-200 bg-white/80 backdrop-blur lg:flex">
+          {rail()}
         </aside>
-        <main className="min-w-0 space-y-4">
+
+        <div className="l30-main-column relative z-10 flex min-w-0 flex-1 flex-col">
+          <header className="l30-header flex items-center gap-3 px-3 pt-3 sm:px-4 lg:px-10">
+            <button
+              ref={menuButtonRef}
+              type="button"
+              onClick={() => setDrawer(true)}
+              aria-label="فهرس الدرس"
+              aria-expanded={drawer}
+              aria-controls="l30-mobile-navigation"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-slate-200 bg-white text-lg shadow-sm transition hover:border-sky-300 focus-visible:outline-none lg:hidden"
+            >
+              ☰
+            </button>
+            <div className="min-w-0 flex-1">
+              <div className="truncate text-sm font-bold text-slate-500">
+                {area === "lesson"
+                  ? <Rich text={`${SECTIONS_30.find((section) => section.id === slide.section)?.label ?? slide.section} · ${slide.title}`} />
+                  : <Rich text={`الدرس 30 · ${areaLabel}`} />}
+              </div>
+              <div className="mt-0.5 truncate text-xs font-semibold text-slate-400">{area === "lesson" ? <Rich text={slide.lead ?? ""} /> : <LatinRuns text={LESSON_SUBTITLE_30} />}</div>
+            </div>
+            <button type="button" onClick={onExit} className="l30-mobile-exit rounded-xl bg-white px-3 py-2 text-sm font-bold text-slate-600 shadow-sm transition hover:bg-slate-100 lg:hidden">
+              ← خروج
+            </button>
+          </header>
+
+          <nav aria-label="مناطق الدرس" className="l30-area-tabs grid grid-cols-2 gap-2 px-3 pt-3 sm:flex sm:flex-wrap sm:px-4 lg:px-10">
+            {AREAS.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setArea(item.id)}
+                aria-pressed={area === item.id}
+                className={`l30-area-tab flex min-w-0 flex-1 items-center justify-center gap-2 rounded-2xl border-2 px-3 py-2.5 text-sm font-black transition active:scale-[0.98] sm:px-5 ${
+                  area === item.id ? "border-slate-900 bg-slate-900 text-white shadow" : "border-slate-200 bg-white text-slate-600 hover:border-sky-300"
+                }`}
+              >
+                <span aria-hidden>{item.emoji}</span>
+                <span>{item.ar}</span>
+                {item.id === "solutions" && !solutionsUnlocked && <span aria-label="مقفل">🔒</span>}
+              </button>
+            ))}
+          </nav>
+
           {area === "lesson" && (
-            <div data-area="l30-lesson">
-              <SlideView30 key={index} s={slide} onGoTest={() => setArea("test")} />
-              {/* 🏁 الاختبار النهائي — طبقة نهاية الدرس (تظهر مع الخطوة الأخيرة فقط) */}
-              {index === SLIDE_COUNT - 1 && (
-                <div className="mt-4">
-                  <FinalTest
-                    lesson={30}
-                    questions={FINAL_TESTS[30]}
-                    accent="bg-teal-700"
-                    onGoTeacher={() => setArea("teacher")}
-                  />
+            <div className="l30-progress-row mx-3 mt-3 flex items-center gap-2 rounded-2xl border border-sky-200 bg-white px-3 py-2 sm:mx-4 lg:mx-10">
+              <span className="shrink-0 text-xs font-black text-slate-700"><Rich text={`خطوة ${slide.no} من ${SLIDE_COUNT}`} /></span>
+              <div
+                role="progressbar"
+                aria-label="التقدم في خطوات الدرس"
+                aria-valuemin={1}
+                aria-valuemax={SLIDE_COUNT}
+                aria-valuenow={slide.no}
+                className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-slate-200"
+              >
+                <div className="h-full rounded-full bg-gradient-to-l from-sky-500 via-orange-400 to-emerald-500 transition-all duration-500" style={{ width: `${progress}%` }} />
+              </div>
+              <span className="shrink-0 text-xs font-black text-slate-400"><Rich text={`${progress}٪`} /></span>
+            </div>
+          )}
+
+          <main id="l30-main" ref={scrollRef} className="l30-scroll flex-1 overflow-y-auto px-3 pb-32 pt-4 sm:px-4 md:px-6 lg:px-10">
+            <div className="l30-content mx-auto w-full max-w-4xl">
+              {area === "lesson" && (
+                <div data-area="l30-lesson">
+                  <SlideView30 key={index} s={slide} onGoTest={() => setArea("test")} />
+                  {index === SLIDE_COUNT - 1 && (
+                    <div className="l30-final-test-shell mt-4">
+                      <FinalTest
+                        lesson={30}
+                        questions={FINAL_TESTS[30]}
+                        accent="bg-teal-700"
+                        onGoTeacher={() => setArea("teacher")}
+                      />
+                    </div>
+                  )}
                 </div>
               )}
-              <div className="flex items-center gap-2">
-                <button type="button" disabled={index === 0} onClick={() => setIndex((i) => Math.max(0, i - 1))}
-                  className="flex-1 rounded-2xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-black text-slate-700 transition enabled:hover:border-teal-300 disabled:opacity-30">
+              {area === "test" && <div className="l30-area-content l30-test-content" data-area="l30-test"><TestArea30 onCheckedChange={setTestChecked} onShowSolutions={() => setArea("solutions")} /></div>}
+              {area === "solutions" && <div className="l30-area-content l30-solutions-content" data-area="l30-solutions"><Solutions30 unlocked={solutionsUnlocked} onGoTest={() => setArea("test")} onGoTeacher={() => setArea("teacher")} /></div>}
+              {area === "teacher" && <div className="l30-area-content l30-teacher-content" data-area="l30-teacher"><TeacherArea30 unlocked={teacherOk} onUnlockChange={setTeacherOk} onGoSolutions={() => setArea("solutions")} /></div>}
+            </div>
+          </main>
+
+          {area === "lesson" && (
+            <div className="l30-floating-nav pointer-events-none absolute inset-x-0 bottom-4 z-20 flex justify-center px-3">
+              <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/95 p-1.5 shadow-xl backdrop-blur">
+                <button
+                  type="button"
+                  onClick={() => goSlide(index - 1)}
+                  disabled={index === 0}
+                  className="rounded-full px-4 py-2 text-sm font-bold text-slate-700 transition enabled:hover:bg-slate-100 disabled:opacity-30"
+                >
                   → السابق
                 </button>
-                <span className="rounded-xl bg-slate-100 px-3 py-2 text-xs font-black text-slate-500">{slide.no} / {SLIDE_COUNT}</span>
-                <button type="button" disabled={index === SLIDE_COUNT - 1} onClick={() => setIndex((i) => Math.min(SLIDE_COUNT - 1, i + 1))}
-                  className="flex-1 rounded-2xl bg-teal-700 px-4 py-3 text-sm font-black text-white transition enabled:hover:bg-teal-800 disabled:opacity-30">
+                <span className="h-6 w-px bg-slate-200" />
+                <span className="rounded-lg px-2 text-xs font-bold text-slate-500">{slide.no} / {SLIDE_COUNT}</span>
+                <span className="h-6 w-px bg-slate-200" />
+                <button
+                  type="button"
+                  onClick={() => goSlide(index + 1)}
+                  disabled={index === SLIDE_COUNT - 1}
+                  className="rounded-full bg-slate-900 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-slate-700 disabled:opacity-30"
+                >
                   التالي ←
                 </button>
               </div>
             </div>
           )}
-          {area === "test" && <div data-area="l30-test"><TestArea30 onCheckedChange={setTestChecked} onShowSolutions={() => setArea("solutions")} /></div>}
-          {area === "solutions" && <div data-area="l30-solutions"><Solutions30 unlocked={solutionsUnlocked} onGoTest={() => setArea("test")} onGoTeacher={() => setArea("teacher")} /></div>}
-          {area === "teacher" && <div data-area="l30-teacher"><TeacherArea30 unlocked={teacherOk} onUnlockChange={setTeacherOk} onGoSolutions={() => setArea("solutions")} /></div>}
-        </main>
+        </div>
       </div>
 
-      <p className="pb-4 text-center text-[11px] font-bold text-slate-400">
-        📜 المصدر: {SOURCE_NUMBERED_COUNT} قسمًا مرقّمًا · {SOURCE_LEDGER_COUNT} وحدة في السجل · العرض دلالي تفاعلي — لا نص خام
-      </p>
+      {drawer && (
+        <div className="l30-mobile-drawer fixed inset-0 z-50 flex lg:hidden" onClick={() => setDrawer(false)}>
+          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" aria-hidden="true" />
+          <aside
+            ref={drawerRef}
+            id="l30-mobile-navigation"
+            role="dialog"
+            aria-modal="true"
+            aria-label="فهرس خطوات الدرس"
+            className="relative z-10 h-full w-80 max-w-[85vw] bg-white shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            {rail(true)}
+          </aside>
+        </div>
+      )}
     </div>
   );
 }
-

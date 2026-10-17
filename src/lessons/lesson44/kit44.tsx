@@ -34,6 +34,18 @@ export const isArabicOnly = (text: string) => ARABIC.test(text) && !LATIN.test(t
 export function Text44({ text, className = '' }: { text: string; className?: string }) {
   if (isEnglishOnly(text)) return <span dir="ltr" lang="en" className={`en44 ${className}`}>{text}</span>;
   if (!ARABIC.test(text)) return <span className={className}>{text}</span>;
+  // "العنوان: My School Rules …" — an Arabic label followed by a whole English
+  // phrase. The shared splitter keeps the colon inside the LTR run, which parks
+  // it at the far left of the line; two explicit runs keep it next to its label.
+  const labelled = text.match(/^([^:]*?):\s+([A-Za-z][\s\S]*)$/);
+  if (labelled && isArabicOnly(labelled[1]) && isEnglishOnly(labelled[2])) {
+    return (
+      <span className={className}>
+        <span className="labelAr44">{labelled[1]}:</span>{' '}
+        <span dir="ltr" lang="en" className="en44">{labelled[2]}</span>
+      </span>
+    );
+  }
   return <span className={className}><Rich text={text} /></span>;
 }
 

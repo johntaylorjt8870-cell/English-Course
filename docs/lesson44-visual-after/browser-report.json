@@ -8,8 +8,8 @@
       "min": 3.46,
       "minText": "36",
       "issues": [],
-      "docHeight": 2406,
-      "stepHeight": 2019
+      "docHeight": 2402,
+      "stepHeight": 2015
     },
     {
       "label": "laptop-1024-step13",
@@ -109,8 +109,8 @@
       "min": 3.46,
       "minText": "03",
       "issues": [],
-      "docHeight": 2326,
-      "stepHeight": 1939
+      "docHeight": 2318,
+      "stepHeight": 1931
     },
     {
       "label": "desktop-step-11",
@@ -230,8 +230,8 @@
       "min": 3.46,
       "minText": "36",
       "issues": [],
-      "docHeight": 2382,
-      "stepHeight": 1994
+      "docHeight": 2378,
+      "stepHeight": 1990
     },
     {
       "label": "desktop-step-38",
@@ -241,8 +241,8 @@
       "min": 3.46,
       "minText": "38",
       "issues": [],
-      "docHeight": 1477,
-      "stepHeight": 1089
+      "docHeight": 1473,
+      "stepHeight": 1085
     },
     {
       "label": "desktop-test",
@@ -274,7 +274,7 @@
       "min": 5.05,
       "minText": "الإجابة",
       "issues": [],
-      "docHeight": 14179,
+      "docHeight": 14170,
       "stepHeight": 0
     },
     {
@@ -285,8 +285,8 @@
       "min": 3.46,
       "minText": "36",
       "issues": [],
-      "docHeight": 2406,
-      "stepHeight": 2019
+      "docHeight": 2402,
+      "stepHeight": 2015
     },
     {
       "label": "laptop-1024-step13",
@@ -348,7 +348,7 @@
     "cover": 2206,
     "step1": 561,
     "step2": 1487,
-    "step3": 1939,
+    "step3": 1931,
     "step11": 762,
     "step12": 1225,
     "step13": 1663,
@@ -359,11 +359,11 @@
     "step28": 1509,
     "step33": 2615,
     "step34": 751,
-    "step36": 1994,
-    "step38": 1089,
+    "step36": 1990,
+    "step38": 1085,
     "test": 7171,
     "solutions": 8225,
-    "teacher": 14179
+    "teacher": 14170
   },
   "shots": [
     "docs/lesson44-visual-after/01-cover.png",

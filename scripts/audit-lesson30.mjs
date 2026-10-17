@@ -76,6 +76,7 @@ export { React_ as React, renderToString, createRoot, Lesson30, SlideView30, Tes
   outfile: outFile,
   jsx: "automatic",
   packages: "external",
+  loader: { ".css": "empty" },
   logLevel: "silent",
 });
 
@@ -85,6 +86,7 @@ const plainOf = (html) => unescape(String(html).replace(/<!--[\s\S]*?-->/g, "").
 const norm = (s) => String(s).replace(/[\s​‌⁠().,;:=!?…\-–—"'«»“”’`·/\\|←→]+/g, "");
 const normText = (html) => norm(plainOf(html));
 const byText = (scope, text) => [...scope.querySelectorAll("button")].find((b) => (b.textContent || "").includes(text));
+const areaByText = (scope, text) => [...scope.querySelectorAll(".l30-area-tabs button")].find((b) => (b.textContent || "").includes(text));
 const setNativeValue = (el, value) => {
   const proto = el.tagName === "TEXTAREA" ? win.HTMLTextAreaElement.prototype : win.HTMLInputElement.prototype;
   Object.getOwnPropertyDescriptor(proto, "value").set.call(el, value);
@@ -649,13 +651,13 @@ try {
     const el = m.mount(m.React.createElement(m.Lesson30, { onExit: noop }));
     await tick(80);
     ok(!!el.querySelector('[data-area="l30-lesson"]'), "lesson area mounted");
-    byText(el, "الاختبار")?.click();
+    areaByText(el, "الاختبار")?.click();
     await tick(60);
     ok(!!el.querySelector('[data-area="l30-test"]'), "Test Area opens as a separate area");
-    byText(el, "الحلول")?.click();
+    areaByText(el, "الحلول")?.click();
     await tick(60);
     ok(!!el.querySelector('[data-area="l30-solutions"]'), "Test Solutions area opens as a separate area");
-    byText(el, "المعلم")?.click();
+    areaByText(el, "المعلم")?.click();
     await tick(60);
     ok(!!el.querySelector('[data-area="l30-teacher"]'), "Teacher Area opens as a separate area");
     el.remove();

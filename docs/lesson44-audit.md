@@ -149,7 +149,7 @@ observed at 1280 or 375.
 
 | Check | Result |
 |---|---|
-| `npm run build` | ✓ 9.05 s |
+| `npm run build` | ✓ 8.93 s |
 | `node scripts/audit-lesson44.mjs` | ✓ 91 assertions · 39 sections / 761 lines · 13 chapters · 25 practice / 25 test / 25 solutions |
 | `node scripts/audit-lesson44-dom.mjs` | ✓ 1 692 assertions · 39 steps · 761 `data-source-unit`s · 25-question submit · 25 solutions · password-gated teacher guide · 47 BIDI snapshots |
 | `node scripts/audit-lesson44-browser.mjs` | ✓ 69 checks · 32 screenshots · 25 contrast snapshots · lowest 3.46:1 (large folio numerals only) · no horizontal overflow at 1280 / 1024 / 768 / 390 |

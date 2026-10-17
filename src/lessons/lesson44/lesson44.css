@@ -96,7 +96,7 @@
 .lesson44 .glyph44 { width: 18px; height: 18px; flex: none; }
 .lesson44 .flip44 { transform: rotate(180deg); }
 .lesson44 .en44 { unicode-bidi: isolate; }
-.lesson44 .font-en { margin-inline-end: .12em; }
+.lesson44 .font-en { margin-inline-end: .28em; }
 .lesson44 .labelEn44 { unicode-bidi: isolate; direction: ltr; margin-inline-end: .55em; font-family: var(--mono); font-size: .92em; letter-spacing: .01em; }
 .lesson44 .levelHead44 h3 .labelEn44 { display: inline; }
 

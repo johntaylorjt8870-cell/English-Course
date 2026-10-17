@@ -52,8 +52,8 @@
       "min": 3.46,
       "minText": "13",
       "issues": [],
-      "docHeight": 3428,
-      "stepHeight": 2900
+      "docHeight": 3460,
+      "stepHeight": 2932
     },
     {
       "label": "phone-390-step13",
@@ -63,8 +63,8 @@
       "min": 3.46,
       "minText": "13",
       "issues": [],
-      "docHeight": 3428,
-      "stepHeight": 2900
+      "docHeight": 3460,
+      "stepHeight": 2932
     }
   ],
   "contrast": [
@@ -274,7 +274,7 @@
       "min": 5.05,
       "minText": "الإجابة",
       "issues": [],
-      "docHeight": 14154,
+      "docHeight": 14179,
       "stepHeight": 0
     },
     {
@@ -329,8 +329,8 @@
       "min": 3.46,
       "minText": "13",
       "issues": [],
-      "docHeight": 3428,
-      "stepHeight": 2900
+      "docHeight": 3460,
+      "stepHeight": 2932
     },
     {
       "label": "phone-390-step13",
@@ -340,8 +340,8 @@
       "min": 3.46,
       "minText": "13",
       "issues": [],
-      "docHeight": 3428,
-      "stepHeight": 2900
+      "docHeight": 3460,
+      "stepHeight": 2932
     }
   ],
   "heights": {
@@ -363,7 +363,7 @@
     "step38": 1089,
     "test": 7171,
     "solutions": 8225,
-    "teacher": 14154
+    "teacher": 14179
   },
   "shots": [
     "docs/lesson44-visual-after/01-cover.png",

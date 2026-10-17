@@ -1,277 +1,995 @@
-/* The Obligation Lab — scoped exclusively to Lesson 44.
-   Bright, vibrant identity: sky-blue canvas, white cards,
-   cyan MUST, amber HAVE TO, coral MUSTN'T, emerald don't-have-to,
-   purple HAD TO, teal WILL HAVE TO. NO dark backgrounds. */
-.lesson44{
-  --lab-canvas:#F0F9FF;--lab-surface:#FFFFFF;--lab-ink:#1E293B;--lab-muted:#64748B;
-  --lab-line:#CBD5E1;--lab-line-strong:#94A3B8;
-  --lab-must:#0891B2;--lab-must-ink:#0E7490;--lab-must-soft:#ECFEFF;
-  --lab-haveto:#D97706;--lab-haveto-ink:#92400E;--lab-haveto-soft:#FFFBEB;
-  --lab-prohibit:#EF4444;--lab-prohibit-ink:#B91C1C;--lab-prohibit-soft:#FEF2F2;
-  --lab-unnecessary:#10B981;--lab-unnecessary-ink:#065F46;--lab-unnecessary-soft:#ECFDF5;
-  --lab-past:#8B5CF6;--lab-past-ink:#6D28D9;--lab-past-soft:#F5F3FF;
-  --lab-future:#06B6D4;--lab-future-ink:#0E7490;--lab-future-soft:#ECFEFF;
-  --lab-signal:#F59E0B;--lab-signal-soft:#FEF3C7;
-  --lab-ok:#10B981;--lab-ok-soft:#ECFDF5;--lab-bad:#EF4444;--lab-bad-soft:#FEF2F2;
-  --lab-note:#475569;--lab-note-soft:#F1F5F9;
-  --lab-accent:#EC4899;
-  --radius:18px;--radius-sm:12px;
-  background:
-    radial-gradient(900px 400px at 90% -5%, #E0F2FE 0%, transparent 55%),
-    radial-gradient(800px 350px at -5% 15%, #FEF3C7 0%, transparent 50%),
-    var(--lab-canvas);
-  color:var(--lab-ink);
-  font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;
-  font-size:17px;line-height:1.85;min-height:100vh;overflow-wrap:anywhere;
+/* Self-hosted subsets — see fonts/README.md. Lesson-scoped only. */
+@font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('./fonts/newsreader-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Newsreader'; font-style: italic; font-weight: 400; font-display: swap;
+  src: url('./fonts/newsreader-latin-400-italic.woff2') format('woff2'); }
+@font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('./fonts/newsreader-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 600; font-display: swap;
+  src: url('./fonts/newsreader-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Newsreader'; font-style: italic; font-weight: 600; font-display: swap;
+  src: url('./fonts/newsreader-latin-600-italic.woff2') format('woff2'); }
+@font-face { font-family: 'Tajawal'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('./fonts/tajawal-arabic-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Tajawal'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('./fonts/tajawal-arabic-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Tajawal'; font-style: normal; font-weight: 700; font-display: swap;
+  src: url('./fonts/tajawal-arabic-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Tajawal'; font-style: normal; font-weight: 800; font-display: swap;
+  src: url('./fonts/tajawal-arabic-800-normal.woff2') format('woff2'); }
+
+/* ============================================================
+   LESSON 44 — ENGLISH LEARNING STUDIO
+   A scoped editorial system: warm paper, ink typography, one
+   semantic colour family per obligation form. Every selector is
+   scoped under `.lesson44`; other lessons are untouched.
+   ============================================================ */
+
+.lesson44 {
+  /* paper + ink */
+  --paper: #FFF8EC;
+  --paper-2: #FBF0DE;
+  --surface: #FFFFFF;
+  --ink: #17316B;
+  --ink-2: #33447A;
+  --muted: #42516D;
+  --faint: #5A6780;
+  --line: #E8DCC8;
+  --line-2: #D3C3A7;
+
+  /* semantic family */
+  --cobalt: #2448D8;
+  --cobalt-ink: #1B37B8;
+  --cobalt-soft: #E9EDFF;
+  --teal: #087F68;
+  --teal-ink: #06604F;
+  --teal-soft: #E2F2EC;
+  --coral: #C63F27;
+  --coral-ink: #9A2F1C;
+  --coral-soft: #FCEAE4;
+  --violet: #5B4B99;
+  --violet-ink: #4A3C82;
+  --violet-soft: #F2ECFF;
+  --amber-ink: #8A5A00;
+  --amber-soft: #FFF1D2;
+
+  /* feedback */
+  --good-ink: #1B6B3A;
+  --good-soft: #E7F4EA;
+  --bad-ink: #A3260F;
+  --bad-soft: #FCE7E1;
+
+  --focus: #2448D8;
+  --radius: 18px;
+  --radius-sm: 12px;
+  --shadow: 0 1px 0 rgba(23, 49, 107, .03), 0 18px 40px -34px rgba(23, 49, 107, .5);
+  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --sans: 'Tajawal', 'Rubik', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --shell: 1240px;
+  --measure: 67ch;
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.9;
+  min-height: 100vh;
+  overflow-wrap: break-word;
 }
-.lesson44 *{box-sizing:border-box}
-.lesson44 h1,.lesson44 h2,.lesson44 h3,.lesson44 h4,.lesson44 p,.lesson44 figure{margin:0}
-.lesson44 h1{font-size:clamp(26px,3.4vw,42px);line-height:1.25;letter-spacing:-.02em;font-weight:800}
-.lesson44 h2{font-size:clamp(22px,2.6vw,31px);font-weight:750;line-height:1.5}
-.lesson44 h3{font-size:21px;font-weight:755;margin-bottom:16px;line-height:1.6}
-.lesson44 h4{font-size:18px;font-weight:700;margin:14px 0 6px}
-.lesson44 p+p{margin-top:10px}
-.lesson44 .source44-line{border-inline-start:3px solid var(--lab-must);background:var(--lab-must-soft);color:var(--lab-must-ink);padding:8px 12px;border-radius:8px;font-weight:600}
-.lesson44 .en44{display:inline-block;unicode-bidi:isolate;direction:ltr;text-align:left}
-.lesson44 .font-en{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}
-.lesson44 button,.lesson44 input,.lesson44 select,.lesson44 textarea{font:inherit}
-.lesson44 button{border:1px solid var(--lab-line-strong);border-radius:var(--radius-sm);padding:10px 16px;color:var(--lab-ink);background:var(--lab-surface);font-weight:700;cursor:pointer;line-height:1.5;min-height:46px;transition:background-color .15s,border-color .15s,color .15s,box-shadow .15s}
-.lesson44 button:hover:not(:disabled){border-color:var(--lab-must);background:var(--lab-must-soft);color:var(--lab-must-ink);box-shadow:0 2px 8px rgba(8,145,178,.12)}
-.lesson44 button:active:not(:disabled){background:var(--lab-must-soft)}
-.lesson44 button[aria-pressed=true],.lesson44 button[aria-current=step]{background:var(--lab-must-soft);border-color:var(--lab-must);color:var(--lab-must-ink)}
-.lesson44 button:disabled{background:var(--lab-note-soft);color:var(--lab-muted);border-color:var(--lab-line);cursor:not-allowed}
-.lesson44 :is(button,a,input,select,textarea,summary):focus-visible{outline:3px solid var(--lab-signal);outline-offset:3px}
-.lesson44 .primary44{background:var(--lab-must);border-color:var(--lab-must);color:#FFFFFF}
-.lesson44 .primary44:hover:not(:disabled){background:var(--lab-must-ink);border-color:var(--lab-must-ink);color:#FFFFFF;box-shadow:0 4px 12px rgba(8,145,178,.2)}
-.lesson44 a{text-decoration:underline;text-underline-offset:5px;color:var(--lab-must-ink)}
-.lesson44 a:focus-visible{outline-color:var(--lab-signal)}
-
-/* ---------- masthead ---------- */
-.lesson44 .masthead44{background:linear-gradient(135deg,#0891B2 0%,#06B6D4 50%,#0EA5E9 100%);color:#FFFFFF;border-bottom:3px solid var(--lab-signal)}
-.lesson44 .mastheadInner44{max-width:1280px;margin:auto;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.lesson44 .masthead44 a{color:#FFFFFF}
-.lesson44 .masthead44 a:hover{background:rgba(255,255,255,.15);color:#FFFFFF}
-.lesson44 .masthead44 a:last-child{font-size:14px;font-weight:700}
-.lesson44 .brand44{display:flex;gap:12px;align-items:center;text-decoration:none;font-size:18px;font-weight:bold;color:#FFFFFF}
-.lesson44 .brand44 small{display:block;font-size:10px;letter-spacing:2px;color:var(--lab-signal-soft);font-family:ui-monospace,Consolas,monospace}
-.lesson44 .brandMark44{border:2px solid var(--lab-signal);color:var(--lab-signal);background:rgba(255,255,255,.15);width:44px;height:44px;display:grid;place-items:center;border-radius:50%;line-height:1;font-family:ui-monospace,Consolas,monospace;font-weight:700}
-.lesson44 .lessonTop44{max-width:1280px;margin:auto;padding:36px 32px 26px;display:flex;justify-content:space-between;gap:30px;align-items:center;flex-wrap:wrap}
-.lesson44 .lessonTop44 h1{color:var(--lab-ink)}
-.lesson44 .lessonTop44 p{color:var(--lab-muted)}
-.lesson44 .eyebrow44{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--lab-must-ink);margin-bottom:12px;font-family:ui-monospace,Consolas,monospace}
-.lesson44 .lessonMetric44{min-width:190px;max-width:230px}
-.lesson44 .lessonMetric44 b{font-size:34px;display:block;direction:ltr;text-align:right;font-weight:800;font-family:ui-monospace,Consolas,monospace;color:var(--lab-must)}
-.lesson44 .lessonMetric44 b span{font-size:18px;color:var(--lab-muted);margin-left:6px}
-.lesson44 .lessonMetric44 small{display:block;font-size:12px;color:var(--lab-muted);margin-top:4px}
-.lesson44 progress{width:100%;height:8px;accent-color:var(--lab-must);border:0;border-radius:8px;overflow:hidden;background:#E2E8F0;margin-top:8px}
-.lesson44 progress::-webkit-progress-bar{background:#E2E8F0}
-.lesson44 progress::-webkit-progress-value{background:linear-gradient(90deg,var(--lab-must),var(--lab-unnecessary))}
-.lesson44 .areas44{max-width:1216px;margin:0 auto 30px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;border-bottom:2px solid #E2E8F0;padding-bottom:12px}
-.lesson44 .areas44 button{border:0;background:transparent;color:var(--lab-ink);border-radius:var(--radius-sm);display:flex;gap:12px;align-items:center;justify-content:center;font-size:15px;font-weight:600}
-.lesson44 .areas44 button span{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--lab-must)}
-.lesson44 .areas44 button[aria-current=page]{background:var(--lab-must-soft);color:var(--lab-must-ink);border:1px solid var(--lab-must)}
-.lesson44 .areas44 button:disabled{color:var(--lab-muted)}
-.lesson44 .layout44{max-width:1280px;margin:auto;padding:0 32px;display:grid;grid-template-columns:232px minmax(0,1fr);gap:32px;align-items:start}
-.lesson44 .areaLayout44{max-width:1000px;margin:auto;padding:0 32px}
-.lesson44 main{min-width:0}
-
-/* ---------- station rail ---------- */
-.lesson44 .sidebar44{position:sticky;top:20px}
-.lesson44 .station44{margin-bottom:6px}
-.lesson44 .station44>button{width:100%;display:flex;text-align:right;gap:12px;border:0;background:transparent;color:var(--lab-ink);padding:12px 8px;align-items:center;border-radius:var(--radius-sm);font-weight:600}
-.lesson44 .station44>button[aria-pressed=true]{background:var(--lab-must-soft);border:1px solid var(--lab-must)}
-.lesson44 .station44 small{display:block;font-size:10px;letter-spacing:.08em;color:var(--lab-muted);font-family:ui-monospace,Consolas,monospace}
-.lesson44 .stationIndex44{font:14px ui-monospace,Consolas,monospace;color:var(--lab-must);border:1px solid var(--lab-must);border-radius:50%;width:32px;height:32px;display:grid;place-items:center;flex-shrink:0;background:var(--lab-surface)}
-.lesson44 .sectionsNav44{border-inline-end:2px solid var(--lab-must);margin:4px 23px 14px 0;padding-inline-end:12px;display:grid;gap:4px}
-.lesson44 .sectionsNav44 button{font-size:13px;text-align:right;padding:8px;min-height:40px;display:flex;gap:9px;border:1px solid transparent;background:transparent;color:var(--lab-muted);font-weight:500;border-radius:8px}
-.lesson44 .station44>button:hover:not(:disabled),.lesson44 .sectionsNav44 button:hover:not(:disabled){background:var(--lab-must-soft);border-color:var(--lab-must);color:var(--lab-must-ink)}
-.lesson44 .sectionsNav44 button[aria-current=step]{background:var(--lab-must);border-color:var(--lab-must);color:#FFFFFF}
-.lesson44 .sectionsNav44 button span:first-child{flex-shrink:0;font-family:ui-monospace,Consolas,monospace;color:var(--lab-muted)}
-.lesson44 .sidebarNote44{margin:22px 8px;color:var(--lab-muted);font-size:13px;border-top:1px solid #E2E8F0;padding-top:16px}
-.lesson44 .mobileToggle44{display:none}
-.lesson44 .step44{display:grid;gap:22px;color:var(--lab-ink)}
-.lesson44 .stepHeading44{display:flex;gap:16px;align-items:center;padding:6px 0 2px}
-.lesson44 .stepHeading44 .eyebrow44{margin-bottom:4px;color:var(--lab-accent)}
-.lesson44 .sectionNumber44{font:700 56px/1 ui-monospace,Consolas,monospace;color:var(--lab-must);flex-shrink:0;min-width:2ch;white-space:nowrap}
-
-/* ---------- panels by function ---------- */
-.lesson44 .panel44{background:var(--lab-surface);border:1px solid var(--lab-line);border-radius:var(--radius);padding:26px;margin-bottom:22px;position:relative;overflow:hidden;color:var(--lab-ink);box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.lesson44 .step44>.panel44{margin-bottom:0}
-.lesson44 .panel44::before{content:"";position:absolute;inset-block-start:0;inset-inline-start:0;width:100%;height:4px;background:var(--lab-line)}
-.lesson44 .panel44>p{margin-bottom:14px}
-.lesson44 .panel44.rule::before{background:linear-gradient(90deg,var(--lab-must),var(--lab-future))}
-.lesson44 .panel44.example::before{background:var(--lab-haveto)}
-.lesson44 .panel44.compare::before{background:linear-gradient(90deg,var(--lab-must),var(--lab-haveto))}
-.lesson44 .panel44.dialog::before{background:var(--lab-accent)}
-.lesson44 .panel44.drill::before{background:var(--lab-unnecessary)}
-.lesson44 .panel44.challenge::before{background:linear-gradient(90deg,var(--lab-signal),var(--lab-accent))}
-.lesson44 .panel44.lab::before{background:linear-gradient(90deg,var(--lab-must),var(--lab-unnecessary),var(--lab-haveto))}
-.lesson44 .panel44.read::before{background:var(--lab-past)}
-.lesson44 .panel44.write::before{background:var(--lab-accent)}
-.lesson44 .panel44.prohibit::before{background:var(--lab-prohibit)}
-.lesson44 .panel44.unnecessary::before{background:var(--lab-unnecessary)}
-.lesson44 .panelTag44{position:absolute;top:14px;inset-inline-end:14px;font:700 10px/1 ui-monospace,Consolas,monospace;color:var(--lab-must-ink);background:var(--lab-must-soft);border:1px solid var(--lab-must);border-radius:6px;padding:4px 8px;letter-spacing:.06em}
-
-/* ---------- source text ---------- */
-.lesson44 .source44{display:grid;gap:6px;margin:10px 0}
-.lesson44 .source44 .line44{color:var(--lab-ink);padding:2px 0;font-size:17px}
-.lesson44 .source44 .example44{background:var(--lab-must-soft);color:var(--lab-must-ink);border-inline-start:3px solid var(--lab-must);border-radius:0 8px 8px 0;padding:8px 14px;font-size:16px;font-weight:600;direction:ltr;text-align:left;margin:4px 0}
-.lesson44 .table44{overflow-x:auto;margin:14px 0}
-.lesson44 table{width:100%;border-collapse:collapse;border:1px solid var(--lab-line);border-radius:var(--radius-sm);overflow:hidden}
-.lesson44 th{background:var(--lab-must);color:#FFFFFF;padding:12px 16px;text-align:right;font-weight:700;font-size:15px}
-.lesson44 td{padding:12px 16px;border-top:1px solid var(--lab-line);font-size:16px;color:var(--lab-ink)}
-.lesson44 tr:nth-child(even){background:var(--lab-note-soft)}
-
-/* ---------- tokens ---------- */
-.lesson44 .token44{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--lab-line-strong);border-radius:8px;padding:8px 12px;font:700 17px/1 ui-monospace,Consolas,monospace;background:var(--lab-surface)}
-.lesson44 .token44 small{font-size:10px;font-weight:600;color:var(--lab-muted);letter-spacing:.04em}
-.lesson44 .token44.subject{border-color:var(--lab-must);background:var(--lab-must-soft);color:var(--lab-must-ink)}
-.lesson44 .token44.must{border-color:var(--lab-must);background:var(--lab-must-soft);color:var(--lab-must-ink)}
-.lesson44 .token44.haveto{border-color:var(--lab-haveto);background:var(--lab-haveto-soft);color:var(--lab-haveto-ink)}
-.lesson44 .token44.hadto{border-color:var(--lab-past);background:var(--lab-past-soft);color:var(--lab-past-ink)}
-.lesson44 .token44.mustnt{border-color:var(--lab-prohibit);background:var(--lab-prohibit-soft);color:var(--lab-prohibit-ink)}
-.lesson44 .token44.verb{border-color:var(--lab-unnecessary);background:var(--lab-unnecessary-soft);color:var(--lab-unnecessary-ink)}
-
-/* ---------- exercises ---------- */
-.lesson44 .exercise44{background:var(--lab-surface);border:1px solid var(--lab-line);border-radius:var(--radius-sm);padding:18px;margin:14px 0;position:relative}
-.lesson44 .exercise44 .label44{position:absolute;top:12px;inset-inline-end:12px;font:700 12px/1 ui-monospace,Consolas,monospace;color:var(--lab-must);background:var(--lab-must-soft);border-radius:6px;padding:4px 8px}
-.lesson44 .feedback44{margin-top:14px;padding:14px;border-radius:var(--radius-sm);background:var(--lab-ok-soft);border:1px solid var(--lab-ok);color:var(--lab-unnecessary-ink)}
-.lesson44 .feedback44.error{background:var(--lab-bad-soft);border-color:var(--lab-prohibit);color:var(--lab-prohibit-ink)}
-.lesson44 .formula44{font:700 18px/1.6 ui-monospace,Consolas,monospace;background:var(--lab-note-soft);padding:10px 16px;border-radius:8px;margin:10px 0;color:var(--lab-ink);direction:ltr;text-align:left}
-.lesson44 .actions44{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
-.lesson44 .field44{display:block;margin:12px 0}
-.lesson44 .field44 textarea,.lesson44 .field44 input,.lesson44 .field44 select{width:100%;border:1px solid var(--lab-line-strong);border-radius:var(--radius-sm);padding:10px 14px;font-size:16px;background:var(--lab-surface);color:var(--lab-ink);margin-top:6px}
-.lesson44 .field44 textarea:focus,.lesson44 .field44 input:focus{border-color:var(--lab-must);outline:none;box-shadow:0 0 0 3px var(--lab-must-soft)}
-.lesson44 .label44{font-size:13px;color:var(--lab-muted);margin:8px 0}
-.lesson44 .reference44{margin:14px 0;padding:14px;background:var(--lab-haveto-soft);border:1px solid var(--lab-haveto);border-radius:var(--radius-sm)}
-.lesson44 .reference44 .example44{color:var(--lab-ink);background:var(--lab-surface)}
-.lesson44 .checklist44{margin:18px 0;border-top:1px solid var(--lab-line);border-bottom:1px solid var(--lab-line);list-style:none;padding:14px 0;display:grid;gap:10px}
-.lesson44 .checklist44 label{display:flex;align-items:flex-start;gap:12px;padding:11px 0;cursor:pointer;font-size:16px}
-.lesson44 .checklist44 input{margin-top:5px}
-.lesson44 .options44{display:grid;gap:10px;margin-top:14px}
-.lesson44 .option44{display:flex;align-items:center;gap:12px;border:1px solid var(--lab-line-strong);border-radius:var(--radius-sm);padding:13px;cursor:pointer;direction:ltr}
-.lesson44 .option44:has(input:checked){border-color:var(--lab-must);background:var(--lab-must-soft);color:var(--lab-must-ink)}
-.lesson44 fieldset:disabled{opacity:.6}
-
-/* ---------- choice grid ---------- */
-.lesson44 .choiceGrid44{display:grid;gap:14px;margin:14px 0}
-
-/* ---------- dial / builder ---------- */
-.lesson44 .dialRow44{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin:14px 0}
-.lesson44 .dialGroup44{background:var(--lab-surface);border:1px solid var(--lab-line);border-radius:var(--radius-sm);padding:14px}
-.lesson44 .dialGroup44 .actions44{margin:0}
-.lesson44 .readout44{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0;padding:14px;background:var(--lab-note-soft);border-radius:var(--radius-sm)}
-.lesson44 .channelMust44{background:var(--lab-must-soft)!important;border-color:var(--lab-must)!important;color:var(--lab-must-ink)!important}
-.lesson44 .channelHaveto44{background:var(--lab-haveto-soft)!important;border-color:var(--lab-haveto)!important;color:var(--lab-haveto-ink)!important}
-
-/* ---------- tense cards ---------- */
-.lesson44 .tenseGrid44{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
-.lesson44 .tenseCard44{padding:14px;border-radius:var(--radius-sm);border:1px solid var(--lab-line)}
-.lesson44 .tenseCard44 b{display:block;margin-bottom:8px;font-size:14px}
-.lesson44 .tenseCard44 p{font:600 16px/1.5 ui-monospace,Consolas,monospace}
-.lesson44 .tenseCard44.aff{background:var(--lab-must-soft);border-color:var(--lab-must)}
-.lesson44 .tenseCard44.neg{background:var(--lab-prohibit-soft);border-color:var(--lab-prohibit)}
-.lesson44 .tenseCard44.q{background:var(--lab-haveto-soft);border-color:var(--lab-haveto)}
-
-/* ---------- prohibition / unnecessary buttons ---------- */
-.lesson44 .prohibit44{color:var(--lab-prohibit-ink)!important;font-weight:700}
-.lesson44 button.prohibit44[aria-pressed=true]{background:var(--lab-prohibit-soft)!important;border-color:var(--lab-prohibit)!important}
-.lesson44 .unnecessary44{color:var(--lab-unnecessary-ink)!important;font-weight:700}
-.lesson44 button.unnecessary44[aria-pressed=true]{background:var(--lab-unnecessary-soft)!important;border-color:var(--lab-unnecessary)!important}
-
-/* ---------- goals ---------- */
-.lesson44 .goalGrid44{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
-.lesson44 .goal44{display:flex;gap:14px;align-items:flex-start;background:var(--lab-surface);border:1px solid var(--lab-line);border-inline-start:4px solid var(--lab-must);border-radius:var(--radius-sm);padding:16px;color:var(--lab-ink)}
-.lesson44 .goalIndex44{font:800 15px/1 ui-monospace,Consolas,monospace;color:var(--lab-must-ink);background:var(--lab-must-soft);border-radius:8px;padding:8px 9px;flex-shrink:0}
-
-/* ---------- dialog ---------- */
-.lesson44 .dialog44{display:grid;gap:10px;margin:14px 0}
-.lesson44 .turn44{display:flex;gap:12px;align-items:flex-start;background:var(--lab-surface);border:1px solid var(--lab-line);border-radius:var(--radius-sm);padding:12px 14px}
-.lesson44 .speaker44{font-weight:800;color:var(--lab-must-ink);background:var(--lab-must-soft);border-radius:999px;padding:2px 12px;flex-shrink:0;font-size:15px}
-.lesson44 .said44{flex:1;min-width:0}
-
-/* ---------- summary ---------- */
-.lesson44 .summaryGrid44{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-.lesson44 .summaryCard44{background:var(--lab-surface);border:1px solid var(--lab-line);border-radius:var(--radius-sm);padding:20px}
-.lesson44 .summaryCard44:nth-child(5n+1){border-top:4px solid var(--lab-must)}
-.lesson44 .summaryCard44:nth-child(5n+2){border-top:4px solid var(--lab-haveto)}
-.lesson44 .summaryCard44:nth-child(5n+3){border-top:4px solid var(--lab-past)}
-.lesson44 .summaryCard44:nth-child(5n+4){border-top:4px solid var(--lab-unnecessary)}
-.lesson44 .summaryCard44:nth-child(5n){border-top:4px solid var(--lab-accent)}
-
-.lesson44 .teacherList44{padding-inline-start:24px;display:grid;gap:14px}
-.lesson44 details{border-top:1px solid var(--lab-line);padding:14px 0}
-.lesson44 summary{cursor:pointer;font-weight:700}
-.lesson44 details[open]>summary{margin-bottom:14px}
-
-/* ---------- cover ---------- */
-.lesson44 .cover44{background:linear-gradient(135deg,#0891B2 0%,#06B6D4 40%,#0EA5E9 100%);color:#FFFFFF;border-radius:24px;overflow:hidden;padding:34px;display:grid;gap:26px;border:1px solid #0E7490}
-.lesson44 .cover44 .eyebrow44{color:var(--lab-signal);font-size:11px}
-.lesson44 .cover44 h2{font-size:clamp(30px,4vw,50px);line-height:1.12;letter-spacing:-.03em;font-weight:800;text-align:left;margin-bottom:18px;font-family:ui-monospace,Consolas,monospace;color:#FFFFFF}
-.lesson44 .cover44 em{font-style:normal;color:var(--lab-signal);font-size:.52em;display:block;margin-top:10px;letter-spacing:0}
-.lesson44 .cover44 .source44{color:#FFFFFF}
-.lesson44 .cover44 .source44 .example44{background:rgba(255,255,255,.15);color:#FFFFFF;border-color:var(--lab-signal)}
-.lesson44 .cover44 .source44 .line44{color:rgba(255,255,255,.85)}
-.lesson44 .coverSignals44{display:flex;margin:24px 0 18px;gap:18px;flex-wrap:wrap}
-.lesson44 .coverSignal44{flex:1;min-width:150px;font:800 34px/1.1 ui-monospace,Consolas,monospace;border-top:3px solid var(--lab-signal);padding-top:12px}
-.lesson44 .coverSignal44 small{display:block;color:var(--lab-signal);font-size:11px;letter-spacing:1px;margin-top:10px;font-family:ui-monospace,Consolas,monospace}
-.lesson44 .coverSignal44.must-sig{color:#A5F3FC}
-.lesson44 .coverSignal44.haveto-sig{color:var(--lab-signal)}
-.lesson44 .coverCaption44{font-size:14px;color:rgba(255,255,255,.8)}
-.lesson44 .coverContext44{border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:22px;background:rgba(255,255,255,.1)}
-.lesson44 .coverContext44 .eyebrow44{color:var(--lab-signal)}
-
-/* ---------- progress ---------- */
-.lesson44 .progressBar44{height:12px;background:#E2E8F0;border-radius:12px;overflow:hidden;margin:14px 0}
-.lesson44 .progressFill44{height:100%;background:linear-gradient(90deg,var(--lab-must),var(--lab-unnecessary),var(--lab-haveto));border-radius:12px;transition:width .3s}
-.lesson44 .nextLesson44{margin-top:18px;padding:16px;background:var(--lab-signal-soft);border:1px solid var(--lab-signal);border-radius:var(--radius-sm)}
-
-/* ---------- navigation and footer ---------- */
-.lesson44 .bottomNav44{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:2px solid #E2E8F0;margin-top:28px;padding:22px 0;flex-wrap:wrap}
-.lesson44 .bottomNav44>span{font-size:14px;color:var(--lab-muted);direction:ltr;font-family:ui-monospace,Consolas,monospace}
-.lesson44 .back44{margin:22px 0}
-.lesson44 .footer44{max-width:1216px;margin:44px auto 0;padding:30px 32px;border-top:2px solid #E2E8F0;display:flex;align-items:center;justify-content:space-between;gap:20px;color:var(--lab-muted);font-size:14px;flex-wrap:wrap}
-.lesson44 .footer44>span{font-size:18px;font-weight:800;color:var(--lab-must);font-family:ui-monospace,Consolas,monospace}
-
-/* ---------- responsive ---------- */
-@media(min-width:1200px){.lesson44 .cover44{grid-template-columns:1.15fr 1fr;align-items:center;padding:32px}}
-@media(max-width:850px){
-  .lesson44 .layout44{grid-template-columns:1fr;gap:20px;padding:0 20px}
-  .lesson44 .sidebar44{position:static}
-  .lesson44 .mobileToggle44{display:block;width:100%;text-align:right;background:var(--lab-surface);border:1px solid var(--lab-line)}
-  .lesson44 .navContent44{display:none}
-  .lesson44 .navContent44.open{display:block;border:1px solid var(--lab-line);border-radius:var(--radius-sm);padding:18px;margin-top:10px;background:var(--lab-surface)}
-  .lesson44 .areas44{margin:0 20px 24px}
-  .lesson44 .lessonTop44{padding:26px 20px}
-  .lesson44 .mastheadInner44{padding:16px 20px}
-  .lesson44 .areaLayout44{padding:0 20px}
+.lesson44 * { box-sizing: border-box; }
+.lesson44 h1, .lesson44 h2, .lesson44 h3, .lesson44 h4, .lesson44 p, .lesson44 figure, .lesson44 dl, .lesson44 dd, .lesson44 blockquote { margin: 0; }
+.lesson44 ul, .lesson44 ol { margin: 0; }
+.lesson44 h1 { font-size: inherit; }
+.lesson44 a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.lesson44 a:hover { color: var(--cobalt-ink); }
+.lesson44 :is(button, a, input, textarea, select, summary):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
-@media(max-width:500px){
-  .lesson44{font-size:16px}
-  .lesson44 .lessonTop44{display:block}
-  .lesson44 .lessonMetric44{max-width:none;margin-top:18px}
-  .lesson44 .lessonMetric44 b{font-size:26px}
-  .lesson44 .areas44{grid-template-columns:repeat(2,1fr)}
-  .lesson44 .areas44 button{justify-content:flex-start;padding:12px;gap:9px;font-size:14px}
-  .lesson44 .panel44{padding:18px 14px;border-radius:16px}
-  .lesson44 .cover44{padding:22px 16px}
-  .lesson44 .cover44 h2{font-size:30px}
-  .lesson44 .coverSignal44{font-size:26px}
-  .lesson44 .token44{font-size:16px;padding:8px 10px}
-  .lesson44 .choiceGrid44,.lesson44 .goalGrid44,.lesson44 .summaryGrid44,.lesson44 .dialRow44,.lesson44 .tenseGrid44{grid-template-columns:1fr}
-  .lesson44 .exercise44{padding:15px 13px}
-  .lesson44 .stepHeading44{gap:12px}
-  .lesson44 .sectionNumber44{font-size:40px}
-  .lesson44 .stepHeading44 h2{font-size:21px}
-  .lesson44 .footer44{margin-top:26px;padding:22px 20px}
-  .lesson44 .brand44{font-size:16px;gap:9px}
-  .lesson44 .source44 .example44{padding:10px;font-size:16px}
-  .lesson44 .bottomNav44 button{padding:10px 14px}
-  .lesson44 td,.lesson44 th{padding:10px;min-width:96px;font-size:14px}
-  .lesson44 .turn44{flex-direction:column;gap:6px}
-  .lesson44 .formula44{font-size:17px}
+.lesson44 ::selection { background: var(--cobalt-soft); color: var(--ink); }
+.lesson44 .sr44 {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
-@media(prefers-reduced-motion:reduce){.lesson44 *{transition:none!important;scroll-behavior:auto!important}}
-.lesson44 .lessonTop44 b[dir="ltr"]{display:inline-block;white-space:nowrap}
-.lesson44 .nextStation44{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:8px 0}
-.lesson44 .navLabel44{display:inline-flex;align-items:center;gap:6px;width:100%}
+.lesson44 .glyph44 { width: 18px; height: 18px; flex: none; }
+.lesson44 .flip44 { transform: rotate(180deg); }
+.lesson44 .en44 { unicode-bidi: isolate; }
+.lesson44 .font-en { margin-inline-end: .12em; }
+.lesson44 .labelEn44 { unicode-bidi: isolate; direction: ltr; margin-inline-end: .55em; font-family: var(--mono); font-size: .92em; letter-spacing: .01em; }
+.lesson44 .levelHead44 h3 .labelEn44 { display: inline; }
+
+/* ------------------------------------------------------------
+   Top bar
+   ------------------------------------------------------------ */
+.lesson44 .bar44 {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(255, 248, 236, .96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.lesson44 .barInner44 {
+  max-width: var(--shell); margin: 0 auto; min-height: 66px;
+  padding: 9px 28px;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center; gap: 24px;
+}
+.lesson44 .brand44 { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+.lesson44 .brandNum44 {
+  width: 42px; height: 42px; display: grid; place-items: center;
+  border: 1.5px solid var(--ink); border-radius: 12px;
+  font: 500 21px/1 var(--serif); color: var(--ink); background: var(--surface);
+}
+.lesson44 .brandText44 { display: grid; gap: 2px; }
+.lesson44 .brandText44 > span { font: 500 16px/1.2 var(--serif); color: var(--ink); }
+.lesson44 .brandText44 small { font: 700 9.5px/1.2 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+.lesson44 .areas44 { display: flex; justify-content: center; gap: 2px; }
+.lesson44 .areas44 button {
+  position: relative; display: inline-flex; align-items: center; gap: 8px;
+  min-height: 42px; padding: 0 14px; border: 0; border-radius: 8px;
+  background: transparent; color: var(--muted);
+  font: 700 13.5px/1.2 var(--sans); cursor: pointer;
+}
+.lesson44 .areas44 button > span { font: 600 9.5px/1 var(--mono); color: var(--faint); letter-spacing: .06em; }
+.lesson44 .areas44 button:hover:not(:disabled) { color: var(--ink); background: var(--paper-2); }
+.lesson44 .areas44 button[aria-current="page"] { color: var(--ink); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line-2); }
+.lesson44 .areas44 button[aria-current="page"] > span { color: var(--cobalt); }
+.lesson44 .areas44 button:disabled { color: var(--faint); opacity: .75; cursor: not-allowed; }
+.lesson44 .tabLock44 { width: 13px; height: 13px; color: var(--faint); }
+.lesson44 .barMeta44 { display: flex; align-items: center; gap: 16px; justify-self: end; min-width: 0; }
+.lesson44 .barArea44 {
+  font: 700 12px/1.4 var(--sans); color: var(--muted); max-width: 230px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.lesson44 .barProgress44 { display: flex; align-items: center; gap: 9px; font: 600 11px/1 var(--mono); color: var(--muted); }
+.lesson44 .barBar44 { width: 74px; height: 3px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.lesson44 .barBar44 > span { display: block; height: 100%; background: var(--ink); border-radius: 2px; }
+
+/* ------------------------------------------------------------
+   Layout
+   ------------------------------------------------------------ */
+.lesson44 .layout44 {
+  max-width: var(--shell); margin: 0 auto; padding: 30px 28px 44px;
+  display: grid; grid-template-columns: 286px minmax(0, 1fr); gap: 48px; align-items: start;
+}
+.lesson44 .layout44--cover { grid-template-columns: minmax(0, 1fr); padding-top: 22px; }
+.lesson44 .railCol44 { position: sticky; top: 84px; }
+.lesson44 .rail44 { max-height: calc(100vh - 104px); overflow: auto; padding-inline-end: 6px; }
+.lesson44 .railHead44 { border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 8px; }
+.lesson44 .railProgress44 { font: 500 11.5px/1.6 var(--mono); color: var(--faint); margin-top: 4px; }
+.lesson44 .railNav44 { display: grid; }
+.lesson44 .chapter44 { border-bottom: 1px solid var(--line); }
+.lesson44 .chapterBtn44 {
+  width: 100%; display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 10px;
+  align-items: center; padding: 10px 6px; border: 0; background: transparent;
+  color: var(--ink); text-align: start; cursor: pointer; border-radius: 8px;
+}
+.lesson44 .chapterBtn44:hover { background: var(--paper-2); }
+.lesson44 .chapterNo44 { font: 500 11px/1 var(--mono); color: var(--faint); }
+.lesson44 .chapterName44 { display: grid; gap: 1px; min-width: 0; }
+.lesson44 .chapterName44 b { font: 700 13.5px/1.5 var(--sans); }
+.lesson44 .chapterName44 small { font: 600 8.5px/1.5 var(--mono); letter-spacing: .1em; color: var(--faint); }
+.lesson44 .chapterCount44 { font: 500 10.5px/1 var(--mono); color: var(--faint); }
+.lesson44 .chapter44.is-active .chapterBtn44 { background: var(--ink); color: #fff; }
+.lesson44 .chapter44.is-active .chapterBtn44:hover { background: var(--ink); }
+.lesson44 .chapter44.is-active .chapterNo44,
+.lesson44 .chapter44.is-active .chapterCount44,
+.lesson44 .chapter44.is-active .chapterName44 small { color: #D8DEF5; }
+.lesson44 .sectionNav44 { list-style: none; padding: 2px 6px 10px; margin: 0; display: grid; }
+.lesson44 .sectionNav44 button {
+  width: 100%; display: block; padding: 7px 6px; border: 0; border-radius: 7px;
+  background: transparent; color: var(--muted); text-align: start; cursor: pointer;
+  font: 500 12.5px/1.5 var(--sans);
+}
+.lesson44 .sectionNav44 button:hover { background: var(--paper-2); color: var(--ink); }
+.lesson44 .sectionNav44 button[aria-current="step"] { background: var(--cobalt-soft); color: var(--ink); box-shadow: inset 2px 0 0 var(--cobalt); }
+.lesson44 .sectionLabel44 {
+  display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px;
+  align-items: baseline; min-width: 0; text-align: left;
+}
+.lesson44 .sectionNo44 { font: 500 9.5px/1.8 var(--mono); color: var(--faint); text-align: end; }
+.lesson44 .sectionTitle44 { min-width: 0; }
+.lesson44 .railNote44 { font: 600 11px/1.8 var(--mono); color: var(--faint); border-top: 1px solid var(--line); padding-top: 10px; margin-top: 4px; }
+.lesson44 .mobileToggle44 { display: none; }
+
+/* ------------------------------------------------------------
+   Stage + step heading
+   ------------------------------------------------------------ */
+.lesson44 .stage44 { min-width: 0; max-width: 900px; }
+.lesson44 .stage44--cover { max-width: none; }
+.lesson44 .step44 { display: grid; gap: 26px; }
+.lesson44 .stepHead44 { border-bottom: 1px solid var(--line); padding-bottom: 16px; }
+.lesson44 .kicker44 {
+  display: flex; align-items: center; gap: 8px;
+  font: 800 12px/1.6 var(--sans); color: var(--cobalt-ink);
+}
+.lesson44 .kicker44::before { content: ""; width: 18px; height: 2px; background: currentColor; flex: none; }
+.lesson44 .stepCount44 { margin-inline-start: auto; font: 500 11px/1.6 var(--mono); color: var(--faint); }
+.lesson44 .stepTitleRow44 { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; align-items: start; margin-top: 12px; }
+.lesson44 .stepFolio44 {
+  font: 500 62px/.9 var(--serif); color: #9C8256; letter-spacing: -.04em;
+  font-variant-numeric: lining-nums; padding-top: 4px;
+}
+.lesson44 .stepEn44 { font: italic 400 17px/1.4 var(--serif); color: var(--faint); margin-bottom: 4px; }
+.lesson44 .stepTitleText44 h2 {
+  font: 800 clamp(25px, 2.7vw, 34px)/1.4 var(--sans); color: var(--ink);
+  outline: none;
+}
+
+/* ------------------------------------------------------------
+   Article / source rendering
+   ------------------------------------------------------------ */
+.lesson44 .article44 { max-width: 100%; }
+/* Long-form prose keeps a readable measure; the article itself fills the stage
+   so tables, example pairs and plates line up with the step heading. */
+.lesson44 .article44 > .body44,
+.lesson44 .article44 > .bullets44,
+.lesson44 .article44 > .numlist44,
+.lesson44 .article44 > .note44 { max-width: 74ch; }
+.lesson44 .article44 > * + * { margin-top: 13px; }
+.lesson44 .article44 > .ex44 + .ex44,
+.lesson44 .article44 > .lead44 + .ex44 { margin-top: 0; }
+.lesson44 .article44 > .lead44 { margin-top: 20px; }
+.lesson44 .article44 > .lead44:first-child { margin-top: 0; }
+.lesson44 .article44 > .contrast44 { margin-top: 18px; }
+.lesson44 .body44 { font: 400 17.5px/1.95 var(--sans); color: var(--ink); max-width: 74ch; }
+.lesson44 .lead44 {
+  display: flex; align-items: center; gap: 9px;
+  font: 800 13px/1.6 var(--sans); color: var(--teal-ink); margin-top: 16px;
+}
+.lesson44 .lead44::before { content: ""; width: 12px; height: 2px; background: currentColor; flex: none; }
+.lesson44 .subhead44 {
+  font: 800 21px/1.5 var(--sans); color: var(--ink);
+  border-bottom: 1px solid var(--line); padding-bottom: 8px; margin-top: 16px;
+}
+.lesson44 .article44 > .subhead44:first-child { margin-top: 0; }
+.lesson44 .article44 > .subhead44 + * { margin-top: 10px; }
+.lesson44 .ex44 {
+  display: grid; grid-template-columns: minmax(0, 1.34fr) minmax(0, 1fr);
+  column-gap: 24px; align-items: start; direction: ltr;
+  padding: 9px 0; margin: 0;
+}
+.lesson44 .ex44 + .ex44 { border-top: 1px solid var(--line); }
+.lesson44 .ex44:not(:has(figcaption)) blockquote { grid-column: 1 / -1; }
+.lesson44 .ex44 blockquote {
+  font: 400 20.5px/1.5 var(--serif); color: var(--ink); text-align: left;
+  unicode-bidi: isolate; margin: 0;
+}
+.lesson44 .ex44 figcaption {
+  font: 400 15px/1.85 var(--sans); color: var(--muted);
+  direction: rtl; text-align: right; padding-inline-start: 20px; border-inline-start: 1px solid var(--line);
+  padding-top: 5px;
+}
+.lesson44 .contrast44 {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; direction: ltr;
+  margin: 6px 0 2px; max-width: 760px;
+}
+.lesson44 .contrastPane44 {
+  border: 1.5px solid var(--line-2); border-radius: 14px; padding: 14px 16px;
+  display: grid; gap: 7px; background: var(--surface); margin: 0;
+}
+.lesson44 .contrastPane44--must { border-color: #AFC0F2; background: var(--cobalt-soft); }
+.lesson44 .contrastPane44--haveto { border-color: #A9D3C7; background: var(--teal-soft); }
+.lesson44 .contrastPane44--prohibit { border-color: #E3A597; background: var(--coral-soft); }
+.lesson44 .contrastPane44--unnec { border: 1.5px dashed #C3B4EC; background: var(--violet-soft); }
+.lesson44 .contrastPane44--past,
+.lesson44 .contrastPane44--future { border-color: #A9D3C7; background: var(--teal-soft); }
+.lesson44 .contrastTag44 {
+  display: flex; align-items: center; gap: 7px;
+  font: 800 11.5px/1.4 var(--sans); color: var(--cobalt-ink); direction: rtl; text-align: right;
+}
+.lesson44 .contrastPane44--haveto .contrastTag44,
+.lesson44 .contrastPane44--past .contrastTag44,
+.lesson44 .contrastPane44--future .contrastTag44 { color: var(--teal-ink); }
+.lesson44 .contrastPane44--prohibit .contrastTag44 { color: var(--coral-ink); }
+.lesson44 .contrastPane44--unnec .contrastTag44 { color: var(--violet-ink); }
+.lesson44 .contrastTag44 .glyph44 { width: 14px; height: 14px; }
+.lesson44 .contrastPane44 blockquote {
+  font: 400 21px/1.45 var(--serif); color: var(--ink); text-align: left; margin: 0;
+}
+.lesson44 .solo44 { font: 400 20px/1.6 var(--serif); color: var(--ink); }
+.lesson44 .term44 { font: 500 26px/1.35 var(--serif); color: var(--ink); letter-spacing: -.01em; }
+.lesson44 .formula44 {
+  display: inline-block; width: fit-content; max-width: 100%;
+  font: 500 15.5px/1.8 var(--mono); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: 10px;
+  padding: 8px 14px; box-shadow: var(--shadow); text-align: left;
+}
+.lesson44 .def44 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; font-size: 16px; direction: ltr; max-width: 60ch; }
+.lesson44 .defPart44 {
+  font: 500 15px/1.6 var(--mono); color: var(--ink);
+  border: 1px solid var(--line-2); border-radius: 7px; padding: 2px 8px; background: var(--surface);
+}
+.lesson44 .defGloss44 { color: var(--muted); }
+.lesson44 .eq44 { color: var(--faint); font: 600 14px var(--mono); }
+.lesson44 .verdicts44 { list-style: none; padding: 0; display: grid; }
+.lesson44 .verdicts44 li {
+  display: flex; align-items: baseline; gap: 10px;
+  border-bottom: 1px dotted var(--line); padding: 5px 0;
+}
+.lesson44 .verdictText44 { font: 400 19px/1.6 var(--serif); color: var(--ink); }
+.lesson44 .verdictMark44 { width: 16px; height: 16px; display: inline-flex; align-self: center; }
+.lesson44 .verdictMark44 .glyph44 { width: 15px; height: 15px; }
+.lesson44 .verdicts44 li.is-good .verdictMark44 { color: var(--good-ink); }
+.lesson44 .verdicts44 li.is-bad .verdictMark44 { color: var(--bad-ink); }
+.lesson44 .numlist44 { list-style: none; counter-reset: n; padding: 0; display: grid; gap: 6px; }
+.lesson44 .numlist44 li {
+  counter-increment: n; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px;
+  font: 400 16.5px/1.8 var(--sans); color: var(--ink);
+}
+.lesson44 .numlist44 li::before {
+  content: counter(n, decimal-leading-zero);
+  font: 600 11px/2.4 var(--mono); color: var(--cobalt-ink);
+}
+.lesson44 .bullets44 { padding-inline-start: 18px; display: grid; gap: 4px; }
+.lesson44 .bullets44 li { font-size: 16px; color: var(--ink-2); }
+.lesson44 .tableWrap44 {
+  overflow-x: auto; border: 1px solid var(--line); border-radius: 14px;
+  background: var(--surface); box-shadow: var(--shadow); max-width: 100%;
+}
+.lesson44 .tableWrap44 table { width: 100%; border-collapse: collapse; min-width: 460px; }
+.lesson44 .tableWrap44 th {
+  background: var(--paper-2); color: var(--ink); font: 800 12.5px/1.5 var(--sans);
+  padding: 11px 16px; text-align: start; border-bottom: 1px solid var(--line-2); white-space: nowrap;
+}
+.lesson44 .tableWrap44 td {
+  padding: 11px 16px; border-bottom: 1px solid var(--line);
+  font: 400 15.5px/1.7 var(--sans); color: var(--ink); vertical-align: top;
+}
+.lesson44 .tableWrap44 tr:last-child td { border-bottom: 0; }
+.lesson44 .tableWrap44--compare th:first-child { box-shadow: inset 0 3px 0 var(--cobalt); }
+.lesson44 .tableWrap44--compare th:nth-child(2) { box-shadow: inset 0 3px 0 var(--teal); }
+.lesson44 .note44 { border: 1px solid; border-radius: 14px; padding: 14px 18px; display: grid; gap: 10px; }
+.lesson44 .note44--amber { background: var(--amber-soft); border-color: #E6C993; color: var(--amber-ink); }
+.lesson44 .note44--violet { background: var(--violet-soft); border-color: #D8CDF3; color: var(--violet-ink); }
+.lesson44 .note44--cobalt { background: var(--cobalt-soft); border-color: #C9D1F7; color: var(--cobalt-ink); }
+.lesson44 .note44--coral { background: var(--coral-soft); border-color: #EEC0B5; color: var(--coral-ink); }
+.lesson44 .noteHead44 { display: flex; align-items: center; gap: 8px; font: 800 14px/1.5 var(--sans); }
+.lesson44 .noteBody44 { display: grid; gap: 8px; }
+.lesson44 .note44 .body44, .lesson44 .note44 .ex44 blockquote, .lesson44 .note44 .solo44,
+.lesson44 .note44 .verdictText44, .lesson44 .note44 .defPart44 { color: var(--ink); }
+.lesson44 .note44 .ex44 figcaption, .lesson44 .note44 .defGloss44, .lesson44 .note44 .eq44 { color: var(--ink-2); }
+.lesson44 .note44 .ex44 { border-inline-start-color: currentColor; }
+.lesson44 .sourceKey44 { border-top: 2px solid var(--ink); padding-top: 14px; display: grid; gap: 10px; margin-top: 8px; }
+.lesson44 .sourceKeyTitle44 { font: 800 18px/1.5 var(--sans); color: var(--ink); }
+.lesson44 .sourceKey44 .article44 { max-width: 100%; }
+
+/* marks */
+.lesson44 .m44 {
+  background: transparent; color: inherit; font-weight: 600;
+  padding-bottom: 1px; border-bottom: 2px solid currentColor;
+}
+.lesson44 .m44--must { color: var(--cobalt-ink); }
+.lesson44 .m44--haveto { color: var(--teal-ink); }
+.lesson44 .m44--prohibit { color: var(--coral-ink); }
+.lesson44 .m44--unnec { color: var(--violet-ink); }
+.lesson44 .m44--past { color: var(--teal-ink); border-bottom-style: dotted; }
+.lesson44 .m44--future { color: var(--teal-ink); border-bottom-style: dashed; }
+
+/* ------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------ */
+.lesson44 .btn44 {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 46px; padding: 0 18px; border-radius: 999px;
+  border: 1px solid var(--line-2); background: var(--surface); color: var(--ink);
+  font: 700 14.5px/1.2 var(--sans); cursor: pointer;
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+.lesson44 .btn44:hover:not(:disabled) { border-color: var(--ink); }
+.lesson44 .btn44--solid { background: var(--ink); border-color: var(--ink); color: #fff; }
+.lesson44 .btn44--solid:hover:not(:disabled) { background: var(--cobalt); border-color: var(--cobalt); }
+.lesson44 .btn44--ghost { background: transparent; border-color: var(--ink); }
+.lesson44 .btn44--ghost:hover:not(:disabled) { background: var(--surface); }
+.lesson44 .btn44--quiet { background: transparent; border-color: transparent; color: var(--muted); text-decoration: underline; text-underline-offset: 4px; }
+.lesson44 .btn44--quiet:hover:not(:disabled) { color: var(--ink); }
+.lesson44 .btn44:disabled { background: var(--paper-2); border-color: var(--line-2); color: var(--faint); cursor: not-allowed; }
+.lesson44 .btn44--solid:disabled { background: var(--paper-2); border-color: var(--line-2); color: var(--faint); }
+
+/* ------------------------------------------------------------
+   Cover
+   ------------------------------------------------------------ */
+.lesson44 .cover44 { display: grid; gap: 52px; }
+.lesson44 .coverGrid44 {
+  display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(280px, .68fr); gap: 48px;
+  align-items: end; border-bottom: 1px solid var(--line); padding-bottom: 34px;
+}
+.lesson44 .coverText44 { max-width: 760px; }
+.lesson44 .coverTitle44 {
+  font: 500 clamp(54px, 7.2vw, 100px)/.94 var(--serif); letter-spacing: -.035em;
+  color: var(--ink); margin: 16px 0 18px;
+}
+.lesson44 .amp44 { color: var(--cobalt); font-style: italic; }
+.lesson44 .coverAr44 { font: 800 clamp(20px, 2vw, 26px)/1.55 var(--sans); color: var(--ink); }
+.lesson44 .coverDek44 { font: italic 400 clamp(18px, 1.8vw, 22px)/1.4 var(--serif); color: var(--muted); margin-top: 6px; }
+.lesson44 .coverMeta44 { font: 600 13px/1.7 var(--sans); color: var(--faint); margin-top: 14px; }
+.lesson44 .coverActions44 { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 20px; }
+.lesson44 .coverStats44 {
+  display: flex; gap: 34px; border-top: 1px solid var(--line); padding-top: 14px; max-width: 560px;
+}
+.lesson44 .coverStats44 div { display: flex; flex-direction: column-reverse; gap: 2px; }
+.lesson44 .coverStats44 dt { font: 700 10.5px/1.4 var(--mono); letter-spacing: .08em; color: var(--faint); }
+.lesson44 .coverStats44 dd { font: 500 26px/1 var(--serif); color: var(--ink); }
+.lesson44 .coverIndex44 {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  padding: 16px 18px; box-shadow: var(--shadow); align-self: stretch; max-height: 470px; overflow: auto;
+}
+.lesson44 .coverIndex44 ol { list-style: none; padding: 0; margin-top: 6px; display: grid; }
+.lesson44 .coverIndex44 li {
+  display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 9px;
+  align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--line);
+}
+.lesson44 .coverIndex44 li:last-child { border-bottom: 0; }
+.lesson44 .indexNo44 { font: 500 10px/1.6 var(--mono); color: var(--cobalt-ink); }
+.lesson44 .indexName44 { font: 700 12.5px/1.5 var(--sans); }
+.lesson44 .indexName44 small { display: block; font: 600 8px/1.5 var(--mono); letter-spacing: .1em; color: var(--faint); }
+.lesson44 .indexRange44 { font: 500 9.5px/1.5 var(--mono); color: var(--faint); }
+.lesson44 .coverStory44 { max-width: 880px; display: grid; gap: 16px; }
+.lesson44 .storyLead44 { font: 800 23px/1.7 var(--sans); color: var(--ink); }
+.lesson44 .voices44 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 12px 0; }
+.lesson44 .voice44 {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  padding: 16px 18px; display: grid; gap: 8px; box-shadow: var(--shadow);
+}
+.lesson44 .voice44 figcaption { font: 800 11.5px/1.5 var(--sans); color: var(--coral-ink); }
+.lesson44 .voice44 blockquote { font: 500 19px/1.45 var(--serif); color: var(--ink); }
+.lesson44 .voice44 p { font: 400 13.5px/1.7 var(--sans); color: var(--muted); }
+.lesson44 .storyArticle44 { max-width: 760px; }
+.lesson44 .pivot44 {
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  padding: 22px 0; display: grid; gap: 6px; margin: 6px 0;
+}
+.lesson44 .pivotLead44 { font: 700 13px/1.6 var(--sans); color: var(--faint); }
+.lesson44 .pivotTitle44 { font: 500 clamp(36px, 4.4vw, 58px)/1.08 var(--serif); letter-spacing: -.02em; color: var(--ink); }
+.lesson44 .pullQuote44 {
+  font: 800 clamp(23px, 2.8vw, 32px)/1.7 var(--sans); color: var(--ink);
+  border-inline-start: 3px solid var(--cobalt); padding-inline-start: 20px; margin: 8px 0;
+}
+.lesson44 .crux44 { border-top: 2px solid var(--ink); padding-top: 16px; display: grid; gap: 14px; }
+.lesson44 .cruxPair44 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.lesson44 .cruxPlate44 {
+  border: 1.5px solid var(--line-2); border-radius: 16px; padding: 18px 20px;
+  display: grid; gap: 3px; background: var(--surface);
+}
+.lesson44 .cruxPlate44--ban { border-color: var(--coral); background: var(--coral-soft); }
+.lesson44 .cruxPlate44--open { border-style: dashed; border-color: var(--violet); background: var(--violet-soft); }
+.lesson44 .cruxMark44 {
+  width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+  margin-bottom: 6px; border: 1.5px solid currentColor;
+}
+.lesson44 .cruxPlate44--ban .cruxMark44 { color: var(--coral-ink); }
+.lesson44 .cruxPlate44--open .cruxMark44 { color: var(--violet-ink); border-style: dashed; }
+.lesson44 .cruxTerm44 { font: 600 14px/1.6 var(--mono); color: var(--ink); }
+.lesson44 .cruxGloss44 { font: 800 17px/1.5 var(--sans); color: var(--ink); }
+.lesson44 .cruxSentence44 { font: 400 20px/1.45 var(--serif); color: var(--ink); margin-top: 6px; text-align: left; }
+.lesson44 .cruxConclusion44 { font: 800 18px/1.8 var(--sans); color: var(--ink); }
+
+/* ------------------------------------------------------------
+   Goals
+   ------------------------------------------------------------ */
+.lesson44 .goals44 { display: grid; gap: 16px; max-width: 900px; }
+.lesson44 .goalsIntro44 { font: 500 19px/1.8 var(--sans); color: var(--ink); }
+.lesson44 .goalsGrid44 {
+  list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px;
+}
+.lesson44 .goalsGrid44 li {
+  display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px;
+  padding: 11px 0; border-bottom: 1px solid var(--line);
+}
+.lesson44 .goalNo44 { font: 500 17px/1.5 var(--serif); color: var(--cobalt-ink); }
+.lesson44 .goalText44 { font: 400 16px/1.75 var(--sans); color: var(--ink); }
+
+/* ------------------------------------------------------------
+   Plates, tasks, answers, feedback
+   ------------------------------------------------------------ */
+.lesson44 .plate44 {
+  margin-top: 8px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 24px 26px; box-shadow: var(--shadow);
+}
+.lesson44 .plateHead44 { display: grid; gap: 6px; padding-bottom: 14px; border-bottom: 1px solid var(--line); margin-bottom: 6px; }
+.lesson44 .plateTitle44 { font: 800 22px/1.4 var(--sans); color: var(--ink); }
+.lesson44 .plateIntro44 { font: 400 15.5px/1.85 var(--sans); color: var(--muted); max-width: 66ch; }
+.lesson44 .plateEnglish44 { font: italic 400 18px/1.4 var(--serif); color: var(--faint); }
+.lesson44 .tasks44 { display: grid; }
+@media (min-width: 1180px) {
+  .lesson44 .tasks44--two { grid-template-columns: 1fr 1fr; column-gap: 34px; }
+  .lesson44 .tasks44--two > .task44 { border-bottom: 1px solid var(--line); }
+  .lesson44 .tasks44--two > .task44:nth-child(-n + 2) { border-top: 0; }
+}
+.lesson44 .tasks44--two { align-items: start; }
+.lesson44 .levelList44 { list-style: none; padding: 0; margin-top: 8px; display: grid; gap: 6px; }
+.lesson44 .levelList44 li {
+  display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 10px; align-items: baseline;
+  border-bottom: 1px solid var(--line); padding: 7px 0; font: 400 15px/1.7 var(--sans); color: var(--ink);
+}
+.lesson44 .levelList44 li:last-child { border-bottom: 0; }
+.lesson44 .levelNo44--brief { font: 600 10.5px/1.7 var(--mono); color: var(--cobalt-ink); }
+.lesson44 .levelName44 { min-width: 0; }
+.lesson44 .levelTag44 { font: 600 10px/1.6 var(--mono); color: var(--faint); white-space: nowrap; }
+.lesson44 .briefNote44 { font: 500 12.5px/1.8 var(--sans); color: var(--faint); margin-top: 10px; }
+.lesson44 .task44 { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.lesson44 .task44:last-child { border-bottom: 0; padding-bottom: 2px; }
+.lesson44 .taskTop44 { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+.lesson44 .taskNo44 { font: 600 11px/1 var(--mono); color: var(--cobalt-ink); }
+.lesson44 .taskKind44 { font: 700 11.5px/1 var(--sans); color: var(--faint); }
+.lesson44 .taskPrompt44 { font: 500 17px/1.8 var(--sans); color: var(--ink); margin-bottom: 10px; max-width: 68ch; }
+.lesson44 .taskSentence44 { font: 400 20px/1.55 var(--serif); color: var(--ink); text-align: left; margin: 2px 0 9px; max-width: 64ch; }
+.lesson44 .taskSentence44--broken { padding: 10px 14px; border-inline-start: 2px solid var(--coral); background: var(--paper-2); border-radius: 0 10px 10px 0; }
+.lesson44 .taskContext44 { font: 400 14px/1.75 var(--sans); color: var(--muted); margin-bottom: 10px; }
+.lesson44 .answers44 { display: grid; gap: 8px; max-width: 660px; direction: ltr; }
+.lesson44 .answer44 {
+  display: flex; align-items: center; gap: 12px; width: 100%; min-height: 52px;
+  padding: 9px 14px; border: 1px solid var(--line-2); border-radius: 11px;
+  background: var(--surface); color: var(--ink); text-align: left; cursor: pointer;
+  font: 500 16px/1.5 var(--sans);
+}
+.lesson44 .answer44:hover:not([data-state]) { border-color: var(--ink); }
+.lesson44 .answer44[aria-pressed="true"] {
+  border-color: var(--cobalt); background: var(--cobalt-soft);
+  box-shadow: inset 0 0 0 1px var(--cobalt);
+}
+.lesson44 .answerLetter44 {
+  width: 27px; height: 27px; flex: none; border-radius: 50%;
+  display: grid; place-items: center; border: 1px solid var(--line-2);
+  font: 600 11px/1 var(--mono); color: var(--muted); background: var(--surface);
+}
+.lesson44 .answer44[aria-pressed="true"] .answerLetter44 { background: var(--cobalt); border-color: var(--cobalt); color: #fff; }
+.lesson44 .answerText44 { flex: 1; min-width: 0; text-align: left; }
+.lesson44 .answerTag44 {
+  font: 700 10.5px/1 var(--sans); color: var(--teal-ink); background: var(--teal-soft);
+  border-radius: 999px; padding: 4px 9px; white-space: nowrap;
+}
+.lesson44 .answerTag44--no { color: var(--coral-ink); background: var(--coral-soft); }
+.lesson44 .answer44[data-state="right"] { border-color: var(--good-ink); background: var(--good-soft); }
+.lesson44 .answer44[data-state="wrong"] { border-color: var(--bad-ink); background: var(--bad-soft); }
+.lesson44 .taskActions44 { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+.lesson44 .taskHint44 { font: 500 12px/1.6 var(--sans); color: var(--faint); }
+.lesson44 .field44 { display: grid; gap: 6px; margin: 10px 0; max-width: 660px; }
+.lesson44 .field44--tight { margin: 6px 0 0; }
+.lesson44 .fieldLabel44 { font: 700 12px/1.5 var(--sans); color: var(--muted); }
+.lesson44 .fieldHint44 { font-size: 12px; color: var(--faint); }
+.lesson44 .field44 textarea, .lesson44 .field44 input {
+  width: 100%; border: 1px solid var(--line-2); border-radius: 10px;
+  background: var(--surface); color: var(--ink); padding: 10px 12px;
+  font: 400 16px/1.65 var(--sans); min-height: 46px;
+}
+.lesson44 .field44 textarea { resize: vertical; }
+.lesson44 .field44 textarea::placeholder { color: var(--faint); }
+.lesson44 .fb44 {
+  margin-top: 14px; padding: 13px 16px; border-radius: 12px; border: 1px solid;
+  max-width: 700px;
+}
+.lesson44 .fb44--ok { background: var(--good-soft); border-color: #B7D9C2; }
+.lesson44 .fb44--no { background: var(--bad-soft); border-color: #ECC0B6; }
+.lesson44 .fb44--info { background: var(--cobalt-soft); border-color: #C9D1F7; }
+.lesson44 .fbTitle44 { display: flex; align-items: center; gap: 8px; font: 800 14.5px/1.5 var(--sans); color: var(--ink); margin-bottom: 5px; }
+.lesson44 .fb44--ok .fbTitle44 .glyph44 { color: var(--good-ink); }
+.lesson44 .fb44--no .fbTitle44 .glyph44 { color: var(--bad-ink); }
+.lesson44 .fb44--info .fbTitle44 .glyph44 { color: var(--cobalt-ink); }
+.lesson44 .fbBody44 { display: grid; gap: 6px; }
+.lesson44 .fbBody44 p { font: 400 15.5px/1.85 var(--sans); color: var(--ink); }
+.lesson44 .fbKey44 { font: 500 19px/1.5 var(--serif); color: var(--ink); }
+.lesson44 .fbNote44 { color: var(--muted); }
+
+/* poles */
+.lesson44 .poles44 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; max-width: 470px; }
+.lesson44 .pole44 {
+  display: flex; align-items: center; gap: 10px; min-height: 54px; padding: 8px 12px;
+  border: 1px solid var(--line-2); border-radius: 11px; background: var(--surface);
+  color: var(--ink); text-align: start; cursor: pointer;
+}
+.lesson44 .poleMark44 {
+  width: 28px; height: 28px; flex: none; border-radius: 50%;
+  display: grid; place-items: center; border: 1.5px dashed var(--violet); color: var(--violet-ink);
+}
+.lesson44 .pole44--ban .poleMark44 { border-style: solid; border-color: var(--coral); color: var(--coral-ink); }
+.lesson44 .poleText44 b { display: block; font: 800 14.5px/1.5 var(--sans); }
+.lesson44 .poleText44 small { font: 600 9.5px/1.5 var(--mono); color: var(--faint); }
+.lesson44 .pole44--ban[aria-pressed="true"] { border-color: var(--coral); background: var(--coral-soft); box-shadow: inset 0 0 0 1px var(--coral); }
+.lesson44 .pole44--open[aria-pressed="true"] { border-color: var(--violet); background: var(--violet-soft); box-shadow: inset 0 0 0 1px var(--violet); }
+
+/* benches */
+.lesson44 .bench44 { display: grid; gap: 12px; margin-top: 14px; }
+.lesson44 .benchRow44 { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; align-items: start; }
+.lesson44 .benchLabel44 { font: 700 12px/1.6 var(--sans); color: var(--muted); padding-top: 10px; }
+.lesson44 .chips44 { display: flex; flex-wrap: wrap; gap: 7px; }
+.lesson44 .chips44--wide { flex-wrap: wrap; }
+.lesson44 .chip44 {
+  min-height: 40px; padding: 7px 14px; border: 1px solid var(--line-2); border-radius: 999px;
+  background: var(--surface); color: var(--ink); font: 700 13.5px/1.2 var(--sans); cursor: pointer;
+}
+.lesson44 .chip44:hover:not([aria-pressed="true"]) { border-color: var(--ink); }
+.lesson44 .chip44[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.lesson44 .chip44--must[aria-pressed="true"] { background: var(--cobalt); border-color: var(--cobalt); }
+.lesson44 .chip44--haveto[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); }
+.lesson44 .chip44--tense[aria-pressed="true"] { background: var(--ink); }
+.lesson44 .chip44--en { font: 500 15px/1.3 var(--serif); padding: 8px 13px; }
+.lesson44 .readout44 {
+  margin-top: 16px; padding: 18px 20px; border: 1px solid var(--line);
+  border-radius: 14px; background: var(--paper-2); display: grid; gap: 5px;
+}
+.lesson44 .readoutFull44 { font: 400 27px/1.4 var(--serif); color: var(--ink); text-align: left; }
+.lesson44 .readoutTr44 { font: 400 15px/1.8 var(--sans); color: var(--muted); }
+.lesson44 .readoutNote44 { font: 700 12.5px/1.7 var(--sans); color: var(--cobalt-ink); }
+.lesson44 .conj44 { margin-top: 16px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.lesson44 .conjRow44 { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 12px; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--line); }
+.lesson44 .conjLabel44 { display: flex; align-items: center; gap: 7px; font: 700 12px/1.4 var(--sans); color: var(--muted); }
+.lesson44 .conjLabel44 .glyph44 { width: 14px; height: 14px; }
+.lesson44 .conjText44 { font: 400 20px/1.5 var(--serif); color: var(--ink); text-align: left; }
+.lesson44 .conjTr44 { padding: 11px 16px; font-size: 14px; color: var(--muted); background: var(--paper-2); }
+
+/* dialogue */
+.lesson44 .dlg44 { display: grid; margin: 10px 0 16px; }
+.lesson44 .turn44 { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.lesson44 .speaker44 { font: 800 12.5px/1.8 var(--sans); color: var(--cobalt-ink); }
+.lesson44 .turn44--b .speaker44 { color: var(--teal-ink); }
+.lesson44 .said44 { font: 400 20px/1.6 var(--serif); color: var(--ink); text-align: left; }
+
+/* practice meta */
+.lesson44 .practice44 { display: grid; gap: 16px; }
+.lesson44 .practiceMeta44 {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  padding: 10px 0; font: 600 12px/1.6 var(--sans); color: var(--faint);
+}
+.lesson44 .practiceProgress44 { color: var(--ink); }
+
+/* reading */
+.lesson44 .reading44 { display: grid; gap: 28px; }
+.lesson44 .reader44 {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 30px 34px; box-shadow: var(--shadow); max-width: 830px;
+}
+.lesson44 .readerTitle44 {
+  font: 500 clamp(27px, 3vw, 36px)/1.2 var(--serif); color: var(--ink);
+  margin: 10px 0 18px; direction: ltr; text-align: left;
+}
+.lesson44 .readerBody44 { max-width: 63ch; }
+.lesson44 .readerLine44 {
+  font: 400 19px/1.75 var(--serif); color: var(--ink-2);
+  margin-bottom: 12px; text-align: left;
+}
+.lesson44 .readerLine44--quote { color: var(--ink); }
+.lesson44 .readerLine44--quote { color: var(--ink); }
+
+.lesson44 .questions44 { display: grid; gap: 14px; }
+.lesson44 .questionsTitle44 { font: 800 23px/1.4 var(--sans); color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 10px; }
+.lesson44 .qGrid44 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.lesson44 .qCard44 { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.lesson44 .qTop44 { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.lesson44 .qNo44 { font: 600 10.5px/1.4 var(--mono); color: var(--cobalt-ink); }
+.lesson44 .qText44 { font: 400 16.5px/1.55 var(--serif); color: var(--ink); text-align: left; }
+.lesson44 .readingMeta44 { font: 600 12px/1.6 var(--sans); color: var(--faint); }
+
+/* writing */
+.lesson44 .writing44 { display: grid; gap: 20px; }
+.lesson44 .model44 { border: 1px solid var(--line); border-radius: 14px; background: var(--paper-2); padding: 18px 20px; max-width: 780px; }
+.lesson44 .modelLabel44 { font: 800 11px/1.5 var(--sans); color: var(--faint); margin-bottom: 6px; }
+.lesson44 .modelText44 { font: 400 18.5px/1.8 var(--serif); color: var(--ink); text-align: left; }
+.lesson44 .writeBox44 { display: grid; gap: 10px; border-top: 2px solid var(--ink); padding-top: 16px; max-width: 780px; }
+.lesson44 .writeHead44 { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.lesson44 .writeTitle44 { font: 800 21px/1.4 var(--sans); }
+.lesson44 .writeMeta44 { font: 600 11px/1.6 var(--sans); color: var(--faint); }
+.lesson44 .writeCount44 { font: 600 12px/1.5 var(--mono); color: var(--faint); }
+.lesson44 .checkHead44 { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 8px; }
+.lesson44 .checkHead44 h4 { font: 800 16px/1.5 var(--sans); }
+.lesson44 .checkHead44 p { font: 600 11.5px/1.6 var(--mono); color: var(--faint); }
+.lesson44 .checklist44 { list-style: none; padding: 0; display: grid; }
+.lesson44 .checklist44 label {
+  display: flex; align-items: center; gap: 12px; padding: 8px 0;
+  border-bottom: 1px solid var(--line); cursor: pointer; font: 400 15px/1.6 var(--sans);
+}
+.lesson44 .checklist44 input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.lesson44 .checkMark44 {
+  width: 22px; height: 22px; flex: none; border: 1.5px solid var(--line-2); border-radius: 6px;
+  display: grid; place-items: center; color: transparent; background: var(--surface);
+}
+.lesson44 .checkMark44 .glyph44 { width: 13px; height: 13px; }
+.lesson44 .checklist44 input:checked + .checkMark44 { background: var(--ink); border-color: var(--ink); color: #fff; }
+.lesson44 .checklist44 input:focus-visible + .checkMark44 { outline: 2px solid var(--focus); outline-offset: 2px; }
+.lesson44 .checklist44 label:has(input:checked) { color: var(--muted); }
+
+/* roadmap */
+.lesson44 .roadmap44 { display: grid; gap: 18px; }
+.lesson44 .progressPlate44 { border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; background: var(--surface); max-width: 780px; }
+.lesson44 .progressHead44 { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.lesson44 .progressNum44 { font: 500 44px/1 var(--serif); color: var(--ink); }
+.lesson44 .ticks44 { display: grid; grid-template-columns: repeat(30, 1fr); gap: 3px; margin: 14px 0 10px; }
+.lesson44 .tick44 { height: 8px; border-radius: 2px; background: var(--line); }
+.lesson44 .tick44.is-done { background: var(--cobalt); }
+.lesson44 .progressTr44 { font: 600 12.5px/1.6 var(--sans); color: var(--faint); }
+.lesson44 .nextLesson44 { border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; background: var(--paper-2); max-width: 780px; }
+.lesson44 .nextTitle44 { font: 500 23px/1.3 var(--serif); color: var(--ink); margin-top: 4px; }
+.lesson44 .nextSub44 { font: italic 400 17px/1.5 var(--serif); color: var(--muted); }
+
+/* step nav */
+.lesson44 .stepNav44 {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  border-top: 1px solid var(--line); margin-top: 40px; padding-top: 18px; flex-wrap: wrap;
+}
+.lesson44 .stepNavMeta44 { font: 500 11px/1.6 var(--mono); color: var(--faint); text-align: center; }
+.lesson44 .stepNavMeta44 small { display: block; font: 700 11px/1.6 var(--sans); color: var(--faint); }
+
+/* ------------------------------------------------------------
+   Test area
+   ------------------------------------------------------------ */
+.lesson44 .area44 { max-width: 1080px; margin: 0 auto; padding: 32px 28px 50px; }
+.lesson44 .testArea44 { display: grid; gap: 26px; }
+.lesson44 .testHead44 { border-bottom: 2px solid var(--ink); padding-bottom: 16px; }
+.lesson44 .testTitle44 { font: 500 clamp(30px, 3.6vw, 44px)/1.15 var(--serif); color: var(--ink); margin-top: 8px; }
+.lesson44 .testSub44 { font: 400 15px/1.8 var(--sans); color: var(--muted); max-width: 72ch; margin-top: 6px; }
+.lesson44 .testMeter44 { display: grid; gap: 6px; max-width: 520px; margin-top: 14px; }
+.lesson44 .testCount44 { display: flex; align-items: baseline; gap: 10px; font: 600 12px/1.5 var(--sans); color: var(--faint); }
+.lesson44 .testCount44 b { font: 500 26px/1 var(--serif); color: var(--ink); }
+.lesson44 .testCount44 em { font: 700 11px/1 var(--sans); font-style: normal; color: var(--good-ink); }
+.lesson44 progress {
+  width: 100%; height: 8px; appearance: none; border: 0; border-radius: 8px;
+  overflow: hidden; background: var(--line);
+}
+.lesson44 progress::-webkit-progress-bar { background: var(--line); border-radius: 8px; }
+.lesson44 progress::-webkit-progress-value { background: var(--cobalt); border-radius: 8px; }
+.lesson44 progress::-moz-progress-bar { background: var(--cobalt); border-radius: 8px; }
+.lesson44 .testLevel44 { display: grid; gap: 2px; }
+.lesson44 .levelHead44 {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px;
+  align-items: baseline; border-bottom: 1px solid var(--line-2); padding: 14px 0 9px;
+}
+.lesson44 .levelNo44 { font: 500 14px/1 var(--mono); color: var(--cobalt-ink); }
+.lesson44 .levelHead44 h3 { font: 800 21px/1.4 var(--sans); color: var(--ink); }
+.lesson44 .levelCount44 { font: 700 11.5px/1.4 var(--sans); color: var(--faint); }
+.lesson44 .testBrief44 { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; background: var(--paper-2); display: grid; gap: 6px; margin: 10px 0 4px; }
+.lesson44 .testBrief44 p { font: 400 15px/1.75 var(--sans); color: var(--ink); }
+.lesson44 .testBriefTitle44 { font: 500 20px/1.4 var(--serif) !important; }
+.lesson44 .testBriefTurn44 { font: 400 16px/1.7 var(--serif) !important; text-align: left; }
+.lesson44 .testQuestions44 { display: grid; }
+.lesson44 .qField44 { border: 0; border-bottom: 1px solid var(--line); margin: 0; padding: 16px 0; min-width: 0; }
+.lesson44 .qField44:last-child { border-bottom: 0; }
+.lesson44 .qLegend44 { display: flex; align-items: center; gap: 10px; padding: 0; margin-bottom: 8px; font: 700 12px/1.4 var(--sans); color: var(--muted); }
+.lesson44 .qNo44 {
+  min-width: 29px; height: 29px; padding: 0 4px; border-radius: 50%;
+  display: inline-grid; place-items: center; background: var(--ink); color: #fff;
+  font: 600 11px/1 var(--mono);
+}
+.lesson44 .qLines44 { display: grid; gap: 3px; }
+.lesson44 .qLines44 p { font: 400 18.5px/1.6 var(--serif); color: var(--ink); text-align: start; }
+.lesson44 .options44 { display: grid; gap: 7px; margin-top: 10px; max-width: 660px; direction: ltr; }
+.lesson44 .option44 {
+  display: flex; align-items: center; gap: 12px; min-height: 50px;
+  padding: 8px 12px; border: 1px solid var(--line-2); border-radius: 10px;
+  background: var(--surface); cursor: pointer; font: 500 15.5px/1.5 var(--sans); color: var(--ink);
+  text-align: left;
+}
+.lesson44 .option44 input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.lesson44 .optionLetter44 {
+  width: 26px; height: 26px; flex: none; border-radius: 50%; border: 1px solid var(--line-2);
+  display: grid; place-items: center; font: 600 10.5px/1 var(--mono); color: var(--muted);
+}
+.lesson44 .optionText44 { min-width: 0; flex: 1; text-align: left; }
+.lesson44 .option44:has(input:checked) { border-color: var(--cobalt); background: var(--cobalt-soft); box-shadow: inset 0 0 0 1px var(--cobalt); }
+.lesson44 .option44:has(input:checked) .optionLetter44 { background: var(--cobalt); border-color: var(--cobalt); color: #fff; }
+.lesson44 .option44:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.lesson44 .qField44:disabled { opacity: 1; }
+.lesson44 .qField44:disabled .option44,
+.lesson44 .qField44:disabled .field44 { opacity: .82; }
+.lesson44 .field44--test { margin: 6px 0 0; }
+.lesson44 .testBar44 {
+  position: sticky; bottom: 12px; z-index: 20; margin-top: 22px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: 14px;
+  padding: 12px 16px; box-shadow: 0 10px 30px -22px rgba(23, 49, 107, .55);
+}
+.lesson44 .testBarMeta44 { display: grid; gap: 2px; }
+.lesson44 .testBarMeta44 p { font: 600 13px/1.5 var(--sans); color: var(--ink); }
+.lesson44 .testBarHint44 { font: 500 11.5px/1.5 var(--sans); color: var(--faint); }
+.lesson44 .testBarActions44 { display: flex; gap: 8px; flex-wrap: wrap; }
+.lesson44 .testBarActions44 .btn44 { min-height: 42px; font-size: 13.5px; }
+
+/* ------------------------------------------------------------
+   Solutions
+   ------------------------------------------------------------ */
+.lesson44 .solutions44 { display: grid; gap: 22px; }
+.lesson44 .solutionsHead44 { border-bottom: 2px solid var(--ink); padding-bottom: 16px; }
+.lesson44 .solutionsTitle44 { font: 500 clamp(30px, 3.6vw, 44px)/1.15 var(--serif); color: var(--ink); margin-top: 8px; }
+.lesson44 .solutionsIntro44 { font: 400 15px/1.8 var(--sans); color: var(--muted); max-width: 74ch; margin-top: 6px; }
+.lesson44 .solutionsProv44 { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.lesson44 .chipTag44 { font: 700 10px/1 var(--mono); letter-spacing: .06em; color: var(--ink); border: 1px solid var(--line-2); border-radius: 999px; padding: 5px 9px; }
+.lesson44 .chipTag44--soft { color: var(--cobalt-ink); border-color: var(--cobalt-soft); background: var(--cobalt-soft); }
+.lesson44 .solutionsCount44 { margin-inline-start: auto; font: 600 11px/1 var(--mono); color: var(--faint); }
+.lesson44 .solLevel44 { display: grid; gap: 10px; }
+.lesson44 .levelHead44--solutions { border-bottom-color: var(--line); }
+.lesson44 .solCards44 { display: grid; gap: 12px; }
+.lesson44 .solCard44 {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 13px;
+  padding: 16px 18px; display: grid; gap: 7px; box-shadow: var(--shadow);
+}
+.lesson44 .solTop44 { display: flex; align-items: center; gap: 10px; }
+.lesson44 .solLabel44 { font: 700 11px/1.4 var(--sans); color: var(--faint); }
+.lesson44 .solQuestion44 p { font: 400 16px/1.55 var(--serif); color: var(--muted); }
+.lesson44 .solGiven44 span, .lesson44 .solAnswer44 span { display: block; font: 700 10.5px/1.5 var(--sans); color: var(--faint); }
+.lesson44 .solGiven44 p { font: 400 15px/1.6 var(--sans); color: var(--muted); }
+.lesson44 .solAnswer44 { background: var(--paper-2); border-radius: 9px; padding: 9px 12px; }
+.lesson44 .solAnswer44 p { font: 500 19px/1.5 var(--serif); color: var(--ink); }
+.lesson44 .solReason44 { font: 400 14.5px/1.8 var(--sans); color: var(--ink-2); }
+.lesson44 .solKey44 { font: 500 11px/1.6 var(--mono); color: var(--faint); letter-spacing: .02em; margin-bottom: 3px; }
+.lesson44 .solWhy44 { font-weight: 700; color: var(--muted); }
+.lesson44 .solProv44 { font: 500 10px/1.5 var(--sans); color: var(--faint); }
+
+/* ------------------------------------------------------------
+   Teacher
+   ------------------------------------------------------------ */
+.lesson44 .teacherGate44 { display: grid; place-items: center; padding: 26px 0 10px; }
+.lesson44 .teacherGateCard44 {
+  width: min(100%, 620px); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 22px; padding: 34px; box-shadow: var(--shadow); display: grid; gap: 10px;
+  text-align: center; justify-items: center;
+}
+.lesson44 .teacherGateCard44 form { width: 100%; display: grid; gap: 10px; text-align: start; }
+.lesson44 .teacherLock44 {
+  width: 54px; height: 54px; border-radius: 50%; background: var(--paper-2);
+  display: grid; place-items: center; color: var(--ink); margin-bottom: 4px;
+}
+.lesson44 .teacherGateCard44 h2 { font: 500 34px/1.2 var(--serif); }
+.lesson44 .teacherGateText44 { font: 400 15px/1.8 var(--sans); color: var(--muted); }
+.lesson44 .teacherErr44 { padding: 10px 12px; font-size: 13.5px; }
+.lesson44 .teacherGateFoot44 { font: 500 11.5px/1.6 var(--sans); color: var(--faint); }
+.lesson44 .teacherArea44 { display: grid; gap: 24px; }
+.lesson44 .teacherOpenHead44 {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; flex-wrap: wrap;
+  border-bottom: 2px solid var(--ink); padding-bottom: 16px;
+}
+.lesson44 .teacherOpenHead44 h2 { font: 500 36px/1.2 var(--serif); margin: 6px 0; }
+.lesson44 .teacherOpenHead44 p { font: 400 14.5px/1.7 var(--sans); color: var(--muted); }
+.lesson44 .areaLoading44 { font: 600 13px/1.6 var(--sans); color: var(--faint); padding: 16px 0; }
+.lesson44 .back44 { margin-top: 26px; background: transparent; border: 0; border-bottom: 1px solid var(--line-2); border-radius: 0; color: var(--ink); font: 700 13px/1.6 var(--sans); padding: 4px 0; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.lesson44 .guide44 { display: grid; gap: 24px; }
+.lesson44 .guideHead44 { border-bottom: 2px solid var(--ink); padding-bottom: 16px; }
+.lesson44 .guideHead44 h2 { font: 500 40px/1.15 var(--serif); margin-top: 6px; }
+.lesson44 .guideHead44 p { font: 400 14.5px/1.8 var(--sans); color: var(--muted); max-width: 74ch; margin-top: 6px; }
+.lesson44 .guideNav44 { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.lesson44 .guideNav44 a { font: 700 12.5px/1.6 var(--sans); text-decoration: none; color: var(--ink); border-bottom: 1px solid var(--line-2); padding: 3px 0; }
+.lesson44 .guideSec44 { display: grid; gap: 12px; scroll-margin-top: 88px; }
+.lesson44 .guideSec44 > h3 { font: 800 23px/1.4 var(--sans); border-bottom: 1px solid var(--line); padding-bottom: 9px; }
+.lesson44 .timeline44 { list-style: none; padding: 0; display: grid; }
+.lesson44 .timeline44 li { display: grid; grid-template-columns: 38px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.lesson44 .timelineNo44 { font: 500 13px/1.8 var(--serif); color: var(--cobalt-ink); }
+.lesson44 .misconceptions44 { display: grid; gap: 6px; padding-inline-start: 20px; font-size: 15px; color: var(--ink-2); }
+.lesson44 .guideNote44 { font: 500 12.5px/1.7 var(--sans); color: var(--faint); }
+.lesson44 .practiceKeys44 { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.lesson44 .practiceKeys44 table { width: 100%; border-collapse: collapse; min-width: 720px; }
+.lesson44 .practiceKeys44 th { font: 800 11px/1.4 var(--sans); text-align: start; padding: 9px 12px; background: var(--paper-2); border-bottom: 1px solid var(--line-2); white-space: nowrap; }
+.lesson44 .practiceKeys44 td { font: 400 13px/1.65 var(--sans); padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.lesson44 .practiceKeys44 tr:last-child td { border-bottom: 0; }
+.lesson44 .keyPrompt44 { color: var(--ink); }
+.lesson44 .keyOptions44 { font-family: var(--mono); font-size: 11px; color: var(--faint); margin-top: 2px; }
+.lesson44 .keyAnswer44 { color: var(--ink); font-weight: 600; white-space: nowrap; }
+.lesson44 .guideDetails44 { border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; background: var(--surface); }
+.lesson44 .guideDetails44 summary { cursor: pointer; font: 700 13.5px/1.6 var(--sans); color: var(--ink); }
+.lesson44 .guideDetails44[open] summary { margin-bottom: 10px; }
+.lesson44 .stationMap44 { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+.lesson44 .stationMap44 li { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.lesson44 .stationMapNo44 { font: 500 10px/2 var(--mono); color: var(--cobalt-ink); }
+.lesson44 .stationMap44 small { display: block; font: 600 8.5px/1.5 var(--mono); letter-spacing: .08em; color: var(--faint); }
+.lesson44 .stationMapRange44 { font: 500 9.5px/2 var(--mono); color: var(--faint); }
+.lesson44 .coverage44 { display: grid; gap: 2px; }
+.lesson44 .coverageRow44 { border-bottom: 1px solid var(--line); padding: 8px 0; }
+.lesson44 .coverageRow44 summary { cursor: pointer; display: flex; align-items: baseline; gap: 10px; font: 600 13px/1.6 var(--sans); }
+.lesson44 .coverageLabel44 {
+  display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px;
+  align-items: baseline; min-width: 0; text-align: left; flex: 1;
+}
+.lesson44 .coverageId44 { font: 600 10px/1.6 var(--mono); color: var(--cobalt-ink); }
+.lesson44 .coverageAnswer44 { color: var(--faint); font-size: 12px; }
+.lesson44 .coverageCount44 { margin-inline-start: auto; font: 500 10px/1.6 var(--mono); color: var(--faint); }
+.lesson44 .coverageRow44 ul { margin: 8px 0 0; padding-inline-start: 18px; display: grid; gap: 2px; font-size: 12px; color: var(--muted); }
+.lesson44 .coverageItem44 { font-family: var(--mono); font-size: 10.5px; }
+.lesson44 .accuracyNotes44 { border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; background: var(--surface); display: grid; gap: 6px; }
+.lesson44 .accuracyNotes44 h4 { font: 800 14px/1.5 var(--sans); margin: 6px 0 0; }
+.lesson44 .accuracyNotes44 ul { padding-inline-start: 18px; display: grid; gap: 4px; font-size: 13.5px; color: var(--ink-2); }
+
+/* ------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------ */
+.lesson44 .footer44 {
+  max-width: var(--shell); margin: 30px auto 0; padding: 26px 28px 34px;
+  border-top: 1px solid var(--line);
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center;
+}
+.lesson44 .footerBrand44 .footerTitle44 { font: 500 19px/1.2 var(--serif); color: var(--ink); }
+.lesson44 .footerBrand44 p { font: 600 11.5px/1.6 var(--sans); color: var(--faint); }
+.lesson44 .footerNote44 { font: 600 12px/1.7 var(--sans); color: var(--muted); text-align: center; }
+.lesson44 .footerLinks44 { display: flex; gap: 16px; justify-content: flex-end; font: 700 11.5px/1.6 var(--sans); }
+.lesson44 .footerLinks44 a { color: var(--ink); }
+
+/* ------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------ */
+@media (max-width: 1160px) {
+  .lesson44 .coverGrid44 { grid-template-columns: minmax(0, 1.2fr) minmax(260px, .7fr); gap: 32px; }
+  .lesson44 .layout44 { gap: 34px; grid-template-columns: 260px minmax(0, 1fr); }
+}
+@media (max-width: 1000px) {
+  .lesson44 .barArea44 { display: none; }
+  .lesson44 .layout44 { grid-template-columns: minmax(0, 1fr); gap: 18px; padding: 20px 20px 38px; }
+  .lesson44 .railCol44 { position: static; }
+  .lesson44 .mobileToggle44 {
+    display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 10px;
+    min-height: 46px; padding: 8px 14px; border: 1px solid var(--line-2); border-radius: 10px;
+    background: var(--surface); color: var(--ink); font: 700 12.5px/1.4 var(--sans); cursor: pointer;
+  }
+  .lesson44 .navContent44 { display: none; }
+  .lesson44 .navContent44.open {
+    display: block; margin-top: 10px; max-height: none; overflow: visible;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 14px 16px; box-shadow: var(--shadow);
+  }
+  .lesson44 .stage44 { max-width: none; }
+  .lesson44 .coverGrid44 { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .lesson44 .coverIndex44 { max-height: none; }
+  .lesson44 .coverIndex44 ol { grid-template-columns: 1fr 1fr; gap: 0 18px; }
+  .lesson44 .qGrid44 { grid-template-columns: 1fr; }
+  .lesson44 .goalsGrid44 { grid-template-columns: 1fr; }
+  .lesson44 .stationMap44 { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  .lesson44 .barInner44 {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "brand meta" "areas areas";
+    padding: 8px 18px 6px; gap: 8px 14px;
+  }
+  .lesson44 .brand44 { grid-area: brand; }
+  .lesson44 .barMeta44 { grid-area: meta; }
+  .lesson44 .areas44 { grid-area: areas; justify-content: flex-start; overflow-x: auto; padding-bottom: 4px; }
+  .lesson44 .areas44 button { flex: none; padding: 0 10px; }
+  .lesson44 .barProgress44 { display: none; }
+  .lesson44 .coverTitle44 { font-size: clamp(42px, 11vw, 66px); }
+  .lesson44 .voices44 { grid-template-columns: 1fr; }
+  .lesson44 .cruxPair44 { grid-template-columns: 1fr; }
+  .lesson44 .levelHead44 { grid-template-columns: auto minmax(0, 1fr); }
+  .lesson44 .levelCount44 { display: none; }
+  .lesson44 .footer44 { grid-template-columns: 1fr; gap: 10px; text-align: start; }
+  .lesson44 .footerNote44 { text-align: start; }
+  .lesson44 .footerLinks44 { justify-content: flex-start; }
+}
+@media (max-width: 620px) {
+  .lesson44 { font-size: 16.5px; }
+  .lesson44 .layout44 { padding: 16px 14px 30px; }
+  .lesson44 .barInner44 { padding: 8px 14px 6px; }
+  .lesson44 .brandText44 > span { font-size: 14px; }
+  .lesson44 .brandText44 small { font-size: 8px; }
+  .lesson44 .brandNum44 { width: 36px; height: 36px; font-size: 18px; }
+  .lesson44 .areas44 button { font-size: 12px; gap: 5px; }
+  .lesson44 .areas44 button > span { display: none; }
+  .lesson44 .stepTitleRow44 { grid-template-columns: 58px minmax(0, 1fr); gap: 10px; }
+  .lesson44 .stepFolio44 { font-size: 46px; }
+  .lesson44 .stepKicker44 { flex-wrap: wrap; }
+  .lesson44 .stepCount44 { margin-inline-start: 0; width: 100%; }
+  .lesson44 .plate44 { padding: 18px 15px; border-radius: 14px; }
+  .lesson44 .taskSentence44 { font-size: 18.5px; }
+  .lesson44 .answers44 { gap: 7px; }
+  .lesson44 .benchRow44 { grid-template-columns: 1fr; gap: 4px; }
+  .lesson44 .benchLabel44 { padding-top: 0; }
+  .lesson44 .readoutFull44 { font-size: 22px; }
+  .lesson44 .conjRow44 { grid-template-columns: 1fr; gap: 2px; }
+  .lesson44 .turn44 { grid-template-columns: 70px minmax(0, 1fr); gap: 8px; }
+  .lesson44 .said44 { font-size: 18px; }
+  .lesson44 .reader44 { padding: 20px 16px; }
+  .lesson44 .readerLine44 { font-size: 17.5px; }
+  .lesson44 .qGrid44 { gap: 10px; }
+  .lesson44 .coverGrid44 { padding-bottom: 22px; }
+  .lesson44 .coverStats44 { gap: 22px; }
+  .lesson44 .coverIndex44 ol { grid-template-columns: 1fr; }
+  .lesson44 .coverStory44 { gap: 12px; }
+  .lesson44 .storyLead44 { font-size: 19px; }
+  .lesson44 .pullQuote44 { font-size: 20px; }
+  .lesson44 .cruxSentence44 { font-size: 18px; }
+  .lesson44 .testBar44 { position: static; }
+  .lesson44 .area44 { padding: 20px 14px 40px; }
+  .lesson44 .solutionsTitle44, .lesson44 .testTitle44 { font-size: 30px; }
+  .lesson44 .footer44 { padding: 20px 16px 28px; }
+  .lesson44 .poles44 { grid-template-columns: 1fr; }
+  .lesson44 .tableWrap44 table { min-width: 420px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lesson44 * { transition: none !important; scroll-behavior: auto !important; }
+}

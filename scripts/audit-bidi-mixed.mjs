@@ -47,7 +47,7 @@ const ALLOWLIST = new Set([
 // here: their own audits cover them and the ratchet file has no bounds for them.
 const LESSONS = process.env.ONLY
   ? process.env.ONLY.split(",").map(Number)
-  : [...Array.from({ length: 34 }, (_, i) => i + 1), 37, 38, 39, 40, 42, 43];
+  : [...Array.from({ length: 34 }, (_, i) => i + 1), 37, 38, 39, 40, 42, 43, 44];
 const WRITE = process.argv.includes("--write-baseline");
 
 // ---------------- crawler ----------------
@@ -67,6 +67,8 @@ export { flushSync } from "react-dom";`,
     },
     bundle: true, platform: "node", format: "esm", outfile: outFile, jsx: "automatic",
     packages: "external", logLevel: "error",
+    // Lesson 44 ships self-hosted font subsets; jsdom does not render them.
+    loader: { ".woff2": "empty" },
   });
   const mod = await import(pathToFileURL(outFile).href);
   rmSync(outFile, { force: true });

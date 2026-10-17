@@ -79,6 +79,8 @@ export { React, act, createRoot, renderToString, App, Lesson39, StepView39, Test
   chunkNames: "chunks/[name]-[hash]",
   jsx: "automatic",
   packages: "external",
+  // Lesson 44 bundles its own local font subsets; jsdom never renders them.
+  loader: { ".woff2": "empty" },
   logLevel: "silent",
 });
 const M = await import(pathToFileURL(outFile).href);
@@ -162,10 +164,9 @@ ok(!sourceSection39("s40"), "no fabricated section beyond the supplied 39");
 ok(COVERAGE_39.length === 40 && COVERAGE_SECTION_COUNT_39 === 39, "coverage ledger row exists for the opening plus all 39 numbered sections");
 ok(COVERAGE_ACCURACY_NOTES_39.length >= 6 && COVERAGE_PLATFORM_ADDITIONS_39.length >= 30, "coverage ledger records the source-accuracy notes and the platform additions");
 {
-  // Lesson 39's own §39 remains unchanged; Lessons 40–43 are now implemented independently. Lesson 44 must remain unimplemented.
-  ok(!existsSync(join(root, "src/lessons/lesson44")), "Lesson 44 is not implemented");
+  // Lesson 39's own §39 remains unchanged; Lessons 40–44 are now implemented independently.
   const appText = readFileSync(join(root, "src/App.tsx"), "utf8");
-  ok(!appText.includes("#/lesson/44") && !/route === 44/.test(appText), "no route or hub card points at the planned Lesson 44");
+  ok(existsSync(join(root, "src/lessons/lesson44")) && appText.includes("#/lesson/44") && /route === 44/.test(appText), "Lesson 44 ships in its own folder and is routed");
   ok(NEXT_LESSON_39.status === "planned-not-implemented" && NEXT_LESSON_39.label.includes("الدرس 40"), "§39 keeps Lesson 40 as a planned, not implemented, next station in Lesson 39's untouched data");
   const curriculumHtml = renderStep(SLIDES_39.find((slide) => slide.id === "s39"));
   const curriculumText = textOf(curriculumHtml);
@@ -1212,8 +1213,8 @@ ok(["\u200f", "\u200e"].every((mark) => directionSources.includes(mark) === fals
   ok(pkg.scripts["audit:lesson39"] === "node scripts/audit-lesson39.mjs", "package.json exposes audit:lesson39");
   const chain = pkg.scripts["audit:english-direction"];
   ok(chain.includes("audit-lesson39.mjs"), "audit:english-direction runs the Lesson 39 audit");
-  ok(readFileSync(join(root, "scripts/check-english-direction.mjs"), "utf8").includes("lessons.length === 43"), "direction-check inventory covers 43 lessons");
-  ok(readFileSync(join(root, "scripts/audit-render-direction.mjs"), "utf8").includes("lessonFolders.length === 43"), "render audit covers 43 lesson folders");
+  ok(readFileSync(join(root, "scripts/check-english-direction.mjs"), "utf8").includes("lessons.length === 44"), "direction-check inventory covers 44 lessons");
+  ok(readFileSync(join(root, "scripts/audit-render-direction.mjs"), "utf8").includes("lessonFolders.length === 44"), "render audit covers 44 lesson folders");
   ok(readFileSync(join(root, "scripts/audit-lesson-navigation.mjs"), "utf8").includes('"#/lesson/39"'), "navigation audit covers the Lesson 39 route");
   ok(readFileSync(join(root, "scripts/audit-final-test.mjs"), "utf8").includes("lesson39DedicatedAssessment"), "final-test audit recognises the Lesson 39 dedicated assessment");
   ok(

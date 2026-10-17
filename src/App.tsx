@@ -499,11 +499,11 @@ const CARDS: Card[] = [
   {
     n: 44,
     title: "الدرس 44: MUST & HAVE TO — الضرورة، والإلزام، والقواعد، والمسؤوليات",
-    en: "Obligation Lab · The Language of Necessity & Obligation",
+    en: "English Learning Studio · The Language of Necessity & Obligation",
     emoji: "⚖️",
-    stats: "38 قسمًا · 39 خطوة · باني الضرورة وآلة الأزمنة · اختبار 25 سؤالًا",
+    stats: "38 قسمًا · 39 خطوة · باني الجملة ومصنّف المنع · اختبار 25 سؤالًا",
     href: "#/lesson/44",
-    grad: "from-[#0891B2] to-[#0EA5E9]",
+    grad: "from-[#2448D8] to-[#087F68]",
   },
 ];
 

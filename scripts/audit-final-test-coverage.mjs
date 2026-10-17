@@ -79,6 +79,8 @@ export { FINAL_TESTS, FINAL_TEST_MIN, FINAL_TEST_MAX, finalTestFor, finalTestLes
     resolveDir: dirname(root), loader: "tsx",
   },
   bundle: true, platform: "node", format: "esm", outfile: outFile, jsx: "automatic", packages: "external", logLevel: "error",
+  // Lesson 44 ships self-hosted font subsets; jsdom does not render them.
+  loader: { ".woff2": "empty" },
 });
 const M = await import(pathToFileURL(outFile).href);
 rmSync(outFile, { force: true });

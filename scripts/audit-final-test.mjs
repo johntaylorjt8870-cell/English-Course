@@ -79,6 +79,8 @@ export { React, createRoot, Lesson27, Lesson28, Lesson29, Lesson30, Lesson31, Le
   jsx: "automatic",
   packages: "external",
   logLevel: "silent",
+  // Lesson 44 ships self-hosted font subsets; jsdom does not render them.
+  loader: { ".woff2": "empty" },
 });
 const m = await import(pathToFileURL(outFile).href);
 rmSync(outFile, { force: true });

@@ -69,6 +69,8 @@ export { React, act, createRoot, renderToString, App, Lesson37, StepView37, Test
   chunkNames: "chunks/[name]-[hash]",
   jsx: "automatic",
   packages: "external",
+  // Lesson 44 bundles its own local font subsets; jsdom never renders them.
+  loader: { ".woff2": "empty" },
   logLevel: "silent",
 });
 const M = await import(pathToFileURL(outFile).href);
@@ -834,8 +836,8 @@ ok(["\u200f", "\u200e"].every((mark) => directionSources.includes(mark) === fals
   ok(pkg.scripts["audit:lesson37"] === "node scripts/audit-lesson37.mjs", "package.json exposes audit:lesson37");
   const chain = pkg.scripts["audit:english-direction"];
   ok(chain.includes("audit-lesson37.mjs"), "audit:english-direction runs the Lesson 37 audit");
-  ok(readFileSync(join(root, "scripts/check-english-direction.mjs"), "utf8").includes("lessons.length === 43"), "direction-check inventory covers 43 lessons");
-  ok(readFileSync(join(root, "scripts/audit-render-direction.mjs"), "utf8").includes("lessonFolders.length === 43"), "render audit covers 43 lesson folders");
+  ok(readFileSync(join(root, "scripts/check-english-direction.mjs"), "utf8").includes("lessons.length === 44"), "direction-check inventory covers 44 lessons");
+  ok(readFileSync(join(root, "scripts/audit-render-direction.mjs"), "utf8").includes("lessonFolders.length === 44"), "render audit covers 44 lesson folders");
   ok(readFileSync(join(root, "scripts/audit-lesson-navigation.mjs"), "utf8").includes('"#/lesson/37"'), "navigation audit covers the Lesson 37 route");
   ok(readFileSync(join(root, "scripts/audit-final-test.mjs"), "utf8").includes("lesson37DedicatedAssessment"), "final-test audit recognises the Lesson 37 dedicated assessment");
   ok(existsSync(join(root, "src/lessons/lesson37/ledger37.ts")) && existsSync(join(root, "src/lessons/lesson37/solutionsData37.ts")) && existsSync(join(root, "docs/lesson37-coverage.md")), "Lesson 37 source ledger, separate solution data, and coverage document exist");

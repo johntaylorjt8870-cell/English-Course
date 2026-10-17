@@ -152,6 +152,8 @@ export { React as React_, Lesson29, mount };
       loader: "tsx",
     },
     bundle: true, platform: "node", format: "esm", outfile: outFile, jsx: "automatic", packages: "external", logLevel: "silent",
+    // Lesson 44 ships self-hosted font subsets; jsdom does not render them.
+    loader: { ".woff2": "empty" },
   });
   const m = await import(pathToFileURL(outFile).href);
   rmSync(outFile, { force: true });

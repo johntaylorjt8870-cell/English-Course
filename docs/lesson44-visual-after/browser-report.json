@@ -1,0 +1,433 @@
+{
+  "viewports": [
+    {
+      "label": "laptop-1024",
+      "width": 1024,
+      "scroll": 1024,
+      "tested": 181,
+      "min": 3.46,
+      "minText": "36",
+      "issues": [],
+      "docHeight": 2406,
+      "stepHeight": 2019
+    },
+    {
+      "label": "laptop-1024-step13",
+      "width": 1024,
+      "scroll": 1024,
+      "tested": 176,
+      "min": 3.46,
+      "minText": "13",
+      "issues": [],
+      "docHeight": 2695,
+      "stepHeight": 2307
+    },
+    {
+      "label": "tablet-768",
+      "width": 768,
+      "scroll": 768,
+      "tested": 108,
+      "min": 3.46,
+      "minText": "13",
+      "issues": [],
+      "docHeight": 2846,
+      "stepHeight": 2307
+    },
+    {
+      "label": "tablet-768-step13",
+      "width": 768,
+      "scroll": 768,
+      "tested": 108,
+      "min": 3.46,
+      "minText": "13",
+      "issues": [],
+      "docHeight": 2846,
+      "stepHeight": 2307
+    },
+    {
+      "label": "phone-390",
+      "width": 390,
+      "scroll": 390,
+      "tested": 104,
+      "min": 3.46,
+      "minText": "13",
+      "issues": [],
+      "docHeight": 3428,
+      "stepHeight": 2900
+    },
+    {
+      "label": "phone-390-step13",
+      "width": 390,
+      "scroll": 390,
+      "tested": 104,
+      "min": 3.46,
+      "minText": "13",
+      "issues": [],
+      "docHeight": 3428,
+      "stepHeight": 2900
+    }
+  ],
+  "contrast": [
+    {
+      "label": "desktop-cover",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 130,
+      "min": 5.05,
+      "minText": "السابق",
+      "issues": [],
+      "docHeight": 2206,
+      "stepHeight": 1826
+    },
+    {
+      "label": "desktop-step-1",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 128,
+      "min": 3.46,
+      "minText": "01",
+      "issues": [],
+      "docHeight": 1079,
+      "stepHeight": 561
+    },
+    {
+      "label": "desktop-step-2",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 164,
+      "min": 3.46,
+      "minText": "02",
+      "issues": [],
+      "docHeight": 1875,
+      "stepHeight": 1487
+    },
+    {
+      "label": "desktop-step-3",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 187,
+      "min": 3.46,
+      "minText": "03",
+      "issues": [],
+      "docHeight": 2326,
+      "stepHeight": 1939
+    },
+    {
+      "label": "desktop-step-11",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 121,
+      "min": 3.46,
+      "minText": "11",
+      "issues": [],
+      "docHeight": 1150,
+      "stepHeight": 762
+    },
+    {
+      "label": "desktop-step-12",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 139,
+      "min": 3.46,
+      "minText": "12",
+      "issues": [],
+      "docHeight": 1620,
+      "stepHeight": 1232
+    },
+    {
+      "label": "desktop-step-13",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 176,
+      "min": 3.46,
+      "minText": "13",
+      "issues": [],
+      "docHeight": 2050,
+      "stepHeight": 1663
+    },
+    {
+      "label": "desktop-step-17",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 121,
+      "min": 3.46,
+      "minText": "17",
+      "issues": [],
+      "docHeight": 1233,
+      "stepHeight": 845
+    },
+    {
+      "label": "desktop-step-20",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 178,
+      "min": 3.46,
+      "minText": "20",
+      "issues": [],
+      "docHeight": 2389,
+      "stepHeight": 2002
+    },
+    {
+      "label": "desktop-step-23",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 143,
+      "min": 3.46,
+      "minText": "23",
+      "issues": [],
+      "docHeight": 1583,
+      "stepHeight": 1195
+    },
+    {
+      "label": "desktop-step-27",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 151,
+      "min": 3.46,
+      "minText": "27",
+      "issues": [],
+      "docHeight": 2233,
+      "stepHeight": 1845
+    },
+    {
+      "label": "desktop-step-28",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 157,
+      "min": 3.46,
+      "minText": "28",
+      "issues": [],
+      "docHeight": 1896,
+      "stepHeight": 1509
+    },
+    {
+      "label": "desktop-step-33",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 165,
+      "min": 3.46,
+      "minText": "33",
+      "issues": [],
+      "docHeight": 3003,
+      "stepHeight": 2615
+    },
+    {
+      "label": "desktop-step-34",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 126,
+      "min": 3.46,
+      "minText": "34",
+      "issues": [],
+      "docHeight": 1139,
+      "stepHeight": 751
+    },
+    {
+      "label": "desktop-step-36",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 181,
+      "min": 3.46,
+      "minText": "36",
+      "issues": [],
+      "docHeight": 2382,
+      "stepHeight": 1994
+    },
+    {
+      "label": "desktop-step-38",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 121,
+      "min": 3.46,
+      "minText": "38",
+      "issues": [],
+      "docHeight": 1477,
+      "stepHeight": 1089
+    },
+    {
+      "label": "desktop-test",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 248,
+      "min": 5.05,
+      "minText": "تسليم الاختبار",
+      "issues": [],
+      "docHeight": 7171,
+      "stepHeight": 0
+    },
+    {
+      "label": "desktop-solutions",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 411,
+      "min": 5.05,
+      "minText": "الإجابة",
+      "issues": [],
+      "docHeight": 8225,
+      "stepHeight": 0
+    },
+    {
+      "label": "desktop-teacher",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 2299,
+      "min": 5.05,
+      "minText": "الإجابة",
+      "issues": [],
+      "docHeight": 14154,
+      "stepHeight": 0
+    },
+    {
+      "label": "laptop-1024",
+      "width": 1024,
+      "scroll": 1024,
+      "tested": 181,
+      "min": 3.46,
+      "minText": "36",
+      "issues": [],
+      "docHeight": 2406,
+      "stepHeight": 2019
+    },
+    {
+      "label": "laptop-1024-step13",
+      "width": 1024,
+      "scroll": 1024,
+      "tested": 176,
+      "min": 3.46,
+      "minText": "13",
+      "issues": [],
+      "docHeight": 2695,
+      "stepHeight": 2307
+    },
+    {
+      "label": "tablet-768",
+      "width": 768,
+      "scroll": 768,
+      "tested": 108,
+      "min": 3.46,
+      "minText": "13",
+      "issues": [],
+      "docHeight": 2846,
+      "stepHeight": 2307
+    },
+    {
+      "label": "tablet-768-step13",
+      "width": 768,
+      "scroll": 768,
+      "tested": 108,
+      "min": 3.46,
+      "minText": "13",
+      "issues": [],
+      "docHeight": 2846,
+      "stepHeight": 2307
+    },
+    {
+      "label": "phone-390",
+      "width": 390,
+      "scroll": 390,
+      "tested": 104,
+      "min": 3.46,
+      "minText": "13",
+      "issues": [],
+      "docHeight": 3428,
+      "stepHeight": 2900
+    },
+    {
+      "label": "phone-390-step13",
+      "width": 390,
+      "scroll": 390,
+      "tested": 104,
+      "min": 3.46,
+      "minText": "13",
+      "issues": [],
+      "docHeight": 3428,
+      "stepHeight": 2900
+    }
+  ],
+  "heights": {
+    "cover": 2206,
+    "step1": 561,
+    "step2": 1487,
+    "step3": 1939,
+    "step11": 762,
+    "step12": 1232,
+    "step13": 1663,
+    "step17": 845,
+    "step20": 2002,
+    "step23": 1195,
+    "step27": 1845,
+    "step28": 1509,
+    "step33": 2615,
+    "step34": 751,
+    "step36": 1994,
+    "step38": 1089,
+    "test": 7171,
+    "solutions": 8225,
+    "teacher": 14154
+  },
+  "shots": [
+    "docs/lesson44-visual-after/01-cover.png",
+    "docs/lesson44-visual-after/02-cover-crux.png",
+    "docs/lesson44-visual-after/03-step-01-goals.png",
+    "docs/lesson44-visual-after/04-step-02-builder.png",
+    "docs/lesson44-visual-after/05-step-03-check.png",
+    "docs/lesson44-visual-after/06-step-11-comparison.png",
+    "docs/lesson44-visual-after/07-step-12-dialogue.png",
+    "docs/lesson44-visual-after/08-step-13-prohibition.png",
+    "docs/lesson44-visual-after/09-step-17-questions.png",
+    "docs/lesson44-visual-after/10-step-20-past.png",
+    "docs/lesson44-visual-after/11-step-23-future.png",
+    "docs/lesson44-visual-after/12-step-27-detective.png",
+    "docs/lesson44-visual-after/13-step-28-practice.png",
+    "docs/lesson44-visual-after/14-step-33-reading.png",
+    "docs/lesson44-visual-after/15-step-34-test-brief.png",
+    "docs/lesson44-visual-after/16-step-36-writing.png",
+    "docs/lesson44-visual-after/17-step-38-roadmap.png",
+    "docs/lesson44-visual-after/18-state-answer-feedback.png",
+    "docs/lesson44-visual-after/19-state-focus.png",
+    "docs/lesson44-visual-after/20-state-practice-key-open.png",
+    "docs/lesson44-visual-after/21-step-36-writing-filled.png",
+    "docs/lesson44-visual-after/22-area-test.png",
+    "docs/lesson44-visual-after/23-area-solutions.png",
+    "docs/lesson44-visual-after/24-area-teacher-gate.png",
+    "docs/lesson44-visual-after/25-area-teacher-guide.png",
+    "docs/lesson44-visual-after/26-area-teacher-practice-keys.png",
+    "docs/lesson44-visual-after/27-responsive-laptop-1024.png",
+    "docs/lesson44-visual-after/28-responsive-laptop-1024-step13.png",
+    "docs/lesson44-visual-after/27-responsive-tablet-768.png",
+    "docs/lesson44-visual-after/28-responsive-tablet-768-step13.png",
+    "docs/lesson44-visual-after/27-responsive-phone-390.png",
+    "docs/lesson44-visual-after/28-responsive-phone-390-step13.png"
+  ],
+  "errors": [],
+  "focus": [
+    {
+      "outline": "2px",
+      "style": "solid",
+      "color": "rgb(36, 72, 216)",
+      "tag": "BUTTON",
+      "cls": "answer44"
+    }
+  ],
+  "states": {
+    "answer": {
+      "wrongState": 1,
+      "rightState": 1,
+      "feedback": "راجع الاختيار\n\nالمفتاح: A — must\n\nالمتحدث يؤكد لنفسه أهمية التحسن — ضرورة شخصية تستخدم MUST."
+    }
+  },
+  "fonts": {
+    "newsreader": true,
+    "tajawal": true,
+    "loaded": [
+      "Newsreader 400 normal",
+      "Newsreader 400 italic",
+      "Newsreader 500 normal",
+      "Newsreader 600 normal",
+      "Tajawal 400 normal",
+      "Tajawal 700 normal",
+      "Tajawal 800 normal"
+    ]
+  },
+  "checks": 69
+}

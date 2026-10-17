@@ -72,6 +72,8 @@ export { React, createRoot, App, LessonNumberNav, LESSON_WINDOW, lessonHash };
   outfile: outFile,
   jsx: "automatic",
   packages: "external",
+  // Lesson 44 bundles its own local font subsets; jsdom never renders them.
+  loader: { ".woff2": "empty" },
   logLevel: "silent",
 });
 const M = await import(pathToFileURL(outFile).href);

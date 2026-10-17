@@ -69,6 +69,8 @@ export { React, createRoot, renderToString, App, Lesson35, StepView35, TestArea3
   outfile: outFile,
   jsx: "automatic",
   packages: "external",
+  // Lesson 44 bundles its own local font subsets; jsdom never renders them.
+  loader: { ".woff2": "empty" },
   logLevel: "silent",
 });
 const M = await import(pathToFileURL(outFile).href);

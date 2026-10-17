@@ -2691,65 +2691,64 @@ export default function Lesson30({ onExit }: { onExit: () => void }) {
         </aside>
 
         <div className="l30-main-column relative z-10 flex min-w-0 flex-1 flex-col">
-          <header className="l30-header flex items-center gap-3 px-3 pt-3 sm:px-4 lg:px-10">
-            <button
-              ref={menuButtonRef}
-              type="button"
-              onClick={() => setDrawer(true)}
-              aria-label="فهرس الدرس"
-              aria-expanded={drawer}
-              aria-controls="l30-mobile-navigation"
-              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-slate-200 bg-white text-lg shadow-sm transition hover:border-sky-300 focus-visible:outline-none lg:hidden"
-            >
-              ☰
-            </button>
-            <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-bold text-slate-500">
-                {area === "lesson"
-                  ? <Rich text={`${SECTIONS_30.find((section) => section.id === slide.section)?.label ?? slide.section} · ${slide.title}`} />
-                  : <Rich text={`الدرس 30 · ${areaLabel}`} />}
-              </div>
-              <div className="mt-0.5 truncate text-xs font-semibold text-slate-400">{area === "lesson" ? <Rich text={slide.lead ?? ""} /> : <LatinRuns text={LESSON_SUBTITLE_30} />}</div>
-            </div>
-            <button type="button" onClick={onExit} className="l30-mobile-exit rounded-xl bg-white px-3 py-2 text-sm font-bold text-slate-600 shadow-sm transition hover:bg-slate-100 lg:hidden">
-              ← خروج
-            </button>
-          </header>
-
-          <nav aria-label="مناطق الدرس" className="l30-area-tabs grid grid-cols-2 gap-2 px-3 pt-3 sm:flex sm:flex-wrap sm:px-4 lg:px-10">
-            {AREAS.map((item) => (
+          <header className="l30-header flex flex-wrap items-center gap-2 px-3 pt-3 sm:px-4 lg:flex-nowrap lg:gap-3 lg:px-10">
+            <div className="l30-header-controls flex w-full min-w-0 items-center gap-2 lg:w-auto lg:flex-1 lg:gap-3">
               <button
-                key={item.id}
+                ref={menuButtonRef}
                 type="button"
-                onClick={() => setArea(item.id)}
-                aria-pressed={area === item.id}
-                className={`l30-area-tab flex min-w-0 flex-1 items-center justify-center gap-2 rounded-2xl border-2 px-3 py-2.5 text-sm font-black transition active:scale-[0.98] sm:px-5 ${
-                  area === item.id ? "border-slate-900 bg-slate-900 text-white shadow" : "border-slate-200 bg-white text-slate-600 hover:border-sky-300"
-                }`}
+                onClick={() => setDrawer(true)}
+                aria-label="فهرس الدرس"
+                aria-expanded={drawer}
+                aria-controls="l30-mobile-navigation"
+                className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-slate-200 bg-white text-lg shadow-sm transition hover:border-sky-300 focus-visible:outline-none lg:hidden"
               >
-                <span aria-hidden>{item.emoji}</span>
-                <span>{item.ar}</span>
-                {item.id === "solutions" && !solutionsUnlocked && <span aria-label="مقفل">🔒</span>}
+                ☰
               </button>
-            ))}
-          </nav>
-
-          {area === "lesson" && (
-            <div className="l30-progress-row mx-3 mt-3 flex items-center gap-2 rounded-2xl border border-sky-200 bg-white px-3 py-2 sm:mx-4 lg:mx-10">
-              <span className="shrink-0 text-xs font-black text-slate-700"><Rich text={`خطوة ${slide.no} من ${SLIDE_COUNT}`} /></span>
-              <div
-                role="progressbar"
-                aria-label="التقدم في خطوات الدرس"
-                aria-valuemin={1}
-                aria-valuemax={SLIDE_COUNT}
-                aria-valuenow={slide.no}
-                className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-slate-200"
-              >
-                <div className="h-full rounded-full bg-gradient-to-l from-sky-500 via-orange-400 to-emerald-500 transition-all duration-500" style={{ width: `${progress}%` }} />
-              </div>
-              <span className="shrink-0 text-xs font-black text-slate-400"><Rich text={`${progress}٪`} /></span>
+              {area === "lesson" ? (
+                <div className="l30-progress-row flex min-w-0 flex-1 items-center gap-2 rounded-2xl border border-sky-200 bg-white px-2.5 py-1.5 sm:px-3">
+                  <span className="shrink-0 text-[11px] font-black text-slate-700 sm:text-xs"><Rich text={`خطوة ${slide.no} من ${SLIDE_COUNT}`} /></span>
+                  <div
+                    role="progressbar"
+                    aria-label="التقدم في خطوات الدرس"
+                    aria-valuemin={1}
+                    aria-valuemax={SLIDE_COUNT}
+                    aria-valuenow={slide.no}
+                    aria-valuetext={`الخطوة ${slide.no} من ${SLIDE_COUNT}`}
+                    className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-slate-200"
+                  >
+                    <div className="h-full rounded-full bg-gradient-to-l from-sky-500 via-orange-400 to-emerald-500 transition-all duration-500" style={{ width: `${progress}%` }} />
+                  </div>
+                  <span className="shrink-0 text-[11px] font-black text-slate-400 sm:text-xs"><Rich text={`${progress}٪`} /></span>
+                </div>
+              ) : (
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-bold text-slate-500"><Rich text={`الدرس 30 · ${areaLabel}`} /></div>
+                  <div className="mt-0.5 truncate text-xs font-semibold text-slate-400"><LatinRuns text={LESSON_SUBTITLE_30} /></div>
+                </div>
+              )}
+              <button type="button" onClick={onExit} className="l30-mobile-exit shrink-0 rounded-xl bg-white px-3 py-2 text-sm font-bold text-slate-600 shadow-sm transition hover:bg-slate-100 lg:hidden">
+                ← خروج
+              </button>
             </div>
-          )}
+
+            <nav aria-label="مناطق الدرس" className="l30-area-tabs grid w-full grid-cols-4 gap-1 lg:w-auto lg:shrink-0 lg:flex lg:gap-1.5">
+              {AREAS.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setArea(item.id)}
+                  aria-pressed={area === item.id}
+                  className={`l30-area-tab flex min-w-0 flex-1 items-center justify-center gap-1 rounded-2xl border-2 px-1.5 py-1.5 text-xs font-black transition active:scale-[0.98] sm:gap-1.5 sm:px-2.5 sm:text-sm ${
+                    area === item.id ? "border-slate-900 bg-slate-900 text-white shadow" : "border-slate-200 bg-white text-slate-600 hover:border-sky-300"
+                  }`}
+                >
+                  <span aria-hidden className="hidden sm:inline">{item.emoji}</span>
+                  <span className="whitespace-nowrap">{item.ar}</span>
+                  {item.id === "solutions" && !solutionsUnlocked && <span aria-label="مقفل">🔒</span>}
+                </button>
+              ))}
+            </nav>
+          </header>
 
           <main id="l30-main" ref={scrollRef} className="l30-scroll flex-1 overflow-y-auto px-3 pb-32 pt-4 sm:px-4 md:px-6 lg:px-10">
             <div className="l30-content mx-auto w-full max-w-4xl">

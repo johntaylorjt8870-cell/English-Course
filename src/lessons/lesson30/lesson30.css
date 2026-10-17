@@ -44,8 +44,14 @@
   min-height: 2.75rem;
 }
 
+.lesson30 .l30-header,
+.lesson30 .l30-header-controls,
+.lesson30 .l30-area-tabs {
+  min-width: 0;
+}
+
 .lesson30 .l30-progress-row {
-  min-height: 2.6rem;
+  min-height: 2.75rem;
   border-radius: 999px;
 }
 
@@ -231,14 +237,6 @@
 }
 
 @media (max-width: 639px) {
-  .lesson30 .l30-header {
-    min-height: 3.5rem;
-  }
-
-  .lesson30 .l30-header > div {
-    min-width: 0;
-  }
-
   .lesson30 .l30-mobile-exit {
     min-width: 3.25rem;
   }

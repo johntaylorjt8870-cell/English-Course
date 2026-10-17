@@ -643,6 +643,27 @@ try {
     ok(lessonHtml.includes('dir="ltr"'), "Lesson 30 isolates English as LTR");
     ok(lessonHtml.includes('data-area="l30-lesson"'), "Lesson area is present");
     ok(plainOf(lessonHtml).includes("خطوة 1 من 46"), "step counter starts at 1 / 46");
+    const shell = document.createElement("div");
+    shell.innerHTML = lessonHtml;
+    const header = shell.querySelector(".l30-header");
+    const headerText = plainOf(header?.innerHTML ?? "");
+    ok(!!header, "compact Lesson 30 header renders");
+    ok(!headerText.includes(m.VIEW_SLIDES[0].title), "current lesson title is not repeated in the header");
+    ok(!headerText.includes(m.VIEW_SLIDES[0].lead), "current lesson lead is not repeated in the header");
+    const areaNav = header?.querySelector('nav[aria-label="مناطق الدرس"]');
+    const areaTabs = [...(areaNav?.querySelectorAll("button") ?? [])];
+    ok(!!areaNav, "area destinations remain in the persistent header navigation");
+    ok(areaNav?.parentElement === header, "area navigation shares the compact header instead of a separate desktop row");
+    ok(areaTabs.length === 4, `all four area destinations remain accessible (${areaTabs.length})`);
+    for (const name of ["الدرس", "الاختبار", "الحلول", "المعلم"]) {
+      ok(areaTabs.some((tab) => plainOf(tab.innerHTML).includes(name)), `area navigation retains “${name}”`);
+    }
+    ok(areaTabs.every((tab) => tab.tagName === "BUTTON" && tab.getAttribute("aria-pressed") !== null), "area navigation remains keyboard-operable with pressed-state semantics");
+    ok(areaTabs.some((tab) => plainOf(tab.innerHTML).includes("الحلول") && tab.querySelector('[aria-label="مقفل"]')), "solutions lock indicator remains visible and announced");
+    const progressbar = header?.querySelector('[role="progressbar"]');
+    ok(progressbar?.getAttribute("aria-valuenow") === "1" && progressbar.getAttribute("aria-valuemax") === "46", "compact progress indicator remains accessible and starts at 1 / 46");
+    ok(progressbar?.getAttribute("aria-valuetext") === "الخطوة 1 من 46", "progress indicator announces the current step");
+    ok(shell.querySelectorAll(".l30-progress-row").length === 1, "progress row is integrated once, not duplicated below navigation");
     ok(view.includes("ArrowLeft") && view.includes("ArrowRight"), "keyboard arrow navigation wired");
     ok(view.includes("→ السابق") && view.includes("التالي ←"), "Previous/Next controls present");
     ok(!view.includes("split(/(\\s+)/)"), "no per-token space splitting (word-reversal engine banned)");
@@ -651,6 +672,20 @@ try {
     const el = m.mount(m.React.createElement(m.Lesson30, { onExit: noop }));
     await tick(80);
     ok(!!el.querySelector('[data-area="l30-lesson"]'), "lesson area mounted");
+    const nextStep = byText(el, "التالي ←");
+    nextStep?.click();
+    await tick(40);
+    let liveProgress = el.querySelector('[role="progressbar"][aria-label="التقدم في خطوات الدرس"]');
+    ok(liveProgress?.getAttribute("aria-valuenow") === "2", "Next advances to step 2 and updates progress");
+    const stepFour = [...(el.querySelector("#l30-desktop-navigation")?.querySelectorAll("button") ?? [])]
+      .find((button) => button.textContent?.includes(m.VIEW_SLIDES[3].title));
+    stepFour?.click();
+    await tick(40);
+    liveProgress = el.querySelector('[role="progressbar"][aria-label="التقدم في خطوات الدرس"]');
+    ok(liveProgress?.getAttribute("aria-valuenow") === "4", "step rail jumps directly to step 4 and updates progress");
+    ok(el.querySelector('#l30-desktop-navigation [aria-current="step"]')?.textContent?.includes(m.VIEW_SLIDES[3].title), "step rail marks the selected step as current");
+    const activeHeaderText = plainOf(el.querySelector(".l30-header")?.innerHTML ?? "");
+    ok(!activeHeaderText.includes(m.VIEW_SLIDES[3].title) && !activeHeaderText.includes(m.VIEW_SLIDES[3].lead), "later steps also omit their repeated title and lead from the header");
     areaByText(el, "الاختبار")?.click();
     await tick(60);
     ok(!!el.querySelector('[data-area="l30-test"]'), "Test Area opens as a separate area");

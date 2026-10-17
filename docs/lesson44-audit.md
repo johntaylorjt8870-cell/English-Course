@@ -149,11 +149,11 @@ observed at 1280 or 375.
 
 | Check | Result |
 |---|---|
-| `npm run build` | ✓ 8.93 s |
+| `npm run build` | ✓ 8.87 s |
 | `node scripts/audit-lesson44.mjs` | ✓ 91 assertions · 39 sections / 761 lines · 13 chapters · 25 practice / 25 test / 25 solutions |
 | `node scripts/audit-lesson44-dom.mjs` | ✓ 1 692 assertions · 39 steps · 761 `data-source-unit`s · 25-question submit · 25 solutions · password-gated teacher guide · 47 BIDI snapshots |
 | `node scripts/audit-lesson44-browser.mjs` | ✓ 69 checks · 32 screenshots · 25 contrast snapshots · lowest 3.46:1 (large folio numerals only) · no horizontal overflow at 1280 / 1024 / 768 / 390 |
-| `npm run audit:english-direction` | ✓ EXIT 0 (338 s), including lessons 24–44, BIDI mixed, final-test coverage, navigation |
+| `npm run audit:english-direction` | ✓ EXIT 0 (316 s), including lessons 24–44, BIDI mixed, final-test coverage, navigation |
 | `audit-bidi-mixed` for Lesson 44 | ✓ 0 classic + 0 alternative violations (site total unchanged: 785 unique, 2 allowlisted) |
 
 The browser report is `docs/lesson44-visual-after/browser-report.json`; screenshots are in
@@ -184,6 +184,9 @@ draft, test submit locked/unlocked, wrong teacher password, teacher guide open.
 - **Arabic–English word boundaries lost their space** when a Latin run carried the boundary
   space inside its isolate. A scoped `.font-en` margin restores the visual space (e.g.
   "منظومة Modal Verbs." no longer "منظومةModal Verbs.").
+- **Mixed-script titles broke at the colon.** Titles such as
+  "التدريب الأول: MUST أم HAVE TO؟" put the colon inside the English run; `Title44` now keeps
+  the label and the full English question in separate isolated runs.
 - **Decorative colour was used for text.** `.areas44 button > span` now uses `--faint`
   (2.6:1 → 5.6:1 at its size), found by the rendered-contrast pass.
 

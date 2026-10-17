@@ -4,4 +4,4 @@ export const LESSON_SUBTITLE_44 = 'الضرورة، والإلزام، والق�
 export const LESSON_SECTION_COUNT_44 = 39;
 export const LESSON_STEP_COUNT_44 = 39;
 export const LESSON_CURRICULUM_TOTAL_44 = 120;
-export const LESSON_IDENTITY_44 = 'Obligation Lab';
+export const LESSON_IDENTITY_44 = 'English Learning Studio';

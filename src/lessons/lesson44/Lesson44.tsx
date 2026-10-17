@@ -1,11 +1,14 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { Signature } from '../../shared/Signature';
-import { SOURCE_SECTIONS_44, STATIONS_44, LESSON_TITLE_44, LESSON_SUBTITLE_44, LESSON_STEP_COUNT_44, LESSON_IDENTITY_44 } from './data';
-import { Workspace44, Text44 } from './kit44';
+import {
+  SOURCE_SECTIONS_44, STATIONS_44, LESSON_TITLE_44, LESSON_SUBTITLE_44, LESSON_STEP_COUNT_44, LESSON_IDENTITY_44,
+} from './data';
+import { Workspace44, Text44, Glyph44 } from './kit44';
 import { Steps44 } from './Steps44';
 import { TestArea44 } from './TestArea44';
 import { TeacherArea44 } from './TeacherArea44';
 import { testComplete44, type TestAnswers44 } from './testData44';
+import { station44 } from './ledger44';
 import './lesson44.css';
 
 const SolutionsArea44 = lazy(() => import('./SolutionsArea44'));
@@ -22,7 +25,8 @@ export default function Lesson44({ onExit }: { onExit?: () => void }) {
   const [teacher, setTeacher] = useState(false);
   const [mobileNav, setMobileNav] = useState(false);
   const unlocked = submitted || teacher;
-  const station = STATIONS_44.find(s => step >= s.start && step <= s.end)!;
+  const station = station44(step);
+  const chapterNo = STATIONS_44.indexOf(station) + 1;
 
   function navigate(index: number) {
     const next = Math.max(0, Math.min(LAST_STEP, index));
@@ -49,87 +53,147 @@ export default function Lesson44({ onExit }: { onExit?: () => void }) {
   const labels: Record<Area44, string> = {
     student: 'التعلّم', test: 'الاختبار', solutions: unlocked ? 'الحلول' : 'الحلول · مقفلة', teacher: 'المعلم',
   };
+  const areaName: Record<Area44, string> = {
+    student: `الفصل ${String(chapterNo).padStart(2, '0')} · ${station.name}`,
+    test: 'منطقة الاختبار · 25 سؤالًا',
+    solutions: 'الحلول التفصيلية',
+    teacher: 'مساحة المعلم',
+  };
+  const cover = area === 'student' && step === 0;
+
   return <>
-    <Signature/>
+    <Signature />
     <div className="lesson44" dir="rtl" data-lesson="44">
-      <header className="masthead44">
-        <div className="mastheadInner44">
-          <a href="#/" onClick={() => onExit?.()} className="brand44">
-            <span className="brandMark44" aria-hidden="true">44</span>
-            <span dir="ltr">English Course<small>{LESSON_IDENTITY_44.toUpperCase()}</small></span>
+      <header className="bar44">
+        <div className="barInner44">
+          <a href="#/" onClick={() => onExit?.()} className="brand44" aria-label="English Course — العودة إلى كل الدروس">
+            <span className="brandNum44" aria-hidden="true">44</span>
+            <span className="brandText44">
+              <span dir="ltr">English Course</span>
+              <small>{LESSON_IDENTITY_44}</small>
+            </span>
           </a>
-          <a href="#/lesson/43">الدرس السابق ←</a>
+          <nav className="areas44" aria-label="مناطق الدرس">
+            {(['student', 'test', 'solutions', 'teacher'] as const).map((id, i) => (
+              <button key={id} type="button" aria-current={area === id ? 'page' : undefined}
+                disabled={id === 'solutions' && !unlocked} onClick={() => { setArea(id); setMobileNav(false); }}>
+                <span aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                {labels[id]}
+                {id === 'solutions' && !unlocked && <Glyph44 name="lock" className="tabLock44" />}
+              </button>
+            ))}
+          </nav>
+          <div className="barMeta44">
+            <p className="barArea44">{areaName[area]}</p>
+            {area === 'student' && (
+              <p className="barProgress44">
+                <span className="barBar44" aria-hidden="true"><span style={{ width: `${((step + 1) / LESSON_STEP_COUNT_44) * 100}%` }} /></span>
+                <bdi dir="ltr">{step + 1} / {LESSON_STEP_COUNT_44}</bdi>
+              </p>
+            )}
+          </div>
         </div>
       </header>
-      <div className="lessonTop44">
-        <div>
-          <p className="eyebrow44">الضرورة والإلزام والقواعد والمسؤوليات / IQ200</p>
-          <h1><Text44 text={LESSON_TITLE_44}/></h1>
-          <p>{LESSON_SUBTITLE_44}</p>
-        </div>
-        <div className="lessonMetric44">
-          <b>{visited.length}<span>/ {LESSON_STEP_COUNT_44}</span></b>
-          <small>خطوات زرتها — لا تعني الإتقان</small>
-          <progress aria-label="خطوات تمت زيارتها" max={LESSON_STEP_COUNT_44} value={visited.length}/>
-        </div>
-      </div>
-      <nav className="areas44" aria-label="مناطق الدرس">
-        {(['student', 'test', 'solutions', 'teacher'] as const).map((id, i) =>
-          <button key={id} aria-current={area === id ? 'page' : undefined} disabled={id === 'solutions' && !unlocked} onClick={() => setArea(id)}>
-            <span aria-hidden="true">0{i + 1}</span>{labels[id]}
-          </button>)}
-      </nav>
+
       <Workspace44.Provider value={{ values, set: (key, value) => setValues(v => ({ ...v, [key]: value })) }}>
-        <div className={area === 'student' ? 'layout44' : 'areaLayout44'}>
-          {area === 'student' && <aside className="sidebar44">
-            <button className="mobileToggle44" aria-expanded={mobileNav} aria-controls="lesson44-step-nav" onClick={() => setMobileNav(!mobileNav)}>
-              خريطة المختبر · الخطوة <bdi dir="ltr">{step + 1} / {LESSON_STEP_COUNT_44}</bdi>
-            </button>
-            <div id="lesson44-step-nav" className={mobileNav ? 'navContent44 open' : 'navContent44'}>
-              <p className="eyebrow44">محطات المختبر</p>
-              <nav aria-label="محطات الدرس">
-                {STATIONS_44.map((s, i) => <div className="station44" key={s.start}>
-                  <button aria-pressed={s === station} onClick={() => navigate(s.start)}>
-                    <span className="stationIndex44">{String(i + 1).padStart(2, '0')}</span>
-                    <span>{s.name}<small dir="ltr">{s.en}</small></span>
-                  </button>
-                  {s === station && <nav aria-label={`أقسام ${s.name}`} className="sectionsNav44">
-                    {SOURCE_SECTIONS_44.filter(sec => sec.num >= s.start && sec.num <= s.end).map(sec =>
-                      <button key={sec.id} aria-current={sec.num === step ? 'step' : undefined} onClick={() => navigate(sec.num)}>
-                        <span dir="ltr" className="ltr-pair navLabel44"><bdi dir="ltr">{sec.num === 0 ? '◉' : sec.num}</bdi><Text44 text={sec.title}/></span>
-                      </button>)}
-                  </nav>}
-                </div>)}
+        {area === 'student' ? (
+          <div className={cover ? 'layout44 layout44--cover' : 'layout44'}>
+            {!cover && (
+              <aside className="railCol44">
+                <button type="button" className="mobileToggle44" aria-expanded={mobileNav} aria-controls="lesson44-step-nav"
+                  onClick={() => setMobileNav(!mobileNav)}>
+                  <span>الفصول · الخطوة <bdi dir="ltr">{step + 1} / {LESSON_STEP_COUNT_44}</bdi></span>
+                  <Glyph44 name="rule" />
+                </button>
+                <div id="lesson44-step-nav" className={mobileNav ? 'rail44 navContent44 open' : 'rail44 navContent44'}>
+                  <div className="railHead44">
+                    <p className="kicker44">الفصول · CHAPTERS</p>
+                    <p className="railProgress44"><bdi dir="ltr">{visited.length} / {LESSON_STEP_COUNT_44}</bdi> خطوة زُرتها</p>
+                  </div>
+                  <nav className="railNav44" aria-label="فصول الدرس">
+                    {STATIONS_44.map((s, i) => {
+                      const active = s === station;
+                      return (
+                        <div className={`chapter44 ${active ? 'is-active' : ''}`} key={s.start}>
+                          <button type="button" className="chapterBtn44" aria-current={active ? 'true' : undefined}
+                            data-chapter-start={s.start} data-chapter-end={s.end}
+                            onClick={() => navigate(s.start)}>
+                            <span className="chapterNo44" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                            <span className="chapterName44"><b>{s.name}</b><small dir="ltr">{s.en}</small></span>
+                            <span className="chapterCount44" aria-hidden="true">{s.end - s.start + 1}</span>
+                          </button>
+                          {active && (
+                            <ol className="sectionNav44">
+                              {SOURCE_SECTIONS_44.filter(sec => sec.num >= s.start && sec.num <= s.end).map(sec => (
+                                <li key={sec.id}>
+                                  <button type="button" aria-current={sec.num === step ? 'step' : undefined} data-step={sec.num}
+                                    onClick={() => navigate(sec.num)}>
+                                    <span dir="ltr" className="sectionLabel44">
+                                      <bdi className="sectionNo44" aria-hidden="true">{sec.num}</bdi>
+                                      <Text44 text={sec.title} />
+                                    </span>
+                                  </button>
+                                </li>
+                              ))}
+                            </ol>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </nav>
+                  <p className="railNote44">← التالي · → السابق</p>
+                </div>
+              </aside>
+            )}
+            <main id="lesson44-main" className={cover ? 'stage44 stage44--cover' : 'stage44'}>
+              <Steps44 index={step} onTest={() => setArea('test')} onTeacher={() => setArea('teacher')} onNavigate={navigate} />
+              <nav className="stepNav44" aria-label="تنقل الخطوات">
+                <button type="button" className="btn44 btn44--ghost" disabled={step === 0} onClick={() => navigate(step - 1)}>
+                  <Glyph44 name="arrow" className="flip44" /> السابق
+                </button>
+                <span className="stepNavMeta44">
+                  <bdi dir="ltr">{step + 1} / {LESSON_STEP_COUNT_44}</bdi>
+                  <small>{station.name}</small>
+                </span>
+                <button type="button" className="btn44 btn44--solid"
+                  onClick={() => step === LAST_STEP ? setArea('test') : navigate(step + 1)}>
+                  {step === LAST_STEP ? 'ابدأ الاختبار' : 'التالي'} <Glyph44 name="arrow" />
+                </button>
               </nav>
-              <p className="sidebarNote44">ما الذي يجب علينا فعله؟<br/>← التالي · → السابق</p>
-            </div>
-          </aside>}
-          <main id="lesson44-main">
-            {area === 'student' ? <>
-              <Steps44 index={step} onTest={() => setArea('test')} onTeacher={() => setArea('teacher')}/>
-              <nav className="bottomNav44" aria-label="تنقل الخطوات">
-                <button type="button" disabled={step === 0} onClick={() => navigate(step - 1)}>→ السابق</button>
-                <span>{step + 1} / {LESSON_STEP_COUNT_44}</span>
-                <button className="primary44" type="button" onClick={() => step === LAST_STEP ? setArea('test') : navigate(step + 1)}>{step === LAST_STEP ? 'ابدأ الاختبار' : 'التالي ←'}</button>
-              </nav>
-            </> : null}
+            </main>
+          </div>
+        ) : (
+          <main className="area44">
             {area === 'test' && <TestArea44
               answers={answers}
               change={(id, value) => { if (!submitted) setAnswers(a => ({ ...a, [id]: value })); }}
               submitted={submitted}
               submit={() => { if (testComplete44(answers)) { setSubmitted(true); setArea('solutions'); } }}
               reset={() => { setAnswers({}); setSubmitted(false); setArea('test'); }}
-              openSolutions={() => { if (unlocked) setArea('solutions'); }}/>}
-            {area === 'solutions' && unlocked && <Suspense fallback={<p role="status">جارٍ تحميل الحلول…</p>}><SolutionsArea44 answers={answers}/></Suspense>}
-            {area === 'teacher' && <TeacherArea44 unlocked={teacher} unlock={() => setTeacher(true)} lock={() => setTeacher(false)}/>}
-            {area !== 'student' && <button className="back44" type="button" onClick={() => setArea('student')}>العودة إلى خطوات التعلّم</button>}
+              openSolutions={() => { if (unlocked) setArea('solutions'); }} />}
+            {area === 'solutions' && unlocked && (
+              <Suspense fallback={<p role="status" className="areaLoading44">جارٍ تحميل الحلول…</p>}>
+                <SolutionsArea44 answers={answers} />
+              </Suspense>
+            )}
+            {area === 'teacher' && <TeacherArea44 unlocked={teacher} unlock={() => setTeacher(true)} lock={() => setTeacher(false)} />}
+            <button className="back44" type="button" onClick={() => setArea('student')}>
+              <Glyph44 name="arrow" /> العودة إلى خطوات التعلّم
+            </button>
           </main>
-        </div>
+        )}
       </Workspace44.Provider>
+
       <footer className="footer44">
-        <span dir="ltr">MUST · HAVE TO</span>
-        <p>لا تترجم MUSTN'T وDON'T HAVE TO على أنهما متشابهتان؛ الأول منع والثاني عدم ضرورة.</p>
-        <a href="#/" onClick={() => onExit?.()}>كل الدروس</a>
+        <div className="footerBrand44">
+          <span dir="ltr" className="footerTitle44">{LESSON_TITLE_44}</span>
+          <p>{LESSON_SUBTITLE_44}</p>
+        </div>
+        <p className="footerNote44">القاعدة التي لا تُنسى: <b>MUSTN'T</b> منع ≠ <b>DON'T HAVE TO</b> عدم ضرورة.</p>
+        <nav className="footerLinks44" aria-label="روابط الدرس">
+          <a href="#/lesson/43">الدرس السابق · 43</a>
+          <a href="#/" onClick={() => onExit?.()}>كل الدروس</a>
+        </nav>
       </footer>
     </div>
   </>;

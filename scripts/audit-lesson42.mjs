@@ -113,7 +113,7 @@ ok(read('labs42.tsx').includes('ليس تقييمًا لقواعد كتابتك'
 // ---------------- 5) registration and roadmap ----------------
 const app = readFileSync('src/App.tsx', 'utf8');
 ok(app.includes('route === 42') && app.includes('href: "#/lesson/42"'), 'route + hub card');
-ok(!app.includes('route === 44') && !existsSync('src/lessons/lesson44'), 'no Lesson 44 implementation');
+ok(app.includes('route === 44') && existsSync('src/lessons/lesson44'), 'Lesson 44 ships in its own folder');
 ok(next.status === 'planned-not-implemented', 'Lesson 42 keeps its frozen roadmap entry');
 ok(stations.length === 10 && stations.every((s, i) => s.start === (i === 0 ? 0 : stations[i - 1].end + 1)), 'stations tile every step once in order');
 ok(stations[stations.length - 1].end === 44, 'last station ends at the final step');
@@ -154,8 +154,10 @@ const changed = base
   ? [...new Set([...execFileSync('git', ['diff', '--name-only', base], { encoding: 'utf8' }).split('\n'),
     ...execFileSync('git', ['ls-files', '--others', '--exclude-standard'], { encoding: 'utf8' }).split('\n')].filter(Boolean))]
   : [...execFileSync('git', ['ls-files', '--others', '--exclude-standard'], { encoding: 'utf8' }).split('\n').filter(Boolean)];
-ok(changed.every(path => integration.has(path) || path.startsWith('src/lessons/lesson42/') || path.startsWith('src/lessons/lesson43/') || path.startsWith('docs/lesson42-') || path.startsWith('docs/lesson43-')
-  || /^scripts\/audit-lesson42(?:-dom|-browser)?\.mjs$/.test(path) || /^scripts\/lesson42-coverage-doc\.mjs$/.test(path) || /^scripts\/audit-lesson43(?:-dom|-browser)?\.mjs$/.test(path) || /^scripts\/lesson43-coverage-doc\.mjs$/.test(path)), `no unrelated modified files (${changed.filter(p => !integration.has(p) && !p.startsWith('src/lessons/lesson42') && !p.startsWith('src/lessons/lesson43') && !p.startsWith('docs/lesson42') && !p.startsWith('docs/lesson43')).join(', ')})`);
+ok(changed.every(path => integration.has(path)
+  || path.startsWith('src/lessons/lesson42/') || path.startsWith('src/lessons/lesson43/') || path.startsWith('src/lessons/lesson44/')
+  || /^docs\/lesson4\d-/.test(path)
+  || /^scripts\/(?:audit-lesson\d+(?:-dom|-browser)?|audit-bidi-mixed|audit-render-direction|audit-final-test(?:-coverage)?|audit-source-reveal|audit-lesson-navigation|check-english-direction|test-bidi-rendering|lesson4\d-coverage-doc)\.mjs$/.test(path)), `no unrelated modified files (${changed.filter(p => !integration.has(p) && !/^src\/lessons\/lesson4[2-4]\//.test(p) && !/^docs\/lesson4\d-/.test(p) && !/^scripts\/(?:audit-|check-english|test-bidi|lesson4)/.test(p)).join(', ')})`);
 ok(!changed.some(path => /^src\/lessons\/lesson(?:[1-9]|[1-3][0-9]|40|41)\//.test(path)), 'Lessons 1–41 source remains untouched');
 
 console.log(`Lesson 42 static/data audit passed: ${checks} assertions; 45 sections (${totalUnits} units), ${practice.length} practice items, 25 test questions, ${testGraph ? '' : ''}${solutions.length} detailed keys, ${pairs.length} contrast pairs.`);

@@ -38,6 +38,22 @@ export function Text44({ text, className = '' }: { text: string; className?: str
 }
 
 /**
+ * Step heading. A title shaped "التدريب الأول: MUST أم HAVE TO؟" keeps its Arabic
+ * label and its colon on the right; the bilingual remainder is one LTR run so
+ * the connector stays between the two English alternatives.
+ */
+export function Title44({ text }: { text: string }) {
+  const match = text.match(/^(.+?:)\s+([A-Za-z][\s\S]*)$/);
+  if (!match) return <Text44 text={text} />;
+  return (
+    <>
+      <span className="titleAr44">{match[1]}</span>{' '}
+      <span className="titleEn44" dir="ltr" lang="en"><Text44 text={match[2]} /></span>
+    </>
+  );
+}
+
+/**
  * A bilingual label written as "المستوى الأول: Multiple Choice". Rendered as
  * two isolated runs so the Arabic reads right-to-left and the English label
  * follows it in reading order instead of drifting to the visual left.

@@ -97,6 +97,7 @@
 .lesson44 .flip44 { transform: rotate(180deg); }
 .lesson44 .en44 { unicode-bidi: isolate; }
 .lesson44 .font-en { margin-inline-end: .28em; }
+.lesson44 .titleEn44 { unicode-bidi: isolate; }
 .lesson44 .labelEn44 { unicode-bidi: isolate; direction: ltr; margin-inline-end: .55em; font-family: var(--mono); font-size: .92em; letter-spacing: .01em; }
 .lesson44 .levelHead44 h3 .labelEn44 { display: inline; }
 
@@ -645,7 +646,7 @@
   font: 500 clamp(27px, 3vw, 36px)/1.2 var(--serif); color: var(--ink);
   margin: 10px 0 18px; direction: ltr; text-align: left;
 }
-.lesson44 .readerBody44 { max-width: 63ch; }
+.lesson44 .readerBody44 { max-width: 63ch; margin-inline-start: auto; }
 .lesson44 .readerLine44 {
   font: 400 19px/1.75 var(--serif); color: var(--ink-2);
   margin-bottom: 12px; text-align: left;

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Article44, En44, Glyph44, Label44, Plate44, Text44 } from './kit44';
+import { Article44, En44, Glyph44, Label44, Plate44, Text44, Title44 } from './kit44';
 import { STATIONS_44, section44, splitTitle44, station44, unitId44 } from './ledger44';
 import { LESSON_STEP_COUNT_44, LESSON_TITLE_44 } from './data';
 import {
@@ -211,7 +211,7 @@ export function Steps44({ index, onTest, onTeacher, onNavigate }: {
           <span className="stepFolio44" aria-hidden="true"><bdi dir="ltr">{String(index).padStart(2, '0')}</bdi></span>
           <div className="stepTitleText44">
             {englishTitle && <p className="stepEn44" dir="ltr" lang="en">{englishTitle}</p>}
-            <h2 id="step-title-44" tabIndex={-1}><Text44 text={arTitle} /></h2>
+            <h2 id="step-title-44" tabIndex={-1}><Title44 text={arTitle} /></h2>
           </div>
         </div>
       </header>

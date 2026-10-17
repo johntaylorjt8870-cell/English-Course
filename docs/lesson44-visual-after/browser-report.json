@@ -131,8 +131,8 @@
       "min": 3.46,
       "minText": "12",
       "issues": [],
-      "docHeight": 1620,
-      "stepHeight": 1232
+      "docHeight": 1613,
+      "stepHeight": 1225
     },
     {
       "label": "desktop-step-13",
@@ -350,7 +350,7 @@
     "step2": 1487,
     "step3": 1939,
     "step11": 762,
-    "step12": 1232,
+    "step12": 1225,
     "step13": 1663,
     "step17": 845,
     "step20": 2002,

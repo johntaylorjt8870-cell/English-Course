@@ -165,8 +165,24 @@
   box-shadow: -12px 0 34px -30px rgba(19, 27, 63, 0.75);
 }
 .lesson32 .l32-rail-head {
-  background: linear-gradient(135deg, var(--l32-indigo-deep), var(--l32-aqua) 58%, var(--l32-aqua-bright));
+  background:
+    radial-gradient(120% 80% at 110% 0%, rgba(34, 211, 238, 0.55), transparent 60%),
+    linear-gradient(135deg, var(--l32-indigo-deep), var(--l32-aqua) 58%, var(--l32-aqua-bright));
   color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+/* الموجة السفلية لرأس السكة — بصمة بصرية فريدة للدرس 32 */
+.lesson32 .l32-rail-head::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  height: 14px;
+  background-image: radial-gradient(ellipse at 8px -2px, var(--l32-paper) 6px, transparent 7px);
+  background-size: 16px 14px;
+  background-repeat: repeat-x;
+  pointer-events: none;
 }
 .lesson32 .l32-rail-group[aria-current="true"] {
   border-color: var(--l32-aqua-line);
@@ -262,16 +278,215 @@
   border-radius: 999px;
 }
 
+/* ------------------------------------------------------------
+   Hero band — غلاف بصري مميّز للدرس 32 (Cover)
+   يُستبدل فيه «بطاقة الغلاف» بشريط عريض متعدد الطبقات:
+   شريط علوي بتدرّج مؤسسي + نص + موجة، ثم الجسم بالتيّار.
+   ------------------------------------------------------------ */
+.lesson32 .l32-hero {
+  position: relative;
+  border-radius: var(--l32-r);
+  border: 1px solid var(--l32-line);
+  background: linear-gradient(180deg, #ffffff 0%, #f4f8ff 100%);
+  box-shadow: var(--l32-shadow);
+  overflow: hidden;
+}
+.lesson32 .l32-hero::before {
+  /* خط تيّار دقيق عمودي على يسار الـ hero */
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: linear-gradient(180deg,
+    var(--l32-indigo-deep) 0%,
+    var(--l32-aqua) 35%,
+    var(--l32-aqua-bright) 70%,
+    var(--l32-coral) 100%);
+}
+.lesson32 .l32-hero-band {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem 1.1rem 1.75rem;
+  background:
+    radial-gradient(120% 80% at 110% 0%, rgba(34, 211, 238, 0.55), transparent 60%),
+    radial-gradient(110% 90% at -10% 100%, rgba(139, 147, 248, 0.45), transparent 60%),
+    linear-gradient(120deg, #312a8f 0%, #0b5f77 52%, #22d3ee 100%);
+  color: #fff;
+}
+.lesson32 .l32-hero-band::after {
+  /* الموجة السفلية لرأس الـ hero */
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  height: 14px;
+  background-image: radial-gradient(ellipse at 8px -2px, #f4f8ff 6px, transparent 7px);
+  background-size: 16px 14px;
+  background-repeat: repeat-x;
+}
+.lesson32 .l32-hero-meta {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.lesson32 .l32-hero-eyebrow {
+  display: inline-block;
+  font-family: var(--l32-font-en-display);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  color: #c9f4ff;
+  text-transform: uppercase;
+}
+.lesson32 .l32-hero-title {
+  margin: 0.3rem 0 0.4rem;
+  font-family: var(--l32-font-ar-head);
+  font-size: clamp(1.55rem, 2.8vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: #fff;
+}
+.lesson32 .l32-hero-formula {
+  display: inline-block;
+  font-family: var(--l32-font-en);
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  font-weight: 800;
+  color: #e2f6ff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  padding: 0.35rem 0.75rem;
+  margin: 0;
+}
+.lesson32 .l32-hero-aside {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: clamp(64px, 9vw, 110px);
+  height: clamp(64px, 9vw, 110px);
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.08) 70%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 16px 40px -20px rgba(34, 211, 238, 0.7);
+}
+.lesson32 .l32-hero-mark {
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+}
+.lesson32 .l32-hero-body {
+  padding: 1.2rem 1.25rem 1.3rem 1.5rem;
+}
+@media (max-width: 640px) {
+  .lesson32 .l32-hero-band {
+    padding: 1rem 1rem 0.85rem 1.35rem;
+  }
+  .lesson32 .l32-hero-body {
+    padding: 1rem 0.85rem 1.05rem 1rem;
+  }
+}
+.lesson32 .l32-journey {
+  position: relative;
+  border-radius: var(--l32-r-sm);
+  border: 1px solid var(--l32-line);
+  background:
+    linear-gradient(90deg,
+      rgba(14, 116, 144, 0.06) 0%,
+      rgba(67, 56, 202, 0.06) 50%,
+      rgba(239, 77, 116, 0.05) 100%);
+  padding: 0.3rem 0.5rem;
+  overflow: hidden;
+}
+.lesson32 .l32-journey::before {
+  /* تيّار متحرّك رفيع داخل الشريط */
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 3px;
+  background:
+    linear-gradient(90deg,
+      var(--l32-aqua-deep),
+      var(--l32-indigo) 40%,
+      var(--l32-coral) 100%);
+  opacity: 0.7;
+}
+.lesson32 .l32-journey-dot {
+  border: 1px solid transparent;
+  letter-spacing: 0.01em;
+  font-size: 10px;
+  transition: transform 0.14s ease, box-shadow 0.14s ease, background-color 0.14s ease, color 0.14s ease;
+}
+.lesson32 .l32-journey-past {
+  background: var(--l32-ok-soft);
+  border-color: var(--l32-ok-line);
+  color: var(--l32-ok-deep);
+  box-shadow: inset 0 0 0 1px rgba(21, 128, 61, 0.12);
+}
+.lesson32 .l32-journey-now {
+  background: linear-gradient(120deg, var(--l32-indigo), var(--l32-aqua));
+  border-color: var(--l32-indigo-deep);
+  color: #fff;
+  box-shadow: 0 8px 18px -10px rgba(49, 42, 143, 0.85);
+  transform: translateY(-1px);
+}
+.lesson32 .l32-journey-future {
+  background: rgba(237, 241, 247, 0.85);
+  border-color: var(--l32-line);
+  color: var(--l32-ink-mute);
+}
+.lesson32 .l32-journey-link {
+  width: 12px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--l32-aqua-line) 50%, transparent);
+  flex-shrink: 0;
+}
+.lesson32 .l32-journey-now + .l32-journey-link {
+  background: linear-gradient(90deg, var(--l32-aqua), transparent);
+}
+
+/* إخفاء قسم البداية (الغلاف) في الأشرطة لأن الغلاف لا يتبع قسمًا */
+.lesson32 .l32-journey[data-journey-section="START"] [data-journey-state="now"] {
+  background: linear-gradient(120deg, var(--l32-indigo), var(--l32-aqua));
+}
+
 /* ترصيص إطار الشريحة المشترك: تعليم يبدأ قريبًا من الأعلى */
 .lesson32 .l32-frame > section {
+  position: relative;
   padding: 1.1rem 1.05rem 1.25rem;
   border-color: var(--l32-line);
   border-radius: var(--l32-r);
   box-shadow: var(--l32-shadow);
+  overflow: hidden;
+}
+.lesson32 .l32-frame > section::before {
+  /* شريط جانبي متدرّج يربط الإطار بالتيّار */
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  background: linear-gradient(180deg,
+    var(--l32-indigo-deep) 0%,
+    var(--l32-aqua) 35%,
+    var(--l32-aqua-bright) 70%,
+    var(--l32-coral) 100%);
+  opacity: 1;
+  border-start-start-radius: var(--l32-r);
+  border-end-start-radius: var(--l32-r);
+  box-shadow: -2px 0 8px -2px rgba(14, 116, 144, 0.4);
+}
+.lesson32 .l32-frame > section > * {
+  position: relative;
+  z-index: 1;
 }
 @media (min-width: 768px) {
   .lesson32 .l32-frame > section {
-    padding: 1.4rem 1.9rem 1.7rem;
+    padding: 1.4rem 1.9rem 1.7rem 2.15rem;
   }
 }
 .lesson32 .l32-frame > section > h2 {

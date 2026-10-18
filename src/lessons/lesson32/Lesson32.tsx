@@ -66,8 +66,53 @@ export function SlideView32({ id, title, lead, tip, step, mascot, section, onGoT
   const sectionLabel = SECTIONS_32.find((s) => s.id === section)?.label ?? "";
   const srcIdx = SEC_32[id];
   const srcTitle = srcIdx !== undefined ? SOURCE_SECTIONS[srcIdx]?.title : undefined;
+  // موضع القسم الحالي ضمن رحلة الأقسام العشر (يظهر في شريط الرحلة أعلى كل خطوة)
+  const sectionIndex = SECTIONS_32.findIndex((s) => s.id === section);
+  // شكل مختصر لكل قسم (نستخدمه حين لا تتّسع المساحة للاسم الكامل)
+  const SHORT_LABEL: Record<string, string> = {
+    START: "البداية",
+    FORM: "الصيغة",
+    TIME: "المدة",
+    QFORM: "النفي/السؤال",
+    CONTRAST: "النتيجة",
+    WORDS: "الكلمات",
+    COMPARE: "المرجع",
+    FIX: "صيد",
+    BOSS: "التحديات",
+    END: "الخاتمة",
+  };
   return (
-    <div className="l32-frame">
+    <div className="l32-frame space-y-2.5">
+      {/* شريط الرحلة — بصمة بصرية فريدة تظهر في كل خطوة، وليس مجرّد زخرفة */}
+      <nav aria-label="رحلة الدرس" className="l32-journey" data-journey-section={section}>
+        <ol className="flex w-full items-center gap-0 overflow-x-auto py-1" dir="rtl">
+          {SECTIONS_32.map((sec, i) => {
+            const state = i < sectionIndex ? "past" : i === sectionIndex ? "now" : "future";
+            const tone =
+              state === "now"
+                ? "l32-journey-now"
+                : state === "past"
+                ? "l32-journey-past"
+                : "l32-journey-future";
+            return (
+              <li key={sec.id} className="flex min-w-0 shrink-0 items-center">
+                <span
+                  data-journey-state={state}
+                  className={`l32-journey-dot ${tone} inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[10px] font-black`}
+                  aria-current={state === "now" ? "step" : undefined}
+                  aria-label={sec.label}
+                >
+                  <span aria-hidden className="ltr-pair inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-white/30 px-1 font-en text-[10px] leading-none">
+                    {state === "past" ? "✓" : i + 1}
+                  </span>
+                  <span className="hidden whitespace-nowrap md:inline"><Rich text={SHORT_LABEL[sec.id] ?? sec.label} /></span>
+                </span>
+                {i < SECTIONS_32.length - 1 && <span aria-hidden className="l32-journey-link" />}
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
       <Frame
         mascot={mascot}
         step={step}
@@ -234,7 +279,7 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
 
         <div className="relative flex min-w-0 flex-1 flex-col">
           {/* ---------- الرأس المضغوط ---------- */}
-          <header className="l32-header z-20 flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1.5 px-2.5 py-2">
+          <header className="l32-header z-20 flex shrink-0 items-center gap-x-2 gap-y-1.5 px-2.5 py-2 sm:px-3">
             <button
               type="button"
               ref={menuRef}
@@ -242,21 +287,21 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
               onClick={() => setDrawer((d) => !d)}
               aria-expanded={drawer}
               aria-controls={drawer ? "l32-drawer" : undefined}
-              className={`l32-tap min-h-[40px] px-3 lg:hidden ${FOCUS32}`}
+              className={`l32-tap min-h-[40px] shrink-0 px-3 lg:hidden ${FOCUS32}`}
             >
               ☰ <span className="text-xs font-black"><Rich text="الخطوات" /></span>
             </button>
 
             {area === "lesson" && (
-              <div className="flex min-w-0 items-center gap-2">
+              <div className="flex min-w-0 shrink-0 items-center gap-2">
                 <span className="l32-chip l32-chip-indigo whitespace-nowrap">
                   <Rich text={`خطوة ${index + 1} من ${SLIDE_COUNT_32}`} />
                 </span>
                 <div role="progressbar" aria-label="تقدّم الدرس" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}
-                  className="l32-progress-track hidden h-2.5 w-28 overflow-hidden rounded-full sm:block md:w-44">
+                  className="l32-progress-track hidden h-2.5 w-24 overflow-hidden rounded-full sm:block xl:w-40">
                   <div className="l32-progress-fill h-full rounded-full transition-all" style={{ width: `${progress}%` }} />
                 </div>
-                <span aria-hidden className="font-en hidden text-[11px] font-black text-[#46507f] sm:block">{progress}%</span>
+                <span aria-hidden className="font-en hidden shrink-0 text-[11px] font-black text-[#46507f] sm:block">{progress}%</span>
               </div>
             )}
 
@@ -264,7 +309,7 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
               <Rich text={area === "lesson" ? `${SECTIONS_32.find((s) => s.id === slide.section)?.label ?? ""} · ${navLabel32(slide.title)}` : areaLabel} />
             </span>
 
-            <nav className="order-last flex w-full flex-wrap items-center gap-1.5 md:order-none md:w-auto md:flex-1 md:justify-end" role="group" aria-label="مناطق الدرس">
+            <nav className="flex shrink-0 items-center gap-1.5 ms-auto" role="group" aria-label="مناطق الدرس">
               {AREAS_32.map((a) => (
                 <button
                   key={a.id}
@@ -272,7 +317,7 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
                   data-tab={a.id}
                   onClick={() => setArea(a.id)}
                   aria-current={area === a.id ? "true" : undefined}
-                  className={`l32-tab rounded-2xl px-2.5 text-xs font-black sm:px-3.5 sm:text-sm ${FOCUS32}`}
+                  className={`l32-tab rounded-2xl px-2.5 text-xs font-black sm:px-3 sm:text-sm ${FOCUS32}`}
                 >
                   <span aria-hidden>{a.emoji}</span>
                   <span className="sr-only sm:hidden"><Rich text={a.ar} /></span>
@@ -282,17 +327,17 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
               ))}
             </nav>
 
-            <button type="button" onClick={onExit} className={`l32-tap l32-tap-soft min-h-[40px] px-3 text-xs font-black ${FOCUS32}`}>
+            <button type="button" onClick={onExit} className={`l32-tap l32-tap-soft min-h-[40px] shrink-0 px-3 text-xs font-black ${FOCUS32}`}>
               → <Rich text="خروج" />
             </button>
           </header>
 
           {/* ---------- المحتوى ---------- */}
-          <main id="l32-main" ref={mainRef} className="l32-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-2.5 pb-36 pt-3">
+          <main id="l32-main" ref={mainRef} className="l32-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-3 pb-36 pt-3 sm:px-4">
             <p role="status" aria-live="polite" className="sr-only">
               <Rich text={area === "lesson" ? `الخطوة ${index + 1} من ${SLIDE_COUNT_32}: ${slide.title}` : areaLabel} />
             </p>
-            <div className="mx-auto w-full max-w-5xl space-y-3">
+            <div className="mx-auto w-full max-w-[76rem] space-y-3">
               {area === "lesson" && (
                 <div data-area="l32-lesson" className="space-y-3">
                   <SlideView32

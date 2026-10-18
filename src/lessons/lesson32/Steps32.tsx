@@ -85,22 +85,33 @@ function LensAxis32({ compact = false }: { compact?: boolean }) {
 function Cover() {
   return (
     <StepStack id="cover">
-      <div className="l32-card overflow-hidden">
-        <div className="bg-[linear-gradient(120deg,#312a8f_0%,#0e7490_52%,#22d3ee_100%)] px-4 py-3.5 text-white">
-          <p className="l32-en-display text-[11px] font-black uppercase tracking-[0.28em] text-[#c9f4ff]">
-            <En>THE DURATION STREAM</En>
-          </p>
-          <p className="mt-0.5 text-[13px] font-black text-white">
-            <Rich text="تيّار المدة" />
-          </p>
-          <p className="mt-1 font-en text-sm font-black text-white md:text-base">
-            <En>Subject + have/has + been + verb-ing</En>
-          </p>
+      {/* Hero band: يمتد ليأخذ عرض المحتوى كاملًا مع تفاصيل محسوبة (مسطّرة) */}
+      <section className="l32-hero" aria-label="غلاف الدرس 32">
+        <div className="l32-hero-band">
+          <div className="l32-hero-meta">
+            <span className="l32-hero-eyebrow"><En>THE DURATION STREAM</En></span>
+            <p className="l32-hero-title"><Rich text="تيّار المدة" /></p>
+            <p className="l32-hero-formula" dir="ltr"><En>Subject + have/has + been + verb-ing</En></p>
+          </div>
+          <div className="l32-hero-aside" aria-hidden>
+            <svg viewBox="0 0 64 64" className="l32-hero-mark" aria-hidden focusable="false">
+              <defs>
+                <linearGradient id="l32-wave-grad" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0%" stopColor="#22d3ee" />
+                  <stop offset="100%" stopColor="#4338ca" />
+                </linearGradient>
+              </defs>
+              <path d="M2 32 Q 12 18, 22 32 T 42 32 T 62 32" fill="none" stroke="url(#l32-wave-grad)" strokeWidth="5" strokeLinecap="round" />
+              <path d="M2 44 Q 12 30, 22 44 T 42 44 T 62 44" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="3" strokeLinecap="round" />
+              <circle cx="54" cy="14" r="4" fill="#22d3ee" />
+            </svg>
+          </div>
         </div>
-        <div className="p-3 sm:p-4">
+        {/* التيّار يتجوّل داخل شريط Hero لكن يبقى داخل عرض البطاقة */}
+        <div className="l32-hero-body">
           <StreamTimeline32 start={0.28} live label="التيّار يمتد نحو الآن"
             caption="انظر إلى التيّار: نقطة بداية في الماضي، مدة ممتدة، ثم NOW — وأحيانًا أثرٌ يبقى بعد التوقف." />
-          <div className="mt-3 flex flex-wrap justify-center gap-2" dir="ltr">
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-2" dir="ltr">
             {["for", "since", "how long", "been", "V-ing", "all day"].map((w) => (
               <span key={w} className="l32-chip l32-chip-aqua font-en text-sm font-black">{w}</span>
             ))}
@@ -108,9 +119,10 @@ function Cover() {
           <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
             <SourceBadge32 src />
             <span className="l32-chip l32-chip-indigo"><Rich text="40 خطوة · كل خطوة وحدة مصدرية واحدة" /></span>
+            <span className="l32-chip l32-chip-coral"><Rich text="🌊 PAST ──→ NOW · التيّار هو الدرس" /></span>
           </div>
         </div>
-      </div>
+      </section>
     </StepStack>
   );
 }

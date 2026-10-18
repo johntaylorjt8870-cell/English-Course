@@ -1,0 +1,355 @@
+{
+  "viewports": [
+    {
+      "name": "laptop-1280",
+      "headerHeight": 56,
+      "shellHeight": 800,
+      "viewportHeight": 800
+    },
+    {
+      "name": "tablet-1024",
+      "headerHeight": 56,
+      "shellHeight": 768,
+      "viewportHeight": 768
+    },
+    {
+      "name": "tablet-768",
+      "headerHeight": 108,
+      "shellHeight": 1024,
+      "viewportHeight": 1024
+    },
+    {
+      "name": "mobile-375",
+      "headerHeight": 108,
+      "shellHeight": 812,
+      "viewportHeight": 812
+    }
+  ],
+  "contrast": [
+    {
+      "label": "desktop-cover",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 290,
+      "min": 5.03,
+      "minText": "NOW",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 56,
+      "frameTop": 121,
+      "viewportHeight": 900,
+      "scrollerHeight": 795,
+      "shellHeight": 900
+    },
+    {
+      "label": "desktop-pspp-timeline",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 312,
+      "min": 5.03,
+      "minText": "NOW",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 56,
+      "frameTop": -438,
+      "viewportHeight": 900,
+      "scrollerHeight": 795,
+      "shellHeight": 900
+    },
+    {
+      "label": "desktop-s28-compare",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 297,
+      "min": 5.22,
+      "minText": "📸",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 56,
+      "frameTop": 121,
+      "viewportHeight": 900,
+      "scrollerHeight": 795,
+      "shellHeight": 900
+    },
+    {
+      "label": "desktop-s5-builder",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 377,
+      "min": 5.03,
+      "minText": "السؤال",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 56,
+      "frameTop": -821,
+      "viewportHeight": 900,
+      "scrollerHeight": 795,
+      "shellHeight": 900
+    },
+    {
+      "label": "desktop-s12-signals",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 338,
+      "min": 5.28,
+      "minText": "🦉",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 56,
+      "frameTop": 121,
+      "viewportHeight": 900,
+      "scrollerHeight": 795,
+      "shellHeight": 900
+    },
+    {
+      "label": "desktop-s35-detective",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 298,
+      "min": 4.72,
+      "minText": "الجملة الصحيحة",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 56,
+      "frameTop": 121,
+      "viewportHeight": 900,
+      "scrollerHeight": 795,
+      "shellHeight": 900
+    },
+    {
+      "label": "desktop-s43-final-boss",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 306,
+      "min": 5.28,
+      "minText": "🦉",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 56,
+      "frameTop": -887,
+      "viewportHeight": 900,
+      "scrollerHeight": 795,
+      "shellHeight": 900
+    },
+    {
+      "label": "desktop-test-area",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 497,
+      "min": 5.25,
+      "minText": "اختيار واحد",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 56,
+      "frameTop": -1,
+      "viewportHeight": 900,
+      "scrollerHeight": 795,
+      "shellHeight": 900
+    },
+    {
+      "label": "desktop-teacher-open",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 1430,
+      "min": 5.02,
+      "minText": "•",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 56,
+      "frameTop": -1,
+      "viewportHeight": 900,
+      "scrollerHeight": 795,
+      "shellHeight": 900
+    },
+    {
+      "label": "desktop-test-graded",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 723,
+      "min": 4.55,
+      "minText": "ridden",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 56,
+      "frameTop": -1,
+      "viewportHeight": 900,
+      "scrollerHeight": 795,
+      "shellHeight": 900
+    },
+    {
+      "label": "laptop-1280",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 303,
+      "min": 4.76,
+      "minText": ".",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 56,
+      "frameTop": 121,
+      "viewportHeight": 800,
+      "scrollerHeight": 695,
+      "shellHeight": 800
+    },
+    {
+      "label": "tablet-1024",
+      "width": 1024,
+      "scroll": 1024,
+      "tested": 303,
+      "min": 4.76,
+      "minText": ".",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 56,
+      "frameTop": 121,
+      "viewportHeight": 768,
+      "scrollerHeight": 663,
+      "shellHeight": 768
+    },
+    {
+      "label": "tablet-768",
+      "width": 768,
+      "scroll": 768,
+      "tested": 93,
+      "min": 4.76,
+      "minText": ".",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 108,
+      "frameTop": 173,
+      "viewportHeight": 1024,
+      "scrollerHeight": 867,
+      "shellHeight": 1024
+    },
+    {
+      "label": "mobile-375",
+      "width": 375,
+      "scroll": 375,
+      "tested": 75,
+      "min": 5.03,
+      "minText": "NOW",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 108,
+      "frameTop": 169,
+      "viewportHeight": 812,
+      "scrollerHeight": 659,
+      "shellHeight": 812
+    }
+  ],
+  "heights": {
+    "cover": {
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 290,
+      "min": 5.03,
+      "minText": "NOW",
+      "skippedShared": 8,
+      "issues": [],
+      "headerHeight": 56,
+      "frameTop": 121,
+      "viewportHeight": 900,
+      "scrollerHeight": 795,
+      "shellHeight": 900
+    }
+  },
+  "shots": [
+    "docs/lesson31-visual/desktop-01-cover.png",
+    "docs/lesson31-visual/desktop-02-timeline-past-simple.png",
+    "docs/lesson31-visual/desktop-03-timeline-present-perfect.png",
+    "docs/lesson31-visual/desktop-04-compare-lab-triple.png",
+    "docs/lesson31-visual/desktop-05-builder-wrong-helper.png",
+    "docs/lesson31-visual/desktop-06-builder-question.png",
+    "docs/lesson31-visual/desktop-07-signal-board.png",
+    "docs/lesson31-visual/desktop-08-detective.png",
+    "docs/lesson31-visual/desktop-09-boss-analyzer.png",
+    "docs/lesson31-visual/desktop-10-final-boss-analysis.png",
+    "docs/lesson31-visual/desktop-11-map-final-test.png",
+    "docs/lesson31-visual/desktop-12-test-area.png",
+    "docs/lesson31-visual/desktop-13-solutions-locked.png",
+    "docs/lesson31-visual/desktop-14-teacher-locked.png",
+    "docs/lesson31-visual/desktop-15-teacher-open.png",
+    "docs/lesson31-visual/desktop-21-test-graded.png",
+    "docs/lesson31-visual/desktop-16-focus.png",
+    "docs/lesson31-visual/desktop-17-1280.png",
+    "docs/lesson31-visual/tablet-18-768.png",
+    "docs/lesson31-visual/mobile-19-cover.png",
+    "docs/lesson31-visual/mobile-20-drawer.png"
+  ],
+  "errors": [],
+  "interactions": {
+    "timeline": {
+      "beforeView": "fixed",
+      "afterView": "true",
+      "bridgeWidth": "0%",
+      "sentenceShown": true,
+      "timelineHtmlBefore": 5039
+    },
+    "compare": {
+      "lensBefore": 2,
+      "lensAfter": 3,
+      "triplePressed": "true",
+      "pperfShown": true
+    },
+    "builder": {
+      "builtSentence": "She has gone home.هي يذهب — إلى البيتبُنيت 1 جملة🌉Present Perfect"
+    },
+    "signalBoard": {
+      "signalCount": 10,
+      "yetPanel": {
+        "position": true,
+        "example": true,
+        "formula": true
+      }
+    },
+    "bossAnalyzer": {
+      "phrases": 6,
+      "bossReading": "joined📸Past Simpleمع last year — فترة ماضية منتهية.العبارة المحددة الآن معروضة أعلاه — جرّب بقية العبارات لقراءة سبب كل زمن."
+    }
+  },
+  "states": {
+    "headerText": "☰خطوة 1 من 502٪← خروج📖الدرس🧪منطقة الاختبارات🔑حلول الاختبارات🔒👩‍🏫منطقة المعلم",
+    "frameTitle": "الدرس 31: Present Perfect — المضارع التام",
+    "teacher": {
+      "overview": true,
+      "notes": true,
+      "key": 15
+    },
+    "focus": {
+      "found": true,
+      "tag": "BUTTON",
+      "text": "الماضي + ارتباط بالحاضر",
+      "outline": "solid",
+      "width": "3px",
+      "color": "rgb(245, 158, 11)",
+      "matchesFocusVisible": true
+    },
+    "hover": {
+      "beforeHover": "oklch(0.929 0.013 255.508)",
+      "afterHover": "rgb(153, 246, 228)",
+      "selected": {
+        "pressed": "true",
+        "bg": "rgb(240, 253, 250)"
+      }
+    },
+    "disabled": {
+      "disabledState": 0,
+      "navDisabled": {
+        "disabled": true,
+        "opacity": "0.3"
+      }
+    }
+  },
+  "fonts": {
+    "rubik": true,
+    "tajawal": true,
+    "changa": true,
+    "loaded": [
+      "Tajawal 400",
+      "Tajawal 700",
+      "Tajawal 800"
+    ]
+  },
+  "checks": 89,
+  "failures": []
+}

@@ -28,6 +28,8 @@ const require = createRequire(import.meta.url);
 const esbuild = require("esbuild");
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const outFile = join(root, "scripts", ".lesson31-audit.mjs");
+/** esbuild يُخرج ملف css جانبيًا عند حزمة استيراد lesson31.css — يُنظَّف مع الحزمة. */
+const outCss = join(root, "scripts", ".lesson31-audit.css");
 
 const failures = [];
 let checks = 0;
@@ -834,6 +836,7 @@ try {
   ok(false, err.stack || String(err));
 } finally {
   rmSync(outFile, { force: true });
+  rmSync(outCss, { force: true });
 }
 
 if (failures.length) {

@@ -217,11 +217,84 @@
 .lesson31 .l31-frame-wrap > section > p {
   max-width: 88%;
   line-height: 1.75;
+  color: #475569;
 }
 .lesson31 .l31-frame-wrap [data-source-section] {
   border: 1px solid var(--l31-line);
   background: var(--l31-teal-soft);
   line-height: 1.5;
+}
+.lesson31 .text-slate-500 {
+  color: #475569;
+}
+.lesson31 .text-sky-400 {
+  color: #0f766e;
+}
+.lesson31 .text-sky-600 {
+  color: #0f766e;
+}
+.lesson31 .text-teal-600 {
+  color: #0f766e;
+}
+.lesson31 .text-teal-400 {
+  color: #0f766e;
+}
+.lesson31 .text-emerald-400 {
+  color: #047857;
+}
+.lesson31 .text-amber-400 {
+  color: #b45309;
+}
+.lesson31 .text-violet-400 {
+  color: #6d28d9;
+}
+.lesson31 .text-orange-400 {
+  color: #c2410c;
+}
+.lesson31 .text-cyan-400 {
+  color: #0e7490;
+}
+.lesson31 .text-rose-400 {
+  color: #be123c;
+}
+.lesson31 .text-emerald-600 {
+  color: #047857;
+}
+.lesson31 .text-rose-500 {
+  color: #be123c;
+}
+.lesson31 .text-fuchsia-400 {
+  color: #a21caf;
+}
+.lesson31 .text-indigo-400 {
+  color: #4338ca;
+}
+.lesson31 .text-slate-300 {
+  color: #64748b;
+}
+.lesson31 .text-slate-400 {
+  color: #52616f;
+}
+.lesson31 .placeholder\:text-slate-300::placeholder {
+  color: #64748b;
+}
+.lesson31 .bg-emerald-600 {
+  background-color: #047857;
+}
+.lesson31 .bg-emerald-500 {
+  background-color: #047857;
+}
+.lesson31 .bg-rose-600 {
+  background-color: #be123c;
+}
+.lesson31 .bg-rose-500 {
+  background-color: #be123c;
+}
+.lesson31 .hover\:bg-emerald-600:hover {
+  background-color: #047857;
+}
+.lesson31 .hover\:bg-rose-700:hover {
+  background-color: #9f1239;
 }
 .lesson31 .l31-lab {
   border-color: #c8e8e3;
@@ -270,10 +343,10 @@
   background:
     linear-gradient(
       90deg,
-      #cdeae6 0%,
-      #a7ded7 55%,
-      #8ed3cb 100%);
-  border: 1px solid #b9e2dc;
+      #e8f6f3 0%,
+      #d3ece7 55%,
+      #bfe4dd 100%);
+  border: 1px solid #cde8e2;
 }
 .lesson31 .l31-track-bridge {
   position: absolute;
@@ -284,8 +357,8 @@
   background:
     linear-gradient(
       90deg,
-      rgba(13, 148, 136, 0.16),
-      rgba(13, 148, 136, 0.42));
+      rgba(13, 148, 136, 0.14),
+      rgba(13, 148, 136, 0.3));
   border-inline-end: 3px dashed rgba(15, 118, 110, 0.65);
   transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -299,8 +372,8 @@
   background:
     linear-gradient(
       90deg,
-      rgba(245, 158, 11, 0.05),
-      rgba(245, 158, 11, 0.28));
+      rgba(245, 158, 11, 0.04),
+      rgba(245, 158, 11, 0.18));
   border-inline-start: 3px dashed rgba(180, 83, 9, 0.45);
 }
 .lesson31 .l31-track-marker {
@@ -398,6 +471,11 @@
 .lesson31 .l31-floating-nav > div {
   pointer-events: auto;
 }
+.lesson31 .font-en {
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: baseline;
+}
 @media (prefers-reduced-motion: reduce) {
   .lesson31 *,
   .lesson31 *::before,
@@ -433,9 +511,6 @@
     padding: 0.5rem;
   }
   .lesson31 .l31-track-line {
-    height: 3.75rem;
-  }
-  .lesson31 .l31-track-line .l31-track-marker span {
-    font-size: 0.55rem;
+    height: 4.25rem;
   }
 }

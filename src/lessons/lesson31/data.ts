@@ -2073,7 +2073,7 @@ export const TEST_31: TestQ31[] = [
     ar: "رتّب الكلمات لبناء الجملة الصحيحة بمعنى «لقد أنهينا المشروع بالفعل».",
     items: ["have", "We", "already", "finished", "the project."],
     answer: ["We", "have", "already", "finished", "the project."],
-    why: "الترتيب: Subject + have + already + V3 — و already تقف بين المساعد والفعل الأساسي، لا في النهاية.",
+    why: "الترتيب الصحيح جملة مستقلة: Subject + have + already + V3. وكلمة already تقف بين المساعد والفعل الأساسي، لا في النهاية.",
     trap: "We have finished already the project أو وضع already في النهاية يغيّر التركيب المطلوب هنا.",
   },
 ];

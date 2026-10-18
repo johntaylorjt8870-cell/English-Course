@@ -144,12 +144,55 @@
 .lesson31 .l31-frame-wrap > section > p {
   max-width: 88%;
   line-height: 1.75;
+  /* الإطار المشترك يرسم النص التمهيدي بـ slate-500؛ داخل الدرس 31 فقط
+     نرفعه إلى slate-600 ليحقّق تباين WCAG AA على الورق المائي الفاتح. */
+  color: #475569;
 }
 .lesson31 .l31-frame-wrap [data-source-section] {
   border: 1px solid var(--l31-line);
   background: var(--l31-teal-soft);
   line-height: 1.5;
 }
+
+/* النص الثانوي (slate-500) يُرفع داخل الدرس 31 إلى slate-600: معظم البطاقات
+   الملونة الفاتحة (teal-50 / orange-50 / amber-50) تجعل slate-500 عند 4.4:1
+   تقريبًا، أي تحت حدّ WCAG AA للنص الصغير. لا يوجد في الدرس استخدام واحد
+   لـ slate-500 فوق خلفية داكنة، لذا الرفع آمن ويحسّن القراءة في كل خطوة. */
+.lesson31 .text-slate-500 { color: #475569; }
+
+/* رصاصات وعلامات القائمة الملونة (*-400) — تُرفع إلى درجة مقروءة مع بقاء
+   الترميز اللوني نفسه لكل مجموعة في منطقة المعلم والمختبرات. */
+.lesson31 .text-sky-400 { color: #0f766e; }
+.lesson31 .text-sky-600 { color: #0f766e; }
+.lesson31 .text-teal-600 { color: #0f766e; }
+.lesson31 .text-teal-400 { color: #0f766e; }
+.lesson31 .text-emerald-400 { color: #047857; }
+.lesson31 .text-amber-400 { color: #b45309; }
+.lesson31 .text-violet-400 { color: #6d28d9; }
+.lesson31 .text-orange-400 { color: #c2410c; }
+.lesson31 .text-cyan-400 { color: #0e7490; }
+.lesson31 .text-rose-400 { color: #be123c; }
+/* علامتا الصواب/الخطأ بعد التصحيح — درجة أغمق كي تحققان AA */
+.lesson31 .text-emerald-600 { color: #047857; }
+.lesson31 .text-rose-500 { color: #be123c; }
+.lesson31 .text-fuchsia-400 { color: #a21caf; }
+.lesson31 .text-indigo-400 { color: #4338ca; }
+
+/* الرموز النصية الزخرفية (نقطة نهاية الجملة في PartsLine، العناصر النائبة،
+   وأرقام الفهرس غير النشطة) — داخل الدرس 31 تُرفع من slate-300 إلى درجة
+   مقروءة، مع بقائها أخفّ من النص الأساسي حتى تبقى الهرمية البصرية. */
+.lesson31 .text-slate-300 { color: #64748b; }
+.lesson31 .text-slate-400 { color: #52616f; }
+.lesson31 .placeholder\:text-slate-300::placeholder { color: #64748b; }
+
+/* حالات الاختيار والتغذية الراجعة (إجابة صحيحة/خاطئة) — داخل الدرس 31
+   تُرفع إلى درجة أغمق كي يبقى النص الأبيض فوقها محقّقًا WCAG AA. */
+.lesson31 .bg-emerald-600 { background-color: #047857; }
+.lesson31 .bg-emerald-500 { background-color: #047857; }
+.lesson31 .bg-rose-600 { background-color: #be123c; }
+.lesson31 .bg-rose-500 { background-color: #be123c; }
+.lesson31 .hover\:bg-emerald-600:hover { background-color: #047857; }
+.lesson31 .hover\:bg-rose-700:hover { background-color: #9f1239; }
 
 /* ---------- المختبرات ---------- */
 .lesson31 .l31-lab {
@@ -183,8 +226,8 @@
   position: relative;
   height: 3.25rem;
   border-radius: 0.9rem;
-  background: linear-gradient(90deg, #cdeae6 0%, #a7ded7 55%, #8ed3cb 100%);
-  border: 1px solid #b9e2dc;
+  background: linear-gradient(90deg, #e8f6f3 0%, #d3ece7 55%, #bfe4dd 100%);
+  border: 1px solid #cde8e2;
 }
 /* نطاق «الحدث قبل الآن» — يتوهج عند الربط بالحاضر */
 .lesson31 .l31-track-bridge {
@@ -193,7 +236,7 @@
   bottom: 0;
   left: 0;
   border-radius: 0.9rem 0 0 0.9rem;
-  background: linear-gradient(90deg, rgba(13, 148, 136, 0.16), rgba(13, 148, 136, 0.42));
+  background: linear-gradient(90deg, rgba(13, 148, 136, 0.14), rgba(13, 148, 136, 0.3));
   border-inline-end: 3px dashed rgba(15, 118, 110, 0.65);
   transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -205,7 +248,7 @@
   right: 0;
   width: 22%;
   border-radius: 0 0.9rem 0.9rem 0;
-  background: linear-gradient(90deg, rgba(245, 158, 11, 0.05), rgba(245, 158, 11, 0.28));
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.04), rgba(245, 158, 11, 0.18));
   border-inline-start: 3px dashed rgba(180, 83, 9, 0.45);
 }
 .lesson31 .l31-track-marker {
@@ -298,6 +341,21 @@
   pointer-events: auto;
 }
 
+/* ============================================================
+   عزل المقاطع الإنجليزية داخل الفقرات RTL — داخل الدرس 31 فقط.
+   المشكلة: المقطع الإنجليزي المعزول (مثل "Present Perfect") قد يلتفّ
+   داخليًا عند ضيق السطر، فيتوزّع جزآه على طرفي السطر التالي وتختلط
+   القراءة («Present مقابلPast Simple / Perfect»). الحل: جعل المقطع
+   صندوقًا ذرّيًا (inline-block) لا ينكسر داخليًا إلا إذا فاض عن عرضه
+   (max-width:100%) — فتبقى الجمل الإنجليزية الطويلة قابلة للالتفاف
+   دون فيض أفقي، ولا تختلط العناوين المختلطة أبدًا.
+   ============================================================ */
+.lesson31 .font-en {
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: baseline;
+}
+
 /* ---------- احترام تقليل الحركة ---------- */
 @media (prefers-reduced-motion: reduce) {
   .lesson31 *,
@@ -331,6 +389,5 @@
     font-size: 1.65rem;
   }
   .lesson31 .l31-track { padding: 0.5rem; }
-  .lesson31 .l31-track-line { height: 3.75rem; }
-  .lesson31 .l31-track-line .l31-track-marker span { font-size: 0.55rem; }
+  .lesson31 .l31-track-line { height: 4.25rem; }
 }

@@ -156,7 +156,7 @@ const TENSE_TONE_31: Record<string, { chip: string; soft: string; text: string; 
     ring: "ring-teal-300",
   },
   ps: {
-    chip: "bg-orange-600 text-white",
+    chip: "bg-orange-700 text-white",
     soft: "border-orange-300 bg-orange-50",
     text: "text-orange-900",
     line: "border-orange-300",
@@ -172,7 +172,7 @@ const TENSE_TONE_31: Record<string, { chip: string; soft: string; text: string; 
     ring: "ring-violet-300",
   },
   pc: {
-    chip: "bg-cyan-600 text-white",
+    chip: "bg-cyan-700 text-white",
     soft: "border-cyan-300 bg-cyan-50",
     text: "text-cyan-900",
     line: "border-cyan-300",
@@ -180,7 +180,7 @@ const TENSE_TONE_31: Record<string, { chip: string; soft: string; text: string; 
     ring: "ring-cyan-300",
   },
   now: {
-    chip: "bg-amber-600 text-white",
+    chip: "bg-amber-700 text-white",
     soft: "border-amber-300 bg-amber-50",
     text: "text-amber-900",
     line: "border-amber-300",
@@ -248,10 +248,10 @@ const ARABIC_ORD_31: Record<number, string> = {
 // ---------------- العدسات الزمنية الموحّدة ----------------
 export type Lens31 = "ps" | "present" | "pperf" | "pc";
 const LENS_META_31: Record<Lens31, { emoji: string; tag: string; ar: string; chip: string; soft: string; text: string; ring: string; bar: string }> = {
-  ps: { emoji: "📸", tag: "PAST SIMPLE", ar: "حدث ماضٍ انتهى", chip: "bg-orange-600 text-white", soft: "border-orange-300 bg-orange-50", text: "text-orange-900", ring: "ring-orange-300", bar: "bg-orange-500" },
+  ps: { emoji: "📸", tag: "PAST SIMPLE", ar: "حدث ماضٍ انتهى", chip: "bg-orange-700 text-white", soft: "border-orange-300 bg-orange-50", text: "text-orange-900", ring: "ring-orange-300", bar: "bg-orange-500" },
   present: { emoji: "🌉", tag: "PRESENT PERFECT", ar: "ماضٍ مرتبط بالحاضر", chip: "bg-teal-700 text-white", soft: "border-teal-300 bg-teal-50", text: "text-teal-900", ring: "ring-teal-300", bar: "bg-teal-600" },
   pperf: { emoji: "⏪", tag: "PAST PERFECT", ar: "قبل حدث ماضٍ آخر", chip: "bg-violet-700 text-white", soft: "border-violet-300 bg-violet-50", text: "text-violet-900", ring: "ring-violet-300", bar: "bg-violet-600" },
-  pc: { emoji: "🎥", tag: "PAST CONTINUOUS", ar: "كان يحدث في لحظة ماضية", chip: "bg-cyan-600 text-white", soft: "border-cyan-300 bg-cyan-50", text: "text-cyan-900", ring: "ring-cyan-300", bar: "bg-cyan-500" },
+  pc: { emoji: "🎥", tag: "PAST CONTINUOUS", ar: "كان يحدث في لحظة ماضية", chip: "bg-cyan-700 text-white", soft: "border-cyan-300 bg-cyan-50", text: "text-cyan-900", ring: "ring-cyan-300", bar: "bg-cyan-500" },
 };
 const LENSES_31: Lens31[] = ["ps", "present", "pperf", "pc"];
 
@@ -349,9 +349,9 @@ function BridgeTrack({ active = "link", segs }: { active?: string; segs?: { key:
     { key: "now", label: "NOW", wide: 1 },
   ];
   const tone: Record<string, string> = {
-    past: "bg-sky-500",
-    link: "bg-sky-700",
-    now: "bg-teal-600",
+    past: "bg-teal-700",
+    link: "bg-teal-800",
+    now: "bg-amber-700",
   };
   return (
     <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row rounded-2xl border-2 border-slate-200 bg-white p-2.5">
@@ -362,11 +362,11 @@ function BridgeTrack({ active = "link", segs }: { active?: string; segs?: { key:
             style={{ flexGrow: s.wide ?? 1, flexBasis: 0 }}
             className={`flex items-center justify-center overflow-hidden rounded-lg ${tone[s.key] ?? "bg-slate-400"} ${active === s.key ? "ring-2 ring-amber-300" : ""}`}
           >
-            <span className="px-1 text-center text-[10px] font-black leading-tight text-white">{s.label}</span>
+            <span className="px-1 text-center text-[11px] font-black leading-tight text-white">{s.label}</span>
           </div>
         ))}
       </div>
-      <div className="mt-1.5 flex justify-between text-[10px] font-black text-slate-400">
+      <div className="mt-1.5 flex justify-between text-[11px] font-black text-slate-600">
         <En>BEFORE NOW</En>
         <En>NOW</En>
       </div>
@@ -426,9 +426,7 @@ function TimelineLab31({ seq, onView }: { seq: string; onView?: (id: string) => 
       {/* الخط الزمني نفسه — يتغير مع زاوية النظر */}
       <div className="l31-track rounded-2xl border-2 p-3.5">
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-          <span className="text-[11px] font-black uppercase tracking-[0.14em] text-slate-500">
-            <En>Timeline</En> — <Rich text="الخط الزمني" />
-          </span>
+          <EnAr en="TIMELINE" ar="الخط الزمني" sep="—" enClassName="text-[11px] font-black uppercase tracking-[0.14em] text-slate-500" arClassName="text-[11px] font-black text-slate-500" />
           <span aria-live="polite" className={`rounded-full px-2.5 py-0.5 text-[11px] font-black ${linked ? "bg-amber-100 text-amber-900" : "bg-slate-100 text-slate-600"}`}>
             <Rich text={linked ? "الجسر مفتوح: الحدث يصل إلى NOW" : "لا جسر: الحدث بقي في الماضي"} />
           </span>
@@ -447,27 +445,27 @@ function TimelineLab31({ seq, onView }: { seq: string; onView?: (id: string) => 
           {/* نقطة الحدث X */}
           <div className="l31-track-marker" style={{ left: linked ? "26%" : "34%" }}>
             <span
-              className={`grid h-9 min-w-9 place-items-center rounded-full px-1.5 text-[10px] font-black text-white shadow-md ${linked ? "bg-teal-700" : "bg-orange-600"}`}
+              className={`grid h-9 min-w-9 place-items-center rounded-full px-1.5 text-[11px] font-black text-white shadow-md ${linked ? "bg-teal-800" : "bg-orange-700"}`}
             >
               <En>X</En>
             </span>
-            <span className={`mt-1 block whitespace-nowrap text-center text-[10px] font-black ${linked ? "text-teal-900" : "text-orange-900"}`}>
+            <span className={`mt-1 block whitespace-nowrap rounded-lg bg-white/90 px-1 text-center text-[11px] font-black ${linked ? "text-teal-900" : "text-orange-900"}`}>
               <Rich text={view.markerLabel} />
             </span>
           </div>
 
           {/* نقطة NOW */}
           <div className="l31-track-now">
-            <span className={`l31-now-pulse grid h-10 min-w-10 place-items-center rounded-full bg-amber-500 px-1.5 text-[10px] font-black text-white shadow-md ${linked ? "" : "opacity-40"}`}>
+            <span className={`l31-now-pulse grid h-10 min-w-10 place-items-center rounded-full bg-amber-700 px-1.5 text-[11px] font-black text-white shadow-md ${linked ? "" : "opacity-60"}`}>
               <En>NOW</En>
             </span>
-            <span className={`mt-1 block whitespace-nowrap text-center text-[10px] font-black ${linked ? "text-amber-900" : "text-slate-400"}`}>
+            <span className={`mt-1 block whitespace-nowrap text-center text-[11px] font-black ${linked ? "text-amber-900" : "text-slate-600"}`}>
               <Rich text={linked ? "النتيجة هنا" : "بلا صلة"} />
             </span>
           </div>
         </div>
 
-        <div dir="ltr" className="ltr-row mt-1.5 flex justify-between text-[10px] font-black text-slate-400">
+        <div dir="ltr" className="ltr-row mt-1.5 flex justify-between text-[11px] font-black text-slate-600">
           <En>PAST</En>
           <En>the moment we speak</En>
         </div>
@@ -476,7 +474,7 @@ function TimelineLab31({ seq, onView }: { seq: string; onView?: (id: string) => 
       {/* القراءة: السؤال الذي تجيب عنه الجملة + النتيجة الحالية */}
       <div key={view.id} className={`tada grid gap-2 sm:grid-cols-2 ${tone.soft} rounded-2xl border-2 p-3`}>
         <div>
-          <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500">
+          <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-600">
             <Rich text="السؤال الذي تجيب عنه الجملة" />
           </p>
           <Rich text={view.question} className={`mt-1 block text-sm font-black ${tone.text}`} />
@@ -485,7 +483,7 @@ function TimelineLab31({ seq, onView }: { seq: string; onView?: (id: string) => 
           </div>
         </div>
         <div>
-          <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500">
+          <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-600">
             <Rich text="النتيجة في هذه اللحظة" />
           </p>
           <Rich text={view.resultNow} className={`mt-1 block text-sm font-black ${linked ? "text-amber-900" : "text-slate-600"}`} />
@@ -569,7 +567,7 @@ function CompareLab31({ seq, onExplore }: { seq: string; onExplore?: (count: num
             triple ? "border-violet-400 bg-violet-700 text-white" : "border-slate-200 bg-white text-slate-600 hover:border-violet-300"
           }`}
         >
-          {triple ? "⏪ إخفاء Past Perfect" : "⏪ أضف Past Perfect — مقارنة ثلاثية"}
+          <Rich text={triple ? "⏪ إخفاء Past Perfect" : "⏪ أضف Past Perfect — مقارنة ثلاثية"} />
         </button>
       </div>
 
@@ -577,18 +575,22 @@ function CompareLab31({ seq, onExplore }: { seq: string; onExplore?: (count: num
       <div key={active.id} className={`l31-lens-panel tada rounded-2xl border-2 p-3.5 ${tone.soft}`}>
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-2xl" aria-hidden>{active.emoji}</span>
-          <TenseTag31 tense={active.tense} />
-          <Rich text={active.ar} className={`text-sm font-black ${tone.text}`} />
+          <span dir="ltr" className="ltr-pair inline-flex flex-wrap items-center gap-2">
+            <TenseTag31 tense={active.tense} />
+            <span dir="rtl">
+              <Rich text={active.ar} className={`text-sm font-black ${tone.text}`} />
+            </span>
+          </span>
         </div>
         <div className="mt-2.5 grid gap-2 sm:grid-cols-2">
           <div className="rounded-xl bg-white/85 p-2.5">
-            <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="يركّز على" /></p>
+            <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-600"><Rich text="يركّز على" /></p>
             <Rich text={active.focus} className="mt-0.5 block text-sm font-bold text-slate-800" />
-            <p className="mt-2 text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="القاعدة العملية" /></p>
+            <p className="mt-2 text-[11px] font-black uppercase tracking-[0.12em] text-slate-600"><Rich text="القاعدة العملية" /></p>
             <Rich text={active.rule} className="mt-0.5 block text-sm font-bold text-slate-700" />
           </div>
           <div className="rounded-xl bg-white/85 p-2.5">
-            <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="السؤال الكاشف" /></p>
+            <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-600"><Rich text="السؤال الكاشف" /></p>
             <Rich text={active.probe} className="mt-0.5 block text-sm font-black text-slate-800" />
             <Rich text={active.probeAnswer} className="mt-0.5 block text-sm font-bold text-slate-600" />
             <div dir="ltr" className="ltr-row mt-2 rounded-lg bg-slate-900 p-2">
@@ -656,7 +658,9 @@ function BuilderLab31({ seq, onBuilt }: { seq: string; onBuilt?: (count: number)
     const v3 = verb.v3;
     if (mode === "pos") return `${subj.en} ${subj.helper} ${v3} ${verb.object}.`;
     if (mode === "neg") return `${subj.en} ${subj.helper === "has" ? "hasn't" : "haven't"} ${v3} ${verb.object}.`;
-    return `${subj.helper === "has" ? "Has" : "Have"} ${subj.en} ${v3} ${verb.object}?`;
+    // السؤال يبدأ بالمساعد، والفاعل بعده بحرف صغير: Has she gone home?
+    const lower = subj.en.charAt(0).toLowerCase() + subj.en.slice(1);
+    return `${subj.helper === "has" ? "Has" : "Have"} ${lower} ${v3} ${verb.object}?`;
   })();
 
   const slot = (label: string, value: ReactNode, filled: boolean, toneKey: string) => {
@@ -786,7 +790,7 @@ function BuilderLab31({ seq, onBuilt }: { seq: string; onBuilt?: (count: number)
                     }`}
                   >
                     <En>{f.label}</En>
-                    <span className={`mt-0.5 block text-[10px] font-bold ${on ? "text-white/85" : "text-slate-400"}`}>
+                    <span className={`mt-0.5 block text-[10px] font-bold ${on ? "text-white" : "text-slate-400"}`}>
                       <Rich text={f.note} />
                     </span>
                   </button>
@@ -823,11 +827,11 @@ function BuilderLab31({ seq, onBuilt }: { seq: string; onBuilt?: (count: number)
               aria-pressed={mode === m.id}
               onClick={() => setMode(m.id)}
               className={`l31-build-chip rounded-xl border-2 px-3.5 py-2 text-sm font-black transition ${
-                mode === m.id ? "border-transparent bg-amber-600 text-white ring-2 ring-amber-300" : "border-slate-200 bg-white text-slate-600 hover:border-amber-300"
+                mode === m.id ? "border-transparent bg-amber-700 text-white ring-2 ring-amber-300" : "border-slate-200 bg-white text-slate-600 hover:border-amber-300"
               }`}
             >
               <Rich text={m.label} />
-              <span className={`mt-0.5 block text-[10px] font-bold ${mode === m.id ? "text-white/85" : "text-slate-400"}`}>
+              <span className={`mt-0.5 block text-[10px] font-bold ${mode === m.id ? "text-white" : "text-slate-400"}`}>
                 <En>{m.hint}</En>
               </span>
             </button>
@@ -910,7 +914,7 @@ function SignalBoard31({ seq, onExplored }: { seq: string; onExplored?: (count: 
               }`}
             >
               <En>{w.word}</En>
-              <span className={`mt-0.5 block text-[10px] font-bold ${on ? "text-white/85" : "text-slate-400"}`}>
+              <span className={`mt-0.5 block text-[10px] font-bold ${on ? "text-white" : "text-slate-400"}`}>
                 <Rich text={w.ar} />
               </span>
             </button>
@@ -926,11 +930,11 @@ function SignalBoard31({ seq, onExplored }: { seq: string; onExplored?: (count: 
           </div>
           <div className="grid gap-2 sm:grid-cols-2">
             <div className="rounded-xl bg-white p-2.5">
-              <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="المعنى" /></p>
+              <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-600"><Rich text="المعنى" /></p>
               <Rich text={active.meaning} className="mt-0.5 block text-sm font-bold leading-relaxed text-slate-700" />
             </div>
             <div className="l31-signal-pos rounded-xl border-2 p-2.5">
-              <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="موضعها المعتاد" /></p>
+              <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-600"><Rich text="موضعها المعتاد" /></p>
               <Rich text={active.position} className="mt-0.5 block text-sm font-bold text-slate-700" />
               <div dir="ltr" className="ltr-row mt-1.5">
                 <En className="rounded-lg bg-white px-2 py-1 text-xs font-black text-teal-900">{active.formula}</En>
@@ -939,7 +943,7 @@ function SignalBoard31({ seq, onExplored }: { seq: string; onExplored?: (count: 
           </div>
           {active.examples.length > 0 && (
             <div className="space-y-1.5">
-              <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="أمثلة من المصدر" /></p>
+              <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-600"><Rich text="أمثلة من المصدر" /></p>
               {active.examples.map((ex) => (
                 <div key={ex.en} className="rounded-xl border-2 border-white bg-white p-2.5">
                   <En className="block text-base font-black text-slate-900">{ex.en}</En>
@@ -1044,10 +1048,10 @@ function BossTextAnalyzer31({ seq, focused, onFocused }: { seq: string; focused:
 
       <div className="flex flex-wrap gap-1.5">
         <span className={`rounded-lg px-2.5 py-1 text-[11px] font-black ${focused ? "bg-teal-100 text-teal-900" : "bg-slate-100 text-slate-500"}`}>
-          🌉 <En>Present Perfect</En> — <Rich text="ماضٍ مرتبط بالحاضر" />
+          <Rich text="🌉 Present Perfect — ماضٍ مرتبط بالحاضر" />
         </span>
         <span className={`rounded-lg px-2.5 py-1 text-[11px] font-black ${focused ? "bg-orange-100 text-orange-900" : "bg-slate-100 text-slate-500"}`}>
-          📸 <En>Past Simple</En> — <Rich text="ماضٍ منتهٍ" />
+          <Rich text="📸 Past Simple — ماضٍ منتهٍ" />
         </span>
       </div>
 
@@ -1159,11 +1163,11 @@ function BossAnalysis31({ seq, onAnalyzed }: { seq: string; onAnalyzed?: (count:
                   <Rich text={item.ar} className="text-sm font-bold text-slate-600" />
                 </div>
                 <div className="rounded-xl bg-white p-2.5">
-                  <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="سبب الاختيار" /></p>
+                  <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-600"><Rich text="سبب الاختيار" /></p>
                   <Rich text={analysis.why} className="mt-0.5 block text-sm font-bold leading-relaxed text-slate-700" />
                 </div>
                 <div className="rounded-xl bg-white p-2.5">
-                  <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="الخط الزمني المصغّر" /></p>
+                  <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-600"><Rich text="الخط الزمني المصغّر" /></p>
                   <div dir="ltr" className="ltr-row mt-1 rounded-lg bg-slate-900 p-2">
                     <En className="block text-xs font-black leading-relaxed text-white">{analysis.timeline}</En>
                   </div>
@@ -1648,7 +1652,7 @@ function CoverStep({ slide }: { slide: Slide31 }) {
   const active = demo[lens];
 
   return (
-    <section className="l31-cover-page space-y-4" data-source-section={sourceTitleFor(slide)}>
+    <section className="l31-cover-page space-y-4" data-step-id={slide.id} data-source-section={sourceTitleFor(slide)}>
       <div className="l31-cover-hero relative overflow-hidden rounded-[2rem] border border-teal-200 bg-white p-6 text-center shadow-[0_18px_50px_-24px_rgba(15,118,110,0.55)] md:p-10">
         <div aria-hidden className="pointer-events-none absolute -left-12 -top-12 h-52 w-52 rounded-full bg-teal-200/60 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute -bottom-14 -right-10 h-52 w-52 rounded-full bg-amber-200/70 blur-3xl" />
@@ -4137,7 +4141,9 @@ export function SlideView31({ s, onGoTest }: { s: Slide31; onGoTest?: () => void
         accent={ACCENT31}
         sourceTag={sourceTitleFor(s)}
       >
-        <SlideBody s={s} onGoTest={onGoTest} />
+          <div data-step-id={s.id}>
+          <SlideBody s={s} onGoTest={onGoTest} />
+        </div>
       </Frame>
     </div>
   );
@@ -4851,11 +4857,11 @@ export default function Lesson31({ onExit }: { onExit: () => void }) {
             </button>
           )}
           <div className="min-w-0 flex-1">
-            <button type="button" onClick={onExit} className="text-sm font-semibold text-slate-400 transition hover:text-teal-800">
+            <button type="button" onClick={onExit} className="text-sm font-semibold text-slate-600 transition hover:text-teal-800">
               → جميع الدروس
             </button>
             <div className="font-head mt-2 text-xl font-bold text-slate-900">الدرس 31 · المضارع التام</div>
-            <En className="text-xs font-semibold text-slate-400">Present Perfect · The Present Bridge</En>
+            <En className="text-xs font-semibold text-slate-600">Present Perfect · The Present Bridge</En>
           </div>
         </div>
       </div>
@@ -4866,7 +4872,7 @@ export default function Lesson31({ onExit }: { onExit: () => void }) {
       >
         {groups.map((group) => (
           <div key={group.id} className="mb-3">
-            <div className="px-3 py-1 text-xs font-black text-slate-400">
+            <div className="px-3 py-1 text-xs font-black text-slate-600">
               <Rich text={group.label} />
             </div>
             {group.items.map(({ s, i }) => {
@@ -4877,11 +4883,12 @@ export default function Lesson31({ onExit }: { onExit: () => void }) {
                   type="button"
                   onClick={() => goSlide(i)}
                   aria-current={active ? "step" : undefined}
+                  data-rail-step={s.id}
                   className={`l31-rail-item flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-right text-sm transition ${
                     active ? "bg-teal-700 text-white shadow" : "text-slate-600 hover:bg-teal-50"
                   }`}
                 >
-                  <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"}`}>
+                  <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/25 text-white" : "bg-slate-100 text-slate-700"}`}>
                     {s.no}
                   </span>
                   <span className="min-w-0 flex-1 truncate font-semibold">
@@ -4894,7 +4901,7 @@ export default function Lesson31({ onExit }: { onExit: () => void }) {
           </div>
         ))}
       </nav>
-      <div className="border-t border-teal-100 p-4 text-xs text-slate-400">
+      <div className="border-t border-teal-100 p-4 text-xs text-slate-600">
         <Rich text="التنقل: الأسهم ← → · الفهرس: ☰" />
       </div>
     </div>
@@ -4949,7 +4956,7 @@ export default function Lesson31({ onExit }: { onExit: () => void }) {
                       style={{ width: `${progress}%` }}
                     />
                   </div>
-                  <span className="shrink-0 text-[11px] font-black text-slate-400 sm:text-xs">
+                  <span className="shrink-0 text-[11px] font-black text-slate-600 sm:text-xs">
                     <Rich text={`${progress}٪`} />
                   </span>
                 </div>
@@ -4958,7 +4965,7 @@ export default function Lesson31({ onExit }: { onExit: () => void }) {
                   <div className="truncate text-sm font-bold text-slate-600">
                     <Rich text={`الدرس 31 · ${areaLabel}`} />
                   </div>
-                  <div className="mt-0.5 truncate text-xs font-semibold text-slate-400">
+                  <div className="mt-0.5 truncate text-xs font-semibold text-slate-600">
                     <LatinRuns text={LESSON_SUBTITLE_31} />
                   </div>
                 </div>
@@ -5037,7 +5044,7 @@ export default function Lesson31({ onExit }: { onExit: () => void }) {
                   → السابق
                 </button>
                 <span className="h-6 w-px bg-slate-200" />
-                <span className="rounded-lg px-2 text-xs font-bold text-slate-500">{slide.no} / {SLIDE_COUNT}</span>
+                <span className="rounded-lg px-2 text-xs font-bold text-slate-700">{slide.no} / {SLIDE_COUNT}</span>
                 <span className="h-6 w-px bg-slate-200" />
                 <button
                   type="button"

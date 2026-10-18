@@ -1,0 +1,1183 @@
+{
+  "lesson": 32,
+  "identity": "THE DURATION STREAM / تيّار المدة",
+  "browser": "153.0.8010.0",
+  "url": "http://127.0.0.1:4173/English-Course/#/lesson/32",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "checks": 247,
+  "failures": [],
+  "errors": [],
+  "externalNetworkErrors": [
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap",
+      "message": "Failed to load resource: net::ERR_FAILED"
+    }
+  ],
+  "screenshots": [
+    "docs/lesson32-visual/desktop-01-cover.png",
+    "docs/lesson32-visual/desktop-02-s4-duration-stream.png",
+    "docs/lesson32-visual/desktop-03-s7-for-since.png",
+    "docs/lesson32-visual/desktop-04-s14-lens.png",
+    "docs/lesson32-visual/desktop-05-s24-reference-rail.png",
+    "docs/lesson32-visual/desktop-06-s27-detective.png",
+    "docs/lesson32-visual/desktop-07-s30-meaning-board.png",
+    "docs/lesson32-visual/desktop-08-s32-boss.png",
+    "docs/lesson32-visual/desktop-09-s36-gear-map.png",
+    "docs/lesson32-visual/desktop-10-summary.png",
+    "docs/lesson32-visual/desktop-11-closing.png",
+    "docs/lesson32-visual/desktop-12-test-fresh.png",
+    "docs/lesson32-visual/desktop-13-test-scored.png",
+    "docs/lesson32-visual/desktop-14-solutions.png",
+    "docs/lesson32-visual/desktop-15-teacher-locked.png",
+    "docs/lesson32-visual/desktop-16-teacher-open.png",
+    "docs/lesson32-visual/mobile-01-drawer.png",
+    "docs/lesson32-visual/mobile-02-s14-lens.png",
+    "docs/lesson32-visual/mobile-03-s4-stream.png",
+    "docs/lesson32-visual/mobile-04-test.png"
+  ],
+  "renderedChecks": [
+    {
+      "label": "desktop-cover",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 45,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-s4-timeline",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 73,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-s7-forsince",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 95,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-s14-lens",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 123,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-s24-reference",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 147,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-s27-detective",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 211,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-s30-meaning",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 133,
+      "min": 4.93,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-s32-boss",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 192,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-s36-map",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 143,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-summary",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 202,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-closing",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 321,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-1-cover",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 45,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-2-objectives",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 82,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-3-s1",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 63,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-4-s2",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 76,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-5-s3",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 77,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-6-s4",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 73,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-7-s5",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 86,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-8-s6",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 84,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-9-s7",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 95,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-10-s8",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 82,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-11-s9",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 86,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-12-s10",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 84,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-13-s11",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 91,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-14-s12",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 102,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-15-s13",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 105,
+      "min": 4.93,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-16-s14",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 109,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-17-s15",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 110,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-18-s16",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 102,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-19-s17",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 89,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-20-s18",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 99,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-21-s19",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 140,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-22-s20",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 116,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-23-s21",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 130,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-24-s22",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 124,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-25-s23",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 128,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-26-s24",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 145,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-27-s25",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 141,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-28-s26",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 150,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-29-s27",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 205,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-30-s28",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 174,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-31-s29",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 139,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-32-s30",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 129,
+      "min": 4.93,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-33-s31",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 154,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-34-s32",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 192,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-35-s33",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 143,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-36-s34",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 177,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-37-s35",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 159,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-38-s36",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 143,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-39-summary",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 202,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-step-40-closing",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 321,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-test-fresh",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 325,
+      "min": 4.76,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-test-scored",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 495,
+      "min": 4.76,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-solutions",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 366,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-teacher-locked",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 10,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "desktop-teacher-open",
+      "width": 1440,
+      "scroll": 1440,
+      "tested": 1015,
+      "min": 4.89,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous",
+        "المضارع التام المستمر",
+        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
+        "NOW",
+        "have/has + been + V-ing",
+        "التيّار يمتد من الماضي إلى"
+      ],
+      "refs": []
+    },
+    {
+      "label": "mobile-drawer",
+      "width": 390,
+      "scroll": 390,
+      "tested": 188,
+      "min": 4.93,
+      "issues": [],
+      "gradients": [
+        "OBJECTIVES",
+        "علّم كل هدف بعد أن تتقنه",
+        "شرح المنصة",
+        "علّم الهدف بعد أن تنجز تفاعل الخطوة لا بعد قراءتها؛ الأهداف ",
+        "كل هدف تتقنه يضيف قطعة إلى تيّار المدة .",
+        "THE DURATION STREAM",
+        "الدرس",
+        "32: Present Perfect Continuous"
+      ],
+      "refs": []
+    },
+    {
+      "label": "mobile-s14",
+      "width": 390,
+      "scroll": 390,
+      "tested": 52,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "RESULT vs ACTIVITY",
+        "العدستان على المشهد نفسه",
+        "عدسة النتيجة",
+        "Present Perfect",
+        "عدسة النشاط",
+        "Present Perfect Continuous",
+        "شرح المنصة",
+        "هذا هو محور الدرس : الجملة نفسها تقريبًا، والفرق كله في زاوي"
+      ],
+      "refs": []
+    },
+    {
+      "label": "mobile-s4",
+      "width": 390,
+      "scroll": 390,
+      "tested": 55,
+      "min": 5.36,
+      "issues": [],
+      "gradients": [
+        "THE DURATION STREAM",
+        "متى نستخدمه؟",
+        "شرح المنصة",
+        "حرّك نقطة البداية فترى المدة تتغيّر، وحرّك حالة التيّار فترى",
+        "الأثر الظاهر ( اللهاث، الطلاء، البلل ) هو دليل الطالب على أن",
+        "النشاط يبدأ في الماضي ويمتد إلى ، وقد يتوقف قبلها تاركًا أثر",
+        "NOW"
+      ],
+      "refs": []
+    },
+    {
+      "label": "mobile-test",
+      "width": 390,
+      "scroll": 390,
+      "tested": 324,
+      "min": 4.76,
+      "issues": [],
+      "gradients": [
+        "🧪 اختبار الدرس 32 — تيّار المدة",
+        "20 سؤالًا جديدًا",
+        "· 6 Basic · 7 Medium · 4 Advanced · 3 Thinking"
+      ],
+      "refs": []
+    }
+  ]
+}

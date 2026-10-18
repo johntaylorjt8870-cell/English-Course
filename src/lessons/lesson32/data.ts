@@ -1,19 +1,24 @@
 // ============================================================
 // الدرس 32 — Present Perfect Continuous · المضارع التام المستمر
-// 🌿 THE ACTIVITY RIBBON — شريط النشاط
+// 🌊 THE DURATION STREAM — تيّار المدة
+//
+// الاستعارة: النشاط «تيّار» ينطلق من نقطة في الماضي ويمتد نحو NOW؛
+// أحيانًا يبقى جاريًا، وأحيانًا يتوقف قبل اللحظة الحالية ويترك أثرًا
+// ظاهرًا نراه الآن (لهاث، طلاء على الملابس، أرض مبللة).
 //
 // - سجل المصدر الحرفي في ledger32.ts (40 وحدة). هذا الملف يحوي:
 //   1) سجل الخطوات SLIDES: خطوة واحدة لكل وحدة مصدرية (1:1) مع مرجع المصدر.
 //   2) محتوى التفاعلات: الأمثلة المأخوذة من المصدر، والجمل المبنية
 //      للتمارين، وكل شرح «Platform Explanation» مكتوب هنا بوضوح.
+//   3) TEACH_32: شرح المنصة لكل خطوة (لا يستبدل شرح المصدر، يوضّحه).
 // - أي جملة إنجليزية مأخوذة من المصدر تُعرض كما هي. أي جملة من إنشاء
 //   المنصة للتدريب تُوسم «مثال تدريبي للمنصة» في الواجهة.
 // ============================================================
 
 export const LESSON_TITLE_32 = "الدرس 32: Present Perfect Continuous — المضارع التام المستمر";
-export const LESSON_SUBTITLE_32 = "🌿 شريط النشاط — نشاط بدأ قبل الآن وما زال يترك أثره";
-export const LAB_NAME_32 = "THE ACTIVITY RIBBON";
-export const LAB_MOTTO_32 = "have/has + been + V-ing · الشريط يمتد من الماضي إلى NOW";
+export const LESSON_SUBTITLE_32 = "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو NOW، وأثره ما زال ظاهرًا";
+export const LAB_NAME_32 = "THE DURATION STREAM";
+export const LAB_MOTTO_32 = "have/has + been + V-ing · التيّار يمتد من الماضي إلى NOW";
 
 export type SourceCount32 = { numbered: number; ledger: number };
 
@@ -21,11 +26,11 @@ export type SourceCount32 = { numbered: number; ledger: number };
 // أقسام الشريط الجانبي (تجميع الخطوات)
 // ============================================================
 export const SECTIONS_32: { id: string; label: string }[] = [
-  { id: "START", label: "🌿 البداية" },
+  { id: "START", label: "🌊 البداية" },
   { id: "FORM", label: "🧱 الصيغة والأساس" },
   { id: "TIME", label: "⏳ for · since · How long" },
   { id: "QFORM", label: "❓ النفي والسؤال" },
-  { id: "CONTRAST", label: "🔍 الأثر والنتيجة" },
+  { id: "CONTRAST", label: "🎨 الأثر والنتيجة" },
   { id: "WORDS", label: "🔑 الكلمات والأفعال" },
   { id: "COMPARE", label: "🧭 نقطة المرجع" },
   { id: "FIX", label: "🕵️ صيد الأخطاء" },
@@ -49,136 +54,137 @@ export type Slide32Data = {
 };
 
 export const SLIDES: Slide32Data[] = [
-  { id: "cover", section: "START", mascot: "🌿", title: "تتبّع الأثر المستمر", step: "الغلاف",
-    lead: "نشاط بدأ في الماضي… وما زال أثره يصل إلى الآن.",
-    tip: "شريط النشاط هو الفكرة التي سنبنيها في هذا الدرس — شاهده يمتد نحو NOW.", source: ["cover"] },
+  { id: "cover", section: "START", mascot: "🌊", title: "تتبّع تيّار المدة", step: "الغلاف",
+    lead: "نشاط انطلق في الماضي… وما زال أثره يصل إلى الآن.",
+    tip: "تيّار المدة هو فكرة هذا الدرس: انظر إليه وهو يمتد من الماضي نحو NOW.", source: ["cover"] },
   { id: "objectives", section: "START", mascot: "🎯", title: "أهداف الدرس", step: "الأهداف",
     lead: "تسعة أهداف — علّم كل هدف بعد أن تتقنه.",
-    tip: "كل هدف تعلّمه يفتح جزءًا من شريط النشاط.", source: ["objectives"] },
+    tip: "كل هدف تتقنه يضيف قطعة إلى تيّار المدة.", source: ["objectives"] },
 
-  { id: "s1", section: "FORM", mascot: "🧠", title: "ما هو Present Perfect Continuous؟", step: "① التعريف",
+  { id: "s1", section: "FORM", mascot: "🧱", title: "ما هو Present Perfect Continuous؟", step: "① التعريف",
     lead: "رتّب قطع الجملة: الفاعل ← have/has ← been ← verb-ing.",
     tip: "القطعة الأخيرة هي التي تحمل معنى الاستمرار.", source: ["s1"] },
-  { id: "s2", section: "FORM", mascot: "🔥", title: "لماذا have + been + ing؟", step: "② الأجزاء",
+  { id: "s2", section: "FORM", mascot: "🔍", title: "لماذا have + been + ing؟", step: "② الأجزاء",
     lead: "المس كل قطعة لتقرأ دورها في الجملة.",
     tip: "أربع قطع، أربع وظائف — اكشفها كلها.", source: ["s2"] },
-  { id: "s3", section: "FORM", mascot: "⭐", title: "have أم has؟", step: "③ الفاعل",
+  { id: "s3", section: "FORM", mascot: "👥", title: "have أم has؟", step: "③ الفاعل",
     lead: "ضع كل فاعل في صندوقه الصحيح.",
     tip: "I / You / We / They ← have · He / She / It ← has.", source: ["s3"] },
-  { id: "s4", section: "FORM", mascot: "🧠", title: "متى نستخدمه؟ — شريط النشاط", step: "④ الاستخدام الأول",
-    lead: "حرّك المدة وحدد هل النشاط ما زال مستمرًا — وشاهد الجملة تتكوّن.",
-    tip: "النشاط يبدأ في الماضي وينتهي عند NOW.", source: ["s4"] },
+  { id: "s4", section: "FORM", mascot: "🌊", title: "متى نستخدمه؟ — تيّار المدة", step: "④ الاستخدام الأول",
+    lead: "حرّك نقطة البداية والمدة، وقرّر هل التيّار ما زال جاريًا — وشاهد الجملة تتكوّن.",
+    tip: "النشاط يبدأ في الماضي ويمتد إلى NOW، وقد يتوقف قبلها تاركًا أثره.", source: ["s4"] },
 
-  { id: "s5", section: "TIME", mascot: "⭐", title: "for مع المدة", step: "⑤ for",
+  { id: "s5", section: "TIME", mascot: "📏", title: "for مع المدة", step: "⑤ for",
     lead: "for تقيس مدة… اختر المدة الصحيحة لكل جملة.",
     tip: "for = كم من الوقت؟ (مدة يمكن قياسها).", source: ["s5"] },
-  { id: "s6", section: "TIME", mascot: "⭐", title: "since مع نقطة البداية", step: "⑥ since",
+  { id: "s6", section: "TIME", mascot: "🚩", title: "since مع نقطة البداية", step: "⑥ since",
     lead: "since تحدد لحظة البداية… اختر البداية الصحيحة.",
     tip: "since = منذ متى بدأ الأمر؟", source: ["s6"] },
-  { id: "s7", section: "TIME", mascot: "🧠", title: "for أم since؟", step: "⑦ القرار",
+  { id: "s7", section: "TIME", mascot: "⚖️", title: "for أم since؟", step: "⑦ القرار",
     lead: "فرز سريع: مدة (for) أم نقطة بداية (since)؟",
     tip: "اسأل: هل هذه مسافة أم علامة على الطريق؟", source: ["s7"] },
-  { id: "s8", section: "TIME", mascot: "🔥", title: "السؤال الأقوى: How long؟", step: "⑧ How long",
+  { id: "s8", section: "TIME", mascot: "❓", title: "السؤال الأقوى: How long؟", step: "⑧ How long",
     lead: "ابنِ السؤال أولًا، ثم اختر جوابًا بـ for أو since.",
     tip: "How long → for أو since في الجواب.", source: ["s8"] },
 
-  { id: "s9", section: "QFORM", mascot: "⭐", title: "النفي", step: "⑨ النفي",
+  { id: "s9", section: "QFORM", mascot: "🚫", title: "النفي", step: "⑨ النفي",
     lead: "ضع not في موضعها بين have/has و been.",
     tip: "have not → haven't · has not → hasn't.", source: ["s9"] },
-  { id: "s10", section: "QFORM", mascot: "⭐", title: "الأسئلة", step: "⑩ الأسئلة",
+  { id: "s10", section: "QFORM", mascot: "❔", title: "الأسئلة", step: "⑩ الأسئلة",
     lead: "ابدأ بـ Have / Has ثم الفاعل ثم been ثم verb-ing.",
     tip: "حرّك have/has إلى مقدمة الجملة.", source: ["s10"] },
-  { id: "s11", section: "QFORM", mascot: "⭐", title: "الإجابات القصيرة", step: "⑪ الجواب",
+  { id: "s11", section: "QFORM", mascot: "✂️", title: "الإجابات القصيرة", step: "⑪ الجواب",
     lead: "الجواب القصير يستخدم have/has — لا been.",
     tip: "اختبر كل جواب: هل نعيد have أم has فقط؟", source: ["s11"] },
-  { id: "s12", section: "QFORM", mascot: "🧩", title: "Wh Questions", step: "⑫ أسئلة بأداة",
+  { id: "s12", section: "QFORM", mascot: "🔎", title: "Wh Questions", step: "⑫ أسئلة بأداة",
     lead: "من الجواب إلى السؤال: ما أداة السؤال المناسبة؟",
     tip: "انظر إلى الجواب أولًا، ثم اسأل عنه.", source: ["s12"] },
 
-  { id: "s13", section: "CONTRAST", mascot: "🔥", title: "نشاط انتهى للتو… والأثر باقٍ", step: "⑬ الأثر",
-    lead: "ابحث عن الأدلة المرئية الآن، ثم اختر الجملة التي تفسّرها.",
+  { id: "s13", section: "CONTRAST", mascot: "👣", title: "نشاط انتهى للتو… والأثر باقٍ", step: "⑬ الأثر",
+    lead: "اجمع الأدلة المرئية الآن، ثم اختر الجملة التي تفسّرها.",
     tip: "الدليل الآن ← جملة PPC تفسّره.", source: ["s13"] },
-  { id: "s14", section: "CONTRAST", mascot: "🧠", title: "Present Perfect أم PPC؟ — النتيجة والنشاط", step: "⑭ المقارنة الكبرى",
-    lead: "بدّل بين عدستي النتيجة والنشاط على الجدار نفسه.",
+  { id: "s14", section: "CONTRAST", mascot: "🎨", title: "Present Perfect أم PPC؟ — النتيجة والنشاط", step: "⑭ المقارنة الكبرى",
+    lead: "بدّل بين عدستي النتيجة والنشاط على الجدار نفسه، ثم تنقّل بين أمثلة المصدر.",
     tip: "النتيجة: الجدار مطلي · النشاط: الفرشاة لا تزال تتحرك.", source: ["s14"] },
-  { id: "s15", section: "CONTRAST", mascot: "🎯", title: "النتيجة أم النشاط؟", step: "⑮ القرار",
+  { id: "s15", section: "CONTRAST", mascot: "🚪", title: "النتيجة أم النشاط؟", step: "⑮ القرار",
     lead: "اسأل نفسك قبل أن تختار الباب.",
     tip: "هل أهتم بما أُنجز؟ ← PP · هل أهتم بالنشاط أو المدة؟ ← PPC.", source: ["s15"] },
-  { id: "s16", section: "CONTRAST", mascot: "🔥", title: "مثال IQ200 — شخصان", step: "⑯ زاويتان",
+  { id: "s16", section: "CONTRAST", mascot: "🗣️", title: "مثال IQ200 — شخصان", step: "⑯ زاويتان",
     lead: "شخصان يتحدثان عن الكتابة… ما زاوية كل واحد؟",
     tip: "الزاوية تغيّر الزمن — حتى لو كانت الكلمات متقاربة.", source: ["s16"] },
-  { id: "s17", section: "CONTRAST", mascot: "⭐", title: "مثال آخر — لوحات وبعد الظهر", step: "⑰ العدد أم المدة",
+  { id: "s17", section: "CONTRAST", mascot: "🖼️", title: "مثال آخر — لوحات وبعد الظهر", step: "⑰ العدد أم المدة",
     lead: "ثلاث لوحات… أم طوال بعد الظهر؟",
     tip: "العدد المكتمل ← PP · المدة الممتدة ← PPC.", source: ["s17"] },
-  { id: "s18", section: "CONTRAST", mascot: "🧠", title: "هل يعني دائمًا أنه ما زال مستمرًا؟", step: "⑱ الدقة",
+  { id: "s18", section: "CONTRAST", mascot: "🏃", title: "هل يعني دائمًا أنه ما زال مستمرًا؟", step: "⑱ الدقة",
     lead: "حرّك الحالة: هل يركض الآن؟ أم توقف قبل دقيقة؟",
     tip: "الجملة لم تتغيّر… الذي تغيّر هو الواقع.", source: ["s18"] },
 
-  { id: "s19", section: "WORDS", mascot: "⭐", title: "كلمات شائعة مع PPC", step: "⑲ الكلمات",
+  { id: "s19", section: "WORDS", mascot: "🔑", title: "كلمات شائعة مع PPC", step: "⑲ الكلمات",
     lead: "المس كل كلمة لتفتح مثالها.",
     tip: "تسع كلمات من المصدر + مثال تدريبي واحد للمنصة لكل كلمة لا مثال لها في المصدر.", source: ["s19"] },
   { id: "s20", section: "WORDS", mascot: "⚠️", title: "لا تعتمد على كلمة واحدة", step: "⑳ الكلمة والسياق",
     lead: "الكلمة وحدها لا تحدد الزمن — المعنى يحدده.",
     tip: "قارن today مع all morning ثم اختر التركيز.", source: ["s20"] },
-  { id: "s21", section: "WORDS", mascot: "🔥", title: "PP أم PPC؟ — ثلاثة أزواج", step: "㉑ الأزواج",
+  { id: "s21", section: "WORDS", mascot: "🧩", title: "PP أم PPC؟ — ثلاثة أزواج", step: "㉑ الأزواج",
     lead: "في كل زوج: أيّ جملة تركّز على ما يُرى من النتيجة؟",
     tip: "الزوج نفسه، والتركيز مختلف.", source: ["s21"] },
-  { id: "s22", section: "WORDS", mascot: "🧠", title: "هل نستخدم PPC مع عدد؟", step: "㉒ العدد",
+  { id: "s22", section: "WORDS", mascot: "🔢", title: "هل نستخدم PPC مع عدد؟", step: "㉒ العدد",
     lead: "عدّ الأشياء المكتملة… أم قِس المدة؟",
     tip: "عدد مكتمل ← PP · نشاط طويل ← PPC.", source: ["s22"] },
-  { id: "s23", section: "WORDS", mascot: "⭐", title: "أفعال لا نستخدمها عادةً في Continuous", step: "㉓ البوابة",
+  { id: "s23", section: "WORDS", mascot: "🚧", title: "أفعال لا نستخدمها عادةً في Continuous", step: "㉓ البوابة",
     lead: "مرّر الفعل من بوابة -ing… هل يُعبر؟",
     tip: "الأفعال الحالية (know، want…) تُستعمل عادةً بدون continuous.", source: ["s23"] },
 
-  { id: "s24", section: "COMPARE", mascot: "🔥", title: "مقارنة مع Past Continuous", step: "㉔ نقطة المرجع",
+  { id: "s24", section: "COMPARE", mascot: "🕰️", title: "مقارنة مع Past Continuous", step: "㉔ نقطة المرجع",
     lead: "حرّك نقطة المرجع من 8:00 إلى NOW وشاهد الزمن يتغيّر.",
     tip: "نقطة المرجع في الماضي ← Past Continuous · عند NOW ← PPC.", source: ["s24"] },
-  { id: "s25", section: "COMPARE", mascot: "🔥", title: "مقارنة مع Past Perfect Continuous", step: "㉕ نقطة المرجع",
+  { id: "s25", section: "COMPARE", mascot: "📞", title: "مقارنة مع Past Perfect Continuous", step: "㉕ نقطة المرجع",
     lead: "نقطة المرجع الآن: حدث ماضٍ آخر (اتصل صديقي).",
     tip: "قبل حدث ماضٍ آخر ← PPC الماضي التام · قبل الآن ← PPC.", source: ["s25"] },
-  { id: "s26", section: "COMPARE", mascot: "🧠", title: "الخريطة الزمنية الكبرى", step: "㉖ الخريطة",
+  { id: "s26", section: "COMPARE", mascot: "🗺️", title: "الخريطة الزمنية الكبرى", step: "㉖ الخريطة",
     lead: "ثلاث نقاط مرجعية… وثلاث جمل. ضع كل جملة في مكانها.",
     tip: "لاحظ كيف تغيّرت نقطة المرجع.", source: ["s26"] },
 
   { id: "s27", section: "FIX", mascot: "🕵️", title: "Grammar Detective", step: "㉗ المحقق",
     lead: "المس الجزء الخاطئ ثم اختر الإصلاح. ثمانية ملفات.",
     tip: "ابدأ بالسؤال: ما الذي بعد been؟", source: ["s27"] },
-  { id: "s28", section: "FIX", mascot: "🚀", title: "تحدي الاختيار", step: "㉘ الاختيار",
+  { id: "s28", section: "FIX", mascot: "🎯", title: "تحدي الاختيار", step: "㉘ الاختيار",
     lead: "اكتب الصيغة المناسبة لكل جملة حسب الدليل بين القوسين.",
     tip: "العدد أو الإنجاز ← PP · النشاط والمدة ← PPC.", source: ["s28"] },
-  { id: "s29", section: "FIX", mascot: "🔥", title: "IQ200 — نفس الفعل، معنى مختلف", step: "㉙ IQ200",
+  { id: "s29", section: "FIX", mascot: "🚲", title: "IQ200 — نفس الفعل، معنى مختلف", step: "㉙ IQ200",
     lead: "نفس الفعل «إصلاح». هل الدراجة انتهت في الجملتين؟",
     tip: "السؤال ليس «أي زمن أصعب؟» بل «ما الذي أريد أن أُبرزه؟».", source: ["s29"] },
-  { id: "s30", section: "FIX", mascot: "🧠", title: "تحدي المعنى", step: "㉚ المشهد",
+  { id: "s30", section: "FIX", mascot: "🎬", title: "تحدي المعنى", step: "㉚ المشهد",
     lead: "انظر إلى المشهد: هل ترى أثر النشاط أم النتيجة؟",
     tip: "أثر النشاط (فرشاة، بقع) ← PPC · الجدار المكتمل ← PP.", source: ["s30"] },
-  { id: "s31", section: "FIX", mascot: "⭐", title: "since و for — مستوى أعلى", step: "㉛ مستوى أعلى",
+  { id: "s31", section: "FIX", mascot: "🔧", title: "since و for — مستوى أعلى", step: "㉛ مستوى أعلى",
     lead: "صحّح الجملة الخاطئة، ثم اختر for أو since في جمل أخرى.",
     tip: "three hours = مدة · 5:00 = نقطة بداية.", source: ["s31"] },
 
-  { id: "s32", section: "BOSS", mascot: "🏆", title: "Boss Challenge — اختر الزمن الصحيح", step: "㉜ الزعيم",
+  { id: "s32", section: "BOSS", mascot: "🐉", title: "Boss Challenge — اختر الزمن الصحيح", step: "㉜ الزعيم",
     lead: "كل ضربة صحيحة تُنقص صحة الزعيم. اختر أحد الأزمنة الأربعة.",
     tip: "أربعة أزمنة للحاضر، وكل جملة لها دليل واحد أو أكثر.", source: ["s32"] },
-  { id: "s33", section: "BOSS", mascot: "🔥", title: "Final IQ200 Challenge", step: "㉝ تحليل الفقرة",
+  { id: "s33", section: "BOSS", mascot: "📖", title: "Final IQ200 Challenge", step: "㉝ تحليل الفقرة",
     lead: "المس كل عبارة فعلية في الفقرة وقرّر زمنها.",
     tip: "انتبه إلى الكلمة الدالة على المدة أو النتيجة.", source: ["s33"] },
-  { id: "s34", section: "BOSS", mascot: "🏆", title: "Final Boss — قصة Maya", step: "㉞ النهائي",
+  { id: "s34", section: "BOSS", mascot: "🏁", title: "Final Boss — قصة Maya", step: "㉞ النهائي",
     lead: "أكملي قصة Maya بالصيغة الصحيحة. اكتب الإجابة ثم تحقّق.",
     tip: "انتبهي: نشاط ممتد؟ عدد مكتمل؟ نتيجة؟", source: ["s34"] },
 
-  { id: "s35", section: "END", mascot: "🧠", title: "قاعدة الذهب", step: "㉟ القاعدة",
+  { id: "s35", section: "END", mascot: "🥇", title: "قاعدة الذهب", step: "㉟ القاعدة",
     lead: "اقرأ الشكل أولًا: have/has + V3… أم have/has + been + V-ing؟",
     tip: "الشكل يخبرك بالنمط، والمعنى يخبرك بالسبب.", source: ["s35"] },
   { id: "s36", section: "END", mascot: "🗺️", title: "الخريطة التي أصبحت عندك", step: "㊱ الخريطة",
     lead: "أربعة تروس للحاضر — اضغط كل ترس لتفعيله.",
     tip: "كل ترس له جملة من المصدر.", source: ["s36"] },
-  { id: "summary", section: "END", mascot: "⭐", title: "ملخص الدرس 32", step: "الملخص",
+  { id: "summary", section: "END", mascot: "📋", title: "ملخص الدرس 32", step: "الملخص",
     lead: "الصيغة، الاستخدامات، الكلمات، والفرق الذهبي.",
     tip: "Present Perfect → النتيجة · Present Perfect Continuous → النشاط.", source: ["summary"] },
-  { id: "closing", section: "END", mascot: "🏁", title: "الخطوة التالية", step: "الخاتمة",
+  { id: "closing", section: "END", mascot: "🚀", title: "الخطوة التالية", step: "الخاتمة",
     lead: "الخطوة التالية في المنهج كما وردت في المصدر.",
     tip: "ابدأ الاختبار الآن لتثبت ما تعلّمته.", source: ["closing"] },
 ];
+
 
 export const SLIDE_COUNT_32 = SLIDES.length;
 
@@ -245,14 +251,20 @@ export const SUBJECTS_S3 = [
   { en: "It", bucket: 1 },
 ];
 
-/** خطوة ④ — شريط النشاط: الأنشطة المتاحة (الجملة تبنى من المدة وحالة الاستمرار) */
+/** خطوة ④ — تيّار المدة: الأنشطة المتاحة + الآثار المرئية عند التوقف */
 export const RIBBON_S4 = {
   activities: [
-    { key: "studying", en: "studying", ar: "أدرس" },
-    { key: "working", en: "working", ar: "أعمل" },
-    { key: "waiting", en: "waiting", ar: "أنتظر" },
+    { key: "studying", en: "studying", ar: "أدرس", emoji: "📚",
+      traces: ["📖 الكتب مفتوحة على الطاولة", "😮‍💨 تعب بعد ساعات من التركيز"] },
+    { key: "working", en: "working", ar: "أعمل", emoji: "🧰",
+      traces: ["🧰 العدة ما زالت مفتوحة", "💻 الشاشة مضاءة"] },
+    { key: "waiting", en: "waiting", ar: "أنتظر", emoji: "⏳",
+      traces: ["👀 أنظر إلى الساعة كل دقيقة", "🚶 أقف عند الباب"] },
   ],
   maxHours: 6,
+  /** الجملة النموذج كما وردت في المصدر (§4) */
+  model: "I have been studying for three hours.",
+  modelAr: "لقد كنت أدرس منذ ثلاث ساعات.",
 };
 
 /** خطوة ⑤ — for: قالب مع اختيارات */
@@ -403,33 +415,48 @@ export const WH_ROWS_S12 = [
     why: "Who = من؟ — تدريب للمنصة: Who هنا هي الفاعل، لذلك لا يأتي have/has قبلها (Who has been using my computer? كما في المصدر)." },
 ];
 
-/** خطوة ⑬ — أدلة مرئية الآن ← الجملة التي تفسّرها */
+/** خطوة ⑬ — أدلة مرئية الآن ← السياق ← الجملة التي تفسّرها (أسطر المصدر §13) */
 export const EVIDENCE_S13 = [
   {
     scene: "🏃", title: "أنت تلهث الآن.",
-    clues: ["😮‍💨 تلهث", "💦 عرق على الجبين"],
+    clues: ["😮‍💨 تلهث", "💦 عرق على الجبين", "👟 حذاء الركض"],
+    evidence: "You are out of breath.", evidenceAr: "أنت تلهث.",
+    context: "ربما توقفت عن الركض الآن.", reason: "لكننا نرى النتيجة: أنت تلهث.",
     options: [
-      { text: "You have been running.", ok: true, why: "الدليل (اللهاث) نتيجة نشاط الركض الذي توقف قبل قليل." },
-      { text: "You have been sleeping.", ok: false, why: "النوم لا يفسر اللهاث والعرق." },
-      { text: "You have been eating.", ok: false, why: "الأكل لا يترك لهاثًا وعرقًا." },
+      { text: "You have been running.", ar: "لقد كنت تركض.", ok: true,
+        why: "الدليل (اللهاث) أثرُ نشاطٍ امتد إلى قريب من الآن: لقد كنت تركض." },
+      { text: "You have been sleeping.", ar: "لقد كنت نائمًا.", ok: false,
+        why: "النوم لا يفسر اللهاث والعرق — الأثر لا يطابق النشاط." },
+      { text: "You have been eating.", ar: "لقد كنت تأكل.", ok: false,
+        why: "الأكل لا يترك لهاثًا وعرقًا على الجبين." },
     ],
   },
   {
     scene: "🌱", title: "يداها متسختان.",
-    clues: ["🟫 يدان متسختان", "🌿 تراب على الملابس"],
+    clues: ["🟫 يدان متسختان", "🌿 تراب على الملابس", "🪴 أصيص بجانبها"],
+    evidence: "Her hands are dirty.", evidenceAr: "يداها متسختان.",
+    context: "النشاط قد يكون انتهى، لكن النتيجة واضحة الآن.", reason: "التراب على اليدين هو أثر العمل في الحديقة.",
     options: [
-      { text: "She has been gardening.", ok: true, why: "المصدر: لقد كانت تعمل في الحديقة — الدليل التراب." },
-      { text: "She has been swimming.", ok: false, why: "السباحة لا تترك تربة على اليدين." },
-      { text: "She has been reading.", ok: false, why: "القراءة لا تترك أثر تراب." },
+      { text: "She has been gardening.", ar: "لقد كانت تعمل في الحديقة.", ok: true,
+        why: "المصدر: Her hands are dirty ← She has been gardening — الدليل التراب." },
+      { text: "She has been swimming.", ar: "لقد كانت تسبح.", ok: false,
+        why: "السباحة تترك بللًا لا تربة على اليدين." },
+      { text: "She has been reading.", ar: "لقد كانت تقرأ.", ok: false,
+        why: "القراءة لا تترك أثر تراب على اليدين." },
     ],
   },
   {
     scene: "🌧️", title: "الأرض مبللة.",
-    clues: ["💧 الأرض مبللة", "☂️ مظلات مفتوحة"],
+    clues: ["💧 الأرض مبللة", "☂️ مظلات مفتوحة", "🌥️ سماء ملبّدة"],
+    evidence: "The floor is wet.", evidenceAr: "الأرض مبللة.",
+    context: "المطر ربما توقف قبل قليل.", reason: "الأرض المبللة أثرٌ باقٍ لنشاط المطر.",
     options: [
-      { text: "It has been raining.", ok: true, why: "المصدر: لقد كانت السماء تمطر — المطر يفسر الأرض المبللة." },
-      { text: "It has been sunny.", ok: false, why: "الشمس وحدها لا تُبلل الأرض." },
-      { text: "She has been reading.", ok: false, why: "القراءة لا تُبلل الأرض." },
+      { text: "It has been raining.", ar: "لقد كانت السماء تمطر.", ok: true,
+        why: "المصدر: The floor is wet ← It has been raining — المطر يفسر الأرض المبللة." },
+      { text: "It has been sunny.", ar: "لقد كانت الشمس ساطعة.", ok: false,
+        why: "الشمس وحدها لا تُبلل الأرض." },
+      { text: "She has been reading.", ar: "لقد كانت تقرأ.", ok: false,
+        why: "القراءة لا تُبلل الأرض — لا رابط بين الأثر والنشاط." },
     ],
   },
 ];
@@ -584,17 +611,29 @@ export const BIKE_S29 = [
     why: "المصدر: قد أكون انتهيت، وقد لا أكون انتهيت — التركيز على النشاط." },
 ];
 
-/** خطوة ㉚ — مشهد المعنى (حالتان) */
+/** خطوة ㉚ — مشهد المعنى (حالتان) — أسطر المصدر §30 */
 export const SCENE_S30 = [
-  { scene: "🖌️", title: "رجل يحمل فرشاة طلاء، وعلى ملابسه آثار طلاء.", clues: ["🖌️ فرشاة في اليد", "🎨 بقع طلاء على الملابس"],
+  { scene: "🖌️", title: "رجل يحمل فرشاة طلاء، وعلى ملابسه آثار طلاء.",
+    clues: ["🖌️ فرشاة في اليد", "🎨 بقع طلاء على الملابس", "🪣 دلو الطلاء مفتوح"],
+    evidence: "أنت تدخل غرفة وترى شخصًا يحمل فرشاة طلاء، وعلى ملابسه آثار طلاء.",
+    evidenceAr: "تقول له: You have been painting.",
+    context: "الأثر على الشخص نفسه، لا على الجدار.", reason: "لأننا نرى آثار النشاط.",
     options: [
-      { text: "You have been painting.", ok: true, why: "المصدر: لأننا نرى آثار النشاط." },
-      { text: "You have painted the wall.", ok: false, why: "الجدار لم يُذكر في هذا المشهد؛ الدليل هو النشاط نفسه." },
+      { text: "You have been painting.", ar: "لقد كنت تدهن.", ok: true,
+        why: "المصدر: لأننا نرى آثار النشاط — الفرشاة وبقع الطلاء." },
+      { text: "You have painted the wall.", ar: "لقد دهنت الجدار.", ok: false,
+        why: "الجدار لم يُذكر في هذا المشهد؛ الدليل هو آثار النشاط على الشخص." },
     ] },
-  { scene: "🧱", title: "تنظر إلى الجدار وقد أصبح مطليًا بالكامل.", clues: ["🧱 جدار مطلي بالكامل", "✅ الجدار أصبح جاهزًا"],
+  { scene: "🧱", title: "تنظر إلى الجدار وقد أصبح مطليًا بالكامل.",
+    clues: ["🧱 جدار مطلي بالكامل", "✅ اللون جافّ", "🪜 السلّم مُبعد"],
+    evidence: "تنظر إلى الجدار وتقول:",
+    evidenceAr: "You have painted the wall.",
+    context: "النتيجة أمامك: الجدار انتهى.", reason: "التركيز هنا على النتيجة: الجدار أصبح مطليًا.",
     options: [
-      { text: "You have painted the wall.", ok: true, why: "المصدر: التركيز هنا على النتيجة — الجدار أصبح مطليًا." },
-      { text: "You have been painting.", ok: false, why: "هنا النتيجة هي المهمة، لا آثار النشاط." },
+      { text: "You have painted the wall.", ar: "لقد دهنت الجدار.", ok: true,
+        why: "المصدر: التركيز هنا على النتيجة — الجدار أصبح مطليًا." },
+      { text: "You have been painting.", ar: "لقد كنت تدهن.", ok: false,
+        why: "هنا المهمة المنتهية هي المهمّة، لا آثار النشاط." },
     ] },
 ];
 
@@ -677,3 +716,248 @@ export const GEARS_S36 = [
 
 /** كلمات تمهيدية للمنصة: الشرح يُوسم دائمًا */
 export const PLATFORM_NOTE_S18 = "الجملة لم تتغيّر، لكن الواقع يختلف: Present Perfect Continuous يهتم بالنشاط الذي امتد إلى قرب الحاضر وبآثاره، وليس شرطًا أن يكون مستمرًا في الثانية نفسها (المصدر ⑱).";
+
+// ============================================================
+// 🌊 تيّار المدة — مجموعات بيانات إضافية (إعادة البناء)
+// كل جملة إنجليزية هنا منقولة من المصدر كما هي؛ ما تضيفه المنصة هو
+// التصنيف (نتيجة/نشاط) والعرض البصري، ويُوسم بـ«Platform Explanation».
+// ============================================================
+
+/** خطوة ⑭ — محور النتيجة مقابل النشاط: أمثلة المصدر التسعة كعدستين */
+export type LensSide32 = { en: string; ar: string; see: string };
+export type LensPair32 = {
+  key: string;
+  emoji: string;
+  topic: string;
+  /** ما الذي تراه في المشهد تحت كل عدسة */
+  result: LensSide32;
+  activity: LensSide32;
+  /** مرجع القسم في المصدر */
+  ref: string;
+  /** هل المثالان من المصدر (true) أم تدريب منصّة (false) */
+  src: boolean;
+};
+
+export const LENS_S14: LensPair32[] = [
+  {
+    key: "room", emoji: "🎨", topic: "طلاء الغرفة", ref: "§14", src: true,
+    result: { en: "I have painted the room.", ar: "الغرفة مطلية / المهمة أُنجزت.", see: "الجدار مكتمل الطلاء، والفرشاة مغسولة وموضوعة جانبًا." },
+    activity: { en: "I have been painting the room.", ar: "كنت أقوم بالطلاء لفترة.", see: "الفرشاة في اليد، وبقع طلاء على الملابس — ربما انتهيت وربما لا." },
+  },
+  {
+    key: "kitchen", emoji: "🧽", topic: "تنظيف المطبخ", ref: "§15", src: true,
+    result: { en: "I have cleaned the kitchen.", ar: "المطبخ أصبح نظيفًا.", see: "الأرضية لامعة، ولا شيء في الحوض." },
+    activity: { en: "I have been cleaning the kitchen.", ar: "كنت أقوم بعملية التنظيف.", see: "الماء ما زال جارياً، والإسفنجة في اليد." },
+  },
+  {
+    key: "book", emoji: "📖", topic: "قراءة الكتاب", ref: "§21 ①②", src: true,
+    result: { en: "I have read the book.", ar: "لقد قرأت الكتاب.", see: "الكتاب مغلق وموضوع على الرف — التركيز على الإنجاز." },
+    activity: { en: "I have been reading the book.", ar: "لقد كنت أقرأ الكتاب.", see: "الكتاب مفتوح والعلامة بين الصفحات — قد لا أكون انتهيت منه." },
+  },
+  {
+    key: "wall", emoji: "🧱", topic: "دهان الجدار", ref: "§21 ①②", src: true,
+    result: { en: "She has painted the wall.", ar: "لقد دهنت الجدار.", see: "الجدار بلون واحد جديد — النتيجة مهمة." },
+    activity: { en: "She has been painting the wall.", ar: "لقد كانت تدهن الجدار.", see: "نصف الجدار ما زال بلونه القديم — النشاط مهم." },
+  },
+  {
+    key: "machine", emoji: "⚙️", topic: "إصلاح الآلة", ref: "§21 ①②", src: true,
+    result: { en: "They have repaired the machine.", ar: "لقد أصلحوا الآلة.", see: "الآلة تعمل الآن — النتيجة." },
+    activity: { en: "They have been repairing the machine.", ar: "لقد كانوا يعملون على إصلاح الآلة.", see: "العدة مفتوحة والأيدي عليها — التركيز على النشاط." },
+  },
+  {
+    key: "emails", emoji: "✉️", topic: "الرسائل والبريد", ref: "§22", src: true,
+    result: { en: "I have written five emails.", ar: "لأننا نهتم بالعدد: five emails.", see: "خمسة رسائل في صندوق الصادر — عدد مكتمل." },
+    activity: { en: "I have been writing emails all morning.", ar: "لأننا نهتم بالنشاط والمدة.", see: "الشاشة ما زالت مفتوحة والصباح كلّه كتابة." },
+  },
+  {
+    key: "bicycle", emoji: "🚲", topic: "الدراجة", ref: "§29", src: true,
+    result: { en: "I have repaired my bicycle.", ar: "الدراجة أصبحت مُصلحة.", see: "الدراجة جاهزة للركوب." },
+    activity: { en: "I have been repairing my bicycle.", ar: "كنت أعمل على إصلاح الدراجة.", see: "قد أكون انتهيت، وقد لا أكون انتهيت." },
+  },
+  {
+    key: "pages", emoji: "📄", topic: "الصفحات والساعات", ref: "§16", src: true,
+    result: { en: "I have written five pages.", ar: "التركيز على النتيجة / الكمية.", see: "خمس صفحات على الطاولة." },
+    activity: { en: "I have been writing for three hours.", ar: "التركيز على النشاط والمدة.", see: "ثلاث ساعات متواصلة من الكتابة." },
+  },
+  {
+    key: "pictures", emoji: "🖼️", topic: "اللوحات وبعد الظهر", ref: "§17", src: true,
+    result: { en: "She has painted three pictures.", ar: "النتيجة والعدد — ثلاث لوحات.", see: "ثلاث لوحات معلّقة." },
+    activity: { en: "She has been painting all afternoon.", ar: "النشاط والمدة — طوال بعد الظهر.", see: "بعد الظهر كلّه أمام اللوحة." },
+  },
+];
+
+/** خطّان ثابتان للمقارنة البصرية داخل المحور (نتيجة/نشاط) */
+export const LENS_AXIS_32 = {
+  result: { tag: "Present Perfect", icon: "🏆", ar: "النتيجة / الإنجاز" },
+  activity: { tag: "Present Perfect Continuous", icon: "🎥", ar: "النشاط / المدة" },
+};
+
+/** خطوات ㉔ ㉕ ㉖ — جدول المقارنة بنقطة المرجع (بلا خلط بين الأزمنة) */
+export type TenseRow32 = { tense: string; form: string; ref: string; en: string; ar: string };
+export const TENSE_MAP_S24: TenseRow32[] = [
+  { tense: "Past Continuous", form: "was/were + V-ing", ref: "نقطة معينة في الماضي (8:00)",
+    en: "I was studying at 8:00.", ar: "كنت أدرس الساعة الثامنة." },
+  { tense: "Present Perfect Continuous", form: "have/has + been + V-ing", ref: "NOW — النشاط مرتبط بالحاضر",
+    en: "I have been studying since 8:00.", ar: "أنا أدرس منذ الساعة الثامنة." },
+];
+export const TENSE_MAP_S25: TenseRow32[] = [
+  { tense: "Present Perfect Continuous", form: "have/has + been + V-ing", ref: "قبل الآن (NOW)",
+    en: "I have been studying for three hours.", ar: "أدرس منذ ثلاث ساعات." },
+  { tense: "Past Perfect Continuous", form: "had + been + V-ing", ref: "قبل حدث ماضٍ آخر (اتصل صديقي)",
+    en: "I had been studying for three hours when my friend called.", ar: "كنت أدرس منذ ثلاث ساعات عندما اتصل صديقي." },
+];
+export const TENSE_MAP_S26: TenseRow32[] = [
+  { tense: "Past Continuous", form: "was/were + V-ing", ref: "نقطة في الماضي: 8:00",
+    en: "I was studying at 8:00.", ar: "كنت أدرس عند الساعة 8." },
+  { tense: "Past Perfect Continuous", form: "had + been + V-ing", ref: "قبل حدث ماضٍ آخر: وصل",
+    en: "I had been studying for three hours when he arrived.", ar: "كنت قد درست لمدة ثلاث ساعات عندما وصل." },
+  { tense: "Present Perfect Continuous", form: "have/has + been + V-ing", ref: "قبل الآن: NOW",
+    en: "I have been studying for three hours.", ar: "أدرس منذ ثلاث ساعات حتى الآن / كنت أدرس منذ ثلاث ساعات." },
+];
+
+/** الملخص — الفرق الذهبي كما ورد في المصدر (يُعرض كمحور بصري) */
+export const GOLDEN_DIFF_32 = [
+  { side: "result", tense: "Present Perfect", ar: "النتيجة / الإنجاز / التجربة", en: "I have painted the room.", enAr: "الغرفة أصبحت مطلية." },
+  { side: "activity", tense: "Present Perfect Continuous", ar: "النشاط / المدة / الآثار", en: "I have been painting the room.", enAr: "كنت أقوم بعملية الطلاء لفترة." },
+] as const;
+
+/** الملخص — منظومة الحاضر الأربع (خطوة ㊱ + الملخص) */
+export const FOUR_PRESENT_32 = [
+  { icon: "📸", tense: "Present Simple", ar: "عادة وحقيقة", en: "I study English every day." },
+  { icon: "🎥", tense: "Present Continuous", ar: "يحدث الآن", en: "I am studying English now." },
+  { icon: "🏆", tense: "Present Perfect", ar: "ماضٍ مرتبط بالحاضر", en: "I have studied three chapters." },
+  { icon: "🎥🏆", tense: "Present Perfect Continuous", ar: "نشاط ممتد من الماضي نحو الحاضر", en: "I have been studying for three hours." },
+];
+
+// ============================================================
+// شرح المنصة لكل خطوة (Platform Explanation) — يوضّح ولا يستبدل المصدر
+// ============================================================
+export const TEACH_32: Record<string, string[]> = {
+  cover: [
+    "الفكرة في كلمة واحدة: «الامتداد». الجملة لا تصف لحظة، بل تصف تيّارًا بدأ قبل الآن وما زال أثره يصل إلينا.",
+    "كل تفاعل في هذا الدرس يعيد رسم هذا التيّار: نقطة بداية، مدة، ثم سؤال واحد — هل ما زال جاريًا، أم ترك أثره؟",
+  ],
+  objectives: [
+    "علّم الهدف بعد أن تنجز تفاعل الخطوة لا بعد قراءتها؛ الأهداف التسعة هي نفسها خريطة الدرس.",
+  ],
+  s1: [
+    "الترتيب ثابت لا يتغيّر: الفاعل ← have/has ← been ← verb-ing. أي قطعة تُزاح يتغيّر معها الزمن كله.",
+    "been ليست زائدة: هي التي تحمل «الاستمرار» إلى الحاضر، وبدونها تعود الجملة Present Perfect عادية.",
+  ],
+  s2: [
+    "have/has = الرابط بالحاضر · been = V3 من be · verb-ing = معنى الاستمرار. ثلاث وظائف، لا ثلاث كلمات نحفظها.",
+  ],
+  s3: [
+    "الاختيار بين have وhas قرار الفاعل وحده، ولا علاقة له بالمدة ولا بالنشاط.",
+  ],
+  s4: [
+    "حرّك نقطة البداية فترى المدة تتغيّر، وحرّك حالة التيّار فترى أن الجملة لا تتغيّر — الواقع هو الذي يتغيّر.",
+    "الأثر الظاهر (اللهاث، الطلاء، البلل) هو دليل الطالب على أن النشاط امتد، حتى لو توقف قبل لحظة.",
+  ],
+  s5: [
+    "for تقيس «كم» — لذلك تحتاج مسافة زمنية: ten minutes، two hours، six months، a long time.",
+  ],
+  s6: [
+    "since تضع «علامة» على بداية التيّار — لذلك تحتاج لحظة أو تاريخًا: Monday، 8:00، January، 2024.",
+  ],
+  s7: [
+    "الاختبار السريع: هل الكلمة مسافة أم علامة على الطريق؟ مسافة ← for · علامة ← since.",
+  ],
+  s8: [
+    "How long هو سؤال المدة، وجوابه الطبيعي for أو since؛ لذلك هو أقوى أسئلة هذا الزمن.",
+  ],
+  s9: [
+    "not تدخل بين have/has وbeen: hasn't been sleeping — لا قبل been ولا بعدها.",
+  ],
+  s10: [
+    "في السؤال يتقدّم have/has على الفاعل، ويبقى ترتيب been + verb-ing كما هو.",
+  ],
+  s11: [
+    "الفخ الأشهر: Yes, I have been ❌. الجواب القصير يعيد have/has فقط لأن been جزء من الصيغة لا جزء من الجواب.",
+  ],
+  s12: [
+    "ابدأ من الجواب: إن كان مدة ← How long، وإن كان مكانًا ← Where، وإن كان سببًا ← Why.",
+    "ملاحظة خاصة: في Who has been using my computer؟ الكلمة Who هي الفاعل، فلا يتقدّم عليها has.",
+  ],
+  s13: [
+    "هنا يتعلم الطالب أن PPC لا يشترط الاستمرار اللحظي: الدليل المرئي الآن يكفي.",
+  ],
+  s14: [
+    "هذا هو محور الدرس: الجملة نفسها تقريبًا، والفرق كله في زاوية النظر — ما أُنجز أم ما استمر.",
+    "بدّل العدسة ثم تنقّل بين أمثلة المصدر التسعة؛ ستلاحظ أن الدليل البصري هو الذي يحسم الاختيار.",
+  ],
+  s15: [
+    "سؤالان قبل أي اختيار: هل أهتم بما تم إنجازه؟ ← PP · هل أهتم بالنشاط أو المدة؟ ← PPC.",
+  ],
+  s16: [
+    "قد تكون النتيجة خمس صفحات في الحالتين؛ المختلف هو ما اختار المتكلم أن يُبرزه.",
+  ],
+  s17: [
+    "العدد المكتمل (three pictures) يسحب الجملة إلى PP، والمدة الممتدة (all afternoon) تسحبها إلى PPC.",
+  ],
+  s18: [
+    "نقطة متقدمة: الجملة لا تخبرك إن كان الفعل مستمرًا الآن، بل تخبرك أن النشاط امتد إلى قرب الحاضر وله أثر.",
+  ],
+  s19: [
+    "الكلمات الشائعة إشارات لا قوانين: تسع كلمات من المصدر، ومثال تدريبي واحد من المنصة حيث لا مثال في المصدر.",
+  ],
+  s20: [
+    "today قد تأتي مع PP (three chapters today) وrecently قد تأتي مع PPC — المعنى هو الحكم.",
+  ],
+  s21: [
+    "ثلاثة أزواج من المصدر: الكتاب، الجدار، والآلة. في كل زوج الجملة صحيحة، والمختلف هو التركيز.",
+  ],
+  s22: [
+    "إذا كان التركيز على عدد الأشياء المكتملة فاستعمل PP؛ وإذا كان على النشاط والمدة فاستعمل PPC.",
+  ],
+  s23: [
+    "أفعال الحالة (know، believe، want…) تُستعمل عادةً بلا continuous؛ المصدر يقول «عادةً» فلا نحوّلها إلى تحريم مطلق.",
+  ],
+  s24: [
+    "نقطة المرجع تصنع الزمن: نقطة داخل الماضي ← Past Continuous · امتداد إلى NOW ← PPC.",
+  ],
+  s25: [
+    "إذا كانت نقطة المرجع حدثًا ماضيًا آخر فننتقل إلى had been (الدرس 29)، وإذا كانت NOW نبقى مع have/has been.",
+  ],
+  s26: [
+    "الخريطة الكبرى تجمع الأزمنة الثلاثة في صورة واحدة؛ الفرق الوحيد هو موضع نقطة المرجع.",
+  ],
+  s27: [
+    "الملفات الثمانية هي أخطاء المصدر نفسها. لا تُصحَّح قبل المحاولة: المس الجزء الخاطئ أولًا ثم اختر الإصلاح.",
+    "الملف الثامن خاص: have been written ← have written، لأن التركيز على عدد مكتمل (five emails).",
+  ],
+  s28: [
+    "الدليل بين القوسين (read/make/clean) يحدد الفعل، والجملة نفسها تحدد الزمن: عدد ← PP، مدة ← PPC.",
+  ],
+  s29: [
+    "السؤال ليس «أي زمن أصعب؟» بل «ما الذي أريد أن أُبرزه؟» — النتيجة أم النشاط.",
+  ],
+  s30: [
+    "مشهدان من المصدر: آثار النشاط على الشخص (فرشاة وبقع طلاء) مقابل الجدار المكتمل.",
+  ],
+  s31: [
+    "three hours مدة ← for، و5:00 لحظة ← since. الخطأ الشائع هو ترجمة «منذ» العربية إلى since دائمًا.",
+  ],
+  s32: [
+    "الزعيم يجمع أزمنة الحاضر الأربعة: ابحث أولًا عن كلمة الزمن، ثم اسأل عن النتيجة أو النشاط.",
+  ],
+  s33: [
+    "فقرة Adam من المصدر: has studied (مدة وتجربة) · has built (عدد) · has been working (since January) · has been testing (نشاط متكرر).",
+    "تصنيف has studied robotics for three years هو تصنيف المصدر نفسه، ويُناقش لا يُغيَّر (انظر ملاحظة المعلم).",
+  ],
+  s34: [
+    "قصة Maya تدريب نهائي على القرار: studying + مدة ← PPC · eight books ← PP · since January ← PPC · completed ← PP · tired + all day ← PPC.",
+  ],
+  s35: [
+    "اقرأ الشكل أولًا: have/has + V3 يسألك عن النتيجة، وhave/has + been + V-ing يسألك عن النشاط والمدة.",
+  ],
+  s36: [
+    "أصبحت عندك أربع درجات للحاضر: عادة · يحدث الآن · ماضٍ مرتبط بالحاضر · نشاط ممتد نحو الحاضر.",
+  ],
+  summary: [
+    "الملخص يعيد الصيغة والاستخدامات الثلاثة والكلمات المهمة والفرق الذهبي — وكلها من المصدر حرفيًا في الأسفل.",
+  ],
+  closing: [
+    "الخطوة التالية في المنهج كما وردت في المصدر: تثبيت أزمنة الحاضر الأربعة في درس شامل، ثم الانتقال إلى المستقبل.",
+  ],
+};

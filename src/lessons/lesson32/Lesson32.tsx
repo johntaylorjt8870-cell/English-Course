@@ -1,13 +1,24 @@
 // ============================================================
 // الدرس 32 — Present Perfect Continuous (المضارع التام المستمر)
+// 🌊 THE DURATION STREAM / تيّار المدة
+//
 // بنية: 4 مناطق — الدرس · الاختبار · الحلول · المعلم.
-// الدرس: 40 خطوة (1:1 مع سجل المصدر) — تفاعل → اكتشاف → شرح → مصدر → تدريب → إتقان.
-// الهوية البصرية: زمرّدي/كهرماني (شريط النشاط) — مختلفة عن الدروس 27–31.
+// الدرس: 40 خطوة (1:1 مع سجل المصدر) — تفاعل → إتمام → شرح المنصة →
+// منصة أمثلة المصدر → تدريب.
+//
+// الهيكل: شاشة كاملة برأس مضغوط (مبدأ الدرس 30):
+//   • لا عنوان خطوة مكررًا في رأس كبير — عنوان الخطوة مرة واحدة في إطارها.
+//   • عدّاد خطوات + شريط تقدم مضغوطان في سطر واحد.
+//   • فهرس الخطوات في سكة جانبية (lg) أو درج (أصغر) مع حبس تركيز وEscape.
+//   • تنقّل طائر (السابق/التالي) + أسهم لوحة المفاتيح (في RTL: ← = التالي).
+//   • المحتوى التعليمي يبدأ قرب الأعلى.
+// الهوية البصرية في lesson32.css (مسوّرة بـ .lesson32 — لا تمسّ درسًا آخر).
 // ============================================================
 
-import { useEffect, useMemo, useState } from "react";
-import { Frame, Rich } from "../../shared/lessonKit";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { En, Frame, Rich } from "../../shared/lessonKit";
 import { LatinRuns } from "../../shared/bidi";
+import { Signature, SignatureGhost } from "../../shared/Signature";
 import { SOURCE_NUMBERED_COUNT_32, SOURCE_LEDGER_COUNT_32, SOURCE_SECTIONS, SEC_32 } from "./ledger32";
 import {
   LESSON_TITLE_32, LESSON_SUBTITLE_32, LAB_NAME_32, LAB_MOTTO_32, SECTIONS_32, SLIDES,
@@ -18,6 +29,7 @@ import TestArea32, { Solutions32 } from "./TestArea32";
 import TeacherArea32 from "./TeacherArea32";
 import FinalTest from "../../shared/finalTest";
 import { FINAL_TESTS } from "../../shared/finalTestBank";
+import "./lesson32.css";
 
 type Area32 = "lesson" | "test" | "solutions" | "teacher";
 const AREAS_32: { id: Area32; emoji: string; ar: string }[] = [
@@ -28,19 +40,8 @@ const AREAS_32: { id: Area32; emoji: string; ar: string }[] = [
 ];
 
 const SLIDE_COUNT_32 = SLIDES.length;
-
-/** حركات الدرس 32 — تُحترم تفضيل تقليل الحركة */
-const CSS_32 = `
-@keyframes l32-flow { from { background-position: 0 0; } to { background-position: 80px 0; } }
-@keyframes l32-run { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-@keyframes l32-brush { 0% { background-position: 0 0; } 100% { background-position: 24px 0; } }
-.l32-ribbon-flow { background-image: repeating-linear-gradient(90deg, rgba(255,255,255,0.55) 0 10px, transparent 10px 20px); animation: l32-flow 1.6s linear infinite; }
-.l32-run { display: inline-block; animation: l32-run 0.9s ease-in-out infinite; }
-.l32-brush { background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.45) 0 6px, transparent 6px 12px); animation: l32-brush 0.9s linear infinite; }
-@media (prefers-reduced-motion: reduce) {
-  .l32-ribbon-flow, .l32-run, .l32-brush { animation: none; }
-}
-`;
+/** عدد الأسطر الحرفية في سجل المصدر — كل سطر منها معروض داخل خطوته */
+const SOURCE_LINES_32 = SOURCE_SECTIONS.reduce((n, sec) => n + sec.units.length, 0);
 
 /** عنوان مختصر للفهرس الجانبي فقط: الجزء قبل « — ». العنوان الكامل محفوظ في إطار الخطوة. */
 function navLabel32(title: string): string {
@@ -53,6 +54,7 @@ function isArrowLocked(target: EventTarget | null): boolean {
   if (!el) return false;
   const tag = el.tagName;
   if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
+  if (el.getAttribute?.("contentEditable") === "true") return true;
   if (el.closest?.("[data-keynav-lock]")) return true;
   if (el.getAttribute?.("role") === "slider") return true;
   return false;
@@ -65,20 +67,22 @@ export function SlideView32({ id, title, lead, tip, step, mascot, section, onGoT
   const srcIdx = SEC_32[id];
   const srcTitle = srcIdx !== undefined ? SOURCE_SECTIONS[srcIdx]?.title : undefined;
   return (
-    <Frame
-      mascot={mascot}
-      step={step}
-      badge={sectionLabel}
-      title={title}
-      lead={lead}
-      tip={tip}
-      accent={ACCENT32}
-      sourceTag={srcTitle}
-    >
-      <div data-lesson-step={id} data-source-id={id} className="space-y-4">
-        <StepBody32 id={id} onGoTest={onGoTest} />
-      </div>
-    </Frame>
+    <div className="l32-frame">
+      <Frame
+        mascot={mascot}
+        step={step}
+        badge={sectionLabel}
+        title={title}
+        lead={lead}
+        tip={tip}
+        accent={ACCENT32}
+        sourceTag={srcTitle}
+      >
+        <div data-lesson-step={id} data-source-id={id} className="space-y-3">
+          <StepBody32 id={id} onGoTest={onGoTest} />
+        </div>
+      </Frame>
+    </div>
   );
 }
 
@@ -91,52 +95,100 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
   const solutionsUnlocked = testChecked || teacherOk;
   const slide = SLIDES[index];
   const progress = useMemo(() => Math.round(((index + 1) / SLIDE_COUNT_32) * 100), [index]);
+  const mainRef = useRef<HTMLElement | null>(null);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
+  const menuRef = useRef<HTMLButtonElement | null>(null);
 
+  const goSlide = useCallback((i: number) => {
+    setIndex(Math.max(0, Math.min(SLIDE_COUNT_32 - 1, i)));
+    setArea("lesson");
+    setDrawer(false);
+  }, []);
+
+  // ---------------- لوحة المفاتيح: تنقّل + Escape ----------------
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && drawer) {
+        setDrawer(false);
+        menuRef.current?.focus?.();
+        return;
+      }
       if (area !== "lesson") return;
       if (isArrowLocked(e.target)) return;
-      if (e.key === "ArrowLeft") setIndex((i) => Math.min(SLIDE_COUNT_32 - 1, i + 1));
-      if (e.key === "ArrowRight") setIndex((i) => Math.max(0, i - 1));
+      // الواجهة RTL: السهم الأيسر = التقدم، والأيمن = الرجوع
+      if (e.key === "ArrowLeft") goSlide(index + 1);
+      if (e.key === "ArrowRight") goSlide(index - 1);
+      if (e.key === "Home") goSlide(0);
+      if (e.key === "End") goSlide(SLIDE_COUNT_32 - 1);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [area]);
+  }, [area, drawer, index, goSlide]);
 
+  // ---------------- التمرير إلى أعلى مع كل خطوة ----------------
   useEffect(() => {
     if (area !== "lesson") return;
     try {
-      const scroller = typeof document !== "undefined" ? document.scrollingElement : null;
-      if (scroller && typeof scroller.scrollTo === "function") scroller.scrollTo({ top: 0, behavior: "smooth" });
+      mainRef.current?.scrollTo?.({ top: 0, behavior: "smooth" });
     } catch {
       /* التمرير غير مدعوم في بيئة الاختبار */
     }
   }, [index, area]);
 
-  const goSlide = (i: number) => { setIndex(i); setArea("lesson"); setDrawer(false); };
+  // ---------------- الدرج: تركيز أولي + حبس Tab ----------------
+  useEffect(() => {
+    if (!drawer) return;
+    const node = drawerRef.current;
+    const focusables = () =>
+      [...(node?.querySelectorAll<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])') ?? [])].filter(
+        (el) => !el.hasAttribute("disabled"),
+      );
+    focusables()[0]?.focus?.();
+    const onTrap = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const items = focusables();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && (active === first || !node?.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", onTrap);
+    return () => window.removeEventListener("keydown", onTrap);
+  }, [drawer]);
 
+  // ---------------- فهرس الخطوات (سكة + درج) ----------------
   const rail = (
-    <nav aria-label="خطوات الدرس" className="space-y-3">
+    <nav aria-label="خطوات الدرس" className="space-y-2.5">
       {SECTIONS_32.map((sec) => {
         const items = SLIDES.map((s, i) => ({ s, i })).filter(({ s }) => s.section === sec.id);
         if (items.length === 0) return null;
+        const current = area === "lesson" && items.some(({ i }) => i === index);
         return (
-          <div key={sec.id}>
-            <p className="mb-1.5 px-1 text-xs font-black text-emerald-900"><Rich text={sec.label} /></p>
+          <div key={sec.id} className="l32-rail-group rounded-2xl border border-transparent p-1.5" aria-current={current ? "true" : undefined}>
+            <p className="l32-rail-group-name mb-1 px-1 text-xs font-black text-[#46507f]"><Rich text={sec.label} /></p>
             <ol className="space-y-1">
               {items.map(({ s, i }) => {
                 const active = i === index && area === "lesson";
+                const done = area === "lesson" && i < index;
                 return (
                   <li key={s.id}>
                     <button
                       type="button"
                       onClick={() => goSlide(i)}
                       aria-current={active ? "step" : undefined}
-                      className={`flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-start text-sm font-bold transition ${active ? "bg-emerald-700 text-white shadow" : "text-slate-600 hover:bg-emerald-50"} ${FOCUS32}`}
+                      data-done={done ? "true" : undefined}
+                      className={`l32-rail-step flex w-full items-center gap-2 rounded-xl border border-transparent px-2 py-1.5 text-start text-[13px] font-bold transition ${active ? "" : "text-[#46507f] hover:bg-white"} ${FOCUS32}`}
                     >
-                      <span aria-hidden>{s.mascot}</span>
+                      <span aria-hidden className="text-base">{s.mascot}</span>
                       <span className="min-w-0 flex-1 truncate"><Rich text={navLabel32(s.title)} /></span>
-                      <span className={`font-en text-[11px] font-black ${active ? "text-emerald-100" : "text-slate-400"}`}>{i + 1}</span>
+                      <span className="font-en shrink-0 text-[11px] font-black opacity-80">{i + 1}</span>
                     </button>
                   </li>
                 );
@@ -145,111 +197,184 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
           </div>
         );
       })}
+      <p className="px-1 pt-1 text-[11px] font-bold text-[#5b6697]">
+        <Rich text={`📜 المصدر: ${SOURCE_NUMBERED_COUNT_32} قسمًا مرقّمًا من ${SOURCE_LEDGER_COUNT_32} قسمًا · ${SOURCE_LINES_32} سطرًا مصدريًا · كل قسم خطوة واحدة، وأسطره معروضة داخل خطوتها.`} />
+      </p>
     </nav>
   );
 
+  const areaLabel = AREAS_32.find((a) => a.id === area)?.ar ?? "";
+
   return (
-    <div className="mx-auto max-w-6xl space-y-4 p-3 sm:p-4">
-      <style>{CSS_32}</style>
-      <div className="flex flex-wrap items-center gap-2">
-        <button type="button" onClick={onExit} className={`rounded-xl bg-slate-100 px-3 py-2 text-sm font-black text-slate-600 transition hover:bg-slate-200 ${FOCUS32}`}>
-          → خروج
-        </button>
-        <button type="button" onClick={() => setDrawer((d) => !d)} aria-expanded={drawer} className={`rounded-xl bg-emerald-700 px-3 py-2 text-sm font-black text-white transition hover:bg-emerald-800 lg:hidden ${FOCUS32}`}>
-          ☰ الخطوات
-        </button>
-        <div className="min-w-0 flex-1">
-          <h1 className="font-head truncate text-lg font-black text-slate-900 md:text-xl"><LatinRuns text={LESSON_TITLE_32} /></h1>
-          <p className="truncate text-xs font-bold text-slate-500"><LatinRuns text={`${LESSON_SUBTITLE_32} · ${LAB_NAME_32}: ${LAB_MOTTO_32}`} /></p>
-        </div>
-      </div>
+    <div className="lesson32 relative flex h-screen flex-col overflow-hidden" data-lesson="32" dir="rtl">
+      <Signature />
+      <SignatureGhost />
+      <div className="l32-bg" aria-hidden />
+      <a href="#l32-main" className={`l32-skip ${FOCUS32}`}><Rich text="تخطَّ إلى محتوى الخطوة" /></a>
 
-      <div className="flex flex-wrap gap-2" role="group" aria-label="مناطق الدرس">
-        {AREAS_32.map((a) => (
-          <button
-            key={a.id}
-            type="button"
-            onClick={() => setArea(a.id)}
-            aria-pressed={area === a.id}
-            className={`flex-1 rounded-2xl border-2 px-3 py-2.5 text-sm font-black transition active:scale-[0.98] sm:flex-none sm:px-5 ${area === a.id ? "border-emerald-700 bg-emerald-700 text-white shadow" : "border-slate-200 bg-white text-slate-600 hover:border-emerald-300"} ${FOCUS32}`}
-          >
-            {a.emoji} {a.ar}
-            {a.id === "solutions" && !solutionsUnlocked && <span aria-label="مقفلة"> 🔒</span>}
-          </button>
-        ))}
-      </div>
-
-      {area === "lesson" && (
-        <div className="flex items-center gap-2 rounded-2xl border-2 border-emerald-100 bg-white px-3 py-2">
-          <span className="text-xs font-black text-emerald-900"><Rich text={`خطوة ${index + 1} من ${SLIDE_COUNT_32}`} /></span>
-          <div role="progressbar" aria-label="تقدم الدرس" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress} className="h-2 min-w-0 flex-1 overflow-hidden rounded-full bg-slate-100">
-            <div className="h-2 rounded-full bg-emerald-600 transition-all" style={{ width: `${progress}%` }} />
+      <div className="l32-shell relative flex min-h-0 flex-1">
+        {/* ---------- السكة الجانبية (شاشات كبيرة) ---------- */}
+        <aside className="l32-rail hidden w-72 shrink-0 flex-col overflow-y-auto lg:flex">
+          <div className="l32-rail-head shrink-0 p-3">
+            <p className="l32-en-display text-[10px] font-black uppercase tracking-[0.22em] text-[#c9f4ff]">
+              <En>{LAB_NAME_32}</En>
+            </p>
+            <h1 className="l32-h mt-0.5 text-[15px] font-black leading-snug text-white">
+              <LatinRuns text={LESSON_TITLE_32} />
+            </h1>
+            <p className="mt-1 text-[11px] font-bold leading-relaxed text-[#e2f6ff]">
+              <LatinRuns text={LESSON_SUBTITLE_32} />
+            </p>
+            <p className="mt-1 text-[11px] font-bold leading-relaxed text-[#d7ecff]">
+              <LatinRuns text={LAB_MOTTO_32} />
+            </p>
           </div>
-          <span className="text-xs font-black text-slate-500"><Rich text={`${progress}٪`} /></span>
-        </div>
-      )}
+          <div className="min-h-0 flex-1 p-2">{rail}</div>
+        </aside>
 
-      {drawer && (
-        <div className="rounded-3xl border-2 border-slate-200 bg-white p-3 lg:hidden">{rail}</div>
-      )}
+        <div className="relative flex min-w-0 flex-1 flex-col">
+          {/* ---------- الرأس المضغوط ---------- */}
+          <header className="l32-header z-20 flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1.5 px-2.5 py-2">
+            <button
+              type="button"
+              ref={menuRef}
+              data-nav-toggle="steps"
+              onClick={() => setDrawer((d) => !d)}
+              aria-expanded={drawer}
+              aria-controls={drawer ? "l32-drawer" : undefined}
+              className={`l32-tap min-h-[40px] px-3 lg:hidden ${FOCUS32}`}
+            >
+              ☰ <span className="text-xs font-black"><Rich text="الخطوات" /></span>
+            </button>
 
-      <div className="grid gap-4 lg:grid-cols-[280px_minmax(0,1fr)]">
-        <aside className="hidden max-h-[80vh] overflow-y-auto rounded-3xl border-2 border-slate-200 bg-white p-3 lg:block">{rail}</aside>
-        <main className="min-w-0 space-y-4">
-          {area === "lesson" && (
-            <div data-area="l32-lesson">
-              <SlideView32
-                key={index}
-                id={slide.id}
-                title={slide.title}
-                lead={slide.lead}
-                tip={slide.tip}
-                step={slide.step}
-                mascot={slide.mascot}
-                section={slide.section}
-                onGoTest={() => setArea("test")}
-              />
-              {/* 🏁 الاختبار النهائي — طبقة نهاية الدرس (تظهر مع الخطوة الأخيرة فقط) */}
-              {index === SLIDE_COUNT_32 - 1 && (
-                <div className="mt-4">
-                  <FinalTest
-                    lesson={32}
-                    questions={FINAL_TESTS[32]}
-                    accent="bg-emerald-700"
-                    onGoTeacher={() => setArea("teacher")}
+            {area === "lesson" && (
+              <div className="flex min-w-0 items-center gap-2">
+                <span className="l32-chip l32-chip-indigo whitespace-nowrap">
+                  <Rich text={`خطوة ${index + 1} من ${SLIDE_COUNT_32}`} />
+                </span>
+                <div role="progressbar" aria-label="تقدّم الدرس" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}
+                  className="l32-progress-track hidden h-2.5 w-28 overflow-hidden rounded-full sm:block md:w-44">
+                  <div className="l32-progress-fill h-full rounded-full transition-all" style={{ width: `${progress}%` }} />
+                </div>
+                <span aria-hidden className="font-en hidden text-[11px] font-black text-[#46507f] sm:block">{progress}%</span>
+              </div>
+            )}
+
+            <span className="hidden min-w-0 flex-1 truncate text-xs font-black text-[#46507f] xl:block">
+              <Rich text={area === "lesson" ? `${SECTIONS_32.find((s) => s.id === slide.section)?.label ?? ""} · ${navLabel32(slide.title)}` : areaLabel} />
+            </span>
+
+            <nav className="order-last flex w-full flex-wrap items-center gap-1.5 md:order-none md:w-auto md:flex-1 md:justify-end" role="group" aria-label="مناطق الدرس">
+              {AREAS_32.map((a) => (
+                <button
+                  key={a.id}
+                  type="button"
+                  data-tab={a.id}
+                  onClick={() => setArea(a.id)}
+                  aria-current={area === a.id ? "true" : undefined}
+                  className={`l32-tab rounded-2xl px-2.5 text-xs font-black sm:px-3.5 sm:text-sm ${FOCUS32}`}
+                >
+                  <span aria-hidden>{a.emoji}</span> <Rich text={a.ar} />
+                  {a.id === "solutions" && !solutionsUnlocked && <span aria-hidden> 🔒</span>}
+                </button>
+              ))}
+            </nav>
+
+            <button type="button" onClick={onExit} className={`l32-tap l32-tap-soft min-h-[40px] px-3 text-xs font-black ${FOCUS32}`}>
+              → <Rich text="خروج" />
+            </button>
+          </header>
+
+          {/* ---------- المحتوى ---------- */}
+          <main id="l32-main" ref={mainRef} className="l32-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-2.5 pb-36 pt-3">
+            <p role="status" aria-live="polite" className="sr-only">
+              <Rich text={area === "lesson" ? `الخطوة ${index + 1} من ${SLIDE_COUNT_32}: ${slide.title}` : areaLabel} />
+            </p>
+            <div className="mx-auto w-full max-w-5xl space-y-3">
+              {area === "lesson" && (
+                <div data-area="l32-lesson" className="space-y-3">
+                  <SlideView32
+                    key={index}
+                    id={slide.id}
+                    title={slide.title}
+                    lead={slide.lead}
+                    tip={slide.tip}
+                    step={slide.step}
+                    mascot={slide.mascot}
+                    section={slide.section}
+                    onGoTest={() => setArea("test")}
                   />
+                  {/* 🏁 الاختبار النهائي — طبقة نهاية الدرس (تظهر مع الخطوة الأخيرة فقط) */}
+                  {index === SLIDE_COUNT_32 - 1 && (
+                    <FinalTest
+                      lesson={32}
+                      questions={FINAL_TESTS[32]}
+                      accent="bg-[#4338ca]"
+                      onGoTeacher={() => setArea("teacher")}
+                    />
+                  )}
                 </div>
               )}
-              <div className="mt-4 flex items-center gap-2">
-                <button type="button" disabled={index === 0} onClick={() => setIndex((i) => Math.max(0, i - 1))}
-                  className={`flex-1 rounded-2xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-black text-slate-700 transition enabled:hover:border-emerald-300 disabled:opacity-30 ${FOCUS32}`}>
-                  → السابق
-                </button>
-                <span className="rounded-xl bg-slate-100 px-3 py-2 text-xs font-black text-slate-500"><span className="font-en">{index + 1}</span> / <span className="font-en">{SLIDE_COUNT_32}</span></span>
-                <button type="button" disabled={index === SLIDE_COUNT_32 - 1} onClick={() => setIndex((i) => Math.min(SLIDE_COUNT_32 - 1, i + 1))}
-                  className={`flex-1 rounded-2xl bg-emerald-700 px-4 py-3 text-sm font-black text-white transition enabled:hover:bg-emerald-800 disabled:opacity-30 ${FOCUS32}`}>
-                  التالي ←
-                </button>
-              </div>
+              {area === "test" && (
+                <div data-area="l32-test">
+                  <TestArea32 onCheckedChange={setTestChecked} onShowSolutions={() => setArea("solutions")} />
+                </div>
+              )}
+              {area === "solutions" && (
+                <div data-area="l32-solutions">
+                  <Solutions32 unlocked={solutionsUnlocked} onGoTest={() => setArea("test")} onGoTeacher={() => setArea("teacher")} />
+                </div>
+              )}
+              {area === "teacher" && (
+                <div data-area="l32-teacher">
+                  <TeacherArea32 unlocked={teacherOk} onUnlockChange={setTeacherOk} onGoSolutions={() => setArea("solutions")} />
+                </div>
+              )}
             </div>
-          )}
-          {area === "test" && <div data-area="l32-test"><TestArea32 onCheckedChange={setTestChecked} onShowSolutions={() => setArea("solutions")} /></div>}
-          {area === "solutions" && (
-            <div data-area="l32-solutions">
-              <Solutions32 unlocked={solutionsUnlocked} onGoTest={() => setArea("test")} onGoTeacher={() => setArea("teacher")} />
-            </div>
-          )}
-          {area === "teacher" && (
-            <div data-area="l32-teacher">
-              <TeacherArea32 unlocked={teacherOk} onUnlockChange={setTeacherOk} onGoSolutions={() => setArea("solutions")} />
-            </div>
-          )}
-        </main>
-      </div>
+          </main>
 
-      <p className="pb-4 text-center text-[11px] font-bold text-slate-400">
-        <Rich text={`📜 المصدر: ${SOURCE_NUMBERED_COUNT_32} قسمًا مرقّمًا · ${SOURCE_LEDGER_COUNT_32} وحدة في السجل · كل وحدة تظهر بعد إتمام تفاعلها — العرض دلالي تفاعلي`} />
-      </p>
+          {/* ---------- التنقّل الطائر (منطقة الدرس فقط) ---------- */}
+          {area === "lesson" && (
+            <>
+              <button type="button" disabled={index === 0} onClick={() => goSlide(index - 1)}
+                className={`l32-fab l32-fab-prev ${FOCUS32}`}>
+                → <Rich text="السابق" />
+              </button>
+              <button type="button" disabled={index === SLIDE_COUNT_32 - 1} onClick={() => goSlide(index + 1)}
+                className={`l32-fab l32-fab-next ${FOCUS32}`}>
+                التالي ←
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* ---------- الدرج (الشاشات الصغيرة) ---------- */}
+        {drawer && (
+          <div className="l32-drawer-scrim lg:hidden" onClick={() => { setDrawer(false); menuRef.current?.focus?.(); }}>
+            <div
+              id="l32-drawer"
+              ref={drawerRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label="خطوات الدرس 32"
+              className="l32-drawer"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="l32-rail-head flex shrink-0 items-start justify-between gap-2 p-3">
+                <div className="min-w-0">
+                  <p className="l32-en-display text-[10px] font-black uppercase tracking-[0.2em] text-[#c9f4ff]"><En>{LAB_NAME_32}</En></p>
+                  <h2 className="l32-h mt-0.5 text-sm font-black leading-snug text-white"><LatinRuns text={LESSON_TITLE_32} /></h2>
+                  <p className="mt-1 text-[11px] font-bold text-[#e2f6ff]"><Rich text={`الخطوة ${index + 1} من ${SLIDE_COUNT_32} · ${progress}٪`} /></p>
+                </div>
+                <button type="button" onClick={() => { setDrawer(false); menuRef.current?.focus?.(); }}
+                  aria-label="إغلاق فهرس الخطوات"
+                  className={`l32-tap min-h-[38px] border-white/40 bg-white/15 px-2.5 text-white ${FOCUS32}`}>✕</button>
+              </div>
+              <div className="l32-scroll min-h-0 flex-1 overflow-y-auto p-2">{rail}</div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

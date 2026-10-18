@@ -1,15 +1,20 @@
 // ============================================================
-// منطقة الاختبار والحلول — الدرس 32
+// منطقة الاختبار والحلول — الدرس 32 · THE DURATION STREAM
 // • 20 سؤالًا جديدًا: 6 Basic · 7 Medium · 4 Advanced · 3 Thinking
-// • محايدة قبل الإرسال: لا ✓/✕ ولا درجة ولا تلميح
-// • بعد الإرسال: الدرجة + الحالة لكل سؤال + فتح منطقة الحلول
-// • إعادة كاملة: تمسح كل الإجابات والدرجة وقفل الحلول
+// • محايدة قبل الإرسال: لا ✓/✕ ولا درجة ولا تلميح — فقط عدّاد «أجبت»
+// • بعد الإرسال: الدرجة + حالة كل سؤال + تلوين الخيارات + فتح الحلول
+// • إعادة كاملة: تمسح الإجابات والدرجة وتقفل الحلول من جديد
+// • الوصول: كل الخيارات عناصر أصلية (radio/checkbox/select/text) فتعمل
+//   لوحة المفاتيح كاملة، وحلقة تركيز واضحة على كل عنصر.
 // ============================================================
 
 import { useMemo, useState, type ReactNode } from "react";
 import { PlatformTag, Rich, En } from "../../shared/lessonKit";
-import { TEST_32, TEST_32_LEVEL_COUNTS, LEVEL_LABEL_32, TEST_32_SOLUTIONS, normalizeTyped32, type TestLevel32, type TestQ32 } from "./testData";
-import { FOCUS32 } from "./kit32";
+import {
+  TEST_32, TEST_32_LEVEL_COUNTS, LEVEL_LABEL_32, TEST_32_SOLUTIONS, normalizeTyped32,
+  type TestLevel32, type TestQ32,
+} from "./testData";
+import { FOCUS32, SourceBadge32 } from "./kit32";
 
 const TYPE_LABEL: Record<TestQ32["type"], string> = {
   single: "اختيار واحد",
@@ -21,11 +26,22 @@ const TYPE_LABEL: Record<TestQ32["type"], string> = {
   typed: "كتابة",
 };
 
-const LEVEL_CLASS: Record<TestLevel32, string> = {
-  basic: "bg-emerald-100 text-emerald-900 border-emerald-300",
-  medium: "bg-amber-100 text-amber-900 border-amber-300",
-  advanced: "bg-sky-100 text-sky-900 border-sky-300",
-  thinking: "bg-rose-100 text-rose-900 border-rose-300",
+const TYPE_ICON: Record<TestQ32["type"], string> = {
+  single: "🎯",
+  tf: "⚖️",
+  multi: "🧺",
+  order: "🧩",
+  match: "🔗",
+  spot: "🔍",
+  typed: "✍️",
+};
+
+const LEVELS: TestLevel32[] = ["basic", "medium", "advanced", "thinking"];
+const LEVEL_AR: Record<TestLevel32, string> = {
+  basic: "الأساس",
+  medium: "التطبيق",
+  advanced: "متقدم",
+  thinking: "تفكير",
 };
 
 type Ans =
@@ -82,11 +98,15 @@ export function isAnswered32(q: TestQ32, a: Ans | undefined): boolean {
   }
 }
 
-function band(score: number): { title: string; text: string } {
-  if (score >= 18) return { title: "أداء متمكّن", text: "تقريبًا كل الأدوات حاضرة. راجع ما أخطأت فيه فقط في الحلول." };
-  if (score >= 14) return { title: "أداء جيد", text: "الأساس ثابت. راجع الأسئلة المتقدمة والتفكير في الحلول." };
-  if (score >= 8) return { title: "أداء متوسط", text: "راجع الخطوات ⑦ و⑪ و⑮ ثم أعد الاختبار." };
-  return { title: "يحتاج دعمًا", text: "ارجع إلى الخطوات ①–⑥ (البناء، for/since) قبل أي محاولة جديدة." };
+/** تغذية راجعة بعد الإرسال: إلى أين يعود الطالب؟ (أرقام الخطوات من فهرس الدرس) */
+function band(score: number): { title: string; text: string; emoji: string } {
+  if (score >= 18)
+    return { emoji: "🌊", title: "أداء متمكّن", text: "التيّار واضح عندك: صيغة ومدة وأثر ومقارنة أزمنة. راجع ما أخطأت فيه فقط في الحلول." };
+  if (score >= 14)
+    return { emoji: "🎨", title: "أداء جيد", text: "الأساس ثابت. راجع «النتيجة أم النشاط؟» (خطوات 16–20) و«نقطة المرجع» (خطوات 26–28)." };
+  if (score >= 8)
+    return { emoji: "⏳", title: "أداء متوسط", text: "راجع for/since (خطوات 7–9) والنفي والسؤال والجواب القصير (خطوات 10–14) ثم أعد الاختبار." };
+  return { emoji: "🧱", title: "يحتاج دعمًا", text: "ابدأ من بناء الصيغة وأدوار أجزائها (خطوات 3–6) قبل أي محاولة جديدة." };
 }
 
 export default function TestArea32({ onCheckedChange, onShowSolutions }: { onCheckedChange: (checked: boolean) => void; onShowSolutions: () => void }) {
@@ -97,6 +117,7 @@ export default function TestArea32({ onCheckedChange, onShowSolutions }: { onChe
 
   const score = useMemo(() => Object.values(resultMap).filter(Boolean).length, [resultMap]);
   const answeredCount = TEST_32.filter((q) => isAnswered32(q, answers[q.n])).length;
+  const answeredPct = Math.round((answeredCount / TEST_32.length) * 100);
 
   const set = (n: number, v: Ans) => setAnswers((a) => ({ ...a, [n]: v }));
   const submit = () => {
@@ -115,54 +136,96 @@ export default function TestArea32({ onCheckedChange, onShowSolutions }: { onChe
   };
 
   return (
-    <div key={key} data-area="l32-test-body" className="space-y-4">
-      <header className="rounded-3xl border-2 border-emerald-200 bg-white p-4">
-        <h2 className="font-head text-xl font-black text-slate-900"><Rich text="🧪 اختبار الدرس 32" /></h2>
-        <p className="mt-1 text-sm font-bold text-slate-600">
-          <Rich text={`20 سؤالًا جديدًا — ${TEST_32_LEVEL_COUNTS.basic} Basic · ${TEST_32_LEVEL_COUNTS.medium} Medium · ${TEST_32_LEVEL_COUNTS.advanced} Advanced · ${TEST_32_LEVEL_COUNTS.thinking} Thinking.`} />
-        </p>
-        <p className="mt-1 text-xs font-bold text-slate-500"><Rich text="الإجابات لا تُصحَّح ولا تظهر حالتها إلا بعد الإرسال." /></p>
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          <span className="rounded-xl bg-slate-100 px-3 py-1.5 text-xs font-black text-slate-700"><Rich text={`أجبت: ${answeredCount}/20`} /></span>
-          {!submitted ? (
-            <button type="button" onClick={submit} className={`rounded-xl bg-emerald-700 px-4 py-2 text-sm font-black text-white hover:bg-emerald-800 ${FOCUS32}`}>
-              📤 <Rich text="إرسال الاختبار" />
-            </button>
-          ) : (
-            <span className="rounded-xl bg-emerald-600 px-3 py-1.5 text-sm font-black text-white"><Rich text={`✓ أُرسل — الدرجة ${score}/20`} /></span>
-          )}
-          <button type="button" onClick={reset} className={`rounded-xl border-2 border-slate-300 bg-white px-4 py-2 text-sm font-black text-slate-700 hover:bg-slate-50 ${FOCUS32}`}>
-            ↺ <Rich text="إعادة الاختبار كاملًا" />
-          </button>
+    <div key={key} data-area="l32-test-body" className="space-y-3">
+      {/* ---------- رأس المنطقة + شريط الحالة ---------- */}
+      <header className="l32-card l32-card-flat overflow-hidden">
+        <div className="bg-[linear-gradient(120deg,#312a8f_0%,#0e7490_55%,#22d3ee_100%)] px-4 py-3 text-white">
+          <h2 className="l32-h text-lg font-black leading-snug text-white">
+            <Rich text="🧪 اختبار الدرس 32 — تيّار المدة" />
+          </h2>
+          <p className="mt-0.5 text-xs font-bold text-[#e2f6ff]">
+            <Rich text={`20 سؤالًا جديدًا · ${TEST_32_LEVEL_COUNTS.basic} Basic · ${TEST_32_LEVEL_COUNTS.medium} Medium · ${TEST_32_LEVEL_COUNTS.advanced} Advanced · ${TEST_32_LEVEL_COUNTS.thinking} Thinking`} />
+          </p>
+        </div>
+        <div className="space-y-2.5 p-3">
+          <p className="text-xs font-bold text-[#46507f]">
+            <Rich text="🔒 لا تصحيح ولا درجة قبل الإرسال — أجب ثم اضغط «إرسال الاختبار». الأسئلة مؤلَّفة للاختبار، وليست نسخًا من تمارين الشرح." />
+          </p>
+
+          {/* خريطة الأسئلة: 20 خانة ملوّنة بمستوى السؤال، تمتلئ عند الإجابة */}
+          <div className="flex flex-wrap items-center gap-1" role="group" aria-label="خريطة الأسئلة">
+            {TEST_32.map((q) => {
+              const done = isAnswered32(q, answers[q.n]);
+              const good = submitted && resultMap[q.n];
+              const bad = submitted && !resultMap[q.n];
+              return (
+                <a
+                  key={q.n}
+                  href={`#l32-q${q.n}`}
+                  aria-label={`الانتقال إلى السؤال ${q.n}${done ? " (مُجاب)" : " (بلا إجابة)"}`}
+                  className={`l32-tier l32-tier-${q.level} l32-map-dot font-en h-8 w-8 justify-center text-xs font-black ${done ? "" : "opacity-45"} ${bad ? "ring-2 ring-[#b91c1c]" : good ? "ring-2 ring-[#15803d]" : ""} ${FOCUS32}`}
+                >
+                  {q.n}
+                </a>
+              );
+            })}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="l32-chip l32-chip-aqua"><Rich text={`أجبت: ${answeredCount}/20`} /></span>
+            <div className="l32-progress-track h-2.5 w-28 overflow-hidden rounded-full sm:w-44" role="progressbar"
+              aria-label="عدد الأسئلة التي أجبت عنها" aria-valuemin={0} aria-valuemax={20} aria-valuenow={answeredCount}>
+              <div className="l32-progress-fill h-full rounded-full transition-all" style={{ width: `${answeredPct}%` }} />
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <button type="button" onClick={submit} className={`l32-tap l32-tap-primary ${FOCUS32}`}>
+                📤 <Rich text="إرسال الاختبار" />
+              </button>
+              <button type="button" onClick={reset} className={`l32-tap l32-tap-soft ${FOCUS32}`}>
+                ↺ <Rich text="إعادة الاختبار كاملًا" />
+              </button>
+            </div>
+            {submitted && (
+              <span className="l32-chip l32-chip-indigo"><Rich text={`✓ أُرسل — ${score}/20`} /></span>
+            )}
+          </div>
         </div>
       </header>
 
+      {/* ---------- النتيجة (بعد الإرسال فقط) ---------- */}
       {submitted && (
-        <section role="status" aria-live="polite" className="rounded-3xl border-2 border-emerald-300 bg-emerald-50 p-4">
-          <p className="text-lg font-black text-emerald-950"><Rich text={`الدرجة: ${score} من 20 — ${band(score).title}`} /></p>
-          <p className="mt-1 text-sm font-bold text-slate-700"><Rich text={band(score).text} /></p>
+        <section role="status" aria-live="polite" className="l32-card l32-card-indigo">
+          <p className="l32-h text-lg font-black text-[#312a8f]">
+            <Rich text={`${band(score).emoji} الدرجة: ${score} من 20 — ${band(score).title}`} />
+          </p>
+          <p className="mt-1 text-sm font-bold text-[#3c4670]"><Rich text={band(score).text} /></p>
           <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {(["basic", "medium", "advanced", "thinking"] as TestLevel32[]).map((lv) => {
+            {LEVELS.map((lv) => {
               const qs = TEST_32.filter((q) => q.level === lv);
-              const ok = qs.filter((q) => resultMap[q.n]).length;
+              const good = qs.filter((q) => resultMap[q.n]).length;
               return (
-                <div key={lv} className="rounded-2xl border-2 border-white bg-white p-2 text-center">
-                  <div className="text-xs font-black text-slate-500">{LEVEL_LABEL_32[lv]}</div>
-                  <div className="font-en text-lg font-black text-slate-900">{ok}/{qs.length}</div>
+                <div key={lv} className={`l32-tier l32-tier-${lv} l32-tier-card`}>
+                  <span dir="ltr" className="font-en text-[11px] font-black uppercase tracking-wider">
+                    <En>{`${LEVEL_LABEL_32[lv]} · ${LEVEL_AR[lv]}`}</En>
+                  </span>
+                  <span className="font-en text-lg font-black">{good}<span className="text-xs opacity-70">/{qs.length}</span></span>
                 </div>
               );
             })}
           </div>
-          <button type="button" onClick={onShowSolutions} className={`mt-3 rounded-xl bg-slate-900 px-4 py-2 text-sm font-black text-white hover:bg-slate-700 ${FOCUS32}`}>
+          <button type="button" onClick={onShowSolutions} className={`l32-tap mt-3 ${FOCUS32}`}>
             🔑 <Rich text="انتقل إلى حلول الاختبار" />
           </button>
         </section>
       )}
 
-      {(["basic", "medium", "advanced", "thinking"] as TestLevel32[]).map((lv) => (
-        <section key={lv} aria-labelledby={`l32-level-${lv}`} className="space-y-3">
-          <h3 id={`l32-level-${lv}`} className={`inline-block rounded-xl border-2 px-3 py-1 text-sm font-black ${LEVEL_CLASS[lv]}`}>
-            <Rich text={`${LEVEL_LABEL_32[lv]} · ${TEST_32_LEVEL_COUNTS[lv]} أسئلة`} />
+      {/* ---------- الأسئلة حسب المستوى ---------- */}
+      {LEVELS.map((lv) => (
+        <section key={lv} aria-labelledby={`l32-level-${lv}`} className="space-y-2.5">
+          <h3 id={`l32-level-${lv}`} className={`l32-tier l32-tier-${lv} l32-tier-lg`}>
+            <span dir="ltr"><En>{LEVEL_LABEL_32[lv]}</En></span>
+            <span aria-hidden>·</span>
+            <Rich text={`${LEVEL_AR[lv]} — ${TEST_32_LEVEL_COUNTS[lv]} أسئلة`} />
           </h3>
           {TEST_32.filter((q) => q.level === lv).map((q) => (
             <QuestionCard
@@ -177,57 +240,97 @@ export default function TestArea32({ onCheckedChange, onShowSolutions }: { onChe
         </section>
       ))}
 
-      <div className="flex flex-wrap items-center gap-2 rounded-3xl border-2 border-slate-200 bg-white p-4">
+      {/* ---------- تذكير الإرسال ---------- */}
+      <div className="l32-card flex flex-wrap items-center gap-2">
         {!submitted ? (
-          <button type="button" onClick={submit} className={`rounded-xl bg-emerald-700 px-4 py-2 text-sm font-black text-white hover:bg-emerald-800 ${FOCUS32}`}>📤 <Rich text="إرسال الاختبار" /></button>
+          <button type="button" onClick={submit} className={`l32-tap l32-tap-primary ${FOCUS32}`}>
+            📤 <Rich text="إرسال الاختبار" />
+          </button>
         ) : (
-          <span className="text-sm font-black text-emerald-800"><Rich text="✓ تم الإرسال." /></span>
+          <span className="l32-chip l32-chip-ok"><Rich text="✓ تم الإرسال — الحالة ظاهرة فوق كل سؤال." /></span>
         )}
-        <span className="text-xs font-bold text-slate-500"><Rich text="«إعادة الاختبار كاملًا» تمسح الإجابات والدرجة وتقفل الحلول من جديد." /></span>
+        <span className="text-xs font-bold text-[#5b6697]">
+          <Rich text="«إعادة الاختبار كاملًا» تمسح الإجابات والدرجة وتقفل الحلول من جديد." />
+        </span>
       </div>
     </div>
   );
 }
 
 // ---------------------------------------------------------------
-// بطاقة السؤال — تحمل كل الأنواع السبعة
+// بطاقة السؤال — تحمل الأنواع السبعة
 // ---------------------------------------------------------------
 function QuestionCard({ q, value, onChange, submitted, correct }: {
   q: TestQ32; value: Ans | undefined; onChange: (v: Ans) => void; submitted: boolean; correct?: boolean;
 }) {
   const id = `l32-q${q.n}`;
+  const answered = isAnswered32(q, value);
+  const verdict = submitted ? (correct ? "correct" : "wrong") : undefined;
   const status: ReactNode = submitted ? (
-    <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-black ${correct ? "bg-emerald-600 text-white" : "bg-rose-600 text-white"}`}>
+    <span className={`l32-chip ${correct ? "l32-chip-ok" : "l32-chip-err"}`}>
       {correct ? "✓ صحيح" : "✕ غير صحيح"}
     </span>
   ) : null;
 
   return (
-    <article id={id} data-test-q={q.n} data-test-type={q.type} className={`rounded-3xl border-2 bg-white p-4 ${submitted ? (correct ? "border-emerald-300" : "border-rose-200") : "border-slate-200"}`}>
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="font-head grid h-8 min-w-8 place-items-center rounded-xl bg-slate-900 px-2 text-sm font-black text-white">{q.n}</span>
-        <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-black text-slate-700"><Rich text={TYPE_LABEL[q.type]} /></span>
+    <article
+      id={id}
+      data-test-q={q.n}
+      data-test-type={q.type}
+      data-answered={answered ? "true" : undefined}
+      data-verdict={verdict}
+      className="l32-q space-y-2"
+    >
+      <div className="flex flex-wrap items-center gap-1.5">
+        <span className="font-en grid h-8 min-w-8 place-items-center rounded-xl bg-[#131b3f] px-2 text-sm font-black text-white">{q.n}</span>
+        <span className="l32-chip"><Rich text={`${TYPE_ICON[q.type]} ${TYPE_LABEL[q.type]}`} /></span>
+        <span className={`l32-tier l32-tier-${q.level}`}><Rich text={LEVEL_AR[q.level]} /></span>
+        <span className="l32-chip l32-chip-aqua"><Rich text={`🎯 ${q.skill}`} /></span>
         {status}
       </div>
-      <p className="mt-2 text-base font-bold leading-relaxed text-slate-900"><Rich text={q.ar} /></p>
-      {"en" in q && q.en && <p dir="ltr" className="ltr-row mt-1 font-en text-base font-bold text-slate-800"><En>{q.en}</En></p>}
-      <div className="mt-3">
-        <Control q={q} value={value} onChange={onChange} id={id} disabled={submitted} />
-      </div>
+
+      <p className="l32-h text-base font-black leading-relaxed text-[#131b3f]"><Rich text={q.ar} /></p>
+      {"en" in q && q.en && (
+        <p dir="ltr" className="ltr-row font-en text-base font-bold text-[#0b5f77]"><En>{q.en}</En></p>
+      )}
+
+      <Control q={q} value={value} onChange={onChange} id={id} disabled={submitted} correct={correct} submitted={submitted} />
+
+      {/* شرح المنصة — يظهر بعد الإرسال فقط */}
+      {submitted && (
+        <div className={`mt-1 rounded-2xl border p-2.5 text-sm ${correct ? "border-[#b6e0c4] bg-[#eaf7ee]" : "border-[#f0d99b] bg-[#fff7e2]"}`}>
+          <p className="mb-1 flex flex-wrap items-center gap-1.5">
+            <PlatformTag />
+            <span dir="rtl" className="l32-h text-xs font-black"><Rich text={correct ? "تثبيت المفهوم" : "شرح التصحيح"} /></span>
+          </p>
+          <p className="font-semibold text-[#3c4670]"><Rich text={q.why} /></p>
+          {q.trap && <p className="mt-1 text-xs font-bold text-[#a32a4c]"><Rich text={`⚠️ الفخ: ${q.trap}`} /></p>}
+        </div>
+      )}
     </article>
   );
 }
 
-function Control({ q, value, onChange, id, disabled }: { q: TestQ32; value: Ans | undefined; onChange: (v: Ans) => void; id: string; disabled: boolean }) {
+/** حالة خيار بعد الإرسال: صحيح / خاطئ / مختار بلا تلوين */
+function optState(picked: boolean, isRight: boolean | undefined, submitted: boolean): string | undefined {
+  if (!submitted) return picked ? "picked" : undefined;
+  if (isRight) return "right";
+  if (picked) return "wrong";
+  return undefined;
+}
+
+function Control({ q, value, onChange, id, disabled, correct, submitted }: {
+  q: TestQ32; value: Ans | undefined; onChange: (v: Ans) => void; id: string; disabled: boolean; correct?: boolean; submitted: boolean;
+}) {
   switch (q.type) {
     case "single":
       return (
         <fieldset className="space-y-2" disabled={disabled}>
-          <legend className="sr-only">اختر الإجابة</legend>
+          <legend className="sr-only"><Rich text="اختر إجابة واحدة" /></legend>
           {q.opts.map((o, i) => (
-            <label key={i} className={`flex cursor-pointer items-center gap-2 rounded-xl border-2 px-3 py-2 text-start ${value === i ? "border-emerald-600 bg-emerald-50" : "border-slate-200 bg-white hover:border-emerald-300"} has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-emerald-400`}>
-              <input type="radio" name={`${id}-r`} checked={value === i} onChange={() => onChange(i)} className="h-4 w-4 accent-emerald-700" />
-              <En className="text-base font-bold text-slate-800">{o}</En>
+            <label key={`${q.n}-${i}`} data-state={optState(value === i, i === q.answer, submitted)} className={`l32-opt ${FOCUS32}`}>
+              <input type="radio" name={`${id}-r`} checked={value === i} onChange={() => onChange(i)} className="h-4 w-4 shrink-0 accent-[#4338ca]" />
+              <span dir="ltr" className="font-en text-base font-bold"><En>{o}</En></span>
             </label>
           ))}
         </fieldset>
@@ -235,10 +338,10 @@ function Control({ q, value, onChange, id, disabled }: { q: TestQ32; value: Ans 
     case "tf":
       return (
         <fieldset className="flex flex-wrap gap-2" disabled={disabled}>
-          <legend className="sr-only">صح أم خطأ</legend>
+          <legend className="sr-only"><Rich text="صح أم خطأ" /></legend>
           {[true, false].map((v) => (
-            <label key={String(v)} className={`cursor-pointer rounded-xl border-2 px-4 py-2 text-sm font-black ${value === v ? "border-emerald-600 bg-emerald-50 text-emerald-900" : "border-slate-200 bg-white text-slate-700 hover:border-emerald-300"} has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-emerald-400`}>
-              <input type="radio" name={`${id}-tf`} checked={value === v} onChange={() => onChange(v)} className="me-2 accent-emerald-700" />
+            <label key={`${q.n}-${String(v)}`} data-state={optState(value === v, v === q.answer, submitted)} className={`l32-opt l32-opt-inline text-sm font-black ${FOCUS32}`}>
+              <input type="radio" name={`${id}-tf`} checked={value === v} onChange={() => onChange(v)} className="accent-[#4338ca]" />
               {v ? "صحيح (True)" : "خطأ (False)"}
             </label>
           ))}
@@ -246,13 +349,14 @@ function Control({ q, value, onChange, id, disabled }: { q: TestQ32; value: Ans 
       );
     case "multi": {
       const cur = (value as number[] | undefined) ?? [];
+      const rights = q.answer;
       return (
         <fieldset className="space-y-2" disabled={disabled}>
-          <legend className="text-xs font-black text-slate-500"><Rich text="اختر كل الإجابات الصحيحة" /></legend>
+          <legend className="text-xs font-black text-[#5b6697]"><Rich text="اختر كل الإجابات الصحيحة" /></legend>
           {q.opts.map((o, i) => (
-            <label key={i} className={`flex cursor-pointer items-center gap-2 rounded-xl border-2 px-3 py-2 ${cur.includes(i) ? "border-emerald-600 bg-emerald-50" : "border-slate-200 bg-white hover:border-emerald-300"} has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-emerald-400`}>
-              <input type="checkbox" checked={cur.includes(i)} onChange={() => onChange(cur.includes(i) ? cur.filter((x) => x !== i) : [...cur, i])} className="h-4 w-4 accent-emerald-700" />
-              <En className="text-base font-bold text-slate-800">{o}</En>
+            <label key={`${q.n}-${i}`} data-state={optState(cur.includes(i), rights.includes(i), submitted)} className={`l32-opt ${FOCUS32}`}>
+              <input type="checkbox" checked={cur.includes(i)} onChange={() => onChange(cur.includes(i) ? cur.filter((x) => x !== i) : [...cur, i])} className="h-4 w-4 shrink-0 accent-[#4338ca]" />
+              <span dir="ltr" className="font-en text-base font-bold"><En>{o}</En></span>
             </label>
           ))}
         </fieldset>
@@ -262,21 +366,30 @@ function Control({ q, value, onChange, id, disabled }: { q: TestQ32; value: Ans 
       const cur = (value as string[] | undefined) ?? [];
       const rest = q.items.filter((it) => !cur.includes(it));
       return (
-        <div className="space-y-2" dir="ltr">
-          <p className="text-xs font-black text-slate-500"><Rich text="اضغط العبارات بالترتيب الصحيح (من الأول إلى الأخير)" /></p>
-          <div className="flex min-h-[2.75rem] flex-wrap gap-1.5 rounded-xl border-2 border-dashed border-emerald-300 bg-white p-2" aria-live="polite" aria-label="الترتيب الحالي">
-            {cur.length === 0 && <span className="text-xs font-bold text-slate-400"><Rich text="لم تُرتَّب بعد" /></span>}
+        <div className="space-y-2" dir="ltr" data-keynav-lock="1">
+          <p dir="rtl" className="text-xs font-black text-[#5b6697]"><Rich text="اضغط العبارات بالترتيب الصحيح (من الأول إلى الأخير)" /></p>
+          <div className="flex min-h-[2.9rem] flex-wrap gap-1.5 rounded-2xl border-2 border-dashed border-[#a9dcea] bg-[#f6fcfe] p-2" aria-live="polite" aria-label="الترتيب الحالي">
+            {cur.length === 0 && <span dir="rtl" className="text-xs font-bold text-[#5b6697]"><Rich text="لم تُرتَّب بعد" /></span>}
             {cur.map((it, i) => (
-              <span key={it} className="font-en rounded-lg bg-emerald-600 px-2 py-1 text-sm font-bold text-white">{i + 1}. {it}</span>
+              <span key={`${q.n}-placed-${i}`} className={`font-en rounded-xl px-2.5 py-1 text-sm font-black text-white ${submitted && it === q.answer[i] ? "bg-[#15803d]" : submitted ? "bg-[#b91c1c]" : "bg-[#0e7490]"}`}>
+                {i + 1}. {it}
+              </span>
             ))}
           </div>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap items-center gap-1.5">
             {rest.map((it) => (
-              <button key={it} type="button" disabled={disabled} onClick={() => onChange([...cur, it])}
-                className={`font-en rounded-lg border-2 border-slate-300 bg-white px-2.5 py-1.5 text-sm font-bold text-slate-800 hover:border-emerald-400 disabled:opacity-50 ${FOCUS32}`}>{it}</button>
+              <button key={`${q.n}-rest-${it}`} type="button" disabled={disabled} onClick={() => onChange([...cur, it])}
+                className={`l32-tap l32-tap-bare font-en text-sm ${FOCUS32}`}>{it}</button>
             ))}
             {cur.length > 0 && !disabled && (
-              <button type="button" onClick={() => onChange([])} className={`rounded-lg bg-slate-100 px-2.5 py-1.5 text-xs font-black text-slate-600 ${FOCUS32}`}><Rich text="↺ مسح الترتيب" /></button>
+              <button type="button" onClick={() => onChange(cur.slice(0, -1))} className={`l32-tap l32-tap-soft text-xs ${FOCUS32}`}>
+                <Rich text="↺ تراجع خطوة" />
+              </button>
+            )}
+            {cur.length > 0 && !disabled && (
+              <button type="button" onClick={() => onChange([])} className={`l32-tap l32-tap-quiet text-xs ${FOCUS32}`}>
+                <Rich text="✕ مسح الترتيب" />
+              </button>
             )}
           </div>
         </div>
@@ -285,19 +398,25 @@ function Control({ q, value, onChange, id, disabled }: { q: TestQ32; value: Ans 
     case "match": {
       const cur = (value as (number | null)[] | undefined) ?? q.left.map(() => null);
       return (
-        <div className="space-y-2">
-          {q.left.map((l, li) => (
-            <div key={li} className="flex flex-wrap items-center gap-2">
-              <En className="min-w-[10rem] rounded-lg bg-slate-50 px-2 py-1 text-sm font-bold text-slate-800">{l}</En>
-              <label className="sr-only" htmlFor={`${id}-m${li}`}>اختر الجملة المقابلة لـ {l}</label>
-              <select id={`${id}-m${li}`} dir="ltr" disabled={disabled} value={cur[li] ?? ""}
-                onChange={(e) => { const next = [...cur]; next[li] = e.target.value === "" ? null : Number(e.target.value); onChange(next); }}
-                className={`font-en min-w-0 flex-1 rounded-xl border-2 border-slate-300 bg-white px-2 py-1.5 text-sm font-bold text-slate-800 ${FOCUS32}`}>
-                <option value="">— اختر —</option>
-                {q.right.map((r, ri) => <option key={ri} value={ri}>{r}</option>)}
-              </select>
-            </div>
-          ))}
+        <div className="space-y-2" data-keynav-lock="1">
+          <p className="text-xs font-black text-[#5b6697]"><Rich text="اختر المقابل الصحيح لكل جملة" /></p>
+          {q.left.map((l, li) => {
+            const good = submitted && cur[li] === q.answer[li];
+            return (
+              <div key={`${q.n}-m${li}`} className="flex flex-wrap items-center gap-2">
+                <span dir="ltr" className={`font-en min-w-[11rem] flex-1 rounded-xl border px-2.5 py-1.5 text-sm font-bold ${submitted ? (good ? "border-[#b6e0c4] bg-[#eaf7ee] text-[#14532d]" : "border-[#f2bcbc] bg-[#fdecec] text-[#7f1414]") : "border-[#d6ddf2] bg-[#f8faff] text-[#0b5f77]"}`}>
+                  <En>{l}</En>
+                </span>
+                <label className="sr-only" htmlFor={`${id}-m${li}`}>اختر المقابل للجملة: {l}</label>
+                <select id={`${id}-m${li}`} dir="ltr" disabled={disabled} value={cur[li] ?? ""}
+                  onChange={(e) => { const next = [...cur]; next[li] = e.target.value === "" ? null : Number(e.target.value); onChange(next); }}
+                  className={`font-en min-w-[11rem] flex-1 rounded-xl border-2 border-[#d6ddf2] bg-white px-2 py-1.5 text-sm font-bold text-[#131b3f] ${FOCUS32}`}>
+                  <option value="">— اختر —</option>
+                  {q.right.map((r, ri) => <option key={`${q.n}-r${ri}`} value={ri}>{r}</option>)}
+                </select>
+              </div>
+            );
+          })}
         </div>
       );
     }
@@ -305,24 +424,35 @@ function Control({ q, value, onChange, id, disabled }: { q: TestQ32; value: Ans 
       const cur = (value as { seg: number | null } | undefined) ?? { seg: null };
       return (
         <fieldset className="space-y-2" disabled={disabled}>
-          <legend className="text-xs font-black text-slate-500"><Rich text="اختر الكلمة الخاطئة من الجملة" /></legend>
-          <div dir="ltr" className="flex flex-wrap gap-1.5">
-            {q.segments.map((s, i) => (
-              <label key={i} className={`font-en cursor-pointer rounded-lg border-2 px-2.5 py-1.5 text-sm font-bold ${cur.seg === i ? "border-rose-500 bg-rose-50 text-rose-900" : "border-slate-200 bg-white text-slate-800 hover:border-rose-300"} has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-emerald-400`}>
-                <input type="radio" name={`${id}-spot`} className="sr-only" checked={cur.seg === i} onChange={() => onChange({ seg: i })} />
-                {s}
-              </label>
-            ))}
+          <legend className="text-xs font-black text-[#5b6697]"><Rich text="اضغط الكلمة الخاطئة في الجملة" /></legend>
+          <div dir="ltr" className="flex flex-wrap gap-1.5" data-keynav-lock="1">
+            {q.segments.map((s, i) => {
+              const picked = cur.seg === i;
+              const state = optState(picked, i === q.answer, submitted);
+              return (
+                <label key={`${q.n}-s${i}`} data-state={state} className={`l32-opt l32-opt-inline font-en text-sm font-bold ${FOCUS32}`}>
+                  <input type="radio" name={`${id}-spot`} className="sr-only" checked={picked} onChange={() => onChange({ seg: i })} />
+                  {s}
+                </label>
+              );
+            })}
           </div>
+          {submitted && <p className="text-xs font-black text-[#0b5f77]"><Rich text={`التصحيح: ${q.fix}`} /></p>}
         </fieldset>
       );
     }
     case "typed":
       return (
-        <div className="flex flex-wrap items-center gap-2">
-          <label htmlFor={`${id}-t`} className="text-xs font-black text-slate-600"><Rich text="اكتب الجواب بالإنجليزية:" /></label>
+        <div className="space-y-1.5" data-keynav-lock="1">
+          <label htmlFor={`${id}-t`} className="text-xs font-black text-[#46507f]"><Rich text="اكتب الجواب بالإنجليزية:" /></label>
           <input id={`${id}-t`} dir="ltr" disabled={disabled} value={(value as string | undefined) ?? ""} onChange={(e) => onChange(e.target.value)}
-            className="font-en min-w-0 flex-1 rounded-xl border-2 border-slate-300 bg-white px-3 py-2 text-base font-bold outline-none focus:border-emerald-500" />
+            placeholder="Type your answer…"
+            className={`font-en w-full rounded-xl border-2 bg-white px-3 py-2 text-base font-bold text-[#131b3f] outline-none ${submitted ? (correct ? "border-[#b6e0c4] bg-[#eaf7ee]" : "border-[#f2bcbc] bg-[#fdecec]") : "border-[#d6ddf2] focus:border-[#0e7490]"} ${FOCUS32}`} />
+          {submitted && (
+            <p className="text-xs font-black text-[#0b5f77]">
+              <Rich text={`الإجابة المقبولة: ${q.accept[0]}`} />
+            </p>
+          )}
         </div>
       );
     default:
@@ -331,43 +461,53 @@ function Control({ q, value, onChange, id, disabled }: { q: TestQ32; value: Ans 
 }
 
 // ---------------------------------------------------------------
-// حلول الاختبار — 20 حلًا مجمّعة كل 5، مقفلة قبل الإرسال
+// حلول الاختبار — 20 حلًا في 4 مجموعات، مقفلة قبل الاستحقاق
 // ---------------------------------------------------------------
 export function Solutions32({ unlocked, onGoTest, onGoTeacher }: { unlocked: boolean; onGoTest: () => void; onGoTeacher: () => void }) {
   if (!unlocked) {
     return (
-      <div className="space-y-3 rounded-3xl border-2 border-slate-300 bg-white p-5" role="region" aria-label="حلول الاختبار مقفلة">
-        <p className="text-lg font-black text-slate-900"><Rich text="🔒 الحلول مقفلة" /></p>
-        <p className="text-sm font-bold text-slate-600"><Rich text="تُفتح بعد إرسال الاختبار. (لا تظهر الإجابات قبل المحاولة.)" /></p>
+      <div className="l32-card space-y-3" role="region" aria-label="حلول الاختبار مقفلة">
+        <p className="l32-h text-lg font-black text-[#312a8f]"><Rich text="🔒 الحلول مقفلة" /></p>
+        <p className="text-sm font-bold text-[#46507f]">
+          <Rich text="تُفتح بعد إرسال الاختبار — لا تظهر أي إجابة أو شرح قبل المحاولة. (أو ادخل من منطقة المعلم.)" />
+        </p>
         <div className="flex flex-wrap gap-2">
-          <button type="button" onClick={onGoTest} className={`rounded-xl bg-emerald-700 px-4 py-2 text-sm font-black text-white ${FOCUS32}`}>← <Rich text="الذهاب إلى الاختبار" /></button>
-          <button type="button" onClick={onGoTeacher} className={`rounded-xl border-2 border-slate-300 bg-white px-4 py-2 text-sm font-black text-slate-700 ${FOCUS32}`}><Rich text="منطقة المعلم" /></button>
+          <button type="button" onClick={onGoTest} className={`l32-tap l32-tap-primary ${FOCUS32}`}>← <Rich text="الذهاب إلى الاختبار" /></button>
+          <button type="button" onClick={onGoTeacher} className={`l32-tap l32-tap-soft ${FOCUS32}`}>👩‍🏫 <Rich text="منطقة المعلم" /></button>
         </div>
       </div>
     );
   }
   const groups = [0, 1, 2, 3].map((g) => TEST_32_SOLUTIONS.slice(g * 5, g * 5 + 5));
   return (
-    <div className="space-y-4" data-area="l32-solutions-body">
-      <header className="rounded-3xl border-2 border-emerald-200 bg-white p-4">
-        <h2 className="font-head text-xl font-black text-slate-900"><Rich text="🔑 حلول الاختبار (20)" /></h2>
-        <p className="mt-1 text-sm font-bold text-slate-600"><Rich text="مجمّعة كل 5 أسئلة. كل حل يشمل الإجابة والسبب والفخّ المحتمل." /></p>
+    <div className="space-y-3" data-area="l32-solutions-body">
+      <header className="l32-card l32-card-indigo space-y-2">
+        <h2 className="l32-h text-lg font-black text-[#312a8f]"><Rich text="🔑 حلول الاختبار (20 سؤالًا)" /></h2>
+        <p className="text-sm font-bold text-[#3c4670]">
+          <Rich text="أربع مجموعات من خمسة أسئلة. كل حل يشمل الإجابة والمهارة ومرجعها في الدرس وشرح المنصة والفخّ المتوقع." />
+        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <SourceBadge32 src={false} />
+          <span className="l32-chip l32-chip-aqua"><Rich text="شرح المنصة — لا نص منقول من المصدر" /></span>
+        </div>
       </header>
       {groups.map((grp, gi) => (
         <section key={gi} aria-labelledby={`l32-sol-g${gi}`} className="space-y-2">
-          <h3 id={`l32-sol-g${gi}`} className="rounded-xl bg-slate-900 px-3 py-1.5 text-sm font-black text-white">
+          <h3 id={`l32-sol-g${gi}`} className="l32-chip l32-chip-indigo l32-chip-lg">
             <Rich text={`المجموعة ${gi + 1}: الأسئلة ${grp[0].n}–${grp[grp.length - 1].n}`} />
           </h3>
           {grp.map((s) => (
-            <article key={s.n} className="rounded-2xl border-2 border-slate-200 bg-white p-3">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="font-head grid h-7 min-w-7 place-items-center rounded-lg bg-emerald-700 px-1.5 text-xs font-black text-white">{s.n}</span>
-                <span className={`rounded-full border px-2 py-0.5 text-[11px] font-black ${LEVEL_CLASS[s.level]}`}><Rich text={LEVEL_LABEL_32[s.level]} /></span>
-                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-black text-slate-700"><Rich text={TYPE_LABEL[s.type]} /></span>
+            <article key={s.n} className="l32-q space-y-1.5">
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="font-en grid h-7 min-w-7 place-items-center rounded-lg bg-[#0e7490] px-1.5 text-xs font-black text-white">{s.n}</span>
+                <span className={`l32-tier l32-tier-${s.level}`}><En>{LEVEL_LABEL_32[s.level]}</En></span>
+                <span className="l32-chip"><Rich text={`${TYPE_ICON[s.type]} ${TYPE_LABEL[s.type]}`} /></span>
+                <span className="l32-chip l32-chip-aqua"><Rich text={`🎯 ${s.skill}`} /></span>
+                <span className="l32-chip l32-chip-gold"><Rich text={s.ref} /></span>
               </div>
-              <p className="mt-2 text-sm font-bold text-slate-900"><Rich text={`الإجابة: ${s.answer}`} /></p>
-              <p className="mt-1 text-sm font-semibold text-slate-700"><PlatformTag /> <Rich text={s.why} /></p>
-              {s.trap && <p className="mt-1 text-xs font-semibold text-rose-800"><Rich text={`⚠️ الفخ: ${s.trap}`} /></p>}
+              <p className="text-sm font-black text-[#131b3f]"><Rich text={`الإجابة: ${s.answer}`} /></p>
+              <p className="text-sm font-semibold text-[#3c4670]"><PlatformTag /> <Rich text={s.why} /></p>
+              {s.trap && <p className="text-xs font-bold text-[#a32a4c]"><Rich text={`⚠️ الفخ: ${s.trap}`} /></p>}
             </article>
           ))}
         </section>
@@ -375,4 +515,3 @@ export function Solutions32({ unlocked, onGoTest, onGoTeacher }: { unlocked: boo
     </div>
   );
 }
-

@@ -2,7 +2,14 @@
 // 🌉 الدرس 31 — Present Perfect · المضارع التام (Native Multi-Step)
 // 🌉 THE PRESENT BRIDGE — جسر الحاضر
 //
-// إعادة بناء أصلية بمعيار الدرس 6 + الدروس 27 · 28 · 29 · 30:
+// إعادة البناء البصرية والتربوية (بروح الدرس 1 + الرأس المختصر للدرس 30):
+// - shell كامل الشاشة: فهرس جانبي + رأس مختصر + تنقّل عائم (نمط الدرس 1)
+// - الرأس لا يكرر عنوان الخطوة ووصفها (مبدأ PR #59 في الدرس 30):
+//   مؤشر خطوة + شريط تقدم + تبويبات المناطق الأربع فقط
+// - هوية لونية وظيفية: 🌉 تركواز = Present Perfect · 📸 مرجاني = Past Simple
+//   · ⏪ بنفسجي = Past Perfect · ⏺ ذهبي = NOW والنتائج الحالية
+// - تفاعلات مميزة: خط زمني تفاعلي · مختبر مقارنة الأزمنة · مختبر بناء
+//   الجملة · لوحة الكلمات الدالة · محلّل Boss/Final Boss
 // - فكرة واحدة لكل خطوة · لا جدران نصوص · التفاعل هو الشرح
 // - سجل المصدر (SOURCE_SECTIONS) = مرجع التغطية والتدقيق فقط،
 //   ولا يُعرض أبدًا كأسطر خام في واجهة الطالب
@@ -12,6 +19,7 @@
 // ============================================================
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import "./lesson31.css";
 import {
   SLIDES as DATA_SLIDES,
   SOURCE_SECTIONS,
@@ -92,9 +100,18 @@ import {
   TEACHER_31_SOLUTIONS,
   TEACHER_31_RUBRICS,
   TEACHER_31_MISTAKES,
+  TIMELINE_LAB_31,
+  COMPARE_LAB_31,
+  BUILDER_SUBJECTS_31,
+  BUILDER_VERBS_31,
+  SIGNAL_WORDS_31,
+  FINAL_BOSS_ANALYSIS_31,
   type Slide31 as Slide31Data,
   type TestQ31,
   type Starter31,
+  type Viewpoint31,
+  type CompareLens31,
+  type SignalWord31,
 } from "./data";
 import { Signature, SignatureGhost } from "../../shared/Signature";
 import { EnAr, LatinRuns } from "../../shared/bidi";
@@ -114,12 +131,85 @@ import {
 import FinalTest, { FinalTestAnswerKey } from "../../shared/finalTest";
 import { FINAL_TESTS } from "../../shared/finalTestBank";
 
+/**
+ * هوية الدرس 31 اللونية — وظيفة تعليمية ثابتة:
+ *   🌉 التركواز/الأزرق المائي = Present Perfect (الزمن البطل)
+ *   📸 المرجاني              = Past Simple (الماضي المنتهي)
+ *   ⏪ البنفسجي              = Past Perfect (الماضي الأقدم)
+ *   ⏺ الذهبي                = NOW والنتائج الحالية
+ */
 const ACCENT31: FrameAccent = {
-  step: "bg-sky-700",
-  badge: "bg-sky-100 text-sky-800",
-  tip: "from-sky-700 to-teal-600",
-  shadow: "shadow-[0_16px_44px_-24px_rgba(3,105,161,0.45)]",
+  step: "bg-teal-700",
+  badge: "bg-teal-50 text-teal-800",
+  tip: "from-teal-800 to-cyan-700",
+  shadow: "shadow-[0_16px_44px_-24px_rgba(15,118,110,0.5)]",
 };
+
+/** لوحة الألوان الدلالية للأزمنة — تُستخدم في كل المختبرات والمقارنات. */
+const TENSE_TONE_31: Record<string, { chip: string; soft: string; text: string; line: string; bar: string; ring: string }> = {
+  pp: {
+    chip: "bg-teal-700 text-white",
+    soft: "border-teal-300 bg-teal-50",
+    text: "text-teal-900",
+    line: "border-teal-300",
+    bar: "bg-teal-600",
+    ring: "ring-teal-300",
+  },
+  ps: {
+    chip: "bg-orange-600 text-white",
+    soft: "border-orange-300 bg-orange-50",
+    text: "text-orange-900",
+    line: "border-orange-300",
+    bar: "bg-orange-500",
+    ring: "ring-orange-300",
+  },
+  pperf: {
+    chip: "bg-violet-700 text-white",
+    soft: "border-violet-300 bg-violet-50",
+    text: "text-violet-900",
+    line: "border-violet-300",
+    bar: "bg-violet-600",
+    ring: "ring-violet-300",
+  },
+  pc: {
+    chip: "bg-cyan-600 text-white",
+    soft: "border-cyan-300 bg-cyan-50",
+    text: "text-cyan-900",
+    line: "border-cyan-300",
+    bar: "bg-cyan-500",
+    ring: "ring-cyan-300",
+  },
+  now: {
+    chip: "bg-amber-600 text-white",
+    soft: "border-amber-300 bg-amber-50",
+    text: "text-amber-900",
+    line: "border-amber-300",
+    bar: "bg-amber-500",
+    ring: "ring-amber-300",
+  },
+};
+
+/** مفتاح الزمن النصي → مفتاح اللوحة اللونية. */
+function tenseToneKey31(tense: string): keyof typeof TENSE_TONE_31 {
+  if (tense === "Past Simple") return "ps";
+  if (tense === "Past Perfect") return "pperf";
+  if (tense === "Past Continuous") return "pc";
+  return "pp";
+}
+
+/** شارة زمن موحّدة — اللون نفسه في الشرح والأمثلة والتفاعلات والاختبار. */
+function TenseTag31({ tense, emoji, size = "md" }: { tense: string; emoji?: string; size?: "sm" | "md" }) {
+  const tone = TENSE_TONE_31[tenseToneKey31(tense)];
+  return (
+    <span
+      dir="ltr"
+      className={`ltr-pair inline-flex items-center gap-1.5 rounded-xl font-black ${tone.chip} ${size === "sm" ? "px-2.5 py-1 text-[11px]" : "px-3 py-1.5 text-xs"}`}
+    >
+      {emoji && <span aria-hidden>{emoji}</span>}
+      <En>{tense}</En>
+    </span>
+  );
+}
 
 // ---------------- سجل الخطوات (من data.ts) ----------------
 export type Slide31 = Slide31Data & { no: number };
@@ -158,10 +248,10 @@ const ARABIC_ORD_31: Record<number, string> = {
 // ---------------- العدسات الزمنية الموحّدة ----------------
 export type Lens31 = "ps" | "present" | "pperf" | "pc";
 const LENS_META_31: Record<Lens31, { emoji: string; tag: string; ar: string; chip: string; soft: string; text: string; ring: string; bar: string }> = {
-  ps: { emoji: "📸", tag: "PAST SIMPLE", ar: "حدث ماضٍ انتهى", chip: "bg-orange-500 text-white", soft: "border-orange-200 bg-orange-50", text: "text-orange-900", ring: "ring-orange-300", bar: "bg-orange-400" },
-  present: { emoji: "🌉", tag: "PRESENT PERFECT", ar: "ماضٍ مرتبط بالحاضر", chip: "bg-sky-700 text-white", soft: "border-sky-200 bg-sky-50", text: "text-sky-900", ring: "ring-sky-300", bar: "bg-sky-600" },
-  pperf: { emoji: "⏪", tag: "PAST PERFECT", ar: "قبل حدث ماضٍ آخر", chip: "bg-violet-700 text-white", soft: "border-violet-200 bg-violet-50", text: "text-violet-900", ring: "ring-violet-300", bar: "bg-violet-500" },
-  pc: { emoji: "🎥", tag: "PAST CONTINUOUS", ar: "كان يحدث في لحظة ماضية", chip: "bg-cyan-600 text-white", soft: "border-cyan-200 bg-cyan-50", text: "text-cyan-900", ring: "ring-cyan-300", bar: "bg-cyan-500" },
+  ps: { emoji: "📸", tag: "PAST SIMPLE", ar: "حدث ماضٍ انتهى", chip: "bg-orange-600 text-white", soft: "border-orange-300 bg-orange-50", text: "text-orange-900", ring: "ring-orange-300", bar: "bg-orange-500" },
+  present: { emoji: "🌉", tag: "PRESENT PERFECT", ar: "ماضٍ مرتبط بالحاضر", chip: "bg-teal-700 text-white", soft: "border-teal-300 bg-teal-50", text: "text-teal-900", ring: "ring-teal-300", bar: "bg-teal-600" },
+  pperf: { emoji: "⏪", tag: "PAST PERFECT", ar: "قبل حدث ماضٍ آخر", chip: "bg-violet-700 text-white", soft: "border-violet-300 bg-violet-50", text: "text-violet-900", ring: "ring-violet-300", bar: "bg-violet-600" },
+  pc: { emoji: "🎥", tag: "PAST CONTINUOUS", ar: "كان يحدث في لحظة ماضية", chip: "bg-cyan-600 text-white", soft: "border-cyan-300 bg-cyan-50", text: "text-cyan-900", ring: "ring-cyan-300", bar: "bg-cyan-500" },
 };
 const LENSES_31: Lens31[] = ["ps", "present", "pperf", "pc"];
 
@@ -181,7 +271,7 @@ function LensChip31({ lens, active, onClick, size = "md" }: { lens: Lens31; acti
       onClick={onClick}
       aria-pressed={active === true}
       className={`inline-flex items-center gap-1.5 rounded-xl font-black transition active:scale-95 ${cls} ${
-        active ? `${v.chip} ring-2 ${v.ring}` : "border-2 border-slate-200 bg-white text-slate-600 hover:border-sky-300"
+        active ? `${v.chip} ring-2 ${v.ring}` : "border-2 border-slate-200 bg-white text-slate-600 hover:border-teal-300"
       }`}
     >
       {inner}
@@ -194,10 +284,10 @@ function LensChip31({ lens, active, onClick, size = "md" }: { lens: Lens31; acti
 /** مختبر بصري تفاعلي — يحمل هوية data-en-seq للتدقيق. */
 function Lab({ emoji, label, ar, children, seq }: { emoji: string; label: string; ar?: string; children: ReactNode; seq?: string }) {
   return (
-    <div data-en-seq={seq} className="rounded-3xl border-2 border-sky-200 bg-gradient-to-br from-sky-50 via-teal-50 to-amber-50/70 p-3.5 sm:p-4">
-      <div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-sky-100 bg-white px-3 py-2">
+    <div data-en-seq={seq} className="l31-lab rounded-3xl border-2 border-teal-200 p-3.5 sm:p-4">
+      <div className="l31-lab-head mb-3 flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-teal-100 bg-white px-3 py-2">
         <span className="text-xl" aria-hidden>{emoji}</span>
-        <EnAr en={label} ar={ar} enClassName="text-[11px] font-black uppercase tracking-[0.16em] text-sky-700" arClassName="text-sm font-bold text-slate-600" />
+        <EnAr en={label} ar={ar} enClassName="text-[11px] font-black uppercase tracking-[0.16em] text-teal-700" arClassName="text-sm font-bold text-slate-600" />
       </div>
       {children}
     </div>
@@ -207,7 +297,7 @@ function Lab({ emoji, label, ar, children, seq }: { emoji: string; label: string
 /** شرح إضافي من المنصة — يُوسم دائمًا بشارة Platform Explanation. */
 function PlatformPanel({ title, children }: { title?: string; children: ReactNode }) {
   return (
-    <div className="space-y-1.5 rounded-3xl border-2 border-amber-300 bg-amber-50 p-3.5">
+    <div className="l31-platform-panel space-y-1.5 rounded-3xl border-2 border-amber-300 bg-amber-50 p-3.5">
       <div dir="ltr" className="ltr-pair flex flex-wrap items-center gap-2">
         <PlatformTag />
         {title && (
@@ -224,7 +314,7 @@ function PlatformPanel({ title, children }: { title?: string; children: ReactNod
 /** رقعة كشف — تظهر بعد إتمام المحاولة (ملخص المصدر الحرفي). */
 function SourceReveal({ seq, children }: { seq: string; children: ReactNode }) {
   return (
-    <div data-reveal-block={seq} className="space-y-1.5 rounded-3xl border-2 border-emerald-200 bg-emerald-50/60 p-3">
+    <div data-reveal-block={seq} className="l31-completion-note space-y-1.5 rounded-3xl border-2 border-emerald-200 bg-emerald-50/60 p-3">
       {children}
     </div>
   );
@@ -279,6 +369,812 @@ function BridgeTrack({ active = "link", segs }: { active?: string; segs?: { key:
       <div className="mt-1.5 flex justify-between text-[10px] font-black text-slate-400">
         <En>BEFORE NOW</En>
         <En>NOW</En>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// التفاعل (أ) — الخط الزمني التفاعلي: زاويتا النظر إلى الحدث نفسه
+//
+// الفكرة التربوية: الطالب يبدّل بين «I lost my keys yesterday.» و
+// «I have lost my keys.» فيشاهد على الخط نفسه كيف تتغير زاوية النظر:
+//   📸 الماضي المنتهي → نقطة X ثابتة عند أمس، ولا جسر إلى NOW
+//   🌉 الماضي المرتبط → نقطة X قبل الآن + جسر يصل إلى NOW + نتيجة حية
+// ============================================================
+
+function TimelineLab31({ seq, onView }: { seq: string; onView?: (id: string) => void }) {
+  const [active, setActive] = useState<Viewpoint31["id"]>("linked");
+  const view = TIMELINE_LAB_31.find((v) => v.id === active) ?? TIMELINE_LAB_31[1];
+  const linked = view.id === "linked";
+  const tone = linked ? TENSE_TONE_31.pp : TENSE_TONE_31.ps;
+
+  const pick = (id: Viewpoint31["id"]) => {
+    setActive(id);
+    onView?.(id);
+  };
+
+  return (
+    <div data-en-seq={seq} className="space-y-3">
+      {/* اختيار زاوية النظر — زرّان كبيران بحالة pressed واضحة */}
+      <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="زاويتا النظر إلى الحدث">
+        {TIMELINE_LAB_31.map((v) => {
+          const on = v.id === active;
+          const t = v.id === "linked" ? TENSE_TONE_31.pp : TENSE_TONE_31.ps;
+          return (
+            <button
+              key={v.id}
+              type="button"
+              data-viewpoint={v.id}
+              aria-pressed={on}
+              onClick={() => pick(v.id)}
+              className={`l31-viewpoint rounded-2xl border-2 p-3 text-right transition active:scale-[0.99] ${
+                on ? `${t.soft} ring-2 ${t.ring}` : "border-slate-200 bg-white hover:border-teal-300"
+              }`}
+            >
+              <div className="flex flex-wrap items-center gap-2">
+                <TenseTag31 tense={v.tense} emoji={v.id === "linked" ? "🌉" : "📸"} size="sm" />
+                {on && <span className="text-xs font-black text-teal-800">✓ مُختارة</span>}
+              </div>
+              <En className={`mt-2 block text-base font-black md:text-lg ${on ? "text-slate-900" : "text-slate-700"}`}>{v.en}</En>
+              <Rich text={v.ar} className="mt-0.5 block text-xs font-bold text-slate-500" />
+            </button>
+          );
+        })}
+      </div>
+
+      {/* الخط الزمني نفسه — يتغير مع زاوية النظر */}
+      <div className="l31-track rounded-2xl border-2 p-3.5">
+        <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+          <span className="text-[11px] font-black uppercase tracking-[0.14em] text-slate-500">
+            <En>Timeline</En> — <Rich text="الخط الزمني" />
+          </span>
+          <span aria-live="polite" className={`rounded-full px-2.5 py-0.5 text-[11px] font-black ${linked ? "bg-amber-100 text-amber-900" : "bg-slate-100 text-slate-600"}`}>
+            <Rich text={linked ? "الجسر مفتوح: الحدث يصل إلى NOW" : "لا جسر: الحدث بقي في الماضي"} />
+          </span>
+        </div>
+
+        <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row l31-track-line">
+          {/* الجسر — يظهر فقط مع Present Perfect */}
+          <div
+            className="l31-track-bridge"
+            style={{ width: linked ? "78%" : "0%" }}
+            aria-hidden
+          />
+          {/* منطقة النتيجة الحالية قرب NOW */}
+          <div className={`l31-track-nowzone ${linked ? "" : "opacity-25"}`} aria-hidden />
+
+          {/* نقطة الحدث X */}
+          <div className="l31-track-marker" style={{ left: linked ? "26%" : "34%" }}>
+            <span
+              className={`grid h-9 min-w-9 place-items-center rounded-full px-1.5 text-[10px] font-black text-white shadow-md ${linked ? "bg-teal-700" : "bg-orange-600"}`}
+            >
+              <En>X</En>
+            </span>
+            <span className={`mt-1 block whitespace-nowrap text-center text-[10px] font-black ${linked ? "text-teal-900" : "text-orange-900"}`}>
+              <Rich text={view.markerLabel} />
+            </span>
+          </div>
+
+          {/* نقطة NOW */}
+          <div className="l31-track-now">
+            <span className={`l31-now-pulse grid h-10 min-w-10 place-items-center rounded-full bg-amber-500 px-1.5 text-[10px] font-black text-white shadow-md ${linked ? "" : "opacity-40"}`}>
+              <En>NOW</En>
+            </span>
+            <span className={`mt-1 block whitespace-nowrap text-center text-[10px] font-black ${linked ? "text-amber-900" : "text-slate-400"}`}>
+              <Rich text={linked ? "النتيجة هنا" : "بلا صلة"} />
+            </span>
+          </div>
+        </div>
+
+        <div dir="ltr" className="ltr-row mt-1.5 flex justify-between text-[10px] font-black text-slate-400">
+          <En>PAST</En>
+          <En>the moment we speak</En>
+        </div>
+      </div>
+
+      {/* القراءة: السؤال الذي تجيب عنه الجملة + النتيجة الحالية */}
+      <div key={view.id} className={`tada grid gap-2 sm:grid-cols-2 ${tone.soft} rounded-2xl border-2 p-3`}>
+        <div>
+          <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500">
+            <Rich text="السؤال الذي تجيب عنه الجملة" />
+          </p>
+          <Rich text={view.question} className={`mt-1 block text-sm font-black ${tone.text}`} />
+          <div dir="ltr" className="ltr-row mt-1.5">
+            <En className="rounded-xl bg-white px-2.5 py-1 text-sm font-black text-slate-800">{view.answer}</En>
+          </div>
+        </div>
+        <div>
+          <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500">
+            <Rich text="النتيجة في هذه اللحظة" />
+          </p>
+          <Rich text={view.resultNow} className={`mt-1 block text-sm font-black ${linked ? "text-amber-900" : "text-slate-600"}`} />
+          <div className="mt-1.5 flex flex-wrap gap-1.5">
+            <span className={`rounded-lg px-2 py-0.5 text-[11px] font-black ${linked ? "bg-amber-100 text-amber-900" : "bg-slate-100 text-slate-500"}`}>
+              {linked ? "⏺ مرتبطة بـ NOW" : "○ منفصلة عن NOW"}
+            </span>
+            <span className={`rounded-lg px-2 py-0.5 text-[11px] font-black ${linked ? "bg-teal-100 text-teal-900" : "bg-orange-100 text-orange-900"}`}>
+              {linked ? "🌉 وقت غير محدد" : "📸 وقت محدد ومنتهٍ"}
+            </span>
+          </div>
+        </div>
+        <div className="sm:col-span-2">
+          <Rich text={view.reading} className="block text-sm font-bold leading-relaxed text-slate-700" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// التفاعل (ب) — مختبر مقارنة الأزمنة: ثنائية ثم ثلاثية
+//
+// الطالب يختار الزمن، فيتغير الشرح والمثال والخط الزمني. زر «أضف
+// Past Perfect» يرفع المقارنة من ثنائية إلى ثلاثية — والأمثلة
+// الأصلية من المصدر تبقى معروضة دائمًا أسفل المختبر.
+// ============================================================
+
+function CompareLab31({ seq, onExplore }: { seq: string; onExplore?: (count: number) => void }) {
+  const [triple, setTriple] = useState(false);
+  const [lens, setLens] = useState<CompareLens31["id"]>("pp");
+  const [seen, setSeen] = useState<Record<string, boolean>>({ pp: true });
+  const lenses = triple ? COMPARE_LAB_31 : COMPARE_LAB_31.filter((l) => l.id !== "pperf");
+  const active = lenses.find((l) => l.id === lens) ?? lenses[0];
+  const tone = TENSE_TONE_31[tenseToneKey31(active.tense)];
+  const seenCount = Object.values(seen).filter(Boolean).length;
+
+  useEffect(() => {
+    onExplore?.(seenCount);
+  }, [seenCount, onExplore]);
+
+  const choose = (id: CompareLens31["id"]) => {
+    setLens(id);
+    setSeen((prev) => ({ ...prev, [id]: true }));
+  };
+
+  return (
+    <div data-en-seq={seq} className="space-y-3">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap gap-2" role="group" aria-label="عدسات الأزمنة">
+          {lenses.map((l) => {
+            const on = l.id === active.id;
+            const t = TENSE_TONE_31[l.id === "pp" ? "pp" : l.id === "ps" ? "ps" : "pperf"];
+            return (
+              <button
+                key={l.id}
+                type="button"
+                data-lens-pick={l.id}
+                aria-pressed={on}
+                onClick={() => choose(l.id)}
+                className={`l31-lens-btn inline-flex items-center gap-1.5 rounded-xl border-2 px-3 py-2 text-xs font-black transition active:scale-95 ${
+                  on ? `${t.chip} border-transparent ring-2 ${t.ring}` : "border-slate-200 bg-white text-slate-600 hover:border-teal-300"
+                }`}
+              >
+                <span aria-hidden>{l.emoji}</span>
+                <En>{l.tag}</En>
+              </button>
+            );
+          })}
+        </div>
+        <button
+          type="button"
+          data-triple-toggle
+          aria-pressed={triple}
+          onClick={() => {
+            setTriple((v) => !v);
+            if (!triple) setLens("pperf"), setSeen((prev) => ({ ...prev, pperf: true }));
+            else setLens("pp");
+          }}
+          className={`rounded-xl border-2 px-3 py-2 text-xs font-black transition active:scale-95 ${
+            triple ? "border-violet-400 bg-violet-700 text-white" : "border-slate-200 bg-white text-slate-600 hover:border-violet-300"
+          }`}
+        >
+          {triple ? "⏪ إخفاء Past Perfect" : "⏪ أضف Past Perfect — مقارنة ثلاثية"}
+        </button>
+      </div>
+
+      {/* لوحة الشرح — تتبدل مع الزمن المختار */}
+      <div key={active.id} className={`l31-lens-panel tada rounded-2xl border-2 p-3.5 ${tone.soft}`}>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-2xl" aria-hidden>{active.emoji}</span>
+          <TenseTag31 tense={active.tense} />
+          <Rich text={active.ar} className={`text-sm font-black ${tone.text}`} />
+        </div>
+        <div className="mt-2.5 grid gap-2 sm:grid-cols-2">
+          <div className="rounded-xl bg-white/85 p-2.5">
+            <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="يركّز على" /></p>
+            <Rich text={active.focus} className="mt-0.5 block text-sm font-bold text-slate-800" />
+            <p className="mt-2 text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="القاعدة العملية" /></p>
+            <Rich text={active.rule} className="mt-0.5 block text-sm font-bold text-slate-700" />
+          </div>
+          <div className="rounded-xl bg-white/85 p-2.5">
+            <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="السؤال الكاشف" /></p>
+            <Rich text={active.probe} className="mt-0.5 block text-sm font-black text-slate-800" />
+            <Rich text={active.probeAnswer} className="mt-0.5 block text-sm font-bold text-slate-600" />
+            <div dir="ltr" className="ltr-row mt-2 rounded-lg bg-slate-900 p-2">
+              <En className="block text-[11px] font-black leading-relaxed text-white">{active.timeline}</En>
+            </div>
+          </div>
+        </div>
+        <div className="mt-2.5 rounded-xl border-2 border-white/70 bg-white p-2.5">
+          <En className="block text-base font-black text-slate-900 md:text-lg">{active.example}</En>
+          <Rich text={active.exampleAr} className="mt-0.5 block text-sm font-bold text-slate-600" />
+        </div>
+      </div>
+
+      <div aria-live="polite" className="rounded-xl bg-slate-100 px-3 py-2 text-center text-xs font-black text-slate-600">
+        <Rich text={`استكشفت ${seenCount} من ${COMPARE_LAB_31.length} أزمنة${triple ? " — المقارنة ثلاثية" : " — المقارنة ثنائية"}`} />
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// التفاعل (ج) — مختبر بناء الجملة: Subject + have/has + V3
+//
+// الطالب يختار الفاعل ← يقرر المساعد (have/has) ← يتحقق من صيغة V3
+// (الفخ: V2 المعروض كخيار خاطئ) ← ثم يبدّل بين الإثبات والنفي والسؤال.
+// ============================================================
+
+function BuilderLab31({ seq, onBuilt }: { seq: string; onBuilt?: (count: number) => void }) {
+  const [subjIdx, setSubjIdx] = useState<number | null>(null);
+  const [verbIdx, setVerbIdx] = useState<number | null>(null);
+  const [helperPick, setHelperPick] = useState<"have" | "has" | null>(null);
+  const [formPick, setFormPick] = useState<"v3" | "v2" | "base" | null>(null);
+  const [mode, setMode] = useState<"pos" | "neg" | "q">("pos");
+  const [built, setBuilt] = useState<Record<string, boolean>>({});
+
+  const subj = subjIdx === null ? null : BUILDER_SUBJECTS_31[subjIdx];
+  const verb = verbIdx === null ? null : BUILDER_VERBS_31[verbIdx];
+  const helperOk = subj !== null && helperPick === subj.helper;
+  const formOk = formPick === "v3";
+  const complete = subj !== null && verb !== null && helperOk && formOk;
+  const builtCount = Object.values(built).filter(Boolean).length;
+
+  useEffect(() => {
+    if (complete) {
+      const key = `${subjIdx}-${verbIdx}-${mode}`;
+      setBuilt((prev) => (prev[key] ? prev : { ...prev, [key]: true }));
+    }
+  }, [complete, subjIdx, verbIdx, mode]);
+
+  useEffect(() => {
+    onBuilt?.(builtCount);
+  }, [builtCount, onBuilt]);
+
+  const reset = () => {
+    setSubjIdx(null);
+    setVerbIdx(null);
+    setHelperPick(null);
+    setFormPick(null);
+    setMode("pos");
+  };
+
+  /** الجملة النهائية بحسب الوضع: إثبات · نفي · سؤال */
+  const sentence = (() => {
+    if (!subj || !verb || !helperOk || !formOk) return null;
+    const v3 = verb.v3;
+    if (mode === "pos") return `${subj.en} ${subj.helper} ${v3} ${verb.object}.`;
+    if (mode === "neg") return `${subj.en} ${subj.helper === "has" ? "hasn't" : "haven't"} ${v3} ${verb.object}.`;
+    return `${subj.helper === "has" ? "Has" : "Have"} ${subj.en} ${v3} ${verb.object}?`;
+  })();
+
+  const slot = (label: string, value: ReactNode, filled: boolean, toneKey: string) => {
+    const t = TENSE_TONE_31[toneKey] ?? TENSE_TONE_31.pp;
+    return (
+      <div className={`l31-build-slot flex min-w-0 flex-1 flex-col items-center justify-center rounded-2xl border-2 p-2 text-center ${filled ? `filled ${t.soft}` : "border-slate-300 bg-slate-50"}`}>
+        <span className="text-[10px] font-black uppercase tracking-[0.1em] text-slate-400">
+          <En>{label}</En>
+        </span>
+        <span className={`mt-1 text-sm font-black md:text-base ${filled ? "text-slate-900" : "text-slate-300"}`}>
+          {filled ? value : <En>…</En>}
+        </span>
+      </div>
+    );
+  };
+
+  return (
+    <div data-en-seq={seq} className="space-y-3">
+      {/* ① الفاعل */}
+      <div className="rounded-2xl border-2 border-teal-100 bg-white p-3">
+        <div className="mb-2 flex items-center gap-2">
+          <Nub n={1} className="bg-teal-700" />
+          <Rich text="اختر الفاعل" className="text-sm font-black text-slate-700" />
+          <span className="text-[11px] font-bold text-slate-400"><En>Subject</En></span>
+        </div>
+        <div dir="ltr" className="ltr-row flex flex-wrap gap-2">
+          {BUILDER_SUBJECTS_31.map((sb, i) => (
+            <button
+              key={sb.en}
+              type="button"
+              data-build-subject={sb.en}
+              aria-pressed={subjIdx === i}
+              onClick={() => { setSubjIdx(i); setHelperPick(null); }}
+              className={`l31-build-chip rounded-xl border-2 px-3 py-1.5 text-sm font-black transition ${
+                subjIdx === i ? "border-transparent bg-teal-700 text-white ring-2 ring-teal-300" : "border-slate-200 bg-white text-slate-700 hover:border-teal-300"
+              }`}
+            >
+              <En>{sb.en}</En>
+            </button>
+          ))}
+        </div>
+        {subj && <Rich text={subj.ar} className="mt-1.5 block text-xs font-bold text-slate-500" />}
+      </div>
+
+      {/* ② المساعد have/has */}
+      <div className="rounded-2xl border-2 border-teal-100 bg-white p-3">
+        <div className="mb-2 flex items-center gap-2">
+          <Nub n={2} className="bg-teal-700" />
+          <Rich text="اختر المساعد الصحيح" className="text-sm font-black text-slate-700" />
+          <span className="text-[11px] font-bold text-slate-400"><En>have / has</En></span>
+        </div>
+        <div dir="ltr" className="ltr-row flex flex-wrap gap-2">
+          {(["have", "has"] as const).map((h) => {
+            const on = helperPick === h;
+            const right = subj !== null && h === subj.helper;
+            const wrong = on && !right;
+            return (
+              <button
+                key={h}
+                type="button"
+                data-build-helper={h}
+                disabled={subj === null}
+                aria-pressed={on}
+                onClick={() => setHelperPick(h)}
+                className={`l31-build-chip rounded-xl border-2 px-4 py-2 text-base font-black transition disabled:cursor-not-allowed disabled:opacity-30 ${
+                  wrong ? "border-rose-400 bg-rose-600 text-white" : on ? "border-transparent bg-teal-700 text-white ring-2 ring-teal-300" : "border-slate-200 bg-white text-slate-700 hover:border-teal-300"
+                }`}
+              >
+                <En>{h}</En>
+              </button>
+            );
+          })}
+        </div>
+        {helperPick !== null && subj !== null && (
+          <p className={`mt-2 text-sm font-bold ${helperOk ? "text-emerald-700" : "text-rose-600"}`}>
+            {helperOk
+              ? <span className="tada inline-block">✓ <Rich text={`مع ${subj.en} نستخدم ${subj.helper} — القاعدة: I/You/We/They → have · He/She/It → has.`} /></span>
+              : <span>✕ <Rich text={`ليس ${helperPick} — مع ${subj.en} المساعد الصحيح هو ${subj.helper}.`} /></span>}
+          </p>
+        )}
+        {subj === null && <p className="mt-2 text-xs font-bold text-slate-400"><Rich text="اختر الفاعل أولًا ليصبح المساعد قابلًا للاختيار." /></p>}
+      </div>
+
+      {/* ③ صيغة الفعل — الفخ: V2 */}
+      <div className="rounded-2xl border-2 border-teal-100 bg-white p-3">
+        <div className="mb-2 flex items-center gap-2">
+          <Nub n={3} className="bg-teal-700" />
+          <Rich text="اختر الفعل واكشف الصيغة المطلوبة بعد المساعد" className="text-sm font-black text-slate-700" />
+          <span className="text-[11px] font-bold text-slate-400"><En>V3</En></span>
+        </div>
+        <div dir="ltr" className="ltr-row flex flex-wrap gap-2">
+          {BUILDER_VERBS_31.map((vb, i) => (
+            <button
+              key={vb.base}
+              type="button"
+              data-build-verb={vb.base}
+              aria-pressed={verbIdx === i}
+              onClick={() => { setVerbIdx(i); setFormPick(null); }}
+              className={`l31-build-chip rounded-xl border-2 px-3 py-1.5 text-sm font-black transition ${
+                verbIdx === i ? "border-transparent bg-violet-700 text-white ring-2 ring-violet-300" : "border-slate-200 bg-white text-slate-700 hover:border-violet-300"
+              }`}
+            >
+              <En>{vb.base}</En>
+            </button>
+          ))}
+        </div>
+        {verb && (
+          <div className="mt-2.5 space-y-2">
+            <Rich text={verb.ar} className="block text-xs font-bold text-slate-500" />
+            <div dir="ltr" className="ltr-row flex flex-wrap gap-2">
+              {([
+                { id: "base" as const, label: verb.base, note: "V1 — المصدر" },
+                { id: "v2" as const, label: verb.v2, note: "V2 — الماضي البسيط" },
+                { id: "v3" as const, label: verb.v3, note: "V3 — التصريف الثالث" },
+              ]).map((f) => {
+                const on = formPick === f.id;
+                const wrong = on && f.id !== "v3";
+                return (
+                  <button
+                    key={f.id}
+                    type="button"
+                    data-build-form={f.id}
+                    aria-pressed={on}
+                    onClick={() => setFormPick(f.id)}
+                    className={`l31-build-chip rounded-xl border-2 px-3.5 py-2 text-sm font-black transition ${
+                      wrong ? "border-rose-400 bg-rose-600 text-white" : on ? "border-transparent bg-fuchsia-700 text-white ring-2 ring-fuchsia-300" : "border-slate-200 bg-white text-slate-700 hover:border-fuchsia-300"
+                    }`}
+                  >
+                    <En>{f.label}</En>
+                    <span className={`mt-0.5 block text-[10px] font-bold ${on ? "text-white/85" : "text-slate-400"}`}>
+                      <Rich text={f.note} />
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            {formPick !== null && (
+              <p className={`text-sm font-bold ${formOk ? "text-emerald-700" : "text-rose-600"}`}>
+                {formOk
+                  ? <span className="tada inline-block">✓ <Rich text={`${verb.base} → ${verb.v2} → ${verb.v3}: بعد have/has نستخدم V3 دائمًا.`} /></span>
+                  : <span>✕ <Rich text={`${formPick === "v2" ? `${verb.v2} هي V2 — مكانها في Past Simple` : `${verb.base} هي V1 — المصدر`}. المطلوب بعد المساعد: ${verb.v3}.`} /></span>}
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* ④ الصيغة: إثبات · نفي · سؤال */}
+      <div className="rounded-2xl border-2 border-teal-100 bg-white p-3">
+        <div className="mb-2 flex items-center gap-2">
+          <Nub n={4} className="bg-teal-700" />
+          <Rich text="اعرض الجملة في الصيغ الثلاث" className="text-sm font-black text-slate-700" />
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {([
+            { id: "pos" as const, label: "الإثبات", hint: "Subject + have/has + V3" },
+            { id: "neg" as const, label: "النفي", hint: "Subject + haven't/hasn't + V3" },
+            { id: "q" as const, label: "السؤال", hint: "Have/Has + Subject + V3?" },
+          ]).map((m) => (
+            <button
+              key={m.id}
+              type="button"
+              data-build-mode={m.id}
+              aria-pressed={mode === m.id}
+              onClick={() => setMode(m.id)}
+              className={`l31-build-chip rounded-xl border-2 px-3.5 py-2 text-sm font-black transition ${
+                mode === m.id ? "border-transparent bg-amber-600 text-white ring-2 ring-amber-300" : "border-slate-200 bg-white text-slate-600 hover:border-amber-300"
+              }`}
+            >
+              <Rich text={m.label} />
+              <span className={`mt-0.5 block text-[10px] font-bold ${mode === m.id ? "text-white/85" : "text-slate-400"}`}>
+                <En>{m.hint}</En>
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* مسار البناء الحي */}
+      <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row grid gap-2 sm:grid-cols-4">
+        {slot("Subject", subj ? <En>{subj.en}</En> : null, subj !== null, "pp")}
+        {slot("have / has", subj ? <En>{subj.helper}</En> : null, helperOk, "pp")}
+        {slot("V3", verb ? <En>{verb.v3}</En> : null, formOk, "pperf")}
+        {slot("rest", verb ? <En>{verb.object}</En> : null, verb !== null, "now")}
+      </div>
+
+      <div aria-live="polite" role="status" className={`rounded-2xl border-2 p-3 text-center transition ${complete ? "border-emerald-300 bg-emerald-50" : "border-dashed border-slate-300 bg-slate-50"}`}>
+        {complete && sentence ? (
+          <div className="tada space-y-1.5">
+            <En className="block text-lg font-black text-slate-900 md:text-xl">{sentence}</En>
+            <Rich text={`${subj?.ar} ${verb?.ar} — ${verb?.objectAr}`} className="block text-sm font-bold text-slate-600" />
+            <div className="flex flex-wrap justify-center gap-1.5">
+              <span className="rounded-lg bg-teal-100 px-2 py-0.5 text-[11px] font-black text-teal-900">
+                <Rich text={`بُنيت ${builtCount} جملة`} />
+              </span>
+              <TenseTag31 tense="Present Perfect" emoji="🌉" size="sm" />
+            </div>
+          </div>
+        ) : (
+          <Rich text="اختر الفاعل ← المساعد ← صيغة V3 ← ثم الصيغة (إثبات/نفي/سؤال) لتكتمل الجملة هنا." className="text-sm font-bold text-slate-400" />
+        )}
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        <button type="button" onClick={reset} className="rounded-xl bg-slate-100 px-4 py-2 text-sm font-black text-slate-600 transition hover:bg-slate-200">
+          <Rich text="↺ إعادة البناء" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// التفاعل (د) — لوحة الكلمات الدالة: كل كلمة قابلة للاستكشاف
+//
+// المعنى · الموضع المعتاد في الجملة · أمثلة من المصدر — مع تنبيه صريح
+// بأن الكلمة المساعدة ليست بديلًا عن فهم السياق (قاعدة ⑱ في المصدر).
+// ============================================================
+
+function SignalBoard31({ seq, onExplored }: { seq: string; onExplored?: (count: number) => void }) {
+  const [open, setOpen] = useState<string | null>(null);
+  const [seen, setSeen] = useState<Record<string, boolean>>({});
+  const seenCount = Object.values(seen).filter(Boolean).length;
+
+  useEffect(() => {
+    onExplored?.(seenCount);
+  }, [seenCount, onExplored]);
+
+  const active = SIGNAL_WORDS_31.find((w) => w.word === open) ?? null;
+
+  const toggle = (word: string) => {
+    setOpen((prev) => (prev === word ? null : word));
+    setSeen((prev) => ({ ...prev, [word]: true }));
+  };
+
+  return (
+    <div data-en-seq={seq} className="space-y-3">
+      <div className="flex flex-wrap gap-2" role="group" aria-label="الكلمات الدالة">
+        {SIGNAL_WORDS_31.map((w) => {
+          const on = open === w.word;
+          const visited = seen[w.word] === true;
+          return (
+            <button
+              key={w.word}
+              type="button"
+              data-signal-word={w.word}
+              aria-pressed={on}
+              onClick={() => toggle(w.word)}
+              className={`l31-signal-card rounded-xl border-2 px-3 py-2 text-sm font-black transition active:scale-95 ${
+                on ? "border-transparent bg-teal-700 text-white ring-2 ring-teal-300" : visited ? "border-teal-300 bg-teal-50 text-teal-900" : "border-slate-200 bg-white text-slate-700 hover:border-teal-300"
+              }`}
+            >
+              <En>{w.word}</En>
+              <span className={`mt-0.5 block text-[10px] font-bold ${on ? "text-white/85" : "text-slate-400"}`}>
+                <Rich text={w.ar} />
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {active && (
+        <div key={active.word} className="tada space-y-2.5 rounded-2xl border-2 border-teal-300 bg-teal-50 p-3.5">
+          <div className="flex flex-wrap items-center gap-2">
+            <En className="rounded-xl bg-teal-700 px-3 py-1.5 text-lg font-black text-white">{active.word}</En>
+            <Rich text={active.ar} className="text-base font-black text-teal-900" />
+          </div>
+          <div className="grid gap-2 sm:grid-cols-2">
+            <div className="rounded-xl bg-white p-2.5">
+              <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="المعنى" /></p>
+              <Rich text={active.meaning} className="mt-0.5 block text-sm font-bold leading-relaxed text-slate-700" />
+            </div>
+            <div className="l31-signal-pos rounded-xl border-2 p-2.5">
+              <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="موضعها المعتاد" /></p>
+              <Rich text={active.position} className="mt-0.5 block text-sm font-bold text-slate-700" />
+              <div dir="ltr" className="ltr-row mt-1.5">
+                <En className="rounded-lg bg-white px-2 py-1 text-xs font-black text-teal-900">{active.formula}</En>
+              </div>
+            </div>
+          </div>
+          {active.examples.length > 0 && (
+            <div className="space-y-1.5">
+              <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="أمثلة من المصدر" /></p>
+              {active.examples.map((ex) => (
+                <div key={ex.en} className="rounded-xl border-2 border-white bg-white p-2.5">
+                  <En className="block text-base font-black text-slate-900">{ex.en}</En>
+                  <Rich text={ex.ar} className="mt-0.5 block text-xs font-bold text-slate-500" />
+                </div>
+              ))}
+            </div>
+          )}
+          {active.platformExample && (
+            <div className="space-y-1.5">
+              <PlatformTag />
+              <div className="rounded-xl border-2 border-amber-200 bg-amber-50 p-2.5">
+                <En className="block text-base font-black text-slate-900">{active.platformExample.en}</En>
+                <Rich text={active.platformExample.ar} className="mt-0.5 block text-xs font-bold text-slate-600" />
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      <div aria-live="polite" className="rounded-xl bg-slate-100 px-3 py-2 text-center text-xs font-black text-slate-600">
+        <Rich text={`استكشفت ${seenCount} من ${SIGNAL_WORDS_31.length} كلمات`} />
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// التفاعل (ز) — واجهة تحليل نص Boss Challenge (قصة Lina)
+//
+// النص نفسه يبقى كاملًا كما ورد في المصدر، لكن كل عبارة فعلية تصبح
+// عنصرًا قابلًا للتحديد داخل النص: الطالب يلمس العبارة فيراها مميّزة
+// بلون زمنها، ويقرأ سبب هذا الزمن — فيربط اللون بالمعنى لا بالزخرفة.
+// ============================================================
+
+function BossTextAnalyzer31({ seq, focused, onFocused }: { seq: string; focused: string | null; onFocused: (verb: string | null) => void }) {
+  /** تقسيم نص المصدر إلى مقاطع: عبارة فعلية قابلة للتحليل أو نص عادي. */
+  const segments: { text: string; verb?: string }[] = [];
+  let rest = BOSS_LINA_TEXT_31;
+  const verbs = BOSS_LINA_VERBS_31.map((v) => v.verb);
+  while (rest.length > 0) {
+    let bestIdx = -1;
+    let bestVerb = "";
+    for (const verb of verbs) {
+      // نبحث عن أول ظهور لم يُستهلك بعد (case-insensitive على بداية الكلمة)
+      const idx = rest.toLowerCase().indexOf(verb.toLowerCase());
+      if (idx >= 0 && (bestIdx === -1 || idx < bestIdx)) {
+        bestIdx = idx;
+        bestVerb = verb;
+      }
+    }
+    if (bestIdx === -1) {
+      segments.push({ text: rest });
+      break;
+    }
+    if (bestIdx > 0) segments.push({ text: rest.slice(0, bestIdx) });
+    segments.push({ text: rest.substr(bestIdx, bestVerb.length), verb: bestVerb });
+    rest = rest.slice(bestIdx + bestVerb.length);
+  }
+
+  const info = (verb: string) => BOSS_LINA_VERBS_31.find((v) => v.verb === verb);
+  const active = focused ? info(focused) : null;
+  const seenCount = segments.filter((seg) => seg.verb && focused === seg.verb).length;
+
+  return (
+    <div data-en-seq={seq} className="space-y-2.5">
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-teal-100 bg-white px-3 py-2">
+        <span className="text-sm font-black text-teal-800">
+          🕵️ <Rich text="واجهة التحليل — المس كل عبارة فعلية داخل النص" />
+        </span>
+        <span className="text-[11px] font-bold text-slate-400">
+          <Rich text={`${BOSS_LINA_VERBS_31.length} عبارات فعلية`} />
+        </span>
+      </div>
+
+      <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row rounded-3xl border-2 border-slate-100 bg-white p-4">
+        <p className="text-base font-bold leading-loose text-slate-800 md:text-lg">
+          {segments.map((seg, i) =>
+            seg.verb ? (
+              <button
+                key={i}
+                type="button"
+                data-boss-phrase={seg.verb}
+                aria-pressed={focused === seg.verb}
+                onClick={() => onFocused(focused === seg.verb ? null : seg.verb)}
+                className={`font-en mx-0.5 rounded-lg border-2 px-1.5 py-0.5 transition ${
+                  focused === seg.verb
+                    ? info(seg.verb)?.tense === "Past Simple"
+                      ? "border-orange-400 bg-orange-100 text-orange-900"
+                      : "border-teal-400 bg-teal-100 text-teal-900"
+                    : "border-slate-200 bg-slate-50 text-slate-800 hover:border-teal-300"
+                }`}
+              >
+                {seg.text}
+              </button>
+            ) : (
+              <span key={i} className="font-en">{seg.text}</span>
+            )
+          )}
+        </p>
+      </div>
+
+      <div className="flex flex-wrap gap-1.5">
+        <span className={`rounded-lg px-2.5 py-1 text-[11px] font-black ${focused ? "bg-teal-100 text-teal-900" : "bg-slate-100 text-slate-500"}`}>
+          🌉 <En>Present Perfect</En> — <Rich text="ماضٍ مرتبط بالحاضر" />
+        </span>
+        <span className={`rounded-lg px-2.5 py-1 text-[11px] font-black ${focused ? "bg-orange-100 text-orange-900" : "bg-slate-100 text-slate-500"}`}>
+          📸 <En>Past Simple</En> — <Rich text="ماضٍ منتهٍ" />
+        </span>
+      </div>
+
+      <div aria-live="polite" className={`rounded-2xl border-2 p-3 transition ${active ? (active.tense === "Past Simple" ? "border-orange-300 bg-orange-50" : "border-teal-300 bg-teal-50") : "border-dashed border-slate-300 bg-slate-50"}`}>
+        {active ? (
+          <div key={active.verb} className="tada space-y-1.5">
+            <div className="flex flex-wrap items-center gap-2">
+              <En className="rounded-xl bg-slate-900 px-3 py-1 text-sm font-black text-white">{active.verb}</En>
+              <TenseTag31 tense={active.tense} emoji={active.tense === "Past Simple" ? "📸" : "🌉"} size="sm" />
+            </div>
+            <Rich text={active.ar} className="block text-sm font-bold leading-relaxed text-slate-700" />
+          </div>
+        ) : (
+          <Rich text="المس عبارة فعلية داخل النص ليظهر زمنها وسبب هذا الزمن هنا." className="block text-sm font-bold text-slate-400" />
+        )}
+        {seenCount > 0 && (
+          <p className="mt-1.5 text-[11px] font-black text-slate-500">
+            <Rich text="العبارة المحددة الآن معروضة أعلاه — جرّب بقية العبارات لقراءة سبب كل زمن." />
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// التفاعل (ز) — محلّل Final Boss: أربع جمل، أربعة أزمنة، وأسبابها
+//
+// كل جملة تُفتح على: الزمن · سبب الاختيار · خط زمني مصغّر — فلا يكون
+// النقر على الإجابة الصحيحة مجرد أثر لوني بلا تفسير.
+// ============================================================
+
+function BossAnalysis31({ seq, onAnalyzed }: { seq: string; onAnalyzed?: (count: number) => void }) {
+  const [open, setOpen] = useState<Record<number, boolean>>({});
+  const [pick, setPick] = useState<Record<number, string>>({});
+  const count = Object.values(open).filter(Boolean).length;
+
+  useEffect(() => {
+    onAnalyzed?.(count);
+  }, [count, onAnalyzed]);
+
+  return (
+    <div data-en-seq={seq} className="space-y-2.5">
+      {FINAL_BOSS_31.map((item, i) => {
+        const analysis = FINAL_BOSS_ANALYSIS_31.find((a) => a.en === item.en);
+        const chosen = pick[i];
+        const right = chosen === item.tense;
+        const isOpen = open[i] === true;
+        const tone = TENSE_TONE_31[tenseToneKey31(item.tense)];
+        return (
+          <div
+            key={item.en}
+            data-boss-item={i}
+            className={`rounded-2xl border-2 p-3 transition ${isOpen ? `${tone.soft}` : right ? "border-emerald-300 bg-emerald-50/60" : chosen ? "border-rose-300 bg-rose-50/60" : "border-slate-200 bg-white"}`}
+          >
+            <div className="flex flex-wrap items-center gap-2">
+              <Nub n={i + 1} className="bg-teal-700" />
+              <En className="text-base font-black text-slate-900 md:text-lg">{item.en}</En>
+            </div>
+
+            {/* الخطوة ① — اختر الزمن قبل أن تفتح التحليل */}
+            <div className="mt-2 flex flex-wrap gap-2">
+              {["Past Simple", "Past Continuous", "Past Perfect", "Present Perfect"].map((t) => {
+                const on = chosen === t;
+                const tt = TENSE_TONE_31[tenseToneKey31(t)];
+                return (
+                  <button
+                    key={t}
+                    type="button"
+                    data-boss-tense={`${i}:${t}`}
+                    aria-pressed={on}
+                    onClick={() => setPick((prev) => ({ ...prev, [i]: t }))}
+                    className={`l31-build-chip rounded-xl border-2 px-3 py-1.5 text-xs font-black transition active:scale-95 ${
+                      on ? (right ? "border-transparent bg-emerald-600 text-white" : "border-transparent bg-rose-600 text-white") : `border-slate-200 bg-white ${tt.text} hover:border-teal-300`
+                    }`}
+                  >
+                    <En>{t}</En>
+                  </button>
+                );
+              })}
+            </div>
+
+            {chosen && !right && (
+              <p className="mt-1.5 text-sm font-bold text-rose-600">
+                ✕ <Rich text={`ليس ${chosen} — افتح التحليل لتقرأ السبب الكامل.`} />
+              </p>
+            )}
+            {right && !isOpen && (
+              <p className="tada mt-1.5 text-sm font-bold text-emerald-700">
+                ✓ <Rich text={`${item.tense} — اضغط «التحليل» لتقرأ السبب والخط الزمني.`} />
+              </p>
+            )}
+
+            {/* الخطوة ② — التحليل: السبب لا اللون */}
+            <button
+              type="button"
+              data-boss-analysis={i}
+              aria-expanded={isOpen}
+              onClick={() => setOpen((prev) => ({ ...prev, [i]: !prev[i] }))}
+              className="mt-2 rounded-xl bg-slate-900 px-3.5 py-2 text-xs font-black text-white transition hover:bg-slate-700"
+            >
+              {isOpen ? "▲ إخفاء التحليل" : "▼ التحليل: لماذا هذا الزمن؟"}
+            </button>
+
+            {isOpen && analysis && (
+              <div className="mt-2 space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <TenseTag31 tense={item.tense} emoji={analysis.emoji} />
+                  <Rich text={item.ar} className="text-sm font-bold text-slate-600" />
+                </div>
+                <div className="rounded-xl bg-white p-2.5">
+                  <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="سبب الاختيار" /></p>
+                  <Rich text={analysis.why} className="mt-0.5 block text-sm font-bold leading-relaxed text-slate-700" />
+                </div>
+                <div className="rounded-xl bg-white p-2.5">
+                  <p className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><Rich text="الخط الزمني المصغّر" /></p>
+                  <div dir="ltr" className="ltr-row mt-1 rounded-lg bg-slate-900 p-2">
+                    <En className="block text-xs font-black leading-relaxed text-white">{analysis.timeline}</En>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+      <div aria-live="polite" className="rounded-xl bg-slate-100 px-3 py-2 text-center text-xs font-black text-slate-600">
+        <Rich text={`حلّلت ${count} من ${FINAL_BOSS_31.length} جمل`} />
       </div>
     </div>
   );
@@ -727,7 +1623,6 @@ function WriteArena({ seq, starters }: { seq: string; starters: Starter31[] }) {
       <div aria-live="polite" role="status" className={`rounded-2xl px-3 py-2.5 text-sm font-black ${allMet ? "bg-emerald-100 text-emerald-900" : "bg-slate-100 text-slate-600"}`}>
         {allMet ? "🏆 الجمل السبع مكتملة النمط — راجعها بصوت عالٍ!" : `اكتمل ${metCount} من ${starters.length} أنماط — يُحدَّث لحظيًا أثناء الكتابة.`}
       </div>
-      {allMet && <Signature />}
     </div>
   );
 }
@@ -736,35 +1631,67 @@ function WriteArena({ seq, starters }: { seq: string; starters: Starter31[] }) {
 // خطوات الدرس — البداية والصيغة والاستخدامات والكلمات
 // ============================================================
 
-function CoverStep() {
+/**
+ * الغلاف — يُعرض خارج إطار الخطوة (Frame) كي لا يتكرر عنوان الخطوة ووصفها
+ * مرتين في الرأس (مبدأ الرأس المختصر المعتمد في الدرس 30 بعد PR #59).
+ * الهوية: تركواز مشرق + لمسات مرجانية وذهبية وبنفسجية، بروح غلاف الدرس 1.
+ */
+function CoverStep({ slide }: { slide: Slide31 }) {
   const [lens, setLens] = useState<Lens31>("present");
-  const demo: Record<string, { en: string; ar: string }> = {
-    ps: { en: "I lost my keys yesterday.", ar: "أضعت مفاتيحي أمس — وقت محدد ومنتهٍ." },
-    present: { en: "I have lost my keys.", ar: "لقد أضعت مفاتيحي — والنتيجة مهمة الآن." },
-    pperf: { en: "I had lost my keys before I left.", ar: "كنت قد أضعت مفاتيحي قبل أن أخرج." },
-    pc: { en: "I was losing my patience.", ar: "كنت أفقد صبري — الفعل كان جاريًا في لحظة ماضية." },
+  const demo: Record<string, { en: string; ar: string; now: string }> = {
+    ps: { en: "I lost my keys yesterday.", ar: "أضعت مفاتيحي أمس — وقت محدد ومنتهٍ.", now: "لا صلة معلنة بالآن" },
+    present: { en: "I have lost my keys.", ar: "لقد أضعت مفاتيحي — والنتيجة مهمة الآن.", now: "المفاتيح ما زالت مفقودة" },
+    pperf: { en: "I had lost my keys before I left.", ar: "كنت قد أضعت مفاتيحي قبل أن أخرج.", now: "حدث أقدم من حدث ماضٍ" },
+    pc: { en: "I was losing my patience.", ar: "كنت أفقد صبري — الفعل كان جاريًا في لحظة ماضية.", now: "مشهد داخل لحظة ماضية" },
   };
+  const sectionLabel = SECTIONS_31.find((section) => section.id === slide.section)?.label ?? slide.section;
+  const active = demo[lens];
+
   return (
-    <div className="space-y-4">
-      <div className="rounded-3xl border-2 border-sky-100 bg-gradient-to-br from-sky-700 via-cyan-700 to-teal-700 p-6 text-center text-white shadow-lg md:p-10">
-        <div className="text-5xl anim-drift md:text-6xl">🌉</div>
-        <En className="mt-3 block text-2xl font-black uppercase tracking-widest text-sky-200 md:text-3xl">{LAB_NAME_31}</En>
-        <h1 className="font-head mt-2 text-2xl font-black md:text-4xl"><LatinRuns text={LESSON_TITLE_31} /></h1>
-        <p className="mt-3 text-base font-semibold text-sky-100 md:text-xl"><LatinRuns text={LESSON_SUBTITLE_31} /></p>
-        <div dir="ltr" className="ltr-row mx-auto mt-4 max-w-2xl rounded-2xl bg-white/10 p-3">
-          <En className="text-sm font-bold text-white md:text-base">{LAB_MOTTO_31}</En>
-        </div>
-        <div className="mx-auto mt-4 grid max-w-3xl grid-cols-3 gap-2 text-center">
-          {[
-            { n: SOURCE_NUMBERED_COUNT, t: "قسمًا مرقّمًا" },
-            { n: SLIDE_COUNT, t: "خطوة تفاعلية" },
-            { n: 20, t: "سؤالًا في منطقة الاختبار" },
-          ].map((s) => (
-            <div key={s.t} className="rounded-2xl bg-white/10 p-2.5">
-              <div className="font-head text-2xl font-black text-white">{s.n}</div>
-              <div className="text-[11px] font-bold text-sky-100">{s.t}</div>
-            </div>
-          ))}
+    <section className="l31-cover-page space-y-4" data-source-section={sourceTitleFor(slide)}>
+      <div className="l31-cover-hero relative overflow-hidden rounded-[2rem] border border-teal-200 bg-white p-6 text-center shadow-[0_18px_50px_-24px_rgba(15,118,110,0.55)] md:p-10">
+        <div aria-hidden className="pointer-events-none absolute -left-12 -top-12 h-52 w-52 rounded-full bg-teal-200/60 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -bottom-14 -right-10 h-52 w-52 rounded-full bg-amber-200/70 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -right-4 top-10 h-28 w-28 rounded-full bg-orange-200/50 blur-2xl" />
+
+        <div className="relative">
+          <div className="mb-3 flex flex-wrap items-center justify-center gap-2">
+            <span className="rounded-full bg-teal-700 px-4 py-1.5 text-sm font-black text-white">
+              <Rich text={`الدرس 31 · ${sectionLabel}`} />
+            </span>
+            <span className="rounded-full bg-amber-100 px-4 py-1.5 text-sm font-black text-amber-900">{slide.step}</span>
+            <span className="rounded-full bg-white/90 px-3 py-1.5 text-xs font-bold text-slate-500 shadow-sm" title={sourceTitleFor(slide)}>
+              📜 <Rich text={sourceTitleFor(slide)} />
+            </span>
+          </div>
+
+          <div className="pop text-6xl anim-drift md:text-7xl" aria-hidden>🌉</div>
+          <En className="pop pop-1 mt-2 block text-lg font-black uppercase tracking-[0.22em] text-teal-700 md:text-2xl">{LAB_NAME_31}</En>
+          <h1 className="pop pop-2 font-head mt-2 text-3xl font-black leading-tight text-slate-900 md:text-5xl">
+            <LatinRuns text={LESSON_TITLE_31} />
+          </h1>
+          <p className="pop pop-3 mx-auto mt-3 max-w-2xl text-base font-bold leading-relaxed text-slate-600 md:text-lg">
+            <LatinRuns text={LESSON_SUBTITLE_31} />
+          </p>
+
+          <div dir="ltr" className="pop pop-4 ltr-row mx-auto mt-4 max-w-2xl rounded-2xl border border-teal-100 bg-teal-50/80 p-3 shadow-sm">
+            <En className="block text-sm font-bold leading-relaxed text-teal-900 md:text-base">{LAB_MOTTO_31}</En>
+          </div>
+
+          <div className="pop pop-5 mt-4 flex flex-wrap items-center justify-center gap-2 text-xs font-black md:text-sm">
+            <span className="rounded-full border border-teal-200 bg-teal-50 px-3.5 py-1.5 text-teal-900">
+              📄 <Rich text={`${SOURCE_NUMBERED_COUNT} قسمًا مرقّمًا`} />
+            </span>
+            <span className="rounded-full border border-orange-200 bg-orange-50 px-3.5 py-1.5 text-orange-900">
+              🧭 <Rich text={`${SLIDE_COUNT} خطوة تفاعلية`} />
+            </span>
+            <span className="rounded-full border border-amber-200 bg-amber-50 px-3.5 py-1.5 text-amber-900">
+              🧪 <Rich text="20 سؤالًا في منطقة الاختبارات" />
+            </span>
+            <span className="rounded-full border border-violet-200 bg-violet-50 px-3.5 py-1.5 text-violet-900">
+              🎛️ <Rich text="4 مناطق: الدرس · الاختبار · الحلول · المعلم" />
+            </span>
+          </div>
         </div>
       </div>
 
@@ -776,20 +1703,47 @@ function CoverStep() {
         </div>
         <div key={lens} className="tada mt-3 space-y-2">
           <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row rounded-2xl bg-slate-900 p-3 text-center">
-            <En className="text-lg font-black text-white md:text-xl">{demo[lens].en}</En>
+            <En className="text-lg font-black text-white md:text-xl">{active.en}</En>
           </div>
-          <Rich text={demo[lens].ar} className="block text-center text-sm font-bold text-slate-600" />
+          <Rich text={active.ar} className="block text-center text-sm font-bold text-slate-600" />
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <span className={`rounded-full px-3 py-1 text-[11px] font-black ${lens === "present" ? "bg-amber-100 text-amber-900" : "bg-slate-100 text-slate-600"}`}>
+              ⏺ <Rich text={active.now} />
+            </span>
+          </div>
         </div>
         <div className="mt-3">
           <BridgeTrack active={lens === "present" ? "link" : lens === "ps" ? "past" : lens === "pperf" ? "past" : "now"} />
         </div>
       </Lab>
 
+      <div className="grid gap-2 sm:grid-cols-2">
+        <div className="rounded-3xl border-2 border-teal-300 bg-teal-50 p-4">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl" aria-hidden>🌉</span>
+            <En className="text-lg font-black text-teal-900">Present Perfect</En>
+          </div>
+          <Rich text="ماضٍ مرتبط بالحاضر: تجربة · نتيجة قائمة · حدث حديث · فترة لم تنتهِ." className="mt-1.5 block text-sm font-bold leading-relaxed text-slate-700" />
+        </div>
+        <div className="rounded-3xl border-2 border-orange-300 bg-orange-50 p-4">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl" aria-hidden>📸</span>
+            <En className="text-lg font-black text-orange-900">Past Simple</En>
+          </div>
+          <Rich text="ماضٍ انتهى عند وقت محدد — الجملة تُغلق على نفسها ولا تصل إلى NOW." className="mt-1.5 block text-sm font-bold leading-relaxed text-slate-700" />
+        </div>
+      </div>
+
       <Note emoji="🧠" text="الفكرة التي ستغيّر فهمك: Present Perfect لا يعني «حدث في الماضي» فقط — بل ماضٍ ما زال له أثر أو خبرة أو استمرار في اللحظة التي تتكلم فيها." />
       <PlatformPanel title="كيف تقرأ هذا الدرس؟">
         <Rich text="كل خطوة تعرض فكرة واحدة، ثم تتفاعل معها فورًا: تختار · تصنّف · تبني · تصحّح · تكتب. لا تنتظر النهاية لتعرف إن كنت مصيبًا — كل لمسة تجيبك وتشرح لك السبب." className="block text-sm font-semibold leading-relaxed text-slate-700" />
       </PlatformPanel>
-    </div>
+
+      <div className="l31-cover-tip flex items-center gap-3 rounded-2xl bg-gradient-to-l from-teal-800 to-cyan-700 p-4 text-white">
+        <span className="text-3xl" aria-hidden>🦉</span>
+        <Rich text={slide.tip ?? ""} className="text-base font-semibold md:text-lg" />
+      </div>
+    </section>
   );
 }
 
@@ -1129,6 +2083,7 @@ function S4_V3Step() {
 // ---------------- ⑤ الجملة المثبتة ----------------
 function S5_PositiveStep() {
   const [done, setDone] = useState(0);
+  const [builtCount, setBuiltCount] = useState(0);
   return (
     <div className="space-y-4">
       <Note emoji="🏗️" text="القاعدة: Subject + have/has + V3 — والآن نبني الجمل بأيدينا." />
@@ -1149,6 +2104,9 @@ function S5_PositiveStep() {
           whys={["The dog = فاعل مفرد → has", "has = المساعد الصحيح", "eaten = V3 للفعل eat", "its food. = التكملة"]}
         />
       </Lab>
+      <Lab emoji="🧱" label="Sentence Builder" ar="ابنِ الجملة بنفسك: فاعل ← مساعد ← V3 ← الصيغة" seq="l31-s5-builder">
+        <BuilderLab31 seq="l31-s5-builder-lab" onBuilt={setBuiltCount} />
+      </Lab>
       <Lab emoji="🧪" label="Choose The V3" ar="أكمل الجمل الأربع المتبقية" seq="l31-s5-quiz">
         <div className="space-y-2.5">
           <McqRow n={1} stem="I have ______ my room." opts={["cleaned", "clean", "cleans"]} answer={0} why="بعد have نستخدم V3: cleaned." onFirstAnswer={() => setDone((d) => d + 1)} />
@@ -1157,7 +2115,7 @@ function S5_PositiveStep() {
           <McqRow n={4} stem="We have ______ the project." opts={["finish", "finished", "finishing"]} answer={1} why="بعد have نستخدم V3: finished." onFirstAnswer={() => setDone((d) => d + 1)} />
         </div>
       </Lab>
-      {done >= 4 && (
+      {done >= 4 && builtCount >= 1 && (
         <SourceReveal seq="l31-reveal-s5">
           <Rich text="لاحظ: He has forgotten... وليس He has forgot... — لأن بعد has نحتاج V3: forget → forgot → forgotten." className="block text-center text-sm font-bold leading-relaxed text-emerald-900" />
           <Rich text={POSITIVE_31.map((p) => p.en).join(" · ")} className="mt-1 block text-center text-xs font-black text-emerald-800" />
@@ -1461,15 +2419,20 @@ function S11_ResultStep() {
 // ---------------- 📸 Past Simple vs Present Perfect ----------------
 function S_PsPpStep() {
   const [done, setDone] = useState(0);
+  const [visited, setVisited] = useState<Record<string, boolean>>({});
+  const seenCount = Object.values(visited).filter(Boolean).length;
   return (
     <div className="space-y-4">
       <Note emoji="📸" text="انظر إلى الفرق: نفس الفعل، وسؤالان مختلفان تمامًا." />
       <div className="grid gap-2 sm:grid-cols-2">
         {PAIR_WALLET_31.map((p) => (
-          <div key={p.en} className={`rounded-3xl border-2 p-3 ${p.tense === "Past Simple" ? "border-orange-200 bg-orange-50" : "border-sky-200 bg-sky-50"}`}>
-            <EnAr en={p.en} ar={p.ar} enClassName="block text-base font-black text-slate-800" arClassName="mt-0.5 block text-xs font-bold text-slate-500" />
+          <div key={p.en} className={`rounded-3xl border-2 p-3 ${p.tense === "Past Simple" ? "border-orange-300 bg-orange-50" : "border-teal-300 bg-teal-50"}`}>
+            <div className="flex flex-wrap items-center gap-2">
+              <TenseTag31 tense={p.tense} emoji={p.tense === "Past Simple" ? "📸" : "🌉"} size="sm" />
+            </div>
+            <EnAr en={p.en} ar={p.ar} enClassName="mt-1.5 block text-base font-black text-slate-800" arClassName="mt-0.5 block text-xs font-bold text-slate-500" />
             <div className="mt-1.5 flex flex-wrap items-center gap-2">
-              <span dir="ltr" className="ltr-pair inline-flex flex-wrap items-center gap-2"><span className={`rounded-xl px-2.5 py-0.5 text-[11px] font-black text-white ${p.tense === "Past Simple" ? "bg-orange-500" : "bg-sky-700"}`}><En>{p.tense}</En></span><span dir="rtl"><span className="rounded-full bg-white px-2.5 py-0.5 text-[11px] font-bold text-slate-600"><Rich text={p.cue} /></span></span></span>
+              <span className="rounded-full bg-white px-2.5 py-0.5 text-[11px] font-bold text-slate-600"><Rich text={p.cue} /></span>
             </div>
           </div>
         ))}
@@ -1490,19 +2453,28 @@ function S_PsPpStep() {
           ))}
         </div>
       </Lab>
+      <Lab emoji="🕰️" label="Interactive Timeline" ar="بدّل زاوية النظر وشاهد الخط الزمني يستجيب" seq="l31-pspp-timeline">
+        <TimelineLab31 seq="l31-pspp-timeline-lab" onView={(id) => setVisited((v) => ({ ...v, [`tl-${id}`]: true }))} />
+      </Lab>
       <Lab emoji="🔑" label="Keep This Pair" ar="زوج يجب أن تحفظه" seq="l31-pspp-pair2">
         <div className="space-y-2">
-          <div className="rounded-2xl border-2 border-orange-200 bg-white p-3">
-            <En className="block text-base font-black text-slate-800">I lost my keys yesterday.</En>
-            <Rich text="أضعت مفاتيحي أمس — الجملة تخبرنا: متى حدث الأمر؟ أمس." className="mt-0.5 block text-sm font-bold text-slate-600" />
+          <div className="rounded-2xl border-2 border-orange-300 bg-orange-50 p-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <TenseTag31 tense="Past Simple" emoji="📸" size="sm" />
+              <En className="block text-base font-black text-slate-800">I lost my keys yesterday.</En>
+            </div>
+            <Rich text="أضعت مفاتيحي أمس — الجملة تخبرنا: متى حدث الأمر؟ أمس." className="mt-1 block text-sm font-bold text-slate-600" />
           </div>
-          <div className="rounded-2xl border-2 border-sky-200 bg-white p-3">
-            <En className="block text-base font-black text-slate-800">I have lost my keys.</En>
-            <Rich text="لقد أضعت مفاتيحي — الجملة تخبرنا: ما المشكلة الآن؟ المفاتيح مفقودة." className="mt-0.5 block text-sm font-bold text-slate-600" />
+          <div className="rounded-2xl border-2 border-teal-300 bg-teal-50 p-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <TenseTag31 tense="Present Perfect" emoji="🌉" size="sm" />
+              <En className="block text-base font-black text-slate-800">I have lost my keys.</En>
+            </div>
+            <Rich text="لقد أضعت مفاتيحي — الجملة تخبرنا: ما المشكلة الآن؟ المفاتيح مفقودة." className="mt-1 block text-sm font-bold text-slate-600" />
           </div>
         </div>
       </Lab>
-      {done >= 2 && (
+      {done >= 2 && seenCount >= 2 && (
         <SourceReveal seq="l31-reveal-pspp">
           <Rich text="احفظ هذا الزوج: I lost my keys yesterday. · I have lost my keys. — الأولى تجيب «متى؟» والثانية تجيب «ما المشكلة الآن؟»." className="block text-center text-sm font-black text-emerald-900" />
         </SourceReveal>
@@ -1514,6 +2486,7 @@ function S_PsPpStep() {
 // ---------------- ⑫ ثالث استخدام: شيء حدث مؤخرًا ----------------
 function S12_RecentStep() {
   const [done, setDone] = useState(0);
+  const [signalsSeen, setSignalsSeen] = useState(0);
   return (
     <div className="space-y-4">
       <Note emoji="⭐" text="الاستخدام الثالث: أحداث حديثة نتيجتها أو علاقتها بالحاضر مهمة." />
@@ -1528,6 +2501,12 @@ function S12_RecentStep() {
           }))}
           cols={2}
         />
+      </Lab>
+      <Lab emoji="🗂️" label="Signal Words Board" ar="الكلمات الدالة العشر — المعنى والموضع والأمثلة" seq="l31-s12-signals">
+        <SignalBoard31 seq="l31-s12-signals-board" onExplored={setSignalsSeen} />
+        <PlatformPanel title="الكلمة الدالة ليست بديلًا عن السياق">
+          <Rich text="هذه اللوحة تختصر المعنى والموضع المعتاد لكل كلمة، لكنها لا تختار الزمن بدلًا منك: نفس الكلمة قد تظهر في جملة ماضية منتهية (I finished the test today at 9:00). اقرأ المعنى أولًا، ثم استعن بالكلمة — وهذا بالضبط ما تأتي به الخطوة ⑱." className="block text-sm font-semibold leading-relaxed text-slate-700" />
+        </PlatformPanel>
       </Lab>
       <Lab emoji="👆" label="Build: just" ar="ابنِ جملة من المصدر بلمس الأجزاء" seq="l31-s12-build">
         <TapOrder
@@ -1573,7 +2552,7 @@ function S12_RecentStep() {
           />
         </div>
       </Lab>
-      {done >= 2 && (
+      {done >= 2 && signalsSeen >= 4 && (
         <SourceReveal seq="l31-reveal-s12">
           <Rich text="just = للتو · already = بالفعل · recently = مؤخرًا · lately = في الآونة الأخيرة — كلها تربط الحدث الحديث بالحاضر." className="block text-center text-sm font-bold leading-relaxed text-emerald-900" />
         </SourceReveal>
@@ -2246,13 +3225,17 @@ function S27_HowLongStep() {
 // ---------------- ㉘ المقارنة الأكبر ----------------
 function S28_BigCompareStep() {
   const [done, setDone] = useState(0);
+  const [lensesSeen, setLensesSeen] = useState(0);
   return (
     <div className="space-y-4">
       <Note emoji="⚔️" text="هذه أهم مقارنة في الدرس: Past Simple يسأل «متى؟» وPresent Perfect يجيب «هل سبق؟»." />
+      <Lab emoji="🔬" label="Tense Comparison Lab" ar="بدّل الزمن — ثم أضف Past Perfect للمقارنة الثلاثية" seq="l31-s28-lenslab">
+        <CompareLab31 seq="l31-s28-lenslab-inner" onExplore={setLensesSeen} />
+      </Lab>
       <div className="grid gap-2 sm:grid-cols-2">
         {COMPARE_31.map((c) => (
-          <div key={c.tense} className={`rounded-3xl border-2 p-3 ${c.tense === "Past Simple" ? "border-orange-200 bg-orange-50" : "border-sky-200 bg-sky-50"}`}>
-            <span className={`rounded-xl px-2.5 py-0.5 text-[11px] font-black text-white ${c.tense === "Past Simple" ? "bg-orange-500" : "bg-sky-700"}`}><En>{c.tense}</En></span>
+          <div key={c.tense} className={`rounded-3xl border-2 p-3 ${c.tense === "Past Simple" ? "border-orange-300 bg-orange-50" : "border-teal-300 bg-teal-50"}`}>
+            <TenseTag31 tense={c.tense} emoji={c.tense === "Past Simple" ? "📸" : "🌉"} size="sm" />
             <EnAr en={c.en} ar={c.ar} enClassName="mt-2 block text-base font-black text-slate-800" arClassName="mt-0.5 block text-xs font-bold text-slate-500" />
             <div className="mt-1.5 space-y-1">
               <Rich text={`يركز على: ${c.focus}`} className="block text-xs font-black text-slate-700" />
@@ -2284,7 +3267,7 @@ function S28_BigCompareStep() {
           />
         </div>
       </Lab>
-      {done >= 2 && (
+      {done >= 2 && lensesSeen >= 2 && (
         <SourceReveal seq="l31-reveal-s28">
           <Rich text="I watched that movie last night. → متى؟ last night. · I have watched that movie. → هل شاهدته من قبل؟ نعم." className="block text-center text-sm font-bold leading-relaxed text-emerald-900" />
         </SourceReveal>
@@ -2642,14 +3625,13 @@ function S38_DeeperStep() {
 function S39_BossLinaStep() {
   const [done, setDone] = useState(0);
   const [solved, setSolved] = useState(0);
+  const [focused, setFocused] = useState<string | null>(null);
   const attempt = () => setDone((d) => d + 1);
   return (
     <div className="space-y-4">
       <Note emoji="🏆" text="اقرأ النص ثم حدّد زمن كل فعل — انتبه إلى last year و this year." />
-      <div className="rounded-3xl border-2 border-slate-100 bg-white p-4">
-        <En className="block text-base font-bold leading-relaxed text-slate-800 md:text-lg">{BOSS_LINA_TEXT_31}</En>
-      </div>
-      <Lab emoji="🏆" label="Boss Challenge" ar="ستة أفعال — لكل فعل زمن واحد" seq="l31-s39-boss">
+      <BossTextAnalyzer31 seq="l31-s39-analyzer" onFocused={setFocused} focused={focused} />
+      <Lab emoji="🏆" label="Boss Challenge" ar="ستة أفعال — لكل فعل زمن واحد وسبب" seq="l31-s39-boss">
         <div className="space-y-2">
           {BOSS_LINA_VERBS_31.map((v, i) => (
             <BossVerbPicker key={v.verb} item={v} index={i} onPick={(ok) => { attempt(); if (ok) setSolved((s) => s + 1); }} />
@@ -2662,11 +3644,18 @@ function S39_BossLinaStep() {
       </Lab>
       <div className="grid gap-2 sm:grid-cols-2">
         {BOSS_LINA_REASON_31.map((r) => (
-          <div key={r.cue} className="rounded-2xl border-2 border-slate-200 bg-white p-3">
-            <EnAr en={r.cue} ar={r.note} enClassName="block text-sm font-black text-slate-800" arClassName="block text-xs font-bold text-slate-600" />
+          <div key={r.cue} className={`rounded-2xl border-2 p-3 transition ${r.cue === "last year" ? "border-orange-300 bg-orange-50" : "border-teal-300 bg-teal-50"}`}>
+            <div className="flex flex-wrap items-center gap-2">
+              <En className="rounded-lg bg-white px-2 py-0.5 text-sm font-black text-slate-800">{r.cue}</En>
+              <TenseTag31 tense={r.cue === "last year" ? "Past Simple" : "Present Perfect"} emoji={r.cue === "last year" ? "📸" : "🌉"} size="sm" />
+            </div>
+            <Rich text={r.note} className="mt-1.5 block text-xs font-bold text-slate-700" />
           </div>
         ))}
       </div>
+      <PlatformPanel title="كيف تحلّل نصًا يجمع زمنين؟">
+        <Rich text="ابحث أولًا عن الكلمات الزمنية: last year فترة ماضية منتهية فتسحب أفعالها إلى Past Simple، وthis year فترة ما زالت مفتوحة فتسحب أفعالها إلى Present Perfect. ثم افحص كل فعل: هل هو خبر عن ماضٍ فقط، أم له أثر في هذه اللحظة؟ النص كله يُقرأ بهذه الخطوتين — لا بحفظ قائمة أفعال." className="block text-sm font-semibold leading-relaxed text-slate-700" />
+      </PlatformPanel>
       {solved >= BOSS_LINA_VERBS_31.length && (
         <SourceReveal seq="l31-reveal-s39">
           <Rich text="has always loved · has visited · has recently started → Present Perfect · joined · built → Past Simple · has already completed → Present Perfect. السبب: last year فترة ماضية منتهية، أما this year فالفترة ما زالت مرتبطة بالحاضر." className="block text-center text-sm font-bold leading-relaxed text-emerald-900" />
@@ -2872,9 +3861,13 @@ function S42_FinalChallengeStep() {
 
 // ---------------- ㊸ Final Boss — أربع جمل، أربعة معانٍ ----------------
 function S43_FinalBossStep() {
+  const [analyzed, setAnalyzed] = useState(0);
   return (
     <div className="space-y-4">
       <Note emoji="🏆" text="القارن النهائي: أربع جمل لنفس الحدث… وأربعة أزمنة مختلفة." />
+      <div aria-live="polite" className="rounded-2xl bg-slate-100 px-3 py-2 text-center text-sm font-black text-slate-600">
+        <Rich text={`حلّلت ${analyzed} من ${FINAL_BOSS_ANALYSIS_31.length} جمل — التحليل يعرض السبب لا اللون فقط.`} />
+      </div>
       <Lab emoji="🏆" label="Final Boss" ar="طابِق كل جملة مع زمنها ومعناها" seq="l31-s43-boss4">
         <PairMatch
           seq="l31-s43-match"
@@ -2887,16 +3880,9 @@ function S43_FinalBossStep() {
           </SourceReveal>
         </PairMatch>
       </Lab>
-      <div className="grid gap-2 sm:grid-cols-2">
-        {FINAL_BOSS_31.map((f) => (
-          <div key={f.en} className="rounded-2xl border-2 border-slate-200 bg-white p-3">
-            <En className="block text-base font-black text-slate-800">{f.en}</En>
-            <div className="mt-1 flex flex-wrap items-center gap-2">
-              <span dir="ltr" className="ltr-pair inline-flex flex-wrap items-center gap-2"><span className="rounded-xl bg-slate-900 px-2.5 py-0.5 text-[11px] font-black text-white"><En>{f.tense}</En></span><span dir="rtl"><Rich text={f.ar} className="text-xs font-bold text-slate-600" /></span></span>
-            </div>
-          </div>
-        ))}
-      </div>
+      <Lab emoji="🔎" label="Boss Analysis" ar="اختر الزمن ثم افتح التحليل: السبب والخط الزمني" seq="l31-s43-analysis">
+        <BossAnalysis31 seq="l31-s43-analysis-inner" onAnalyzed={setAnalyzed} />
+      </Lab>
     </div>
   );
 }
@@ -3070,7 +4056,6 @@ function MapStep({ onGoTest }: { onGoTest?: () => void }) {
           🧪 انتقل إلى منطقة الاختبارات — 20 سؤالًا
         </button>
       )}
-      <Signature />
     </div>
   );
 }
@@ -3081,7 +4066,7 @@ function MapStep({ onGoTest }: { onGoTest?: () => void }) {
 
 function SlideBody({ s, onGoTest }: { s: Slide31; onGoTest?: () => void }) {
   switch (s.id) {
-    case "cover": return <CoverStep />;
+    case "cover": return <CoverStep slide={s} />;
     case "opening": return <OpeningStep />;
     case "objectives": return <ObjectivesStep />;
     case "s1": return <S1_WhatStep />;
@@ -3136,19 +4121,25 @@ function SlideBody({ s, onGoTest }: { s: Slide31; onGoTest?: () => void }) {
 }
 
 export function SlideView31({ s, onGoTest }: { s: Slide31; onGoTest?: () => void }) {
+  // الغلاف صفحة كاملة بذاته — لا يُغلَّف بإطار الخطوة حتى لا يتكرر عنوان
+  // الخطوة ووصفها ونصيحتها مرتين على الشاشة (مبدأ الرأس المختصر).
+  if (s.id === "cover") return <CoverStep slide={s} />;
+  const sectionLabel = SECTIONS_31.find((section) => section.id === s.section)?.label ?? s.section;
   return (
-    <Frame
-      mascot={s.mascot}
-      step={s.step}
-      badge={s.section}
-      title={<Rich text={s.title} />}
-      lead={s.lead ? <Rich text={s.lead} /> : undefined}
-      tip={s.tip}
-      accent={ACCENT31}
-      sourceTag={sourceTitleFor(s)}
-    >
-      <SlideBody s={s} onGoTest={onGoTest} />
-    </Frame>
+    <div className="l31-frame-wrap">
+      <Frame
+        mascot={s.mascot}
+        step={s.step}
+        badge={sectionLabel}
+        title={<Rich text={s.title} />}
+        lead={s.lead ? <Rich text={s.lead} /> : undefined}
+        tip={s.tip}
+        accent={ACCENT31}
+        sourceTag={sourceTitleFor(s)}
+      >
+        <SlideBody s={s} onGoTest={onGoTest} />
+      </Frame>
+    </div>
   );
 }
 
@@ -3771,153 +4762,314 @@ export default function Lesson31({ onExit }: { onExit: () => void }) {
   const [teacherOk, setTeacherOk] = useState(false);
   const solutionsUnlocked = testChecked || teacherOk;
   const slide = SLIDES[index];
+  const scrollRef = useRef<HTMLElement | null>(null);
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+  const drawerRef = useRef<HTMLElement | null>(null);
   const progress = useMemo(() => Math.round(((index + 1) / SLIDE_COUNT) * 100), [index]);
 
+  const groups = useMemo(
+    () => SECTIONS_31.map((sec) => ({ ...sec, items: SLIDES.map((s, i) => ({ s, i })).filter(({ s }) => s.section === sec.id) })).filter((g) => g.items.length > 0),
+    []
+  );
+  const areaLabel = AREAS_31.find((item) => item.id === area)?.ar ?? "الدرس";
+
+  // تنقّل لوحة المفاتيح — لا يعمل داخل حقول الإدخال أو عند فتح الدرج
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (area !== "lesson") return;
-      const tag = (e.target as HTMLElement)?.tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA") return;
+      if (area !== "lesson" || drawer) return;
+      const target = e.target as HTMLElement | null;
+      if (target?.closest("input, textarea, select, [contenteditable='true']")) return;
       if (e.key === "ArrowLeft") setIndex((i) => Math.min(SLIDES.length - 1, i + 1));
       if (e.key === "ArrowRight") setIndex((i) => Math.max(0, i - 1));
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [area]);
+  }, [area, drawer]);
 
+  // الرجوع إلى أعلى المنطقة عند تغيير الخطوة أو المنطقة
   useEffect(() => {
-    if (area !== "lesson") return;
-    try {
-      const scroller = typeof document !== "undefined" ? document.scrollingElement : null;
-      if (scroller && typeof scroller.scrollTo === "function") scroller.scrollTo({ top: 0, behavior: "smooth" });
-    } catch {
-      /* التمرير غير مدعوم في بيئة الاختبار */
-    }
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
   }, [index, area]);
 
-  const goSlide = (i: number) => { setIndex(i); setArea("lesson"); setDrawer(false); };
+  // الدرج المحمول: حبس التركيز + Escape + إعادة التركيز إلى زر الفهرس
+  useEffect(() => {
+    if (!drawer) return;
+    const dialog = drawerRef.current;
+    const returnFocus = menuButtonRef.current;
+    const focusable = () =>
+      dialog
+        ? [...dialog.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')].filter(
+            (element) => element.getAttribute("aria-hidden") !== "true"
+          )
+        : [];
+    focusable()[0]?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setDrawer(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const items = focusable();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === dialog)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      if (returnFocus?.isConnected) returnFocus.focus();
+    };
+  }, [drawer]);
 
-  const rail = (
-    <div className="space-y-3">
-      {SECTIONS_31.map((sec) => {
-        const items = SLIDES.map((s, i) => ({ s, i })).filter(({ s }) => s.section === sec.id);
-        if (items.length === 0) return null;
-        return (
-          <div key={sec.id}>
-            <p className="mb-1.5 px-1 text-xs font-black text-slate-400"><Rich text={sec.label} /></p>
-            <div className="space-y-1">
-              {items.map(({ s, i }) => (
+  const goSlide = (i: number) => {
+    setIndex(Math.max(0, Math.min(SLIDES.length - 1, i)));
+    setArea("lesson");
+    setDrawer(false);
+  };
+
+  /** الفهرس الجانبي — نفس المسار على المكتب وفي الدرج المحمول */
+  const rail = (mobile = false) => (
+    <div className="l31-rail-content flex h-full flex-col">
+      <div className="border-b border-teal-100 p-5">
+        <div className="flex items-start justify-between gap-3">
+          {mobile && (
+            <button
+              type="button"
+              onClick={() => setDrawer(false)}
+              aria-label="إغلاق فهرس خطوات الدرس"
+              className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-slate-200 bg-white text-lg text-slate-600 shadow-sm transition hover:bg-teal-50"
+            >
+              ×
+            </button>
+          )}
+          <div className="min-w-0 flex-1">
+            <button type="button" onClick={onExit} className="text-sm font-semibold text-slate-400 transition hover:text-teal-800">
+              → جميع الدروس
+            </button>
+            <div className="font-head mt-2 text-xl font-bold text-slate-900">الدرس 31 · المضارع التام</div>
+            <En className="text-xs font-semibold text-slate-400">Present Perfect · The Present Bridge</En>
+          </div>
+        </div>
+      </div>
+      <nav
+        id={mobile ? "l31-mobile-step-navigation" : "l31-desktop-navigation"}
+        aria-label="خطوات الدرس 31"
+        className="flex-1 overflow-y-auto p-3"
+      >
+        {groups.map((group) => (
+          <div key={group.id} className="mb-3">
+            <div className="px-3 py-1 text-xs font-black text-slate-400">
+              <Rich text={group.label} />
+            </div>
+            {group.items.map(({ s, i }) => {
+              const active = i === index && area === "lesson";
+              return (
                 <button
                   key={s.id}
                   type="button"
                   onClick={() => goSlide(i)}
-                  aria-current={i === index && area === "lesson" ? "true" : undefined}
-                  className={`flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-right text-sm font-bold transition ${
-                    i === index && area === "lesson" ? "bg-sky-700 text-white shadow" : "text-slate-600 hover:bg-sky-50"
+                  aria-current={active ? "step" : undefined}
+                  className={`l31-rail-item flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-right text-sm transition ${
+                    active ? "bg-teal-700 text-white shadow" : "text-slate-600 hover:bg-teal-50"
                   }`}
                 >
-                  <span aria-hidden>{s.mascot}</span>
-                  <span className="min-w-0 flex-1 truncate"><Rich text={s.title} /></span>
-                  <span className={`text-[11px] font-black ${i === index && area === "lesson" ? "text-sky-200" : "text-slate-300"}`}>{s.no}</span>
+                  <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"}`}>
+                    {s.no}
+                  </span>
+                  <span className="min-w-0 flex-1 truncate font-semibold">
+                    <Rich text={s.title} />
+                  </span>
+                  <span className="text-base" aria-hidden>{s.mascot}</span>
                 </button>
-              ))}
-            </div>
+              );
+            })}
           </div>
-        );
-      })}
+        ))}
+      </nav>
+      <div className="border-t border-teal-100 p-4 text-xs text-slate-400">
+        <Rich text="التنقل: الأسهم ← → · الفهرس: ☰" />
+      </div>
     </div>
   );
 
   return (
-    <div className="mx-auto max-w-6xl space-y-4 p-3 sm:p-4">
-      <SignatureGhost />
-      <div className="flex flex-wrap items-center gap-2">
-        <button type="button" onClick={onExit} className="rounded-xl bg-slate-100 px-3 py-2 text-sm font-black text-slate-600 transition hover:bg-slate-200">
-          → خروج
-        </button>
-        <button type="button" onClick={() => setDrawer((d) => !d)} className="rounded-xl bg-sky-700 px-3 py-2 text-sm font-black text-white transition hover:bg-sky-800 lg:hidden">
-          ☰ الخطوات
-        </button>
-        <div className="min-w-0 flex-1">
-          <h1 className="font-head truncate text-lg font-black text-slate-900 md:text-xl"><LatinRuns text={LESSON_TITLE_31} /></h1>
-          <p className="truncate text-xs font-bold text-slate-500"><LatinRuns text={LESSON_SUBTITLE_31} /></p>
-        </div>
-      </div>
+    <div className="lesson31 style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#eef7f6] text-slate-800" data-lesson="31">
+      {/* الإسناد المشترك — مرة واحدة في أعلى الصفحة */}
+      <Signature />
 
-      <div className="flex flex-wrap gap-2">
-        {AREAS_31.map((a) => (
-          <button
-            key={a.id}
-            type="button"
-            onClick={() => setArea(a.id)}
-            aria-pressed={area === a.id}
-            className={`flex-1 rounded-2xl border-2 px-3 py-2.5 text-sm font-black transition active:scale-[0.98] sm:flex-none sm:px-5 ${
-              area === a.id ? "border-sky-600 bg-sky-700 text-white shadow" : "border-slate-200 bg-white text-slate-600 hover:border-sky-300"
-            }`}
-          >
-            {a.emoji} {a.ar}
-            {a.id === "solutions" && !solutionsUnlocked && " 🔒"}
-          </button>
-        ))}
-      </div>
+      <div className="relative flex min-h-0 flex-1">
+        <SignatureGhost />
 
-      {area === "lesson" && (
-        <div className="flex items-center gap-2 rounded-2xl border-2 border-sky-100 bg-white px-3 py-2">
-          <span className="text-xs font-black text-sky-800"><Rich text={`خطوة ${slide.no} من ${SLIDE_COUNT}`} /></span>
-          <div className="h-2 min-w-0 flex-1 overflow-hidden rounded-full bg-slate-100">
-            <div className="h-2 rounded-full bg-sky-600 transition-all" style={{ width: `${progress}%` }} />
-          </div>
-          <span className="text-xs font-black text-slate-400"><Rich text={`${progress}٪`} /></span>
-        </div>
-      )}
-
-      {drawer && (
-        <div className="rounded-3xl border-2 border-slate-200 bg-white p-3 lg:hidden">
-          {rail}
-        </div>
-      )}
-
-      <div className="grid gap-4 lg:grid-cols-[280px_minmax(0,1fr)]">
-        <aside className="hidden max-h-[80vh] overflow-y-auto rounded-3xl border-2 border-slate-200 bg-white p-3 lg:block">
-          {rail}
+        {/* الفهرس الجانبي — سطح المكتب */}
+        <aside aria-label="مسار الدرس" className="l31-desktop-rail relative z-10 hidden w-72 shrink-0 border-l border-teal-100 bg-white/85 backdrop-blur lg:flex">
+          {rail()}
         </aside>
-        <main className="min-w-0 space-y-4">
-          {area === "lesson" && (
-            <div data-area="l31-lesson">
-              <SlideView31 key={index} s={slide} onGoTest={() => setArea("test")} />
-              {/* 🏁 الاختبار النهائي — طبقة نهاية الدرس (تظهر مع الخطوة الأخيرة فقط) */}
-              {index === SLIDE_COUNT - 1 && (
-                <div className="mt-4">
-                  <FinalTest
-                    lesson={31}
-                    questions={FINAL_TESTS[31]}
-                    accent="bg-sky-700"
-                    onGoTeacher={() => setArea("teacher")}
-                  />
+
+        <div className="l31-main-column relative z-10 flex min-w-0 flex-1 flex-col">
+          {/* الرأس المختصر: لا يكرر عنوان الخطوة ولا وصفها (مبدأ PR #59) —
+              مؤشر خطوة + تقدّم + تبويبات المناطق الأربع فقط */}
+          <header className="l31-header flex flex-wrap items-center gap-2 px-3 pt-3 sm:px-4 lg:flex-nowrap lg:gap-3 lg:px-10">
+            <div className="l31-header-controls flex w-full min-w-0 items-center gap-2 lg:w-auto lg:flex-1 lg:gap-3">
+              <button
+                ref={menuButtonRef}
+                type="button"
+                onClick={() => setDrawer(true)}
+                aria-label="فهرس خطوات الدرس"
+                aria-expanded={drawer}
+                aria-controls="l31-mobile-navigation"
+                className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-slate-200 bg-white text-lg shadow-sm transition hover:border-teal-300 lg:hidden"
+              >
+                ☰
+              </button>
+
+              {area === "lesson" ? (
+                <div className="l31-progress-row flex min-w-0 flex-1 items-center gap-2 rounded-2xl border border-teal-200 bg-white px-2.5 py-1.5 sm:px-3">
+                  <span className="shrink-0 text-[11px] font-black text-slate-700 sm:text-xs">
+                    <Rich text={`خطوة ${slide.no} من ${SLIDE_COUNT}`} />
+                  </span>
+                  <div
+                    role="progressbar"
+                    aria-label="التقدم في خطوات الدرس"
+                    aria-valuemin={1}
+                    aria-valuemax={SLIDE_COUNT}
+                    aria-valuenow={slide.no}
+                    aria-valuetext={`الخطوة ${slide.no} من ${SLIDE_COUNT}`}
+                    className="h-2 min-w-0 flex-1 overflow-hidden rounded-full bg-slate-200"
+                  >
+                    <div
+                      className="h-full rounded-full bg-gradient-to-l from-teal-600 via-cyan-500 to-amber-400 transition-all duration-500"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                  <span className="shrink-0 text-[11px] font-black text-slate-400 sm:text-xs">
+                    <Rich text={`${progress}٪`} />
+                  </span>
+                </div>
+              ) : (
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-bold text-slate-600">
+                    <Rich text={`الدرس 31 · ${areaLabel}`} />
+                  </div>
+                  <div className="mt-0.5 truncate text-xs font-semibold text-slate-400">
+                    <LatinRuns text={LESSON_SUBTITLE_31} />
+                  </div>
                 </div>
               )}
-              <div className="flex items-center gap-2">
-                <button type="button" disabled={index === 0} onClick={() => setIndex((i) => Math.max(0, i - 1))}
-                  className="flex-1 rounded-2xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-black text-slate-700 transition enabled:hover:border-sky-300 disabled:opacity-30">
+
+              <button
+                type="button"
+                onClick={onExit}
+                className="l31-mobile-exit shrink-0 rounded-xl bg-white px-3 py-2 text-sm font-bold text-slate-600 shadow-sm transition hover:bg-teal-50 lg:hidden"
+              >
+                ← خروج
+              </button>
+            </div>
+
+            {/* المناطق الأربع — مستقلة عن واجهة الطالب */}
+            <nav aria-label="مناطق الدرس" className="l31-area-tabs grid w-full grid-cols-4 gap-1 lg:w-auto lg:shrink-0 lg:flex lg:gap-1.5">
+              {AREAS_31.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setArea(item.id)}
+                  aria-pressed={area === item.id}
+                  className={`l31-area-tab flex min-w-0 flex-1 items-center justify-center gap-1 rounded-2xl border-2 px-1.5 py-1.5 text-xs font-black transition active:scale-[0.98] sm:gap-1.5 sm:px-2.5 sm:text-sm ${
+                    area === item.id ? "border-teal-800 bg-teal-700 text-white shadow" : "border-slate-200 bg-white text-slate-600 hover:border-teal-300"
+                  }`}
+                >
+                  <span aria-hidden className="hidden sm:inline">{item.emoji}</span>
+                  <span className="whitespace-nowrap">{item.ar}</span>
+                  {item.id === "solutions" && !solutionsUnlocked && <span aria-label="مقفل">🔒</span>}
+                </button>
+              ))}
+            </nav>
+          </header>
+
+          <main id="l31-main" ref={scrollRef} className="l31-scroll flex-1 overflow-y-auto px-3 pb-32 pt-4 sm:px-4 md:px-6 lg:px-10">
+            <div className="l31-content mx-auto w-full max-w-4xl">
+              {area === "lesson" && (
+                <div data-area="l31-lesson">
+                  <SlideView31 key={index} s={slide} onGoTest={() => setArea("test")} />
+                  {/* 🏁 الاختبار النهائي — طبقة نهاية الدرس (تظهر مع الخطوة الأخيرة فقط) */}
+                  {index === SLIDE_COUNT - 1 && (
+                    <div className="l31-final-test-shell mt-4">
+                      <FinalTest lesson={31} questions={FINAL_TESTS[31]} accent="bg-teal-700" onGoTeacher={() => setArea("teacher")} />
+                    </div>
+                  )}
+                </div>
+              )}
+              {area === "test" && (
+                <div className="l31-area-content l31-test-content" data-area="l31-test">
+                  <TestArea31 onCheckedChange={setTestChecked} onShowSolutions={() => setArea("solutions")} />
+                </div>
+              )}
+              {area === "solutions" && (
+                <div className="l31-area-content l31-solutions-content" data-area="l31-solutions">
+                  <Solutions31 unlocked={solutionsUnlocked} onGoTest={() => setArea("test")} onGoTeacher={() => setArea("teacher")} />
+                </div>
+              )}
+              {area === "teacher" && (
+                <div className="l31-area-content l31-teacher-content" data-area="l31-teacher">
+                  <TeacherArea31 unlocked={teacherOk} onUnlockChange={setTeacherOk} onGoSolutions={() => setArea("solutions")} />
+                </div>
+              )}
+            </div>
+          </main>
+
+          {/* أزرار التنقل العائمة — نمط الدرس 1 */}
+          {area === "lesson" && (
+            <div className="l31-floating-nav absolute inset-x-0 bottom-4 z-20 flex justify-center px-3">
+              <div className="flex items-center gap-1.5 rounded-full border border-teal-200 bg-white/95 p-1.5 shadow-xl backdrop-blur">
+                <button
+                  type="button"
+                  onClick={() => goSlide(index - 1)}
+                  disabled={index === 0}
+                  className="rounded-full px-4 py-2 text-sm font-bold text-slate-700 transition enabled:hover:bg-teal-50 disabled:opacity-30"
+                >
                   → السابق
                 </button>
-                <span className="rounded-xl bg-slate-100 px-3 py-2 text-xs font-black text-slate-500">{slide.no} / {SLIDE_COUNT}</span>
-                <button type="button" disabled={index === SLIDE_COUNT - 1} onClick={() => setIndex((i) => Math.min(SLIDE_COUNT - 1, i + 1))}
-                  className="flex-1 rounded-2xl bg-sky-700 px-4 py-3 text-sm font-black text-white transition enabled:hover:bg-sky-800 disabled:opacity-30">
+                <span className="h-6 w-px bg-slate-200" />
+                <span className="rounded-lg px-2 text-xs font-bold text-slate-500">{slide.no} / {SLIDE_COUNT}</span>
+                <span className="h-6 w-px bg-slate-200" />
+                <button
+                  type="button"
+                  onClick={() => goSlide(index + 1)}
+                  disabled={index === SLIDE_COUNT - 1}
+                  className="rounded-full bg-teal-700 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-teal-800 disabled:opacity-30"
+                >
                   التالي ←
                 </button>
               </div>
             </div>
           )}
-          {area === "test" && <div data-area="l31-test"><TestArea31 onCheckedChange={setTestChecked} onShowSolutions={() => setArea("solutions")} /></div>}
-          {area === "solutions" && <div data-area="l31-solutions"><Solutions31 unlocked={solutionsUnlocked} onGoTest={() => setArea("test")} onGoTeacher={() => setArea("teacher")} /></div>}
-          {area === "teacher" && <div data-area="l31-teacher"><TeacherArea31 unlocked={teacherOk} onUnlockChange={setTeacherOk} onGoSolutions={() => setArea("solutions")} /></div>}
-        </main>
+        </div>
       </div>
 
-      <p className="pb-4 text-center text-[11px] font-bold text-slate-400">
-        📜 المصدر: {SOURCE_NUMBERED_COUNT} قسمًا مرقّمًا · {SOURCE_LEDGER_COUNT} وحدة في السجل · العرض دلالي تفاعلي — لا نص خام
-      </p>
+      {/* الفهرس على الشاشات الصغيرة */}
+      {drawer && (
+        <div className="l31-mobile-drawer fixed inset-0 z-50 flex lg:hidden" onClick={() => setDrawer(false)}>
+          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" aria-hidden="true" />
+          <aside
+            ref={drawerRef}
+            id="l31-mobile-navigation"
+            role="dialog"
+            aria-modal="true"
+            aria-label="فهرس خطوات الدرس"
+            className="relative z-10 h-full w-80 max-w-[85vw] bg-white shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            {rail(true)}
+          </aside>
+        </div>
+      )}
     </div>
   );
 }

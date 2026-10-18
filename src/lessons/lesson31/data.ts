@@ -2780,6 +2780,8 @@ export type CompareLens31 = {
   id: "ps" | "pp" | "pperf";
   emoji: string;
   tag: string;
+  /** اسم الزمن كما ورد في المصدر — يُستخدم للشارة اللونية الموحّدة */
+  tense: "Present Perfect" | "Past Simple" | "Past Perfect";
   ar: string;
   focus: string;
   probe: string;
@@ -2793,6 +2795,7 @@ export type CompareLens31 = {
 export const COMPARE_LAB_31: CompareLens31[] = [
   {
     id: "pp",
+    tense: "Present Perfect",
     emoji: "🌉",
     tag: "PRESENT PERFECT",
     ar: "المضارع التام",
@@ -2806,6 +2809,7 @@ export const COMPARE_LAB_31: CompareLens31[] = [
   },
   {
     id: "ps",
+    tense: "Past Simple",
     emoji: "📸",
     tag: "PAST SIMPLE",
     ar: "الماضي البسيط",
@@ -2819,6 +2823,7 @@ export const COMPARE_LAB_31: CompareLens31[] = [
   },
   {
     id: "pperf",
+    tense: "Past Perfect",
     emoji: "⏪",
     tag: "PAST PERFECT",
     ar: "الماضي التام",

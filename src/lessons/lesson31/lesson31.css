@@ -54,6 +54,38 @@
 .lesson31 .hover\:bg-teal-800:hover { background-color: var(--l31-teal-deep); }
 .lesson31 .focus\:border-teal-400:focus { border-color: var(--l31-teal-bright); }
 
+/* أزرق المنصة العام (sky) يُعاد تفسيره داخل الدرس 31 إلى التركواز/الأزرق
+   المائي الخاص بهويته — بنفس أسلوب الدرس 30 مع teal، وبلا لمس أي ملف
+   مشترك أو أي درس آخر. */
+.lesson31 .bg-sky-700 { background-color: var(--l31-teal); }
+.lesson31 .bg-sky-800 { background-color: var(--l31-teal-deep); }
+.lesson31 .bg-sky-600 { background-color: var(--l31-teal-bright); }
+.lesson31 .bg-sky-500 { background-color: #14b8a6; }
+.lesson31 .bg-sky-100 { background-color: #d7f5ef; }
+.lesson31 .bg-sky-50 { background-color: var(--l31-teal-soft); }
+.lesson31 .text-sky-900 { color: #134e4a; }
+.lesson31 .text-sky-800 { color: #115e59; }
+.lesson31 .text-sky-700 { color: var(--l31-teal); }
+.lesson31 .text-sky-600 { color: var(--l31-teal-bright); }
+.lesson31 .text-sky-200 { color: #a7f3e4; }
+.lesson31 .text-sky-100 { color: #ccf2ea; }
+.lesson31 .text-sky-400 { color: #2dd4bf; }
+.lesson31 .border-sky-400 { border-color: var(--l31-teal-bright); }
+.lesson31 .border-sky-300 { border-color: var(--l31-teal-line); }
+.lesson31 .border-sky-200 { border-color: #b9f0e7; }
+.lesson31 .border-sky-100 { border-color: #ddf7f1; }
+.lesson31 .ring-sky-200 { --tw-ring-color: #ccf2ea; }
+.lesson31 .ring-sky-300 { --tw-ring-color: var(--l31-teal-line); }
+.lesson31 .hover\:border-sky-300:hover { border-color: var(--l31-teal-line); }
+.lesson31 .hover\:bg-sky-50:hover { background-color: var(--l31-teal-soft); }
+.lesson31 .hover\:bg-sky-800:hover { background-color: var(--l31-teal-deep); }
+.lesson31 .focus\:border-sky-400:focus { border-color: var(--l31-teal-bright); }
+.lesson31 .from-sky-700 { --tw-gradient-from: var(--l31-teal-deep); }
+.lesson31 .from-sky-50 { --tw-gradient-from: var(--l31-teal-soft); }
+.lesson31 .via-cyan-700 { --tw-gradient-via: #0e7490; }
+.lesson31 .to-teal-600 { --tw-gradient-to: var(--l31-teal-bright); }
+.lesson31 .to-teal-700 { --tw-gradient-to: var(--l31-teal); }
+
 /* ---------- الهيكل الكامل الشاشة ---------- */
 .lesson31 .l31-desktop-rail {
   box-shadow: 8px 0 32px -30px rgba(18, 51, 50, 0.45);

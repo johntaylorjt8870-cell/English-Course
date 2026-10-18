@@ -1,0 +1,304 @@
+/* ============================================================
+   Lesson 31 — Present Perfect · THE PRESENT BRIDGE (جسر الحاضر)
+   هوية بصرية خاصة بالدرس — لا تمس أي درس آخر.
+
+   وظيفة الألوان تعليمية وثابتة في كل الدرس:
+     🌉 التركواز/الأزرق المائي = Present Perfect (الزمن البطل)
+     📸 المرجاني (coral)        = Past Simple (الماضي المنتهي)
+     ⏪ البنفسجي                = Past Perfect (الماضي الأقدم)
+     ⏺ الذهبي                  = NOW والنتائج الحالية
+   ============================================================ */
+
+.lesson31 {
+  --l31-ink: #123332;          /* حبر أخضر مائي عميق — عناوين */
+  --l31-ink-soft: #476462;
+  --l31-paper: #eef7f6;        /* ورق أزرق مائي بارد */
+  --l31-paper-deep: #e2f1ef;
+  --l31-teal: #0f766e;         /* التركواز الأساسي — Present Perfect */
+  --l31-teal-deep: #115e59;
+  --l31-teal-bright: #0d9488;
+  --l31-teal-soft: #f0fdfa;
+  --l31-teal-line: #99f6e4;
+  --l31-coral: #ea580c;        /* مرجاني — Past Simple */
+  --l31-coral-soft: #fff7ed;
+  --l31-coral-line: #fdba74;
+  --l31-violet: #6d28d9;       /* بنفسجي — Past Perfect */
+  --l31-violet-soft: #f5f3ff;
+  --l31-violet-line: #c4b5fd;
+  --l31-gold: #b45309;         /* ذهبي — NOW / النتائج الحالية */
+  --l31-gold-bright: #f59e0b;
+  --l31-gold-soft: #fffbeb;
+  --l31-gold-line: #fcd34d;
+  --l31-card: #ffffff;
+  --l31-line: #d7e8e5;
+  min-height: 0;
+  color: var(--l31-ink);
+}
+
+/* ---------- الألوان الدلالية داخل الدرس فقط ---------- */
+/* إعادة تفسير أدوات teal/sky العامة داخل نطاق الدرس إلى هوية التركواز،
+   دون لمس أي درس آخر أو أي ملف مشترك. */
+.lesson31 .bg-teal-700 { background-color: var(--l31-teal); }
+.lesson31 .bg-teal-800 { background-color: var(--l31-teal-deep); }
+.lesson31 .bg-teal-600 { background-color: var(--l31-teal-bright); }
+.lesson31 .bg-teal-50  { background-color: var(--l31-teal-soft); }
+.lesson31 .text-teal-900 { color: #134e4a; }
+.lesson31 .text-teal-800 { color: #115e59; }
+.lesson31 .text-teal-700 { color: var(--l31-teal); }
+.lesson31 .text-teal-600 { color: var(--l31-teal-bright); }
+.lesson31 .border-teal-300 { border-color: var(--l31-teal-line); }
+.lesson31 .border-teal-200 { border-color: #b9f0e7; }
+.lesson31 .border-teal-100 { border-color: #ddf7f1; }
+.lesson31 .ring-teal-300 { --tw-ring-color: var(--l31-teal-line); }
+.lesson31 .hover\:border-teal-300:hover { border-color: var(--l31-teal-line); }
+.lesson31 .hover\:bg-teal-800:hover { background-color: var(--l31-teal-deep); }
+.lesson31 .focus\:border-teal-400:focus { border-color: var(--l31-teal-bright); }
+
+/* ---------- الهيكل الكامل الشاشة ---------- */
+.lesson31 .l31-desktop-rail {
+  box-shadow: 8px 0 32px -30px rgba(18, 51, 50, 0.45);
+}
+.lesson31 .l31-rail-content { min-height: 0; }
+.lesson31 .l31-rail-item { min-height: 2.5rem; }
+.lesson31 .l31-rail-item[aria-current="step"] {
+  background-color: var(--l31-teal-deep);
+  color: #fff;
+}
+.lesson31 .l31-rail-item:focus-visible,
+.lesson31 .l31-area-tab:focus-visible,
+.lesson31 .l31-floating-nav button:focus-visible,
+.lesson31 .l31-cover-page button:focus-visible,
+.lesson31 .l31-mobile-drawer button:focus-visible,
+.lesson31 .l31-frame-wrap button:focus-visible,
+.lesson31 .l31-area-content button:focus-visible,
+.lesson31 .l31-area-content input:focus-visible,
+.lesson31 .l31-area-content textarea:focus-visible,
+.lesson31 .l31-area-content select:focus-visible {
+  outline: 3px solid var(--l31-gold-bright);
+  outline-offset: 2px;
+}
+
+.lesson31 .l31-area-tab { min-height: 2.75rem; }
+.lesson31 .l31-header,
+.lesson31 .l31-header-controls,
+.lesson31 .l31-area-tabs { min-width: 0; }
+.lesson31 .l31-progress-row {
+  min-height: 2.75rem;
+  border-radius: 999px;
+}
+.lesson31 .l31-scroll {
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+.lesson31 .l31-content { padding-bottom: 0.5rem; }
+
+/* ---------- إطار الخطوة ---------- */
+.lesson31 .l31-frame-wrap > section {
+  border: 1px solid var(--l31-line);
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.98);
+  padding: clamp(1.25rem, 2.5vw, 2.5rem);
+  box-shadow: 0 14px 44px -24px rgba(15, 118, 110, 0.35);
+}
+.lesson31 .l31-frame-wrap > section > .pointer-events-none.absolute {
+  top: 1.25rem;
+  left: 1.5rem;
+  font-size: 3.5rem;
+}
+.lesson31 .l31-frame-wrap > section > h2 {
+  max-width: 88%;
+  line-height: 1.25;
+}
+.lesson31 .l31-frame-wrap > section > p {
+  max-width: 88%;
+  line-height: 1.75;
+}
+.lesson31 .l31-frame-wrap [data-source-section] {
+  border: 1px solid var(--l31-line);
+  background: var(--l31-teal-soft);
+  line-height: 1.5;
+}
+
+/* ---------- المختبرات ---------- */
+.lesson31 .l31-lab {
+  border-color: #c8e8e3;
+  background-image: linear-gradient(135deg, #ffffff 0%, #effaf8 55%, #fff8ec 100%);
+  box-shadow: 0 6px 22px -19px rgba(18, 51, 50, 0.55);
+}
+.lesson31 .l31-lab-head {
+  border-color: #d9efeb;
+  box-shadow: 0 1px 5px rgba(18, 51, 50, 0.04);
+}
+.lesson31 .l31-lab-head .text-teal-700 { color: var(--l31-teal); }
+.lesson31 .l31-platform-panel { line-height: 1.7; }
+.lesson31 .l31-completion-note { line-height: 1.7; }
+
+/* ---------- الغلاف ---------- */
+.lesson31 .l31-cover-hero { isolation: isolate; }
+.lesson31 .l31-cover-hero h1 { text-wrap: balance; }
+.lesson31 .l31-cover-tip {
+  box-shadow: 0 10px 25px -20px rgba(15, 118, 110, 0.7);
+}
+
+/* ============================================================
+   الخط الزمني التفاعلي (التفاعل أ)
+   ============================================================ */
+.lesson31 .l31-track {
+  border-color: var(--l31-line);
+  background: linear-gradient(180deg, #ffffff 0%, #f4fbfa 100%);
+}
+.lesson31 .l31-track-line {
+  position: relative;
+  height: 3.25rem;
+  border-radius: 0.9rem;
+  background: linear-gradient(90deg, #cdeae6 0%, #a7ded7 55%, #8ed3cb 100%);
+  border: 1px solid #b9e2dc;
+}
+/* نطاق «الحدث قبل الآن» — يتوهج عند الربط بالحاضر */
+.lesson31 .l31-track-bridge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 0.9rem 0 0 0.9rem;
+  background: linear-gradient(90deg, rgba(13, 148, 136, 0.16), rgba(13, 148, 136, 0.42));
+  border-inline-end: 3px dashed rgba(15, 118, 110, 0.65);
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* منطقة النتيجة الحالية قرب NOW — الذهبي */
+.lesson31 .l31-track-nowzone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 22%;
+  border-radius: 0 0.9rem 0.9rem 0;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.05), rgba(245, 158, 11, 0.28));
+  border-inline-start: 3px dashed rgba(180, 83, 9, 0.45);
+}
+.lesson31 .l31-track-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+.lesson31 .l31-track-now {
+  position: absolute;
+  top: 50%;
+  right: -0.55rem;
+  transform: translateY(-50%);
+  z-index: 3;
+}
+.lesson31 .l31-now-pulse {
+  animation: l31-nowpulse 2.2s ease-in-out infinite;
+}
+@keyframes l31-nowpulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.55); }
+  55% { box-shadow: 0 0 0 9px rgba(245, 158, 11, 0); }
+}
+.lesson31 .l31-viewpoint {
+  transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+.lesson31 .l31-viewpoint[aria-pressed="true"] {
+  box-shadow: 0 8px 22px -14px rgba(15, 118, 110, 0.55);
+}
+
+/* ============================================================
+   مختبر المقارنة (التفاعل ب) — عدسات الأزمنة
+   ============================================================ */
+.lesson31 .l31-lens-btn {
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.lesson31 .l31-lens-btn[aria-pressed="true"] {
+  box-shadow: 0 6px 18px -10px rgba(18, 51, 50, 0.45);
+}
+.lesson31 .l31-lens-panel {
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+/* ============================================================
+   مختبر بناء الجملة (التفاعل ج)
+   ============================================================ */
+.lesson31 .l31-build-chip {
+  transition: transform 0.12s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+.lesson31 .l31-build-chip:not(:disabled):active { transform: scale(0.95); }
+.lesson31 .l31-build-chip[aria-pressed="true"] {
+  box-shadow: 0 6px 16px -10px rgba(15, 118, 110, 0.6);
+}
+.lesson31 .l31-build-slot {
+  min-height: 3.25rem;
+  border-style: dashed;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.lesson31 .l31-build-slot.filled {
+  border-style: solid;
+}
+
+/* ============================================================
+   لوحة الكلمات الدالة (التفاعل د)
+   ============================================================ */
+.lesson31 .l31-signal-card {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+.lesson31 .l31-signal-card[aria-pressed="true"] {
+  box-shadow: 0 10px 26px -16px rgba(15, 118, 110, 0.55);
+}
+.lesson31 .l31-signal-pos {
+  border-color: var(--l31-teal-line);
+  background: var(--l31-teal-soft);
+}
+
+/* ============================================================
+   منطقة الاختبار — شريط الأسئلة
+   ============================================================ */
+.lesson31 .l31-test-content [data-test-q] { scroll-margin-top: 1rem; }
+.lesson31 .l31-area-content > * + * { margin-top: 1rem; }
+
+/* ---------- الدرج المحمول ---------- */
+.lesson31 .l31-mobile-drawer { overscroll-behavior: contain; }
+
+/* ---------- الطباعة والتنقل ---------- */
+.lesson31 .l31-floating-nav {
+  pointer-events: none;
+}
+.lesson31 .l31-floating-nav > div {
+  pointer-events: auto;
+}
+
+/* ---------- احترام تقليل الحركة ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .lesson31 *,
+  .lesson31 *::before,
+  .lesson31 *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- الشاشات الصغيرة ---------- */
+@media (max-width: 639px) {
+  .lesson31 .l31-mobile-exit { min-width: 3.25rem; }
+  .lesson31 .l31-frame-wrap > section {
+    border-radius: 1.5rem;
+    padding: 1.25rem;
+  }
+  .lesson31 .l31-frame-wrap > section > .pointer-events-none.absolute {
+    top: 0.75rem;
+    left: 0.75rem;
+    font-size: 2.5rem;
+  }
+  .lesson31 .l31-frame-wrap > section > h2,
+  .lesson31 .l31-frame-wrap > section > p {
+    max-width: 100%;
+  }
+  .lesson31 .l31-frame-wrap > section > h2 {
+    padding-left: 2.5rem;
+    font-size: 1.65rem;
+  }
+  .lesson31 .l31-track { padding: 0.5rem; }
+  .lesson31 .l31-track-line { height: 3.75rem; }
+  .lesson31 .l31-track-line .l31-track-marker span { font-size: 0.55rem; }
+}

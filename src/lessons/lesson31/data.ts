@@ -2731,3 +2731,290 @@ export const SLIDES: Slide31[] = [
 ];
 
 export const SLIDE_COUNT = SLIDES.length;
+
+// ============================================================
+// التفاعلات المميزة لإعادة بناء الدرس 31 (إضافات المنصة — لا تمس المصدر)
+// كل مجموعة تُبنى من وحدات المصدر نفسها أو تُوسم Platform Explanation.
+// ============================================================
+
+// ---------- التفاعل أ — الخط الزمني التفاعلي: زاويتا النظر ----------
+export type Viewpoint31 = {
+  id: "fixed" | "linked";
+  en: string;
+  ar: string;
+  tense: "Past Simple" | "Present Perfect";
+  question: string;
+  answer: string;
+  markerLabel: string;
+  resultNow: string;
+  reading: string;
+};
+
+export const TIMELINE_LAB_31: Viewpoint31[] = [
+  {
+    id: "fixed",
+    en: "I lost my keys yesterday.",
+    ar: "أضعت مفاتيحي أمس.",
+    tense: "Past Simple",
+    question: "متى حدث الأمر؟",
+    answer: "أمس — yesterday.",
+    markerLabel: "X — أمس",
+    resultNow: "لا نعرف — الجملة تنتهي عند أمس.",
+    reading: "حدث محدد في وقت ماضٍ منتهٍ: النقطة X ثابتة عند أمس، ولا يوجد جسر إلى NOW — فالخط يتوقف عند الحدث.",
+  },
+  {
+    id: "linked",
+    en: "I have lost my keys.",
+    ar: "لقد أضعت مفاتيحي.",
+    tense: "Present Perfect",
+    question: "ما المشكلة الآن؟",
+    answer: "المفاتيح مفقودة حتى الآن.",
+    markerLabel: "X — قبل الآن",
+    resultNow: "المفاتيح مفقودة الآن.",
+    reading: "حدث قبل الآن ونتيجته حية: الجسر يصل النقطة X بنقطة NOW — النتيجة (المفاتيح مفقودة) مهمة في هذه اللحظة.",
+  },
+];
+
+// ---------- التفاعل ب — مختبر مقارنة الأزمنة: عدسات الشرح ----------
+export type CompareLens31 = {
+  id: "ps" | "pp" | "pperf";
+  emoji: string;
+  tag: string;
+  ar: string;
+  focus: string;
+  probe: string;
+  probeAnswer: string;
+  rule: string;
+  example: string;
+  exampleAr: string;
+  timeline: string;
+};
+
+export const COMPARE_LAB_31: CompareLens31[] = [
+  {
+    id: "pp",
+    emoji: "🌉",
+    tag: "PRESENT PERFECT",
+    ar: "المضارع التام",
+    focus: "التجربة أو النتيجة أو العلاقة بالحاضر.",
+    probe: "هل شاهدته من قبل؟",
+    probeAnswer: "نعم — والخبرة حية الآن.",
+    rule: "بلا وقت ماضٍ محدد ومنتهٍ — الماضي مرتبط بالحاضر.",
+    example: "I have watched that movie.",
+    exampleAr: "لقد شاهدت ذلك الفيلم.",
+    timeline: "X ──🌉──▶ NOW — الحدث يصل إلى اللحظة الحاضرة بجسر.",
+  },
+  {
+    id: "ps",
+    emoji: "📸",
+    tag: "PAST SIMPLE",
+    ar: "الماضي البسيط",
+    focus: "حدث انتهى في الماضي — وغالبًا نعرف متى حدث.",
+    probe: "متى؟",
+    probeAnswer: "last night — وقت محدد ومنتهٍ.",
+    rule: "وقت ماضٍ محدد ومنتهٍ — الحدث انطفأ عند نقطة ماضية.",
+    example: "I watched that movie last night.",
+    exampleAr: "شاهدت ذلك الفيلم ليلة أمس.",
+    timeline: "X ● ——— الحدث يبقى في مكانه الماضي دون جسر إلى NOW.",
+  },
+  {
+    id: "pperf",
+    emoji: "⏪",
+    tag: "PAST PERFECT",
+    ar: "الماضي التام",
+    focus: "حدث اكتمل قبل حدث ماضٍ آخر.",
+    probe: "ما الذي سبق؟",
+    probeAnswer: "المتحف كان قد شوهد قبل الدخول.",
+    rule: "had + V3 — فلاش باك إلى حدث أقدم داخل الماضي.",
+    example: "I had seen the museum before we entered the city.",
+    exampleAr: "كنت قد رأيت المتحف قبل أن ندخل المدينة.",
+    timeline: "X ⏪——— Y ● ——— حدثان ماضيان: X أقدم من Y.",
+  },
+];
+
+// ---------- التفاعل ج — مختبر بناء الجملة ----------
+export type BuilderSubject31 = { en: string; ar: string; helper: "have" | "has" };
+export const BUILDER_SUBJECTS_31: BuilderSubject31[] = [
+  { en: "I", ar: "أنا", helper: "have" },
+  { en: "You", ar: "أنت", helper: "have" },
+  { en: "We", ar: "نحن", helper: "have" },
+  { en: "They", ar: "هم", helper: "have" },
+  { en: "He", ar: "هو", helper: "has" },
+  { en: "She", ar: "هي", helper: "has" },
+  { en: "It", ar: "هو / هي لغير العاقل", helper: "has" },
+  { en: "Khalil", ar: "خليل", helper: "has" },
+  { en: "Sara", ar: "سارة", helper: "has" },
+];
+
+export type BuilderVerb31 = { base: string; v2: string; v3: string; ar: string; object: string; objectAr: string };
+export const BUILDER_VERBS_31: BuilderVerb31[] = [
+  { base: "clean", v2: "cleaned", v3: "cleaned", ar: "ينظّف", object: "my room", objectAr: "غرفتي" },
+  { base: "open", v2: "opened", v3: "opened", ar: "يفتح", object: "the window", objectAr: "النافذة" },
+  { base: "build", v2: "built", v3: "built", ar: "يبني", object: "a small robot", objectAr: "روبوتًا صغيرًا" },
+  { base: "forget", v2: "forgot", v3: "forgotten", ar: "ينسى", object: "his password", objectAr: "كلمة مروره" },
+  { base: "finish", v2: "finished", v3: "finished", ar: "ينهي", object: "the project", objectAr: "المشروع" },
+  { base: "eat", v2: "ate", v3: "eaten", ar: "يأكل", object: "its food", objectAr: "طعامه" },
+  { base: "go", v2: "went", v3: "gone", ar: "يذهب", object: "home", objectAr: "إلى البيت" },
+  { base: "see", v2: "saw", v3: "seen", ar: "يرى", object: "the museum", objectAr: "المتحف" },
+  { base: "write", v2: "wrote", v3: "written", ar: "يكتب", object: "a letter", objectAr: "رسالة" },
+  { base: "visit", v2: "visited", v3: "visited", ar: "يزور", object: "Italy", objectAr: "إيطاليا" },
+];
+
+// ---------- التفاعل د — لوحة الكلمات الدالة ----------
+export type SignalWord31 = {
+  word: string;
+  ar: string;
+  meaning: string;
+  position: string;
+  formula: string;
+  examples: { en: string; ar: string }[];
+  platformExample?: { en: string; ar: string };
+};
+
+export const SIGNAL_WORDS_31: SignalWord31[] = [
+  {
+    word: "ever",
+    ar: "هل سبق أن",
+    meaning: "تسأل عن خبرة حدثت في الحياة من قبل — دون تحديد وقت.",
+    position: "بين الفاعل و V3 داخل السؤال",
+    formula: "Have / Has + Subject + ever + V3 ?",
+    examples: [
+      { en: "Have you ever visited Spain?", ar: "هل سبق أن زرت إسبانيا؟" },
+      { en: "Has she ever seen snow?", ar: "هل سبق أن رأت الثلج؟" },
+    ],
+  },
+  {
+    word: "never",
+    ar: "لم يسبق أبدًا",
+    meaning: "نفي كامل للخبرة — الشيء لم يحدث حتى الآن في الحياة.",
+    position: "بين المساعد و V3",
+    formula: "have / has + never + V3",
+    examples: [
+      { en: "I have never visited Australia.", ar: "لم يسبق لي أن زرت أستراليا." },
+      { en: "He has never eaten sushi.", ar: "لم يسبق له أن أكل السوشي." },
+    ],
+  },
+  {
+    word: "already",
+    ar: "بالفعل",
+    meaning: "الشيء حدث قبل الوقت المتوقع أو قبل الآن.",
+    position: "بين المساعد و V3 — غالبًا",
+    formula: "have / has + already + V3",
+    examples: [
+      { en: "She has already left.", ar: "لقد غادرت بالفعل." },
+      { en: "He has already seen the movie.", ar: "لقد شاهد الفيلم بالفعل." },
+    ],
+  },
+  {
+    word: "just",
+    ar: "للتو",
+    meaning: "الحدث وقع قبل لحظات قليلة — ونتيجته قائمة الآن.",
+    position: "بين المساعد و V3",
+    formula: "have / has + just + V3",
+    examples: [
+      { en: "The train has just left.", ar: "غادر القطار للتو." },
+      { en: "The baby has just fallen asleep.", ar: "لقد نام الطفل للتو." },
+    ],
+  },
+  {
+    word: "yet",
+    ar: "بعد / حتى الآن",
+    meaning: "تسأل هل حدث الشيء أم لا — أو تقول إنه لم يحدث حتى الآن.",
+    position: "في نهاية السؤال والجملة المنفية — غالبًا",
+    formula: "Have … V3 yet ? · haven't / hasn't … yet",
+    examples: [
+      { en: "Have you finished your homework yet?", ar: "هل أنهيت واجبك بعد؟" },
+      { en: "They haven't decided yet.", ar: "لم يقرروا بعد." },
+    ],
+  },
+  {
+    word: "recently",
+    ar: "مؤخرًا",
+    meaning: "الحدث حديث ونتيجته أو علاقته بالحاضر مهمة.",
+    position: "بعد V3 — أو قبله",
+    formula: "have / has + (recently) + V3",
+    examples: [
+      { en: "We have recently moved to a new house.", ar: "انتقلنا مؤخرًا إلى منزل جديد." },
+      { en: "He has recently started a new job.", ar: "بدأ مؤخرًا عملًا جديدًا." },
+    ],
+  },
+  {
+    word: "lately",
+    ar: "في الآونة الأخيرة",
+    meaning: "أحداث حديثة متكررة في الفترة الأخيرة — مرتبطة بالحاضر.",
+    position: "عادة في نهاية الجملة",
+    formula: "have / has + V3 … lately",
+    examples: [{ en: "I have just finished my homework.", ar: "لقد أنهيت واجبي للتو — من عائلة الكلمات الحديثة مثل lately." }],
+  },
+  {
+    word: "so far",
+    ar: "حتى الآن",
+    meaning: "تمتد من الماضي إلى هذه اللحظة — النتيجة قائمة الآن.",
+    position: "عادة في نهاية الجملة",
+    formula: "have / has + V3 … so far",
+    examples: [],
+    platformExample: { en: "We have learned three uses so far.", ar: "تعلمنا ثلاثة استخدامات حتى الآن. — مثال من إعداد المنصة" },
+  },
+  {
+    word: "for",
+    ar: "لمدة",
+    meaning: "مدة زمنية امتدت من الماضي حتى الحاضر.",
+    position: "بعد V3",
+    formula: "have / has + V3 + for + مدة",
+    examples: [
+      { en: "I have lived here for five years.", ar: "أعيش هنا منذ خمس سنوات." },
+      { en: "He has worked here for six months.", ar: "يعمل هنا منذ ستة أشهر." },
+    ],
+  },
+  {
+    word: "since",
+    ar: "منذ",
+    meaning: "نقطة بداية في الماضي استمرت الحالة منها حتى الآن.",
+    position: "بعد V3",
+    formula: "have / has + V3 + since + نقطة بداية",
+    examples: [
+      { en: "I have lived here since 2021.", ar: "أعيش هنا منذ عام 2021." },
+      { en: "We have known him since childhood.", ar: "نعرفه منذ الطفولة." },
+    ],
+  },
+];
+
+// ---------- التفاعل ز — تحليل Final Boss: كل جملة وزمنها وسببها ----------
+export type FinalBossAnalysis31 = {
+  en: string;
+  tense: string;
+  emoji: string;
+  why: string;
+  timeline: string;
+};
+
+export const FINAL_BOSS_ANALYSIS_31: FinalBossAnalysis31[] = [
+  {
+    en: "I ate the cake.",
+    tense: "Past Simple",
+    emoji: "📸",
+    why: "حدث ماضٍ انتهى تمامًا — لا علاقة معلنة بالحاضر: الجملة تروي وقائع فقط.",
+    timeline: "X ● ——— انتهى في ماضٍ منتهٍ",
+  },
+  {
+    en: "I was eating the cake.",
+    tense: "Past Continuous",
+    emoji: "🎥",
+    why: "الأكل كان جاريًا في لحظة ماضية — مشهد يُصوَّر لا نتيجة تُعلن عن NOW.",
+    timeline: "——— ▓▓▓ ——— نشاط داخل لحظة ماضية",
+  },
+  {
+    en: "I had eaten the cake before they arrived.",
+    tense: "Past Perfect",
+    emoji: "⏪",
+    why: "الأكل اكتمل قبل حدث ماضٍ آخر (وصولهم) — فلاش باك إلى حدث أقدم داخل الماضي.",
+    timeline: "X ⏪——— Y ● ——— أقدم من لحظة ماضية",
+  },
+  {
+    en: "I have eaten the cake.",
+    tense: "Present Perfect",
+    emoji: "🌉",
+    why: "الأكل وقع قبل الآن وله علاقة بالحاضر: الكعكة انتهت الآن — النتيجة قابلة للرؤية في اللحظة الحاضرة.",
+    timeline: "X ──🌉──▶ NOW — نتيجة حية الآن",
+  },
+];

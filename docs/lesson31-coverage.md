@@ -1,62 +1,85 @@
 # Lesson 31 coverage ledger — Present Perfect · المضارع التام
 
-## Scope and fidelity contract
+## Scope and fidelity contract (rebuild 2026-10)
 
 Lesson 31 (`الدرس 31: Present Perfect — المضارع التام` — 🌉 IQ200 THE PRESENT
-BRIDGE) is a **native multi-step interactive lesson** built on the approved
-Lesson 6 UX benchmark and the rebuilt Lessons 27/28/29/30 system: one clear
-idea per step, no raw source dumps, interaction-as-explanation, and immediate
-feedback + `why` for every in-lesson answer. The change set is confined to
-Lesson 31 plus the shared registries it must touch: `src/lessons/lesson31/`
-(new `data.ts` + `Lesson31.tsx`), `src/App.tsx` (route + hub card),
-`scripts/audit-lesson31.mjs` (new), `scripts/check-english-direction.mjs`
-(31-lesson inventory + Lesson 31 fidelity block),
-`scripts/audit-render-direction.mjs` (31 lesson folders + routing loop),
-`package.json` (audit chain), and this doc. No other lesson file was edited.
-The teacher-area password remains `somer173` (never re-created).
+BRIDGE) was **visually and pedagogically rebuilt** on top of its approved
+native multi-step system, using Lesson 1 as the design reference and the
+Lesson 30 post-PR-#59 compact header as the shell rule:
 
-`SOURCE_SECTIONS` is the fidelity/coverage ledger only: it is never rendered as
-raw lines and never drives slide generation. Every step renders from semantic
-components (`Frame`, `En`, `Rich`, `PartsLine`, `Lab`, `McqRow`, `TapOrder`,
-`TwoStepFix`, `SortBuckets`, `PairMatch`, `RevealCards`, `CueSwitch`,
-`BridgeTrack`, `FormulaStrip`, `WriteArena`) and carries its ledger title as a
-`data-source-section` chip (audited exact-once vs `SLIDES`). English is
-isolated LTR (`En` / `LatinRuns`, `dir="ltr"` + `unicode-bidi: isolate`); the
-Arabic shell stays RTL. Platform-added explanations are always tagged
-`Platform Explanation`.
+* **Shell (Lesson 1 spirit):** full-screen `h-screen` layout — desktop step
+  rail (all 50 steps grouped by source section), mobile drawer with focus
+  trap + `Escape` + focus return, floating prev/next pill, and the four area
+  tabs. The page itself never scrolls; only the lesson scroller does.
+* **Compact header (PR #59 rule):** the header shows *only* a step counter
+  (`خطوة N من 50`), a progress bar with `role="progressbar"`, and the four
+  area tabs (with the 🔒 indicator on Solutions). It never repeats the step
+  title, lead or tip — those live once inside the step frame. The cover step
+  renders **outside** the step frame so its title/lead/tip are not doubled.
+* **Visual identity (scoped `lesson31.css`, no shared file touched):**
+  turquoise/aqua = Present Perfect · coral = Past Simple · violet = Past
+  Perfect · gold = NOW / current results. The same tone tags every tense in
+  explanations, examples, labs, the test and the teacher area. Arabic stays
+  RTL; every English run is an atomic LTR isolate (`inline-block`, scoped)
+  so mixed titles can never split mid-isolate across lines.
+* **Typography:** the project's own stacks — `Changa`/`Rubik` for Arabic
+  headings/body (Style B, as in Lesson 1) and `Rubik`/`Fredoka` for English,
+  all loaded from the existing `index.html` font link; no new network
+  dependency and sane fallbacks if a family is unavailable.
+* **Fidelity:** `SOURCE_SECTIONS` (45 numbered ①–㊺ + 5 unnumbered) remains
+  the coverage ledger only; every step still maps to exactly one ledger
+  section, and every source example/solution/intentionally-wrong line is
+  still rendered verbatim through semantic components.
+* **Change set:** `src/lessons/lesson31/{Lesson31.tsx,data.ts,lesson31.css}`,
+  `scripts/audit-lesson31.mjs` (artifact cleanup), `scripts/audit-lesson31-browser.mjs`
+  (new, optional real-Chromium verification) and this doc. No other lesson
+  file, shared component or stylesheet was modified.
 
 | Ledger item | Result |
 | --- | --- |
-| Authoritative source sections | **50** (`SOURCE_SECTIONS`: 45 numbered ①–㊺ in source order + 5 unnumbered: `cover`, `opening`, `objectives`, `pspp`, `map`) |
+| Authoritative source sections | **50** (`SOURCE_SECTIONS`: 45 numbered ①–㊺ + 5 unnumbered: `cover`, `opening`, `objectives`, `pspp`, `map`) |
 | Source headings rendered on-slide | **50** — every step carries its ledger title as a `data-source-section` chip, exact-once vs `SLIDES` (audited) |
-| Native steps (rendered sequentially) | **50**: cover + opening + objectives + 45 mapped steps ①–㊺ + the unnumbered `pspp` panel + `map` — `SLIDES` ↔ ledger exact-once |
-| Interactive lab visualizations | **112** distinct `data-en-seq` lab boards + **47** completion-gated `SourceReveal` summary blocks |
-| Signature interactive experiences | **10** (see below) |
-| In-lesson practice | **Immediate feedback + why everywhere** — no solve-all-then-check in the student area; gated source summaries appear only after completing each interaction |
-| Test Area questions | **20** newly authored (`TEST_31`, numbered 1–20): 9 single + 2 tf + 3 multi + 2 order + 2 match + 2 spot — real tap/spot UI, neutral until submit |
-| Final Test (end of lesson) | **15** platform-authored questions (`finalTestBank.ts` → `LESSON_31`) spanning all seven types — no correctness, score, or explanation while answering; the single «تصحيح الاختبار» action reveals score + review + explanations, with a full reset. Separate from the 20-question Test Area; answer key lives in the Teacher Area |
-| Test difficulty mix | **6 Basic · 7 Medium · 4 Advanced · 3 Thinking** (`TEST_31_LEVEL_COUNTS`, audited) |
+| Native steps (rendered sequentially) | **50**: cover + opening + objectives + 45 mapped steps ①–㊺ + the unnumbered `pspp` panel + `map` |
+| Signature interactive experiences | **12** (see below) |
+| In-lesson practice | Immediate feedback + `why` everywhere; gated source summaries appear only after completing each interaction |
+| Test Area questions | **20** newly authored (`TEST_31`): 9 single + 2 tf + 3 multi + 2 order + 2 match + 2 spot; 6 Basic · 7 Medium · 4 Advanced · 3 Thinking |
+| Final Test (end of lesson) | **15** platform-authored questions (`finalTestBank.ts` → `LESSON_31`); no correctness/score/explanation before the single correction; key lives in the Teacher Area |
 | Test solutions | **20** explanatory solutions (answer + why + trap), grouped by level, locked until test submit or teacher unlock |
-| Teacher area | `somer173`-gated: overview (9 objectives + 4 prerequisites + 3 core briefs) + 14 teaching notes + 9 source-activity solution blocks + 2 rubrics + 10 common mistakes + the 19-entry intentionally-wrong inventory + the 50-section source index + solutions entry |
-| Intentional source errors preserved verbatim | **19** (`INTENTIONALLY_WRONG_31`: ④ V2-after-have ×4, ⑤ forgot, ⑧ in-2022, ⑩ double negative, ㉛–㉞ famous errors, ㉟ detective ×8) |
-| Source visuals | **2** source timelines (`DIAGRAMS_31`) kept verbatim as labelled `See textbook/reference` art — never guessed or redrawn |
+| Teacher area | `somer173`-gated: overview, 50-step teaching sequence, difficult concepts, 14 notes, 9 source-solution blocks, 2 rubrics, 10 mistakes, the 19-entry intentionally-wrong inventory, the 50-section index |
 | New runtime dependencies | **None** |
-| Branding | `EnglishwithSomeR` only; no country-flag branding added |
+| Branding | `EnglishwithSomeR` / shared `Signature` rendered **once** in the shell; not duplicated inside lesson content |
 
-## The ten signature interactive experiences
+## Visual identity & colour semantics
+
+| Concept | Colour | Where it appears |
+| --- | --- | --- |
+| Present Perfect (الزمن البطل) | turquoise / aqua (`#0f766e` family) | step chips, builder slots, timeline bridge, lens chips, rail active item, test/solutions accents |
+| Past Simple (الماضي المنتهي) | coral / orange (`#c2410c` family) | comparison cards, timeline X marker when fixed, lens chips |
+| Past Perfect (الماضي الأقدم) | violet (`#6d28d9`) | triple-comparison lens, V3/formula accents |
+| NOW / النتائج الحالية | gold / amber (`#b45309`) | NOW pulse marker, result zone, current-result chips |
+
+Contrast: every visible text node on its own background meets WCAG AA
+(≥4.5:1, ≥3:1 for large text) measured in real Chromium — including the
+graded test state; the only shared elements excluded from measurement are
+the platform-wide WhatsApp signature bar and the watermark ghost (identical
+on all 44 lessons and out of scope by design).
+
+## The signature interactive experiences (12)
 
 | # | Experience | Implementation |
 | --- | --- | --- |
-| 1 | Present Bridge | `l31-cover` + `BridgeTrack` — the ⏮ → 🌉 → ⏺ track under every use: past event, bridge, now |
-| 2 | have/has selector | `l31-s3-helpers` (③) — 7 subjects, instant why per subject |
-| 3 | V3 machine + wrong-form hunter | `l31-s4-v3` (④) — 8 verb triples + the 4 intentionally wrong `have went / has ate / have saw / has wrote` forms with explicit distractors |
-| 4 | Sentence builder (tap-to-order) | `l31-s5-build-1/2`, `l31-s15-order` — scrambled chunks tapped in order, each tap corrected instantly |
-| 5 | Time-cue switch | `l31-s7-switch`, `l31-s17-period`, `l31-s18-today`, `l31-s28-compare`, `l31-s40-transform` — add/remove the time phrase and watch the tense verdict change live |
-| 6 | Classification buckets | `l31-s6-classify` (experience vs finished time), `l31-s16-buckets` (already vs yet), `l31-s19-classify` (for vs since) |
-| 7 | Two-step error fix | `l31-s8-fix`, `l31-s31..s34-fix` (㉛–㉞) and the 8-sentence `l31-s35-detect` (㉟): tap the wrong segment, then pick the fix — 19 source errors in total |
-| 8 | Tense detective / boss battle | `l31-s36-smart` (㊱ 8 cue pairs), `l31-s39-boss` (㊴ Lina story: tense per verb), `l31-s43-boss4` (㊸ four sentences, four tenses) |
-| 9 | Angle-of-view labs | `l31-s37-iq` (㊲ Maya/Daniel), `l31-s38-deeper` (㊳ the plane question), `l31-s44-map` (㊹ the four-lens big map) |
-| 10 | Real-writing arena | `l31-s42-write` (㊷) — 7 real "write about yourself" starters with live pattern checks, hint + model per line |
+| 1 | **Interactive timeline (two viewpoints)** | `TimelineLab31` at `pspp`: the student switches `I lost my keys yesterday.` ↔ `I have lost my keys.` and watches the bridge to NOW open/close, the X marker move, the NOW result zone fade, and the question each sentence answers (`متى؟` vs `ما المشكلة الآن؟`) |
+| 2 | **Tense comparison lab (2-way → 3-way)** | `CompareLab31` at `s28`: lens switcher (Present Perfect / Past Simple) plus a toggle that adds Past Perfect; each lens swaps focus, rule, probe question, source example and a mini timeline |
+| 3 | **Sentence builder** | `BuilderLab31` at `s5`: subject → have/has (wrong helper explained live) → V3 (the V2 trap explained) → positive/negative/question; the built sentence renders live with role slots |
+| 4 | **Signal-word board** | `SignalBoard31` at `s12`: all ten cue words (ever…since) explorable with meaning, usual position, formula and source examples; a Platform Explanation states cues never replace context |
+| 5 | Present Bridge | `l31-cover` + `BridgeTrack` — ⏮ → 🌉 → ⏺ under every use |
+| 6 | have/has selector | `l31-s3-helpers` (③) — 7 subjects, instant why per subject |
+| 7 | V3 machine + wrong-form hunter | `l31-s4-v3` (④) — 8 verb triples + the 4 intentionally wrong forms |
+| 8 | Two-step error fix | `l31-s8-fix`, `l31-s31..s34-fix`, the 8-sentence `l31-s35-detect` (㉟): tap the wrong segment, then pick the fix — solutions never shown before the attempt |
+| 9 | Boss text analyzer | `BossTextAnalyzer31` at `s39`: the Lina story stays verbatim; each verb phrase is a tappable chip that reveals its tense + reason |
+| 10 | Final Boss analysis | `BossAnalysis31` at `s43`: pick the tense per sentence, then open "التحليل" for the reason + mini timeline — a correct pick is never just a colour |
+| 11 | Real-writing arena | `l31-s42-write` (㊷) — 7 real starters with live pattern checks |
+| 12 | Classification / matching / cue-switch kit | `SortBuckets`, `PairMatch`, `CueSwitch`, `TapOrder` across ⑥⑯⑲㉑㉕㊱㊶ |
 
 Supporting labs: `l31-opening` (bridge cards), `l31-objectives` (checkable
 goals), `l31-s1-formula`, `l31-s2-bridge`, `l31-s9-build` (ever), `l31-s10-trap`
@@ -166,7 +189,44 @@ already/just/yet examples) keep every source item as its own data entry.
   index, and a link to the test solutions. A wrong password shakes and leaks
   nothing.
 
-## Verification performed (automated/static only — no live browser session)
+## Verification performed — real browser (Chromium, headless)
+
+`node scripts/audit-lesson31-browser.mjs` (optional, provisioned with
+`npm install --no-save playwright-core @sparticuz/chromium`, dev server on
+:5173). 89 assertions, all passing; screenshots + `report.json` in
+`docs/lesson31-visual/`:
+
+* **Viewports:** 1440×900 (laptop, primary), 1280×800, 1024×768, 768×1024,
+  375×812 — no horizontal overflow anywhere; the shell stays exactly one
+  screen tall (no page-level scroll) at every size.
+* **Compact header:** measured height ≤120px on laptop; asserts the header
+  shows the step counter + progress + four tabs and does **not** repeat the
+  step title; Solutions tab shows 🔒 before entitlement.
+* **Contrast:** every visible text node vs its own background (oklch-aware
+  parser + gradient stops, worst-case) at every stop: cover, timeline,
+  compare lab, builder, signal board, detective, Final Boss, test area,
+  graded test, teacher area, all viewports — 0 issues.
+* **Interactions verified live:** timeline viewpoint switch changes the
+  bridge width (0% ↔ 78%) and the NOW zone; compare lab grows 2→3 lenses and
+  swaps the example; builder rejects `have` with *She* and `went` as V3, then
+  builds `She has gone home.` / `She hasn't gone home.` / `Has she gone
+  home?`; signal board opens *yet* with position + source example; detective
+  hides corrections until the two-step attempt; Boss analyzer explains
+  `joined` via *last year*; Final Boss opens reason + timeline; 20/20 test
+  answers unlock submit and only then reveal the score; solutions stay locked;
+  wrong teacher password rejected, `somer173` opens the full area + key.
+* **Keyboard/a11y:** Tab focus ring visible (3px outline, `:focus-visible`),
+  drawer traps focus, `Escape` closes it and returns focus to the index
+  button, `aria-pressed`/`aria-expanded`/`role="progressbar"`/`aria-live`
+  present, hover and disabled states verified as real style changes.
+* **Console:** zero page/console errors across the whole run.
+* **Known environment limitation:** the sandbox Chromium has no emoji font,
+  so mascots/emoji render as tofu boxes in the screenshots; on real machines
+  they render normally (no code dependency on them). Google Fonts is blocked
+  in the sandbox, so screenshots use the fallback stack — the shipped
+  `index.html` still requests the project fonts.
+
+## Verification performed (automated/static)
 
 - `npm run build` — production build passes.
 - `node scripts/check-english-direction.mjs` — 1610 assertions, 31 lessons
@@ -180,6 +240,12 @@ already/just/yet examples) keep every source item as its own data entry.
   neutral→submit→reset, solutions lock, teacher gate).
 - `node scripts/interaction-test.mjs` — 558 passed, 0 failed (Lessons 1–26
   unchanged).
-- Not performed: no manual browser/visual pass was run, so no visual claim is
-  made beyond the automated renders, BIDI isolation checks and interaction
-  walks listed above.
+- `node scripts/audit-lesson31-browser.mjs` — 89 real-Chromium assertions
+  (contrast, overflow, header height, interactions, gates, keyboard) — see
+  the browser section above.
+- `npm run audit:lesson-navigation` — 176 passed, 0 failed.
+- `npm run audit:english-direction` — the whole chain (Lessons 24–44 audits,
+  Final Test audits, source-reveal audit, BIDI audit) passes with Lesson 31
+  rebuilt.
+- `git diff --check` — clean; the change set touches only Lesson 31 files,
+  its audit scripts, its visual evidence folder and this doc.

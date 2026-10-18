@@ -260,7 +260,7 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
               </div>
             )}
 
-            <span className="hidden min-w-0 flex-1 truncate text-xs font-black text-[#46507f] xl:block">
+            <span className="hidden min-w-0 flex-1 truncate text-xs font-black text-[#46507f] 2xl:block">
               <Rich text={area === "lesson" ? `${SECTIONS_32.find((s) => s.id === slide.section)?.label ?? ""} · ${navLabel32(slide.title)}` : areaLabel} />
             </span>
 
@@ -274,7 +274,9 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
                   aria-current={area === a.id ? "true" : undefined}
                   className={`l32-tab rounded-2xl px-2.5 text-xs font-black sm:px-3.5 sm:text-sm ${FOCUS32}`}
                 >
-                  <span aria-hidden>{a.emoji}</span> <Rich text={a.ar} />
+                  <span aria-hidden>{a.emoji}</span>
+                  <span className="sr-only sm:hidden"><Rich text={a.ar} /></span>
+                  <span className="hidden sm:inline"><Rich text={a.ar} /></span>
                   {a.id === "solutions" && !solutionsUnlocked && <span aria-hidden> 🔒</span>}
                 </button>
               ))}

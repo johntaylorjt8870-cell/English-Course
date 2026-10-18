@@ -225,8 +225,10 @@ export function SourceDeck32({ blocks, sectionTitle }: { blocks: DeckBlock32[]; 
   return (
     <section className="l32-deck" aria-label="أمثلة المصدر وشرحها لهذه الخطوة">
       <div className="l32-deck-head">
-        <span className="l32-kicker">📚 أمثلة المصدر وشرحها</span>
-        <span className="l32-chip"><Rich text={`${blocks.length} سطرًا · ${examples} مثالًا · ${translated} مع ترجمة`} /></span>
+        <span className="l32-kicker">📚 سجل المصدر داخل هذه الخطوة</span>
+        <span className="l32-chip">
+          <Rich text={`${blocks.length} سطرًا مصدريًا${examples > 0 ? ` · ${examples} مثالًا إنجليزيًا` : ""}${translated > 0 ? ` · ${translated} منها بترجمة عربية` : ""}`} />
+        </span>
         {sectionTitle && <span className="l32-chip l32-chip-indigo"><Rich text={sectionTitle} /></span>}
       </div>
       <div className="grid gap-1.5 md:grid-cols-2">

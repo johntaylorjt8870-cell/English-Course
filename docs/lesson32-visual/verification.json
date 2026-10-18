@@ -49,7 +49,7 @@
       "label": "desktop-cover",
       "width": 1440,
       "scroll": 1440,
-      "tested": 45,
+      "tested": 44,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -68,7 +68,7 @@
       "label": "desktop-s4-timeline",
       "width": 1440,
       "scroll": 1440,
-      "tested": 73,
+      "tested": 72,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -87,7 +87,7 @@
       "label": "desktop-s7-forsince",
       "width": 1440,
       "scroll": 1440,
-      "tested": 95,
+      "tested": 92,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -106,7 +106,7 @@
       "label": "desktop-s14-lens",
       "width": 1440,
       "scroll": 1440,
-      "tested": 123,
+      "tested": 119,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -125,7 +125,7 @@
       "label": "desktop-s24-reference",
       "width": 1440,
       "scroll": 1440,
-      "tested": 147,
+      "tested": 145,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -144,7 +144,7 @@
       "label": "desktop-s27-detective",
       "width": 1440,
       "scroll": 1440,
-      "tested": 211,
+      "tested": 209,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -163,7 +163,7 @@
       "label": "desktop-s30-meaning",
       "width": 1440,
       "scroll": 1440,
-      "tested": 133,
+      "tested": 132,
       "min": 4.93,
       "issues": [],
       "gradients": [
@@ -182,7 +182,7 @@
       "label": "desktop-s32-boss",
       "width": 1440,
       "scroll": 1440,
-      "tested": 192,
+      "tested": 190,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -201,7 +201,7 @@
       "label": "desktop-s36-map",
       "width": 1440,
       "scroll": 1440,
-      "tested": 143,
+      "tested": 142,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -220,7 +220,7 @@
       "label": "desktop-summary",
       "width": 1440,
       "scroll": 1440,
-      "tested": 202,
+      "tested": 201,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -239,7 +239,7 @@
       "label": "desktop-closing",
       "width": 1440,
       "scroll": 1440,
-      "tested": 321,
+      "tested": 320,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -258,7 +258,7 @@
       "label": "desktop-step-1-cover",
       "width": 1440,
       "scroll": 1440,
-      "tested": 45,
+      "tested": 44,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -277,7 +277,7 @@
       "label": "desktop-step-2-objectives",
       "width": 1440,
       "scroll": 1440,
-      "tested": 82,
+      "tested": 81,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -296,7 +296,7 @@
       "label": "desktop-step-3-s1",
       "width": 1440,
       "scroll": 1440,
-      "tested": 63,
+      "tested": 61,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -315,7 +315,7 @@
       "label": "desktop-step-4-s2",
       "width": 1440,
       "scroll": 1440,
-      "tested": 76,
+      "tested": 74,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -334,7 +334,7 @@
       "label": "desktop-step-5-s3",
       "width": 1440,
       "scroll": 1440,
-      "tested": 77,
+      "tested": 73,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -353,7 +353,7 @@
       "label": "desktop-step-6-s4",
       "width": 1440,
       "scroll": 1440,
-      "tested": 73,
+      "tested": 72,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -372,7 +372,7 @@
       "label": "desktop-step-7-s5",
       "width": 1440,
       "scroll": 1440,
-      "tested": 86,
+      "tested": 84,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -391,7 +391,7 @@
       "label": "desktop-step-8-s6",
       "width": 1440,
       "scroll": 1440,
-      "tested": 84,
+      "tested": 82,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -410,7 +410,7 @@
       "label": "desktop-step-9-s7",
       "width": 1440,
       "scroll": 1440,
-      "tested": 95,
+      "tested": 92,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -429,7 +429,7 @@
       "label": "desktop-step-10-s8",
       "width": 1440,
       "scroll": 1440,
-      "tested": 82,
+      "tested": 79,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -448,7 +448,7 @@
       "label": "desktop-step-11-s9",
       "width": 1440,
       "scroll": 1440,
-      "tested": 86,
+      "tested": 85,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -467,7 +467,7 @@
       "label": "desktop-step-12-s10",
       "width": 1440,
       "scroll": 1440,
-      "tested": 84,
+      "tested": 83,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -486,7 +486,7 @@
       "label": "desktop-step-13-s11",
       "width": 1440,
       "scroll": 1440,
-      "tested": 91,
+      "tested": 90,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -505,7 +505,7 @@
       "label": "desktop-step-14-s12",
       "width": 1440,
       "scroll": 1440,
-      "tested": 102,
+      "tested": 100,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -524,7 +524,7 @@
       "label": "desktop-step-15-s13",
       "width": 1440,
       "scroll": 1440,
-      "tested": 105,
+      "tested": 104,
       "min": 4.93,
       "issues": [],
       "gradients": [
@@ -543,7 +543,7 @@
       "label": "desktop-step-16-s14",
       "width": 1440,
       "scroll": 1440,
-      "tested": 109,
+      "tested": 105,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -562,7 +562,7 @@
       "label": "desktop-step-17-s15",
       "width": 1440,
       "scroll": 1440,
-      "tested": 110,
+      "tested": 109,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -581,7 +581,7 @@
       "label": "desktop-step-18-s16",
       "width": 1440,
       "scroll": 1440,
-      "tested": 102,
+      "tested": 100,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -600,7 +600,7 @@
       "label": "desktop-step-19-s17",
       "width": 1440,
       "scroll": 1440,
-      "tested": 89,
+      "tested": 88,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -619,7 +619,7 @@
       "label": "desktop-step-20-s18",
       "width": 1440,
       "scroll": 1440,
-      "tested": 99,
+      "tested": 98,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -638,7 +638,7 @@
       "label": "desktop-step-21-s19",
       "width": 1440,
       "scroll": 1440,
-      "tested": 140,
+      "tested": 138,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -657,7 +657,7 @@
       "label": "desktop-step-22-s20",
       "width": 1440,
       "scroll": 1440,
-      "tested": 116,
+      "tested": 115,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -676,7 +676,7 @@
       "label": "desktop-step-23-s21",
       "width": 1440,
       "scroll": 1440,
-      "tested": 130,
+      "tested": 126,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -695,7 +695,7 @@
       "label": "desktop-step-24-s22",
       "width": 1440,
       "scroll": 1440,
-      "tested": 124,
+      "tested": 122,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -714,7 +714,7 @@
       "label": "desktop-step-25-s23",
       "width": 1440,
       "scroll": 1440,
-      "tested": 128,
+      "tested": 126,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -733,7 +733,7 @@
       "label": "desktop-step-26-s24",
       "width": 1440,
       "scroll": 1440,
-      "tested": 145,
+      "tested": 143,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -752,7 +752,7 @@
       "label": "desktop-step-27-s25",
       "width": 1440,
       "scroll": 1440,
-      "tested": 141,
+      "tested": 139,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -771,7 +771,7 @@
       "label": "desktop-step-28-s26",
       "width": 1440,
       "scroll": 1440,
-      "tested": 150,
+      "tested": 149,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -790,7 +790,7 @@
       "label": "desktop-step-29-s27",
       "width": 1440,
       "scroll": 1440,
-      "tested": 205,
+      "tested": 203,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -809,7 +809,7 @@
       "label": "desktop-step-30-s28",
       "width": 1440,
       "scroll": 1440,
-      "tested": 174,
+      "tested": 173,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -828,7 +828,7 @@
       "label": "desktop-step-31-s29",
       "width": 1440,
       "scroll": 1440,
-      "tested": 139,
+      "tested": 137,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -847,7 +847,7 @@
       "label": "desktop-step-32-s30",
       "width": 1440,
       "scroll": 1440,
-      "tested": 129,
+      "tested": 128,
       "min": 4.93,
       "issues": [],
       "gradients": [
@@ -866,7 +866,7 @@
       "label": "desktop-step-33-s31",
       "width": 1440,
       "scroll": 1440,
-      "tested": 154,
+      "tested": 151,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -885,7 +885,7 @@
       "label": "desktop-step-34-s32",
       "width": 1440,
       "scroll": 1440,
-      "tested": 192,
+      "tested": 190,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -904,7 +904,7 @@
       "label": "desktop-step-35-s33",
       "width": 1440,
       "scroll": 1440,
-      "tested": 143,
+      "tested": 141,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -923,7 +923,7 @@
       "label": "desktop-step-36-s34",
       "width": 1440,
       "scroll": 1440,
-      "tested": 177,
+      "tested": 175,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -942,7 +942,7 @@
       "label": "desktop-step-37-s35",
       "width": 1440,
       "scroll": 1440,
-      "tested": 159,
+      "tested": 158,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -961,7 +961,7 @@
       "label": "desktop-step-38-s36",
       "width": 1440,
       "scroll": 1440,
-      "tested": 143,
+      "tested": 142,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -980,7 +980,7 @@
       "label": "desktop-step-39-summary",
       "width": 1440,
       "scroll": 1440,
-      "tested": 202,
+      "tested": 201,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -999,7 +999,7 @@
       "label": "desktop-step-40-closing",
       "width": 1440,
       "scroll": 1440,
-      "tested": 321,
+      "tested": 320,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -1018,7 +1018,7 @@
       "label": "desktop-test-fresh",
       "width": 1440,
       "scroll": 1440,
-      "tested": 325,
+      "tested": 324,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1037,7 +1037,7 @@
       "label": "desktop-test-scored",
       "width": 1440,
       "scroll": 1440,
-      "tested": 495,
+      "tested": 494,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1056,7 +1056,7 @@
       "label": "desktop-solutions",
       "width": 1440,
       "scroll": 1440,
-      "tested": 366,
+      "tested": 365,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -1075,7 +1075,7 @@
       "label": "desktop-teacher-locked",
       "width": 1440,
       "scroll": 1440,
-      "tested": 10,
+      "tested": 9,
       "min": 5.36,
       "issues": [],
       "gradients": [
@@ -1094,7 +1094,7 @@
       "label": "desktop-teacher-open",
       "width": 1440,
       "scroll": 1440,
-      "tested": 1015,
+      "tested": 1014,
       "min": 4.89,
       "issues": [],
       "gradients": [

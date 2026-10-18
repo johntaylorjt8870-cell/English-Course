@@ -24,7 +24,8 @@
     "audit:lesson43-dom": "node scripts/audit-lesson43-dom.mjs",
     "audit:lesson43-browser": "node scripts/audit-lesson43-browser.mjs",
     "audit:lesson44": "node scripts/audit-lesson44.mjs",
-    "audit:lesson44-dom": "node scripts/audit-lesson44-dom.mjs"
+    "audit:lesson44-dom": "node scripts/audit-lesson44-dom.mjs",
+    "audit:lesson32-browser": "node scripts/audit-lesson32-browser.mjs"
   },
   "dependencies": {
     "clsx": "2.1.1",

@@ -78,3 +78,14 @@ No source line was found to be unreadable. No source content was invented.
 - The student UI never reveals the literal source text: the `SourceReveal32` panel («نص المصدر الحرفي — اضغط للعرض») was removed and not replaced by any equivalent toggle/collapsible. Each step closes with a completion badge (`data-gate-done`), the verbatim units stay in `ledger32.ts`, and the teacher-only source index (`TeacherArea32.tsx`, `SOURCE_SECTIONS`) is preserved.
 - Exercise feedback and solutions still appear only after the student's attempt (completion-gated feedback — not a source-reveal control).
 - Platform explanations (analogies, hints, "why" feedback, mnemonic names such as *Activity Ribbon*) are always labelled **Platform Explanation**.
+
+## 8. Post-rebuild verification (2026-10-18 — THE DURATION STREAM rebuild)
+
+The lesson was rebuilt (visual identity + interaction layer + test + teacher area) with the ledger kept verbatim. Verified after the rebuild:
+
+1. **Nothing lost:** `scripts/audit-lesson32.mjs` now renders all 40 steps server-side and asserts that every verbatim source line (587 lines across 40 sections) appears inside its own step's rendered output (`coverage: all 587 source lines rendered across the 40 steps`). The student UI also shows each line in a designed «📜 من المصدر» card inside its step (`sourceDeck32.ts`, derived from `ledger32.ts`).
+2. **No silent edits:** no ledger string was modified; platform-side wording lives only in `data.ts` (TEACH_32), `testData.ts`, `teacherData.ts`, and is labelled **Platform Explanation** in the UI.
+3. **Deliberate errors:** E1–E12 remain verbatim in the ledger, are taught as corrections in steps 11/27/31, and are listed in the teacher table with corrections and locations.
+4. **Disputed classification (§33):** unchanged; teacher-only note keeps both readings.
+5. **Visual layer:** real-Chromium pass (`scripts/audit-lesson32-browser.mjs`, 247 checks, 0 failures) with screenshots in `docs/lesson32-visual/` — timelines are direction-correct (PAST left → NOW right), AA contrast, no overflow at 1440×900 and 390×844. The sandbox has no color-emoji font and no Google Fonts access, so screenshots show tofu boxes for emoji and system-font fallbacks; neither affects the shipped layout.
+6. **Direction/BIDI:** every Latin run goes through `En`/`Rich`/`LatinRuns`; `audit-bidi-mixed.mjs` reports 0 violations for lesson 32.

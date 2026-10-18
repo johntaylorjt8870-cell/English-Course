@@ -23,6 +23,8 @@ const require = createRequire(import.meta.url);
 const esbuild = require("esbuild");
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const outFile = join(root, "scripts", ".lesson32-audit.mjs");
+/** esbuild يُخرج ملف css جانبيًا عند حزمة استيراد lesson32.css — يُنظَّف مع الحزمة. */
+const outCss = join(root, "scripts", ".lesson32-audit.css");
 const L32 = join(root, "src", "lessons", "lesson32");
 
 const failures = [];
@@ -131,6 +133,11 @@ ok(SLIDES.every((s) => s.tip && s.lead && s.title), "steps: every slide has titl
 // 3) SSR render of all 40 steps
 // ============================================================
 const REVEAL_BANNED = /data-reveal-block|اضغط للعرض|نص المصدر الحرفي/;
+const decodeEnt32 = (t) => t
+  .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+  .replace(/&#x27;/g, "'").replace(/&#39;/g, "'").replace(/&quot;/g, '"')
+  .replace(/&nbsp;/g, " ");
+let coveredUnits = 0;
 for (const s of SLIDES) {
   let html = "";
   try {
@@ -143,7 +150,20 @@ for (const s of SLIDES) {
   ok(html.includes("data-source-section"), `render: step ${s.id} shows its source-section badge`);
   ok(!REVEAL_BANNED.test(html), `render: step ${s.id} shows no student-facing source reveal`);
   ok(!/✓ صحيح|✕ غير صحيح|الدرجة:/.test(html), `render: step ${s.id} shows no correctness state before attempt`);
+
+  // دفتر التغطية: كل وحدة مصدرية تابعة لقسم هذه الخطوة تظهر داخل خطوتها
+  // (مقارنة بلا مسافات بعد فكّ كيانات HTML وإزالة الوسوم).
+  const sIdx = L.SEC_32[s.id];
+  const units = sIdx === undefined ? [] : ledger[sIdx].units;
+  const plain = decodeEnt32(html.replace(/<[^>]+>/g, "")).replace(/\s+/gu, "");
+  const missingUnits = units.filter((u) => !plain.includes(u.replace(/\s+/gu, "")));
+  ok(units.length > 0, `coverage: step ${s.id} maps to a ledger section (${units.length} units)`);
+  ok(missingUnits.length === 0, `coverage: step ${s.id} renders every source unit (${units.length - missingUnits.length}/${units.length})${missingUnits.length ? " — missing: " + missingUnits.slice(0, 3).map((u) => u.slice(0, 60)).join(" | ") : ""}`);
+  coveredUnits += units.length - missingUnits.length;
 }
+const totalLines = ledger.reduce((n, sec) => n + sec.units.length, 0);
+ok(totalLines >= 500, `coverage: the ledger holds every source line (${totalLines})`);
+ok(coveredUnits === totalLines, `coverage: all ${totalLines} source lines rendered across the 40 steps (got ${coveredUnits})`);
 
 // ============================================================
 // 4–5) DOM-driven completion (gated reveal + interaction walk)
@@ -630,6 +650,7 @@ ok(Object.keys(pkg.dependencies).sort().join(",") === "clsx,react,react-dom,tail
 
 // ---------------- cleanup & report ----------------
 rmSync(outFile, { force: true });
+rmSync(outCss, { force: true });
 if (failures.length) {
   console.error(`Lesson 32 audit: ${checks - failures.length} passed, ${failures.length} FAILED`);
   for (const f of failures) console.error(" ✕ " + f);

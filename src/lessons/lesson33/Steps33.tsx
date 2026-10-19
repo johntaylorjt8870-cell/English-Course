@@ -116,29 +116,45 @@ function GateFlag33({ done, sid }: { done: boolean; sid: string }) {
   );
 }
 
-/* ---------- الغلاف ---------- */
+/* ---------- الغلاف — Hero Lab ---------- */
 function StepCover33() {
   const drv = useGate33(COVER_GATES_33.length);
   return (
-    <Lab33 source="cover">
-      <div data-lesson-step="cover" data-source-section="cover">
-        <div className="mb-3 text-center">
-          <div aria-hidden className="text-4xl">🧭</div>
-          <h2 className="mt-1 text-xl font-black text-amber-900">
-            <En>The Four Present Tenses</En>
-          </h2>
-          <p className="mt-1 text-[13px] leading-6 text-amber-800">
-            المراجعة الشاملة لأزمنة الحاضر الأربعة — <En className="font-bold">Present Tenses Mastery</En> · 🔥 <En className="font-bold">IQ200</En>
-          </p>
-          <p className="mx-auto mt-2 max-w-xl rounded-2xl bg-white/70 px-4 py-2 text-[12px] leading-6 text-amber-900">
+    <div data-lesson-step="cover" data-source-section="cover" className="space-y-3">
+      <div className="l33-hero">
+        <div className="l33-hero-band">
+          <div className="l33-hero-eyebrow"><En>THE PRESENT LAB</En> · مختبر الحاضر</div>
+          <h2 className="l33-hero-title"><Rich text="الدرس 33: The Four Present Tenses" /></h2>
+          <p className="mt-2 max-w-[88%] text-[13px] font-bold leading-6 text-white/90"><Rich text="المراجعة الشاملة لأزمنة الحاضر الأربعة — Present Tenses Mastery · IQ200" /></p>
+          <div className="l33-hero-formula">
+            <span><En>V1 / V-s</En></span>
+            <span><En>am/is/are + V-ing</En></span>
+            <span><En>have/has + V3</En></span>
+            <span><En>have/has + been + V-ing</En></span>
+          </div>
+          <svg className="l33-hero-mark" viewBox="0 0 100 100" aria-hidden>
+            <circle cx="50" cy="50" r="36" fill="none" stroke="white" strokeWidth="2" strokeDasharray="6 6" opacity="0.9" />
+            <path d="M50 18 L54 42 L78 46 L54 50 L50 78 L46 50 L22 46 L46 42 Z" fill="white" opacity="0.95" />
+          </svg>
+        </div>
+        <div className="l33-hero-body">
+          <p className="text-[13px] leading-7 text-slate-700">
             <Rich text="في الدرس 30 راجعنا الماضي كاملًا، وفي الدروس 31–32 أتقنّا المضارع التام والمضارع التام المستمر. اليوم نكمل الصورة: لا زمن جديد، بل مراجعة شاملة في خريطة واحدة — وبعدها الاختبار." />
           </p>
+          <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <div className="l33-pillar" data-tense="PS"><div className="text-[11px] font-black text-emerald-700">● Present Simple</div><div className="mt-1 text-[11px] leading-5 text-slate-600">عادة · حقيقة</div></div>
+            <div className="l33-pillar" data-tense="PC"><div className="text-[11px] font-black text-sky-700">● Present Continuous</div><div className="mt-1 text-[11px] leading-5 text-slate-600">جارٍ الآن</div></div>
+            <div className="l33-pillar" data-tense="PP"><div className="text-[11px] font-black text-violet-700">● Present Perfect</div><div className="mt-1 text-[11px] leading-5 text-slate-600">إنجاز · خبرة</div></div>
+            <div className="l33-pillar" data-tense="PPC"><div className="text-[11px] font-black text-orange-700">● Present Perfect Continuous</div><div className="mt-1 text-[11px] leading-5 text-slate-600">نشاط ممتد</div></div>
+          </div>
         </div>
+      </div>
+      <div className="l33-lab p-4">
         <BoardTitle33><Rich text="المس بوّابات الأزمنة الأربعة لتفتح الخريطة:" /></BoardTitle33>
         <CoverGates33 gates={COVER_GATES_33} drv={drv} />
         <GateFlag33 done={drv.complete >= drv.total} sid="cover" />
       </div>
-    </Lab33>
+    </div>
   );
 }
 

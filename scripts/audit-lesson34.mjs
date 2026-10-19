@@ -438,7 +438,11 @@ const drivePairs = async (el, pairs) => {
   // a wrong pick must answer back before the row is solved
   clickEl(q(el, `[data-trap-row="0"][data-trap-opt="0"]`));
   await tick(15);
-  ok(textOf(el).includes("goes"), "s4 traps: wrong pick renders its corrective note");
+  ok(
+    D.WILL_TRAPS_S4[0].options[0].note && textOf(el).includes("وبعد will لا نضيف s أبدًا"),
+    "s4 traps: wrong pick renders its own corrective note",
+  );
+  ok(!textOf(el).includes("✓ She will go to school."), "s4 traps: the corrected sentence stays hidden until the right pick");
   ok(!(await gateDone34(el, "s4")), "s4 traps: gate stays closed while a trap is unsolved");
   for (let i = 0; i < D.WILL_TRAPS_S4.length; i++) {
     const answer = D.WILL_TRAPS_S4[i].options.findIndex((option) => option.ok);

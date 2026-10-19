@@ -310,7 +310,10 @@ body {
   display: none;
 }
 
-[data-site-lock-host] {
+[data-site-lock-host],
+footer:has([data-site-lock-host]),
+nav:has([data-site-lock-host]),
+div.justify-between:has([data-site-lock-host]) {
   flex-wrap: wrap !important;
   gap: 0.5rem 0.75rem;
 }
@@ -359,5 +362,18 @@ div.absolute.inset-x-0.bottom-4.flex.justify-center > div:first-child {
   width: 100%;
   padding: 0.625rem 1rem;
   box-sizing: border-box;
+}
+
+/* Mobile/tablet clearance for Lessons 34 & 35 fixed bottom-left step-drawer button (lg:hidden) */
+@media (max-width: 1023.98px) {
+  #l34-main,
+  #l35-main {
+    padding-bottom: 4.25rem;
+  }
+
+  [data-lesson="34"] ~ .site-gate-bar,
+  [data-lesson="35"] ~ .site-gate-bar {
+    padding-inline-end: 7.5rem;
+  }
 }
 

@@ -23,13 +23,14 @@
       "height": 812
     }
   ],
-  "checks": 312,
+  "checks": 475,
   "failures": [],
   "consoleErrors": [],
   "measurements": [
     {
       "lesson": 33,
       "viewport": "1440x900",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 1440,
       "scrollWidth": 1440,
@@ -63,6 +64,7 @@
     {
       "lesson": 33,
       "viewport": "1280x800",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 1280,
       "scrollWidth": 1280,
@@ -96,6 +98,7 @@
     {
       "lesson": 33,
       "viewport": "768x900",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 768,
       "scrollWidth": 768,
@@ -129,6 +132,7 @@
     {
       "lesson": 33,
       "viewport": "375x812",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 375,
       "scrollWidth": 375,
@@ -162,6 +166,7 @@
     {
       "lesson": 32,
       "viewport": "1440x900",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 1440,
       "scrollWidth": 1440,
@@ -195,6 +200,7 @@
     {
       "lesson": 32,
       "viewport": "1280x800",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 1280,
       "scrollWidth": 1280,
@@ -228,6 +234,7 @@
     {
       "lesson": 32,
       "viewport": "768x900",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 768,
       "scrollWidth": 768,
@@ -261,6 +268,7 @@
     {
       "lesson": 32,
       "viewport": "375x812",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 375,
       "scrollWidth": 375,
@@ -294,6 +302,7 @@
     {
       "lesson": 31,
       "viewport": "1440x900",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 1440,
       "scrollWidth": 1440,
@@ -327,6 +336,7 @@
     {
       "lesson": 31,
       "viewport": "1280x800",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 1280,
       "scrollWidth": 1280,
@@ -360,6 +370,7 @@
     {
       "lesson": 31,
       "viewport": "768x900",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 768,
       "scrollWidth": 768,
@@ -393,6 +404,7 @@
     {
       "lesson": 31,
       "viewport": "375x812",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 375,
       "scrollWidth": 375,
@@ -426,6 +438,7 @@
     {
       "lesson": 1,
       "viewport": "1440x900",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 1440,
       "scrollWidth": 1440,
@@ -459,6 +472,7 @@
     {
       "lesson": 1,
       "viewport": "1280x800",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 1280,
       "scrollWidth": 1280,
@@ -492,6 +506,7 @@
     {
       "lesson": 1,
       "viewport": "768x900",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 768,
       "scrollWidth": 768,
@@ -525,6 +540,7 @@
     {
       "lesson": 1,
       "viewport": "375x812",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 375,
       "scrollWidth": 375,
@@ -558,6 +574,7 @@
     {
       "lesson": 2,
       "viewport": "1440x900",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 1440,
       "scrollWidth": 1440,
@@ -591,6 +608,7 @@
     {
       "lesson": 2,
       "viewport": "1280x800",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 1280,
       "scrollWidth": 1280,
@@ -624,6 +642,7 @@
     {
       "lesson": 2,
       "viewport": "768x900",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 768,
       "scrollWidth": 768,
@@ -657,6 +676,7 @@
     {
       "lesson": 2,
       "viewport": "375x812",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 375,
       "scrollWidth": 375,
@@ -690,6 +710,7 @@
     {
       "lesson": 44,
       "viewport": "1440x900",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 1440,
       "scrollWidth": 1440,
@@ -723,6 +744,7 @@
     {
       "lesson": 44,
       "viewport": "1280x800",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 1280,
       "scrollWidth": 1280,
@@ -756,6 +778,7 @@
     {
       "lesson": 44,
       "viewport": "768x900",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 768,
       "scrollWidth": 768,
@@ -789,6 +812,7 @@
     {
       "lesson": 44,
       "viewport": "375x812",
+      "activeTab": "student",
       "labelSuffix": "",
       "clientWidth": 375,
       "scrollWidth": 375,
@@ -820,10 +844,860 @@
       "screenshot": "docs/navigation-fix-visual/lesson44-375x812.png"
     }
   ],
+  "drawerClearance": [
+    {
+      "lesson": 34,
+      "viewport": "768x900",
+      "activeTab": "lesson",
+      "drawerBox": {
+        "x": 12,
+        "y": 841,
+        "width": 95,
+        "height": 48,
+        "right": 107,
+        "bottom": 888,
+        "text": "🧭 الخطوات"
+      },
+      "lockBox": {
+        "x": 20,
+        "y": 754,
+        "width": 99,
+        "height": 40,
+        "right": 119,
+        "bottom": 794,
+        "text": "🔒 قفل الموقع"
+      },
+      "nextBox": {
+        "x": 230,
+        "y": 752,
+        "width": 93,
+        "height": 44,
+        "right": 323,
+        "bottom": 796,
+        "text": "التالي ←"
+      },
+      "drawerLockOverlap": 0,
+      "drawerNextOverlap": 0,
+      "lockNextOverlap": 0,
+      "verticalClearancePx": 45,
+      "screenshot": "docs/navigation-fix-visual/lesson34-768x900-bottom.png"
+    },
+    {
+      "lesson": 34,
+      "viewport": "375x812",
+      "activeTab": "lesson",
+      "drawerBox": {
+        "x": 12,
+        "y": 753,
+        "width": 95,
+        "height": 48,
+        "right": 107,
+        "bottom": 800,
+        "text": "🧭 الخطوات"
+      },
+      "lockBox": {
+        "x": 264,
+        "y": 676,
+        "width": 99,
+        "height": 40,
+        "right": 363,
+        "bottom": 716,
+        "text": "🔒 قفل الموقع"
+      },
+      "nextBox": {
+        "x": 12,
+        "y": 624,
+        "width": 93,
+        "height": 44,
+        "right": 105,
+        "bottom": 668,
+        "text": "التالي ←"
+      },
+      "drawerLockOverlap": 0,
+      "drawerNextOverlap": 0,
+      "lockNextOverlap": 0,
+      "verticalClearancePx": 37,
+      "screenshot": "docs/navigation-fix-visual/lesson34-375x812-bottom.png"
+    },
+    {
+      "lesson": 35,
+      "viewport": "768x900",
+      "activeTab": "lesson",
+      "drawerBox": {
+        "x": 12,
+        "y": 842,
+        "width": 97,
+        "height": 46,
+        "right": 109,
+        "bottom": 888,
+        "text": "🧭 الخطوات"
+      },
+      "lockBox": {
+        "x": 20,
+        "y": 753,
+        "width": 99,
+        "height": 40,
+        "right": 119,
+        "bottom": 793,
+        "text": "🔒 قفل الموقع"
+      },
+      "nextBox": {
+        "x": 131,
+        "y": 753,
+        "width": 90,
+        "height": 40,
+        "right": 221,
+        "bottom": 793,
+        "text": "التالي ←"
+      },
+      "drawerLockOverlap": 0,
+      "drawerNextOverlap": 0,
+      "lockNextOverlap": 0,
+      "verticalClearancePx": 49,
+      "screenshot": "docs/navigation-fix-visual/lesson35-768x900-bottom.png"
+    },
+    {
+      "lesson": 35,
+      "viewport": "375x812",
+      "activeTab": "lesson",
+      "drawerBox": {
+        "x": 12,
+        "y": 754,
+        "width": 97,
+        "height": 46,
+        "right": 109,
+        "bottom": 800,
+        "text": "🧭 الخطوات"
+      },
+      "lockBox": {
+        "x": 46,
+        "y": 670,
+        "width": 99,
+        "height": 40,
+        "right": 146,
+        "bottom": 710,
+        "text": "🔒 قفل الموقع"
+      },
+      "nextBox": {
+        "x": 158,
+        "y": 669,
+        "width": 97,
+        "height": 43,
+        "right": 255,
+        "bottom": 712,
+        "text": "التالي ←"
+      },
+      "drawerLockOverlap": 0,
+      "drawerNextOverlap": 0,
+      "lockNextOverlap": 0,
+      "verticalClearancePx": 42,
+      "screenshot": "docs/navigation-fix-visual/lesson35-375x812-bottom.png"
+    }
+  ],
+  "tabTransitions": [
+    {
+      "lesson": 31,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الاختبارات",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 14,
+        "y": 752,
+        "width": 99,
+        "height": 40,
+        "right": 113,
+        "bottom": 792
+      },
+      "hostTag": "site-lock-slot site-lock-slot--column-footer"
+    },
+    {
+      "lesson": 31,
+      "viewport": "1280x800",
+      "activeTab": "حلول الاختبارات",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 14,
+        "y": 752,
+        "width": 99,
+        "height": 40,
+        "right": 113,
+        "bottom": 792
+      },
+      "hostTag": "site-lock-slot site-lock-slot--column-footer"
+    },
+    {
+      "lesson": 31,
+      "viewport": "1280x800",
+      "activeTab": "منطقة المعلم",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 752,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 792
+      },
+      "hostTag": "site-lock-slot site-lock-slot--column-footer"
+    },
+    {
+      "lesson": 31,
+      "viewport": "1280x800",
+      "activeTab": "الدرس",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 304,
+        "y": 747,
+        "width": 99,
+        "height": 40,
+        "right": 404,
+        "bottom": 787
+      },
+      "hostTag": "site-lock-slot site-lock-slot--pill"
+    },
+    {
+      "lesson": 32,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الاختبار",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 14,
+        "y": 752,
+        "width": 99,
+        "height": 40,
+        "right": 113,
+        "bottom": 792
+      },
+      "hostTag": "lesson-step-nav__end"
+    },
+    {
+      "lesson": 32,
+      "viewport": "1280x800",
+      "activeTab": "حلول الاختبار",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 14,
+        "y": 752,
+        "width": 99,
+        "height": 40,
+        "right": 113,
+        "bottom": 792
+      },
+      "hostTag": "lesson-step-nav__end"
+    },
+    {
+      "lesson": 32,
+      "viewport": "1280x800",
+      "activeTab": "منطقة المعلم",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 14,
+        "y": 752,
+        "width": 99,
+        "height": 40,
+        "right": 113,
+        "bottom": 792
+      },
+      "hostTag": "lesson-step-nav__end"
+    },
+    {
+      "lesson": 32,
+      "viewport": "1280x800",
+      "activeTab": "الدرس",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 14,
+        "y": 750,
+        "width": 99,
+        "height": 40,
+        "right": 113,
+        "bottom": 790
+      },
+      "hostTag": "lesson-step-nav__end"
+    },
+    {
+      "lesson": 33,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الاختبار",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 14,
+        "y": 752,
+        "width": 99,
+        "height": 40,
+        "right": 113,
+        "bottom": 792
+      },
+      "hostTag": "lesson-step-nav__end"
+    },
+    {
+      "lesson": 33,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الحلول",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 14,
+        "y": 752,
+        "width": 99,
+        "height": 40,
+        "right": 113,
+        "bottom": 792
+      },
+      "hostTag": "lesson-step-nav__end"
+    },
+    {
+      "lesson": 33,
+      "viewport": "1280x800",
+      "activeTab": "منطقة المعلم",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 14,
+        "y": 752,
+        "width": 99,
+        "height": 40,
+        "right": 113,
+        "bottom": 792
+      },
+      "hostTag": "lesson-step-nav__end"
+    },
+    {
+      "lesson": 33,
+      "viewport": "1280x800",
+      "activeTab": "خطوات الدرس",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 14,
+        "y": 751,
+        "width": 99,
+        "height": 40,
+        "right": 113,
+        "bottom": 791
+      },
+      "hostTag": "lesson-step-nav__end"
+    },
+    {
+      "lesson": 34,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الاختبار",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 34,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الحلول",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 750,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 790
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 34,
+      "viewport": "1280x800",
+      "activeTab": "منطقة المعلم",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 750,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 790
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 34,
+      "viewport": "1280x800",
+      "activeTab": "خطوات الدرس",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 84,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 183,
+        "bottom": 800
+      },
+      "hostTag": "site-lock-slot site-lock-slot--append"
+    },
+    {
+      "lesson": 35,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الاختبار",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 35,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الحلول",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 35,
+      "viewport": "1280x800",
+      "activeTab": "منطقة المعلم",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 35,
+      "viewport": "1280x800",
+      "activeTab": "خطوات الدرس",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 20,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 119,
+        "bottom": 800
+      },
+      "hostTag": "site-lock-slot site-lock-slot--append"
+    },
+    {
+      "lesson": 36,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الاختبار",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 36,
+      "viewport": "1280x800",
+      "activeTab": "منطقة المعلم",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 36,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الطالب",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 20,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 119,
+        "bottom": 800
+      },
+      "hostTag": "site-lock-slot site-lock-slot--append"
+    },
+    {
+      "lesson": 37,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الاختبار",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 37,
+      "viewport": "1280x800",
+      "activeTab": "منطقة المعلم",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 37,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الطالب",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 20,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 119,
+        "bottom": 800
+      },
+      "hostTag": "site-lock-slot site-lock-slot--append"
+    },
+    {
+      "lesson": 38,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الاختبار",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 38,
+      "viewport": "1280x800",
+      "activeTab": "منطقة المعلم",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 38,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الطالب",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 20,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 119,
+        "bottom": 800
+      },
+      "hostTag": "site-lock-slot site-lock-slot--append"
+    },
+    {
+      "lesson": 39,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الاختبار",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 39,
+      "viewport": "1280x800",
+      "activeTab": "منطقة المعلم",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 39,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الطالب",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 20,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 119,
+        "bottom": 800
+      },
+      "hostTag": "site-lock-slot site-lock-slot--append"
+    },
+    {
+      "lesson": 40,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الاختبار",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 40,
+      "viewport": "1280x800",
+      "activeTab": "مساحة المعلم",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 40,
+      "viewport": "1280x800",
+      "activeTab": "منطقة الطالب",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 105,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 204,
+        "bottom": 800
+      },
+      "hostTag": "site-lock-slot site-lock-slot--append"
+    },
+    {
+      "lesson": 41,
+      "viewport": "1280x800",
+      "activeTab": "الاختبار",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 41,
+      "viewport": "1280x800",
+      "activeTab": "المعلم",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 41,
+      "viewport": "1280x800",
+      "activeTab": "التعلّم",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 318,
+        "y": 753,
+        "width": 156,
+        "height": 48,
+        "right": 473,
+        "bottom": 800
+      },
+      "hostTag": "site-lock-slot site-lock-slot--before-last"
+    },
+    {
+      "lesson": 44,
+      "viewport": "1280x800",
+      "activeTab": "الاختبار",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 44,
+      "viewport": "1280x800",
+      "activeTab": "المعلم",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 16,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 115,
+        "bottom": 800
+      },
+      "hostTag": "site-gate-bar"
+    },
+    {
+      "lesson": 44,
+      "viewport": "1280x800",
+      "activeTab": "التعلّم",
+      "totalLockCount": 1,
+      "visibleLockCount": 1,
+      "hiddenHostCount": 0,
+      "lockBox": {
+        "x": 425,
+        "y": 760,
+        "width": 99,
+        "height": 40,
+        "right": 524,
+        "bottom": 800
+      },
+      "hostTag": "site-lock-slot site-lock-slot--before-last"
+    }
+  ],
   "edgeCases": [
     {
       "lesson": 33,
       "viewport": "1280x800",
+      "activeTab": "student",
       "labelSuffix": "-ltr",
       "clientWidth": 1280,
       "scrollWidth": 1280,
@@ -856,6 +1730,7 @@
     {
       "lesson": 33,
       "viewport": "1280x800",
+      "activeTab": "student",
       "labelSuffix": "-long-labels",
       "clientWidth": 1280,
       "scrollWidth": 1280,
@@ -889,6 +1764,7 @@
     {
       "lesson": 33,
       "viewport": "375x812",
+      "activeTab": "student",
       "labelSuffix": "-ltr",
       "clientWidth": 375,
       "scrollWidth": 375,
@@ -921,6 +1797,7 @@
     {
       "lesson": 33,
       "viewport": "375x812",
+      "activeTab": "student",
       "labelSuffix": "-long-labels",
       "clientWidth": 375,
       "scrollWidth": 375,

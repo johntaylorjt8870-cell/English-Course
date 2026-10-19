@@ -76,7 +76,6 @@ function findStepNavHost(root: HTMLElement): { container: HTMLElement; beforeNod
   );
   for (const bar of pillBars) {
     if (isElementVisible(bar)) {
-      setAttrIfChanged(bar, "data-site-lock-host", "true");
       return { container: bar, beforeNode: null, mode: "pill" };
     }
   }
@@ -87,7 +86,6 @@ function findStepNavHost(root: HTMLElement): { container: HTMLElement; beforeNod
   );
   for (const nav of studioNavs) {
     if (isElementVisible(nav)) {
-      setAttrIfChanged(nav, "data-site-lock-host", "true");
       return { container: nav, beforeNode: nav.lastElementChild, mode: "before-last" };
     }
   }
@@ -112,7 +110,6 @@ function findStepNavHost(root: HTMLElement): { container: HTMLElement; beforeNod
     const lastBtn = candidates[candidates.length - 1];
     const bar = lastBtn.closest<HTMLElement>("footer, nav, div.justify-between");
     if (bar && isElementVisible(bar)) {
-      setAttrIfChanged(bar, "data-site-lock-host", "true");
       const parent = lastBtn.parentElement;
       if (parent && parent !== bar && parent.classList.contains("flex")) {
         return { container: parent, beforeNode: null, mode: "append" };
@@ -279,6 +276,32 @@ export default function SitePasswordGate({ children }: { children: ReactNode }) 
       });
     };
 
+    const clearSlot = () => {
+      if (slotEl) {
+        slotEl.remove();
+        slotEl = null;
+      }
+      if (currentContainer) {
+        if (!currentContainer.hasAttribute("data-lesson-step-nav")) {
+          currentContainer.removeAttribute("data-site-lock-host");
+        }
+        currentContainer = null;
+      }
+      setPortalSlot((prev) => (prev === null ? prev : null));
+    };
+
+    const isInternalNode = (node: Node | null): boolean => {
+      if (!node) return false;
+      if (node === slotEl || (slotEl && slotEl.contains(node))) return true;
+      if (
+        node instanceof HTMLElement &&
+        (node.classList.contains("site-gate-bar") || Boolean(node.closest(".site-gate-bar")))
+      ) {
+        return true;
+      }
+      return false;
+    };
+
     const sync = () => {
       if (syncing) return;
       syncing = true;
@@ -286,23 +309,13 @@ export default function SitePasswordGate({ children }: { children: ReactNode }) 
 
       try {
         if (root.querySelector("[data-lesson-step-nav='true']")) {
-          if (slotEl) {
-            slotEl.remove();
-            slotEl = null;
-            currentContainer = null;
-            setPortalSlot((prev) => (prev === null ? prev : null));
-          }
+          clearSlot();
           return;
         }
 
         const target = findStepNavHost(root);
         if (!target) {
-          if (slotEl) {
-            slotEl.remove();
-            slotEl = null;
-            currentContainer = null;
-            setPortalSlot((prev) => (prev === null ? prev : null));
-          }
+          clearSlot();
           return;
         }
 
@@ -319,7 +332,9 @@ export default function SitePasswordGate({ children }: { children: ReactNode }) 
         setAttrIfChanged(slotEl, "data-site-lock-slot", mode);
 
         if (currentContainer && currentContainer !== container) {
-          currentContainer.removeAttribute("data-site-lock-host");
+          if (!currentContainer.hasAttribute("data-lesson-step-nav")) {
+            currentContainer.removeAttribute("data-site-lock-host");
+          }
         }
         currentContainer = container;
 
@@ -341,12 +356,16 @@ export default function SitePasswordGate({ children }: { children: ReactNode }) 
 
     if (typeof MutationObserver !== "undefined") {
       observer = new MutationObserver((records) => {
-        const external = records.some(
-          (r) =>
-            r.target !== slotEl &&
-            !(slotEl && slotEl.contains(r.target)) &&
-            ![...r.addedNodes, ...r.removedNodes].every((n) => n === slotEl || (slotEl && slotEl.contains(n))),
-        );
+        const external = records.some((r) => {
+          if (isInternalNode(r.target)) {
+            return false;
+          }
+          if (r.type === "attributes") {
+            return true;
+          }
+          const changedNodes = [...r.addedNodes, ...r.removedNodes];
+          return changedNodes.length > 0 && !changedNodes.every((n) => isInternalNode(n));
+        });
         if (external) sync();
       });
     }
@@ -356,7 +375,9 @@ export default function SitePasswordGate({ children }: { children: ReactNode }) 
     return () => {
       observer?.disconnect();
       if (slotEl) slotEl.remove();
-      if (currentContainer) currentContainer.removeAttribute("data-site-lock-host");
+      if (currentContainer && !currentContainer.hasAttribute("data-lesson-step-nav")) {
+        currentContainer.removeAttribute("data-site-lock-host");
+      }
     };
   }, [unlocked, inlineHostCount]);
 

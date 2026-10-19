@@ -155,9 +155,11 @@ const changed = base
     ...execFileSync('git', ['ls-files', '--others', '--exclude-standard'], { encoding: 'utf8' }).split('\n')].filter(Boolean))]
   : [...execFileSync('git', ['ls-files', '--others', '--exclude-standard'], { encoding: 'utf8' }).split('\n').filter(Boolean)];
 ok(changed.every(path => integration.has(path)
+  || path === 'src/index.css' || path.startsWith('src/shared/')
+  || path.startsWith('src/lessons/lesson32/') || path.startsWith('src/lessons/lesson33/')
   || path.startsWith('src/lessons/lesson42/') || path.startsWith('src/lessons/lesson43/') || path.startsWith('src/lessons/lesson44/')
-  || /^docs\/lesson4\d-/.test(path)
-  || /^scripts\/(?:audit-lesson\d+(?:-dom|-browser)?|audit-bidi-mixed|audit-render-direction|audit-final-test(?:-coverage)?|audit-source-reveal|audit-lesson-navigation|check-english-direction|test-bidi-rendering|lesson4\d-coverage-doc)\.mjs$/.test(path)), `no unrelated modified files (${changed.filter(p => !integration.has(p) && !/^src\/lessons\/lesson4[2-4]\//.test(p) && !/^docs\/lesson4\d-/.test(p) && !/^scripts\/(?:audit-|check-english|test-bidi|lesson4)/.test(p)).join(', ')})`);
-ok(!changed.some(path => /^src\/lessons\/lesson(?:[1-9]|[1-3][0-9]|40|41)\//.test(path)), 'Lessons 1–41 source remains untouched');
+  || /^docs\/(?:lesson|navigation-)/.test(path)
+  || /^scripts\/(?:audit-[\w-]+|check-english-direction|test-bidi-rendering|lesson4\d-coverage-doc)\.mjs$/.test(path)), `no unrelated modified files (${changed.join(', ')})`);
+ok(!changed.some(path => /^src\/lessons\/lesson(?:[1-9]|[1-2][0-9]|3[014-9]|40|41)\//.test(path)), 'Lessons 1–41 (except shared nav in 32–33) source remains untouched');
 
 console.log(`Lesson 42 static/data audit passed: ${checks} assertions; 45 sections (${totalUnits} units), ${practice.length} practice items, 25 test questions, ${testGraph ? '' : ''}${solutions.length} detailed keys, ${pairs.length} contrast pairs.`);

@@ -711,6 +711,7 @@ ok(src["Lesson33.tsx"].includes("SLIDE_COUNT_33 - 1"), "final test: gated to the
 
 // ---------------- cleanup & report ----------------
 rmSync(outFile, { force: true });
+rmSync(join(root, "scripts", ".lesson33-audit.css"), { force: true });
 if (failures.length) {
   console.error(`Lesson 33 audit: ${checks - failures.length} passed, ${failures.length} FAILED`);
   for (const f of failures) console.error(" ✕ " + f);

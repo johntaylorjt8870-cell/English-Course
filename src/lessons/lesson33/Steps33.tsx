@@ -123,7 +123,7 @@ function StepCover33() {
     <div data-lesson-step="cover" data-source-section="cover" className="space-y-3">
       <div className="l33-hero">
         <div className="l33-hero-band">
-          <div className="l33-hero-eyebrow"><En>THE PRESENT LAB</En> · مختبر الحاضر</div>
+          <div className="l33-hero-eyebrow"><Rich text="THE PRESENT LAB · مختبر الحاضر" /></div>
           <h2 className="l33-hero-title"><Rich text="الدرس 33: The Four Present Tenses" /></h2>
           <p className="mt-2 max-w-[88%] text-[13px] font-bold leading-6 text-white/90"><Rich text="المراجعة الشاملة لأزمنة الحاضر الأربعة — Present Tenses Mastery · IQ200" /></p>
           <div className="l33-hero-formula">

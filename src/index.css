@@ -204,3 +204,176 @@ body {
 [dir="rtl"] .font-en {
   white-space: pre-wrap;
 }
+
+/* ============================================================
+   شريط التنقّل الموحّد + زر «قفل الموقع» في التدفّق الطبيعي (Flex)
+   يمنع التداخل بين «التالي» و«قفل الموقع» في جميع الدروس والمقاسات
+   مع دعم RTL/LTR والتفاف مرن عند ضيق العرض أو طول العناوين.
+   ============================================================ */
+.lesson-step-nav {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 0.75rem;
+  width: 100%;
+  flex-shrink: 0;
+  padding: 0.5rem 0.875rem;
+  box-sizing: border-box;
+}
+
+.lesson-step-nav__start,
+.lesson-step-nav__end {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.625rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.lesson-step-nav__center {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-width: 0;
+  max-width: 100%;
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.lesson-step-nav__btn {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.site-lock-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 40px;
+  padding: 0.45rem 0.85rem;
+  border-radius: 9999px;
+  border: 1.5px solid #cbd5e1 !important;
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.35;
+  box-shadow: 0 4px 12px -4px rgba(15, 23, 42, 0.12);
+  cursor: pointer;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.site-lock-btn:hover:not(:disabled) {
+  background-color: #f8fafc !important;
+  border-color: #94a3b8 !important;
+  color: #0f172a !important;
+}
+
+.site-lock-btn:focus-visible {
+  outline: 3px solid #2563eb !important;
+  outline-offset: 2px !important;
+}
+
+.site-lock-slot {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  max-width: 100%;
+}
+
+.site-lock-slot--column-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0.5rem 0.875rem;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.site-lock-sentinel {
+  display: none;
+}
+
+[data-site-lock-host],
+footer:has([data-site-lock-host]),
+nav:has([data-site-lock-host]),
+div.justify-between:has([data-site-lock-host]) {
+  flex-wrap: wrap !important;
+  gap: 0.5rem 0.75rem;
+}
+
+div.l30-floating-nav,
+div.l31-floating-nav,
+div.absolute.inset-x-0.bottom-4.flex.justify-center {
+  position: relative !important;
+  inset: auto !important;
+  bottom: auto !important;
+  z-index: 20;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem 0.75rem !important;
+  width: 100%;
+  flex-shrink: 0;
+  padding: 0.5rem 0.75rem !important;
+  pointer-events: auto !important;
+  box-sizing: border-box;
+}
+
+div.l30-floating-nav > div:first-child,
+div.l31-floating-nav > div:first-child,
+div.absolute.inset-x-0.bottom-4.flex.justify-center > div:first-child {
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+}
+
+@media (max-width: 480px) {
+  div.l30-floating-nav > div:first-child button,
+  div.l31-floating-nav > div:first-child button,
+  div.absolute.inset-x-0.bottom-4.flex.justify-center > div:first-child button {
+    padding-inline: 0.75rem !important;
+  }
+}
+
+.site-gate-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.625rem 1rem;
+  box-sizing: border-box;
+}
+
+/* Mobile/tablet clearance for Lessons 34 & 35 fixed bottom-left step-drawer button (lg:hidden) */
+@media (max-width: 1023.98px) {
+  #l34-main,
+  #l35-main {
+    padding-bottom: 4.25rem;
+  }
+
+  [data-lesson="34"] ~ .site-gate-bar,
+  [data-lesson="35"] ~ .site-gate-bar {
+    padding-inline-end: 7.5rem;
+  }
+}
+

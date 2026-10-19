@@ -1,8 +1,41 @@
-import { useEffect, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { FormEvent, ReactNode } from "react";
 
 const SITE_PASSWORD = "CloseYourEyes173";
 const STORAGE_KEY = "englishwithsomer-site-unlocked";
+
+interface SiteLockContextValue {
+  lockSite: () => void;
+  registerInlineHost: () => () => void;
+}
+
+const SiteLockContext = createContext<SiteLockContextValue | null>(null);
+
+export function useSiteLock() {
+  const ctx = useContext(SiteLockContext);
+  const fallbackLock = useCallback(() => {
+    writeUnlockedState(false);
+  }, []);
+  return ctx?.lockSite ?? fallbackLock;
+}
+
+export function useRegisterInlineLockHost(enabled = true) {
+  const ctx = useContext(SiteLockContext);
+  useLayoutEffect(() => {
+    if (!enabled || !ctx) return;
+    return ctx.registerInlineHost();
+  }, [enabled, ctx]);
+}
+
+export function SiteLockButton({ className = "" }: { className?: string }) {
+  const lockSite = useSiteLock();
+  return (
+    <button type="button" onClick={lockSite} aria-label="قفل الموقع" data-site-lock-button="true" className={`site-lock-btn ${className}`.trim()}>
+      🔒 قفل الموقع
+    </button>
+  );
+}
 
 function readUnlockedState() {
   if (typeof window === "undefined") return false;
@@ -22,6 +55,79 @@ function writeUnlockedState(unlocked: boolean) {
   } catch {
     // Storage can be disabled by the browser; unlocking remains session-safe.
   }
+}
+
+function isElementVisible(el: HTMLElement | null): el is HTMLElement {
+  if (!el) return false;
+  if (el.closest("[hidden], [aria-hidden='true'], .hidden")) return false;
+  return true;
+}
+
+function setAttrIfChanged(el: HTMLElement, name: string, value: string) {
+  if (el.getAttribute(name) !== value) {
+    el.setAttribute(name, value);
+  }
+}
+
+function findStepNavHost(root: HTMLElement): { container: HTMLElement; beforeNode: ChildNode | null; mode: "pill" | "before-last" | "append" | "column-footer" } | null {
+  // 1. Lessons 1, 3–26, 28–31 bottom navigation bar
+  const pillBars = root.querySelectorAll<HTMLElement>(
+    "div.l30-floating-nav, div.l31-floating-nav, div.absolute.inset-x-0.bottom-4.flex.justify-center",
+  );
+  for (const bar of pillBars) {
+    if (isElementVisible(bar)) {
+      return { container: bar, beforeNode: null, mode: "pill" };
+    }
+  }
+
+  // 2. Lessons 41–44 step navigation bar (insert before last button so button:last-child stays Next)
+  const studioNavs = root.querySelectorAll<HTMLElement>(
+    "nav.bottomNav41, nav.bottomNav42, nav.bottomNav43, nav.stepNav44",
+  );
+  for (const nav of studioNavs) {
+    if (isElementVisible(nav)) {
+      return { container: nav, beforeNode: nav.lastElementChild, mode: "before-last" };
+    }
+  }
+
+  // 3. Lessons 2, 27, 34–40 bottom step navigation bar
+  const candidates = [...root.querySelectorAll<HTMLButtonElement>("button")].filter((btn) => {
+    if (!isElementVisible(btn)) return false;
+    if (btn.hasAttribute("data-site-lock-button")) return false;
+    if (btn.closest("header, aside, [role='dialog'], [aria-label*='مناطق']")) return false;
+    const txt = (btn.textContent || "").replace(/\s+/g, " ").trim();
+    if (!txt || txt.includes("الدرس السابق") || txt.includes("الدرس التالي")) return false;
+    return (
+      txt.includes("التالي") ||
+      txt.includes("الخطوة التالية") ||
+      txt.includes("→ السابق") ||
+      txt === "السابق" ||
+      txt.startsWith("→ الخطوة السابقة")
+    );
+  });
+
+  if (candidates.length > 0) {
+    const lastBtn = candidates[candidates.length - 1];
+    const bar = lastBtn.closest<HTMLElement>("footer, nav, div.justify-between");
+    if (bar && isElementVisible(bar)) {
+      const parent = lastBtn.parentElement;
+      if (parent && parent !== bar && parent.classList.contains("flex")) {
+        return { container: parent, beforeNode: null, mode: "append" };
+      }
+      return { container: bar, beforeNode: null, mode: "append" };
+    }
+  }
+
+  // 4. Full-viewport h-screen lessons on non-step tabs (test / solutions / teacher)
+  const hScreen = root.querySelector<HTMLElement>(".h-screen");
+  if (hScreen && isElementVisible(hScreen)) {
+    const main = hScreen.querySelector<HTMLElement>("main");
+    if (main && main.parentElement) {
+      return { container: main.parentElement, beforeNode: null, mode: "column-footer" };
+    }
+  }
+
+  return null;
 }
 
 function PasswordScreen({ onUnlock }: { onUnlock: () => void }) {
@@ -125,28 +231,179 @@ function PasswordScreen({ onUnlock }: { onUnlock: () => void }) {
 
 export default function SitePasswordGate({ children }: { children: ReactNode }) {
   const [unlocked, setUnlocked] = useState(readUnlockedState);
+  const [inlineHostCount, setInlineHostCount] = useState(0);
+  const [portalSlot, setPortalSlot] = useState<HTMLElement | null>(null);
+  const shellRef = useRef<HTMLDivElement>(null);
 
-  function lockSite() {
+  const lockSite = useCallback(() => {
     writeUnlockedState(false);
     setUnlocked(false);
-  }
+  }, []);
+
+  const registerInlineHost = useCallback(() => {
+    setInlineHostCount((c) => c + 1);
+    return () => setInlineHostCount((c) => Math.max(0, c - 1));
+  }, []);
+
+  const contextValue = useMemo(
+    () => ({ lockSite, registerInlineHost }),
+    [lockSite, registerInlineHost],
+  );
+
+  useLayoutEffect(() => {
+    if (!unlocked || inlineHostCount > 0) {
+      setPortalSlot((prev) => {
+        prev?.remove();
+        return null;
+      });
+      return;
+    }
+
+    const root = shellRef.current;
+    if (!root || typeof document === "undefined") return;
+
+    let slotEl: HTMLElement | null = null;
+    let currentContainer: HTMLElement | null = null;
+    let observer: MutationObserver | null = null;
+    let syncing = false;
+
+    const observeRoot = () => {
+      observer?.observe(root, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["class", "hidden", "aria-hidden", "data-area"],
+      });
+    };
+
+    const clearSlot = () => {
+      if (slotEl) {
+        slotEl.remove();
+        slotEl = null;
+      }
+      if (currentContainer) {
+        if (!currentContainer.hasAttribute("data-lesson-step-nav")) {
+          currentContainer.removeAttribute("data-site-lock-host");
+        }
+        currentContainer = null;
+      }
+      setPortalSlot((prev) => (prev === null ? prev : null));
+    };
+
+    const isInternalNode = (node: Node | null): boolean => {
+      if (!node) return false;
+      if (node === slotEl || (slotEl && slotEl.contains(node))) return true;
+      if (
+        node instanceof HTMLElement &&
+        (node.classList.contains("site-gate-bar") || Boolean(node.closest(".site-gate-bar")))
+      ) {
+        return true;
+      }
+      return false;
+    };
+
+    const sync = () => {
+      if (syncing) return;
+      syncing = true;
+      observer?.disconnect();
+
+      try {
+        if (root.querySelector("[data-lesson-step-nav='true']")) {
+          clearSlot();
+          return;
+        }
+
+        const target = findStepNavHost(root);
+        if (!target) {
+          clearSlot();
+          return;
+        }
+
+        const { container, beforeNode, mode } = target;
+        setAttrIfChanged(container, "data-site-lock-host", mode);
+
+        const nextClassName = `site-lock-slot site-lock-slot--${mode}`;
+        if (!slotEl) {
+          slotEl = document.createElement("div");
+        }
+        if (slotEl.className !== nextClassName) {
+          slotEl.className = nextClassName;
+        }
+        setAttrIfChanged(slotEl, "data-site-lock-slot", mode);
+
+        if (currentContainer && currentContainer !== container) {
+          if (!currentContainer.hasAttribute("data-lesson-step-nav")) {
+            currentContainer.removeAttribute("data-site-lock-host");
+          }
+        }
+        currentContainer = container;
+
+        if (mode === "before-last" && beforeNode && beforeNode.parentNode === container) {
+          if (slotEl.parentNode !== container || slotEl.nextSibling !== beforeNode) {
+            container.insertBefore(slotEl, beforeNode);
+          }
+        } else if (slotEl.parentNode !== container) {
+          container.appendChild(slotEl);
+        }
+
+        const activeSlot = slotEl;
+        setPortalSlot((prev) => (prev === activeSlot ? prev : activeSlot));
+      } finally {
+        syncing = false;
+        observeRoot();
+      }
+    };
+
+    if (typeof MutationObserver !== "undefined") {
+      observer = new MutationObserver((records) => {
+        const external = records.some((r) => {
+          if (isInternalNode(r.target)) {
+            return false;
+          }
+          if (r.type === "attributes") {
+            return true;
+          }
+          const changedNodes = [...r.addedNodes, ...r.removedNodes];
+          return changedNodes.length > 0 && !changedNodes.every((n) => isInternalNode(n));
+        });
+        if (external) sync();
+      });
+    }
+
+    sync();
+
+    return () => {
+      observer?.disconnect();
+      if (slotEl) slotEl.remove();
+      if (currentContainer && !currentContainer.hasAttribute("data-lesson-step-nav")) {
+        currentContainer.removeAttribute("data-site-lock-host");
+      }
+    };
+  }, [unlocked, inlineHostCount]);
 
   if (!unlocked) {
     return <PasswordScreen onUnlock={() => setUnlocked(true)} />;
   }
 
   return (
-    <>
-      {children}
-      <button
-        type="button"
-        onClick={lockSite}
-        title="قفل الموقع"
-        aria-label="قفل الموقع"
-        className="fixed bottom-4 left-4 z-[100] rounded-full border border-slate-200 bg-white/90 px-3 py-2 text-xs font-bold text-slate-500 shadow-md shadow-slate-900/10 backdrop-blur transition hover:border-slate-300 hover:bg-white hover:text-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-200"
-      >
-        🔒 قفل الموقع
-      </button>
-    </>
+    <SiteLockContext.Provider value={contextValue}>
+      <div ref={shellRef} className="site-gate-shell">
+        {children}
+        {inlineHostCount === 0 && portalSlot
+          ? createPortal(
+              <>
+                <SiteLockButton />
+                <span aria-hidden="true" className="site-lock-sentinel" />
+              </>,
+              portalSlot,
+            )
+          : null}
+        {inlineHostCount === 0 && !portalSlot ? (
+          <footer className="site-gate-bar" dir="rtl" role="region" aria-label="التحكم بقفل الموقع">
+            <SiteLockButton />
+          </footer>
+        ) : null}
+      </div>
+    </SiteLockContext.Provider>
   );
 }

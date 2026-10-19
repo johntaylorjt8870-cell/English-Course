@@ -12,7 +12,7 @@ import { En, Rich } from "../../shared/lessonKit";
 import { LatinRuns } from "../../shared/bidi";
 
 export const FOCUS34 =
-  "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white";
+  "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-violet-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white";
 
 /* ---------- لوحة الألوان الدلالية (تُستخدم في كل المكوّنات) ---------- */
 export const TONE34 = {
@@ -902,7 +902,7 @@ export function TypedFill34({
                 تحقّق
               </button>
             ) : (
-              <span aria-hidden className="text-emerald-600">
+              <span aria-hidden className="text-emerald-700">
                 ✓
               </span>
             )}
@@ -1554,7 +1554,7 @@ export function TransformDrill34({
                     تحقّق
                   </button>
                 ) : (
-                  <span aria-hidden className="text-emerald-600">
+                  <span aria-hidden className="text-emerald-700">
                     ✓
                   </span>
                 )}
@@ -1611,7 +1611,7 @@ export function TransformDrill34({
                     تحقّق
                   </button>
                 ) : (
-                  <span aria-hidden className="text-emerald-600">
+                  <span aria-hidden className="text-emerald-700">
                     ✓
                   </span>
                 )}

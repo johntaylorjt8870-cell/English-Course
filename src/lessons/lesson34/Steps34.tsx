@@ -527,7 +527,7 @@ function PronounChips34({
             <span aria-hidden className="mx-1 text-stone-400">
               →
             </span>
-            <span className={`text-[13px] font-black ${open[i] ? "text-emerald-800" : "text-stone-300"}`} dir="ltr">
+            <span className={`text-[13px] font-black ${open[i] ? "text-emerald-800" : "text-stone-500"}`} dir="ltr">
               <LatinRuns text={open[i] ? r.form : "will …"} />
             </span>
           </button>
@@ -1171,7 +1171,7 @@ function ContractionGrid34({ rows, drv }: { rows: { full: string; short: string 
           <span aria-hidden className="mx-1 text-stone-400">
             →
           </span>
-          <span className={`text-[13px] font-black ${open[i] ? "text-emerald-800" : "text-stone-300"}`} dir="ltr">
+          <span className={`text-[13px] font-black ${open[i] ? "text-emerald-800" : "text-stone-500"}`} dir="ltr">
             <LatinRuns text={r.short} />
           </span>
         </button>

@@ -13,6 +13,16 @@
    ============================================================ */
 
 /* ---------- 1. tokens ---------- */
+/* Shared final-test copy keeps Tailwind's slate-400/500, which sit below
+   4.5:1 on white. Darken them inside this lesson only (no shared edits). */
+.l34-app .text-slate-400 {
+  color: #64748b;
+}
+
+.l34-app .text-slate-500 {
+  color: #475569;
+}
+
 .l34-app {
   --l34-ink: #241348;
   --l34-ink-soft: #554a6d;
@@ -46,12 +56,15 @@
   --color-stone-100: #f5f1fb;
   --color-stone-200: #e9e2f4;
   --color-stone-300: #d6cce6;
-  --color-stone-400: #a99bc2;
-  --color-stone-500: #85779f;
-  --color-stone-600: #6b5e85;
-  --color-stone-700: #554a6d;
-  --color-stone-800: #403853;
-  --color-stone-900: #2f2840;
+  --color-stone-400: #6f6288;
+  --color-stone-500: #655879;
+  --color-stone-600: #574b6b;
+  --color-stone-700: #4a4059;
+  --color-stone-800: #3a3348;
+  --color-stone-900: #2b2536;
+  /* violet 400/500 are body-text tones here, so they must clear 4.5:1 on white */
+  --color-violet-400: #7c3aed;
+  --color-violet-500: #6d28d9;
 
   min-height: 100vh;
   color: var(--l34-ink);
@@ -338,7 +351,7 @@
 
 .l34-formula-chip--op {
   background: transparent;
-  color: #a78bfa;
+  color: #6d28d9;
   padding-inline: 0.1rem;
 }
 
@@ -623,7 +636,7 @@
 }
 
 .l34-phase__chev {
-  color: #a78bfa;
+  color: #7c3aed;
   font-size: 0.7rem;
 }
 
@@ -674,7 +687,7 @@
 
 .l34-rail__legend-title {
   margin-bottom: 0.35rem;
-  color: #7c6b96;
+  color: #655879;
   font-size: 0.68rem;
   font-weight: 800;
 }
@@ -819,7 +832,7 @@
 .l34-stephead__lead {
   max-width: 54rem;
   margin-top: 0.22rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: #fff;
   font-size: 0.86rem;
   font-weight: 700;
   line-height: 1.75;
@@ -865,7 +878,7 @@
   font-size: 0.66rem;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
-  color: rgba(255, 255, 255, 0.86);
+  color: #fff;
 }
 
 .l34-step {
@@ -975,7 +988,7 @@
   padding: 0.1rem 0.42rem;
   border-radius: 9999px;
   background: #f6f1ff;
-  color: #7c6b96;
+  color: #655879;
   font-size: 0.62rem;
   font-weight: 800;
 }
@@ -1084,7 +1097,7 @@
 
 .l34-objectives__aside p {
   margin-top: 0.45rem;
-  color: rgba(255, 255, 255, 0.92);
+  color: #fff;
   font-size: 0.78rem;
   font-weight: 600;
   line-height: 1.85;
@@ -1150,6 +1163,14 @@
 
 .l34-stepnav__btn:disabled {
   opacity: 0.45;
+}
+
+/* Keep the primary action legible on hover/focus: the generic hover
+   background above is far too light to carry white text. */
+.l34-stepnav__btn.l34-stepnav__btn--next:hover:not(:disabled),
+.l34-stepnav__btn.l34-stepnav__btn--next:focus-visible {
+  background: linear-gradient(120deg, #4c1d95, #6d28d9 55%, #be123c);
+  color: #fff;
 }
 
 .l34-stepnav__btn--next {
@@ -1270,7 +1291,7 @@
   padding: 0.14rem 0.5rem;
   border-radius: 9999px;
   background: #f7f2ff;
-  color: #7c6b96;
+  color: #655879;
   font-size: 0.64rem;
   font-weight: 800;
 }

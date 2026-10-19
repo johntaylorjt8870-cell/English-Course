@@ -1001,6 +1001,39 @@ ok(ledgerText.includes("Daniel: I'll participate!") && ledgerText.includes("Teac
 // 9) Static hygiene: bidi controls, hover-only, buttons, reveal gating
 // ============================================================
 const files = readdirSync(L34).filter((f) => /\.(ts|tsx)$/.test(f)).map((f) => join(L34, f));
+// ---------------- palette contrast: white text on every gradient stop ----------------
+{
+  const css = readFileSync(join(L34, "lesson34.css"), "utf8");
+  const channel = (v) => {
+    const c = v / 255;
+    return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  };
+  const luminance = (hex) => {
+    const h = hex.replace("#", "");
+    const full = h.length === 3 ? h.split("").map((x) => x + x).join("") : h;
+    const [r, g, b] = [0, 2, 4].map((i) => channel(parseInt(full.slice(i, i + 2), 16)));
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const contrast = (a, b) => {
+    const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+    return (hi + 0.05) / (lo + 0.05);
+  };
+  const whiteTextBlocks = [...css.matchAll(/([^{}]+)\{([^{}]*gradient[^{}]*)\}/g)]
+    .filter(([, , body]) => /color:\s*#fff/i.test(body))
+    .map(([, selector, body]) => ({
+      selector: selector.trim().split("\n").pop().trim(),
+      stops: [...new Set((body.match(/#[0-9a-fA-F]{6}/g) || []).filter((hex) => hex.toLowerCase() !== "#ffffff"))],
+    }))
+    .filter((block) => block.stops.length > 0);
+  ok(whiteTextBlocks.length >= 8, `contrast: every white-on-gradient surface is inspected (${whiteTextBlocks.length} blocks)`);
+  for (const block of whiteTextBlocks) {
+    for (const stop of block.stops) {
+      const ratio = contrast(stop, "#ffffff");
+      ok(ratio >= 4.5, `contrast: white on ${stop} in ${block.selector} passes 4.5:1 (got ${ratio.toFixed(2)})`);
+    }
+  }
+}
+
 const src = Object.fromEntries(files.map((f) => [f.split("/").pop(), readFileSync(f, "utf8")]));
 const BIDI_CTRL = /[\u200e\u200f\u202a-\u202e\u2066-\u2069\u061c]/;
 ok(files.every((f) => !BIDI_CTRL.test(src[f.split("/").pop()])), "bidi: no raw Unicode bidi control characters in lesson 34 sources");

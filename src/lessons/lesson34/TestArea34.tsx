@@ -8,7 +8,7 @@
 // المفتاح التفصيلي المشتق (25 سؤالًا: إجابة + سبب + بنية + نماذج).
 // ============================================================
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import { Rich } from "../../shared/lessonKit";
 import { LatinRuns } from "../../shared/bidi";
 import { FOCUS34 } from "./kit34";
@@ -27,15 +27,32 @@ import { DETAILED_TEST_SOLUTIONS_34 } from "./solutionsData34";
 
 type Answer34 = string | number | null;
 
+/** حالة الاختبار — تُرفع إلى الغلاف لتبقى الإجابات محفوظة عند تبديل المنطقة. */
+export type TestSession34 = {
+  answers: Answer34[];
+  setAnswers: Dispatch<SetStateAction<Answer34[]>>;
+  submitted: boolean;
+  setSubmitted: Dispatch<SetStateAction<boolean>>;
+};
+
+export function useTestSession34(): TestSession34 {
+  const [answers, setAnswers] = useState<Answer34[]>(() => TEST_34.map(() => null));
+  const [submitted, setSubmitted] = useState(false);
+  return { answers, setAnswers, submitted, setSubmitted };
+}
+
 export default function TestArea34({
   onRestart,
   onSubmitted,
+  session,
 }: {
   onRestart: () => void;
   onSubmitted: () => void;
+  /** عند تمريره من الغلاف تبقى الإجابات والدرجة محفوظة بين المناطق. */
+  session?: TestSession34;
 }) {
-  const [answers, setAnswers] = useState<Answer34[]>(() => TEST_34.map(() => null));
-  const [submitted, setSubmitted] = useState(false);
+  const local = useTestSession34();
+  const { answers, setAnswers, submitted, setSubmitted } = session ?? local;
 
   const total = TEST_34.length;
   const answered = useMemo(() => TEST_34.filter((q, i) => isAnswered34(q, answers[i])).length, [answers]);

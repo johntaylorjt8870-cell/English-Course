@@ -203,6 +203,18 @@ for (const vp of [
     await page.waitForTimeout(250);
     await shot("test-after-submit");
 
+    // Answers + score must survive leaving and re-entering the test area.
+    await page.click("[data-area-tab='lesson']");
+    await page.waitForTimeout(350);
+    await page.click("[data-area-tab='test']");
+    await page.waitForTimeout(350);
+    const persisted = await page.evaluate(() => ({
+      score: (document.querySelector("[data-test-area='34']")?.textContent.match(/النتيجة: \d+ \/ 25/) || [""])[0],
+      feedback: document.querySelectorAll("[data-q-feedback]").length,
+    }));
+    ok(persisted.score === "النتيجة: 25 / 25", `test: score survives switching areas (got "${persisted.score}")`);
+    ok(persisted.feedback === 25, `test: all 25 explanations survive switching areas (got ${persisted.feedback})`);
+
     await page.click("[data-area-tab='solutions']");
     await page.waitForTimeout(550);
     ok(await page.locator("[data-locked-solutions='34']").count() === 0, "solutions: unlocked after a full submit");

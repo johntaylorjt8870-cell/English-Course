@@ -31,7 +31,7 @@ import {
   PHASE_META_34,
 } from "./data";
 import Steps34 from "./Steps34";
-import TestArea34, { Solutions34 } from "./TestArea34";
+import TestArea34, { Solutions34, useTestSession34 } from "./TestArea34";
 import TeacherArea34 from "./TeacherArea34";
 import { FOCUS34 } from "./kit34";
 
@@ -498,7 +498,7 @@ function Rail34({
                 <span className="min-w-0 overflow-wrap-anywhere text-right">
                   <Rich text={sec.label.replace(/^\S+\s*/, "")} />
                   {phaseMeta ? (
-                    <span className="mt-0.5 block text-[9px] font-bold opacity-70" dir="ltr">
+                    <span className="mt-0.5 block text-[9px] font-bold" dir="ltr">
                       {phaseMeta.en}
                     </span>
                   ) : null}
@@ -601,7 +601,8 @@ export default function Lesson34(_props: { onExit?: () => void }) {
   const { onExit } = _props;
   const [area, setArea] = useState<Area34>("lesson");
   const [teacherUnlocked, setTeacherUnlocked] = useState(false);
-  const [testSubmitted, setTestSubmitted] = useState(false);
+  const testSession = useTestSession34();
+  const testSubmitted = testSession.submitted;
   const [index, setIndex] = useState(0);
   const [mapOpen, setMapOpen] = useState(false);
   const [openMap, setOpenMap] = useState<Record<string, boolean>>(() =>
@@ -739,7 +740,11 @@ export default function Lesson34(_props: { onExit?: () => void }) {
 
         <div className="mt-2">
           {area === "test" ? (
-            <TestArea34 onRestart={() => setTestSubmitted(false)} onSubmitted={() => setTestSubmitted(true)} />
+            <TestArea34
+              session={testSession}
+              onRestart={() => testSession.setSubmitted(false)}
+              onSubmitted={() => testSession.setSubmitted(true)}
+            />
           ) : area === "solutions" ? (
             <Solutions34 unlocked={testSubmitted} onGoTest={() => setArea("test")} onGoTeacher={() => setArea("teacher")} />
           ) : (

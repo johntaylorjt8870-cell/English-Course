@@ -234,6 +234,25 @@ for (const vp of [
       ok(perArea[tab] === 1, `tab ${tab}: exactly one visible site-lock button (got ${perArea[tab]})`);
     }
     report.lockPerArea = perArea;
+
+    // Mobile pass for the three non-lesson areas (same mounted state, smaller viewport).
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.waitForTimeout(400);
+    const mobileAreas = {};
+    for (const tab of ["test", "solutions", "teacher"]) {
+      await page.click(`[data-area-tab='${tab}']`);
+      await page.waitForTimeout(400);
+      const state = await page.evaluate(() => ({
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth,
+        locks: [...document.querySelectorAll("[data-site-lock-button='true']")].filter((el) => el.offsetParent !== null).length,
+      }));
+      mobileAreas[tab] = state;
+      ok(state.scrollWidth <= state.clientWidth, `375x812 ${tab}: no horizontal overflow (${state.scrollWidth} > ${state.clientWidth})`);
+      ok(state.locks === 1, `375x812 ${tab}: exactly one visible site-lock button (got ${state.locks})`);
+      await shot(`area-375x812-${tab}`);
+    }
+    report.mobileAreas = mobileAreas;
   }
 }
 

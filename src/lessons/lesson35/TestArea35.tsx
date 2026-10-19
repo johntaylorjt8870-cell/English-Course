@@ -1,68 +1,138 @@
-import { useState } from "react";
-import { PlatformTag, Rich } from "../../shared/lessonKit";
-import { TEST_LEVELS_35, TEST_35, TEST_35_COUNT, TEST_SOLUTIONS_35, answerText35, gradeObjective35, isAnswered35, type TestQuestion35 } from "./testData";
-import { Card35, FOCUS_35 } from "./kit35";
+import { useMemo, useState } from "react";
+import { Rich } from "../../shared/lessonKit";
+import { FOCUS_35 } from "./kit35";
+import {
+  TEST_35,
+  TEST_35_COUNT,
+  TEST_INTRO_35,
+  TEST_LEVELS_35,
+  answerText35,
+  gradeObjective35,
+  gradeProduction35,
+  isAnswered35,
+  type TestQuestion35,
+  type TestWrite35,
+} from "./testData";
 
-export default function TestArea35({ onSubmitted, onRestart }: { onSubmitted: () => void; onRestart: () => void }) {
+/* The 25-question assessment. Neutral before submission: no verdict, score,
+   model answer, or explanation is rendered until the learner submits all 25. */
+
+export default function TestArea35({
+  onSubmitted,
+  onGoSolutions,
+}: {
+  onSubmitted: () => void;
+  onGoSolutions: () => void;
+}) {
   const [answers, setAnswers] = useState<Record<number, string | number>>({});
   const [submitted, setSubmitted] = useState(false);
-  const answered = TEST_35.filter((question) => isAnswered35(question, answers[question.n])).length;
+
+  const answered = useMemo(() => TEST_35.filter((question) => isAnswered35(question, answers[question.n])).length, [answers]);
   const ready = answered === TEST_35_COUNT;
+
   const objective = TEST_35.filter((question) => question.type !== "write");
-  const score = objective.reduce((total, question) => total + (gradeObjective35(question, answers[question.n]) === true ? 1 : 0), 0);
-  const update = (number: number, value: string | number) => setAnswers((current) => ({ ...current, [number]: value }));
+  const objectiveScore = objective.filter((question) => gradeObjective35(question, answers[question.n]) === true).length;
+  const production = TEST_35.filter((question): question is TestWrite35 => question.type === "write");
+  const verified = production.filter((question) => gradeProduction35(question, answers[question.n]) === "verified").length;
+  const review = production.filter((question) => gradeProduction35(question, answers[question.n]) === "review").length;
+
+  const update = (n: number, value: string | number) => {
+    if (submitted) return;
+    setAnswers((current) => ({ ...current, [n]: value }));
+  };
+
   const submit = () => {
     if (!ready || submitted) return;
     setSubmitted(true);
     onSubmitted();
   };
-  const reset = () => {
+
+  const restart = () => {
     setAnswers({});
     setSubmitted(false);
-    onRestart();
   };
 
   return (
-    <div data-area="lesson35-test" data-source-section="s34" className="space-y-4">
-      <Card35 className="border-[#d3e3da] bg-[#f5f9fc]" eyebrow="Future Plans Master Test" title="اختبار الدرس 35 — 25 سؤالًا، خمسة مستويات">
-        <p className="text-sm leading-6 text-[#56686b]">أجب عن جميع الأسئلة قبل الإرسال. لا تظهر علامة صح أو خطأ أو الإجابة النموذجية قبل الضغط على «إرسال الاختبار».</p>
-        <div className="mt-3 flex items-center gap-3" aria-label="تقدم الإجابة">
-          <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-[#e2eaf1]"><div className="h-full rounded-full bg-[#0d8f7f] transition-[width] duration-200" style={{ width: `${Math.round((answered / TEST_35_COUNT) * 100)}%` }} /></div>
-          <span className="text-xs font-black tabular-nums text-[#4a6070]" aria-live="polite">{answered}/{TEST_35_COUNT}</span>
+    <div data-area="lesson35-test" className="fg35-body">
+      <header className="fg35-testhead">
+        <div className="fg35-card__eyebrow">
+          <span className="fg35-pill fg35-pill--source">🏆 MASTER TEST · §34</span>
+          <span className="fg35-pill">5 مستويات</span>
+          <span className="fg35-pill">25 سؤالًا</span>
         </div>
-      </Card35>
+        <h2>اختبار الدرس 35 — Future Plans Master Test</h2>
+        <div style={{ marginTop: 7 }}>
+          {TEST_INTRO_35.map((line) => <p key={line} className="fg35-prose" style={{ marginTop: 2 }}><Rich text={line} /></p>)}
+        </div>
+        <div className="fg35-track" aria-label="تقدم الإجابة">
+          <div className="fg35-track__bar"><span style={{ width: `${Math.round((answered / TEST_35_COUNT) * 100)}%` }} /></div>
+          <span className="fg35-track__num" dir="ltr" aria-live="polite">{answered}/{TEST_35_COUNT}</span>
+        </div>
+        <p className="fg35-muted" style={{ marginTop: 6 }}>
+          لا تظهر أي إجابة أو علامة صحة قبل الإرسال. يمكنك التنقل بين المستويات؛ إجاباتك تُحفظ داخل الجلسة.
+        </p>
+      </header>
 
       {submitted ? (
-        <section role="status" aria-live="polite" className="rounded-3xl border-2 border-[#c7d8d3] bg-[#eef4f0] p-4 text-center">
-          <div className="text-lg font-black text-[#0d2b46]">النتيجة الموضوعية: {score} / {objective.length}</div>
-          <p className="mt-1 text-sm leading-6 text-[#42595c]">أُرسلت الإجابات الكتابية للأسئلة 21–25 للمراجعة البشرية؛ لا تُقيّم آليًا كي لا تُرفض إجابة صحيحة بصياغة مختلفة.</p>
+        <section className="fg35-score" role="status" aria-live="polite" data-test-score>
+          <div className="fg35-card__eyebrow">النتيجة</div>
+          <div className="fg35-score__big" dir="ltr">{objectiveScore + verified} / 25</div>
+          <p className="fg35-prose" style={{ marginTop: 4 }}>
+            <b>{objectiveScore}/20</b> سؤالًا موضوعيًا صحيحًا · <b>{verified}/5</b> مهمة إنتاج تحققت بنيتها آليًا.
+            {review > 0 ? ` · ${review} إجابة كتابية تحتاج مراجعة بشرية (لم تُخصم).` : ""}
+          </p>
+          <p className="fg35-muted">
+            درجات الإنتاج تعتمد على فحص بنيوي (وجود الصيغة المطلوبة في السياق)، وليست حكمًا نهائيًا على جودة اللغة. راجع النماذج في التغذية الراجعة أدناه.
+          </p>
+          <div className="fg35-inputrow">
+            <button type="button" className={`fg35-btn ${FOCUS_35}`} onClick={onGoSolutions}>
+              اكشف الحلول التفصيلية
+            </button>
+            <button type="button" className={`fg35-btn fg35-btn--ghost ${FOCUS_35}`} onClick={restart}>
+              إعادة الاختبار
+            </button>
+          </div>
         </section>
       ) : null}
 
-      {TEST_LEVELS_35.map((level) => (
-        <section key={level.id} className="space-y-3" aria-label={level.title}>
-          <div className="flex flex-wrap items-center gap-2 border-b border-[#d9e3ec] pb-2">
-            <span className="grid h-8 w-8 place-items-center rounded-full bg-[#0d2b46] text-xs font-black text-white">{level.range.split(" ").at(-1)?.replace(/[^0-9–-]/g, "")}</span>
-            <h3 data-source-unit={level.titleSourceUnit} className="font-black text-[#0d2b46]"><Rich text={level.title} /></h3>
-            <span className="text-xs font-bold text-[#718080]">{level.range}</span>
-          </div>
-          {level.instruction ? <p data-source-unit={level.instructionSourceUnit} className="text-sm font-bold text-[#4a6070]"><Rich text={level.instruction} /></p> : null}
+      {TEST_LEVELS_35.map((level, levelIndex) => (
+        <section className="fg35-testlevel" key={level.id} aria-labelledby={`l35-${level.id}`}>
+          <header className="fg35-testlevel__head">
+            <span className="fg35-testlevel__num">{levelIndex + 1}</span>
+            <h3 id={`l35-${level.id}`} style={{ margin: 0, fontSize: "0.98rem", fontWeight: 900 }}>
+              <Rich text={level.title} />
+            </h3>
+            <span className="fg35-pill" dir="ltr">{level.range.replace("الأسئلة", "Q")}</span>
+          </header>
+          {level.instruction ? <p className="fg35-muted" style={{ marginTop: 0 }}><Rich text={level.instruction} /></p> : null}
           {level.questions.map((question) => (
-            <Question35 key={question.n} question={question} value={answers[question.n]} submitted={submitted} onChange={(value) => update(question.n, value)} />
+            <Question35
+              key={question.n}
+              question={question}
+              value={answers[question.n]}
+              submitted={submitted}
+              onChange={(value) => update(question.n, value)}
+            />
           ))}
         </section>
       ))}
 
-      <div className="sticky bottom-3 z-10 rounded-2xl border border-[#d9e3ec] bg-[#fbfdff]/95 p-3 shadow-lg backdrop-blur">
+      <div className="fg35-card fg35-stickybar">
         {!submitted ? (
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <button type="button" data-test-submit disabled={!ready} onClick={submit} className={`${FOCUS_35} rounded-xl bg-[#0d8f7f] px-6 py-3 text-sm font-black text-white disabled:cursor-not-allowed disabled:bg-[#c6d4d9] disabled:text-[#6f7d78]`}>إرسال الاختبار</button>
-            <span className="text-xs font-bold text-[#66777a]">{ready ? "كل الإجابات جاهزة للإرسال." : `أكمل ${TEST_35_COUNT - answered} سؤالًا متبقيًا.`}</span>
+          <div className="fg35-row" style={{ justifyContent: "space-between" }}>
+            <button type="button" className={`fg35-btn ${FOCUS_35}`} data-test-submit disabled={!ready} onClick={submit}>
+              إرسال الاختبار
+            </button>
+            <span className="fg35-muted" aria-live="polite">
+              {ready ? "أجبت عن كل الأسئلة. أرسل مرة واحدة لرؤية النتيجة." : `أكمل ${TEST_35_COUNT - answered} سؤالًا قبل الإرسال.`}
+            </span>
           </div>
         ) : (
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <button type="button" onClick={reset} className={`${FOCUS_35} rounded-xl border border-[#0d8f7f] bg-white px-5 py-2.5 text-sm font-black text-[#0d8f7f] hover:bg-[#eef4f0]`}>إعادة الاختبار</button>
-            <span className="text-xs font-bold text-[#66777a]">إجابات الأسئلة 1–20 ظاهرة؛ الكتابية راجعها مع مفتاح المعلم.</span>
+          <div className="fg35-row" style={{ justifyContent: "space-between" }}>
+            <span className="fg35-strong">تم الإرسال — الإجابات محفوظة أدناه.</span>
+            <button type="button" className={`fg35-btn fg35-btn--ghost ${FOCUS_35}`} onClick={onGoSolutions}>
+              الحلول التفصيلية
+            </button>
           </div>
         )}
       </div>
@@ -70,90 +140,116 @@ export default function TestArea35({ onSubmitted, onRestart }: { onSubmitted: ()
   );
 }
 
-function Question35({ question, value, submitted, onChange }: { question: TestQuestion35; value: string | number | undefined; submitted: boolean; onChange: (answer: string | number) => void }) {
-  const grade = submitted ? gradeObjective35(question, value) : null;
-  const model = answerText35(question);
-  const groupName = `l35-question-${question.n}`;
+function Question35({
+  question,
+  value,
+  submitted,
+  onChange,
+}: {
+  question: TestQuestion35;
+  value: string | number | undefined;
+  submitted: boolean;
+  onChange: (value: string | number) => void;
+}) {
+  const objective = submitted ? gradeObjective35(question, value) : null;
+  const production = submitted && question.type === "write" ? gradeProduction35(question, value) : null;
+  const grade = objective === true || production === "verified" ? "correct" : objective === false ? "wrong" : production === "review" ? "review" : undefined;
+
   return (
-    <article data-test-q={question.n} data-source-section="s34" className={`rounded-2xl border p-3 sm:p-4 ${grade === true ? "border-[#b8d6c0] bg-[#f3f8f2]" : grade === false ? "border-[#e6c3be] bg-[#fff8f6]" : "border-[#dbe4ed] bg-white"}`}>
-      <div className="flex flex-wrap items-start justify-between gap-2">
-        <div className="min-w-0 flex-1 space-y-1.5">
-          {question.promptLines.map((line, index) => <div key={index} data-source-unit={question.sourceUnits[index]} dir="auto" className="text-sm font-bold leading-6 text-[#263f49]"><Rich text={line} /></div>)}
+    <article className="fg35-q" data-test-q={question.n} data-grade={grade}>
+      <div className="fg35-q__prompt">
+        <span className="fg35-q__n">{question.n}</span>
+        <div className="fg35-wide">
+          {question.promptLines.map((line, index) => (
+            <div key={index} className="fg35-en" dir={/[A-Za-z]/.test(line) ? "ltr" : "rtl"} style={/[A-Za-z]/.test(line) ? { textAlign: "left" } : { textAlign: "right" }}>
+              <Rich text={line} />
+            </div>
+          ))}
         </div>
-        {submitted && grade !== null ? <span className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-black ${grade ? "bg-[#dcebe0] text-[#315d4e]" : "bg-[#f7ddda] text-[#8d433b]"}`}>{grade ? "صحيح" : "راجع الإجابة"}</span> : null}
-        {submitted && question.type === "write" ? <span className="shrink-0 rounded-full bg-[#f5ecd9] px-2.5 py-1 text-xs font-black text-[#795c31]">للمراجعة البشرية</span> : null}
+        {submitted ? (
+          <span className="fg35-pill" aria-hidden>
+            {grade === "correct" ? "✓" : grade === "wrong" ? "✕" : grade === "review" ? "…" : ""}
+          </span>
+        ) : null}
       </div>
 
       {question.type === "single" ? (
-        <div className="mt-3 grid gap-2 sm:grid-cols-3" role="radiogroup" aria-label={`السؤال ${question.n}`}>
+        <div className="fg35-optlist" role="radiogroup" aria-label={`السؤال ${question.n}`}>
           {question.options.map((option, index) => (
-            <button key={option} type="button" role="radio" data-source-unit={question.sourceUnits[question.promptLines.length + index]} aria-checked={value === index} aria-pressed={value === index} disabled={submitted} onClick={() => onChange(index)} className={`${FOCUS_35} rounded-xl border px-3 py-2.5 text-left text-sm font-bold transition ${value === index ? "border-[#0d8f7f] bg-[#0d8f7f] text-white" : "border-[#d6e1ea] bg-white text-[#304750] hover:border-[#4d9c8b]"} disabled:cursor-default`}>
-              <span className="mr-2 text-xs opacity-70">{String.fromCharCode(65 + index)}.</span><span dir="auto"><Rich text={option.replace(/^[A-C]\.\s*/, "")} /></span>
+            <button
+              key={option}
+              type="button"
+              role="radio"
+              aria-checked={value === index}
+              aria-pressed={value === index}
+              disabled={submitted}
+              onClick={() => onChange(index)}
+              className={`fg35-opt ${FOCUS_35}`}
+            >
+              <span className="fg35-opt__letter">{String.fromCharCode(65 + index)}.</span>
+              <span>{option}</span>
             </button>
           ))}
         </div>
       ) : question.type === "write" ? (
-        <textarea aria-label={`السؤال ${question.n} — إجابة حرة`} dir="ltr" rows={2} disabled={submitted} value={typeof value === "string" ? value : ""} onChange={(event) => onChange(event.target.value)} className={`${FOCUS_35} mt-3 w-full resize-y rounded-xl border border-[#c8d6e0] bg-[#fdfeff] px-3 py-2 text-base leading-6 text-[#0d2b46]`} placeholder="Write your own sentence…" />
+        <>
+          <label className="fg35-sr" htmlFor={`l35-q-${question.n}`}>إجابتك عن السؤال {question.n}</label>
+          <textarea
+            id={`l35-q-${question.n}`}
+            className="fg35-textarea"
+            dir="ltr"
+            rows={2}
+            disabled={submitted}
+            value={typeof value === "string" ? value : ""}
+            onChange={(event) => onChange(event.target.value)}
+            placeholder="Write your sentence in English…"
+          />
+        </>
       ) : (
-        <input aria-label={`السؤال ${question.n} — إجابتك`} dir="ltr" type="text" disabled={submitted} value={typeof value === "string" ? value : ""} onChange={(event) => onChange(event.target.value)} className={`${FOCUS_35} mt-3 w-full rounded-xl border border-[#c8d6e0] bg-[#fdfeff] px-3 py-2 text-base font-en text-[#0d2b46]`} placeholder={question.type === "repair" ? "Write the corrected sentence…" : "Type the missing form…"} />
+        <>
+          <label className="fg35-sr" htmlFor={`l35-q-${question.n}`}>إجابتك عن السؤال {question.n}</label>
+          <input
+            id={`l35-q-${question.n}`}
+            className="fg35-input"
+            type="text"
+            dir="ltr"
+            autoComplete="off"
+            disabled={submitted}
+            value={typeof value === "string" ? value : ""}
+            onChange={(event) => onChange(event.target.value)}
+            placeholder={question.type === "repair" ? "Write the corrected sentence…" : "Type the missing form…"}
+            style={{ width: "100%", marginTop: 7 }}
+          />
+        </>
       )}
 
-      {submitted && grade !== null ? (
-        <div data-test-feedback={question.n} className="mt-3 rounded-xl border border-[#d5e2db] bg-white p-3">
-          <div className="text-[10px] font-black uppercase tracking-[.12em] text-[#718080]">إجابة نموذجية · من إعداد المعلم</div>
-          <div dir="ltr" className="mt-1 font-en font-black text-[#0d2b46]">{model}</div>
-          <p className="mt-1 text-sm leading-6 text-[#4a6070]"><PlatformTag text="شرح تعليمي من إعداد المعلم" /> <Rich text={question.why} /></p>
+      {submitted ? (
+        <div className="fg35-feedback" data-test-feedback={question.n} data-ok={grade === "correct"}>
+          <div className="fg35-row" style={{ justifyContent: "space-between" }}>
+            <span className="fg35-tag fg35-tag--authored">حل من إعداد المنصة/المعلم</span>
+            <span className="fg35-muted">{question.concept}</span>
+          </div>
+          <div style={{ marginTop: 4 }}>
+            <b>الإجابة: </b>
+            {question.type === "write" ? (
+              <span className="fg35-en" dir="ltr">{question.modelAnswers.join(" / ")}</span>
+            ) : (
+              <span className="fg35-en" dir="ltr">{answerText35(question)}</span>
+            )}
+          </div>
+          {question.type === "write" && production === "review" ? (
+            <div style={{ marginTop: 4 }}>
+              <b>لم يتحقق الفحص البنيوي بالكامل.</b> راجع أن جملتك تحتوي الصيغة المطلوبة للموقف. النموذج أعلاه للمقارنة، ولا يعني أن إجابتك خاطئة لغويًا.
+            </div>
+          ) : null}
+          <div style={{ marginTop: 4 }}><Rich text={question.why} /></div>
+          {question.alternatives?.length ? (
+            <div className="fg35-muted" style={{ marginTop: 4 }}>
+              بدائل مقبولة: <span className="fg35-en" dir="ltr">{question.alternatives.join(" · ")}</span>
+            </div>
+          ) : null}
         </div>
       ) : null}
-      {submitted && question.type === "write" ? <p className="mt-2 rounded-xl bg-[#f5ecd9] p-2 text-xs font-bold leading-5 text-[#795c31]">اطّلع على إجابة نموذجية وبدائل مقبولة في منطقة الحلول/المعلم؛ لا توجد إجابة وحيدة لكل موقف كتابي.</p> : null}
-      <span className="sr-only" id={`${groupName}-status`}>{submitted ? "تم الإرسال" : "لم يرسل بعد"}</span>
     </article>
-  );
-}
-
-export function Solutions35({ unlocked, onGoTest, onGoTeacher }: { unlocked: boolean; onGoTest: () => void; onGoTeacher: () => void }) {
-  if (!unlocked) {
-    return (
-      <div data-area="lesson35-solutions" className="rounded-3xl border-2 border-[#d5c69e] bg-[#fbf5e8] p-6 text-center">
-        <div className="text-3xl">🔒</div>
-        <h2 className="mt-2 text-lg font-black text-[#594a31]">منطقة الحلول مقفلة</h2>
-        <p className="mt-1 text-sm leading-6 text-[#766548]">قدّم الاختبار أولًا، أو افتح منطقة المعلم للوصول إلى الإجابات والشروح.</p>
-        <div className="mt-3 flex flex-wrap justify-center gap-2">
-          <button type="button" onClick={onGoTest} className={`${FOCUS_35} rounded-xl bg-[#0d8f7f] px-4 py-2 text-sm font-black text-white`}>العودة إلى الاختبار</button>
-          <button type="button" onClick={onGoTeacher} className={`${FOCUS_35} rounded-xl border border-[#75639c] bg-white px-4 py-2 text-sm font-black text-[#5f4b82]`}>منطقة المعلم</button>
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div data-area="lesson35-solutions" className="space-y-4">
-      <Card35 eyebrow="Solutions Area · §35 source note" title="حلول Future Plans Master Test">
-        <p className="text-sm leading-7 text-[#465b60]">القسم 35 من المصدر يطلب فتح الحلول التفصيلية لكنه لا يورد مفتاح الأسئلة. الإجابات والشروح أدناه إعداد تعليمي من المعلم/المنصة، مبني على نصوص أسئلة القسم 34 وقواعد الدرس. أسئلة IQ200 الكتابية تقبل إجابات أخرى صحيحة.</p>
-        <div className="mt-2 text-xs font-black text-[#66777a]"><PlatformTag text="محتوى الحلول من إعداد المعلم؛ ليس نصًا أصليًا من المصدر" /></div>
-      </Card35>
-      {TEST_LEVELS_35.map((level) => (
-        <section key={level.id} className="space-y-2" aria-label={`حلول ${level.title}`}>
-          <h3 className="border-b border-[#d9e3ec] pb-2 font-black text-[#0d2b46]"><Rich text={level.title} /></h3>
-          {level.questions.map((question) => {
-            const solution = TEST_SOLUTIONS_35.find((item) => item.n === question.n)!;
-            return (
-              <article key={question.n} data-solution={question.n} className="rounded-2xl border border-[#d6e1ea] bg-white p-3">
-                <div className="text-sm font-bold leading-6 text-[#304750]"><span className="ml-2 font-black text-[#b57f22]">س{question.n}.</span>{question.promptLines.map((line, index) => <div key={index} dir="auto"><Rich text={line} /></div>)}</div>
-                <div className="mt-2 rounded-xl border border-[#c9d8d2] bg-[#eef4f0] p-3">
-                  <div className="text-[10px] font-black uppercase tracking-[.12em] text-[#60756f]">{question.type === "write" ? "إجابة/إجابات نموذجية من إعداد المعلم" : "الإجابة النموذجية من إعداد المعلم"}</div>
-                  <div dir="ltr" className="mt-1 font-en font-black leading-6 text-[#0d2b46]">{solution.answer}</div>
-                  {question.type === "write" ? <p className="mt-1 text-xs font-bold text-[#4a6070]">توجد صيغ أخرى صحيحة ما دامت تعبّر عن المعنى وتستخدم البناء المطلوب.</p> : null}
-                </div>
-                <p className="mt-2 text-sm leading-6 text-[#4a6070]"><PlatformTag text="تفسير من إعداد المعلم" /> <Rich text={solution.explanation} /></p>
-              </article>
-            );
-          })}
-        </section>
-      ))}
-      <div className="flex flex-wrap justify-center gap-2">
-        <button type="button" onClick={onGoTest} className={`${FOCUS_35} rounded-xl border border-[#0d8f7f] bg-white px-4 py-2 text-sm font-black text-[#0d8f7f]`}>إعادة الاختبار</button>
-        <button type="button" onClick={onGoTeacher} className={`${FOCUS_35} rounded-xl border border-[#75639c] bg-white px-4 py-2 text-sm font-black text-[#5f4b82]`}>منطقة المعلم</button>
-      </div>
-    </div>
   );
 }

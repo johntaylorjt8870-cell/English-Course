@@ -1,0 +1,164 @@
+{
+  "baseUrl": "http://127.0.0.1:4173/English-Course/#/lesson/35",
+  "viewports": [
+    {
+      "viewport": "1440x900",
+      "visibleLockCount": 1,
+      "totalLockCount": 1,
+      "horizontal": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440
+      },
+      "direction": "rtl",
+      "contrast": {
+        "samples": 28,
+        "below": 0,
+        "worst": {
+          "ratio": 4.84,
+          "text": "التنقل: استخدم «التالي/السابق» أو خريطة الخطوات. الاختبار في"
+        }
+      },
+      "overlaps": {
+        "lockNext": 0,
+        "lockPrev": 0,
+        "fabLock": 0,
+        "fabNext": 0
+      },
+      "fabVisible": false
+    },
+    {
+      "viewport": "1280x800",
+      "visibleLockCount": 1,
+      "totalLockCount": 1,
+      "horizontal": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280
+      },
+      "direction": "rtl",
+      "contrast": {
+        "samples": 28,
+        "below": 0,
+        "worst": {
+          "ratio": 4.84,
+          "text": "التنقل: استخدم «التالي/السابق» أو خريطة الخطوات. الاختبار في"
+        }
+      },
+      "overlaps": {
+        "lockNext": 0,
+        "lockPrev": 0,
+        "fabLock": 0,
+        "fabNext": 0
+      },
+      "fabVisible": false
+    },
+    {
+      "viewport": "768x900",
+      "visibleLockCount": 1,
+      "totalLockCount": 1,
+      "horizontal": {
+        "scrollWidth": 768,
+        "clientWidth": 768
+      },
+      "direction": "rtl",
+      "contrast": {
+        "samples": 28,
+        "below": 0,
+        "worst": {
+          "ratio": 4.84,
+          "text": "التنقل: استخدم «التالي/السابق» أو خريطة الخطوات. الاختبار في"
+        }
+      },
+      "overlaps": {
+        "lockNext": 0,
+        "lockPrev": 0,
+        "fabLock": 0,
+        "fabNext": 0
+      },
+      "fabVisible": true
+    },
+    {
+      "viewport": "375x812",
+      "visibleLockCount": 1,
+      "totalLockCount": 1,
+      "horizontal": {
+        "scrollWidth": 375,
+        "clientWidth": 375
+      },
+      "direction": "rtl",
+      "contrast": {
+        "samples": 28,
+        "below": 0,
+        "worst": {
+          "ratio": 4.84,
+          "text": "التنقل: استخدم «التالي/السابق» أو خريطة الخطوات. الاختبار في"
+        }
+      },
+      "overlaps": {
+        "lockNext": 0,
+        "lockPrev": 0,
+        "fabLock": 0,
+        "fabNext": 0
+      },
+      "fabVisible": true
+    }
+  ],
+  "consoleErrors": [],
+  "generatedAt": "2026-10-19T23:10:03.239Z",
+  "stepHeights": {
+    "tallest": [
+      {
+        "id": "boss-writing",
+        "height": 1236,
+        "words": 468
+      },
+      {
+        "id": "bakery",
+        "height": 1207,
+        "words": 416
+      },
+      {
+        "id": "comprehension-1",
+        "height": 1130,
+        "words": 401
+      },
+      {
+        "id": "both-forms",
+        "height": 1120,
+        "words": 479
+      },
+      {
+        "id": "affirmative-examples",
+        "height": 1034,
+        "words": 398
+      }
+    ],
+    "median": 869,
+    "count": 61
+  },
+  "lockPerArea": {
+    "lesson": 1,
+    "test": 1,
+    "solutions": 1,
+    "teacher": 1
+  },
+  "mobileAreas": {
+    "test": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "locks": 1
+    },
+    "solutions": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "locks": 1
+    },
+    "teacher": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "locks": 1
+    }
+  },
+  "checks": 136,
+  "passed": 136,
+  "failures": []
+}

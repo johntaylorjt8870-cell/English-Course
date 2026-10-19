@@ -1,150 +1,182 @@
-import type { ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { En, PlatformTag, Rich } from "../../shared/lessonKit";
-import { SOURCE_SECTIONS_35 } from "./ledger35";
 
-export const FOCUS_35 = "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#2fc4ae]/35";
+export const FOCUS_35 = "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#0f8f7d]/35";
 
-export function English35({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <En className={className}>{children}</En>;
+/** Normalise learner typing before comparing it with an accepted answer. */
+export function normalize35(value: string) {
+  return value
+    .replace(/[\u200e\u200f\u202a-\u202e]/g, "")
+    .replace(/[’‘`]/g, "'")
+    .replace(/[.,!?؟:;]+/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
 }
 
-export function PlatformNote35({ children }: { children: ReactNode }) {
-  return (
-    <aside className="rounded-2xl border border-[#c3dcd3] bg-[#edf6f1] p-3 text-sm leading-6 text-[#243f46]">
-      <div className="mb-1.5"><PlatformTag text="إضافة تعليمية من المنصة" /></div>
-      <div>{children}</div>
-    </aside>
-  );
-}
-
-export function SourceUnit35({ text, index }: { text: string; index: number }) {
-  const pureEnglish = /[A-Za-z]/.test(text) && !/[\u0600-\u06FF]/.test(text);
-  const emphasis = /^(الحلول|الحلول المفصلة|التحليل|التحليل النحوي|الترجمة|أمثلة:?|القاعدة:?|لماذا\؟|قارن:?|ملاحظة لغوية:|الموقف الأول:|الموقف الثاني:|أسئلة الفهم|نموذج إرشادي قصير|أهم استخدامين|المقارنة الذهبية|المحطة القادمة:)$/.test(text);
-  const correctExample = text.includes("✅");
-  const incorrectExample = text.includes("❌");
-  return (
-    <div
-      data-source-unit={index}
-      dir="auto"
-      className={`min-w-0 rounded-xl px-3 py-2 leading-7 ${
-        correctExample
-          ? "border border-[#b8d6c0] bg-[#edf5ee] font-bold text-[#315d4e]"
-          : incorrectExample
-            ? "border border-[#e6c3be] bg-[#fbefed] font-bold text-[#8d433b]"
-            : pureEnglish
-              ? "border border-[#d4e2e8] bg-white text-[#102b3d] shadow-[0_1px_3px_-2px_rgba(13,43,70,.35)]"
-              : emphasis
-                ? "mt-1 border-r-4 border-[#d08a24] bg-[#fbf7ee] font-black text-[#293d47]"
-                : "text-[#263a44]"
-      }`}
-    >
-      {pureEnglish ? <span dir="ltr" className="font-en block text-left">{text}</span> : <Rich text={text} />}
-    </div>
-  );
-}
-
-/** Verbatim source passage for a single section; answer keys are a separate gated block. */
-export function SourcePanel35({
-  id,
-  units,
-  revealUnits,
-  revealed = false,
-  sourceLabel = "نص الدرس المورّد",
-}: {
-  id: string;
-  units?: string[];
-  revealUnits?: string[];
-  revealed?: boolean;
-  sourceLabel?: string;
-}) {
-  const section = SOURCE_SECTIONS_35.find((candidate) => candidate.id === id);
-  if (!section) return null;
-  const shownUnits = units ?? section.units;
-  const gatedUnits = revealUnits ?? section.revealUnits;
-  return (
-    <section
-      data-source-section={id}
-      className="overflow-hidden rounded-3xl border border-[#d6e1ea] bg-[#fbfdff] shadow-[0_14px_34px_-30px_rgba(8,28,48,.6)]"
-    >
-      <header className="flex flex-wrap items-center justify-between gap-2 bg-[#0d2b46] px-4 py-2.5">
-        <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[.14em] text-[#f5b64a]">
-          <span aria-hidden="true" className="inline-block h-2 w-2 rounded-full bg-[#2fc4ae] shadow-[0_0_8px_rgba(47,196,174,.9)]" />
-          {sourceLabel}
-        </div>
-        <div className="rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-black text-[#9fd8cd]">{section.num ? `§${section.num}` : "FUTURE LAB"}</div>
-      </header>
-      <div className="space-y-1 p-3 sm:p-4">
-        {shownUnits.map((text, index) => <SourceUnit35 key={`${id}-${index}`} text={text} index={index} />)}
-      </div>
-      {gatedUnits?.length ? (
-        <div data-answer-feedback={id}>
-          {revealed ? (
-            <div className="border-t border-[#c9dfd2] bg-[#f1f7f1] p-3 sm:p-4">
-              <div className="mb-2 rounded-full bg-[#dcebe0] px-3 py-1 text-xs font-black text-[#315d4e]">مفتاح المصدر — ظهر بعد المحاولة</div>
-              <div className="space-y-1">
-                {gatedUnits.map((text, index) => <SourceUnit35 key={`${id}-reveal-${index}`} text={text} index={shownUnits.length + index} />)}
-              </div>
-            </div>
-          ) : (
-            <div className="border-t border-dashed border-[#d3e3da] px-4 py-3 text-sm font-bold text-[#4a6070]">
-              🔒 مفتاح المصدر محفوظ حتى تحاول ثم تطلب التحقق.
-            </div>
-          )}
-        </div>
-      ) : null}
-    </section>
-  );
+export function matches35(value: string, accepted: string[]) {
+  const normalized = normalize35(value);
+  if (!normalized) return false;
+  return accepted.some((candidate) => normalize35(candidate) === normalized);
 }
 
 export function Card35({
+  eyebrow,
+  title,
+  tone = "mint",
   children,
   className = "",
-  title,
-  eyebrow,
+  id,
 }: {
+  eyebrow?: ReactNode;
+  title?: ReactNode;
+  tone?: "mint" | "plan" | "predict" | "sun" | "sky" | "plain";
   children: ReactNode;
   className?: string;
-  title?: ReactNode;
-  eyebrow?: string;
+  id?: string;
 }) {
   return (
-    <section className={`rounded-3xl border border-[#d6e1ea] bg-[#fbfdff] p-4 shadow-[0_14px_34px_-30px_rgba(8,28,48,.6)] sm:p-5 ${className}`}>
-      {eyebrow ? <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[.15em] text-[#a06f1a]"><span aria-hidden="true" className="inline-block h-1.5 w-1.5 rounded-full bg-[#0d8f7f]" />{eyebrow}</div> : null}
-      {title ? <h3 className="mt-1 text-lg font-black leading-snug text-[#123049]">{title}</h3> : null}
+    <section id={id} className={`fg35-card ${className}`.trim()} data-tone={tone === "plain" ? undefined : tone}>
+      {eyebrow ? <div className="fg35-card__eyebrow">{eyebrow}</div> : null}
+      {title ? <h3>{title}</h3> : null}
       {children}
     </section>
   );
 }
 
-export function SourceTable35({
-  headers,
-  rows,
-  ariaLabel,
-  sourceUnitOffset,
+export function SourceLine35({
+  text,
+  emphasis = false,
+  ok,
+  bad,
+  label,
 }: {
-  headers: [string, string];
-  rows: [string, string][];
-  ariaLabel: string;
-  /** Linear source-ledger index of the first table header. */
-  sourceUnitOffset?: number;
+  text: string;
+  emphasis?: boolean;
+  ok?: boolean;
+  bad?: boolean;
+  label?: string;
 }) {
   return (
-    <div className="overflow-x-auto rounded-2xl border border-[#d6e1ea] bg-white shadow-[0_10px_26px_-24px_rgba(8,28,48,.55)]">
-      <table dir="rtl" aria-label={ariaLabel} className="w-full min-w-[290px] border-collapse text-sm">
+    <span className="fg35-source" data-emphasis={emphasis || undefined} data-ok={ok || undefined} data-bad={bad || undefined}>
+      {label ? <span className="fg35-source__label">{label}</span> : null}
+      <Rich text={text} />
+    </span>
+  );
+}
+
+export function SourceGroup35({
+  lines,
+  label,
+  offset,
+}: {
+  lines: string[];
+  label?: string;
+  offset?: number;
+}) {
+  return (
+    <div data-source-block data-source-offset={offset}>
+      {label ? <div className="fg35-source__label">{label}</div> : null}
+      <div className="fg35-sourcegroup">
+        {lines.map((line, index) => (
+          <SourceLine35 key={`${index}-${line}`} text={line} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Clearly-marked platform addition, never presented as textbook wording. */
+export function PlatformNote35({ children, title = "إضافة تعليمية من المنصة" }: { children: ReactNode; title?: string }) {
+  return (
+    <div className="fg35-platform">
+      <span className="fg35-platform__tag">🧩 {title}</span>
+      <div>{children}</div>
+    </div>
+  );
+}
+
+/** Bilingual example: English is LTR-isolated, Arabic stays in the RTL flow. */
+export function Example35({
+  en,
+  ar,
+  note,
+  tone,
+  status,
+}: {
+  en: string;
+  ar?: ReactNode;
+  note?: ReactNode;
+  tone?: "predict" | "sun" | "sky" | "mint";
+  status?: "ok" | "bad";
+}) {
+  return (
+    <div className={`fg35-ex${status === "ok" ? " fg35-ex--ok" : status === "bad" ? " fg35-ex--bad" : ""}`} data-tone={tone}>
+      <span className="fg35-en" dir="ltr">
+        {status === "ok" ? <span className="fg35-ex__mark" aria-hidden>✓ </span> : null}
+        {status === "bad" ? <span className="fg35-ex__mark" aria-hidden>✕ </span> : null}
+        {en}
+      </span>
+      {ar ? <span className="fg35-ar">{ar}</span> : null}
+      {note ? <span className="fg35-muted">{note}</span> : null}
+    </div>
+  );
+}
+
+export type FormulaPart35 = { text: string; role?: "subject" | "aux" | "going" | "verb" | "rest"; hint?: string };
+
+/** Colour-coded sentence frame: Subject + am/is/are + going to + V1 + Rest. */
+export function Formula35({ label, parts }: { label?: string; parts: FormulaPart35[] }) {
+  return (
+    <div className="fg35-formula" role="group" aria-label={label || parts.map((part) => part.text).join(" + ")} dir="ltr">
+      {parts.map((part, index) => (
+        <span key={`${part.text}-${index}`} style={{ display: "contents" }}>
+          {index > 0 ? <span className="fg35-formula__plus" aria-hidden>+</span> : null}
+          <span className="fg35-formula__part" data-role={part.role}>
+            {part.text}
+            {part.hint ? <small>{part.hint}</small> : null}
+          </span>
+        </span>
+      ))}
+    </div>
+  );
+}
+
+/** Two-speaker dialogue with Arabic glosses under each English turn. */
+export function Dialog35({ turns }: { turns: { who: string; en: ReactNode; ar?: ReactNode }[] }) {
+  return (
+    <div className="fg35-stack" style={{ marginTop: 6 }}>
+      {turns.map((turn, index) => {
+        const adam = /^adam/i.test(turn.who);
+        return (
+          <div className="fg35-turn" data-who={adam ? "adam" : "nora"} key={`${turn.who}-${index}`}>
+            <span className="fg35-turn__who">{turn.who}</span>
+            <div className="fg35-turn__body">
+              <span className="fg35-en" dir="ltr">{turn.en}</span>
+              {turn.ar ? <span className="fg35-ar">{turn.ar}</span> : null}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/** Compact two-column table for the lesson's comparison and auxiliary grids. */
+export function Table35({ ariaLabel, headers, rows }: { ariaLabel: string; headers: [string, string] | string[]; rows: { a: string; b: string }[] }) {
+  return (
+    <div className="fg35-tablewrap">
+      <table className="fg35-table" aria-label={ariaLabel}>
         <thead>
-          <tr className="bg-[#0d2b46] text-white">
-            {headers.map((header, index) => <th key={header} data-source-unit={sourceUnitOffset == null ? undefined : sourceUnitOffset + index} scope="col" className="px-3 py-2.5 text-right font-black first:rounded-tr-none"><span className="text-[#f5b64a] ml-1.5" aria-hidden="true">◆</span>{header}</th>)}
+          <tr>
+            {headers.map((header) => <th key={header} scope="col">{header}</th>)}
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, index) => (
-            <tr key={`${row[0]}-${row[1]}`} className={index % 2 ? "bg-[#edf3f9]" : "bg-white"}>
-              <th data-source-unit={sourceUnitOffset == null ? undefined : sourceUnitOffset + 2 + index * 2} scope="row" className="border-t border-[#e0e9f0] px-3 py-2 text-right font-bold text-[#314751]">
-                <Rich text={row[0]} />
-              </th>
-              <td data-source-unit={sourceUnitOffset == null ? undefined : sourceUnitOffset + 3 + index * 2} className="border-t border-[#e0e9f0] px-3 py-2 text-right font-bold text-[#0d2b46]">
-                <span dir="ltr" className="font-en inline-block">{row[1]}</span>
-              </td>
+          {rows.map((row) => (
+            <tr key={`${row.a}-${row.b}`}>
+              <th scope="row"><Rich text={row.a} /></th>
+              <td><Rich text={row.b} /></td>
             </tr>
           ))}
         </tbody>
@@ -153,38 +185,296 @@ export function SourceTable35({
   );
 }
 
-export function ChoiceButton35({
-  children,
-  selected = false,
-  onClick,
-  disabled = false,
-  className = "",
-  pressed,
+export type ChoiceOption35 = { text: ReactNode; ar?: ReactNode; correct?: boolean; note?: ReactNode };
+
+/** Immediate, explanatory single-choice check. Retrying is always allowed. */
+export function Choice35({
+  question,
+  options,
+  explanation,
+  columns = false,
+  correctText,
 }: {
-  children: ReactNode;
-  selected?: boolean;
-  onClick: () => void;
-  disabled?: boolean;
-  className?: string;
-  pressed?: boolean;
+  question: ReactNode;
+  options: ChoiceOption35[];
+  explanation: ReactNode;
+  columns?: boolean;
+  correctText?: string;
 }) {
+  const [picked, setPicked] = useState<number | null>(null);
+  const correctIndex = options.findIndex((option) => option.correct);
+  const isRight = picked !== null && picked === correctIndex;
   return (
-    <button
-      type="button"
-      aria-pressed={pressed ?? selected}
-      disabled={disabled}
-      onClick={onClick}
-      className={`${FOCUS_35} rounded-xl border px-3 py-2 text-sm font-black transition disabled:cursor-default ${
-        selected
-          ? "border-[#0d8f7f] bg-[#0d8f7f] text-white shadow-[0_6px_18px_-10px_rgba(13,143,127,.9)]"
-          : "border-[#cfdce5] bg-white text-[#304750] hover:border-[#3ea18e] hover:bg-[#eff6f2]"
-      } ${className}`}
-    >
-      {children}
-    </button>
+    <div data-choice-check>
+      <p className="fg35-prose" style={{ marginTop: 0, fontWeight: 800 }}>{question}</p>
+      <div className={`fg35-choices ${columns ? "fg35-choices--inline" : ""}`} role="group">
+        {options.map((option, index) => {
+          const state = picked === null ? undefined : index === correctIndex ? "correct" : picked === index ? "wrong" : "picked";
+          return (
+            <button
+              key={index}
+              type="button"
+              className={`fg35-choice ${FOCUS_35}`}
+              data-state={state}
+              aria-pressed={picked === index}
+              onClick={() => setPicked(index)}
+            >
+              <span style={{ display: "block" }}>{option.text}</span>
+              {option.ar ? <span className="fg35-ar">{option.ar}</span> : null}
+              {picked !== null && index === correctIndex && option.note ? (
+                <span className="fg35-muted" style={{ display: "block", marginTop: 3 }}>{option.note}</span>
+              ) : null}
+            </button>
+          );
+        })}
+      </div>
+      {picked !== null ? (
+        <div className="fg35-feedback" data-ok={isRight} role="status">
+          <b>{isRight ? "✓ إجابة صحيحة. " : "↺ ليست الاختيار الأنسب بعد. "}</b>
+          {isRight && correctText ? <span className="fg35-en" dir="ltr">{correctText} </span> : null}
+          <Rich text={typeof explanation === "string" ? explanation : ""} />
+          {typeof explanation !== "string" ? explanation : null}
+        </div>
+      ) : null}
+    </div>
   );
 }
 
-export function LtrSentence35({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div dir="ltr" className={`ltr-row rounded-2xl border border-[#d6e4e4] bg-white px-4 py-3 text-left text-lg font-black text-[#0d2b46] shadow-[0_2px_12px_-10px_rgba(13,43,70,.7)] ${className}`}>{children}</div>;
+/** Typed recall with a source-key reveal after the first attempt. */
+export function Input35({
+  question,
+  accept,
+  answer,
+  explanation,
+  placeholder = "اكتب الإجابة بالإنجليزية…",
+  multiline = false,
+  label,
+}: {
+  question?: ReactNode;
+  accept: string[];
+  answer: string;
+  explanation: ReactNode;
+  placeholder?: string;
+  multiline?: boolean;
+  label: string;
+}) {
+  const id = useId();
+  const [value, setValue] = useState("");
+  const [checked, setChecked] = useState(false);
+  const ok = matches35(value, accept);
+  return (
+    <div>
+      {question ? <div className="fg35-prose" style={{ marginTop: 0 }}>{question}</div> : null}
+      <label className="fg35-sr" htmlFor={id}>{label}</label>
+      {multiline ? (
+        <textarea
+          id={id}
+          className="fg35-textarea"
+          dir="ltr"
+          rows={2}
+          value={value}
+          placeholder={placeholder}
+          onChange={(event) => {
+            setValue(event.target.value);
+            if (checked) setChecked(false);
+          }}
+        />
+      ) : (
+        <div className="fg35-inputrow">
+          <input
+            id={id}
+            className="fg35-input"
+            type="text"
+            dir="ltr"
+            autoComplete="off"
+            value={value}
+            placeholder={placeholder}
+            onChange={(event) => {
+              setValue(event.target.value);
+              if (checked) setChecked(false);
+            }}
+          />
+        </div>
+      )}
+      <div className="fg35-inputrow">
+        <button type="button" className={`fg35-btn ${FOCUS_35}`} disabled={!value.trim()} onClick={() => setChecked(true)}>
+          تحقق
+        </button>
+        <button type="button" className={`fg35-btn fg35-btn--ghost ${FOCUS_35}`} onClick={() => setChecked(true)}>
+          أظهر مفتاح المصدر
+        </button>
+      </div>
+      {checked ? (
+        <div className="fg35-feedback" data-ok={ok} role="status">
+          <b>{ok ? "✓ مطابق. " : "✕ راجع الصياغة. "}</b>
+          <span className="fg35-en" dir="ltr">{answer}</span>
+          <div style={{ marginTop: 4 }}>{explanation}</div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/** One item of a supplied exercise: prompt + keyed answer + explanation. */
+export function PracticeItem35({
+  n,
+  prompt,
+  answer,
+  explanation,
+  mode = "repair",
+}: {
+  n: number;
+  prompt: string;
+  answer: string;
+  explanation: string;
+  mode?: "repair" | "text";
+}) {
+  return (
+    <div className="fg35-question" data-practice-item={n}>
+      <div className="fg35-q__prompt">
+        <span className="fg35-q__n">{n}</span>
+        <span className="fg35-wide"><Rich text={prompt} /></span>
+      </div>
+      <Input35
+        label={`إجابة البند ${n}`}
+        accept={[answer]}
+        answer={answer}
+        explanation={<Rich text={explanation} />}
+        placeholder={mode === "repair" ? "Write the corrected sentence…" : "Write the missing form…"}
+      />
+    </div>
+  );
+}
+
+/** Options drill (am / is / are) with an immediate authorial explanation. */
+export function OptionDrill35({
+  n,
+  prompt,
+  options,
+  answer,
+  explanation,
+}: {
+  n: number;
+  prompt: ReactNode;
+  options: string[];
+  answer: string;
+  explanation: string;
+}) {
+  const [picked, setPicked] = useState<string | null>(null);
+  const ok = picked === answer;
+  return (
+    <div className="fg35-question" data-option-drill={n}>
+      <div className="fg35-q__prompt">
+        <span className="fg35-q__n">{n}</span>
+        <span className="fg35-wide">{prompt}</span>
+      </div>
+      <div className="fg35-choices fg35-choices--inline" role="group" aria-label={`البند ${n}`}>
+        {options.map((option) => (
+          <button
+            key={option}
+            type="button"
+            className={`fg35-choice ${FOCUS_35}`}
+            data-state={picked === null ? undefined : option === answer ? "correct" : picked === option ? "wrong" : "picked"}
+            aria-pressed={picked === option}
+            onClick={() => setPicked(option)}
+          >
+            <span className="fg35-en" dir="ltr">{option}</span>
+          </button>
+        ))}
+      </div>
+      {picked !== null ? (
+        <div className="fg35-feedback" data-ok={ok} role="status">
+          <b>{ok ? "✓ صحيح. " : `✕ الصحيح: ${answer}. `}</b>
+          <Rich text={explanation} />
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/** Stage-A goal list; learners can mark what they can already do. */
+export function TapChecks35({ items }: { items: string[] }) {
+  const [on, setOn] = useState<Record<number, boolean>>({});
+  const done = Object.values(on).filter(Boolean).length;
+  return (
+    <div>
+      <div className="fg35-stack">
+        {items.map((item, index) => (
+          <button
+            key={item}
+            type="button"
+            className={`fg35-tapcheck ${FOCUS_35}`}
+            aria-pressed={!!on[index]}
+            onClick={() => setOn((current) => ({ ...current, [index]: !current[index] }))}
+          >
+            <span className="fg35-tapcheck__box" aria-hidden>✓</span>
+            <span>{item}</span>
+          </button>
+        ))}
+      </div>
+      <p className="fg35-muted" aria-live="polite" style={{ marginTop: 6 }}>
+        {done === 0 ? "علّم ما تشعر أنك تستطيع فعله الآن؛ سنعود إلى القائمة في نهاية الدرس." : `علّمت ${done} من ${items.length}. أعد تقييم نفسك بعد الاختبار.`}
+      </p>
+    </div>
+  );
+}
+
+export function Bullets35({ items }: { items: ReactNode[] }) {
+  return (
+    <ol className="fg35-numlist">
+      {items.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))}
+    </ol>
+  );
+}
+
+/** Two-column plan vs prediction framing. */
+export function PlanPredict35({
+  planTitle = "خطة / نية سابقة",
+  plan,
+  predictTitle = "توقع من دليل حاضر",
+  predict,
+}: {
+  planTitle?: string;
+  plan: ReactNode;
+  predictTitle?: string;
+  predict: ReactNode;
+}) {
+  return (
+    <div className="fg35-duo">
+      <div className="fg35-plan">
+        <div className="fg35-plan__title">🌱 {planTitle}</div>
+        {plan}
+      </div>
+      <div className="fg35-predict">
+        <div className="fg35-predict__title">☀️ {predictTitle}</div>
+        {predict}
+      </div>
+    </div>
+  );
+}
+
+export function EnglishLine35({ children }: { children: ReactNode }) {
+  return <span className="fg35-en" dir="ltr">{children}</span>;
+}
+
+export function Note35({ children }: { children: ReactNode }) {
+  return <div className="fg35-teacher-note">{children}</div>;
+}
+
+export function Tag35({ children, kind = "neutral" }: { children: ReactNode; kind?: "neutral" | "authored" | "source" }) {
+  return <span className={`fg35-tag ${kind === "authored" ? "fg35-tag--authored" : kind === "source" ? "fg35-tag--source" : ""}`}>{children}</span>;
+}
+
+export function PlatformInline35({ children }: { children: ReactNode }) {
+  return (
+    <p className="fg35-muted" style={{ marginTop: 6 }}>
+      <PlatformTag text="إضافة تعليمية من المنصة" /> {children}
+    </p>
+  );
+}
+
+export function EnLine({ children }: { children: ReactNode }) {
+  return <En className="fg35-strong">{children}</En>;
 }

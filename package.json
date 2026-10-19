@@ -16,6 +16,7 @@
     "audit:lesson34-browser": "node scripts/audit-lesson34-browser.mjs",
     "audit:lesson34": "node scripts/audit-lesson34.mjs",
     "audit:lesson35": "node scripts/audit-lesson35.mjs",
+    "audit:lesson35-browser": "node scripts/audit-lesson35-browser.mjs",
     "audit:lesson36": "node scripts/audit-lesson36.mjs",
     "audit:lesson37": "node scripts/audit-lesson37.mjs",
     "audit:lesson38": "node scripts/audit-lesson38.mjs",

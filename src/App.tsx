@@ -418,11 +418,11 @@ const CARDS: Card[] = [
   {
     n: 35,
     title: "الدرس 35: BE GOING TO — الخطط والنوايا والتوقعات المستقبلية",
-    en: "Future Plans, Intentions & Predictions · Future Lab",
-    emoji: "🧭",
-    stats: "39 خطوة · 13 مشهدًا تفاعليًا · اختبار 25 سؤالًا · Future Lab",
+    en: "Future Plans, Intentions & Predictions · Future Garden Studio",
+    emoji: "🌻",
+    stats: "38 قسمًا مرقّمًا · 61 خطوة قصيرة · 5 مراحل · اختبار 25 سؤالًا · IQ200",
     href: "#/lesson/35",
-    grad: "from-[#17354a] to-[#245f62]",
+    grad: "from-[#0f8f7d] to-[#2f7fe0]",
   },
   {
     n: 36,

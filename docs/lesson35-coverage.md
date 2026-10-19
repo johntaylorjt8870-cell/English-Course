@@ -1,103 +1,111 @@
-# Lesson 35 — Future Lab source-coverage ledger
+# Lesson 35 — Coverage Ledger · Future Garden Studio
 
-**Status:** implemented and verified. The complete source-order ledger preceded the lesson implementation; final coverage and interaction checks are recorded below.
+**الدرس 35: BE GOING TO — الخطط والنوايا والتوقعات المستقبلية**
+`Future Plans, Intentions & Predictions` · 38 قسمًا مرقّمًا + الغلاف = **39 مدخلًا مصدريًا** · **61 خطوة قصيرة** · **5 مراحل** · **اختبار 25 سؤالًا**.
 
-**Authoritative source:** the complete user-provided “Lesson 35: BE GOING TO — Future Plans, Intentions & Predictions” in the task conversation. Source order is retained: unnumbered cover/introduction, then numbered sections 1–38. Markdown divider bars are presentation separators only. Table-shaped material in sections 4 and 24 will be rendered as semantic tables.
+## كيف تُقرأ هذه الوثيقة
 
-**Implementation contract:** `src/lessons/lesson35/ledger35.ts` stores the verbatim source units; `src/lessons/lesson35/data.ts` maps each ledger id to exactly one native student step, in order; `Steps35.tsx` presents the step and its activity; exercises reveal their source answer keys only after learner action. Additions authored to explain source keys are labeled as platform/teacher explanations. Test answers are teacher-authored because the supplied section 35 contains a heading and “عرض الحلول التفصيلية” but no actual detailed answers.
+- كل وحدة نصية من المصدر محفوظة حرفيًا في `src/lessons/lesson35/ledger35.ts` (656 وحدة نصية).
+- الجدول أدناه يربط كل قسم مصدري بالخطوات التي تعرضه. الأقسام الطويلة قُسّمت على أكثر من خطوة بدل حشرها في صفحة واحدة.
+- المصدر §35 («مساحة المعلم — الحلول التفصيلية») لا يحتوي أي إجابات، فقط العنوان وسطرا التعليمات. لذلك:
+  - تظهر وحداته الثلاث في **منطقة المعلم** كما وردت؛
+  - حلول الاختبار الـ25 **مستنتجة من المنصة/المعلم** وموسومة `Platform-derived`، وليست نقلًا عن مفتاح رسمي.
+- اختبار §34: 25 سؤالًا في خمسة مستويات، بلا أي كشف قبل التسليم. التوزيع: 1–5 اختيار من متعدد، 6–10 إكمال، 11–15 اختيار WILL/GOING TO، 16–20 تصحيح، 21–25 إنتاج كتابي.
 
-| Source location | Ledger id | Planned exact implementation location | Coverage notes |
+## خريطة الأقسام المصدريّة
+
+| القسم | الرقم | العنوان كما ورد | الوحدات | مكان العرض (رقم الخطوة) |
+|---|---|---|---|---|
+| cover | — | الدرس 35: BE GOING TO — الخطط والنوايا والتوقعات المستقبلية | 13 | `cover` (1) · `bridge` (2) |
+| s1 | 1 | 🎯 1. أهداف الدرس | 11 | `objectives-a` (3) · `objectives-b` (4) |
+| s2 | 2 | 🧠 2. ما معنى BE GOING TO؟ | 14 | `meaning` (5) · `intention` (6) |
+| s3 | 3 | ⭐ 3. الصيغة الأساسية | 17 | `structure` (7) |
+| s4 | 4 | 🔬 4. اختيار AM / IS / ARE | 28 | `auxiliary` (8) · `auxiliary-examples` (9) |
+| s5 | 5 | 🚨 5. القاعدة الذهبية الأولى | 19 | `v1` (10) |
+| s6 | 6 | 🏗️ 6. الجملة المثبتة — Affirmative | 13 | `affirmative` (11) · `affirmative-examples` (12) |
+| s7 | 7 | 🗣️ 7. الاختصارات في المحادثة | 18 | `contractions` (13) · `gonna` (14) |
+| s8 | 8 | 🎯 8. الاستخدام الأول: الخطط المستقبلية — Future Plans | 18 | `plans` (15) · `plans-more` (16) |
+| s9 | 9 | 🧠 9. هل يجب أن تكون الخطة مؤكدة 100%؟ | 11 | `guarantee` (17) |
+| s10 | 10 | 🎭 10. حوار تطبيقي: Weekend Plans | 23 | `dialogue-1` (18) · `dialogue-2` (19) · `dialogue-analysis` (20) |
+| s11 | 11 | ⚡ 11. الاستخدام الثاني: التوقع المبني على دليل حاضر | 15 | `evidence-intro` (21) |
+| s12 | 12 | 🔍 12. أمثلة على التوقع المبني على دليل | 18 | `evidence-cards` (22) · `evidence-practice` (23) |
+| s13 | 13 | 🧠 13. هل التوقع باستخدام WILL خطأ؟ | 12 | `will-not-wrong` (24) |
+| s14 | 14 | 🚫 14. النفي — Negative Form | 19 | `negative` (25) · `negative-short` (26) |
+| s15 | 15 | 🚨 15. أخطاء النفي الشائعة | 9 | `negative-errors` (27) |
+| s16 | 16 | ❓ 16. تكوين السؤال — Yes/No Questions | 16 | `yesno` (28) |
+| s17 | 17 | 💬 17. الإجابات القصيرة | 15 | `short-answers` (29) |
+| s18 | 18 | 🧩 18. الفرق بين السؤال باستخدام WILL والسؤال باستخدام GOING TO | 14 | `question-intent` (30) |
+| s19 | 19 | 🔎 19. أسئلة Wh مع BE GOING TO | 15 | `wh` (31) |
+| s20 | 20 | 🧠 20. WHO عندما تكون هي الفاعل | 9 | `who` (32) |
+| s21 | 21 | ⏰ 21. الكلمات الزمنية الشائعة | 20 | `time` (33) |
+| s22 | 22 | 🧠 22. GOING TO + BE | 16 | `going-to-be` (34) |
+| s23 | 23 | 🔬 23. GOING TO مع THERE IS / THERE ARE | 18 | `there` (35) |
+| s24 | 24 | ⚔️ 24. WILL vs BE GOING TO — المقارنة الأساسية | 16 | `compare-table` (36) |
+| s25 | 25 | 🎭 25. مختبر المواقف: القرار اللحظي أم الخطة المسبقة؟ | 19 | `bakery` (37) |
+| s26 | 26 | 🔮 26. مختبر التوقعات: رأي أم دليل؟ | 13 | `opinion-evidence` (38) |
+| s27 | 27 | 🚨 27. انتبه! ليست كل جملة فيها GOING TO مستقبلًا | 17 | `movement` (39) · `movement-practice` (40) |
+| s28 | 28 | 🕵️ 28. Grammar Detective — المستوى الأول | 9 + 9 كشف | `detective-1` (41) · `detective-2` (42) |
+| s29 | 29 | ✍️ 29. التدريب الأول: اختر AM / IS / ARE | 9 + 9 كشف | `aux-1` (43) · `aux-2` (44) |
+| s30 | 30 | 🧩 30. التدريب الثاني: أكمل باستخدام GOING TO | 7 + 7 كشف | `transform-1` (45) · `transform-2` (46) |
+| s31 | 31 | 🔥 31. التدريب الثالث: WILL أم GOING TO؟ | 11 + 17 كشف | `scenarios-1` (47) · `scenarios-2` (48) |
+| s32 | 32 | 🧠 32. IQ200 — عندما تصلح الصيغتان | 17 | `both-forms` (49) |
+| s33 | 33 | 📖 33. Reading Challenge — The Science Festival | 26 + 14 كشف | `reading-1` (50) · `reading-2` (51) · `comprehension-1` (52) · `comprehension-2` (53) · `reading-analysis` (54) |
+| s34 | 34 | 🏆 34. الاختبار النهائي — Future Plans Master Test | 50 | `test-bridge` (55) |
+| s35 | 35 | 🔐 35. مساحة المعلم — الحلول التفصيلية | 3 | منطقة المعلم |
+| s36 | 36 | 🚀 36. Final Boss — مهمة الإنتاج اللغوي | 18 | `boss-brief` (56) · `boss-writing` (57) |
+| s37 | 37 | 🧠 37. الملخص الذهبي للدرس 35 | 39 | `summary-forms` (58) · `summary-uses` (59) |
+| s38 | 38 | 🗺️ 38. خريطة تقدم المنهج | 21 | `curriculum` (60) · `closing` (61) |
+
+## عدّاد المصدر
+
+| المؤشر | العدد |
+|---|---|
+| المداخل المصدرية | 39 (الغلاف + §1–§38) |
+| الوحدات النصية المحفوظة حرفيًا | 656 |
+| الأقسام التي تحتوي مفاتيح مصدرية (`revealUnits`) | §28 (9) · §29 (9) · §30 (7) · §31 (17) · §33 (14) |
+| أسئلة اختبار §34 | 25 في 5 مستويات |
+| حلول §34 | 25 حلًا مستنتجًا (`platform-derived`) |
+
+## توزيع المراحل والخطوات
+
+| المرحلة | الخطوات | العدد |
+|---|---|---|
+| A · اكتشف المعنى | cover → v1 | 10 |
+| B · ابنِ الجملة | affirmative → will-not-wrong | 14 |
+| C · حوّل واسأل | negative → movement-practice | 16 |
+| D · تدرّب وحلّل | compare-table → reading-analysis | 14 |
+| E · أثبت الإتقان | test-bridge → closing | 7 |
+| **المجموع** | | **61** |
+
+## مفاتيح التمارين المصدرية
+
+| التمرين | العدد | المصدر | مكان العرض |
 |---|---|---|---|
-| Title, subtitle, level, Lesson 34 bridge, five WILL uses, reason for adding BE GOING TO | `cover` | `ledger35.ts` → `cover`; `data.ts` → `cover`; `Steps35.tsx` → Future Lab opening | Keep complete introduction and the five prior-lesson uses. |
-| §1 Learning objectives | `s1` | `ledger35.ts` → `s1`; `Steps35.tsx` → objective map | All ten objectives. |
-| §2 Meaning / programming intention / question and answer | `s2` | `Steps35.tsx` → meaning discovery | Exact sentence, translation, explanation, and initial-intention insight. |
-| §3 Core construction and grammatical-role analysis | `s3` | `Steps35.tsx` → progressive formula + inspectable role annotations | Keep all four role definitions and both additional examples. |
-| §4 am / is / are table and all seven subject examples; unchanged V1 | `s4` | `Steps35.tsx` → auxiliary selector + semantic table | All seven rows and all seven source examples. |
-| §5 V1 golden rule, six correct forms, four errors, dictionary sentence, V2/V3 explanation | `s5` | `Steps35.tsx` → V1 contrast panel | Full correct/incorrect list and explanation. |
-| §6 Affirmative formula and five examples with Arabic translations | `s6` | `Steps35.tsx` → sentence builder + source example bank | Builder is a real keyboard-operable form; all five supplied examples remain visible. |
-| §7 Six contractions, four examples, informal *gonna* note and formal-writing/test warning | `s7` | `Steps35.tsx` → contraction studio | Standard spelling warning remains explicit. |
-| §8 Prior plans, Layla scenario and four translated examples | `s8` | `Steps35.tsx` → intention timeline | The earlier decision/history is shown before the speaking moment. |
-| §9 No 100% guarantee; example; intention ≠ guarantee; no minute-by-minute detail required | `s9` | `Steps35.tsx` → plan-certainty checkpoint | Preserve both qualifications. |
-| §10 Complete Weekend Plans dialogue, Arabic translation and four grammar-analysis points | `s10` | `Steps35.tsx` → conversation studio | Full dialogue retained; reveal control may progressively reveal lines without deleting access to the complete transcript. |
-| §11 Evidence-based prediction explanation, dark clouds and running child examples | `s11` | `Steps35.tsx` → evidence lab | Show “present evidence → reasonable future prediction”; do not claim exclusivity. |
-| §12 Four evidence examples and shared inference | `s12` | `Steps35.tsx` → visual evidence cards | Glass, storm, team, door: every English sentence and Arabic translation. |
-| §13 WILL prediction vs evidence emphasis and overlap caveat | `s13` | `Steps35.tsx` → side-by-side nuance panel | Preserve the explicit warning that evidence does not prohibit WILL and forms can overlap. |
-| §14 Negative formula, four examples/translations, contractions, I-form, final example | `s14` | `Steps35.tsx` → control room / negative transformation | All examples and translations. |
-| §15 Three common negative errors/corrections and rule | `s15` | `Steps35.tsx` → error contrast | Keep DO/DOES warning and the supplied basic negation caveat. |
-| §16 Yes/No question formula and four examples/translations | `s16` | `Steps35.tsx` → question inversion interaction | Preserve formula and every example. |
-| §17 Three answer pairs, agreement note, WILL short-answer warning | `s17` | `Steps35.tsx` → short-answer matcher | Pair each prompt and answer; keep the warning. |
-| §18 WILL vs GOING TO questions, both examples and context note | `s18` | `Steps35.tsx` → question-intent comparison | Neither grammatical question is labeled universally wrong. |
-| §19 WH formula and six questions/translations | `s19` | `Steps35.tsx` → WH question builder/reference | All six forms retained. |
-| §20 WHO as subject vs object; both questions and explanations | `s20` | `Steps35.tsx` → revealable WHO comparison | Make subject/object roles explicit. |
-| §21 Nine time expressions with Arabic meanings, three example translations, non-compulsion warning | `s21` | `Steps35.tsx` → time-expression table | Keep tomorrow/tonight/next week/next month/next summer/this weekend/in two days/soon/in the future. |
-| §22 GOING TO + BE, four examples/translations and V1 correction | `s22` | `Steps35.tsx` → be-inspection panel | Preserve all four forms and the incorrect/correct pair. |
-| §23 There is/There are future forms, four examples/translations, curriculum-link note | `s23` | `Steps35.tsx` → existence comparison | Preserve singular/plural positive, negative and question forms. |
-| §24 WILL vs BE GOING TO comparison table, six typical meanings and non-absolute rule | `s24` | `Steps35.tsx` → semantic comparison table | Every row preserved; typical uses, not mutually exclusive boundaries. |
-| §25 Two complete bakery scenarios and decision-timing explanation | `s25` | `Steps35.tsx` → decision-history simulator | Both original contexts and translations are shown. |
-| §26 Cars opinion and tilted-cup evidence scenarios | `s26` | `Steps35.tsx` → prediction simulator | Both English examples, translations and reasons. |
-| §27 Motion “going to the library” vs future “going to read”; park examples and context qualification | `s27` | `Steps35.tsx` → construction-or-motion sort | All four English/Arabic examples and final caveat retained. |
-| §28 Eight Grammar Detective errors and eight supplied corrections | `s28` | `Steps35.tsx` → itemized correction lab; `TeacherArea35.tsx` → worked answers | Learner submits each correction before source correction appears. Teacher reasoning is labeled authored. |
-| §29 Eight AM / IS / ARE blanks and complete supplied key | `s29` | `Steps35.tsx` → auxiliary drill; `TeacherArea35.tsx` → key | All eight items; answers gated until check. |
-| §30 Six GOING TO transformations and complete supplied key | `s30` | `Steps35.tsx` → transformation lab; `TeacherArea35.tsx` → key | Preserve exact supplied target strings; answers gated until check. |
-| §31 Eight WILL / GOING TO situations, all eight keys and the supplied detailed explanations | `s31` | `Steps35.tsx` → decision simulator / practice; `TeacherArea35.tsx` → keyed explanations | Preserve each scenario, answer, and original reason. Allow nuance only where the source says forms overlap. |
-| §32 School festival: all three WILL/BE GOING TO examples, acceptability and five reasoning questions | `s32` | `Steps35.tsx` → both-forms decision panel | Preserve examples and questions; explicitly distinguish prediction, plan, and announcement context. |
-| §33 “A Big Plan for the School”: every paragraph, all dialogue, seven comprehension Q&As and five grammar-analysis points | `s33` | `Steps35.tsx` → reading studio; `TeacherArea35.tsx` → reading key | Full passage is visible in original paragraph order; comprehension keys reveal after attempt; all analysis points kept. |
-| §34 Future Plans Master Test — five levels and questions 1–25 | `s34` | `testData.ts` → 25 questions/five levels; `TestArea35.tsx` → submitted test | Exact source wording and intended meaning; submit-all behavior, no per-question correctness before submit. |
-| §35 Detailed solutions heading + “عرض الحلول التفصيلية” only | `s35` | `ledger35.ts` → source units; `Solutions35`/`TeacherArea35.tsx` → clearly labeled teacher-authored solutions | Source does not contain the promised answer content. Do not represent authored solutions as verbatim source. |
-| §36 Final Boss writing task, all eight enumerated requirements, 12–15 target and complete model paragraph/caution | `s36` | `Steps35.tsx` → writing workspace/checklist | Student composes their own paragraph; model remains a model, not auto-filled work. |
-| §37 Complete Golden Summary: formulas, all examples/translations, two uses, four WILL/GOING TO comparison examples and nuance | `s37` | `Steps35.tsx` → golden reference | Every supplied summary line and example is present. |
-| §38 Complete curriculum map, Lesson 36 connection, later Future tenses, and final key insight | `s38` | `Steps35.tsx` → curriculum map/closing | Preserve all present/past/future list items and Lesson 36 description; end on meaning/context insight. |
+| Grammar Detective | 8 | §28 | `detective-1` · `detective-2` |
+| اختيار am / is / are | 8 | §29 | `aux-1` · `aux-2` |
+| تحويل إلى GOING TO | 6 | §30 | `transform-1` · `transform-2` |
+| WILL أم GOING TO (8 مواقف + تعليل) | 8 | §31 | `scenarios-1` · `scenarios-2` |
+| أسئلة القراءة + التحليل النحوي | 7 + 7 + 5 | §33 | `comprehension-1` · `comprehension-2` · `reading-analysis` |
+| Final Boss (8 متطلبات + نموذج) | 8 + 4 | §36 | `boss-brief` · `boss-writing` |
 
-## Final source audit record
+## ملاحظات الدقة
 
-- Source sections expected: **39** (cover + numbered sections 1–38).
-- Native steps expected: **39**, one-to-one and source ordered.
-- Complete supplied exercises: Grammar Detective 8; AM/IS/ARE 8; transformations 6; WILL vs BE GOING TO 8.
-- Test expected: **25 questions across exactly five levels**.
-- Test solution source status: the supplied §35 contains no answer list or explanations. The final answer key and explanations are teacher-authored from §34 questions and the supplied grammar rules, and must be labeled accordingly.
-- Unresolved source ambiguity expected: none beyond the §35 missing answer text, which is an explicit omission rather than a reason to infer source wording.
+- **التداخل مشروع:** WILL وBE GOING TO تتشابهان في سياقات كثيرة؛ الدرس يقدّم الاستخدامات النموذجية كـ«ميل تداولي» لا كقواعد مطلقة، ويعيد ذلك صراحة في §37.
+- **النية السابقة مقابل القرار اللحظي:** المعيار هو توقيت القرار، لا وجود كلمة زمنية في الجملة.
+- **الدليل مقابل الرأي:** التوقع بـ`going to` يُبرَّر بدليل حاضر (غيوم، نتيجة، مشهد)، والتوقع بـ`will` يُبرَّر باعتقاد أو رأي.
+- **لا بطاقة معرفة:** لا يوجد في الدرس أي مكوّن باسم «بطاقة المعرفة» أو أي بديل مُعاد تسميته، ولم يُنسخ من الدرس 34.
 
-| Verification | Result |
+## مراجعة الكثافة (قياس متصفح حقيقي 1440×900)
+
+قِيست كل خطوة من الخطوات الـ61 في Chromium: لا خطوة تتجاوز شاشتين، والوسيط أقل من شاشة ونصف.
+
+| القياس | القيمة |
 |---|---|
-| Ledger sections mapped exactly once | Pass — 39 source entries map to 39 native lesson steps in order |
-| All source units render to student/teacher/test surfaces | Pass — all source units checked across step panels, the 25-question test, solution notes and teacher source ledger |
-| Exercise prompts/keys preserved and feedback gated | Pass — learner feedback is action-gated; teacher source keys stay behind the teacher gate |
-| Test has 25 questions and five levels | Pass — five levels, 25 items; written responses remain for human review |
-| RTL/LTR and route/interactions | Pass — native navigation, keyboard-operable controls, hash route, isolated LTR English, and shared FinalTest verified |
-| `npm run audit:lesson35` | Pass — 229 assertions |
-| Requested repository checks | Pass — production build, English-direction check, Lesson 35 navigation audit, full English-direction audit, and `git diff --check` |
+| عدد الخطوات المقيسة | 61 |
+| الوسيط | 869px |
+| أطول خطوة | `boss-writing` — 1236px (مساحة كتابة + قائمة تحقق + نموذج) |
+| ثم | `bakery` 1207px · `comprehension-1` 1130px · `both-forms` 1120px · `affirmative-examples` 1034px |
 
-## Redesign record — Future Lab "Mission Control" visual system (follow-up to merged PR #46)
+للمقارنة قبل المراجعة: كانت `movement` 1696px و`both-forms` 1453px و`bakery` 1418px. قُسّمت `movement` إلى «الفرق في سطرين» + «صنّف بنفسك»، و`comprehension-2` إلى «أسئلة 5–7» + «التحليل النحوي»، وضُمّت أسطر المصدر المتجاورة في كتلة واحدة بدل فقاعة لكل سطر.
 
-**Status:** implemented and verified on top of `main` commit `84dd052` (PR #46 merge). Scope is limited to Lesson 35 surfaces (`src/lessons/lesson35/`) and this document. No source content was added, removed, reordered, or relabeled; every ledger unit, exercise key, test question, solution, and teacher note is preserved exactly as recorded above.
-
-### Visual redesign
-
-- **Shell:** the cream paper theme is replaced by a Mission Control identity scoped to `[data-lesson="35"]`: deep-space gradient backdrop with a CSS-only twinkling starfield and aurora accents, all decorative layers `aria-hidden` and `pointer-events-none`.
-- **Mission Deck sidebar:** dark navigation deck with scene icons, letter badges, per-scene completion counters (`n/m`, ✓ when complete), visited-step dots, and glowing active states. Desktop rail and mobile sheet share the same nav node.
-- **Mission HUD header:** per-area header with scene icon/name, step counter, gradient progress bar, visited-step mission-log line, and an SVG progress ring (teal→amber gradient) for step X/39.
-- **Step headers:** navy→teal gradient banner per step with orbit-ring decorations, scene code eyebrow, and traceability chips: step position (الخطوة n من 39), source section reference (المصدر §n), and scene code.
-- **Kit primitives (`kit35.tsx`):** source panels now carry a navy header strip with an amber "نص الدرس المورّد" label and § badge; cards/tables/buttons/sentence rows moved to a cool lab palette (teal `#0d8f7f`, navy `#0d2b46`, amber `#f5b64a`) with soft blue-grey borders. Semantic correct/incorrect tints are unchanged.
-- **Step transitions:** each step enters with a short rise/fade animation; all new motion (starfield twinkle, orbit spin, entry rise) is disabled under `prefers-reduced-motion: reduce`.
-- **Readability contract:** the existing mobile readability override (`READABILITY_CSS_35`) and LTR isolation are kept verbatim; content surfaces remain light for Arabic-first reading.
-
-### Educational innovations (additive, around the supplied content)
-
-1. **Mission log:** visited steps persist in `localStorage` (`l35-future-lab-mission-log-v1`, guarded with try/catch). The sidebar shows visited dots, per-scene completion counts, and the HUD shows total visited steps — supporting multi-session study without altering any exercise gating.
-2. **Keyboard navigation:** RTL-aware arrow-key navigation in the lesson area (ArrowLeft = next, ArrowRight = previous, Home/End jump). Ignored while typing in inputs/textareas/selects and while modifier keys are held; no effect on the test/solutions/teacher areas.
-3. **Progress ring + dual progress display:** the SVG ring complements the linear bar, reinforcing position within the 39 source-ordered steps.
-4. **Source traceability chips:** every step visibly cites its source section (§n) and scene code, strengthening the ledger-to-step lineage documented above.
-5. **Scene identity system:** the thirteen scenes gained icons and consistent mission codes (`SCENE_META_35` in `data.ts`), decoration only — scene membership and order are unchanged.
-
-### Verification (post-redesign)
-
-| Check | Result |
-|---|---|
-| `npm run audit:lesson35` | Pass — 229 assertions unchanged |
-| `npm run build` (production) | Pass |
-| `npm run check:english-direction` | Pass — 59/59 BIDI assertions |
-| `npm run audit:lesson-navigation` | Pass — 99 checks |
-| `npm run audit:english-direction` (full suite incl. final-test, source-reveal, BIDI) | Pass |
-| Dev-server inspection of `#/lesson/35` (Vite transform + mounted-shell checks) | Pass — HUD ring, starfield, keyboard nav (←/→/Home/End), mission-log persistence |
-
-Unchanged by design: `App.tsx`, shared components, all other lessons, both existing branches, and merged PR #46.
+التفاصيل الكاملة والقياسات محفوظة في `docs/lesson35-visual/verification.json`.

@@ -1,6 +1,6 @@
 // ============================================================
 // الدرس 34 — Future Simple · المستقبل البسيط باستخدام WILL
-// 🚀 THE FUTURE ENGINE — محرك المستقبل
+// 🚀 THE FUTURE LAUNCHPAD — منصّة الإطلاق
 //
 // - سجل المصدر في ledger34.ts (40 قسمًا: غلاف + أهداف + 39 قسمًا مرقّمًا).
 //   هذا الملف يحوي:
@@ -13,8 +13,21 @@
 
 export const LESSON_TITLE_34 = "الدرس 34: Future Simple";
 export const LESSON_SUBTITLE_34 = "🚀 المستقبل البسيط باستخدام WILL — The Future Starts Here!";
-export const LAB_NAME_34 = "THE FUTURE ENGINE";
+export const LAB_NAME_34 = "FUTURE LAUNCHPAD";
+export const LAB_AR_34 = "منصّة المستقبل";
 export const LAB_MOTTO_34 = "Subject + will + V1 · won't = will not · Will + Subject + V1?";
+export const LAB_PROMISE_34 = "قرار · وعد · توقع · عرض مساعدة — كلّها تنطلق من will + V1";
+
+export const PHASE_META_34: { id: string; n: string; en: string; blurb: string }[] = [
+  { id: "INTRO", n: "الإطلاق", en: "IGNITION", blurb: "الخريطة والأهداف." },
+  { id: "CORE", n: "الشيفرة", en: "CORE CODE", blurb: "المعنى، البناء، والضمائر." },
+  { id: "USES", n: "المهمات", en: "MISSIONS", blurb: "ست وظائف لـ will في سياق حقيقي." },
+  { id: "FORMS", n: "التحكم", en: "CONTROL DECK", blurb: "النفي، السؤال، الاختصارات، والزمن." },
+  { id: "DRILL", n: "التدريب", en: "FLIGHT TRAINING", blurb: "تحويلات، محقق، ومواقف IQ200." },
+  { id: "READ", n: "القراءة", en: "READING ORBIT", blurb: "قصة Daniel ومقارنة الأزمنة." },
+  { id: "MASTER", n: "الاختبار", en: "MASTER TEST", blurb: "25 سؤالًا في خمسة مستويات." },
+  { id: "END", n: "الخاتمة", en: "TOUCHDOWN", blurb: "المشروع، الملخص، وخريطة الطريق." },
+];
 
 export const LESSON_META_34 = { number: 34 };
 
@@ -22,11 +35,11 @@ export const LESSON_META_34 = { number: 34 };
 // أقسام الشريط الجانبي
 // ============================================================
 export const SECTIONS_34: { id: string; label: string }[] = [
-  { id: "INTRO", label: "🚀 البداية" },
-  { id: "CORE", label: "⭐ القاعدة" },
-  { id: "USES", label: "🎭 الاستخدامات" },
-  { id: "FORMS", label: "🧰 الصيغ" },
-  { id: "DRILL", label: "✍️ التدريب" },
+  { id: "INTRO", label: "🚀 الإطلاق" },
+  { id: "CORE", label: "🧬 الشيفرة" },
+  { id: "USES", label: "🎭 المهمات" },
+  { id: "FORMS", label: "🎛️ لوحة التحكم" },
+  { id: "DRILL", label: "🧑‍🚀 التدريب" },
   { id: "READ", label: "📖 القراءة" },
   { id: "MASTER", label: "🏆 الاختبار" },
   { id: "END", label: "🌟 الخاتمة" },
@@ -44,8 +57,8 @@ export type Slide34Data = {
 };
 
 export const SLIDES: Slide34Data[] = [
-  { id: "cover", section: "INTRO", mascot: "🚀", title: "محرك المستقبل — Future Simple", step: "الغلاف",
-    lead: "منظومتا الحاضر والماضي اكتملتا — اليوم نفتح باب المستقبل باستخدام will.",
+  { id: "cover", section: "INTRO", mascot: "🚀", title: "منصّة الإطلاق — Future Simple", step: "الغلاف",
+    lead: "منظومتا الحاضر والماضي اكتملتا — اليوم نفتح باب المستقبل باستخدام will من منصّة إطلاق واحدة.",
     tip: "ثلاث لحظات على الخط الزمني — المس كل رقاقة لتكشف جملتها.", source: ["cover"] },
   { id: "objectives", section: "INTRO", mascot: "🎯", title: "أهداف الدرس", step: "الأهداف",
     lead: "تسعة أهداف — علّم كل هدف بعد أن تتقنه.",

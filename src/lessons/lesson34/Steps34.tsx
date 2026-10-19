@@ -89,6 +89,7 @@ import {
   FunctionChips34,
   ObjectivesChecklist34,
   FormulaBoard34,
+  SentenceBuilder34,
   SentenceList34,
   DialogueReader34,
   MatchRows34,
@@ -137,20 +138,27 @@ function cutAt(id: SourceOrder34, marker: string) {
 }
 
 function BoardTitle34({ children }: { children: ReactNode }) {
-  return <div className="mb-2 text-[12px] font-black text-stone-500">{typeof children === "string" ? <Rich text={children} /> : children}</div>;
+  return (
+    <div className="l34-board-title">
+      {typeof children === "string" ? <Rich text={children} /> : children}
+    </div>
+  );
 }
 
 function GateFlag34({ done, sid }: { done: boolean; sid: string }) {
-  return done ? (
-    <div
-      className="mt-3 rounded-2xl border border-emerald-300 bg-emerald-50 px-3 py-2 text-center text-[12px] font-black text-emerald-800"
-      data-gate-done={sid}
-    >
-      <Rich text="✓ أتممت هذا التفاعل — تقدّم إلى الخطوة التالية" />
-    </div>
-  ) : (
-    <div className="mt-3 rounded-2xl border border-stone-200 bg-stone-50 px-3 py-2 text-center text-[12px] font-bold text-stone-500">
-      <Rich text="أكمل التفاعل أعلاه لفتح الخطوة التالية…" />
+  return (
+    <div className="l34-gate" data-done={done ? "true" : "false"} data-gate-done={done ? sid : undefined}>
+      {done ? (
+        <>
+          <span aria-hidden>🎉</span>
+          <Rich text="✓ أتممت هذا التفاعل — تقدّم إلى الخطوة التالية" />
+        </>
+      ) : (
+        <>
+          <span aria-hidden>🛰️</span>
+          <Rich text="أكمل التفاعل أعلاه لفتح الخطوة التالية…" />
+        </>
+      )}
     </div>
   );
 }
@@ -162,33 +170,50 @@ function StepCover34() {
   const done = drvTime.complete >= drvTime.total && drvFn.complete >= drvFn.total;
   return (
     <Lab34 source="cover">
-      <div data-lesson-step="cover" data-source-section="cover">
-        <div className="mb-3 text-center">
-          <div aria-hidden className="text-4xl">
-            🚀
+      <div data-lesson-step="cover" data-source-section="cover" className="l34-step">
+        <div className="l34-cover">
+          <div className="l34-cover__intro">
+            <span className="l34-cover__kicker">
+              <span aria-hidden>🚀</span>
+              <Rich text="محطة الإطلاق · الدرس 34" />
+            </span>
+            <h2 dir="ltr">
+              <En>Future Simple</En>
+            </h2>
+            <div className="l34-cover__sub">
+              المستقبل البسيط باستخدام <En className="font-bold">WILL</En> ·{" "}
+              <En className="font-bold">The Future Starts Here!</En> · 🔥{" "}
+              <En className="font-bold">IQ200</En>
+            </div>
+            <div className="l34-cover__quote">
+              <Rich text="بعد أن أكملنا منظومتي الحاضر والماضي، وصلنا إلى مرحلة جديدة: التعبير عن المستقبل باللغة الإنجليزية. هدفنا ليس حفظ قاعدة واحدة فقط، بل فهم طريقة تفكير المتحدث الإنجليزي عندما يتخذ قرارًا، أو يقدم وعدًا، أو يتوقع حدوث شيء، أو يعرض المساعدة على شخص آخر." />
+            </div>
+            <div className="l34-cover__quote l34-cover__quote--teal">
+              <Rich text="سنحافظ على أسلوبنا التعليمي: شرح متدرج، أمثلة متنوعة، مقارنة دقيقة، اكتشاف الأخطاء، تدريبات تطبيقية، وتحديات IQ200." />
+            </div>
+            <div className="mt-2 flex flex-wrap gap-1.5" dir="ltr">
+              <span className="l34-formula-chip l34-formula-chip--subject">Subject</span>
+              <span className="l34-formula-chip l34-formula-chip--op">+</span>
+              <span className="l34-formula-chip l34-formula-chip--will">will</span>
+              <span className="l34-formula-chip l34-formula-chip--op">+</span>
+              <span className="l34-formula-chip l34-formula-chip--v1">V1</span>
+              <span className="l34-formula-chip l34-formula-chip--op">+</span>
+              <span className="l34-formula-chip l34-formula-chip--rest">Rest</span>
+            </div>
           </div>
-          <h2 className="mt-1 text-xl font-black text-teal-900" dir="ltr">
-            <En>Future Simple</En>
-          </h2>
-          <p className="mt-1 text-[13px] leading-6 text-stone-700">
-            المستقبل البسيط باستخدام <En className="font-bold">WILL</En> · <En className="font-bold">The Future Starts Here!</En> · 🔥 <En className="font-bold">IQ200</En>
-          </p>
-          <p className="mx-auto mt-2 max-w-xl rounded-2xl bg-stone-50 px-4 py-2 text-[12px] leading-6 text-stone-700">
-            <Rich text="بعد أن أكملنا منظومتي الحاضر والماضي، وصلنا إلى مرحلة جديدة: التعبير عن المستقبل باللغة الإنجليزية. هدفنا ليس حفظ قاعدة واحدة فقط، بل فهم طريقة تفكير المتحدث الإنجليزي عندما يتخذ قرارًا، أو يقدم وعدًا، أو يتوقع حدوث شيء، أو يعرض المساعدة على شخص آخر." />
-          </p>
-          <p className="mx-auto mt-2 max-w-xl rounded-2xl border border-teal-100 bg-teal-50/70 px-4 py-2 text-[12px] font-bold leading-6 text-teal-900">
-            <Rich text="سنحافظ على أسلوبنا التعليمي: شرح متدرج، أمثلة متنوعة، مقارنة دقيقة، اكتشاف الأخطاء، تدريبات تطبيقية، وتحديات IQ200." />
-          </p>
-        </div>
-        <BoardTitle34>
-          <Rich text="المستوى: تأسيسي متقدم — IQ200 — والخط الزمني:" />
-        </BoardTitle34>
-        <TimelineChips34 moments={TIMELINE_COVER_34} drv={drvTime} />
-        <div className="mt-3">
-          <BoardTitle34>
-            <Rich text="من أهم استخدامات will — المس كل وظيفة لتفتحها:" />
-          </BoardTitle34>
-          <FunctionChips34 functions={COVER_FUNCTIONS_34} drv={drvFn} />
+
+          <div>
+            <BoardTitle34>
+              <Rich text="المستوى: تأسيسي متقدم — IQ200 — والخط الزمني:" />
+            </BoardTitle34>
+            <TimelineChips34 moments={TIMELINE_COVER_34} drv={drvTime} />
+            <div className="mt-3">
+              <BoardTitle34>
+                <Rich text="من أهم استخدامات will — المس كل وظيفة لتفتحها:" />
+              </BoardTitle34>
+              <FunctionChips34 functions={COVER_FUNCTIONS_34} drv={drvFn} />
+            </div>
+          </div>
         </div>
         <GateFlag34 done={done} sid="cover" />
       </div>
@@ -201,14 +226,32 @@ function StepObjectives34() {
   const drv = useGate34(OBJECTIVES_34.length);
   return (
     <Lab34 source="objectives">
-      <div data-lesson-step="objectives" data-source-section="objectives">
-        <BoardTitle34>
-          <Rich text="🎯 تسعة أهداف — علّم كل هدف أتقنتَه:" />
-        </BoardTitle34>
-        <p className="mb-2 text-[13px] font-bold leading-6 text-stone-700">
-          <Rich text="بنهاية الدرس ستكون قادرًا على:" />
-        </p>
-        <ObjectivesChecklist34 items={OBJECTIVES_34} drv={drv} />
+      <div data-lesson-step="objectives" data-source-section="objectives" className="l34-step">
+        <div className="l34-objectives">
+          <div>
+            <BoardTitle34>
+              <Rich text="🎯 تسعة أهداف — علّم كل هدف أتقنتَه:" />
+            </BoardTitle34>
+            <p className="mb-2 text-[13px] font-bold leading-6 text-violet-800">
+              <Rich text="بنهاية الدرس ستكون قادرًا على:" />
+            </p>
+            <ObjectivesChecklist34 items={OBJECTIVES_34} drv={drv} />
+          </div>
+          <aside className="l34-objectives__aside">
+            <h3>
+              <Rich text="🧭 كيف تستخدم هذه المنصة؟" />
+            </h3>
+            <p>
+              <Rich text="كل محطة قصيرة: اقرأ بطاقة المعرفة، ثم نفّذ التفاعل في منصّة التطبيق. لا تنتقل حتى يظهر شريط الإنجاز الأخضر — هكذا تبني المهارة خطوة بخطوة." />
+            </p>
+            <p>
+              <Rich text="الأهداف التسعة تغطي البناء، والوظائف الست، والنفي والسؤال، والاختصارات، وWh-questions، والمقارنة مع الصيغ الأخرى، والاختبار الشامل." />
+            </p>
+            <p>
+              <Rich text="التقدم محفوظ داخل الجلسة عبر شريط الرحلة؛ يمكنك العودة لأي محطة من خريطة الرحلة في أي وقت." />
+            </p>
+          </aside>
+        </div>
         <GateFlag34 done={drv.complete >= drv.total} sid="objectives" />
       </div>
     </Lab34>
@@ -231,13 +274,32 @@ function StepShell34({
 }) {
   return (
     <Lab34 source={sid}>
-      <div data-lesson-step={sid} data-source-section={sid}>
-        <div className="grid gap-4 lg:grid-cols-2">
-          <div className="rounded-2xl border border-stone-200 bg-stone-50/60 p-3">
-            <BoardTitle34>📖 من الدرس — اقرأ ثم طبّق في الخطوة التفاعلية:</BoardTitle34>
+      <div data-lesson-step={sid} data-source-section={sid} className="l34-step">
+        <div className="l34-stepgrid">
+          <section className="l34-brief" data-l34-brief={sid} aria-label="بطاقة المعرفة من الدرس">
+            <div className="l34-panel-head">
+              <span className="l34-panel-head__label">
+                <span aria-hidden>📖</span>
+                <Rich text="بطاقة المعرفة" />
+              </span>
+              <span className="l34-panel-head__hint">
+                <Rich text="من الدرس" />
+              </span>
+            </div>
             {board ?? <SourceBoard34 id={sid as SourceOrder34} />}
-          </div>
-          <div>{interaction}</div>
+          </section>
+          <section className="l34-deck" data-l34-deck={sid} aria-label="منصة التطبيق التفاعلية">
+            <div className="l34-panel-head">
+              <span className="l34-panel-head__label">
+                <span aria-hidden>🛸</span>
+                <Rich text="منصّة التطبيق" />
+              </span>
+              <span className="l34-panel-head__hint">
+                <Rich text="جرّب ← اكتشف ← ثبّت" />
+              </span>
+            </div>
+            {interaction}
+          </section>
         </div>
         <GateFlag34 done={done} sid={sid} />
         {platform ? <Platform34>{platform}</Platform34> : null}
@@ -378,6 +440,12 @@ function StepS2() {
             note="V1 = الشكل الأساسي للفعل دون إضافات. لاحظ أن الفعل بعد will لا يتغير مهما تغير الفاعل."
             drv={drvForm}
           />
+          <div className="mt-3">
+            <BoardTitle34>
+              <Rich text="ابنِ جملتك: Subject + will + V1 + Rest" />
+            </BoardTitle34>
+            <SentenceBuilder34 />
+          </div>
           <div className="mt-3">
             <BoardTitle34>
               <Rich text="طابق كل جملة بمعناها العربي:" />
@@ -1954,7 +2022,7 @@ function StepS34({ onGoTest }: { onGoTest?: () => void }) {
             <button
               type="button"
               onClick={onGoTest}
-              className={`${FOCUS34} mt-4 w-full rounded-2xl border-2 border-teal-700 bg-teal-700 px-4 py-3 text-[15px] font-black text-white shadow-lg shadow-teal-200 transition hover:bg-teal-800`}
+              className={`${FOCUS34} l34-submit mt-4 w-full`}
             >
               🧪 الذهاب إلى الاختبار — Future Simple Master Test (25 سؤالًا)
             </button>
@@ -1974,7 +2042,7 @@ function StepS35({ onGoSolutions }: { onGoSolutions?: () => void }) {
       done={drv.complete >= drv.total}
       interaction={
         <>
-          <div className="mb-3 rounded-2xl border-2 border-stone-300 bg-stone-50 p-4 text-center">
+          <div className="l34-locked mb-3">
             <div aria-hidden className="text-3xl">
               🔐
             </div>
@@ -1988,7 +2056,7 @@ function StepS35({ onGoSolutions }: { onGoSolutions?: () => void }) {
               <button
                 type="button"
                 onClick={onGoSolutions}
-                className={`${FOCUS34} mt-3 rounded-full border-2 border-teal-700 bg-white px-4 py-2 text-[13px] font-black text-teal-800 transition hover:bg-teal-50`}
+                className={`${FOCUS34} l34-back mt-3`}
               >
                 🗝️ فتح منطقة الحلول
               </button>

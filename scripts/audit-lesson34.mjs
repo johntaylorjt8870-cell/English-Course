@@ -25,6 +25,7 @@ const require = createRequire(import.meta.url);
 const esbuild = require("esbuild");
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const outFile = join(root, "scripts", ".lesson34-audit.mjs");
+const outCss = join(root, "scripts", ".lesson34-audit.css");
 const L34 = join(root, "src", "lessons", "lesson34");
 
 const failures = [];
@@ -1070,6 +1071,7 @@ const bankQ = 15;
 
 // ---------------- cleanup & report ----------------
 rmSync(outFile, { force: true });
+rmSync(outCss, { force: true });
 if (failures.length) {
   console.error(`Lesson 34 audit: ${checks - failures.length} passed, ${failures.length} FAILED`);
   for (const f of failures) console.error(" ✕ " + f);

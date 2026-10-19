@@ -1,29 +1,31 @@
 // ============================================================
-// TestArea34 — منطقة اختبار الدرس 34 + منطقة الحلول
-// - الاختبار (TEST_34 من قسم المصدر ㉞): 25 سؤالًا في 5 مستويات،
-//   محايد حتى «إرسال الاختبار» — لا ✓ ولا درجة ولا تلميح ألوان قبلها.
-// - الحلول (قسم المصدر ㉟ المساحة): مقفلة حتى الإرسال الكامل، ثم
-//   تُعرض الإجابة + السبب لكل سؤال.
+// TestArea34 — الاختبار النهائي (25 سؤالًا / 5 مستويات)
+//   • محايد تمامًا قبل الإرسال: لا ✓ ولا ✕ ولا درجة ولا شرح.
+//   • الإرسال لا يعمل إلا بعد الإجابة عن الأسئلة الخمسة والعشرين.
+//   • بعد الإرسال: درجة + نطاق + سبب كل سؤال.
+//
+// Solutions34 — منطقة الحلول المقفلة حتى الإرسال الكامل، وتعرض
+// المفتاح التفصيلي المشتق (25 سؤالًا: إجابة + سبب + بنية + نماذج).
 // ============================================================
 
 import { useMemo, useState } from "react";
-import { En, Rich } from "../../shared/lessonKit";
+import { Rich } from "../../shared/lessonKit";
 import { LatinRuns } from "../../shared/bidi";
+import { FOCUS34 } from "./kit34";
 import {
+  TEST_34,
   TEST_34_TITLE,
   TEST_LEVELS_34,
-  TEST_34,
-  type Q34,
   gradeOne34,
   isAnswered34,
   answerText34,
   isHumanGraded34,
+  type Q34,
 } from "./testData";
+import DetailedSolutions34 from "./DetailedSolutions34";
+import { DETAILED_TEST_SOLUTIONS_34 } from "./solutionsData34";
 
-const RING34 =
-  "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white";
-
-type Ans34 = string | number | (string | null)[] | null;
+type Answer34 = string | number | null;
 
 export default function TestArea34({
   onRestart,
@@ -32,7 +34,7 @@ export default function TestArea34({
   onRestart: () => void;
   onSubmitted: () => void;
 }) {
-  const [answers, setAnswers] = useState<Ans34[]>(() => TEST_34.map(() => null));
+  const [answers, setAnswers] = useState<Answer34[]>(() => TEST_34.map(() => null));
   const [submitted, setSubmitted] = useState(false);
 
   const total = TEST_34.length;
@@ -42,18 +44,16 @@ export default function TestArea34({
     [submitted, answers],
   );
 
-  const setAns = (i: number, v: Ans34) => {
+  const setAnswer = (i: number, value: Answer34) => {
     if (submitted) return;
     setAnswers((prev) => {
       const next = [...prev];
-      next[i] = v;
+      next[i] = value;
       return next;
     });
   };
 
-  const canSubmit = answered === total && !submitted;
-
-  const resetAll = () => {
+  const reset = () => {
     setAnswers(TEST_34.map(() => null));
     setSubmitted(false);
     onRestart();
@@ -61,104 +61,106 @@ export default function TestArea34({
 
   const band =
     score >= 21
-      ? { label: "إتقان — مستوى IQ200", cls: "border-emerald-300 bg-emerald-50 text-emerald-900" }
+      ? { key: "high", label: "إتقان — مستوى IQ200" }
       : score >= 16
-        ? { label: "جيد — مراجعة خفيفة ثم أعد المحاولة", cls: "border-amber-300 bg-amber-50 text-amber-900" }
-        : score >= 9
-          ? { label: "مراجعة — عُد إلى الخطوات والتمارين", cls: "border-rose-300 bg-rose-50 text-rose-900" }
-          : { label: "دعم — أعد قراءة الملخص الذهبي والخريطة", cls: "border-rose-400 bg-rose-50 text-rose-900" };
+        ? { key: "mid", label: "جيد — مراجعة خفيفة ثم أعد المحاولة" }
+        : {
+            key: "low",
+            label: score >= 9 ? "مراجعة — عُد إلى الخطوات والتمارين" : "دعم — أعد قراءة الملخص الذهبي وخريطة الطريق",
+          };
 
   return (
-    <div className="space-y-4">
-      {/* رأس الاختبار */}
-      <div className="rounded-3xl border border-teal-200 bg-gradient-to-b from-teal-50/80 via-white to-sky-50/50 p-4 sm:p-6">
-        <div className="text-center">
-          <h2 className="text-lg font-black text-teal-900">
-            <Rich text={TEST_34_TITLE} />
-          </h2>
-          <p className="mt-1 text-[12px] leading-6 text-teal-800">
-            {total} سؤالًا · خمسة مستويات · أجب عن الكل ثم أرسل دفعة واحدة — لا تُكشف الإجابات ولا الدرجة قبل الإرسال.
-          </p>
-          <div className="mx-auto mt-3 flex max-w-md items-center gap-2" aria-label="تقدم الإجابة">
-            <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-teal-100">
-              <div
-                className="h-full rounded-full bg-teal-600 transition-all"
-                style={{ width: `${Math.round((answered / total) * 100)}%` }}
-              />
-            </div>
-            <span className="text-[12px] font-black tabular-nums text-teal-800">أجبت: {answered}/{total}</span>
+    <div className="l34-test" data-test-area="34">
+      <header className="l34-testhero">
+        <span className="l34-eyebrow">
+          <span aria-hidden>🏆</span>
+          <Rich text="MASTER TEST · خمسة مستويات" />
+        </span>
+        <h2>
+          <Rich text={TEST_34_TITLE} />
+        </h2>
+        <p>
+          <Rich text={`${total} سؤالًا: بناء، إكمال، تحديد وظيفة، تصحيح أخطاء، ثم إنتاج حرّ. أجب عن الكل ثم أرسل مرة واحدة — لا تظهر أي إجابة قبل الإرسال.`} />
+        </p>
+        <div className="l34-testprogress" aria-label="تقدم الإجابة">
+          <div role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={answered}>
+            <span style={{ width: `${Math.round((answered / total) * 100)}%` }} />
           </div>
+          <b>
+            <Rich text={`أجبت: ${answered}/${total}`} />
+          </b>
         </div>
-      </div>
+      </header>
 
-      {/* لوحة النتيجة — بعد الإرسال فقط */}
       {submitted ? (
-        <section role="status" aria-live="polite" className={`rounded-3xl border-2 p-4 ${band.cls}`}>
-          <div className="text-center text-[16px] font-black">
+        <section role="status" aria-live="polite" className={`l34-result l34-result--${band.key}`} data-band={band.key}>
+          <div className="text-[17px] font-black">
             <Rich text={`النتيجة: ${score} / ${total} — ${band.label}`} />
           </div>
-          <p className="mt-1 text-center text-[11px] leading-6 opacity-80">
-            <Rich text="المستوى الخامس (21–25) كتابة حرّة — راجع مفتاحها الكامل في منطقة المعلم." />
+          <p className="mt-1 text-[12px] font-bold leading-6 opacity-80">
+            <Rich text="المستوى الخامس كتابة حرّة — قارن نموذجك بالبدائل المقبولة في منطقة الحلول، وراجع السبب والبنية لكل سؤال." />
           </p>
         </section>
       ) : null}
 
-      {/* المستويات والأسئلة */}
-      {TEST_LEVELS_34.map((lv) => {
-        const start = TEST_LEVELS_34.slice(0, TEST_LEVELS_34.indexOf(lv)).reduce((n, l) => n + l.questions.length, 0);
+      {TEST_LEVELS_34.map((level, levelIndex) => {
+        const start = TEST_LEVELS_34.slice(0, levelIndex).reduce((n, item) => n + item.questions.length, 0);
         return (
-          <section key={lv.id} className="space-y-3" aria-label={`${lv.n}: ${lv.name}`}>
-            <div className="flex items-center gap-2">
-              <span className={`rounded-full px-3 py-1 text-[11px] font-black text-white ${lv.cls}`}>{lv.n}</span>
-              <span className="text-[12px] font-black text-teal-900">
-                <Rich text={lv.name} />
+          <section key={level.id} className="l34-level" data-level={level.id} aria-label={`${level.n}: ${level.name}`}>
+            <div className="l34-level__head">
+              <span className="l34-level__badge">{level.n}</span>
+              <span className="l34-level__name">
+                <Rich text={level.name} />
               </span>
-              <span className="text-[11px] text-teal-600">
-                {lv.range} — <Rich text={lv.blurb} />
-              </span>
+              <span className="l34-level__range">{level.range}</span>
             </div>
-            {lv.questions.map((q, li) => (
-              <Question34
-                key={li}
-                q={q}
-                index={start + li}
-                value={answers[start + li]}
-                onChange={(v) => setAns(start + li, v)}
-                submitted={submitted}
-                correct={submitted ? gradeOne34(q, answers[start + li]) : null}
-              />
-            ))}
+            {level.questions.map((q, localIndex) => {
+              const index = start + localIndex;
+              return (
+                <Question34
+                  key={level.id + localIndex}
+                  q={q}
+                  index={index}
+                  value={answers[index]}
+                  onChange={(value) => setAnswer(index, value)}
+                  submitted={submitted}
+                  correct={submitted ? gradeOne34(q, answers[index]) : null}
+                />
+              );
+            })}
           </section>
         );
       })}
 
-      {/* أزرار الإرسال */}
-      <div className="sticky bottom-3 z-10 flex flex-col items-center gap-2">
+      <div className="l34-submit-panel">
         {!submitted ? (
           <button
             type="button"
-            disabled={!canSubmit}
+            disabled={answered !== total}
             onClick={() => {
               setSubmitted(true);
               onSubmitted();
             }}
-            className={`${RING34} rounded-full px-8 py-3 text-[15px] font-black shadow-lg transition ${
-              canSubmit ? "bg-teal-600 text-white shadow-teal-200 hover:bg-teal-700" : "cursor-not-allowed bg-teal-100 text-teal-400"
-            }`}
+            className={`l34-submit ${FOCUS34}`}
           >
-            إرسال الاختبار
+            <span aria-hidden>🚀</span>
+            <Rich text="إرسال الاختبار" />
           </button>
         ) : (
-          <button
-            type="button"
-            onClick={resetAll}
-            className={`${RING34} rounded-full border-2 border-teal-600 bg-white px-8 py-3 text-[15px] font-black text-teal-800 shadow-lg shadow-teal-100 hover:bg-teal-50`}
-          >
-            إعادة الاختبار كاملًا
+          <button type="button" onClick={reset} className={`l34-submit ${FOCUS34}`}>
+            <span aria-hidden>↺</span>
+            <Rich text="إعادة الاختبار كاملًا" />
           </button>
         )}
         {!submitted && answered < total ? (
-          <div className="text-[11px] text-teal-600">يبقى {total - answered} سؤالًا — زر الإرسال يعمل بعد إكمال الكل.</div>
+          <div className="text-[12px] font-bold text-violet-500">
+            <Rich text={`يبقى ${total - answered} سؤالًا — زر الإرسال يعمل بعد إكمال الكل.`} />
+          </div>
+        ) : null}
+        {!submitted && answered === total ? (
+          <div className="text-[12px] font-black text-emerald-700">
+            <Rich text="اكتملت الإجابات — أرسل الآن لكشف الدرجة والشرح." />
+          </div>
         ) : null}
       </div>
     </div>
@@ -175,106 +177,87 @@ function Question34({
 }: {
   q: Q34;
   index: number;
-  value: Ans34;
-  onChange: (v: Ans34) => void;
+  value: Answer34;
+  onChange: (value: Answer34) => void;
   submitted: boolean;
   correct: boolean | null;
 }) {
   return (
-    <div data-test-q={index + 1} className="rounded-2xl border border-teal-200 bg-white p-3">
-      <div className="mb-2 flex items-baseline justify-between gap-2">
-        <div className="text-[13px] font-bold leading-6 text-teal-950" dir="auto">
-          <span className="ml-1 font-black text-teal-600">س{index + 1}.</span>
+    <div className="l34-question" data-test-q={index + 1} data-question-kind={q.type}>
+      <div className="l34-question__head">
+        <div className="l34-question__prompt" dir="auto">
+          <span className="l34-question__num">س{index + 1}.</span>
           <LatinRuns text={q.ar} />
         </div>
         {correct !== null ? (
-          <span
-            aria-hidden
-            className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-black ${
-              correct ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-700"
-            }`}
-          >
+          <span className="l34-question__status" data-ok={correct ? "true" : "false"}>
             {correct ? "✓ صحيح" : "✕ غير صحيح"}
           </span>
         ) : null}
       </div>
 
-      {q.type === "typed" || q.type === "write" ? (
-        <div className="flex flex-wrap items-center gap-1.5" dir="ltr">
-          {q.type === "typed" ? (
-            <>
-              <span className="text-[13px] font-bold text-teal-950">
-                <LatinRuns text={q.before} />
-              </span>
-              <input
-                id={`l34-q${index + 1}`}
-                type="text"
-                value={typeof value === "string" ? value : ""}
-                disabled={submitted}
-                onChange={(e) => onChange(e.target.value)}
-                className={`${RING34} w-44 rounded-lg border-2 px-2 py-1 text-[13px] font-bold text-teal-950 ${
-                  correct === null ? "border-teal-300 bg-white" : correct ? "border-emerald-500 bg-emerald-50" : "border-rose-400 bg-rose-50"
-                }`}
-                aria-label={`السؤال ${index + 1}`}
-              />
-              <span className="text-[13px] font-bold text-teal-950">
-                <LatinRuns text={q.after} />
-              </span>
-            </>
-          ) : (
-            <>
-              <span className="text-[11px] font-black text-violet-700">
-                تلميح: <LatinRuns text={q.hint} />
-              </span>
-              <input
-                id={`l34-q${index + 1}`}
-                type="text"
-                value={typeof value === "string" ? value : ""}
-                disabled={submitted}
-                onChange={(e) => onChange(e.target.value)}
-                className={`${RING34} w-full rounded-lg border-2 px-2 py-1 text-[13px] font-bold text-teal-950 ${
-                  correct === null ? "border-teal-300 bg-white" : correct ? "border-emerald-500 bg-emerald-50" : "border-rose-400 bg-rose-50"
-                }`}
-                aria-label={`السؤال ${index + 1} — جملتك`}
-              />
-            </>
-          )}
-          {q.type === "write" ? (
-            <span className="text-[11px] text-stone-500">اكتب جملة كاملة بالإنجليزية.</span>
-          ) : null}
+      {q.type === "typed" ? (
+        <div className="mt-1.5 flex flex-wrap items-center gap-1.5" dir="ltr">
+          <span className="text-[13px] font-bold text-violet-950">
+            <LatinRuns text={q.before} />
+          </span>
+          <input
+            id={`l34-q${index + 1}`}
+            type="text"
+            dir="ltr"
+            value={typeof value === "string" ? value : ""}
+            disabled={submitted}
+            onChange={(event) => onChange(event.target.value)}
+            placeholder={q.verb}
+            data-state={correct === null ? undefined : correct ? "correct" : "wrong"}
+            className="l34-answer-input w-44"
+            aria-label={`السؤال ${index + 1}`}
+          />
+          <span className="text-[13px] font-bold text-violet-950">
+            <LatinRuns text={q.after} />
+          </span>
+        </div>
+      ) : null}
+
+      {q.type === "write" ? (
+        <div className="mt-1.5 grid gap-1" dir="ltr">
+          <span className="text-[11px] font-black text-fuchsia-700">
+            <Rich text="تلميح:" /> <LatinRuns text={q.hint} />
+          </span>
+          <input
+            id={`l34-q${index + 1}`}
+            type="text"
+            dir="ltr"
+            value={typeof value === "string" ? value : ""}
+            disabled={submitted}
+            onChange={(event) => onChange(event.target.value)}
+            data-state={correct === null ? undefined : correct ? "correct" : "wrong"}
+            className="l34-answer-input w-full"
+            aria-label={`السؤال ${index + 1} — اكتب جملتك`}
+          />
         </div>
       ) : null}
 
       {q.type === "spot" ? (
-        <div className="flex flex-wrap gap-1.5" dir="ltr" role="radiogroup" aria-label={`السؤال ${index + 1}`}>
-          {q.segments.map((seg, si) => {
-            // بعد الإرسال: المقطع الخاطئ يُستبدل بالتصحيح، والمقطع المحذوف يُخفى
-            const removed = submitted && (si === q.drop || (si === q.bad && !q.fix));
-            const label = submitted && si === q.bad ? q.fix : seg;
+        <div className="mt-1.5 flex flex-wrap gap-1.5" dir="ltr" role="radiogroup" aria-label={`السؤال ${index + 1}`}>
+          {q.segments.map((segment, segmentIndex) => {
+            const isBad = segmentIndex === q.bad;
+            const isDrop = segmentIndex === q.drop;
             return (
               <button
-                key={si}
+                key={segmentIndex}
                 type="button"
                 data-test-seg={index + 1}
-                data-seg-index={si}
+                data-seg-index={segmentIndex}
                 disabled={submitted}
-                onClick={() => onChange(si)}
-                aria-pressed={value === si}
-                className={`${RING34} rounded-lg border-2 px-2 py-1.5 text-[13px] font-bold transition ${
-                  removed
-                    ? "border-stone-100 bg-white text-transparent line-through"
-                    : correct === null
-                      ? value === si
-                        ? "border-teal-500 bg-teal-100 text-teal-900"
-                        : "border-teal-200 bg-white text-teal-900 hover:border-teal-400"
-                      : si === q.bad
-                        ? "border-emerald-500 bg-emerald-50 text-emerald-900"
-                        : value === si
-                          ? "border-rose-400 bg-rose-50 text-rose-700"
-                          : "border-teal-100 bg-white text-teal-700"
-                }`}
+                onClick={() => onChange(segmentIndex)}
+                aria-pressed={value === segmentIndex}
+                data-picked={value === segmentIndex ? "true" : undefined}
+                data-state={correct === null ? undefined : isBad ? "correct" : value === segmentIndex ? "wrong" : undefined}
+                className="l34-seg"
+                style={submitted && (isDrop || (isBad && !q.fix)) ? { opacity: 0.28, textDecoration: "line-through" } : undefined}
               >
-                <LatinRuns text={label} />
+                <LatinRuns text={segment} />
               </button>
             );
           })}
@@ -282,42 +265,46 @@ function Question34({
       ) : null}
 
       {q.type === "single" ? (
-        <div className="grid gap-1.5" role="radiogroup" aria-label={`السؤال ${index + 1}`}>
-          {q.options.map((opt, oi) => (
+        <div className="mt-1.5 grid gap-1.5" role="radiogroup" aria-label={`السؤال ${index + 1}`}>
+          {q.options.map((option, optionIndex) => (
             <label
-              key={oi}
-              className={`flex items-center gap-2 rounded-xl border-2 px-3 py-2 text-[13px] font-bold transition ${
-                correct === null
-                  ? value === oi
-                    ? "border-teal-500 bg-teal-50 text-teal-900"
-                    : "border-teal-200 bg-white text-teal-900 hover:border-teal-400"
-                  : oi === q.answer
-                    ? "border-emerald-500 bg-emerald-50 text-emerald-900"
-                    : value === oi
-                      ? "border-rose-400 bg-rose-50 text-rose-700"
-                      : "border-teal-100 bg-white text-teal-700"
-              }`}
+              key={optionIndex}
+              dir="ltr"
+              className="l34-choice"
+              data-picked={value === optionIndex ? "true" : undefined}
+              data-state={correct === null ? undefined : optionIndex === q.answer ? "correct" : value === optionIndex ? "wrong" : undefined}
             >
               <input
-                id={`l34-q${index + 1}-opt${oi}`}
+                id={`l34-q${index + 1}-opt${optionIndex}`}
                 name={`l34-q${index + 1}`}
                 type="radio"
-                className="h-4 w-4 accent-teal-700"
-                checked={value === oi}
+                checked={value === optionIndex}
                 disabled={submitted}
-                onChange={() => onChange(oi)}
+                onChange={() => onChange(optionIndex)}
               />
-              <span dir="auto">
-                <LatinRuns text={opt} />
+              <span dir="ltr">
+                <LatinRuns text={option} />
               </span>
             </label>
           ))}
         </div>
       ) : null}
 
+      {submitted ? (
+        <div className="l34-sol-row mt-1" data-q-feedback={index + 1}>
+          <b>
+            <Rich text="الصواب:" />
+          </b>{" "}
+          <LatinRuns text={answerText34(q)} />{" "}
+          <span className="text-violet-500">
+            — <Rich text={q.why} />
+          </span>
+        </div>
+      ) : null}
+
       {submitted && isHumanGraded34(q) ? (
-        <div className="mt-1 text-[11px] leading-5 text-violet-700">
-          <Rich text="سؤال كتابة حرّة — صحّحه معلمك وفق مفتاح مستوى IQ200 في منطقة المعلم." />
+        <div className="mt-1 rounded-lg border border-amber-200 bg-amber-50 px-2 py-1 text-[11px] font-bold leading-5 text-amber-800">
+          <Rich text="سؤال كتابة حرّة — راجع نموذج الإجابة والبدائل المقبولة في منطقة الحلول؛ يصحّحه المعلم وفق وظيفة الجملة لا وفق التشابه الحرفي." />
         </div>
       ) : null}
     </div>
@@ -325,7 +312,7 @@ function Question34({
 }
 
 /* ============================================================
-   منطقة الحلول — مقفلة حتى الإرسال الكامل (قسم المصدر ㉟)
+   Solutions34 — مقفلة قبل الإرسال، تفصيلية بعده
    ============================================================ */
 export function Solutions34({
   unlocked,
@@ -338,91 +325,59 @@ export function Solutions34({
 }) {
   if (!unlocked) {
     return (
-      <div className="rounded-3xl border-2 border-teal-300 bg-teal-50 p-8 text-center">
-        <div aria-hidden className="text-4xl">
+      <div className="l34-locked" data-locked-solutions="34">
+        <span className="l34-locked__icon" aria-hidden>
           🔐
-        </div>
-        <h2 className="mt-2 text-lg font-black text-teal-900">الحلول مقفلة</h2>
-        <p className="mx-auto mt-1 max-w-lg text-[13px] leading-7 text-teal-800">
-          هذه «مساحة المعلم — عرض الحلول التفصيلية» — مفتاح تصحيح الاختبار النهائي. حاول حل الاختبار كاملًا قبل كشف
-          الإجابات: أجب عن الأسئلة الخمسة والعشرين في منطقة الاختبار وأرسلها دفعة واحدة، ثم يُكشف كشف الحلول هنا.
+        </span>
+        <h2>
+          <Rich text="الحلول مقفلة" />
+        </h2>
+        <p>
+          <Rich text="هذه مساحة «الحلول التفصيلية» للاختبار النهائي. أجب عن الأسئلة الخمسة والعشرين كاملة في منطقة الاختبار وأرسلها، ثم يُكشف المفتاح هنا: الإجابة + السبب + البنية." />
         </p>
-        <button
-          type="button"
-          onClick={onGoTest}
-          className={`${RING34} mt-4 rounded-full border-2 border-teal-600 bg-teal-600 px-6 py-2.5 text-[14px] font-black text-white shadow-md shadow-teal-200 hover:bg-teal-700`}
-        >
-          🧪 الذهاب إلى الاختبار
+        <p className="mt-1 text-[11px] font-bold text-violet-400">
+          <Rich text="لن تظهر أي إجابة قبل الإرسال — هذا شرط الدرس وشرط التدقيق." />
+        </p>
+        <button type="button" onClick={onGoTest} className={`l34-submit mt-3 ${FOCUS34}`}>
+          <span aria-hidden>🧪</span>
+          <Rich text="الذهاب إلى الاختبار" />
         </button>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      <div className="rounded-3xl border border-emerald-200 bg-emerald-50/60 p-4 text-center">
-        <h2 className="text-lg font-black text-emerald-900">🗝️ الحلول التفصيلية — مفتاح تصحيح الاختبار النهائي</h2>
-        <p className="mt-1 text-[12px] leading-6 text-emerald-800">
-          <Rich text="لكل سؤال: الإجابة الصحيحة + السبب القاعدي. راجع أخطاءك ثم أعد الاختبار كاملًا لتثبيت المهارة." />
+    <div data-unlocked-solutions="34">
+      <header className="l34-testhero">
+        <span className="l34-eyebrow">
+          <span aria-hidden>🗝️</span>
+          <Rich text="SOLUTION BAY · عرض الحلول التفصيلية" />
+        </span>
+        <h2>
+          <Rich text="الحلول التفصيلية — 25 سؤالًا" />
+        </h2>
+        <p>
+          <Rich text="لكل سؤال: الإجابة الصحيحة، السبب، والبنية النحوية. أسئلة المستوى الخامس لها نموذج وبدائل مقبولة. المفتاح مشتق وفق قواعد الدرس نفسه، لأن المصدر يعِد بعرض الحلول دون سردها نصًا." />
         </p>
-        <p className="mt-1 text-[11px] leading-5 text-emerald-700">
-          <Rich text="توثيق: المصدر يعد بـ«عرض الحلول التفصيلية» دون أن يسرد الإجابات نصًا ⇒ المفتاح التالي مشتق وفق قواعد الدرس نفسه، والمستوى الخامس (21–25) كتابة حرّة له إجابات ممكنة متعددة." />
+        <p className="mt-1 text-[11px] font-bold text-violet-500">
+          <Rich text="البدائل مقبولة عندما تحقق الوظيفة المطلوبة والبناء نفسه — لا تشترط تطابقًا حرفيًا مع النموذج." />
         </p>
-      </div>
-      {TEST_LEVELS_34.map((lv) => {
-        const start = TEST_LEVELS_34.slice(0, TEST_LEVELS_34.indexOf(lv)).reduce((n, l) => n + l.questions.length, 0);
-        return (
-          <section key={lv.id} className="space-y-2" aria-label={`حلول ${lv.n}: ${lv.name}`}>
-            <div className="flex items-center gap-2">
-              <span className={`rounded-full px-3 py-1 text-[11px] font-black text-white ${lv.cls}`}>{lv.n}</span>
-              <span className="text-[12px] font-black text-emerald-900">
-                حلول <Rich text={lv.name} />
-              </span>
-              <span className="text-[11px] text-emerald-700">{lv.range}</span>
-            </div>
-            {lv.questions.map((q, li) => (
-              <div key={li} className="rounded-2xl border border-emerald-200 bg-white p-3">
-                <div className="mb-1 text-[13px] font-bold leading-6 text-emerald-950" dir="auto">
-                  <span className="ml-1 font-black text-emerald-700">س{start + li + 1}.</span>
-                  <LatinRuns text={q.ar} />
-                </div>
-                <div className="rounded-lg bg-emerald-50 px-2 py-1.5 text-[13px] font-black text-emerald-900" dir="auto">
-                  ✓ الإجابة:{" "}
-                  {q.type === "write" ? (
-                    <>
-                      <LatinRuns text={answerText34(q)} /> (وإجابات ممكنة أخرى — انظر منطقة المعلم)
-                    </>
-                  ) : (
-                    <LatinRuns text={answerText34(q)} />
-                  )}
-                </div>
-                <div className="mt-1 text-[12px] leading-6 text-emerald-900">
-                  <span className="font-black">
-                    <En>Platform Explanation</En> — السبب:{" "}
-                  </span>
-                  <Rich text={q.why} />
-                </div>
-              </div>
-            ))}
-          </section>
-        );
-      })}
+      </header>
+
+      <DetailedSolutions34 />
+
       <div className="flex flex-wrap justify-center gap-2">
-        <button
-          type="button"
-          onClick={onGoTest}
-          className={`${RING34} rounded-full border-2 border-teal-600 bg-white px-5 py-2 text-[13px] font-black text-teal-800 hover:bg-teal-50`}
-        >
-          🧪 إعادة الاختبار كاملًا
+        <button type="button" onClick={onGoTest} className={`l34-back ${FOCUS34}`}>
+          <span aria-hidden>🧪</span>
+          <Rich text="إعادة الاختبار كاملًا" />
         </button>
-        <button
-          type="button"
-          onClick={onGoTeacher}
-          className={`${RING34} rounded-full border-2 border-violet-500 bg-white px-5 py-2 text-[13px] font-black text-violet-800 hover:bg-violet-50`}
-        >
-          👩‍🏫 منطقة المعلم
+        <button type="button" onClick={onGoTeacher} className={`l34-back ${FOCUS34}`}>
+          👩‍🏫 <Rich text="منطقة المعلم" />
         </button>
       </div>
+      <p className="mt-2 text-center text-[11px] font-bold text-violet-400">
+        <Rich text={`عدد الحلول المعروضة: ${DETAILED_TEST_SOLUTIONS_34.length} / ${TEST_34.length}`} />
+      </p>
     </div>
   );
 }

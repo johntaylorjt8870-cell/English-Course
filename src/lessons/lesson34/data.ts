@@ -1,6 +1,6 @@
 // ============================================================
 // الدرس 34 — Future Simple · المستقبل البسيط باستخدام WILL
-// 🚀 THE FUTURE ENGINE — محرك المستقبل
+// 🚀 THE FUTURE LAUNCHPAD — منصّة الإطلاق
 //
 // - سجل المصدر في ledger34.ts (40 قسمًا: غلاف + أهداف + 39 قسمًا مرقّمًا).
 //   هذا الملف يحوي:
@@ -13,8 +13,21 @@
 
 export const LESSON_TITLE_34 = "الدرس 34: Future Simple";
 export const LESSON_SUBTITLE_34 = "🚀 المستقبل البسيط باستخدام WILL — The Future Starts Here!";
-export const LAB_NAME_34 = "THE FUTURE ENGINE";
+export const LAB_NAME_34 = "FUTURE LAUNCHPAD";
+export const LAB_AR_34 = "منصّة المستقبل";
 export const LAB_MOTTO_34 = "Subject + will + V1 · won't = will not · Will + Subject + V1?";
+export const LAB_PROMISE_34 = "قرار · وعد · توقع · عرض مساعدة — كلّها تنطلق من will + V1";
+
+export const PHASE_META_34: { id: string; n: string; en: string; blurb: string }[] = [
+  { id: "INTRO", n: "الإطلاق", en: "IGNITION", blurb: "الخريطة والأهداف." },
+  { id: "CORE", n: "الشيفرة", en: "CORE CODE", blurb: "المعنى، البناء، والضمائر." },
+  { id: "USES", n: "المهمات", en: "MISSIONS", blurb: "ست وظائف لـ will في سياق حقيقي." },
+  { id: "FORMS", n: "التحكم", en: "CONTROL DECK", blurb: "النفي، السؤال، الاختصارات، والزمن." },
+  { id: "DRILL", n: "التدريب", en: "FLIGHT TRAINING", blurb: "تحويلات، محقق، ومواقف IQ200." },
+  { id: "READ", n: "القراءة", en: "READING ORBIT", blurb: "قصة Daniel ومقارنة الأزمنة." },
+  { id: "MASTER", n: "الاختبار", en: "MASTER TEST", blurb: "25 سؤالًا في خمسة مستويات." },
+  { id: "END", n: "الخاتمة", en: "TOUCHDOWN", blurb: "المشروع، الملخص، وخريطة الطريق." },
+];
 
 export const LESSON_META_34 = { number: 34 };
 
@@ -22,11 +35,11 @@ export const LESSON_META_34 = { number: 34 };
 // أقسام الشريط الجانبي
 // ============================================================
 export const SECTIONS_34: { id: string; label: string }[] = [
-  { id: "INTRO", label: "🚀 البداية" },
-  { id: "CORE", label: "⭐ القاعدة" },
-  { id: "USES", label: "🎭 الاستخدامات" },
-  { id: "FORMS", label: "🧰 الصيغ" },
-  { id: "DRILL", label: "✍️ التدريب" },
+  { id: "INTRO", label: "🚀 الإطلاق" },
+  { id: "CORE", label: "🧬 الشيفرة" },
+  { id: "USES", label: "🎭 المهمات" },
+  { id: "FORMS", label: "🎛️ لوحة التحكم" },
+  { id: "DRILL", label: "🧑‍🚀 التدريب" },
   { id: "READ", label: "📖 القراءة" },
   { id: "MASTER", label: "🏆 الاختبار" },
   { id: "END", label: "🌟 الخاتمة" },
@@ -44,8 +57,8 @@ export type Slide34Data = {
 };
 
 export const SLIDES: Slide34Data[] = [
-  { id: "cover", section: "INTRO", mascot: "🚀", title: "محرك المستقبل — Future Simple", step: "الغلاف",
-    lead: "منظومتا الحاضر والماضي اكتملتا — اليوم نفتح باب المستقبل باستخدام will.",
+  { id: "cover", section: "INTRO", mascot: "🚀", title: "منصّة الإطلاق — Future Simple", step: "الغلاف",
+    lead: "منظومتا الحاضر والماضي اكتملتا — اليوم نفتح باب المستقبل باستخدام will من منصّة إطلاق واحدة.",
     tip: "ثلاث لحظات على الخط الزمني — المس كل رقاقة لتكشف جملتها.", source: ["cover"] },
   { id: "objectives", section: "INTRO", mascot: "🎯", title: "أهداف الدرس", step: "الأهداف",
     lead: "تسعة أهداف — علّم كل هدف بعد أن تتقنه.",
@@ -260,6 +273,55 @@ export const ERROR_PAIRS_S4: { wrong: string; right: string; why: string }[] = [
   { wrong: "He will studied.", right: "He will study.", why: "will تحتاج الفعل الأساسي V1 لا صيغة الماضي." },
   { wrong: "They will playing.", right: "They will play.", why: "بعد will لا تأتي صيغة ing." },
   { wrong: "I will to travel.", right: "I will travel.", why: "لا نضع to بين will والفعل الأساسي." },
+];
+
+// ============================================================
+// s4 — تدريب إضافي من إعداد المنصة (ليس نصًا مصادرًا):
+// ثلاث مصائد يكرّرها المتعلّم بعد will/won't — لكل خيار ملاحظة
+// تصحيحية خاصة به، ولا تظهر الإجابة الصحيحة قبل اختيار المتعلّم.
+// ============================================================
+export type WillTrap34 = {
+  n: string;
+  label: string;
+  options: { text: string; ok: boolean; note?: string }[];
+  fix: string;
+  why: string;
+};
+
+export const WILL_TRAPS_S4: WillTrap34[] = [
+  {
+    n: "①",
+    label: "فاعل غائب + will",
+    options: [
+      { text: "She will goes to school.", ok: false, note: "صيغة الفعل هنا فيها s زائدة — وبعد will لا نضيف s أبدًا؛ الصواب go." },
+      { text: "She will go to school.", ok: true },
+      { text: "She will going to school.", ok: false, note: "صيغة ing لا تأتي بعد will — المطلوب V1." },
+    ],
+    fix: "She will go to school.",
+    why: "بعد will يأتي الفعل الأساسي V1: go — لا goes ولا going.",
+  },
+  {
+    n: "②",
+    label: "النفي won't والفعل",
+    options: [
+      { text: "She won't to go to the party.", ok: false, note: "لا نضع to بين won't والفعل مباشرة — الصواب won't go." },
+      { text: "She won't go to the party.", ok: true },
+      { text: "She doesn't will go to the party.", ok: false, note: "أداة النفي won't وحدها تكفي — لا حاجة إلى doesn't." },
+    ],
+    fix: "She won't go to the party.",
+    why: "won't = will not، وبعدها V1 مباشرة دون to.",
+  },
+  {
+    n: "③",
+    label: "الفعل الشاذ في الماضي",
+    options: [
+      { text: "He will went to the market.", ok: false, note: "الفعل went تصريف ماضٍ — بعد will نعود إلى go." },
+      { text: "He will gone to the market.", ok: false, note: "الفعل gone تصريف ثالث V3 وليس V1 — الصواب go." },
+      { text: "He will go to the market.", ok: true },
+    ],
+    fix: "He will go to the market.",
+    why: "سلسلة go → went → gone تتوقف عند will: will go فقط.",
+  },
 ];
 
 // ============================================================

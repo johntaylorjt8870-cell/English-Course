@@ -19,7 +19,7 @@ export const TEACHER_34_OVERVIEW = {
     "تمييز وظائف will الست: قرار لحظي، وعد، توقع، عرض مساعدة، استعداد، ورفض أو عدم استعداد.",
     "استخدام الاختصارات (I'll, you'll, he'll…) والإجابات القصيرة (Yes, I will / No, she won't).",
     "التحذير من خطأين شائعين: will مع الماضي، وإلزام will مع tomorrow.",
-    "المقارنة الأولية مع be going إلى (تمهيد للدرس 35) ومقارنة الأزمنة الستة في جدول واحد.",
+    "المقارنة الأولية مع be going to (تمهيد للدرس 35) ومقارنة الأزمنة الستة في جدول واحد.",
   ],
   prerequisites: [
     "الدرس 30: مراجعة منظومة الماضي (Past / Past Continuous / Past Perfect / Past Perfect Continuous).",
@@ -367,7 +367,7 @@ export const TEACHER_34_TEST_GUIDE: TeacherNote34[] = [
     head: "المستوى الثاني — أكمل الجمل (6–10)",
     lines: [
       "يقيس التطبيق المباشر للنفي والسؤال والتوقع والوعد.",
-      "اقبل in two hours / 'll be / won't tell… إلخ بالكتابتين (مع الاختسار أو بدونه).",
+      "اقبل 'll be / will be و won't tell / will not tell … إلخ بالصيغتين (مع الاختصار أو بدونه).",
     ],
   },
   {

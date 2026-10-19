@@ -411,7 +411,7 @@ const CARDS: Card[] = [
     title: "الدرس 34: Future Simple — المستقبل البسيط باستخدام WILL",
     en: "Future Simple — The Future Starts Here!",
     emoji: "🚀",
-    stats: "38 قسمًا مرقّمًا · 40 خطوة · محرك المستقبل والوظائف الست · اختبار 25 سؤالًا · IQ200",
+    stats: "38 قسمًا مرقّمًا · 40 خطوة · Future Launchpad والوظائف الست · اختبار 25 سؤالًا · IQ200",
     href: "#/lesson/34",
     grad: "from-teal-600 to-sky-600",
   },

@@ -1,0 +1,100 @@
+{
+  "baseUrl": "http://127.0.0.1:4173/English-Course/#/lesson/34",
+  "viewports": [
+    {
+      "viewport": "1440x900",
+      "visibleLockCount": 1,
+      "totalLockCount": 1,
+      "horizontal": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440
+      },
+      "direction": "rtl",
+      "overlaps": {
+        "lockNext": 0,
+        "lockPrev": 0,
+        "fabLock": 0,
+        "fabNext": 0
+      },
+      "fabVisible": false
+    },
+    {
+      "viewport": "1280x800",
+      "visibleLockCount": 1,
+      "totalLockCount": 1,
+      "horizontal": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280
+      },
+      "direction": "rtl",
+      "overlaps": {
+        "lockNext": 0,
+        "lockPrev": 0,
+        "fabLock": 0,
+        "fabNext": 0
+      },
+      "fabVisible": false
+    },
+    {
+      "viewport": "768x900",
+      "visibleLockCount": 1,
+      "totalLockCount": 1,
+      "horizontal": {
+        "scrollWidth": 768,
+        "clientWidth": 768
+      },
+      "direction": "rtl",
+      "overlaps": {
+        "lockNext": 0,
+        "lockPrev": 0,
+        "fabLock": 0,
+        "fabNext": 0
+      },
+      "fabVisible": true
+    },
+    {
+      "viewport": "375x812",
+      "visibleLockCount": 1,
+      "totalLockCount": 1,
+      "horizontal": {
+        "scrollWidth": 375,
+        "clientWidth": 375
+      },
+      "direction": "rtl",
+      "overlaps": {
+        "lockNext": 0,
+        "lockPrev": 0,
+        "fabLock": 0,
+        "fabNext": 0
+      },
+      "fabVisible": true
+    }
+  ],
+  "consoleErrors": [],
+  "generatedAt": "2026-10-19T22:19:21.372Z",
+  "lockPerArea": {
+    "lesson": 1,
+    "test": 1,
+    "solutions": 1,
+    "teacher": 1
+  },
+  "mobileAreas": {
+    "test": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "locks": 1
+    },
+    "solutions": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "locks": 1
+    },
+    "teacher": {
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "locks": 1
+    }
+  },
+  "checks": 53,
+  "failures": []
+}

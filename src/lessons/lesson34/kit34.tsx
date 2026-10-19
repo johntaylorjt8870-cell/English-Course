@@ -1,8 +1,8 @@
 // ============================================================
-// kit34 — مكوّنات تفاعل الدرس 34 (THE FUTURE ENGINE)
-// هوية بصرية جديدة: خلفية عاجية دافئة + أخضر مزرقّ (teal) هادئ أساسي،
-// وأزرق سماوي للمعلومات المساندة، وكهرماني للتلميحات، وبنفسجي للتميّز،
-// وأحمر مقيّد لحالات الخطأ الحقيقية فقط.
+// kit34 — مكوّنات تفاعل الدرس 34 (FUTURE LAUNCHPAD)
+// هوية بصرية نهارية مشبعة: بنفسجي إطلاق، وردي وصول، سماوي للأسئلة،
+// زمردي للمثبت، كهرماني للوعود، برتقالي للقرارات، وأحمر مقيّد للأخطاء.
+// كل الأنماط محصورة داخل .l34-app عبر lesson34.css.
 // القواعد المشتركة: لا كشف للإجابات قبل فعل المتعلّم، تركيز مرئي عبر FOCUS34،
 // وكل الخيارات الإنجليزية تُعرض عبر LatinRuns/En.
 // ============================================================
@@ -12,13 +12,13 @@ import { En, Rich } from "../../shared/lessonKit";
 import { LatinRuns } from "../../shared/bidi";
 
 export const FOCUS34 =
-  "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white";
+  "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white";
 
 /* ---------- لوحة الألوان الدلالية (تُستخدم في كل المكوّنات) ---------- */
 export const TONE34 = {
   /** الأساسي: تنقّل نشط وإجراءات مهمة */
-  primary: "border-teal-700 bg-teal-700 text-white hover:bg-teal-800",
-  primarySoft: "border-teal-200 bg-teal-50 text-teal-900",
+  primary: "border-violet-700 bg-violet-700 text-white hover:bg-violet-800",
+  primarySoft: "border-violet-200 bg-violet-50 text-violet-900",
   /** الثانوي: شروح ومعلومات مساندة */
   info: "border-sky-200 bg-sky-50 text-sky-900",
   /** الأمثلة وحالات التعلّم الناجحة */
@@ -49,11 +49,11 @@ export function useGate34(total: number): GateDriver34 {
 /* ---------- الغلاف الهادئ لكل لوحة ---------- */
 export function Lab34({ children, source }: { children: ReactNode; source?: string }) {
   return (
-    <div className="rounded-[1.75rem] border border-stone-200/80 bg-white/85 p-4 shadow-[0_10px_40px_-32px_rgba(28,25,23,0.45)] sm:p-6">
+    <div className="l34-board">
       {children}
       {source ? (
-        <div className="mt-4 border-t border-stone-100 pt-2 text-[11px] leading-5 text-stone-500">
-          📜 المصدر: <Rich text={source} />
+        <div className="mt-4 border-t border-dashed border-violet-100 pt-2 text-[11px] leading-5 text-violet-400">
+          🛰️ مرجع المصدر: <Rich text={source} />
         </div>
       ) : null}
     </div>
@@ -62,8 +62,8 @@ export function Lab34({ children, source }: { children: ReactNode; source?: stri
 
 export function Platform34({ children }: { children: ReactNode }) {
   return (
-    <div className="mt-3 rounded-2xl border border-dashed border-stone-300 bg-stone-50/70 px-3 py-2 text-[12px] leading-6 text-stone-700">
-      <span className="font-bold">🛠️ مثال تدريبي للمنصة — ليس من المصدر: </span>
+    <div className="mt-3 rounded-2xl border border-dashed border-violet-300 bg-violet-50/60 px-3 py-2 text-[12px] leading-6 text-violet-900">
+      <span className="font-bold">🛸 مثال تدريبي للمنصة — ليس من المصدر: </span>
       {typeof children === "string" ? <Rich text={children} /> : children}
     </div>
   );
@@ -96,8 +96,11 @@ export function Progress34({ complete, total }: { complete: number; total: numbe
   const pct = total ? Math.round((complete / total) * 100) : 0;
   return (
     <div className="mb-3 flex items-center gap-2" aria-label="التقدم في التفاعل">
-      <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-stone-200">
-        <div className="h-full rounded-full bg-teal-700 transition-all" style={{ width: `${pct}%` }} />
+      <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-violet-100">
+        <div
+          className="h-full rounded-full bg-gradient-to-l from-violet-600 via-fuchsia-500 to-amber-400 transition-all"
+          style={{ width: `${pct}%` }}
+        />
       </div>
       <span className="text-[11px] font-bold tabular-nums text-stone-600" aria-live="polite">
         <Rich text={`أنجزت ${complete} من ${total}`} />
@@ -164,11 +167,24 @@ export function TimelineChips34({
           </button>
         ))}
       </div>
-      <div className="mt-2 rounded-2xl border border-stone-200 bg-stone-50/70 px-3 py-2 text-[12px] leading-6 text-stone-700" dir="ltr">
-        <En>PAST ───────── NOW ───────── FUTURE</En>
-        <span className="mr-2 text-stone-500" dir="rtl">
-          الماضي الآن المستقبل
-        </span>
+      <div className="mt-2 rounded-2xl border border-stone-200 bg-stone-50/70 px-3 py-2">
+        <div className="grid grid-cols-3 items-center gap-1 text-center" dir="ltr">
+          <span className="text-[11px] font-black tracking-wider text-violet-700">
+            <En>PAST</En>
+          </span>
+          <span className="text-[11px] font-black tracking-wider text-fuchsia-700">
+            <En>NOW</En>
+          </span>
+          <span className="text-[11px] font-black tracking-wider text-amber-700">
+            <En>FUTURE</En>
+          </span>
+        </div>
+        <div className="my-1 h-0.5 w-full rounded-full bg-gradient-to-r from-violet-300 via-fuchsia-300 to-amber-300" aria-hidden />
+        <div className="grid grid-cols-3 gap-1 text-center text-[11px] font-bold text-stone-500">
+          <span>الماضي</span>
+          <span>الآن</span>
+          <span>المستقبل</span>
+        </div>
       </div>
     </div>
   );
@@ -332,6 +348,143 @@ export function FormulaBoard34({
           <Rich text={note} />
         </div>
       ) : null}
+    </div>
+  );
+}
+
+/* ---------- بناء جملة تفاعلي: Subject + will + V1 ---------- */
+export function SentenceBuilder34() {
+  const subjects = ["I", "You", "He", "She", "It", "We", "They"];
+  const verbs = ["study", "travel", "help", "call", "be"];
+  const rests = ["tomorrow", "next week", "soon", "tonight", "for you"];
+  const [subject, setSubject] = useState("I");
+  const [verb, setVerb] = useState("study");
+  const [rest, setRest] = useState("tomorrow");
+  const [mode, setMode] = useState<"affirmative" | "negative" | "question">("affirmative");
+
+  const lowerSubject = subject.toLowerCase();
+  const sentence =
+    mode === "affirmative"
+      ? `${subject} will ${verb} ${rest}.`
+      : mode === "negative"
+        ? `${subject} won't ${verb} ${rest}.`
+        : `Will ${lowerSubject} ${verb} ${rest}?`;
+
+  const modeNote =
+    mode === "affirmative"
+      ? "مثبت: Subject + will + V1 + Rest."
+      : mode === "negative"
+        ? "منفي: Subject + won't + V1 + Rest — لا do/does، ولا to."
+        : "سؤال: Will + Subject + V1 + Rest? — will قبل الفاعل.";
+
+  return (
+    <div className="rounded-2xl border border-violet-200 bg-white p-3" data-builder="34">
+      <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+        <div className="text-[12px] font-black text-violet-800">
+          <Rich text="🛠️ ابنِ جملتك بنفسك — اختر الفاعل والفعل والزمن:" />
+        </div>
+        <div className="flex flex-wrap gap-1" dir="ltr">
+          {([
+            ["affirmative", "will"],
+            ["negative", "won't"],
+            ["question", "Will …?"],
+          ] as const).map(([value, label]) => (
+            <button
+              key={value}
+              type="button"
+              data-builder-mode={value}
+              aria-pressed={mode === value}
+              onClick={() => setMode(value)}
+              className={`${FOCUS34} rounded-full border-2 px-2.5 py-1 text-[11px] font-black transition ${
+                mode === value
+                  ? "border-violet-600 bg-violet-600 text-white"
+                  : "border-violet-200 bg-white text-violet-800 hover:border-violet-400"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid gap-2 sm:grid-cols-3">
+        <div>
+          <div className="mb-1 text-[10px] font-black text-violet-500">SUBJECT</div>
+          <div className="flex flex-wrap gap-1" dir="ltr">
+            {subjects.map((item) => (
+              <button
+                key={item}
+                type="button"
+                data-builder-subject={item}
+                aria-pressed={subject === item}
+                onClick={() => setSubject(item)}
+                className={`${FOCUS34} rounded-lg border px-2 py-1 text-[12px] font-black transition ${
+                  subject === item
+                    ? "border-indigo-400 bg-indigo-50 text-indigo-800"
+                    : "border-violet-100 bg-white text-violet-700 hover:border-indigo-300"
+                }`}
+              >
+                <En>{item}</En>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <div className="mb-1 text-[10px] font-black text-violet-500">V1 (base verb)</div>
+          <div className="flex flex-wrap gap-1" dir="ltr">
+            {verbs.map((item) => (
+              <button
+                key={item}
+                type="button"
+                data-builder-verb={item}
+                aria-pressed={verb === item}
+                onClick={() => setVerb(item)}
+                className={`${FOCUS34} rounded-lg border px-2 py-1 text-[12px] font-black transition ${
+                  verb === item
+                    ? "border-emerald-400 bg-emerald-50 text-emerald-800"
+                    : "border-violet-100 bg-white text-violet-700 hover:border-emerald-300"
+                }`}
+              >
+                <En>{item}</En>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <div className="mb-1 text-[10px] font-black text-violet-500">REST</div>
+          <div className="flex flex-wrap gap-1" dir="ltr">
+            {rests.map((item) => (
+              <button
+                key={item}
+                type="button"
+                data-builder-rest={item}
+                aria-pressed={rest === item}
+                onClick={() => setRest(item)}
+                className={`${FOCUS34} rounded-lg border px-2 py-1 text-[11px] font-black transition ${
+                  rest === item
+                    ? "border-amber-400 bg-amber-50 text-amber-900"
+                    : "border-violet-100 bg-white text-violet-700 hover:border-amber-300"
+                }`}
+              >
+                <En>{item}</En>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-3 rounded-xl border-2 border-violet-200 bg-gradient-to-l from-violet-50 via-white to-amber-50 px-3 py-2">
+        <div className="text-[10px] font-black text-violet-400">YOUR SENTENCE</div>
+        <div className="mt-0.5 text-[15px] font-black leading-7 text-violet-950" dir="ltr" data-builder-output={mode}>
+          <LatinRuns text={sentence} />
+        </div>
+      </div>
+      <div className="mt-1.5 text-[11px] font-bold leading-5 text-violet-700" aria-live="polite">
+        <Rich text={modeNote} />
+      </div>
+      <div className="mt-1 text-[10px] leading-5 text-violet-400">
+        <Rich text="كل الأفعال المعروضة بصيغة V1 — هذا هو الدرس: لا s ولا ing ولا to ولا ماضٍ بعد will." />
+      </div>
     </div>
   );
 }

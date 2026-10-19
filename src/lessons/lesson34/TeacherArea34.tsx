@@ -20,6 +20,8 @@ import {
   TEACHER_34_SOURCE_NOTE,
 } from "./teacherData";
 import { FOCUS34 } from "./kit34";
+import DetailedSolutions34 from "./DetailedSolutions34";
+import { DETAILED_TEST_SOLUTIONS_34 } from "./solutionsData34";
 import { FinalTestAnswerKey } from "../../shared/finalTest";
 import { FINAL_TESTS } from "../../shared/finalTestBank";
 
@@ -38,7 +40,7 @@ export default function TeacherArea34({
   if (!unlocked) {
     return (
       <form
-        className="mx-auto max-w-md space-y-3 rounded-3xl border-2 border-teal-300 bg-white p-5"
+        className="l34-teacher-gate mx-auto max-w-md space-y-3"
         onSubmit={(e) => {
           e.preventDefault();
           if (pw === TEACHER_PASSWORD_34) {
@@ -86,7 +88,7 @@ export default function TeacherArea34({
   }
 
   return (
-    <div className="space-y-4" data-area="l34-teacher-body">
+    <div className="l34-teacher" data-area="l34-teacher-body">
       {/* مفتاح الاختبار النهائي — داخل منطقة المعلم المفتوحة بكلمة المرور */}
       <FinalTestAnswerKey lesson={34} questions={FINAL_TESTS[34]} accent="bg-teal-800" />
       <header className="flex flex-wrap items-center justify-between gap-2 rounded-3xl border-2 border-teal-200 bg-white p-4">
@@ -183,6 +185,16 @@ export default function TeacherArea34({
             </ul>
           </Sub>
         ))}
+      </Card>
+
+      <Card title="🧪 الحلول التفصيلية للاختبار — 25 سؤالًا">
+        <p className="text-xs font-bold text-teal-700">
+          <Rich text="مفتاح كامل مشتق وفق قواعد الدرس (المصدر يعِد بعرض الحلول دون سردها): إجابة صحيحة + سبب + بنية نحوية لكل سؤال، ونماذج وبدائل مقبولة للأسئلة الخمسة الحرة." />
+        </p>
+        <p className="text-[11px] font-bold text-amber-800">
+          <Rich text={`الإجمالي: ${DETAILED_TEST_SOLUTIONS_34.length} / 25 — تُقبل البدائل عندما تحقق وظيفة الجملة والبناء نفسه.`} />
+        </p>
+        <DetailedSolutions34 />
       </Card>
 
       <Card title="📊 rubrics للتقييم">

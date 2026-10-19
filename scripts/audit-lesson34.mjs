@@ -25,6 +25,7 @@ const require = createRequire(import.meta.url);
 const esbuild = require("esbuild");
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const outFile = join(root, "scripts", ".lesson34-audit.mjs");
+const outCss = join(root, "scripts", ".lesson34-audit.css");
 const L34 = join(root, "src", "lessons", "lesson34");
 
 const failures = [];
@@ -422,12 +423,33 @@ const drivePairs = async (el, pairs) => {
   ok(textOf(el).includes("They will"), "s3: pronoun form rendered after the tap");
 }
 
-// s4 — golden rule one (verb chips + error pairs)
+// s4 — golden rule one (verb chips + error pairs + platform V1 traps)
 {
   const el = await mountStep(slugOf("s4"));
   for (const v of D.GOLDEN_VERBS_34) clickEl(q(el, `[data-verb="${v.v1}"]`));
   await tick(10);
   await drivePairs(el, D.ERROR_PAIRS_S4);
+  // platform drill: the three mandated error forms must each be a decision with feedback
+  const trapText = D.WILL_TRAPS_S4.flatMap((row) => row.options.map((option) => option.text)).join(" | ");
+  for (const probe of ["She will goes", "She won't to go", "He will went"])
+    ok(trapText.includes(probe), `s4 traps: mandated error form covered — ${probe}`);
+  ok(D.WILL_TRAPS_S4.every((row) => row.options.filter((option) => option.ok).length === 1), "s4 traps: each row has exactly one correct option");
+  ok(D.WILL_TRAPS_S4.every((row) => row.options.some((option) => option.note) && row.fix && row.why), "s4 traps: every trap carries feedback and an explanation");
+  // a wrong pick must answer back before the row is solved
+  clickEl(q(el, `[data-trap-row="0"][data-trap-opt="0"]`));
+  await tick(15);
+  ok(
+    D.WILL_TRAPS_S4[0].options[0].note && textOf(el).includes("وبعد will لا نضيف s أبدًا"),
+    "s4 traps: wrong pick renders its own corrective note",
+  );
+  ok(!textOf(el).includes("✓ She will go to school."), "s4 traps: the corrected sentence stays hidden until the right pick");
+  ok(!(await gateDone34(el, "s4")), "s4 traps: gate stays closed while a trap is unsolved");
+  for (let i = 0; i < D.WILL_TRAPS_S4.length; i++) {
+    const answer = D.WILL_TRAPS_S4[i].options.findIndex((option) => option.ok);
+    clickEl(q(el, `[data-trap-row="${i}"][data-trap-opt="${answer}"]`));
+    await tick(15);
+  }
+  ok(textOf(el).includes("He will go to the market."), "s4 traps: corrected sentence revealed after the right pick");
   ok(await gateDone34(el, "s4"), "gate s4: completion confirmed");
 }
 
@@ -1070,6 +1092,7 @@ const bankQ = 15;
 
 // ---------------- cleanup & report ----------------
 rmSync(outFile, { force: true });
+rmSync(outCss, { force: true });
 if (failures.length) {
   console.error(`Lesson 34 audit: ${checks - failures.length} passed, ${failures.length} FAILED`);
   for (const f of failures) console.error(" ✕ " + f);

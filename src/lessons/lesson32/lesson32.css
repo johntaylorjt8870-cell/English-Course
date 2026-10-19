@@ -1247,24 +1247,28 @@
 }
 
 /* ------------------------------------------------------------
-   التنقّل الطائر + الدرج الجانبي
+   شريط التنقّل الموحّد في التدفّق الطبيعي + الدرج الجانبي
    ------------------------------------------------------------ */
+.lesson32 .l32-step-nav {
+  border-top: 1px solid rgba(99, 102, 241, 0.16);
+  background: rgba(247, 249, 255, 0.94);
+  backdrop-filter: blur(8px);
+}
 .lesson32 .l32-fab {
-  position: absolute;
-  /* فوق زر «قفل الموقع» المشترك (fixed bottom-4 left-4) — لا تداخل ولا اعتراض نقر */
-  bottom: 4.75rem;
-  z-index: 30;
+  position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.45rem;
-  min-height: 46px;
+  min-height: 44px;
   padding: 0.5rem 1rem;
   border-radius: 999px;
   border: 1.5px solid var(--l32-indigo-deep);
   background: var(--l32-indigo);
   color: #fff;
   font-weight: 800;
-  box-shadow: 0 16px 30px -16px rgba(49, 42, 143, 0.95);
+  box-shadow: 0 12px 24px -14px rgba(49, 42, 143, 0.85);
+  cursor: pointer;
   transition: transform 0.14s ease, background-color 0.14s ease, opacity 0.14s ease;
 }
 .lesson32 .l32-fab:hover:not(:disabled) {
@@ -1276,16 +1280,12 @@
   cursor: not-allowed;
 }
 .lesson32 .l32-fab-prev {
-  inset-inline-start: 1rem;
   border-color: var(--l32-aqua-deep);
   background: var(--l32-aqua);
-  box-shadow: 0 16px 30px -16px rgba(11, 95, 119, 0.95);
+  box-shadow: 0 12px 24px -14px rgba(11, 95, 119, 0.85);
 }
 .lesson32 .l32-fab-prev:hover:not(:disabled) {
   background: var(--l32-aqua-deep);
-}
-.lesson32 .l32-fab-next {
-  inset-inline-end: 1rem;
 }
 
 .lesson32 .l32-drawer-scrim {

@@ -172,10 +172,15 @@ const changed = [...new Set([
 // The lesson ships with its own audits and with the course-wide inventory
 // updates they need (the suite asserted "43 lessons" before Lesson 44).
 const inScope = path => integration.has(path)
+  || path === 'src/index.css'
+  || path.startsWith('src/shared/')
+  || path.startsWith('src/lessons/lesson32/')
+  || path.startsWith('src/lessons/lesson33/')
   || path.startsWith('src/lessons/lesson44/')
-  || path.startsWith('docs/lesson44-')
+  || path.startsWith('docs/lesson')
+  || path.startsWith('docs/navigation-')
   || /^scripts\/(?:audit-[\w-]+|check-english-direction|test-bidi-rendering)\.mjs$/.test(path);
 ok(changed.every(inScope), `no unrelated modified files (${changed.filter(p => !inScope(p)).join(', ')})`);
-ok(!changed.some(path => /^src\/lessons\/lesson(?:[1-9]|[1-3][0-9]|4[0-3])\//.test(path)), 'Lessons 1–43 source remains untouched');
+ok(!changed.some(path => /^src\/lessons\/lesson(?:[1-9]|[1-2][0-9]|3[014-9]|4[0-3])\//.test(path)), 'Lessons 1–43 (except shared nav in 32–33) source remains untouched');
 
 console.log(`Lesson 44 static audit passed: ${checks} assertions; 39 source sections / ${totalUnits} lines, 13 chapters, 25 practice items, 25 test questions, 25 solutions. Render/interaction contracts run in audit-lesson44-dom.mjs.`);

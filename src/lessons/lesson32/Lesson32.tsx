@@ -19,6 +19,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { En, Frame, Rich } from "../../shared/lessonKit";
 import { LatinRuns } from "../../shared/bidi";
 import { Signature, SignatureGhost } from "../../shared/Signature";
+import LessonStepNav from "../../shared/LessonStepNav";
 import { SOURCE_NUMBERED_COUNT_32, SOURCE_LEDGER_COUNT_32, SOURCE_SECTIONS, SEC_32 } from "./ledger32";
 import {
   LESSON_TITLE_32, LESSON_SUBTITLE_32, LAB_NAME_32, LAB_MOTTO_32, SECTIONS_32, SLIDES,
@@ -333,7 +334,7 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
           </header>
 
           {/* ---------- المحتوى ---------- */}
-          <main id="l32-main" ref={mainRef} className="l32-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-3 pb-36 pt-3 sm:px-4">
+          <main id="l32-main" ref={mainRef} className="l32-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-3 pb-6 pt-3 sm:px-4">
             <p role="status" aria-live="polite" className="sr-only">
               <Rich text={area === "lesson" ? `الخطوة ${index + 1} من ${SLIDE_COUNT_32}: ${slide.title}` : areaLabel} />
             </p>
@@ -380,19 +381,20 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
             </div>
           </main>
 
-          {/* ---------- التنقّل الطائر (منطقة الدرس فقط) ---------- */}
-          {area === "lesson" && (
-            <>
-              <button type="button" disabled={index === 0} onClick={() => goSlide(index - 1)}
-                className={`l32-fab l32-fab-prev ${FOCUS32}`}>
-                → <Rich text="السابق" />
-              </button>
-              <button type="button" disabled={index === SLIDE_COUNT_32 - 1} onClick={() => goSlide(index + 1)}
-                className={`l32-fab l32-fab-next ${FOCUS32}`}>
-                التالي ←
-              </button>
-            </>
-          )}
+          {/* ---------- شريط التنقّل الموحّد في التدفّق الطبيعي ---------- */}
+          <LessonStepNav
+            showStepControls={area === "lesson"}
+            onPrev={() => goSlide(index - 1)}
+            onNext={() => goSlide(index + 1)}
+            prevDisabled={index === 0}
+            nextDisabled={index === SLIDE_COUNT_32 - 1}
+            prevLabel={<>→ <Rich text="السابق" /></>}
+            nextLabel="التالي ←"
+            prevClassName={`l32-fab l32-fab-prev ${FOCUS32}`}
+            nextClassName={`l32-fab l32-fab-next ${FOCUS32}`}
+            className="l32-step-nav"
+            ariaLabel="التنقل بين خطوات الدرس 32"
+          />
         </div>
 
         {/* ---------- الدرج (الشاشات الصغيرة) ---------- */}

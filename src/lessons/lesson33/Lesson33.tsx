@@ -11,6 +11,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { En, Rich } from "../../shared/lessonKit";
 import { LatinRuns } from "../../shared/bidi";
 import { Signature, SignatureGhost } from "../../shared/Signature";
+import LessonStepNav from "../../shared/LessonStepNav";
 import FinalTest from "../../shared/finalTest";
 import { FINAL_TESTS } from "../../shared/finalTestBank";
 import { SECTIONS_33, SLIDES, SLIDE_COUNT_33, LAB_NAME_33, LESSON_TITLE_33, LESSON_SUBTITLE_33, LAB_MOTTO_33 } from "./data";
@@ -361,19 +362,26 @@ export default function Lesson33(_props: { onExit?: () => void }) {
             ) : null}
           </header>
 
-          <main id="l33-main" ref={mainRef} className="l33-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-3 pb-36 pt-3 sm:px-4" data-area={area === "lesson" ? "l33-lesson" : area === "test" ? "l33-test" : area === "solutions" ? "l33-solutions" : "l33-teacher"}>
+          <main id="l33-main" ref={mainRef} className="l33-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-3 pb-6 pt-3 sm:px-4" data-area={area === "lesson" ? "l33-lesson" : area === "test" ? "l33-test" : area === "solutions" ? "l33-solutions" : "l33-teacher"}>
             <p role="status" aria-live="polite" className="sr-only"><Rich text={area === "lesson" ? `الخطوة ${index + 1} من ${SLIDE_COUNT_33}: ${step.title}` : areaLabel} /></p>
             <div className="mx-auto w-full max-w-[76rem] space-y-3">
               {areaMain}
             </div>
           </main>
 
-          {area === "lesson" && (
-            <>
-              <button type="button" disabled={index === 0} onClick={() => goSlide(index - 1)} className={`l33-fab l33-fab-prev ${FOCUS33}`}>→ <Rich text="السابق" /></button>
-              <button type="button" disabled={index === SLIDE_COUNT_33 - 1} onClick={() => goSlide(index + 1)} className={`l33-fab l33-fab-next ${FOCUS33}`}>التالي ←</button>
-            </>
-          )}
+          <LessonStepNav
+            showStepControls={area === "lesson"}
+            onPrev={() => goSlide(index - 1)}
+            onNext={() => goSlide(index + 1)}
+            prevDisabled={index === 0}
+            nextDisabled={index === SLIDE_COUNT_33 - 1}
+            prevLabel={<>→ <Rich text="السابق" /></>}
+            nextLabel="التالي ←"
+            prevClassName={`l33-fab l33-fab-prev ${FOCUS33}`}
+            nextClassName={`l33-fab l33-fab-next ${FOCUS33}`}
+            className="l33-step-nav"
+            ariaLabel="التنقل بين خطوات الدرس 33"
+          />
         </div>
 
         {drawer && (

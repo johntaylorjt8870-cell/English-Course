@@ -375,18 +375,31 @@
   background: #fff;
 }
 
-/* fab */
+/* step navigation (normal flex flow via shared LessonStepNav) */
+.lesson33 .l33-step-nav {
+  border-top: 1px solid var(--l33-line-soft);
+  background: rgba(255, 250, 240, 0.92);
+  backdrop-filter: blur(8px);
+}
 .lesson33 .l33-fab {
-  position: absolute; bottom: 18px;
-  min-height: 42px; border-radius: 999px;
-  padding: 0 16px; font-size: 13px; font-weight: 900;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 42px;
+  border-radius: 999px;
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 900;
   border: 1px solid var(--l33-line);
-  background: #fff; box-shadow: var(--l33-shadow);
+  background: #fff;
+  color: var(--l33-ink);
+  box-shadow: var(--l33-shadow);
+  cursor: pointer;
 }
 .lesson33 .l33-fab:disabled { opacity: 0.35; cursor: not-allowed; }
-.lesson33 .l33-fab-prev { inset-inline-start: 12px; }
 .lesson33 .l33-fab-next {
-  inset-inline-end: 12px;
   background: var(--l33-ink); color: #fff; border-color: var(--l33-ink);
 }
 

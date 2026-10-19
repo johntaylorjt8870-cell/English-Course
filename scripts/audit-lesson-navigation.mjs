@@ -240,11 +240,16 @@ async function main() {
   ok(visibleNumbers(nav).join(",") === "22,23,24,25,26,27,28,29,30,31", "hub: بعد درس 31 تظهر النافذة 22–31 تلقائيًا");
   ok(nav.querySelector('a[href="#/lesson/31"]').getAttribute("aria-current") === "true", "hub: الدرس 31 ظاهر ومميّز");
 
-  // Lesson 35 route and its dedicated Future Lab shell
+  // Lesson 35 route and its dedicated Future Garden Studio shell
   win.location.hash = "#/lesson/35";
   await tick(100);
   ok(!app.host.querySelector(NAV_SELECTOR), "hub: فتح الدرس 35 يغادر الصفحة الرئيسية عبر الراوتر");
-  ok(app.host.querySelector('[data-lesson="35"]') && app.host.textContent.includes("Future Lab"), "hub: مسار الدرس 35 يرسم Future Lab shell");
+  ok(
+    app.host.querySelector('[data-lesson="35"]') &&
+      app.host.textContent.includes("FUTURE GARDEN STUDIO") &&
+      !app.host.textContent.includes("Future Lab"),
+    "hub: مسار الدرس 35 يرسم Future Garden Studio shell المستقل",
+  );
   win.location.hash = "#/";
   await tick(100);
   nav = app.host.querySelector(NAV_SELECTOR);

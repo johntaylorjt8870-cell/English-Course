@@ -276,6 +276,55 @@ export const ERROR_PAIRS_S4: { wrong: string; right: string; why: string }[] = [
 ];
 
 // ============================================================
+// s4 — تدريب إضافي من إعداد المنصة (ليس نصًا مصادرًا):
+// ثلاث مصائد يكرّرها المتعلّم بعد will/won't — لكل خيار ملاحظة
+// تصحيحية خاصة به، ولا تظهر الإجابة الصحيحة قبل اختيار المتعلّم.
+// ============================================================
+export type WillTrap34 = {
+  n: string;
+  label: string;
+  options: { text: string; ok: boolean; note?: string }[];
+  fix: string;
+  why: string;
+};
+
+export const WILL_TRAPS_S4: WillTrap34[] = [
+  {
+    n: "①",
+    label: "فاعل غائب + will",
+    options: [
+      { text: "She will goes to school.", ok: false, note: "goes فيها s — وبعد will لا نضيف s أبدًا." },
+      { text: "She will go to school.", ok: true },
+      { text: "She will going to school.", ok: false, note: "going صيغة ing، و will تحتاج V1." },
+    ],
+    fix: "She will go to school.",
+    why: "بعد will يأتي الفعل الأساسي V1: go — لا goes ولا going.",
+  },
+  {
+    n: "②",
+    label: "النفي won't والفعل",
+    options: [
+      { text: "She won't to go to the party.", ok: false, note: "لا نضع to بين won't والفعل: won't go." },
+      { text: "She won't go to the party.", ok: true },
+      { text: "She doesn't will go to the party.", ok: false, note: "won't هي النفي بنفسها — لا تحتاج doesn't." },
+    ],
+    fix: "She won't go to the party.",
+    why: "won't = will not، وبعدها V1 مباشرة دون to.",
+  },
+  {
+    n: "③",
+    label: "الفعل الشاذ في الماضي",
+    options: [
+      { text: "He will went to the market.", ok: false, note: "went ماضٍ — بعد will نعود إلى go." },
+      { text: "He will gone to the market.", ok: false, note: "gone تصريف ثالث V3، وليس V1." },
+      { text: "He will go to the market.", ok: true },
+    ],
+    fix: "He will go to the market.",
+    why: "سلسلة go → went → gone تتوقف عند will: will go فقط.",
+  },
+];
+
+// ============================================================
 // s5 — وظائف will الست
 // ============================================================
 export const USE_CARDS_S5: { n: string; title: string; ar: string; ex: string; exAr: string }[] = [

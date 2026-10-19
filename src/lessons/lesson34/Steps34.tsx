@@ -19,6 +19,7 @@ import {
   PRONOUN_PICK_S3,
   GOLDEN_VERBS_34,
   ERROR_PAIRS_S4,
+  WILL_TRAPS_S4,
   USE_CARDS_S5,
   MOMENT_EXCHANGES_S6,
   DIALOGUE_HOME_S7,
@@ -78,6 +79,7 @@ import {
   FUTURE_ROADMAP_S38,
   NEXT_STOP_ROW_S38,
   type McRow34,
+  type WillTrap34,
 } from "./data";
 import {
   Lab34,
@@ -535,11 +537,90 @@ function PronounChips34({
   );
 }
 
+/* ---------- s4: مصائد V1 بعد will/won't (إضافة من إعداد المنصة) ---------- */
+function WillTraps34({ rows, drv }: { rows: WillTrap34[]; drv: GateDriver34 }) {
+  const [picks, setPicks] = useState<(number | null)[]>(() => rows.map(() => null));
+  const solved = picks.map((pick, i) => pick !== null && rows[i].options[pick].ok);
+  const count = solved.filter(Boolean).length;
+  useEffect(() => {
+    if (count === rows.length) drv.onDone(true);
+  }, [count, rows.length, drv]);
+  return (
+    <div className="rounded-2xl border border-stone-200 bg-white p-3">
+      <div className="mb-2 text-[12px] font-black text-stone-600">
+        <Rich text="🪤 ثلاث مصائد شائعة — اختر الجملة الصحيحة، وسترى لماذا الخطأ خطأ:" />
+      </div>
+      <Progress34 complete={count} total={rows.length} />
+      <div className="space-y-2">
+        {rows.map((row, i) => {
+          const pick = picks[i];
+          const solvedRow = solved[i];
+          return (
+            <div key={row.n} data-trap-row={i} className="rounded-xl border border-stone-200 p-2.5">
+              <div className="mb-1.5 flex flex-wrap items-center gap-1.5 text-[11px] font-black text-stone-500">
+                <span aria-hidden>{row.n}</span>
+                <Rich text={row.label} />
+              </div>
+              <div className="grid gap-1.5 sm:grid-cols-3" dir="ltr">
+                {row.options.map((option, oi) => {
+                  const chosen = pick === oi;
+                  const good = solvedRow && option.ok;
+                  const bad = chosen && !option.ok;
+                  return (
+                    <button
+                      key={oi}
+                      type="button"
+                      data-trap-row={i}
+                      data-trap-opt={oi}
+                      disabled={solvedRow}
+                      onClick={() =>
+                        setPicks((prev) => {
+                          const next = [...prev];
+                          next[i] = oi;
+                          return next;
+                        })
+                      }
+                      aria-pressed={chosen}
+                      className={`${FOCUS34} rounded-lg border-2 px-2.5 py-2 text-left text-[12px] font-bold leading-6 transition ${
+                        good
+                          ? "border-emerald-500 bg-emerald-50 text-emerald-900"
+                          : bad
+                            ? "border-rose-300 bg-rose-50 text-rose-800"
+                            : "border-stone-200 bg-white text-stone-800 hover:border-emerald-400"
+                      }`}
+                    >
+                      <LatinRuns text={option.text} />
+                    </button>
+                  );
+                })}
+              </div>
+              {pick !== null && !row.options[pick].ok ? (
+                <div className="mt-1.5 rounded-lg border border-rose-200 bg-rose-50 px-2 py-1 text-[11px] font-bold leading-5 text-rose-800">
+                  ✕ <Rich text={row.options[pick].note ?? "ليست الصيغة الأساسية."} />
+                </div>
+              ) : null}
+              {solvedRow ? (
+                <div className="mt-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-2 py-1 text-[11px] font-bold leading-5 text-emerald-900">
+                  ✓ <span dir="ltr"><LatinRuns text={row.fix} /></span> — <Rich text={row.why} />
+                </div>
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 /* ---------- s4: القاعدة الذهبية الأولى ---------- */
 function StepS4() {
   const drvVerbs = useGate34(GOLDEN_VERBS_34.length);
   const drvPairs = useGate34(ERROR_PAIRS_S4.length);
-  const done = drvVerbs.complete >= drvVerbs.total && drvPairs.complete >= drvPairs.total;
+  const drvTraps = useGate34(WILL_TRAPS_S4.length);
+  const done =
+    drvVerbs.complete >= drvVerbs.total &&
+    drvPairs.complete >= drvPairs.total &&
+    drvTraps.complete >= drvTraps.total;
   return (
     <StepShell34
       sid="s4"
@@ -559,6 +640,9 @@ function StepS4() {
               drv={drvPairs}
               intro="الأخطاء الشائعة — اختر الجملة الصحيحة في كل زوج:"
             />
+          </div>
+          <div className="mt-3">
+            <WillTraps34 rows={WILL_TRAPS_S4} drv={drvTraps} />
           </div>
           <Hint34>
             <Rich text="انتبه خصوصًا إلى الخطأ الأخير: لا نضع to بين will والفعل الأساسي." />

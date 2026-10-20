@@ -9,7 +9,7 @@
 - Level: **تأسيسي متقدم — IQ200**.
 - Source of truth: the complete Lesson 38 text supplied in the implementation request.
 - The supplied material has an unnumbered opening that bridges Lesson 37 (Future Continuous) and then **36 numbered source sections**. Sections keep their numbers 1–36 and receive IDs `s01`–`s36`; the opening is the separate `cover` step.
-- Native student sequence: `cover`, then `s01`–`s36` in source order = **37 steps**. Chapters group them: LAUNCH (cover, s01, s02), FORM (s03–s05), MEANING (s06–s09), TIMECLAUSE (s10–s12), DIALOGUE (s13), QUESTIONS (s14–s18), VERBS (s19), COMPARE (s20–s25), PRACTICE (s26–s31), ASSESSMENT (s32–s34), WRAP (s35–s36).
+- Native student sequence: `cover`, then the 36 source sections **in source order**, split into **58 short steps**. No section is dropped and no step is a duplicate: dense sections are split into an explanatory half and a practice half (`s02` → `s02a`/`s02b`, `s30` → `s30a`/`s30b`, …). Chapters group them: ARRIVAL (cover, s01), THE FORM (s02–s05), DEADLINES (s06–s09), TWO EVENTS (s10–s13), CONTROL (s14–s19), COMPARE (s20–s25), PRACTICE (s26–s31), READ & TEST (s32–s34), WRAP UP (s35–s36).
 - Section 33 is the *Future Perfect Master Test*: all **25** questions live once in the dedicated Test Area. Its student step is a launch step that keeps the source section visible and points to the test; it does not duplicate the questions.
 - Section 34 (Teacher solutions area) contains only the heading and «عرض الحلول التفصيلية». The source supplies **no** answer key, so all 25 answers and explanations are **platform/teacher additions**, kept in `src/lessons/lesson38/solutionsData38.ts`, marked `platform-authored-teacher-addition`, and shown only in the gated Solutions/Teacher surfaces.
 
@@ -35,7 +35,7 @@ See `docs/lesson38-source-readability.md`. Summary:
 
 ## Coverage ledger — all 36 numbered sections and the introduction
 
-The in-app ledger is `src/lessons/lesson38/coverage38.ts` (37 rows). A compact copy:
+The in-app ledger is `src/lessons/lesson38/coverage38.ts` (37 rows). Every row's `location` is **derived at runtime** from `SLIDES_38` (`coverageLocation38`), so a coverage row and the step map can never drift: the table below names the source section; where a section is split, the derived location lists every step that carries it (`§2 → الخطوات 3 · 4`). A compact copy:
 
 | Source | Native location | Transfer | Platform addition |
 |---|---|---|---|
@@ -106,11 +106,17 @@ I / You / He / She / We / They → `will have finished.` · It → `It will have
 
 **§24 — three perfects:** have/has + V3 · had + V3 · will have + V3.
 
+## Editorial correction
+
+§23 of the supplied text read «ستخبز أو تعد العشاء غدًا» opposite `cook dinner`. «تخبز» means *bake*, not *cook*, so the rendered line is «ستُعِدّ العشاء غدًا» (with the source wording quoted in the teacher accuracy note and in the implementation report). Nothing else in the source text was reworded.
+
 ## Test and answer provenance contract
 
 - Source Master Test = **25** questions in five groups of five.
-- `testData38.ts` consumes every source line of §33 **once**.
-- Test Area shows no correctness mark, score, or explanation before (or after) submission; it never imports the solutions module.
+- `testData38.ts` consumes every source line of §33 **once**; the five level headings are rendered from their traced source units.
+- **Before submission** the Test Area renders no score, no ✓/✕, no explanation and no key: the grading module (`testKey38.ts` → `solutionsData38.ts`) is loaded with `await import(...)` only inside `submit()`, so it is a separate lazy chunk and is absent from the initial student bundle.
+- **After submission** every question is graded in place (model answer, rule, why the chosen option is wrong, accepted alternatives) and the Solutions/Teacher surfaces unlock.
+- The Test Area never imports the solutions module statically; the shared kit imports neither. This is asserted in `scripts/audit-lesson38.mjs` (new `SECTION 6) Answer protection`).
 - All 25 solutions are platform-authored teacher additions.
 - Q23 (`At 3:00 on Thursday, the team ______ (test) the system.`) is Future Continuous (`will be testing`) — the paragraph’s at-vs-by trap.
 
@@ -123,7 +129,7 @@ English/formulas go through `Rich` / `LatinRuns` or `dir="ltr"` + `font-en`. No 
 | Path | Role |
 |---|---|
 | `src/lessons/lesson38/ledger38.ts` | Verbatim source ledger (cover + §1–§36) |
-| `src/lessons/lesson38/data.ts` | Titles, 11 chapters, 37 native steps |
+| `src/lessons/lesson38/data.ts` | Step map: 58 short steps, 9 chapters, source ranges |
 | `src/lessons/lesson38/coverage38.ts` | In-app coverage + accuracy notes |
 | `src/lessons/lesson38/practiceData38.ts` | Interactive lab items and source keys |
 | `src/lessons/lesson38/kit38.tsx` | Deadline Lab chrome, SourceCard, tables, buttons |
@@ -136,17 +142,30 @@ English/formulas go through `Rich` / `LatinRuns` or `dir="ltr"` + `font-en`. No 
 | `src/lessons/lesson38/SolutionsArea38.tsx` | Gated solutions |
 | `src/lessons/lesson38/TeacherArea38.tsx` | Password `somer173` |
 | `src/lessons/lesson38/TeacherGuide38.tsx` | Coverage / keys / solutions / rules |
+| `src/lessons/lesson38/testKey38.ts` | Grader (dynamic import only) |
+| `src/lessons/lesson38/lesson38.css` | Finish Line Studio design tokens |
 | `docs/lesson38-source-readability.md` | Pre-implementation source audit |
 | `docs/lesson38-coverage.md` | This ledger |
 | `scripts/audit-lesson38.mjs` | Lesson 38 audit |
 
 ## Validation (jsdom / Node — not a visual browser)
 
-- `npm run audit:lesson38` — 267 assertions (source coverage, 25×5 test, 25 solutions, seven §25 error diagnoses, labs, BIDI, contrast, CSS utilities).
-- `node scripts/check-english-direction.mjs` — 38 lessons.
+- `npm run audit:lesson38` — **315 assertions** (source coverage, no source line rendered twice, 58-step map, 25×5 test, 25 solutions, grader regression 25/25 and 0/25, labs, answer protection, teacher gate, BIDI, computed contrast, responsive contract).
+- `npm run check:english-direction` — 59/59 BIDI rendering assertions.
 - `node scripts/audit-lesson-navigation.mjs` — hub window 29–38.
 - `node scripts/audit-final-test.mjs` — dedicated Lesson 38 Master Test.
 - `ONLY=38 node scripts/audit-bidi-mixed.mjs` — 0 violations.
 - `npm run build` — production Vite build.
 
-No real-browser visual review was performed in this environment. HTTP 200 / build / jsdom ≠ visual verification. The §25 interactive lab now diagnoses all seven source error pairs (④ won't has · ⑤ Will she has · ⑥ by the time you will were previously missing from the lab, though they remained in the source card).
+### Real-browser pass (headless Chromium, dev server on `0.0.0.0`)
+
+58 steps were walked at 390×844, 768×1024, 1280×800 and 1920×1080 (clicking the in-app next control, measuring each step):
+
+| Viewport | Steps | Median step height | Max step height | Steps > 2000 px | Horizontal overflow |
+|---|---|---|---|---|---|
+| 390×844 (mobile) | 58 | 1595 px | 2610 px (`s22`) | 13 | 0 px |
+| 768×1024 (tablet) | 58 | 1222 px | 1960 px | 0 | 0 px |
+| 1280×800 (laptop) | 58 | 1222 px | 1960 px | 0 | 0 px |
+| 1920×1080 (desktop) | 58 | 1195 px | 1960 px | 0 | 0 px |
+
+No page errors and no console errors on any viewport. On mobile the steps above 2000 px are the comparison tables, the 15-verb V3 workshop, the two workshop steps (30أ/30ب are split, 29أ/29ب are split) and the writing workspace; they are long because the source lists are long, not because of padding — the tables scroll inside their own container and no other content was shortened to fit. Screenshots were inspected at each viewport (cover, timeline lab, dialogue, V3 table, practice, reading, test launch, summary); the mobile title wrap that broke `Future Perfect` mid-phrase was fixed by rendering the English half of mixed headings as its own LTR line (`Title38`).

@@ -1,5 +1,5 @@
-import { lazy, Suspense, useState } from "react";
-import { ActionButton38, FOCUS_38 } from "./kit38";
+import { Suspense, lazy, useState } from "react";
+import { ActionButton38, FOCUS_38, FinishLine38 } from "./kit38";
 
 const TeacherGuide38 = lazy(() => import("./TeacherGuide38"));
 const TEACHER_PASSWORD_38 = "somer173";
@@ -20,7 +20,7 @@ export default function TeacherArea38({
     return (
       <Suspense
         fallback={
-          <div role="status" className="rounded-2xl border border-[#d8d2c5] bg-white p-4 text-[#24343b]">
+          <div role="status" className="rounded-2xl border border-[#f0d9d2] bg-white p-4 text-sm font-bold text-[#6b4a5e]">
             جارٍ تحميل دليل المعلم…
           </div>
         }
@@ -43,17 +43,18 @@ export default function TeacherArea38({
           setError("كلمة المرور غير صحيحة.");
         }
       }}
-      className="mx-auto max-w-lg space-y-4 rounded-3xl border border-[#d8d2c5] bg-white p-5 shadow-sm"
+      className="mx-auto max-w-xl space-y-3 rounded-3xl border border-[#f0d9d2] bg-white p-5 shadow-sm"
     >
+      <FinishLine38 label="TEACHER" />
       <div>
-        <p className="text-xs font-black uppercase tracking-[.12em] text-[#53676a]">Teacher Area · Lesson 38</p>
-        <h2 className="mt-1 text-xl font-black text-[#17354a]">منطقة المعلم</h2>
-        <p className="mt-2 text-sm leading-6 text-[#43575a]">
-          مساحة منفصلة عن الطالب والاختبار والحلول، وتضم: خريطة تغطية الأقسام الـ36، مفاتيح التدريبات والقراءة والحوار، حلول الاختبار الـ25
-          بمعايير التصحيح، ومرجع القواعد وملاحظات دقة المصدر.
+        <p className="fp38-eyebrow mt-2">Teacher Area · Lesson 38</p>
+        <h2 className="mt-1 text-xl font-black text-[#3f1233]">منطقة المعلم</h2>
+        <p className="mt-2 text-sm leading-7 text-[#6b4a5e]">
+          مساحة منفصلة عن الطالب والاختبار والحلول، وتضم: خريطة تغطية الأقسام الـ36، مفاتيح التدريبات والقراءة والحوارين، حلول الاختبار الـ25
+          بشرح القاعدة وسبب الخطأ، ومرجع القواعد وملاحظات دقة المصدر.
         </p>
       </div>
-      <label htmlFor="l38-teacher-password" className="block text-sm font-black text-[#24343b]">
+      <label htmlFor="l38-teacher-password" className="block text-sm font-black text-[#3f1233]">
         كلمة مرور المعلم
       </label>
       <input
@@ -65,10 +66,10 @@ export default function TeacherArea38({
         onChange={(event) => setPassword(event.currentTarget.value)}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? "l38-teacher-error" : undefined}
-        className={`${FOCUS_38} w-full rounded-xl border border-[#bfcac4] bg-white px-3 py-2.5 text-base text-[#24343b]`}
+        className={`${FOCUS_38} w-full rounded-xl border border-[#e9b9c6] bg-white px-3 py-2.5 text-base text-[#3f1233]`}
       />
       {error ? (
-        <p id="l38-teacher-error" role="alert" className="text-sm font-black text-[#8d3832]">
+        <p id="l38-teacher-error" role="alert" className="text-sm font-black text-[#a41c36]">
           {error}
         </p>
       ) : null}
@@ -78,9 +79,7 @@ export default function TeacherArea38({
           منطقة الحلول
         </ActionButton38>
       </div>
-      <p className="text-xs leading-5 text-[#53676a]">
-        لا تظهر الحلول الرسمية قبل اجتياز بوابة المعلم أو تسليم الطالب للاختبار.
-      </p>
+      <p className="text-xs leading-5 text-[#7a5767]">لا تظهر الحلول الرسمية قبل اجتياز بوابة المعلم أو تسليم الطالب للاختبار.</p>
     </form>
   );
 }

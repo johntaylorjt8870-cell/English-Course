@@ -447,9 +447,9 @@ const CARDS: Card[] = [
     title: "الدرس 38: Future Perfect — المستقبل التام",
     en: "By Tomorrow, I Will Have Finished!",
     emoji: "✅",
-    stats: "36 قسمًا مرقّمًا · 37 خطوة · خط الإنجاز وby · اختبار 25 سؤالًا · IQ200",
+    stats: "36 قسمًا مرقّمًا · 58 خطوة قصيرة · استوديو خط النهاية · اختبار 25 سؤالًا · IQ200",
     href: "#/lesson/38",
-    grad: "from-[#17354a] to-[#245f62]",
+    grad: "from-[#9f1239] to-[#e8a317]",
   },
   {
     n: 39,

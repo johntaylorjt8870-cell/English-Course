@@ -835,3 +835,71 @@ export const SUMMARY_MATCH_38: ChoiceItem38[] = [
     feedback: "Future Perfect: I will have written the report by 9:00.",
   },
 ];
+
+/** §19ب — أزواج الصواب/الخطأ من المصدر (wrote/went/built). */
+export const V3_PAIRS_38: ChoiceItem38[] = [
+  {
+    id: "v3p-written",
+    prompt: "أي الجملتين صحيحة من المصدر؟",
+    choices: [
+      { value: "a", label: "I will have written the report." },
+      { value: "b", label: "I will have wrote the report." },
+    ],
+    accepted: ["a"],
+    feedback: "المصدر: wrote هي V2، وبعد have نستخدم V3 = written.",
+  },
+  {
+    id: "v3p-gone",
+    prompt: "أي الجملتين صحيحة من المصدر؟",
+    choices: [
+      { value: "a", label: "She will have went home." },
+      { value: "b", label: "She will have gone home." },
+    ],
+    accepted: ["b"],
+    feedback: "went هي V2، وV3 للفعل go هي gone.",
+  },
+  {
+    id: "v3p-built",
+    prompt: "They will have ______ the bridge. اختر V3 الصحيح.",
+    choices: [
+      { value: "a", label: "build" },
+      { value: "b", label: "built" },
+    ],
+    accepted: ["b"],
+    feedback: "المصدر: They will have built the bridge. — built هي V3.",
+  },
+];
+
+/** §35ب — فحص فهم النموذج الإرشادي. */
+export const WRITING_MODEL_CHECK_38: ChoiceItem38[] = [
+  {
+    id: "wm-1",
+    prompt: "في النموذج: أي جملة تستخدم won't have + V3؟",
+    choices: [
+      { value: "a", label: "By the end of next year, I will have improved my English significantly." },
+      { value: "b", label: "I won't have wasted the time I spend practising." },
+    ],
+    accepted: ["b"],
+    feedback: "النموذج يضم جملة منفية واحدة بصيغة won't have + V3.",
+  },
+  {
+    id: "wm-2",
+    prompt: "أي جملة في النموذج تستخدم Future Continuous؟",
+    choices: [
+      { value: "a", label: "At this time next year, I will be working on a new educational project." },
+      { value: "b", label: "I will have completed several new courses." },
+    ],
+    accepted: ["a"],
+    feedback: "will be + V-ing هي Future Continuous، وتصف نشاطًا جاريًا في لحظة مستقبلية.",
+  },
+  {
+    id: "wm-3",
+    prompt: "النموذج يبدأ بـ by the time. ما الزمن المستخدم في جملة by the time؟",
+    choices: [
+      { value: "a", label: "المضارع البسيط: By the time the year ends…" },
+      { value: "b", label: "المستقبل: By the time the year will end…" },
+    ],
+    accepted: ["a"],
+    feedback: "القاعدة نفسها: بعد by the time نستخدم Present Simple، والنتيجة في الجملة الرئيسية بصيغة Future Perfect.",
+  },
+];

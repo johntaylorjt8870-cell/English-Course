@@ -1,3 +1,5 @@
+import { SLIDES_37 } from "./data";
+
 // ============================================================
 // Lesson 37 — سجل تغطية المصدر (Source Coverage Ledger)
 //
@@ -23,7 +25,7 @@ export type CoverageRow37 = {
   accuracyNote?: string;
 };
 
-export const COVERAGE_37: CoverageRow37[] = [
+const BASE_COVERAGE_37: CoverageRow37[] = [
   {
     num: null, id: "cover", title: "المقدمة وربط الدروس الثلاثة السابقة",
     elements: "العنوان · What Will You Be Doing Tomorrow? · رحلة إلى المستقبل — IQ200 🚀 · ربط WILL وBE GOING TO وWILL vs BE GOING TO · سؤال الصديق الافتتاحي · تعريف الحاجة إلى الزمن الجديد",
@@ -307,6 +309,22 @@ export const COVERAGE_37: CoverageRow37[] = [
     platformAddition: "اختبار تمهيدي قصير (ثلاثة بنود) على نص الخريطة ومثال الدرس 38.",
   },
 ];
+
+/**
+ * موضع كل قسم في تجربة الدرس الحالية — يُشتق من خريطة الخطوات نفسها،
+ * فلا يتعارض السجل مع الواجهة عند تقسيم قسم إلى خطوتين.
+ */
+function locationFor37(sourceId: string): string {
+  const steps = SLIDES_37.filter((slide) => slide.sourceId === sourceId);
+  if (!steps.length) return "—";
+  if (steps.length === 1) return `الخطوة ${steps[0].step} (${steps[0].id})`;
+  return steps.map((step) => `الخطوة ${step.step} (${step.id})`).join(" ← ");
+}
+
+export const COVERAGE_37: CoverageRow37[] = BASE_COVERAGE_37.map((row) => ({
+  ...row,
+  location: `${locationFor37(row.id)}${row.num === 34 || row.num === 35 ? " + المنطقة المستقلة" : ""}`,
+}));
 
 export const COVERAGE_SECTION_COUNT_37 = COVERAGE_37.filter((row) => row.num != null).length;
 export const COVERAGE_ACCURACY_NOTES_37 = COVERAGE_37.filter((row) => row.accuracyNote);

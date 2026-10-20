@@ -1,0 +1,167 @@
+{
+  "baseUrl": "http://127.0.0.1:4173/English-Course/#/lesson/37",
+  "generatedAt": "2026-10-20T13:34:30.377Z",
+  "viewports": [
+    {
+      "viewport": "1440x900",
+      "locks": 1,
+      "horizontal": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440
+      },
+      "direction": "rtl",
+      "contrast": {
+        "samples": 137,
+        "below": 0,
+        "worst": {
+          "ratio": 5.47,
+          "text": "الدرس 37: Future Continuous — المستقبل المستمر"
+        }
+      },
+      "overlaps": {
+        "lockNext": 0,
+        "lockPrev": 0
+      }
+    },
+    {
+      "viewport": "1280x800",
+      "locks": 1,
+      "horizontal": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280
+      },
+      "direction": "rtl",
+      "contrast": {
+        "samples": 137,
+        "below": 0,
+        "worst": {
+          "ratio": 5.47,
+          "text": "الدرس 37: Future Continuous — المستقبل المستمر"
+        }
+      },
+      "overlaps": {
+        "lockNext": 0,
+        "lockPrev": 0
+      }
+    },
+    {
+      "viewport": "768x900",
+      "locks": 1,
+      "horizontal": {
+        "scrollWidth": 768,
+        "clientWidth": 768
+      },
+      "direction": "rtl",
+      "contrast": {
+        "samples": 79,
+        "below": 0,
+        "worst": {
+          "ratio": 5.5,
+          "text": "Bright Time Observatory · Advanced Foundation · IQ200"
+        }
+      },
+      "overlaps": {
+        "lockNext": 0,
+        "lockPrev": 0
+      }
+    },
+    {
+      "viewport": "375x812",
+      "locks": 1,
+      "horizontal": {
+        "scrollWidth": 375,
+        "clientWidth": 375
+      },
+      "direction": "rtl",
+      "contrast": {
+        "samples": 79,
+        "below": 0,
+        "worst": {
+          "ratio": 5.5,
+          "text": "Bright Time Observatory · Advanced Foundation · IQ200"
+        }
+      },
+      "overlaps": {
+        "lockNext": 0,
+        "lockPrev": 0
+      }
+    }
+  ],
+  "steps": [
+    {
+      "viewport": "1440x900",
+      "tallest": [
+        {
+          "id": "s27",
+          "height": 2192,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        },
+        {
+          "id": "s36",
+          "height": 2177,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        },
+        {
+          "id": "s37b",
+          "height": 2175,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        },
+        {
+          "id": "s19",
+          "height": 2151,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        },
+        {
+          "id": "s08",
+          "height": 2061,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "median": 1437
+    },
+    {
+      "viewport": "1280x800",
+      "tallest": [
+        {
+          "id": "s27",
+          "height": 2192,
+          "scrollWidth": 1280,
+          "clientWidth": 1280
+        },
+        {
+          "id": "s36",
+          "height": 2177,
+          "scrollWidth": 1280,
+          "clientWidth": 1280
+        },
+        {
+          "id": "s37b",
+          "height": 2175,
+          "scrollWidth": 1280,
+          "clientWidth": 1280
+        },
+        {
+          "id": "s19",
+          "height": 2151,
+          "scrollWidth": 1280,
+          "clientWidth": 1280
+        },
+        {
+          "id": "s08",
+          "height": 2061,
+          "scrollWidth": 1280,
+          "clientWidth": 1280
+        }
+      ],
+      "median": 1437
+    }
+  ],
+  "consoleErrors": [],
+  "checks": 170,
+  "failures": []
+}

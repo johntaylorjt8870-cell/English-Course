@@ -438,9 +438,9 @@ const CARDS: Card[] = [
     title: "الدرس 37: Future Continuous — المستقبل المستمر",
     en: "What Will You Be Doing Tomorrow?",
     emoji: "🎥",
-    stats: "38 قسمًا مرقّمًا · 39 خطوة · كاميرا المستقبل والخط الزمني · اختبار 25 سؤالًا · IQ200",
+    stats: "38 قسمًا مرقّمًا · 58 خطوة قصيرة · مرصد الأفق المستقبلي · اختبار 25 سؤالًا · IQ200",
     href: "#/lesson/37",
-    grad: "from-[#17354a] to-[#245f62]",
+    grad: "from-[#0ea5e9] to-[#14b8a6]",
   },
   {
     n: 38,

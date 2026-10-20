@@ -59,7 +59,7 @@ export default function SolutionsArea37({
           نص المصدر في القسم 35 يعرض عنوان مفتاح التصحيح وعبارة «عرض الحلول التفصيلية» فقط، ولا يحمل مفتاحًا فعليًا. الإجابات والتفسيرات
           أدناه إضافات تعليمية من إعداد المنصة/المعلم، مكتوبة وفق أمثلة المصدر وقواعده (الأقسام 1–33)، وليست نصًا منقولًا من المصدر.
         </PlatformNote37>
-        <p className="text-sm leading-6 text-[#43575a]">
+        <p className="text-sm leading-6 text-[#3e5d70]">
           في الأسئلة السياقية نميّز بين الخطأ النحوي، والاختيار الممكن لكنه أقل ملاءمة في السياق، والبدائل الصحيحة التي تغيّر التركيز.
           إجابات المستوى الرابع نماذج وليست صيغًا وحيدة.
         </p>
@@ -73,11 +73,11 @@ export default function SolutionsArea37({
             aria-pressed={level === item.level}
             onClick={() => setLevel(item.level)}
             className={`${FOCUS_37} min-h-12 rounded-xl border px-3 py-2 text-sm font-black transition-colors motion-reduce:transition-none ${
-              level === item.level ? "border-[#245f62] bg-[#245f62] text-white" : "border-[#cfd8d2] bg-white text-[#24343b] hover:bg-[#eef4f0]"
+              level === item.level ? "border-[#007b83] bg-[#007b83] text-white" : "border-[#b8dff0] bg-white text-[#17384a] hover:bg-[#e4f8f5]"
             }`}
           >
             {item.title}
-            <span dir="ltr" className={`font-en mt-1 block text-xs ${level === item.level ? "text-white" : "text-[#53676a]"}`}>
+            <span dir="ltr" className={`font-en mt-1 block text-xs ${level === item.level ? "text-white" : "text-[#4b6a7d]"}`}>
               Q{item.range}
             </span>
           </button>
@@ -85,14 +85,14 @@ export default function SolutionsArea37({
       </nav>
 
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-sm font-bold text-[#43575a]">
+        <p className="text-sm font-bold text-[#3e5d70]">
           كل بطاقة تبدأ مختصرة: الإجابة ظاهرة، والشرح والبدائل داخل قسم قابل للفتح.
         </p>
         <button
           type="button"
           aria-pressed={allOpen}
           onClick={toggleAll}
-          className={`${FOCUS_37} min-h-11 rounded-xl border border-[#cfd8d2] bg-white px-3 py-2 text-sm font-black text-[#17354a] transition-colors hover:bg-[#eef4f0] motion-reduce:transition-none`}
+          className={`${FOCUS_37} min-h-11 rounded-xl border border-[#b8dff0] bg-white px-3 py-2 text-sm font-black text-[#084765] transition-colors hover:bg-[#e4f8f5] motion-reduce:transition-none`}
         >
           {allOpen ? "طيّ كل الشروح" : "فتح كل الشروح"}
         </button>
@@ -104,22 +104,22 @@ export default function SolutionsArea37({
             key={solution.n}
             data-solution={solution.n}
             data-source-status={solution.sourceStatus}
-            className="rounded-2xl border border-[#d8d2c5] bg-white p-4"
+            className="rounded-2xl border border-[#b8dff0] bg-white p-4"
           >
-            <header className="flex flex-wrap items-center justify-between gap-2 border-b border-[#e3e0d7] pb-2">
-              <h2 className="font-black text-[#17354a]">
+            <header className="flex flex-wrap items-center justify-between gap-2 border-b border-[#cde8f2] pb-2">
+              <h2 className="font-black text-[#084765]">
                 السؤال{" "}
                 <span dir="ltr" className="font-en">
                   {solution.n}
                 </span>
               </h2>
-              <span className="rounded-full bg-[#fbf6eb] px-3 py-1 text-xs font-bold text-[#76531e]">
+              <span className="rounded-full bg-[#fff4c5] px-3 py-1 text-xs font-bold text-[#765300]">
                 {solution.judgment === "open-model" ? "نموذج إجابة مفتوحة — إعداد المنصة/المعلم" : "إضافة معلّمة من إعداد المعلم/المنصة"}
               </span>
             </header>
-            <div className="mt-3 space-y-2 text-base leading-7 text-[#24343b]">
+            <div className="mt-3 space-y-2 text-base leading-7 text-[#17384a]">
               <p>
-                <strong className="text-[#17354a]">الإجابة النموذجية: </strong>
+                <strong className="text-[#084765]">الإجابة النموذجية: </strong>
                 <span dir="auto">
                   <Rich text={solution.answer} />
                 </span>
@@ -129,22 +129,22 @@ export default function SolutionsArea37({
                 aria-expanded={openCards[solution.n] === true}
                 aria-controls={`solution-37-details-${solution.n}`}
                 onClick={() => toggleCard(solution.n)}
-                className={`${FOCUS_37} min-h-11 rounded-xl border border-[#cfd8d2] bg-[#fbfdfc] px-3 py-2 text-sm font-black text-[#17354a] transition-colors hover:bg-[#eef4f0] motion-reduce:transition-none`}
+                className={`${FOCUS_37} min-h-11 rounded-xl border border-[#b8dff0] bg-[#f4fbff] px-3 py-2 text-sm font-black text-[#084765] transition-colors hover:bg-[#e4f8f5] motion-reduce:transition-none`}
               >
                 {openCards[solution.n] ? "إخفاء الشرح والبدائل" : "إظهار الشرح والبدائل"}
               </button>
               {openCards[solution.n] ? (
                 <div id={`solution-37-details-${solution.n}`} data-solution-details={solution.n} className="space-y-2">
                   <p>
-                    <strong className="text-[#17354a]">التفسير: </strong>
+                    <strong className="text-[#084765]">التفسير: </strong>
                     <span dir="auto">
                       <Rich text={solution.explanation} />
                     </span>
                   </p>
                   {solution.alternatives?.length ? (
-                    <div className="rounded-xl border border-[#dce3dd] bg-[#f7faf8] p-3">
-                      <h3 className="text-sm font-black text-[#28533b]">بدائل مقبولة / توضيح السياق</h3>
-                      <ul className="mt-1 list-disc space-y-1 ps-5 text-sm leading-6 text-[#24343b]">
+                    <div className="rounded-xl border border-[#dce3dd] bg-[#eff9fd] p-3">
+                      <h3 className="text-sm font-black text-[#1f613d]">بدائل مقبولة / توضيح السياق</h3>
+                      <ul className="mt-1 list-disc space-y-1 ps-5 text-sm leading-6 text-[#17384a]">
                         {solution.alternatives.map((line) => (
                           <li key={line} dir="auto">
                             <Rich text={line} />

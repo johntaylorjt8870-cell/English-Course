@@ -43,55 +43,46 @@ import { OBJECTIVES_37, POLITE_ITEMS_37 } from "./practiceData37";
 function StepHeader37({ slide }: { slide: Slide37 }) {
   const source = slide.source;
   return (
-    <header className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-[#d8d2c5] bg-white px-3 py-2">
+    <header className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-[#b8dff0] bg-white px-3 py-2">
       <div className="min-w-0">
-        <p className="text-xs font-black uppercase tracking-[.12em] text-[#53676a]">
+        <p className="text-xs font-black uppercase tracking-[.12em] text-[#4b6a7d]">
           <Rich text={`Student area · Lesson 37 · خطوة ${slide.step}`} />
         </p>
-        <h1 className="mt-0.5 text-base font-black leading-7 text-[#17354a] sm:text-lg">
+        <h1 className="mt-0.5 text-base font-black leading-7 text-[#084765] sm:text-lg">
           <Rich text={source.title} />
         </h1>
       </div>
-      <span dir="ltr" className="font-en shrink-0 rounded-full bg-[#17354a] px-3 py-1 text-xs font-black text-white">
+      <span dir="ltr" className="font-en shrink-0 rounded-full bg-[#084765] px-3 py-1 text-xs font-black text-white">
         {source.num == null ? "COVER" : `§${source.num}`}
       </span>
     </header>
   );
 }
 
-function CoverScene37({ slide }: { slide: Slide37 }) {
+function CoverScene37({ slide, onStart }: { slide: Slide37; onStart: () => void }) {
   return (
     <div className="space-y-4">
-      <CameraFrame37
-        title="Future Camera · الدرس 37"
-        caption="نضع الكاميرا داخل المستقبل لنصوّر النشاط الذي سيكون جاريًا هناك."
-      >
-        <h1 className="text-xl font-black leading-snug text-[#17354a] sm:text-2xl">
-          <Rich text="الدرس 37: Future Continuous — المستقبل المستمر" />
-        </h1>
-        <p dir="ltr" className="font-en mt-1 text-left text-lg font-black text-[#18333b]">
-          What Will You Be Doing Tomorrow?
-        </p>
-        <p className="mt-1 text-sm font-bold text-[#43575a]">رحلة إلى المستقبل — IQ200 🚀</p>
-        <p className="mt-3 rounded-xl bg-[#f3f5f2] px-3 py-2 text-sm font-bold leading-6 text-[#24343b]">
-          نربط الدرس بثلاث محطات سابقة:{" "}
-          <span dir="ltr" className="font-en inline-block rounded bg-white px-2">WILL</span> ·{" "}
-          <span dir="ltr" className="font-en inline-block rounded bg-white px-2">BE GOING TO</span> ·{" "}
-          <span dir="ltr" className="font-en inline-block rounded bg-white px-2">WILL vs BE GOING TO</span>
-        </p>
-        <dl className="mt-3 grid gap-2 sm:grid-cols-3">
-          {[
-            { k: "حجم المصدر", v: "38 قسمًا مرقّمًا + المقدمة" },
-            { k: "الاختبار الرسمي", v: "25 سؤالًا × 5 مستويات" },
-            { k: "المناطق", v: "طالب · اختبار · حلول · معلم" },
-          ].map((entry) => (
-            <div key={entry.k} className="rounded-xl border border-[#d8d2c5] bg-white px-3 py-2">
-              <dt className="text-xs font-black text-[#53676a]">{entry.k}</dt>
-              <dd className="mt-0.5 text-sm font-bold text-[#24343b]">{entry.v}</dd>
+      <section className="horizon-cover37 overflow-hidden rounded-[2rem] border border-[#b8dff0] bg-white shadow-[0_22px_60px_-35px_rgba(23,105,255,.45)]">
+        <div className="horizon-cover37__top flex flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
+          <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-black tracking-wide text-[#075b83]">FUTURE HORIZON · TIME OBSERVATORY</span>
+          <span className="font-en rounded-full border border-white/80 bg-white/90 px-3 py-1 text-xs font-black text-[#075b83]">LESSON 37 · IQ200</span>
+        </div>
+        <div className="grid gap-5 p-4 sm:p-6 lg:grid-cols-[1fr_1.05fr] lg:items-center">
+          <div className="min-w-0">
+            <p className="text-sm font-black text-[#007b83]">مرصد الزمن · التقط لحظة من الغد</p>
+            <h1 className="mt-2 text-2xl font-black leading-tight text-[#084765] sm:text-3xl">
+              <Rich text="الدرس 37: Future Continuous — المستقبل المستمر" />
+            </h1>
+            <p dir="ltr" className="font-en mt-2 text-left text-xl font-black text-[#17384a] sm:text-2xl">What Will You Be Doing Tomorrow?</p>
+            <p className="mt-2 max-w-2xl text-sm font-bold leading-6 text-[#3e5d70]">اختر ما تتخيل أنك ستكون تفعله في لحظة مستقبلية، ثم ابدأ الدرس من المعنى قبل القاعدة.</p>
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <button type="button" onClick={onStart} className="horizon-start37 min-h-12 rounded-xl bg-[#1769ff] px-5 py-3 text-sm font-black text-white shadow-lg shadow-blue-200 transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#084765] focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none">ابدأ الرحلة التعليمية ←</button>
+              <span className="text-xs font-bold text-[#4b6a7d]">المقدمة كاملة أدناه · الوصول للمحتوى مباشر</span>
             </div>
-          ))}
-        </dl>
-      </CameraFrame37>
+          </div>
+          <HorizonProbe37 />
+        </div>
+      </section>
       <SourceCard37 section={slide.source} />
       <PlatformNote37>
         <Rich text="مفتاح الدرس كله في سطر واحد: Subject + will + be + V-ing — ثم يأتي كل شيء آخر (المعنى، when وwhile، النفي، الأسئلة، أفعال الحالة) ليثبت هذا الأساس ويوسّعه." />
@@ -100,14 +91,47 @@ function CoverScene37({ slide }: { slide: Slide37 }) {
   );
 }
 
+function HorizonProbe37() {
+  const [activity, setActivity] = useState("");
+  const activities = ["studying", "preparing dinner", "reading", "working"];
+  return (
+    <div className="horizon-instrument37 rounded-[1.5rem] border border-[#b8dff0] bg-[#f4fbff] p-4 sm:p-5" data-horizon-probe>
+      <p className="text-xs font-black uppercase tracking-[.12em] text-[#4b6a7d]">Select a future moment</p>
+      <h2 dir="ltr" className="font-en mt-1 text-left text-xl font-black text-[#084765]">What will you be doing at 8:00 tomorrow?</h2>
+      <div className="horizon-timeline37 mt-4" aria-label="خط زمني من السادسة إلى العاشرة غدًا">
+        <div className="horizon-timeline37__line" />
+        {["6:00", "8:00", "10:00"].map((time, index) => (
+          <div key={time} className={`horizon-timeline37__point horizon-timeline37__point--${index}`}>
+            <span className="horizon-timeline37__dot" />
+            <span dir="ltr" className="font-en text-xs font-black text-[#17384a]">{time}</span>
+            {index === 1 ? <span className="horizon-timeline37__lens" aria-hidden="true">◉</span> : null}
+          </div>
+        ))}
+      </div>
+      <p className="mt-3 text-sm font-bold text-[#3e5d70]">اختر نشاطًا؛ مؤشر المرصد يضع الكاميرا عند اللحظة، لا عند بداية النشاط أو نهايته.</p>
+      <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="اختر نشاطًا مستقبليًا">
+        {activities.map((item) => (
+          <button key={item} type="button" aria-pressed={activity === item} onClick={() => setActivity(item)} dir="ltr" className={`font-en min-h-10 rounded-full border px-3 py-1.5 text-sm font-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1769ff] motion-reduce:transition-none ${activity === item ? "border-[#007b83] bg-[#e4f8f5] text-[#075b83]" : "border-[#b8dff0] bg-white text-[#3e5d70] hover:bg-[#eaf4ff]"}`}>
+            {item}
+          </button>
+        ))}
+      </div>
+      {activity ? <p data-horizon-sentence dir="ltr" className="font-en mt-3 rounded-xl border-s-4 border-[#ff765e] bg-white px-3 py-2 text-left font-black text-[#084765]">At 8:00 tomorrow, I will be {activity}.</p> : null}
+      <p className="mt-2 text-[11px] font-bold text-[#4b6a7d]">مثال توضيحي من المنصة · يمكنك اختيار أكثر من نشاط لاحقًا في حياتك الواقعية.</p>
+    </div>
+  );
+}
+
 export default function StepView37({
   slide,
   onGoTest,
   onGoSolutions,
+  onStartStep = () => {},
 }: {
   slide: Slide37;
   onGoTest: () => void;
   onGoSolutions: () => void;
+  onStartStep?: () => void;
 }) {
   const [revealed, setRevealed] = useState(false);
   const [highlight, setHighlight] = useState(false);
@@ -115,9 +139,9 @@ export default function StepView37({
   const reveal = () => setRevealed(true);
 
   if (slide.id === "cover") {
-    return (
+      return (
       <div data-step-id={slide.id} data-source-id={slide.sourceId} data-source-section={slide.sourceId}>
-        <CoverScene37 slide={slide} />
+        <CoverScene37 slide={slide} onStart={onStartStep} />
       </div>
     );
   }

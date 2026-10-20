@@ -1,3 +1,4 @@
+import "./lesson37.css";
 import { lazy, Suspense, useEffect, useState, type ReactNode } from "react";
 import StepView37 from "./Steps37";
 import TestArea37 from "./TestArea37";
@@ -74,19 +75,19 @@ export default function Lesson37({ onExit }: { onExit?: () => void }) {
           ({ candidate }) => candidate.section === chapter.id,
         );
         return (
-          <section key={chapter.id} className="rounded-xl border border-[#e2dfd6] bg-white">
+          <section key={chapter.id} className="rounded-xl border border-[#cde8f2] bg-white">
             <button
               type="button"
               aria-expanded={expanded}
               aria-controls={`${prefix}-chapter-${chapter.id}`}
               onClick={() => setOpenChapters((current) => ({ ...current, [chapter.id]: !current[chapter.id] }))}
               className={`${FOCUS_37} flex min-h-12 w-full items-center justify-between gap-2 rounded-xl px-3 py-2 text-right ${
-                active ? "bg-[#eef4f0] text-[#17354a]" : "text-[#24343b] hover:bg-[#f7f8f5]"
+                active ? "bg-[#e4f8f5] text-[#084765]" : "text-[#17384a] hover:bg-[#edf8ff]"
               }`}
             >
               <span className="min-w-0">
                 <span className="block font-black leading-6">{chapter.label}</span>
-                <span dir="ltr" className="font-en block text-[11px] font-bold text-[#53676a]">
+                <span dir="ltr" className="font-en block text-[11px] font-bold text-[#4b6a7d]">
                   {chapter.en}
                 </span>
               </span>
@@ -95,7 +96,7 @@ export default function Lesson37({ onExit }: { onExit?: () => void }) {
               </span>
             </button>
             {expanded ? (
-              <ol id={`${prefix}-chapter-${chapter.id}`} className="space-y-1 border-t border-[#e3e0d7] p-2">
+              <ol id={`${prefix}-chapter-${chapter.id}`} className="space-y-1 border-t border-[#cde8f2] p-2">
                 {chapterSlides.map(({ candidate, slideIndex }) => (
                   <li key={candidate.id}>
                     <button
@@ -104,13 +105,13 @@ export default function Lesson37({ onExit }: { onExit?: () => void }) {
                       aria-current={slideIndex === index ? "step" : undefined}
                       onClick={() => setStep(slideIndex)}
                       className={`${FOCUS_37} flex min-h-11 w-full items-start gap-2 rounded-lg px-2 py-2 text-right text-sm leading-6 ${
-                        slideIndex === index ? "bg-[#245f62] text-white" : "text-[#24343b] hover:bg-[#eef4f0]"
+                        slideIndex === index ? "bg-[#007b83] text-white" : "text-[#17384a] hover:bg-[#e4f8f5]"
                       }`}
                     >
                       <span
                         dir="ltr"
                         className={`font-en mt-0.5 shrink-0 rounded-full px-2 text-xs font-black ${
-                          slideIndex === index ? "bg-white/15 text-white" : "bg-[#f3f5f2] text-[#43575a]"
+                          slideIndex === index ? "bg-white/15 text-white" : "bg-[#eff9fd] text-[#3e5d70]"
                         }`}
                       >
                         {candidate.source.num ?? "•"}
@@ -133,11 +134,11 @@ export default function Lesson37({ onExit }: { onExit?: () => void }) {
   );
 
   return (
-    <div dir="rtl" data-lesson="37" className="min-h-screen bg-[#f5f3ed] text-[#24343b]">
+    <div dir="rtl" data-lesson="37" className="min-h-screen bg-[#edf8ff] text-[#17384a]">
       <div className="mx-auto flex min-h-screen w-full max-w-7xl gap-4 p-3 sm:p-5">
-        <aside className="sticky top-4 hidden max-h-[calc(100vh-2rem)] w-80 shrink-0 overflow-y-auto rounded-3xl border border-[#d8d2c5] bg-[#fffdf8] p-3 shadow-sm lg:block">
-          <div className="mb-3 rounded-2xl bg-[#17354a] p-3 text-white">
-            <p className="text-xs font-black uppercase tracking-[.14em] text-[#f0ddb6]">Lesson 37 · Future Camera</p>
+        <aside className="sticky top-4 hidden max-h-[calc(100vh-2rem)] w-80 shrink-0 overflow-y-auto rounded-3xl border border-[#b8dff0] bg-[#ffffff] p-3 shadow-sm lg:block">
+          <div className="mb-3 rounded-2xl bg-[#084765] p-3 text-white">
+            <p className="text-xs font-black uppercase tracking-[.14em] text-[#fff4c5]">Future Horizon · Time Observatory</p>
             <h2 className="mt-1 text-base font-black">محتويات الدرس</h2>
             <p className="mt-2 text-sm font-bold text-white">
               <span className="font-en tabular-nums">{index + 1}</span> / <span className="font-en tabular-nums">{STEP_COUNT_37}</span> خطوة
@@ -150,24 +151,24 @@ export default function Lesson37({ onExit }: { onExit?: () => void }) {
               aria-valuenow={index + 1}
               className="mt-2 h-2 overflow-hidden rounded-full bg-white/20"
             >
-              <div className="h-full bg-[#b8d6c0]" style={{ width: `${((index + 1) / STEP_COUNT_37) * 100}%` }} />
+              <div className="h-full bg-[#8fdcd4]" style={{ width: `${((index + 1) / STEP_COUNT_37) * 100}%` }} />
             </div>
           </div>
           {navigation("desktop")}
         </aside>
 
         <main className="min-w-0 flex-1" id="lesson37-main">
-          <header className="rounded-3xl border border-[#d8d2c5] bg-[#fffdf8] p-4 shadow-sm sm:p-5">
+          <header className="rounded-3xl border border-[#b8dff0] bg-[#ffffff] p-4 shadow-sm sm:p-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="text-xs font-black uppercase tracking-[.13em] text-[#53676a]">Advanced Foundation · IQ200</p>
-                <h1 className="mt-1 text-xl font-black leading-snug text-[#17354a] sm:text-2xl">
+                <p className="text-xs font-black uppercase tracking-[.13em] text-[#4b6a7d]">Advanced Foundation · IQ200</p>
+                <h1 className="mt-1 text-xl font-black leading-snug text-[#084765] sm:text-2xl">
                   <Rich text={LESSON_TITLE_AR_37} />
                 </h1>
-                <p dir="ltr" className="font-en mt-1 text-left text-base font-bold text-[#43575a]">
+                <p dir="ltr" className="font-en mt-1 text-left text-base font-bold text-[#3e5d70]">
                   {LESSON_SUBTITLE_37}
                 </p>
-                <p className="mt-1 text-sm font-bold leading-6 text-[#43575a]">{LESSON_ARABIC_SUBTITLE_37}</p>
+                <p className="mt-1 text-sm font-bold leading-6 text-[#3e5d70]">{LESSON_ARABIC_SUBTITLE_37}</p>
               </div>
               <div className="flex flex-wrap gap-2">
                 {onExit ? (
@@ -198,13 +199,13 @@ export default function Lesson37({ onExit }: { onExit?: () => void }) {
             </div>
           </header>
 
-          <div className="mt-3 rounded-2xl border border-[#d8d2c5] bg-white p-3 shadow-sm lg:hidden">
+          <div className="mt-3 rounded-2xl border border-[#b8dff0] bg-white p-3 shadow-sm lg:hidden">
             <button
               type="button"
               aria-expanded={mobileNavOpen}
               aria-controls="lesson37-mobile-nav"
               onClick={() => setMobileNavOpen((current) => !current)}
-              className={`${FOCUS_37} flex min-h-11 w-full items-center justify-between gap-3 rounded-xl px-2 py-2 text-right text-sm font-black text-[#17354a]`}
+              className={`${FOCUS_37} flex min-h-11 w-full items-center justify-between gap-3 rounded-xl px-2 py-2 text-right text-sm font-black text-[#084765]`}
             >
               <span>
                 محتويات الدرس ·{" "}
@@ -222,7 +223,7 @@ export default function Lesson37({ onExit }: { onExit?: () => void }) {
           </div>
 
           <section className={area === "student" ? "mt-4 space-y-4" : "hidden"} aria-hidden={area !== "student"} data-area="lesson37-student">
-            <div className="rounded-2xl border border-[#d8d2c5] bg-white px-3 py-2 text-sm font-bold text-[#43575a] lg:hidden">
+            <div className="rounded-2xl border border-[#b8dff0] bg-white px-3 py-2 text-sm font-bold text-[#3e5d70] lg:hidden">
               <Rich text={`Step ${index + 1} of ${STEP_COUNT_37} · ${slide.title}`} />
               <div
                 role="progressbar"
@@ -230,9 +231,9 @@ export default function Lesson37({ onExit }: { onExit?: () => void }) {
                 aria-valuemin={1}
                 aria-valuemax={STEP_COUNT_37}
                 aria-valuenow={index + 1}
-                className="mt-2 h-1.5 overflow-hidden rounded-full bg-[#ece9e1]"
+                className="mt-2 h-1.5 overflow-hidden rounded-full bg-[#e0f1f8]"
               >
-                <div className="h-full bg-[#245f62]" style={{ width: `${((index + 1) / STEP_COUNT_37) * 100}%` }} />
+                <div className="h-full bg-[#007b83]" style={{ width: `${((index + 1) / STEP_COUNT_37) * 100}%` }} />
               </div>
             </div>
             <StepView37
@@ -240,18 +241,19 @@ export default function Lesson37({ onExit }: { onExit?: () => void }) {
               slide={slide}
               onGoTest={() => setArea("test")}
               onGoSolutions={() => setArea("solutions")}
+              onStartStep={() => setStep(1)}
             />
-            <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#dedbd2] pt-4 pb-6">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#cde8f2] pt-4 pb-6">
               <ActionButton37 variant="secondary" disabled={index === 0} onClick={() => setStep(index - 1)}>
                 → السابق
               </ActionButton37>
-              <span dir="ltr" className="font-en text-sm font-black tabular-nums text-[#53676a]">
+              <span dir="ltr" className="font-en text-sm font-black tabular-nums text-[#4b6a7d]">
                 {index + 1} / {STEP_COUNT_37}
               </span>
               {!last ? (
                 <ActionButton37 onClick={() => setStep(index + 1)}>التالي ←</ActionButton37>
               ) : (
-                <span className="rounded-xl bg-[#edf5ee] px-4 py-3 text-sm font-black text-[#28533b]">
+                <span className="rounded-xl bg-[#e4f8f5] px-4 py-3 text-sm font-black text-[#1f613d]">
                   اكتملت خطوات المصدر؛ أكمل مهمة الكتابة والاختبار من المناطق أعلاه.
                 </span>
               )}
@@ -266,7 +268,7 @@ export default function Lesson37({ onExit }: { onExit?: () => void }) {
             solutionsUnlocked ? (
               <Suspense
                 fallback={
-                  <div role="status" className="mt-4 rounded-2xl border border-[#d8d2c5] bg-white p-4 text-[#24343b]">
+                  <div role="status" className="mt-4 rounded-2xl border border-[#b8dff0] bg-white p-4 text-[#17384a]">
                     جارٍ تحميل الحلول التفصيلية…
                   </div>
                 }
@@ -310,8 +312,8 @@ function AreaButton37({
       onClick={onClick}
       title={title}
       className={`${FOCUS_37} min-h-11 rounded-xl border px-3 py-2 text-sm font-black transition-colors motion-reduce:transition-none ${
-        active ? "border-[#245f62] bg-[#245f62] text-white" : "border-[#cfd8d2] bg-white text-[#24343b] hover:bg-[#eef4f0]"
-      } disabled:cursor-not-allowed disabled:border-[#e1e5df] disabled:bg-[#f5f5f2] disabled:text-[#596965]`}
+        active ? "border-[#007b83] bg-[#007b83] text-white" : "border-[#b8dff0] bg-white text-[#17384a] hover:bg-[#e4f8f5]"
+      } disabled:cursor-not-allowed disabled:border-[#cde8f2] disabled:bg-[#ecf6fa] disabled:text-[#4b6570]`}
     >
       {children}
     </button>
@@ -321,9 +323,9 @@ function AreaButton37({
 function SolutionsGate37({ onGoTest }: { onGoTest: () => void }) {
   return (
     <div data-area="lesson37-solutions" data-solutions-locked className="mt-4">
-      <section className="rounded-3xl border border-[#d8d2c5] bg-white p-5">
-        <h2 className="text-xl font-black text-[#17354a]">منطقة الحلول مقفلة</h2>
-        <p className="mt-2 text-sm leading-6 text-[#43575a]">
+      <section className="rounded-3xl border border-[#b8dff0] bg-white p-5">
+        <h2 className="text-xl font-black text-[#084765]">منطقة الحلول مقفلة</h2>
+        <p className="mt-2 text-sm leading-6 text-[#3e5d70]">
           لا توجد إجابات أو تفسيرات ظاهرة هنا قبل تسليم الاختبار. أكمل الأسئلة الـ25 ثم أرسلها لفتح الحلول، أو ادخل بكلمة مرور المعلم.
         </p>
         <ActionButton37 className="mt-3" onClick={onGoTest}>

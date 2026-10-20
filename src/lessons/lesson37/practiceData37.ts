@@ -1,3 +1,5 @@
+import { sourceSection37 } from "./ledger37";
+
 // ============================================================
 // Lesson 37 — بيانات الأنشطة التفاعلية
 //
@@ -811,6 +813,8 @@ export const IQ200_ITEMS_37 = [
 ] as const;
 
 /** §32 — أسئلة فهم نص A Busy Saturday (ثمانية أسئلة). */
+export const READING32_ANSWERS_37 = sourceSection37("s32")?.revealUnits ?? [];
+
 export const READING32_QUESTIONS_37 = [
   "① What will Daniel be doing at 8:00?",
   "② Where will he be at 9:30?",

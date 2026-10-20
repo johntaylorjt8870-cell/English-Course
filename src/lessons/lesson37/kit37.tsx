@@ -3,7 +3,7 @@ import { En, PlatformTag, Rich } from "../../shared/lessonKit";
 import type { SourceSection37 } from "./ledger37";
 
 export const FOCUS_37 =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17354a] focus-visible:ring-offset-2";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#084765] focus-visible:ring-offset-2";
 
 const ARABIC_RANGE = /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/;
 
@@ -18,7 +18,7 @@ export function English37({ children, className = "" }: { children: ReactNode; c
 
 export function EnglishFormula37({ children }: { children: ReactNode }) {
   return (
-    <span dir="ltr" className="font-en inline-block rounded-lg border border-[#dce6e4] bg-[#fbfdfc] px-2 py-1 text-[#18333b]">
+    <span dir="ltr" className="font-en inline-block rounded-lg border border-[#cde8f2] bg-[#f4fbff] px-2 py-1 text-[#17384a]">
       {children}
     </span>
   );
@@ -36,10 +36,10 @@ export function Card37({
   className?: string;
 }) {
   return (
-    <section className={`rounded-3xl border border-[#d8d2c5] bg-white p-4 shadow-sm sm:p-5 ${className}`}>
-      {eyebrow ? <p className="text-xs font-black uppercase tracking-[.12em] text-[#53676a]">{eyebrow}</p> : null}
-      {title ? <h2 className="mt-1 text-lg font-black leading-snug text-[#24343b] sm:text-xl">{title}</h2> : null}
-      <div className="mt-3 space-y-3 text-base leading-7 text-[#24343b]">{children}</div>
+    <section className={`rounded-3xl border border-[#b8dff0] bg-white p-4 shadow-sm sm:p-5 ${className}`}>
+      {eyebrow ? <p className="text-xs font-black uppercase tracking-[.12em] text-[#4b6a7d]">{eyebrow}</p> : null}
+      {title ? <h2 className="mt-1 text-lg font-black leading-snug text-[#17384a] sm:text-xl">{title}</h2> : null}
+      <div className="mt-3 space-y-3 text-base leading-7 text-[#17384a]">{children}</div>
     </section>
   );
 }
@@ -58,7 +58,7 @@ export function LabCard37({
   children: ReactNode;
 }) {
   return (
-    <Card37 eyebrow={eyebrow} title={title} className="bg-[#fdfcf8]">
+    <Card37 eyebrow={eyebrow} title={title} className="bg-[#ffffff]">
       {platformNote ? <PlatformNote37>{platformNote}</PlatformNote37> : null}
       <div data-lab={id} className="space-y-3">
         {children}
@@ -69,7 +69,7 @@ export function LabCard37({
 
 export function PlatformNote37({ children }: { children: ReactNode }) {
   return (
-    <aside className="rounded-2xl border border-[#b8d6c0] bg-[#edf5ee] p-3 text-sm leading-6 text-[#28533b]">
+    <aside className="rounded-2xl border border-[#8fdcd4] bg-[#e4f8f5] p-3 text-sm leading-6 text-[#1f613d]">
       <div className="mb-1.5">
         <PlatformTag text="إضافة تعليمية من المنصة" />
       </div>
@@ -92,10 +92,10 @@ export function CameraFrame37({
 }) {
   const palette =
     tone === "navy"
-      ? { shell: "bg-[#17354a] text-white", chip: "bg-white/15 text-[#f0ddb6]", body: "bg-white text-[#24343b]" }
-      : { shell: "bg-[#7a5516] text-white", chip: "bg-white/15 text-[#fdf1d8]", body: "bg-[#fffdf6] text-[#24343b]" };
+      ? { shell: "bg-[#084765] text-white", chip: "bg-white/15 text-[#fff4c5]", body: "bg-white text-[#17384a]" }
+      : { shell: "bg-[#6039a7] text-white", chip: "bg-white/15 text-[#f2eaff]", body: "bg-[#ffffff] text-[#17384a]" };
   return (
-    <section className="overflow-hidden rounded-3xl border border-[#d8d2c5] bg-white shadow-sm">
+    <section className="overflow-hidden rounded-3xl border border-[#b8dff0] bg-white shadow-sm">
       <header className={`flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 ${palette.shell}`}>
         <p className="text-sm font-black">
           <Rich text={title ?? "Future Camera"} />
@@ -104,9 +104,9 @@ export function CameraFrame37({
           ● REC · FUTURE
         </span>
       </header>
-      <div className={`relative border-2 border-dashed border-[#c9d6d0] p-3 sm:p-4 ${palette.body}`}>
+      <div className={`relative border-2 border-dashed border-[#9ed7df] p-3 sm:p-4 ${palette.body}`}>
         {caption ? (
-          <p className="mb-2 text-sm font-bold leading-6 text-[#43575a]">
+          <p className="mb-2 text-sm font-bold leading-6 text-[#3e5d70]">
             <Rich text={caption} />
           </p>
         ) : null}
@@ -148,16 +148,16 @@ export function SourceLine37({
       dir={pureEnglish ? "ltr" : "auto"}
       className={`min-w-0 rounded-xl px-3 py-2 leading-7 ${
         pureEnglish
-          ? "border border-[#dce6e4] bg-[#fbfdfc] text-left font-en text-[#18333b]"
+          ? "border border-[#cde8f2] bg-[#f4fbff] text-left font-en text-[#17384a]"
           : isCorrect
-            ? "border border-[#b8d6c0] bg-[#edf5ee] font-bold text-[#28533b]"
+            ? "border border-[#8fdcd4] bg-[#e4f8f5] font-bold text-[#1f613d]"
             : isWrong
-              ? "border border-[#e6c3be] bg-[#fbefed] font-bold text-[#8d3832]"
+              ? "border border-[#f0b8aa] bg-[#fff0ec] font-bold text-[#943c31]"
               : marker
-                ? "border-r-4 border-[#9b6b1f] bg-[#fbf6eb] font-black text-[#24343b]"
+                ? "border-r-4 border-[#9b6b1f] bg-[#fff4c5] font-black text-[#17384a]"
                 : kind === "reveal"
-                  ? "text-[#28533b]"
-                  : "text-[#24343b]"
+                  ? "text-[#1f613d]"
+                  : "text-[#17384a]"
       } ${className}`}
     >
       {pureEnglish ? (
@@ -179,7 +179,7 @@ export function highlightFutureForms37(text: string) {
     const start = match.index ?? 0;
     if (start > cursor) nodes.push(text.slice(cursor, start));
     nodes.push(
-      <mark key={`${start}-${match[0]}`} className="rounded bg-[#f4e8c3] px-0.5 text-[#24343b]">
+      <mark key={`${start}-${match[0]}`} className="rounded bg-[#fff2bc] px-0.5 text-[#17384a]">
         {match[0]}
       </mark>,
     );
@@ -202,10 +202,10 @@ export function Table37({
   idPrefix: string;
 }) {
   return (
-    <div className="overflow-x-auto rounded-2xl border border-[#d8d2c5] bg-white">
+    <div className="overflow-x-auto rounded-2xl border border-[#b8dff0] bg-white">
       <table dir="rtl" aria-label={label} className="w-full min-w-[20rem] border-collapse text-base">
         <thead>
-          <tr className="bg-[#17354a] text-white">
+          <tr className="bg-[#084765] text-white">
             {headers.map((header, index) => (
               <th
                 key={header}
@@ -220,7 +220,7 @@ export function Table37({
         </thead>
         <tbody>
           {rows.map((row, rowIndex) => (
-            <tr key={`${idPrefix}-row-${rowIndex}`} className={rowIndex % 2 === 0 ? "bg-white" : "bg-[#f3f5f2]"}>
+            <tr key={`${idPrefix}-row-${rowIndex}`} className={rowIndex % 2 === 0 ? "bg-white" : "bg-[#eff9fd]"}>
               {row.map((cell, cellIndex) => {
                 const pure = isPureEnglish37(cell);
                 const value = pure ? (
@@ -235,7 +235,7 @@ export function Table37({
                     key={`${idPrefix}-${rowIndex}-${cellIndex}`}
                     scope="row"
                     data-source-unit={`${idPrefix}-${rowIndex}-${cellIndex}`}
-                    className="border-t border-[#e2e4de] px-3 py-3 text-right font-bold text-[#24343b]"
+                    className="border-t border-[#e2e4de] px-3 py-3 text-right font-bold text-[#17384a]"
                   >
                     {value}
                   </th>
@@ -243,7 +243,7 @@ export function Table37({
                   <td
                     key={`${idPrefix}-${rowIndex}-${cellIndex}`}
                     data-source-unit={`${idPrefix}-${rowIndex}-${cellIndex}`}
-                    className="border-t border-[#e2e4de] px-3 py-3 text-right font-black text-[#17354a]"
+                    className="border-t border-[#e2e4de] px-3 py-3 text-right font-black text-[#084765]"
                   >
                     {value}
                   </td>
@@ -287,8 +287,8 @@ export function SourceCard37({
   const tableAfter = section.tableAfter ?? Number.MAX_SAFE_INTEGER;
 
   return (
-    <section data-source-section={section.id} className="overflow-hidden rounded-3xl border border-[#d8d2c5] bg-white shadow-sm">
-      <header className="flex flex-wrap items-center justify-between gap-2 bg-[#17354a] px-4 py-3 text-white">
+    <section data-source-section={section.id} className="overflow-hidden rounded-3xl border border-[#b8dff0] bg-white shadow-sm">
+      <header className="flex flex-wrap items-center justify-between gap-2 bg-[#084765] px-4 py-3 text-white">
         <h2 className="text-base font-black leading-7 sm:text-lg">
           <Rich text={section.title} />
         </h2>
@@ -307,7 +307,7 @@ export function SourceCard37({
                 key={`${section.id}-hidden-${index}`}
                 id={`source-${section.id}-unit-${index}`}
                 data-source-unit={`${section.id}-unit-${index}`}
-                className="rounded-xl border border-dashed border-[#c9d6d0] bg-[#f7faf8] px-3 py-2 text-sm font-bold text-[#53676a]"
+                className="rounded-xl border border-dashed border-[#9ed7df] bg-[#eff9fd] px-3 py-2 text-sm font-bold text-[#4b6a7d]"
               >
                 أجب عن النشاط أولًا لإظهار هذه الجملة من المصدر.
               </div>,
@@ -331,8 +331,8 @@ export function SourceCard37({
         {section.revealUnits?.length ? (
           <div data-answer-key-for={section.id}>
             {showReveal ? (
-              <div className="mt-3 space-y-1 rounded-2xl border border-[#b8d6c0] bg-[#edf5ee] p-3">
-                <p className="mb-1 rounded-full bg-[#d9eadc] px-3 py-1 text-sm font-black text-[#28533b]">
+              <div className="mt-3 space-y-1 rounded-2xl border border-[#8fdcd4] bg-[#e4f8f5] p-3">
+                <p className="mb-1 rounded-full bg-[#e4f8f5] px-3 py-1 text-sm font-black text-[#1f613d]">
                   مفتاح المصدر — بعد المحاولة
                 </p>
                 {section.revealUnits.map((text, index) => (
@@ -346,7 +346,7 @@ export function SourceCard37({
                 ))}
               </div>
             ) : (
-              <p className="mt-3 rounded-xl border border-dashed border-[#c9d6d0] bg-[#f7faf8] p-3 text-sm font-bold text-[#53676a]">
+              <p className="mt-3 rounded-xl border border-dashed border-[#9ed7df] bg-[#eff9fd] p-3 text-sm font-bold text-[#4b6a7d]">
                 <PlatformTag text="الإجابات محفوظة حتى المحاولة" />
               </p>
             )}
@@ -374,10 +374,10 @@ export function ActionButton37({
 }) {
   const color =
     variant === "primary"
-      ? "border-[#245f62] bg-[#245f62] text-white hover:bg-[#1d5053] disabled:border-[#d8d2c5] disabled:bg-[#ece9e1] disabled:text-[#596965]"
+      ? "border-[#007b83] bg-[#007b83] text-white hover:bg-[#07666b] disabled:border-[#b8dff0] disabled:bg-[#e0f1f8] disabled:text-[#4b6570]"
       : variant === "secondary"
-        ? "border-[#b9cfc6] bg-white text-[#245f62] hover:bg-[#eef4f0] disabled:border-[#e1e5df] disabled:bg-[#f5f5f2] disabled:text-[#596965]"
-        : "border-transparent bg-[#f3f5f2] text-[#24343b] hover:bg-[#e6ebe7] disabled:text-[#596965]";
+        ? "border-[#b9cfc6] bg-white text-[#007b83] hover:bg-[#e4f8f5] disabled:border-[#cde8f2] disabled:bg-[#ecf6fa] disabled:text-[#4b6570]"
+        : "border-transparent bg-[#eff9fd] text-[#17384a] hover:bg-[#e6f4f7] disabled:text-[#4b6570]";
   return (
     <button
       type={type}
@@ -402,10 +402,10 @@ export function Feedback37({
 }) {
   const palette =
     state === "ok"
-      ? "border-[#b8d6c0] bg-[#edf5ee] text-[#28533b]"
+      ? "border-[#8fdcd4] bg-[#e4f8f5] text-[#1f613d]"
       : state === "review"
-        ? "border-[#e3d6b6] bg-[#fbf6eb] text-[#6a4d16]"
-        : "border-[#d8d2c5] bg-[#f7faf8] text-[#24343b]";
+        ? "border-[#e3d6b6] bg-[#fff4c5] text-[#765300]"
+        : "border-[#b8dff0] bg-[#eff9fd] text-[#17384a]";
   return (
     <div role="status" aria-live="polite" className={`rounded-xl border p-3 text-sm leading-6 ${palette}`}>
       <strong className="block font-black">{title}</strong>

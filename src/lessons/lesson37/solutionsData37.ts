@@ -112,8 +112,8 @@ export const TEST_SOLUTIONS_37: TestSolution37[] = [
     ],
   },
   {
-    n: 19, level: 4, answer: "نعم؛ يمكن وصف نشاط جارٍ خلال فترة مستقبلية أو ضمن برنامج متوقع دون ساعة محددة.", judgment: "open-model", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "المصدر §33: «Future Continuous لا يحتاج دائمًا إلى ساعة محددة مثل 8:00 أو 9:00».",
+    n: 19, level: 4, answer: "نعم؛ يمكن وصف نشاط جارٍ خلال فترة مستقبلية دون ساعة محددة. مثال: The workers will be repairing the road throughout the weekend.", judgment: "open-model", sourceStatus: "platform-authored-teacher-addition",
+    explanation: "المصدر §33: «Future Continuous لا يحتاج دائمًا إلى ساعة محددة مثل 8:00 أو 9:00»؛ والمثال يحدد فترة كاملة بدل نقطة زمنية واحدة.",
     alternatives: [
       "أمثلة مقبولة من المصدر: «This time next week, I'll be relaxing on the beach.» — «The workers will be repairing the road throughout the weekend.» — «Everyone will be having lunch.»",
       "تقبل أي إجابة تحتوي مثالًا صحيحًا الصيغة (will be + V-ing) مع سياق فترة أو برنامج.",

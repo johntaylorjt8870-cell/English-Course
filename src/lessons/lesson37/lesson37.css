@@ -1,0 +1,85 @@
+[data-lesson="37"] {
+  background-image:
+    radial-gradient(ellipse at 3% 4%, rgba(77, 205, 242, .13), transparent 28rem),
+    radial-gradient(ellipse at 94% 11%, rgba(165, 121, 255, .10), transparent 25rem);
+  color-scheme: light;
+}
+
+[data-lesson="37"] ::selection { background: #c9eaff; color: #073b63; }
+
+.horizon-cover37 {
+  position: relative;
+  background:
+    radial-gradient(circle at 82% 13%, rgba(255, 218, 94, .28), transparent 12rem),
+    linear-gradient(118deg, #f5fcff 0%, #e8f7ff 48%, #f2edff 100%);
+}
+.horizon-cover37__top {
+  border-bottom: 1px solid rgba(8, 71, 101, .12);
+  background: linear-gradient(90deg, rgba(74, 207, 226, .28), rgba(117, 139, 255, .22), rgba(255, 145, 114, .18));
+}
+.horizon-instrument37 {
+  box-shadow: inset 0 1px 0 white, 0 10px 26px -22px rgba(8, 71, 101, .6);
+}
+.horizon-timeline37 {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  min-height: 3.2rem;
+  padding: 0 .35rem;
+}
+.horizon-timeline37__line {
+  position: absolute;
+  top: .46rem;
+  inset-inline: .8rem;
+  height: .32rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #38c7d8 0%, #1769ff 48%, #a174ed 76%, #ff8b70 100%);
+}
+.horizon-timeline37__point {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 4rem;
+  flex-direction: column;
+  align-items: center;
+  gap: .35rem;
+}
+.horizon-timeline37__point--1 { transform: translateY(-.1rem); }
+.horizon-timeline37__dot {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 3px solid white;
+  border-radius: 50%;
+  background: #007b83;
+  box-shadow: 0 0 0 2px #007b83;
+}
+.horizon-timeline37__point--1 .horizon-timeline37__dot {
+  width: 1.5rem;
+  height: 1.5rem;
+  background: #ff765e;
+  box-shadow: 0 0 0 3px #ff765e, 0 0 0 8px rgba(255, 118, 94, .15);
+  animation: horizon-pulse37 2.4s ease-in-out infinite;
+}
+.horizon-timeline37__lens {
+  position: absolute;
+  top: 1.75rem;
+  color: #e45b49;
+  font-size: .8rem;
+  font-weight: 900;
+}
+.horizon-start37 { box-shadow: 0 8px 20px -10px rgba(23, 105, 255, .72); }
+@keyframes horizon-pulse37 {
+  0%, 100% { box-shadow: 0 0 0 3px #ff765e, 0 0 0 8px rgba(255, 118, 94, .12); }
+  50% { box-shadow: 0 0 0 3px #ff765e, 0 0 0 12px rgba(255, 118, 94, .04); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .horizon-timeline37__point--1 .horizon-timeline37__dot { animation: none; }
+  [data-lesson="37"] *, [data-lesson="37"] *::before, [data-lesson="37"] *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

@@ -53,9 +53,10 @@ import * as DATA from ${JSON.stringify(join(root, "src/lessons/lesson37/data.ts"
 import * as PRACTICE from ${JSON.stringify(join(root, "src/lessons/lesson37/practiceData37.ts"))};
 import * as TEST from ${JSON.stringify(join(root, "src/lessons/lesson37/testData37.ts"))};
 import * as SOLUTIONS from ${JSON.stringify(join(root, "src/lessons/lesson37/solutionsData37.ts"))};
+import * as GRADING from ${JSON.stringify(join(root, "src/lessons/lesson37/grading37.ts"))};
 import * as COVERAGE from ${JSON.stringify(join(root, "src/lessons/lesson37/coverage37.ts"))};
 function mount(node) { const el = document.createElement("div"); document.body.appendChild(el); const root = createRoot(el); act(() => root.render(node)); return { el, root: { unmount() { act(() => root.unmount()); } } }; }
-export { React, act, createRoot, renderToString, App, Lesson37, StepView37, TestArea37, TeacherArea37, SolutionsArea37, TeacherGuide37, LEDGER, DATA, PRACTICE, TEST, SOLUTIONS, COVERAGE, mount };
+export { React, act, createRoot, renderToString, App, Lesson37, StepView37, TestArea37, TeacherArea37, SolutionsArea37, TeacherGuide37, LEDGER, DATA, PRACTICE, TEST, SOLUTIONS, GRADING, COVERAGE, mount };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -81,7 +82,7 @@ const { TEST_LEVELS_37, TEST_COUNT_37, TEST_LEVEL_COUNT_37, TEST_INTRO_37, TEST_
 const { TEST_SOLUTIONS_37 } = M.SOLUTIONS;
 const {
   OBJECTIVES_37, ING_ITEMS_37, EXERCISE28_ITEMS_37, TRANSFORM29_ITEMS_37, DETECTIVE30_ITEMS_37, IQ200_ITEMS_37,
-  READING32_QUESTIONS_37, READING32_ANALYSIS_37, WRITING36_CRITERIA_37, WRITING36_MODEL_37, DIALOGUE_LINES_37,
+  READING32_QUESTIONS_37, READING32_ANSWERS_37, READING32_ANALYSIS_37, WRITING36_CRITERIA_37, WRITING36_MODEL_37, DIALOGUE_LINES_37,
 } = M.PRACTICE;
 const { COVERAGE_37, COVERAGE_SECTION_COUNT_37, COVERAGE_ACCURACY_NOTES_37 } = M.COVERAGE;
 const tick = (ms = 25) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -203,6 +204,13 @@ function sensitivityCheck(solution) {
   return /\bwill (is|am|are)\b/.test(solution.answer) && !/❌|خطأ/.test(solution.explanation);
 }
 ok(TEST_SOLUTIONS_37.filter((solution) => solution.n <= 5).every((solution) => /^(A|B|C)\./.test(solution.answer)), "Level 1 solutions name the correct letter and option");
+const gradingAnswers37 = Object.fromEntries(TEST_SOLUTIONS_37.map((solution) => [solution.n, solution.answer]));
+const modelGrade37 = M.GRADING.gradeLesson37(M.TEST.TEST_37, gradingAnswers37);
+ok(modelGrade37.total === 25 && modelGrade37.records.length === 25 && modelGrade37.records.every((record) => record.correct), `all 25 platform model answers pass the independent lesson-specific grader (${modelGrade37.records.filter((record) => !record.correct).map((record) => `Q${record.n}`).join(", ") || "all correct"})`);
+const equivalentGrade37 = M.GRADING.gradeLesson37(M.TEST.TEST_37, { 6: "They'll be sleeping", 7: "I'll be taking", 8: "We'll be preparing", 9: "She will not be working at five tomorrow", 13: "They will not be playing football", 14: "When he arrives, I will sleep", 21: "She'll be attending", 25: "What will you do at 8?" });
+ok([6, 7, 8, 9, 13, 14, 21, 25].every((number) => equivalentGrade37.records.find((record) => record.n === number)?.correct), `the grader accepts contractions/full negative forms and grammatical alternatives with distinct focus (${[6, 7, 8, 9, 13, 14, 21, 25].filter((number) => !equivalentGrade37.records.find((record) => record.n === number)?.correct).map((number) => `Q${number}`).join(", ") || "all accepted"})`);
+const invalidGrade37 = M.GRADING.gradeLesson37(M.TEST.TEST_37, { 6: "will sleep", 8: "when you will arrive we prepare", 10: "Do they wait?", 18: "Yes, use will after when", 19: "yes" });
+ok([6, 8, 10, 18, 19].every((number) => invalidGrade37.records.find((record) => record.n === number)?.correct === false), "the grader rejects incorrect auxiliaries, time-clause errors, and incomplete conceptual responses");
 
 // 5) Every source step renders, is traceable, and is not empty.
 const initialStepHtml = new Map();
@@ -212,6 +220,16 @@ for (const slide of SLIDES_37) {
   initialStepHtml.set(slide.id, html);
   ok(html.includes(`data-step-id="${slide.id}"`) && html.includes(`data-source-id="${slide.id}"`) && html.includes(`data-source-section="${slide.id}"`), `${slide.id}: renders as a native, traceable step`);
   ok(html.length > 700, `${slide.id}: renders substantive content (${html.length} chars)`);
+}
+{
+  let started = false;
+  const { el, root: probeRoot } = M.mount(M.React.createElement(M.StepView37, { slide: SLIDES_37[0], onGoTest() {}, onGoSolutions() {}, onStartStep() { started = true; } }));
+  click(findButton(el, "ابدأ الرحلة التعليمية"));
+  const studying = [...el.querySelectorAll("[data-horizon-probe] button")].find((button) => button.textContent.trim() === "studying");
+  click(studying);
+  ok(!!el.querySelector("[data-horizon-probe]") && !!el.querySelector("[data-horizon-sentence]") && normalize(el.textContent).includes("I will be studying"), "Future Horizon opening has a functional 8:00 timeline probe that builds an extra sentence");
+  ok(started, "the opening call-to-action invokes the next-step navigation callback without delaying the source introduction");
+  probeRoot.unmount(); el.remove();
 }
 
 // 6) Test Area neutrality before/after submission, and no hidden key.
@@ -566,6 +584,11 @@ for (const id of ["s28", "s29", "s30", "s31", "s32"]) {
   await tick(5);
   const keysText = normalize(guide.textContent);
   ok(keysText.includes("Grammar Detective") && keysText.includes("IQ200") && keysText.includes("A Busy Saturday"), "teacher keys cover the drill, the detective, the IQ200 challenge, and the reading");
+  ok(guide.querySelectorAll("details").length >= 7 && READING32_QUESTIONS_37.length === 8 && READING32_ANSWERS_37.length === 8 && guide.textContent.includes("He will be having breakfast with his family."), "Teacher Area exposes all eight reading answers, not only the comprehension questions");
+  ok(guide.textContent.includes("§33 · إجابات التحدي المتقدم") && guide.textContent.includes("الجملتان صحيحتان، والفرق في التركيز"), "Teacher Area includes the advanced challenge keys and rationales");
+  click(findButton(guide, "الأهداف العشرة ومواطن التعثر المتوقعة"));
+  await tick(5);
+  ok(guide.textContent.includes("أخطاء شائعة للمراجعة التشخيصية") && OBJECTIVES_37.length === 10, "Teacher Area includes the ten learning goals and common-error guidance");
   click(findButton(guide, "القواعد والملاحظات التعليمية"));
   await tick(5);
   const rulesText = normalize(guide.textContent);
@@ -609,16 +632,22 @@ for (const id of ["s28", "s29", "s30", "s31", "s32"]) {
   const submit = findButton(shellTest, "إرسال الاختبار");
   ok(submit?.disabled === true, "submission stays disabled until all 25 questions are answered");
   for (const card of shellQuestions) {
+    const number = Number(card.getAttribute("data-test-question"));
+    const model = TEST_SOLUTIONS_37[number - 1];
     const radio = card.querySelector('input[type="radio"]');
-    if (radio) click(radio);
-    else setNative(card.querySelector("input[type=text], textarea"), `response ${card.getAttribute("data-test-question")}`);
+    if (radio) {
+      const correctLetter = model.answer.slice(0, 1);
+      const correctRadio = card.querySelector(`input[type="radio"][value="${correctLetter}"]`);
+      click(correctRadio);
+    } else setNative(card.querySelector("input[type=text], textarea"), model.answer);
   }
   await tick(10);
   ok(findButton(shellTest, "إرسال الاختبار")?.disabled === false, "all 25 answers enable the submission button");
-  click(findButton(shellTest, "إرسال الاختبار"));
-  await tick(10);
-  ok(normalize(shellTest.textContent).includes("لا يوجد تصحيح فوري"), "after submission the Test Area states that there is no immediate correction");
-  ok(shellTest.querySelectorAll("[data-test-feedback]").length === 0 && !shellTest.querySelector("[data-solution]"), "even after submission the Test Area contains no score, key, or explanation");
+  await M.act(async () => { click(findButton(shellTest, "إرسال الاختبار")); await tick(100); });
+  const postSubmit = shellTest.querySelector("[data-test-result]");
+  ok(!!postSubmit && normalize(postSubmit.textContent).includes("25 / 25"), `after final submission the integrated Test Area displays the exact score (${normalize(postSubmit?.textContent ?? "no result")})`);
+  ok(shellTest.querySelectorAll("[data-test-feedback]").length === 25 && shellTest.querySelectorAll("[data-test-feedback] p").length >= 75, "after submission, all 25 responses receive correctness feedback, model answers, and reasons");
+  ok(!shellTest.querySelector("[data-solution]"), "the scored Test Area still does not embed the separate detailed Solutions Area");
   ok(findButton(shell, "منطقة الحلول")?.disabled === false, "submitting the test unlocks the Solutions Area");
   click(findButton(shell, "منطقة الحلول"));
   await M.act(async () => { await tick(120); });
@@ -669,40 +698,41 @@ function channel(hex) { const value = parseInt(hex, 16) / 255; return value <= 0
 function luminance(hex) { const clean = hex.replace("#", ""); return 0.2126 * channel(clean.slice(0, 2)) + 0.7152 * channel(clean.slice(2, 4)) + 0.0722 * channel(clean.slice(4, 6)); }
 function contrast(fg, bg) { const values = [luminance(fg), luminance(bg)].sort((a, b) => b - a); return (values[0] + 0.05) / (values[1] + 0.05); }
 const contrastPairs = [
-  ["#24343b", "#ffffff", "main text on white"], ["#24343b", "#fffdf8", "main text on warm surface"],
-  ["#24343b", "#f5f3ed", "main text on lesson background"], ["#24343b", "#fdfcf8", "main text on lab surface"],
-  ["#24343b", "#f7f8f5", "main text on hover surface"], ["#24343b", "#eef4f0", "main text on selected surface"],
-  ["#24343b", "#edf5ee", "main text on feedback surface"], ["#43575a", "#ffffff", "secondary text on white"],
-  ["#43575a", "#fffdf8", "secondary text on warm surface"], ["#43575a", "#f3f5f2", "secondary text on neutral surface"],
-  ["#43575a", "#fbfaf6", "secondary text on warm card"], ["#53676a", "#ffffff", "muted text on white"],
-  ["#53676a", "#f7faf8", "muted text on pale green"], ["#53676a", "#fdfcf8", "muted text on lab card"],
-  ["#17354a", "#ffffff", "navy text on white"], ["#17354a", "#fffdf8", "navy text on warm white"],
-  ["#28533b", "#edf5ee", "success text on feedback surface"], ["#76531e", "#fbf6eb", "amber text on callout"],
-  ["#18333b", "#fbfdfc", "English text on reading surface"], ["#8d3832", "#ffffff", "error text on white"],
-  ["#ffffff", "#17354a", "white on navy header"], ["#ffffff", "#245f62", "white on primary button"],
-  ["#f0ddb6", "#17354a", "pale accent on navy header"], ["#596965", "#f5f5f2", "disabled button text"],
-  ["#596965", "#ece9e1", "disabled primary-button text"], ["#24343b", "#f4e8c3", "highlighted reading text"],
-  ["#17354a", "#ffffff", "focus ring on white"],
+  ["#075b83", "#ffffff", "observatory label on white"], ["#ffffff", "#1769ff", "white label on electric-blue start action"],
+  ["#17384a", "#ffffff", "main text on white"], ["#17384a", "#ffffff", "main text on warm surface"],
+  ["#17384a", "#edf8ff", "main text on lesson background"], ["#17384a", "#ffffff", "main text on lab surface"],
+  ["#17384a", "#edf8ff", "main text on hover surface"], ["#17384a", "#e4f8f5", "main text on selected surface"],
+  ["#17384a", "#e4f8f5", "main text on feedback surface"], ["#3e5d70", "#ffffff", "secondary text on white"],
+  ["#3e5d70", "#ffffff", "secondary text on warm surface"], ["#3e5d70", "#eff9fd", "secondary text on neutral surface"],
+  ["#3e5d70", "#f4fbff", "secondary text on warm card"], ["#4b6a7d", "#ffffff", "muted text on white"],
+  ["#4b6a7d", "#eff9fd", "muted text on pale green"], ["#4b6a7d", "#ffffff", "muted text on lab card"],
+  ["#084765", "#ffffff", "navy text on white"], ["#084765", "#ffffff", "navy text on warm white"],
+  ["#1f613d", "#e4f8f5", "success text on feedback surface"], ["#765300", "#fff4c5", "amber text on callout"],
+  ["#17384a", "#f4fbff", "English text on reading surface"], ["#943c31", "#ffffff", "error text on white"],
+  ["#ffffff", "#084765", "white on navy header"], ["#ffffff", "#007b83", "white on primary button"],
+  ["#fff4c5", "#084765", "pale accent on navy header"], ["#4b6570", "#ecf6fa", "disabled button text"],
+  ["#4b6570", "#e0f1f8", "disabled primary-button text"], ["#17384a", "#fff2bc", "highlighted reading text"],
+  ["#084765", "#ffffff", "focus ring on white"],
   // الحالات التفاعلية والأسطح الإضافية التي يستخدمها الدرس فعليًا (المصادر تُثبت التغطية أدناه)
-  ["#ffffff", "#1d5053", "white on the primary-button hover surface"],
-  ["#ffffff", "#7a5516", "white on the amber camera band"],
-  ["#fdf1d8", "#7a5516", "pale chip text on the amber camera band"],
-  ["#245f62", "#ffffff", "accent text on white"],
-  ["#245f62", "#eef4f0", "accent text on pale green hover"],
-  ["#6a4d16", "#fbf6eb", "amber text on amber surface"],
-  ["#24343b", "#e6ebe7", "main text on neutral surface hover"],
-  ["#24343b", "#e8e5dc", "main text on warm divider surface"],
-  ["#24343b", "#edf2ee", "main text on pale mint surface"],
-  ["#24343b", "#eef2f6", "main text on pale blue surface"],
-  ["#24343b", "#fbefed", "main text on pale rose surface"],
-  ["#24343b", "#fffdf6", "main text on warm cream surface"],
-  ["#28533b", "#b8d6c0", "success text on progress track"],
-  ["#28533b", "#d9eadc", "success text on pale green chip"],
-  ["#43575a", "#edf2ee", "secondary text on pale mint surface"],
+  ["#ffffff", "#07666b", "white on the primary-button hover surface"],
+  ["#ffffff", "#6039a7", "white on the amber camera band"],
+  ["#f2eaff", "#6039a7", "pale chip text on the amber camera band"],
+  ["#007b83", "#ffffff", "accent text on white"],
+  ["#007b83", "#e4f8f5", "accent text on pale green hover"],
+  ["#765300", "#fff4c5", "amber text on amber surface"],
+  ["#17384a", "#e6f4f7", "main text on neutral surface hover"],
+  ["#17384a", "#e1f0f6", "main text on warm divider surface"],
+  ["#17384a", "#e8f5f8", "main text on pale mint surface"],
+  ["#17384a", "#eaf4ff", "main text on pale blue surface"],
+  ["#17384a", "#fff0ec", "main text on pale rose surface"],
+  ["#17384a", "#ffffff", "main text on warm cream surface"],
+  ["#1f613d", "#8fdcd4", "success text on progress track"],
+  ["#1f613d", "#e4f8f5", "success text on pale green chip"],
+  ["#3e5d70", "#e8f5f8", "secondary text on pale mint surface"],
 ];
 const contrastFailures = contrastPairs.filter(([fg, bg]) => contrast(fg, bg) < 4.5);
 ok(contrastFailures.length === 0, `audited text/background palette pairs meet WCAG AA 4.5:1 (${contrastFailures.map(([fg, bg, label]) => `${label} ${contrast(fg, bg).toFixed(2)}:1`).join(", ")})`);
-ok(contrast("#17354a", "#ffffff") >= 3 && contrast("#17354a", "#fffdf8") >= 3, "focus indicator contrast is at least 3:1 against both light surfaces");
+ok(contrast("#084765", "#ffffff") >= 3 && contrast("#084765", "#ffffff") >= 3, "focus indicator contrast is at least 3:1 against both light surfaces");
 ok(["\u200f", "\u200e"].every((mark) => directionSources.includes(mark) === false), "no stray LRM/RLM marks were needed in the lesson sources");
 // 13a) إغلاق لوحة الألوان: كل لون نص/خلفية يستخدمه الدرس مُغطّى بزوج تدقيق،
 //      ولا يوجد نص باهت، وكل فئة ألوان يستعملها الدرس مُصدَّرة فعلًا في CSS المبنية.
@@ -830,6 +860,8 @@ ok(["\u200f", "\u200e"].every((mark) => directionSources.includes(mark) === fals
   ok(appText.includes('import Lesson37 from "./lessons/lesson37/Lesson37"') && appText.includes('href: "#/lesson/37"') && appText.includes("route === 37"), "App.tsx registers Lesson 37 as a hub card and first-class route");
   const docs = readFileSync(join(root, "docs/lesson37-coverage.md"), "utf8");
   ok((docs.match(/^\| §\d+/gm) || []).length === 38, "coverage ledger documents all 38 numbered source sections");
+  const lessonSources = readdirSync(join(root, "src/lessons/lesson37")).filter((file) => /\.(tsx|ts|css)$/.test(file)).map((file) => readFileSync(join(root, "src/lessons/lesson37", file), "utf8")).join("\n");
+  ok(!/Knowledge\s*Card|بطاقة المعرفة|data-knowledge-card/i.test(lessonSources) && !lessonSources.includes("knowledge-card"), "Lesson 37 does not implement a Knowledge Card or equivalent fixed summary component");
   ok(docs.includes("Table reconstruction contracts") && docs.includes("Test and answer provenance contract"), "coverage ledger records the rebuilt tables and the missing-source-key provenance");
   ok(COVERAGE_ACCURACY_NOTES_37.length >= 5, "the in-app coverage ledger keeps the source-accuracy notes");
   const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
@@ -850,4 +882,6 @@ if (failures.length) {
   for (const failure of failures) console.error(`  - ${failure}`);
   process.exit(1);
 }
+const densestSourceSteps37 = [...SLIDES_37].sort((a, b) => b.source.units.length - a.source.units.length).slice(0, 6).map((slide) => `${slide.id}=${slide.source.units.length}`).join(", ");
+console.log(`  ↳ أعلى كثافة مصدرية (وحدات نصية): ${densestSourceSteps37}`);
 console.log(`✓ Lesson 37 audit passed: ${assertions} assertions; 38 numbered source sections + opening; 25 questions in five levels; 25 separate platform-authored solutions; timeline/camera/formula/builder/reading/writing interactions; source/route/direction/contrast contracts.`);

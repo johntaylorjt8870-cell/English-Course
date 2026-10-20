@@ -61,11 +61,11 @@ export default function TeacherGuide36({ onGoSolutions, onLock }: { onGoSolution
   const mapped = useMemo(() => SOURCE_SECTIONS_36.filter((section) => section.num != null), []);
   return (
     <div data-area="lesson36-teacher" className="space-y-4">
-      <header className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-[#d8d2c5] bg-white p-4">
+      <header className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-[#e2e8f0] bg-white p-4">
         <div>
-          <p className="text-xs font-black uppercase tracking-[.12em] text-[#53676a]">Teacher Area · Lesson 36</p>
-          <h1 className="text-xl font-black text-[#17354a]">دليل المعلم — WILL vs BE GOING TO</h1>
-          <p className="mt-1 text-sm text-[#43575a]">خمسة أقسام منظمة؛ المفاتيح الرسمية إضافات معلم منفصلة عن نص المصدر.</p>
+          <p className="text-xs font-black uppercase tracking-[.12em] text-[#64748b]">Teacher Area · Lesson 36</p>
+          <h1 className="text-xl font-black text-[#0d9488]">دليل المعلم — WILL vs BE GOING TO</h1>
+          <p className="mt-1 text-sm text-[#475569]">خمسة أقسام منظمة؛ المفاتيح الرسمية إضافات معلم منفصلة عن نص المصدر.</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <ActionButton36 variant="secondary" onClick={onGoSolutions}>فتح منطقة الحلول</ActionButton36>
@@ -75,7 +75,7 @@ export default function TeacherGuide36({ onGoSolutions, onLock }: { onGoSolution
 
       <nav aria-label="أقسام دليل المعلم" className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
         {TABS.map((item) => (
-          <button key={item.id} type="button" aria-pressed={tab === item.id} onClick={() => setTab(item.id)} className={`${FOCUS_36} min-h-12 rounded-xl border px-3 py-2 text-sm font-black transition-colors motion-reduce:transition-none ${tab === item.id ? "border-[#245f62] bg-[#245f62] text-white" : "border-[#cfd8d2] bg-white text-[#24343b] hover:bg-[#eef4f0]"}`}>
+          <button key={item.id} type="button" aria-pressed={tab === item.id} onClick={() => setTab(item.id)} className={`${FOCUS_36} min-h-12 rounded-xl border px-3 py-2 text-sm font-black transition-colors motion-reduce:transition-none ${tab === item.id ? "border-[#0d9488] bg-[#0d9488] text-white" : "border-[#cfd8d2] bg-white text-[#334155] hover:bg-[#ccfbf1]"}`}>
             {item.label}
           </button>
         ))}
@@ -94,7 +94,7 @@ function TeachingPlan36() {
   return (
     <div className="space-y-4">
       <Card36 eyebrow="Platform-authored teacher addition" title="مسار تدريس مقترح">
-        <ol className="list-decimal space-y-2 ps-5 text-base leading-7 text-[#24343b]">
+        <ol className="list-decimal space-y-2 ps-5 text-base leading-7 text-[#334155]">
           <li><strong>ابدأ بالمعنى:</strong> قارن قراري الحاسوب في §2 قبل مراجعة الصيغ. اطلب من المتعلمين تحديد متى نشأت النية.</li>
           <li><strong>انقل التفكير إلى الموقف:</strong> استخدم المصباح والكراسي والطبخ والدراسة في §§4–5، ولا تجعل الأفعال مفاتيح آلية لاختيار البناء.</li>
           <li><strong>افصل التوقع عن الدليل:</strong> في §§6–7 اطلب وصف الدليل الحالي أولًا، ثم وضّح أن WILL لا تصبح خطأ بسببه.</li>
@@ -106,7 +106,7 @@ function TeachingPlan36() {
         </ol>
       </Card36>
       <Card36 eyebrow="Teaching priorities" title="أسئلة تشخيصية متكررة">
-        <ul className="list-disc space-y-2 ps-5 text-base leading-7 text-[#24343b]">
+        <ul className="list-disc space-y-2 ps-5 text-base leading-7 text-[#334155]">
           <li>متى اتُخذ القرار؟</li>
           <li>هل يعرض المتحدث خطة سابقة، أو وعدًا/عرضًا لحظيًا؟</li>
           <li>هل يقدّم اعتقادًا عامًا، أم يختار إبراز دليل حاضر؟</li>
@@ -116,7 +116,7 @@ function TeachingPlan36() {
       </Card36>
       <Card36 eyebrow="Common error repair · platform-authored" title="أخطاء متوقعة وكيفية معالجتها">
         <div className="grid gap-3 md:grid-cols-2">
-          {COMMON_ERRORS_36.map((item) => <article key={item.head} className="rounded-2xl border border-[#d8d2c5] bg-[#fbfaf6] p-3"><h3 className="font-black text-[#17354a]">{item.head}</h3><p className="mt-1 text-sm leading-6 text-[#24343b]">{item.note}</p></article>)}
+          {COMMON_ERRORS_36.map((item) => <article key={item.head} className="rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] p-3"><h3 className="font-black text-[#0d9488]">{item.head}</h3><p className="mt-1 text-sm leading-6 text-[#334155]">{item.note}</p></article>)}
         </div>
       </Card36>
     </div>
@@ -127,22 +127,22 @@ function Coverage36({ sections }: { sections: typeof SOURCE_SECTIONS_36 }) {
   return (
     <div data-coverage-section-count={sections.length} className="space-y-4">
       <Card36 eyebrow="Source coverage · section by section" title="خريطة تغطية الأقسام الـ26">
-        <p className="text-sm leading-6 text-[#43575a]">كل عنوان أدناه يطابق رقم المصدر، ويربطه بخطوة المتعلم وبمنطقة التمرين/الاختبار. افتح أي صف للاطلاع على وحدات المصدر كاملة، بما فيها مفاتيح التمارين الأصلية.</p>
+        <p className="text-sm leading-6 text-[#475569]">كل عنوان أدناه يطابق رقم المصدر، ويربطه بخطوة المتعلم وبمنطقة التمرين/الاختبار. افتح أي صف للاطلاع على وحدات المصدر كاملة، بما فيها مفاتيح التمارين الأصلية.</p>
         <PlatformNote36>المحتوى المعروض هنا هو سجل تغطية للمعلم. مفاتيح الاختبار الرسمية ليست من المصدر؛ راجع تبويب «حلول الاختبار» للإضافات المعلمة.</PlatformNote36>
         <ol className="space-y-2">
           {sections.map((section) => (
             <li key={section.id} data-coverage-section={section.num}>
-              <details className="rounded-2xl border border-[#d8d2c5] bg-white">
-                <summary className={`${FOCUS_36} cursor-pointer list-inside px-3 py-3 text-sm font-black text-[#17354a]`}>
+              <details className="rounded-2xl border border-[#e2e8f0] bg-white">
+                <summary className={`${FOCUS_36} cursor-pointer list-inside px-3 py-3 text-sm font-black text-[#0d9488]`}>
                   §{section.num} · <Rich text={section.title} />
-                  <span className="mt-1 block text-xs font-bold text-[#53676a]">{DESTINATION_36[section.id]}</span>
+                  <span className="mt-1 block text-xs font-bold text-[#64748b]">{DESTINATION_36[section.id]}</span>
                 </summary>
-                <div className="space-y-1 border-t border-[#e3e0d7] bg-[#fbfaf6] p-3">
+                <div className="space-y-1 border-t border-[#e2e8f0] bg-[#f8fafc] p-3">
                   {section.tableRows ? (
-                    <ul className="list-disc space-y-1 ps-5 text-sm text-[#24343b]">{section.tableRows.map(([situation, form]) => <li key={situation}><Rich text={`${situation} — ${form}`} /></li>)}</ul>
+                    <ul className="list-disc space-y-1 ps-5 text-sm text-[#334155]">{section.tableRows.map(([situation, form]) => <li key={situation}><Rich text={`${situation} — ${form}`} /></li>)}</ul>
                   ) : null}
                   {section.units.map((line, index) => <SourceLine36 key={index} sectionId={section.id} index={index} text={line} />)}
-                  {section.revealUnits?.length ? <div className="mt-2 rounded-xl border border-[#b8d6c0] bg-[#edf5ee] p-2"><p className="text-xs font-black text-[#28533b]">مفتاح تدريب أصلي / وحدات كشف من المصدر</p>{section.revealUnits.map((line, index) => <SourceLine36 key={index} sectionId={section.id} index={index} kind="reveal" text={line} />)}</div> : null}
+                  {section.revealUnits?.length ? <div className="mt-2 rounded-xl border border-[#5eead4] bg-[#ccfbf1] p-2"><p className="text-xs font-black text-[#0f766e]">مفتاح تدريب أصلي / وحدات كشف من المصدر</p>{section.revealUnits.map((line, index) => <SourceLine36 key={index} sectionId={section.id} index={index} kind="reveal" text={line} />)}</div> : null}
                 </div>
               </details>
             </li>
@@ -150,7 +150,7 @@ function Coverage36({ sections }: { sections: typeof SOURCE_SECTIONS_36 }) {
         </ol>
       </Card36>
       <Card36 eyebrow="Source-shape audit notes" title="ملاحظات وفاء المصدر">
-        <ul className="list-disc space-y-2 ps-5 text-sm leading-6 text-[#24343b]">
+        <ul className="list-disc space-y-2 ps-5 text-sm leading-6 text-[#334155]">
           <li>§3 أعيد بناؤه في جدول دلالي ذي رؤوس وصفوف واضحة، مع صفوف المصدر الثمانية دون إضافة معنى.</li>
           <li>§22 موجود في Test Area مرة واحدة بوصفه اختبارًا رسميًا من 25 سؤالًا وخمسة مستويات.</li>
           <li>§23 يورد العنوان وعبارة كشف الحلول فقط؛ كل حل رسمي في التطبيق موسوم بأنه إضافة تعليمية.</li>
@@ -170,28 +170,28 @@ function PracticeKeys36() {
   return (
     <div className="space-y-4">
       <Card36 eyebrow="§17 · supplied answer key" title="Grammar Detective — الإجابات العشر">
-        <p className="text-sm leading-6 text-[#43575a]">الإجابات المدرجة في نص الدرس المورّد. الشروح التوسعية أدناه إضافة تعليمية من المعلم.</p>
-        <div className="space-y-2">{DETECTIVE_ITEMS_36.map((item) => <div key={item.n} className="rounded-xl border border-[#d8d2c5] bg-white p-3"><p className="text-sm font-bold text-[#53676a]">{item.n}. <Rich text={item.prompt} /></p><p className="mt-1 text-base font-black text-[#17354a]">{item.answers.map((answer, index) => <span key={answer}><span dir="ltr" className="font-en">{answer}</span>{index < item.answers.length - 1 ? " / " : ""}</span>)}</p><p className="mt-1 text-sm leading-6 text-[#24343b]"><span className="font-black">تعليل معلم:</span> {item.feedback}</p></div>)}</div>
-        <p className="text-sm leading-6 text-[#24343b]">في مثال الكوب، الإجابة المعتادة تعليميًا هي <span dir="ltr" className="font-en">Look! The glass is going to fall.</span>، لكن المصدر يصرح بأن <span dir="ltr" className="font-en">Look! The glass will fall.</span> ممكنة نحويًا؛ لا تصحّحها بوصفها خطأ.</p>
-        {s17.revealUnits?.length ? <details className="rounded-xl border border-[#d8d2c5] bg-[#fbfaf6] p-3"><summary className={`${FOCUS_36} cursor-pointer font-black text-[#17354a]`}>إظهار المفتاح الأصلي كاملًا</summary>{s17.revealUnits.map((line, index) => <SourceLine36 key={index} sectionId="s17" index={index} kind="reveal" text={line} />)}</details> : null}
+        <p className="text-sm leading-6 text-[#475569]">الإجابات المدرجة في نص الدرس المورّد. الشروح التوسعية أدناه إضافة تعليمية من المعلم.</p>
+        <div className="space-y-2">{DETECTIVE_ITEMS_36.map((item) => <div key={item.n} className="rounded-xl border border-[#e2e8f0] bg-white p-3"><p className="text-sm font-bold text-[#64748b]">{item.n}. <Rich text={item.prompt} /></p><p className="mt-1 text-base font-black text-[#0d9488]">{item.answers.map((answer, index) => <span key={answer}><span dir="ltr" className="font-en">{answer}</span>{index < item.answers.length - 1 ? " / " : ""}</span>)}</p><p className="mt-1 text-sm leading-6 text-[#334155]"><span className="font-black">تعليل معلم:</span> {item.feedback}</p></div>)}</div>
+        <p className="text-sm leading-6 text-[#334155]">في مثال الكوب، الإجابة المعتادة تعليميًا هي <span dir="ltr" className="font-en">Look! The glass is going to fall.</span>، لكن المصدر يصرح بأن <span dir="ltr" className="font-en">Look! The glass will fall.</span> ممكنة نحويًا؛ لا تصحّحها بوصفها خطأ.</p>
+        {s17.revealUnits?.length ? <details className="rounded-xl border border-[#e2e8f0] bg-[#f8fafc] p-3"><summary className={`${FOCUS_36} cursor-pointer font-black text-[#0d9488]`}>إظهار المفتاح الأصلي كاملًا</summary>{s17.revealUnits.map((line, index) => <SourceLine36 key={index} sectionId="s17" index={index} kind="reveal" text={line} />)}</details> : null}
       </Card36>
 
       <Card36 eyebrow="§18 · supplied key and explanations" title="اختر الصيغة الأنسب — الإجابات الثماني">
-        {EXERCISE18_ITEMS_36.map((item) => <p key={item.n} className="rounded-xl border border-[#d8d2c5] bg-white p-3 text-sm leading-6 text-[#24343b]"><strong className="text-[#17354a]">{item.n}. {item.answer}</strong> — {item.explanation}</p>)}
+        {EXERCISE18_ITEMS_36.map((item) => <p key={item.n} className="rounded-xl border border-[#e2e8f0] bg-white p-3 text-sm leading-6 text-[#334155]"><strong className="text-[#0d9488]">{item.n}. {item.answer}</strong> — {item.explanation}</p>)}
         {s18.revealUnits?.map((line, index) => <SourceLine36 key={index} sectionId="s18" index={index} kind="reveal" text={line} />)}
       </Card36>
 
       <Card36 eyebrow="§19 · supplied key and explanations" title="حوار Sara وAdam">
-        <div className="space-y-2">{DIALOGUE19_ITEMS_36.map((item) => <div key={item.n} className="rounded-xl border border-[#d8d2c5] bg-white p-3"><p className="font-black text-[#17354a]">الفراغ {item.n}: <span dir="ltr" className="font-en">{item.answer}</span></p><p className="text-sm leading-6 text-[#24343b]">{item.explanation}</p></div>)}</div>
-        <p className="mt-2 text-sm leading-6 text-[#24343b]">وجود جدول الاختبارات دليل سياقي، لكنه لا يمنع استعمال <span dir="ltr" className="font-en">will</span> عندما تعبّر الجملة عن اعتقاد المتحدث، كما يؤكد المصدر.</p>
+        <div className="space-y-2">{DIALOGUE19_ITEMS_36.map((item) => <div key={item.n} className="rounded-xl border border-[#e2e8f0] bg-white p-3"><p className="font-black text-[#0d9488]">الفراغ {item.n}: <span dir="ltr" className="font-en">{item.answer}</span></p><p className="text-sm leading-6 text-[#334155]">{item.explanation}</p></div>)}</div>
+        <p className="mt-2 text-sm leading-6 text-[#334155]">وجود جدول الاختبارات دليل سياقي، لكنه لا يمنع استعمال <span dir="ltr" className="font-en">will</span> عندما تعبّر الجملة عن اعتقاد المتحدث، كما يؤكد المصدر.</p>
         {s19.revealUnits?.map((line, index) => <SourceLine36 key={index} sectionId="s19" index={index} kind="reveal" text={line} />)}
       </Card36>
 
       <Card36 eyebrow="§21 · supplied reading key" title="إجابات القراءة وتحليلها النحوي">
-        <p className="text-xs font-black text-[#53676a]">أسئلة المصدر ({READING_QUESTIONS_36.length}) والإجابات ({READING_ANSWERS_36.length})</p>
-        <ol className="list-decimal space-y-2 ps-5">{READING_QUESTIONS_36.map((question, index) => <li key={question} className="text-sm leading-6 text-[#24343b]"><Rich text={question} /><p className="font-bold text-[#17354a]"><Rich text={READING_ANSWERS_36[index]} /></p></li>)}</ol>
-        <h3 className="mt-3 font-black text-[#17354a]">التحليل النحوي ({READING_ANALYSIS_36.length} بنود)</h3>
-        <ol className="list-decimal space-y-1 ps-5 text-sm leading-6 text-[#24343b]">{READING_ANALYSIS_36.map((line) => <li key={line} dir="auto"><Rich text={line} /></li>)}</ol>
+        <p className="text-xs font-black text-[#64748b]">أسئلة المصدر ({READING_QUESTIONS_36.length}) والإجابات ({READING_ANSWERS_36.length})</p>
+        <ol className="list-decimal space-y-2 ps-5">{READING_QUESTIONS_36.map((question, index) => <li key={question} className="text-sm leading-6 text-[#334155]"><Rich text={question} /><p className="font-bold text-[#0d9488]"><Rich text={READING_ANSWERS_36[index]} /></p></li>)}</ol>
+        <h3 className="mt-3 font-black text-[#0d9488]">التحليل النحوي ({READING_ANALYSIS_36.length} بنود)</h3>
+        <ol className="list-decimal space-y-1 ps-5 text-sm leading-6 text-[#334155]">{READING_ANALYSIS_36.map((line) => <li key={line} dir="auto"><Rich text={line} /></li>)}</ol>
         {reading.revealUnits?.map((line, index) => <SourceLine36 key={index} sectionId="s21" index={index} kind="reveal" text={line} />)}
       </Card36>
     </div>
@@ -203,21 +203,21 @@ function TeacherTestSolutions36() {
     <div data-teacher-test-solutions="25" className="space-y-4">
       <Card36 eyebrow="§22 questions · §23 key" title="حلول الاختبار الرسمي — 25 سؤالًا">
         <PlatformNote36>كل الإجابات والشروح في هذا التبويب إضافات معلّمة أعدّتها المنصة؛ لا يقدّم المصدر مفتاحًا فعليًا في §23. البدائل المقبولة موضحة صراحةً.</PlatformNote36>
-        <p className="text-sm leading-6 text-[#43575a]">تظل الأسئلة 16–25 تفسيرية/مفتوحة. استخدم نماذج الإجابة ومعايير قبول المعنى؛ لا تحوّلها إلى اختيار من متعدد أو إجابة واحدة جامدة.</p>
+        <p className="text-sm leading-6 text-[#475569]">تظل الأسئلة 16–25 تفسيرية/مفتوحة. استخدم نماذج الإجابة ومعايير قبول المعنى؛ لا تحوّلها إلى اختيار من متعدد أو إجابة واحدة جامدة.</p>
       </Card36>
       {TEST_LEVELS_36.map((level, index) => {
         const solutions = TEST_SOLUTIONS_36.filter((solution) => solution.n >= level.questions[0].n && solution.n <= level.questions.at(-1)!.n);
         return (
-          <details key={level.id} className="rounded-2xl border border-[#d8d2c5] bg-white" open={index === 0}>
-            <summary className={`${FOCUS_36} cursor-pointer px-4 py-3 font-black text-[#17354a]`}>
+          <details key={level.id} className="rounded-2xl border border-[#e2e8f0] bg-white" open={index === 0}>
+            <summary className={`${FOCUS_36} cursor-pointer px-4 py-3 font-black text-[#0d9488]`}>
               {level.title} · Q{level.questions[0].n}–{level.questions.at(-1)!.n}
             </summary>
-            <div className="space-y-3 border-t border-[#e3e0d7] p-3">
-              {solutions.map((solution) => <article key={solution.n} data-teacher-solution={solution.n} className="rounded-xl border border-[#d8d2c5] bg-[#fbfaf6] p-3">
-                <h3 className="font-black text-[#17354a]">Question {solution.n} — {solution.judgment}</h3>
-                <p className="mt-1 text-sm leading-6 text-[#24343b]"><strong>نموذج/مفتاح:</strong> <Rich text={solution.answer} /></p>
-                <p className="mt-1 text-sm leading-6 text-[#24343b]"><strong>التفسير:</strong> {solution.explanation}</p>
-                {solution.alternatives?.length ? <ul className="mt-1 list-disc space-y-1 ps-5 text-sm leading-6 text-[#24343b]">{solution.alternatives.map((line) => <li key={line}>{line}</li>)}</ul> : null}
+            <div className="space-y-3 border-t border-[#e2e8f0] p-3">
+              {solutions.map((solution) => <article key={solution.n} data-teacher-solution={solution.n} className="rounded-xl border border-[#e2e8f0] bg-[#f8fafc] p-3">
+                <h3 className="font-black text-[#0d9488]">Question {solution.n} — {solution.judgment}</h3>
+                <p className="mt-1 text-sm leading-6 text-[#334155]"><strong>نموذج/مفتاح:</strong> <Rich text={solution.answer} /></p>
+                <p className="mt-1 text-sm leading-6 text-[#334155]"><strong>التفسير:</strong> {solution.explanation}</p>
+                {solution.alternatives?.length ? <ul className="mt-1 list-disc space-y-1 ps-5 text-sm leading-6 text-[#334155]">{solution.alternatives.map((line) => <li key={line}>{line}</li>)}</ul> : null}
                 <p className="mt-2 text-xs font-bold text-[#76531e]">Platform-authored teacher addition · reference: Lesson 36 §22 / §23</p>
               </article>)}
             </div>
@@ -232,12 +232,12 @@ function WritingSupport36() {
   return (
     <div className="space-y-4">
       <Card36 eyebrow="§24 · source task" title="My Future Decisions and Plans">
-        <p className="text-sm leading-6 text-[#43575a]">المتطلبات الثمانية ونموذج الافتتاح محفوظة في Student Area §24. يعرض هذا القسم روبركًا اختياريًا من إعداد المعلم، ولا يستبدل أي شرط مصدري.</p>
-        <ol className="list-decimal space-y-1 ps-5 text-sm leading-6 text-[#24343b]">{WRITING_CRITERIA_36.map((criterion) => <li key={criterion}><Rich text={criterion} /></li>)}</ol>
-        <div className="rounded-xl border border-[#d8d2c5] bg-[#fbfaf6] p-3"><h3 className="font-black text-[#17354a]">نموذج الافتتاح الأصلي</h3>{WRITING_MODEL_36.map((line) => <p key={line} dir="auto" className="mt-1 text-sm leading-6 text-[#24343b]"><Rich text={line} /></p>)}</div>
+        <p className="text-sm leading-6 text-[#475569]">المتطلبات الثمانية ونموذج الافتتاح محفوظة في Student Area §24. يعرض هذا القسم روبركًا اختياريًا من إعداد المعلم، ولا يستبدل أي شرط مصدري.</p>
+        <ol className="list-decimal space-y-1 ps-5 text-sm leading-6 text-[#334155]">{WRITING_CRITERIA_36.map((criterion) => <li key={criterion}><Rich text={criterion} /></li>)}</ol>
+        <div className="rounded-xl border border-[#e2e8f0] bg-[#f8fafc] p-3"><h3 className="font-black text-[#0d9488]">نموذج الافتتاح الأصلي</h3>{WRITING_MODEL_36.map((line) => <p key={line} dir="auto" className="mt-1 text-sm leading-6 text-[#334155]"><Rich text={line} /></p>)}</div>
       </Card36>
       <Card36 eyebrow="Optional scoring guide · platform-authored" title="مؤشرات تصحيح تكويني مقترحة">
-        <ul className="list-disc space-y-2 ps-5 text-sm leading-6 text-[#24343b]">
+        <ul className="list-disc space-y-2 ps-5 text-sm leading-6 text-[#334155]">
           <li>استيفاء العدد المطلوب: 12–15 جملة، مع تماسك الفقرة وتسلسل أفكارها.</li>
           <li>عدّ الجمل التي تطابق أنواع الاستخدام المطلوبة، لا الكلمات المفتاحية وحدها.</li>
           <li>التحقق من بنية المساعد وV1 والنفي والأسئلة، مع عدم فرض صياغة نموذجية واحدة.</li>

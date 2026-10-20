@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import { ActionButton37, FOCUS_37 } from "./kit37";
 
 const TeacherGuide37 = lazy(() => import("./TeacherGuide37"));
@@ -20,7 +20,7 @@ export default function TeacherArea37({
     return (
       <Suspense
         fallback={
-          <div role="status" className="rounded-2xl border border-[#d8d2c5] bg-white p-4 text-[#24343b]">
+          <div role="status" className="rounded-2xl border border-[#bae6fd] bg-white p-4 text-sm font-bold text-[#0c4a6e]">
             جارٍ تحميل دليل المعلم…
           </div>
         }
@@ -43,17 +43,19 @@ export default function TeacherArea37({
           setError("كلمة المرور غير صحيحة.");
         }
       }}
-      className="mx-auto max-w-lg space-y-4 rounded-3xl border border-[#d8d2c5] bg-white p-5 shadow-sm"
+      className="mx-auto max-w-xl space-y-3 rounded-3xl border border-[#bae6fd] bg-white p-5 shadow-sm"
     >
       <div>
-        <p className="text-xs font-black uppercase tracking-[.12em] text-[#53676a]">Teacher Area · Lesson 37</p>
-        <h2 className="mt-1 text-xl font-black text-[#17354a]">منطقة المعلم</h2>
-        <p className="mt-2 text-sm leading-6 text-[#43575a]">
+        <p className="font-en text-[11px] font-black uppercase tracking-[.16em] text-[#0369a1]" dir="ltr">
+          Teacher Area · Lesson 37
+        </p>
+        <h2 className="mt-1 text-xl font-black text-[#0c4a6e]">منطقة المعلم</h2>
+        <p className="mt-2 text-sm leading-7 text-[#1e293b]">
           مساحة منفصلة عن الطالب والاختبار والحلول، وتضم: خريطة تغطية الأقسام الـ38، مفاتيح التدريبات والقراءة والحوار، حلول الاختبار الـ25
           بمعايير التصحيح، ومرجع القواعد وملاحظات دقة المصدر.
         </p>
       </div>
-      <label htmlFor="l37-teacher-password" className="block text-sm font-black text-[#24343b]">
+      <label htmlFor="l37-teacher-password" className="block text-sm font-black text-[#0f172a]">
         كلمة مرور المعلم
       </label>
       <input
@@ -65,10 +67,10 @@ export default function TeacherArea37({
         onChange={(event) => setPassword(event.currentTarget.value)}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? "l37-teacher-error" : undefined}
-        className={`${FOCUS_37} w-full rounded-xl border border-[#bfcac4] bg-white px-3 py-2.5 text-base text-[#24343b]`}
+        className={`${FOCUS_37} w-full rounded-xl border border-[#7dd3fc] bg-white px-3 py-2.5 text-base text-[#0f172a]`}
       />
       {error ? (
-        <p id="l37-teacher-error" role="alert" className="text-sm font-black text-[#8d3832]">
+        <p id="l37-teacher-error" role="alert" className="text-sm font-black text-[#9f1239]">
           {error}
         </p>
       ) : null}
@@ -78,7 +80,7 @@ export default function TeacherArea37({
           منطقة الحلول
         </ActionButton37>
       </div>
-      <p className="text-xs leading-5 text-[#53676a]">
+      <p className="text-xs leading-5 text-[#334155]">
         لا تظهر الحلول الرسمية قبل اجتياز بوابة المعلم أو تسليم الطالب للاختبار.
       </p>
     </form>

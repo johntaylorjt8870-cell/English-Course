@@ -777,11 +777,11 @@ export const EXERCISE28_ITEMS_37 = [
 
 /** §29 — تدريب التحويلات: النفي والسؤال (حلول المصدر). */
 export const TRANSFORM29_ITEMS_37 = [
-  { n: 1, base: "He will be working tomorrow afternoon.", negative: "He won't be working tomorrow afternoon.", question: "Will he be working tomorrow afternoon?" },
-  { n: 2, base: "They will be travelling next Friday.", negative: "They won't be travelling next Friday.", question: "Will they be travelling next Friday?" },
-  { n: 3, base: "We will be preparing dinner at 6:00.", negative: "We won't be preparing dinner at 6:00.", question: "Will we be preparing dinner at 6:00?" },
-  { n: 4, base: "Sara will be studying at midnight.", negative: "Sara won't be studying at midnight.", question: "Will Sara be studying at midnight?" },
-  { n: 5, base: "The children will be playing in the garden.", negative: "The children won't be playing in the garden.", question: "Will the children be playing in the garden?" },
+  { n: 1, base: "① He will be working tomorrow afternoon.", negative: "He won't be working tomorrow afternoon.", question: "Will he be working tomorrow afternoon?" },
+  { n: 2, base: "② They will be travelling next Friday.", negative: "They won't be travelling next Friday.", question: "Will they be travelling next Friday?" },
+  { n: 3, base: "③ We will be preparing dinner at 6:00.", negative: "We won't be preparing dinner at 6:00.", question: "Will we be preparing dinner at 6:00?" },
+  { n: 4, base: "④ Sara will be studying at midnight.", negative: "Sara won't be studying at midnight.", question: "Will Sara be studying at midnight?" },
+  { n: 5, base: "⑤ The children will be playing in the garden.", negative: "The children won't be playing in the garden.", question: "Will the children be playing in the garden?" },
 ] as const;
 
 /** §30 — Grammar Detective: الأخطاء العشرة وتصحيحات المصدر. */
@@ -800,14 +800,14 @@ export const DETECTIVE30_ITEMS_37 = [
 
 /** §31 — IQ200: ثمانية مواقف مع مفتاح المصدر. */
 export const IQ200_ITEMS_37 = [
-  { n: 1, lines: ["A: Someone is calling you!", "B: I ______ answer the phone."], answer: "will", answerText: "will", why: "قرار لحظي." },
-  { n: 2, lines: ["We decided yesterday. We ______ visit the science museum next week."], answer: "going-to", answerText: "are going to", why: "خطة مسبقة." },
-  { n: 3, lines: ["At 8:00 tomorrow, I ______ study for my exam."], answer: "future-continuous", answerText: "will be studying", why: "نشاط سيكون جاريًا عند الثامنة." },
-  { n: 4, lines: ["Look at those clouds! It ______ rain."], answer: "going-to", answerText: "is going to", why: "توقع نبرز فيه دليلًا حاضرًا." },
-  { n: 5, lines: ["I promise I ______ return your book."], answer: "will", answerText: "will", why: "وعد." },
-  { n: 6, lines: ["When you arrive tomorrow, we ______ prepare dinner."], answer: "future-continuous", answerText: "will be preparing", why: "نشاط سيكون جاريًا عند وصول الشخص." },
-  { n: 7, lines: ["This time next month, they ______ travel around Europe."], answer: "future-continuous", answerText: "will be travelling", why: "نشاط جارٍ في لحظة مستقبلية." },
-  { n: 8, lines: ["I think technology ______ change our lives dramatically."], answer: "will", answerText: "will", why: "توقع أو اعتقاد." },
+  { n: 1, lines: ["① A: Someone is calling you!", "B: I ______ answer the phone."], answer: "will", answerText: "will", why: "قرار لحظي." },
+  { n: 2, lines: ["② We decided yesterday. We ______ visit the science museum next week."], answer: "going-to", answerText: "are going to", why: "خطة مسبقة." },
+  { n: 3, lines: ["③ At 8:00 tomorrow, I ______ study for my exam."], answer: "future-continuous", answerText: "will be studying", why: "نشاط سيكون جاريًا عند الثامنة." },
+  { n: 4, lines: ["④ Look at those clouds! It ______ rain."], answer: "going-to", answerText: "is going to", why: "توقع نبرز فيه دليلًا حاضرًا." },
+  { n: 5, lines: ["⑤ I promise I ______ return your book."], answer: "will", answerText: "will", why: "وعد." },
+  { n: 6, lines: ["⑥ When you arrive tomorrow, we ______ prepare dinner."], answer: "future-continuous", answerText: "will be preparing", why: "نشاط سيكون جاريًا عند وصول الشخص." },
+  { n: 7, lines: ["⑦ This time next month, they ______ travel around Europe."], answer: "future-continuous", answerText: "will be travelling", why: "نشاط جارٍ في لحظة مستقبلية." },
+  { n: 8, lines: ["⑧ I think technology ______ change our lives dramatically."], answer: "will", answerText: "will", why: "توقع أو اعتقاد." },
 ] as const;
 
 /** §32 — أسئلة فهم نص A Busy Saturday (ثمانية أسئلة). */

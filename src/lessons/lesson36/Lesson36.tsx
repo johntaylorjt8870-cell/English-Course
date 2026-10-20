@@ -138,17 +138,7 @@ export default function Lesson36({ onExit }: { onExit?: () => void }) {
               <span className="font-en" dir="ltr">Step {index + 1} of {STEP_COUNT_36}</span> · <span>{slide.title}</span>
             </div>
             <StepView36 key={slide.id} slide={slide} onGoTest={() => setArea("test")} onGoSolutions={() => setArea("solutions")} />
-            <LessonStepNav 
-              onPrev={() => setStep(index - 1)} 
-              onNext={() => setStep(index + 1)} 
-              prevDisabled={index === 0} 
-              nextDisabled={last} 
-              showNext={!last}
-              className="mt-4 pt-4 border-t border-[#e2e8f0]"
-            >
-              <span dir="ltr" className="font-en text-sm font-black tabular-nums text-[#64748b]">{index + 1} / {STEP_COUNT_36}</span>
-              {last && <span className="ml-2 rounded-xl bg-[#ccfbf1] px-4 py-2 text-sm font-black text-[#0f766e]">اكتملت خطوات المصدر؛ أكمل الاختبار.</span>}
-            </LessonStepNav>
+            
           </section>
 
           <section className={area === "test" ? "mt-4" : "hidden"} aria-hidden={area !== "test"}>
@@ -166,6 +156,22 @@ export default function Lesson36({ onExit }: { onExit?: () => void }) {
           <section className={area === "teacher" ? "mt-4" : "hidden"} aria-hidden={area !== "teacher"}>
             <TeacherArea36 unlocked={teacherUnlocked} onUnlockChange={setTeacherUnlocked} onGoSolutions={() => setArea("solutions")} />
           </section>
+          <div className="mt-6 border-t border-[#e2e8f0] pt-4">
+            <LessonStepNav 
+              onPrev={area === "student" ? () => setStep(index - 1) : () => setArea("student")} 
+              onNext={area === "student" ? () => setStep(index + 1) : () => setArea("student")} 
+              prevDisabled={area === "student" && index === 0} 
+              nextDisabled={area === "student" && last} 
+              showNext={area === "student" ? !last : false} 
+              prevLabel={area === "student" ? "→ السابق" : "← العودة لخطوات الدرس"} 
+            >
+              {area === "student" ? (
+                <span dir="ltr" className="font-en text-sm font-black tabular-nums text-[#64748b]">{index + 1} / {STEP_COUNT_36}</span>
+              ) : (
+                <span className="text-sm font-black text-[#64748b]">{area === "test" ? "منطقة الاختبار" : area === "solutions" ? "منطقة الحلول" : "منطقة المعلم"}</span>
+              )}
+            </LessonStepNav>
+          </div>
         </main>
       </div>
     </div>

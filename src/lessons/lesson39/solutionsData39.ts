@@ -43,12 +43,12 @@ export const TEST_SOLUTIONS_39: TestSolution39[] = [
   },
   {
     n: 6, level: 2, answer: "will have been studying", judgment: "grammatical-only", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "By 9:00 نقطة مرجع، والمدة for four hours: I will have been studying for four hours. (مطابق لمثال المصدر في §11).",
+    explanation: "By 9:00 نقطة مرجع، والمدة for four hours: I will have been studying for four hours. (نمط التدريب في §30).",
     alternatives: ["will have studied صحيحة نحويًا لكنها تبرز اكتمال الدراسة لا مدة الأربع ساعات (§33)."],
   },
   {
     n: 7, level: 2, answer: "will have been working", judgment: "grammatical-only", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "By next month + مدة (for two years): she will have been working here for two years. (نمط §8).",
+    explanation: "By next June + مدة (for five years): she will have been working here for five years. (نمط §8).",
     alternatives: ["will have worked ممكنة في السياق نفسه؛ النموذج المطلوب هنا هو المستمر لأن التركيز على المدة."],
   },
   {
@@ -146,8 +146,8 @@ export const TEST_SOLUTIONS_39: TestSolution39[] = [
     n: 23, level: 5, answer: "will be presenting", judgment: "contextual", sourceStatus: "platform-authored-teacher-addition",
     explanation: "At 10:00 on the celebration day لحظة محددة داخل نشاط جارٍ، لا موعد اكتمال ولا مدة مقاسة: Future Continuous — Daniel will be presenting his new invention. هذا هو الفخ الذهبي للفقرة: at مقابل by.",
     alternatives: [
-      "will have presented خطأ في هذا السياق لأن at 10:00 تصف ما يكون جاريًا لا ما يكون قد اكتمل.",
-      "will have been presenting غير مناسبة هنا لأن الفقرة لا تذكر مدة مقاسة عند العاشرة.",
+      "will have presented ممكنة إذا قصدنا نتيجة مكتملة عند العاشرة؛ لا تفرض at الزمن وحدها. النموذج هنا نشاط جارٍ.",
+      "will have been presenting تحتاج إلى سياق يوضح النشاط الممتد قبل العاشرة؛ عدم ذكر مدة صريحة لا يجعلها غير نحوية.",
       "will present صحيحة نحويًا لكنها أقل ملاءمة لوصف النشاط الجاري في تلك اللحظة (الدرس 37).",
     ],
   },

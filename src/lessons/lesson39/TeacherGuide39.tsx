@@ -219,7 +219,7 @@ export default function TeacherGuide39({ onGoSolutions, onLock }: { onGoSolution
             </ul>
             <p className="mt-2 text-sm leading-6 text-[#43575a]">
               يتحقق الفحص الآلي <span dir="ltr" className="font-en">npm run audit:lesson39</span> من ربط كل سطر مصدري بواجهة الدرس، ومن تغطية
-              التدريبات والاختبار، ومن عدم تسرّب أي مفتاح قبل المحاولة، ومن تباين ألوان الحالات.
+              التدريبات والاختبار، ومن عدم تضمين مفتاح الاختبار في المسار الأولي للطالب.
             </p>
           </div>
           <PlatformNote39>

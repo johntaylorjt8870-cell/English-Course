@@ -1,3 +1,5 @@
+> Historical source intake audit. Current rebuilt step mapping, corrected teacher-key notes, routing status, and verification are in [lesson39-coverage.md](lesson39-coverage.md) and [lesson39-rebuild-report.md](lesson39-rebuild-report.md). The original source ledger is unchanged.
+
 # Lesson 39 — Source Audit (قبل التنفيذ)
 
 **Prepared before implementation.** This report records what source material was actually available for Lesson 39 (Future Perfect Continuous), what could be read, what had to be reconstructed, what the platform added, and what remains unverifiable.

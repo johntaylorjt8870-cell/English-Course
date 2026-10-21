@@ -1613,7 +1613,7 @@ export const CURRICULUM_SYSTEMS_40 = [
 
 export const NEXT_LESSON_40 = {
   label: "الدرس 41: Master Auxiliary Verbs — الإتقان الشامل للأفعال المساعدة",
-  status: "planned-not-implemented" as const,
+  status: "implemented-route" as const,
   primaryAuxiliaries: "BE — DO — HAVE",
   modalAuxiliaries: "CAN — COULD — MAY — MIGHT — MUST — SHOULD — WOULD.",
   previewQuestions: [
@@ -1622,5 +1622,5 @@ export const NEXT_LESSON_40 = {
     "Have you studied English?",
     "Can you speak English?",
   ],
-  note: "مخطَّط في نص المصدر كمحطة قادمة بعد إتمام منظومة المستقبل في الدرس 40. لم يُنفَّذ الدرس 41 في هذا الإصدار، ولا يوجد له مسار أو بطاقة أو رابط تنقّل.",
+  note: "نص المعاينة محفوظ من المصدر. يتضمن الإصدار الحالي من المستودع درسًا 41 ومسارًا مسجلًا له؛ يُفتح عبر رابط الدرس التالي ولا يُضاف إلى هذه المعاينة أي شرح غير وارد في المصدر.",
 } as const;

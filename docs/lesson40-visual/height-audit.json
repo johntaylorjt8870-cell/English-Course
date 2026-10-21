@@ -1,0 +1,7393 @@
+{
+  "date": "2026-10-21T22:15:21.372Z",
+  "steps": 110,
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 800,
+      "stepCount": 110,
+      "median": 576.0625,
+      "p90": 835.546875,
+      "maximum": 1177.90625,
+      "above1200": [],
+      "expandedPractice": [
+        {
+          "id": "s12-01",
+          "initial": 726.75,
+          "expanded": 778.84375
+        },
+        {
+          "id": "s17-04",
+          "initial": 595.421875,
+          "expanded": 934.078125
+        },
+        {
+          "id": "s19-05",
+          "initial": 647.609375,
+          "expanded": 1010.265625
+        },
+        {
+          "id": "s20-02",
+          "initial": 708.796875,
+          "expanded": 1189.234375
+        },
+        {
+          "id": "s21-01",
+          "initial": 840.171875,
+          "expanded": 1150.3125
+        },
+        {
+          "id": "s21-02",
+          "initial": 840.171875,
+          "expanded": 1140.609375
+        },
+        {
+          "id": "s23-04",
+          "initial": 840.171875,
+          "expanded": 1042.234375
+        },
+        {
+          "id": "s23-05",
+          "initial": 840.171875,
+          "expanded": 1042.234375
+        }
+      ],
+      "overflowSteps": [],
+      "overlapSteps": [],
+      "unreachableSteps": [],
+      "steps": [
+        {
+          "id": "cover-01",
+          "height": 568.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 568.765625
+        },
+        {
+          "id": "cover-02",
+          "height": 631.359375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 631.359375
+        },
+        {
+          "id": "cover-03",
+          "height": 430.390625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 430.390625
+        },
+        {
+          "id": "s01-01",
+          "height": 625.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 625.171875
+        },
+        {
+          "id": "s01-02",
+          "height": 588.28125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 588.28125
+        },
+        {
+          "id": "s02-01",
+          "height": 741.859375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 741.859375
+        },
+        {
+          "id": "s02-02",
+          "height": 539.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 539.46875
+        },
+        {
+          "id": "s02-03",
+          "height": 539.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 539.46875
+        },
+        {
+          "id": "s02-04",
+          "height": 559.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 559.765625
+        },
+        {
+          "id": "s02-05",
+          "height": 539.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 539.46875
+        },
+        {
+          "id": "s02-06",
+          "height": 355.609375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 355.609375
+        },
+        {
+          "id": "s03-01",
+          "height": 682.71875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 682.71875
+        },
+        {
+          "id": "s04-01",
+          "height": 835.546875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 835.546875
+        },
+        {
+          "id": "s04-02",
+          "height": 555.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 555.765625
+        },
+        {
+          "id": "s04-03",
+          "height": 535.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 535.46875
+        },
+        {
+          "id": "s04-04",
+          "height": 351.609375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 351.609375
+        },
+        {
+          "id": "s05-01",
+          "height": 532.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 532.171875
+        },
+        {
+          "id": "s05-02",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s05-03",
+          "height": 564.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 564.765625
+        },
+        {
+          "id": "s05-04",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s05-05",
+          "height": 405.5,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 405.5
+        },
+        {
+          "id": "s06-01",
+          "height": 564.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 564.765625
+        },
+        {
+          "id": "s06-02",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s06-03",
+          "height": 585.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 585.0625
+        },
+        {
+          "id": "s06-04",
+          "height": 319.71875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 319.71875
+        },
+        {
+          "id": "s07-01",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s07-02",
+          "height": 585.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 585.0625
+        },
+        {
+          "id": "s07-03",
+          "height": 507.578125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 507.578125
+        },
+        {
+          "id": "s08-01",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s08-02",
+          "height": 564.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 564.765625
+        },
+        {
+          "id": "s08-03",
+          "height": 523.875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 523.875
+        },
+        {
+          "id": "s09-01",
+          "height": 820.25,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 820.25
+        },
+        {
+          "id": "s09-02",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s09-03",
+          "height": 462.6875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 462.6875
+        },
+        {
+          "id": "s10-01",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s10-02",
+          "height": 552.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 552.46875
+        },
+        {
+          "id": "s10-03",
+          "height": 368.609375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 368.609375
+        },
+        {
+          "id": "s11-01",
+          "height": 616.65625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 616.65625
+        },
+        {
+          "id": "s11-02",
+          "height": 596.359375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 596.359375
+        },
+        {
+          "id": "s11-03",
+          "height": 535.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 535.46875
+        },
+        {
+          "id": "s11-04",
+          "height": 514.875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 514.875
+        },
+        {
+          "id": "s12-01",
+          "height": 726.75,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 778.84375
+        },
+        {
+          "id": "s12-02",
+          "height": 580.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 580.0625
+        },
+        {
+          "id": "s12-03",
+          "height": 576.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 576.0625
+        },
+        {
+          "id": "s12-04",
+          "height": 576.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 576.0625
+        },
+        {
+          "id": "s12-05",
+          "height": 355.609375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 355.609375
+        },
+        {
+          "id": "s13-01",
+          "height": 564.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 564.765625
+        },
+        {
+          "id": "s13-02",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s13-03",
+          "height": 401.5,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 401.5
+        },
+        {
+          "id": "s14-01",
+          "height": 703.15625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 703.15625
+        },
+        {
+          "id": "s14-02",
+          "height": 625.65625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 625.65625
+        },
+        {
+          "id": "s14-03",
+          "height": 568.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 568.765625
+        },
+        {
+          "id": "s14-04",
+          "height": 425.796875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 425.796875
+        },
+        {
+          "id": "s15-01",
+          "height": 1105.75,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1105.75
+        },
+        {
+          "id": "s15-02",
+          "height": 616.65625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 616.65625
+        },
+        {
+          "id": "s15-03",
+          "height": 331.015625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 331.015625
+        },
+        {
+          "id": "s16-01",
+          "height": 1084.015625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1084.015625
+        },
+        {
+          "id": "s16-02",
+          "height": 1177.90625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1177.90625
+        },
+        {
+          "id": "s16-03",
+          "height": 585.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 585.0625
+        },
+        {
+          "id": "s16-04",
+          "height": 585.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 585.0625
+        },
+        {
+          "id": "s16-05",
+          "height": 446.390625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 446.390625
+        },
+        {
+          "id": "s17-01",
+          "height": 1113.125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1113.125
+        },
+        {
+          "id": "s17-02",
+          "height": 925.34375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 925.34375
+        },
+        {
+          "id": "s17-03",
+          "height": 785.15625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 785.15625
+        },
+        {
+          "id": "s17-04",
+          "height": 595.421875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 934.078125
+        },
+        {
+          "id": "s18-01",
+          "height": 535.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 535.46875
+        },
+        {
+          "id": "s18-02",
+          "height": 535.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 535.46875
+        },
+        {
+          "id": "s18-03",
+          "height": 535.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 535.46875
+        },
+        {
+          "id": "s18-04",
+          "height": 535.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 535.46875
+        },
+        {
+          "id": "s18-05",
+          "height": 535.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 535.46875
+        },
+        {
+          "id": "s18-06",
+          "height": 310.71875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 310.71875
+        },
+        {
+          "id": "s19-01",
+          "height": 686.65625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 686.65625
+        },
+        {
+          "id": "s19-02",
+          "height": 706.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 706.953125
+        },
+        {
+          "id": "s19-03",
+          "height": 706.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 706.953125
+        },
+        {
+          "id": "s19-04",
+          "height": 706.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 706.953125
+        },
+        {
+          "id": "s19-05",
+          "height": 647.609375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1010.265625
+        },
+        {
+          "id": "s20-01",
+          "height": 686.65625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 686.65625
+        },
+        {
+          "id": "s20-02",
+          "height": 708.796875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1189.234375
+        },
+        {
+          "id": "s21-01",
+          "height": 840.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1150.3125
+        },
+        {
+          "id": "s21-02",
+          "height": 840.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1140.609375
+        },
+        {
+          "id": "s22-01",
+          "height": 585.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 585.0625
+        },
+        {
+          "id": "s22-02",
+          "height": 564.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 564.765625
+        },
+        {
+          "id": "s22-03",
+          "height": 442.390625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 442.390625
+        },
+        {
+          "id": "s23-01",
+          "height": 695.65625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 695.65625
+        },
+        {
+          "id": "s23-02",
+          "height": 715.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 715.953125
+        },
+        {
+          "id": "s23-03",
+          "height": 846.34375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 846.34375
+        },
+        {
+          "id": "s23-04",
+          "height": 840.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1042.234375
+        },
+        {
+          "id": "s23-05",
+          "height": 840.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1042.234375
+        },
+        {
+          "id": "s24-01",
+          "height": 576.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 576.0625
+        },
+        {
+          "id": "s24-02",
+          "height": 576.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 576.0625
+        },
+        {
+          "id": "s24-03",
+          "height": 515.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 515.171875
+        },
+        {
+          "id": "s25-01",
+          "height": 516.34375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 516.34375
+        },
+        {
+          "id": "s26-01",
+          "height": 507.34375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 507.34375
+        },
+        {
+          "id": "s27-01",
+          "height": 606.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 606.171875
+        },
+        {
+          "id": "s27-02",
+          "height": 676.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 676.171875
+        },
+        {
+          "id": "s27-03",
+          "height": 627.359375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 627.359375
+        },
+        {
+          "id": "s27-04",
+          "height": 442.09375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 442.09375
+        },
+        {
+          "id": "s28-01",
+          "height": 892.734375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 892.734375
+        },
+        {
+          "id": "s28-02",
+          "height": 616.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 616.953125
+        },
+        {
+          "id": "s28-03",
+          "height": 616.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 616.953125
+        },
+        {
+          "id": "s28-04",
+          "height": 616.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 616.953125
+        },
+        {
+          "id": "s28-05",
+          "height": 616.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 616.953125
+        },
+        {
+          "id": "s28-06",
+          "height": 560.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 560.0625
+        },
+        {
+          "id": "s28-07",
+          "height": 392.5,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 392.5
+        },
+        {
+          "id": "s29-01",
+          "height": 596.359375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 596.359375
+        },
+        {
+          "id": "s29-02",
+          "height": 596.359375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 596.359375
+        },
+        {
+          "id": "s29-03",
+          "height": 636.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 636.953125
+        },
+        {
+          "id": "s29-04",
+          "height": 565.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 565.46875
+        },
+        {
+          "id": "s29-05",
+          "height": 616.65625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 616.65625
+        },
+        {
+          "id": "s29-06",
+          "height": 446.5,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 446.5
+        }
+      ]
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "stepCount": 110,
+      "median": 576.0625,
+      "p90": 835.546875,
+      "maximum": 1177.90625,
+      "above1200": [],
+      "expandedPractice": [
+        {
+          "id": "s12-01",
+          "initial": 726.75,
+          "expanded": 778.84375
+        },
+        {
+          "id": "s17-04",
+          "initial": 595.421875,
+          "expanded": 934.078125
+        },
+        {
+          "id": "s19-05",
+          "initial": 647.609375,
+          "expanded": 1010.265625
+        },
+        {
+          "id": "s20-02",
+          "initial": 708.796875,
+          "expanded": 1189.234375
+        },
+        {
+          "id": "s21-01",
+          "initial": 840.171875,
+          "expanded": 1150.3125
+        },
+        {
+          "id": "s21-02",
+          "initial": 840.171875,
+          "expanded": 1140.609375
+        },
+        {
+          "id": "s23-04",
+          "initial": 840.171875,
+          "expanded": 1042.234375
+        },
+        {
+          "id": "s23-05",
+          "initial": 840.171875,
+          "expanded": 1042.234375
+        }
+      ],
+      "overflowSteps": [],
+      "overlapSteps": [],
+      "unreachableSteps": [],
+      "steps": [
+        {
+          "id": "cover-01",
+          "height": 568.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 568.765625
+        },
+        {
+          "id": "cover-02",
+          "height": 631.359375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 631.359375
+        },
+        {
+          "id": "cover-03",
+          "height": 430.390625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 430.390625
+        },
+        {
+          "id": "s01-01",
+          "height": 625.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 625.171875
+        },
+        {
+          "id": "s01-02",
+          "height": 588.28125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 588.28125
+        },
+        {
+          "id": "s02-01",
+          "height": 741.859375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 741.859375
+        },
+        {
+          "id": "s02-02",
+          "height": 539.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 539.46875
+        },
+        {
+          "id": "s02-03",
+          "height": 539.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 539.46875
+        },
+        {
+          "id": "s02-04",
+          "height": 559.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 559.765625
+        },
+        {
+          "id": "s02-05",
+          "height": 539.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 539.46875
+        },
+        {
+          "id": "s02-06",
+          "height": 355.609375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 355.609375
+        },
+        {
+          "id": "s03-01",
+          "height": 682.71875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 682.71875
+        },
+        {
+          "id": "s04-01",
+          "height": 835.546875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 835.546875
+        },
+        {
+          "id": "s04-02",
+          "height": 555.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 555.765625
+        },
+        {
+          "id": "s04-03",
+          "height": 535.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 535.46875
+        },
+        {
+          "id": "s04-04",
+          "height": 351.609375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 351.609375
+        },
+        {
+          "id": "s05-01",
+          "height": 532.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 532.171875
+        },
+        {
+          "id": "s05-02",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s05-03",
+          "height": 564.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 564.765625
+        },
+        {
+          "id": "s05-04",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s05-05",
+          "height": 405.5,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 405.5
+        },
+        {
+          "id": "s06-01",
+          "height": 564.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 564.765625
+        },
+        {
+          "id": "s06-02",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s06-03",
+          "height": 585.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 585.0625
+        },
+        {
+          "id": "s06-04",
+          "height": 319.71875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 319.71875
+        },
+        {
+          "id": "s07-01",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s07-02",
+          "height": 585.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 585.0625
+        },
+        {
+          "id": "s07-03",
+          "height": 507.578125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 507.578125
+        },
+        {
+          "id": "s08-01",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s08-02",
+          "height": 564.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 564.765625
+        },
+        {
+          "id": "s08-03",
+          "height": 523.875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 523.875
+        },
+        {
+          "id": "s09-01",
+          "height": 820.25,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 820.25
+        },
+        {
+          "id": "s09-02",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s09-03",
+          "height": 462.6875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 462.6875
+        },
+        {
+          "id": "s10-01",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s10-02",
+          "height": 552.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 552.46875
+        },
+        {
+          "id": "s10-03",
+          "height": 368.609375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 368.609375
+        },
+        {
+          "id": "s11-01",
+          "height": 616.65625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 616.65625
+        },
+        {
+          "id": "s11-02",
+          "height": 596.359375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 596.359375
+        },
+        {
+          "id": "s11-03",
+          "height": 535.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 535.46875
+        },
+        {
+          "id": "s11-04",
+          "height": 514.875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 514.875
+        },
+        {
+          "id": "s12-01",
+          "height": 726.75,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 778.84375
+        },
+        {
+          "id": "s12-02",
+          "height": 580.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 580.0625
+        },
+        {
+          "id": "s12-03",
+          "height": 576.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 576.0625
+        },
+        {
+          "id": "s12-04",
+          "height": 576.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 576.0625
+        },
+        {
+          "id": "s12-05",
+          "height": 355.609375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 355.609375
+        },
+        {
+          "id": "s13-01",
+          "height": 564.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 564.765625
+        },
+        {
+          "id": "s13-02",
+          "height": 544.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 544.46875
+        },
+        {
+          "id": "s13-03",
+          "height": 401.5,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 401.5
+        },
+        {
+          "id": "s14-01",
+          "height": 703.15625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 703.15625
+        },
+        {
+          "id": "s14-02",
+          "height": 625.65625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 625.65625
+        },
+        {
+          "id": "s14-03",
+          "height": 568.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 568.765625
+        },
+        {
+          "id": "s14-04",
+          "height": 425.796875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 425.796875
+        },
+        {
+          "id": "s15-01",
+          "height": 1105.75,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1105.75
+        },
+        {
+          "id": "s15-02",
+          "height": 616.65625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 616.65625
+        },
+        {
+          "id": "s15-03",
+          "height": 331.015625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 331.015625
+        },
+        {
+          "id": "s16-01",
+          "height": 1084.015625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1084.015625
+        },
+        {
+          "id": "s16-02",
+          "height": 1177.90625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1177.90625
+        },
+        {
+          "id": "s16-03",
+          "height": 585.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 585.0625
+        },
+        {
+          "id": "s16-04",
+          "height": 585.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 585.0625
+        },
+        {
+          "id": "s16-05",
+          "height": 446.390625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 446.390625
+        },
+        {
+          "id": "s17-01",
+          "height": 1113.125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1113.125
+        },
+        {
+          "id": "s17-02",
+          "height": 925.34375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 925.34375
+        },
+        {
+          "id": "s17-03",
+          "height": 785.15625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 785.15625
+        },
+        {
+          "id": "s17-04",
+          "height": 595.421875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 934.078125
+        },
+        {
+          "id": "s18-01",
+          "height": 535.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 535.46875
+        },
+        {
+          "id": "s18-02",
+          "height": 535.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 535.46875
+        },
+        {
+          "id": "s18-03",
+          "height": 535.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 535.46875
+        },
+        {
+          "id": "s18-04",
+          "height": 535.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 535.46875
+        },
+        {
+          "id": "s18-05",
+          "height": 535.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 535.46875
+        },
+        {
+          "id": "s18-06",
+          "height": 310.71875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 310.71875
+        },
+        {
+          "id": "s19-01",
+          "height": 686.65625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 686.65625
+        },
+        {
+          "id": "s19-02",
+          "height": 706.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 706.953125
+        },
+        {
+          "id": "s19-03",
+          "height": 706.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 706.953125
+        },
+        {
+          "id": "s19-04",
+          "height": 706.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 706.953125
+        },
+        {
+          "id": "s19-05",
+          "height": 647.609375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1010.265625
+        },
+        {
+          "id": "s20-01",
+          "height": 686.65625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 686.65625
+        },
+        {
+          "id": "s20-02",
+          "height": 708.796875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1189.234375
+        },
+        {
+          "id": "s21-01",
+          "height": 840.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1150.3125
+        },
+        {
+          "id": "s21-02",
+          "height": 840.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1140.609375
+        },
+        {
+          "id": "s22-01",
+          "height": 585.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 585.0625
+        },
+        {
+          "id": "s22-02",
+          "height": 564.765625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 564.765625
+        },
+        {
+          "id": "s22-03",
+          "height": 442.390625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 442.390625
+        },
+        {
+          "id": "s23-01",
+          "height": 695.65625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 695.65625
+        },
+        {
+          "id": "s23-02",
+          "height": 715.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 715.953125
+        },
+        {
+          "id": "s23-03",
+          "height": 846.34375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 846.34375
+        },
+        {
+          "id": "s23-04",
+          "height": 840.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1042.234375
+        },
+        {
+          "id": "s23-05",
+          "height": 840.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 1042.234375
+        },
+        {
+          "id": "s24-01",
+          "height": 576.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 576.0625
+        },
+        {
+          "id": "s24-02",
+          "height": 576.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 576.0625
+        },
+        {
+          "id": "s24-03",
+          "height": 515.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 515.171875
+        },
+        {
+          "id": "s25-01",
+          "height": 516.34375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 516.34375
+        },
+        {
+          "id": "s26-01",
+          "height": 507.34375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 507.34375
+        },
+        {
+          "id": "s27-01",
+          "height": 606.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 606.171875
+        },
+        {
+          "id": "s27-02",
+          "height": 676.171875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 676.171875
+        },
+        {
+          "id": "s27-03",
+          "height": 627.359375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 627.359375
+        },
+        {
+          "id": "s27-04",
+          "height": 442.09375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 442.09375
+        },
+        {
+          "id": "s28-01",
+          "height": 892.734375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 892.734375
+        },
+        {
+          "id": "s28-02",
+          "height": 616.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 616.953125
+        },
+        {
+          "id": "s28-03",
+          "height": 616.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 616.953125
+        },
+        {
+          "id": "s28-04",
+          "height": 616.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 616.953125
+        },
+        {
+          "id": "s28-05",
+          "height": 616.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 616.953125
+        },
+        {
+          "id": "s28-06",
+          "height": 560.0625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 560.0625
+        },
+        {
+          "id": "s28-07",
+          "height": 392.5,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 392.5
+        },
+        {
+          "id": "s29-01",
+          "height": 596.359375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 596.359375
+        },
+        {
+          "id": "s29-02",
+          "height": 596.359375,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 596.359375
+        },
+        {
+          "id": "s29-03",
+          "height": 636.953125,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 636.953125
+        },
+        {
+          "id": "s29-04",
+          "height": 565.46875,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 565.46875
+        },
+        {
+          "id": "s29-05",
+          "height": 616.65625,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 16,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 616.65625
+        },
+        {
+          "id": "s29-06",
+          "height": 446.5,
+          "width": 1120,
+          "dir": "rtl",
+          "font": 17,
+          "overflow": false,
+          "overlap": false,
+          "unreachable": false,
+          "expandedHeight": 446.5
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "pass": true,
+      "message": "1280: ArrowLeft advances through lesson steps"
+    },
+    {
+      "pass": true,
+      "message": "1280: ArrowRight returns to previous lesson step"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-01: initial height ≤1200px (568.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-02: initial height ≤1200px (631.359375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-03: initial height ≤1200px (430.390625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-03: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 cover-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s01-01: initial height ≤1200px (625.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s01-01: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s01-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s01-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s01-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s01-02: initial height ≤1200px (588.28125)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s01-02: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s01-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s01-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s01-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-01: initial height ≤1200px (741.859375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "six-question decision console opens a meaningful route"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-02: initial height ≤1200px (539.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-03: initial height ≤1200px (539.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-04: initial height ≤1200px (559.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-05: initial height ≤1200px (539.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-05: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-06: initial height ≤1200px (355.609375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-06: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-06: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-06: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s02-06: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s03-01: initial height ≤1200px (682.71875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s03-01: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s03-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s03-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s03-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-01: initial height ≤1200px (835.546875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "five-form timeline selector changes meaning label"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-02: initial height ≤1200px (555.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-03: initial height ≤1200px (535.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-04: initial height ≤1200px (351.609375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-04: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s04-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-01: initial height ≤1200px (532.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-01: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-02: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-03: initial height ≤1200px (564.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-04: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-05: initial height ≤1200px (405.5)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-05: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s05-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-01: initial height ≤1200px (564.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-02: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-03: initial height ≤1200px (585.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-04: initial height ≤1200px (319.71875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-04: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s06-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-01: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-02: initial height ≤1200px (585.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-03: initial height ≤1200px (507.578125)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s07-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-01: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-02: initial height ≤1200px (564.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-03: initial height ≤1200px (523.875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s08-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-01: initial height ≤1200px (820.25)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-02: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-03: initial height ≤1200px (462.6875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s09-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-01: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-02: initial height ≤1200px (552.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-03: initial height ≤1200px (368.609375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-03: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s10-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-01: initial height ≤1200px (616.65625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-02: initial height ≤1200px (596.359375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-03: initial height ≤1200px (535.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-04: initial height ≤1200px (514.875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s11-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-01: initial height ≤1200px (726.75)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "temporal clause repair feedback"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-02: initial height ≤1200px (580.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-03: initial height ≤1200px (576.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-04: initial height ≤1200px (576.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-05: initial height ≤1200px (355.609375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-05: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s12-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-01: initial height ≤1200px (564.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-02: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-03: initial height ≤1200px (401.5)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-03: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s13-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-01: initial height ≤1200px (703.15625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-02: initial height ≤1200px (625.65625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-03: initial height ≤1200px (568.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-04: initial height ≤1200px (425.796875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s14-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-01: initial height ≤1200px (1105.75)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-02: initial height ≤1200px (616.65625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-03: initial height ≤1200px (331.015625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s15-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-01: initial height ≤1200px (1084.015625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-02: initial height ≤1200px (1177.90625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-03: initial height ≤1200px (585.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-04: initial height ≤1200px (585.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-05: initial height ≤1200px (446.390625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-05: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s16-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-01: initial height ≤1200px (1113.125)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-02: initial height ≤1200px (925.34375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-03: initial height ≤1200px (785.15625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-04: initial height ≤1200px (595.421875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s17-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "s17 s17-04: source answer hidden before attempt"
+    },
+    {
+      "pass": true,
+      "message": "s17 s17-04: source answer appears after attempt"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-01: initial height ≤1200px (535.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-02: initial height ≤1200px (535.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-03: initial height ≤1200px (535.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-04: initial height ≤1200px (535.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-05: initial height ≤1200px (535.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-05: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-06: initial height ≤1200px (310.71875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-06: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-06: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-06: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s18-06: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-01: initial height ≤1200px (686.65625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-02: initial height ≤1200px (706.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-03: initial height ≤1200px (706.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-04: initial height ≤1200px (706.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-05: initial height ≤1200px (647.609375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-05: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s19-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "s19 s19-05: source answer hidden before attempt"
+    },
+    {
+      "pass": true,
+      "message": "s19 s19-05: source answer appears after attempt"
+    },
+    {
+      "pass": true,
+      "message": "1280 s20-01: initial height ≤1200px (686.65625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s20-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s20-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s20-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s20-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s20-02: initial height ≤1200px (708.796875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s20-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s20-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s20-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s20-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "s20 s20-02: source answer hidden before attempt"
+    },
+    {
+      "pass": true,
+      "message": "s20 s20-02: source answer appears after attempt"
+    },
+    {
+      "pass": true,
+      "message": "1280 s21-01: initial height ≤1200px (840.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s21-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s21-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s21-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s21-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "s21 s21-01: source answer hidden before attempt"
+    },
+    {
+      "pass": true,
+      "message": "s21 s21-01: source answer appears after attempt"
+    },
+    {
+      "pass": true,
+      "message": "1280 s21-02: initial height ≤1200px (840.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s21-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s21-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s21-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s21-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "s21 s21-02: source answer hidden before attempt"
+    },
+    {
+      "pass": true,
+      "message": "s21 s21-02: source answer appears after attempt"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-01: initial height ≤1200px (585.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-02: initial height ≤1200px (564.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-03: initial height ≤1200px (442.390625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-03: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s22-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-01: initial height ≤1200px (695.65625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-02: initial height ≤1200px (715.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-03: initial height ≤1200px (846.34375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-04: initial height ≤1200px (840.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "s23 s23-04: source answer hidden before attempt"
+    },
+    {
+      "pass": true,
+      "message": "s23 s23-04: source answer appears after attempt"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-05: initial height ≤1200px (840.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-05: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s23-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "s23 s23-05: source answer hidden before attempt"
+    },
+    {
+      "pass": true,
+      "message": "s23 s23-05: source answer appears after attempt"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-01: initial height ≤1200px (576.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-02: initial height ≤1200px (576.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-03: initial height ≤1200px (515.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-03: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s24-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s25-01: initial height ≤1200px (516.34375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s25-01: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s25-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s25-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s25-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s26-01: initial height ≤1200px (507.34375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s26-01: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s26-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s26-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s26-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-01: initial height ≤1200px (606.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-01: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-02: initial height ≤1200px (676.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-02: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-03: initial height ≤1200px (627.359375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-04: initial height ≤1200px (442.09375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s27-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-01: initial height ≤1200px (892.734375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-02: initial height ≤1200px (616.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-03: initial height ≤1200px (616.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-04: initial height ≤1200px (616.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-05: initial height ≤1200px (616.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-05: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-06: initial height ≤1200px (560.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-06: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-06: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-06: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-06: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-07: initial height ≤1200px (392.5)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-07: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-07: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-07: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s28-07: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-01: initial height ≤1200px (596.359375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-02: initial height ≤1200px (596.359375)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-03: initial height ≤1200px (636.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-04: initial height ≤1200px (565.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-05: initial height ≤1200px (616.65625)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-05: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-06: initial height ≤1200px (446.5)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-06: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-06: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-06: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1280 s29-06: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1280: no protected answer/teacher chunks requested while learning"
+    },
+    {
+      "pass": true,
+      "message": "1280: test presents one question at a time"
+    },
+    {
+      "pass": true,
+      "message": "keyboard can select an answer without correctness feedback"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q2"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q3"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q4"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q5"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q6"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q7"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q8"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q9"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q10"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q11"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q12"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q13"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q14"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q15"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q16"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q17"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q18"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q19"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q20"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q21"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q22"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q23"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q24"
+    },
+    {
+      "pass": true,
+      "message": "1280: question navigation reaches Q25"
+    },
+    {
+      "pass": true,
+      "message": "1280: accessible 25-question progress control"
+    },
+    {
+      "pass": true,
+      "message": "no premature correctness/alert in test"
+    },
+    {
+      "pass": true,
+      "message": "1280: submit unlocks all 25 solution cards"
+    },
+    {
+      "pass": true,
+      "message": "1280: score feedback is model-match only and leaves five conceptual items for human review"
+    },
+    {
+      "pass": true,
+      "message": "1280: wrong teacher password rejected"
+    },
+    {
+      "pass": true,
+      "message": "1280: authorized teacher guide loads all final solutions"
+    },
+    {
+      "pass": true,
+      "message": "1920: ArrowLeft advances through lesson steps"
+    },
+    {
+      "pass": true,
+      "message": "1920: ArrowRight returns to previous lesson step"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-01: initial height ≤1200px (568.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-02: initial height ≤1200px (631.359375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-03: initial height ≤1200px (430.390625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-03: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 cover-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s01-01: initial height ≤1200px (625.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s01-01: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s01-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s01-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s01-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s01-02: initial height ≤1200px (588.28125)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s01-02: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s01-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s01-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s01-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-01: initial height ≤1200px (741.859375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "six-question decision console opens a meaningful route"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-02: initial height ≤1200px (539.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-03: initial height ≤1200px (539.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-04: initial height ≤1200px (559.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-05: initial height ≤1200px (539.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-05: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-06: initial height ≤1200px (355.609375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-06: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-06: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-06: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s02-06: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s03-01: initial height ≤1200px (682.71875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s03-01: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s03-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s03-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s03-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-01: initial height ≤1200px (835.546875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "five-form timeline selector changes meaning label"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-02: initial height ≤1200px (555.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-03: initial height ≤1200px (535.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-04: initial height ≤1200px (351.609375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-04: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s04-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-01: initial height ≤1200px (532.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-01: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-02: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-03: initial height ≤1200px (564.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-04: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-05: initial height ≤1200px (405.5)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-05: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s05-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-01: initial height ≤1200px (564.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-02: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-03: initial height ≤1200px (585.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-04: initial height ≤1200px (319.71875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-04: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s06-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-01: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-02: initial height ≤1200px (585.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-03: initial height ≤1200px (507.578125)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s07-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-01: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-02: initial height ≤1200px (564.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-03: initial height ≤1200px (523.875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s08-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-01: initial height ≤1200px (820.25)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-02: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-03: initial height ≤1200px (462.6875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s09-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-01: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-02: initial height ≤1200px (552.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-03: initial height ≤1200px (368.609375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-03: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s10-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-01: initial height ≤1200px (616.65625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-02: initial height ≤1200px (596.359375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-03: initial height ≤1200px (535.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-04: initial height ≤1200px (514.875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s11-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-01: initial height ≤1200px (726.75)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "temporal clause repair feedback"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-02: initial height ≤1200px (580.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-03: initial height ≤1200px (576.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-04: initial height ≤1200px (576.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-05: initial height ≤1200px (355.609375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-05: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s12-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-01: initial height ≤1200px (564.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-02: initial height ≤1200px (544.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-03: initial height ≤1200px (401.5)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-03: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s13-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-01: initial height ≤1200px (703.15625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-02: initial height ≤1200px (625.65625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-03: initial height ≤1200px (568.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-04: initial height ≤1200px (425.796875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s14-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-01: initial height ≤1200px (1105.75)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-02: initial height ≤1200px (616.65625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-03: initial height ≤1200px (331.015625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s15-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-01: initial height ≤1200px (1084.015625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-02: initial height ≤1200px (1177.90625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-03: initial height ≤1200px (585.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-04: initial height ≤1200px (585.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-05: initial height ≤1200px (446.390625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-05: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s16-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-01: initial height ≤1200px (1113.125)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-02: initial height ≤1200px (925.34375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-03: initial height ≤1200px (785.15625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-04: initial height ≤1200px (595.421875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s17-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "s17 s17-04: source answer hidden before attempt"
+    },
+    {
+      "pass": true,
+      "message": "s17 s17-04: source answer appears after attempt"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-01: initial height ≤1200px (535.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-02: initial height ≤1200px (535.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-03: initial height ≤1200px (535.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-04: initial height ≤1200px (535.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-05: initial height ≤1200px (535.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-05: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-06: initial height ≤1200px (310.71875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-06: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-06: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-06: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s18-06: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-01: initial height ≤1200px (686.65625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-02: initial height ≤1200px (706.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-03: initial height ≤1200px (706.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-04: initial height ≤1200px (706.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-05: initial height ≤1200px (647.609375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-05: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s19-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "s19 s19-05: source answer hidden before attempt"
+    },
+    {
+      "pass": true,
+      "message": "s19 s19-05: source answer appears after attempt"
+    },
+    {
+      "pass": true,
+      "message": "1920 s20-01: initial height ≤1200px (686.65625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s20-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s20-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s20-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s20-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s20-02: initial height ≤1200px (708.796875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s20-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s20-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s20-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s20-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "s20 s20-02: source answer hidden before attempt"
+    },
+    {
+      "pass": true,
+      "message": "s20 s20-02: source answer appears after attempt"
+    },
+    {
+      "pass": true,
+      "message": "1920 s21-01: initial height ≤1200px (840.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s21-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s21-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s21-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s21-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "s21 s21-01: source answer hidden before attempt"
+    },
+    {
+      "pass": true,
+      "message": "s21 s21-01: source answer appears after attempt"
+    },
+    {
+      "pass": true,
+      "message": "1920 s21-02: initial height ≤1200px (840.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s21-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s21-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s21-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s21-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "s21 s21-02: source answer hidden before attempt"
+    },
+    {
+      "pass": true,
+      "message": "s21 s21-02: source answer appears after attempt"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-01: initial height ≤1200px (585.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-02: initial height ≤1200px (564.765625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-03: initial height ≤1200px (442.390625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-03: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s22-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-01: initial height ≤1200px (695.65625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-02: initial height ≤1200px (715.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-03: initial height ≤1200px (846.34375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-04: initial height ≤1200px (840.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "s23 s23-04: source answer hidden before attempt"
+    },
+    {
+      "pass": true,
+      "message": "s23 s23-04: source answer appears after attempt"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-05: initial height ≤1200px (840.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-05: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s23-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "s23 s23-05: source answer hidden before attempt"
+    },
+    {
+      "pass": true,
+      "message": "s23 s23-05: source answer appears after attempt"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-01: initial height ≤1200px (576.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-02: initial height ≤1200px (576.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-03: initial height ≤1200px (515.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-03: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s24-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s25-01: initial height ≤1200px (516.34375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s25-01: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s25-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s25-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s25-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s26-01: initial height ≤1200px (507.34375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s26-01: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s26-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s26-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s26-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-01: initial height ≤1200px (606.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-01: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-02: initial height ≤1200px (676.171875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-02: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-03: initial height ≤1200px (627.359375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-04: initial height ≤1200px (442.09375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s27-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-01: initial height ≤1200px (892.734375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-02: initial height ≤1200px (616.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-03: initial height ≤1200px (616.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-04: initial height ≤1200px (616.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-05: initial height ≤1200px (616.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-05: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-06: initial height ≤1200px (560.0625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-06: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-06: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-06: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-06: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-07: initial height ≤1200px (392.5)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-07: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-07: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-07: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s28-07: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-01: initial height ≤1200px (596.359375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-01: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-01: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-01: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-01: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-02: initial height ≤1200px (596.359375)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-02: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-02: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-02: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-02: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-03: initial height ≤1200px (636.953125)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-03: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-03: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-03: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-03: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-04: initial height ≤1200px (565.46875)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-04: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-04: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-04: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-04: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-05: initial height ≤1200px (616.65625)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-05: source text ≥15px (16)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-05: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-05: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-05: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-06: initial height ≤1200px (446.5)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-06: source text ≥15px (17)"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-06: no horizontal page overflow"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-06: no overlapping controls"
+    },
+    {
+      "pass": true,
+      "message": "1920 s29-06: RTL and all controls reachable"
+    },
+    {
+      "pass": true,
+      "message": "1920: no protected answer/teacher chunks requested while learning"
+    },
+    {
+      "pass": true,
+      "message": "1920: test presents one question at a time"
+    },
+    {
+      "pass": true,
+      "message": "keyboard can select an answer without correctness feedback"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q2"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q3"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q4"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q5"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q6"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q7"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q8"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q9"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q10"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q11"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q12"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q13"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q14"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q15"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q16"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q17"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q18"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q19"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q20"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q21"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q22"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q23"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q24"
+    },
+    {
+      "pass": true,
+      "message": "1920: question navigation reaches Q25"
+    },
+    {
+      "pass": true,
+      "message": "1920: accessible 25-question progress control"
+    },
+    {
+      "pass": true,
+      "message": "no premature correctness/alert in test"
+    },
+    {
+      "pass": true,
+      "message": "1920: submit unlocks all 25 solution cards"
+    },
+    {
+      "pass": true,
+      "message": "1920: score feedback is model-match only and leaves five conceptual items for human review"
+    },
+    {
+      "pass": true,
+      "message": "1920: wrong teacher password rejected"
+    },
+    {
+      "pass": true,
+      "message": "1920: authorized teacher guide loads all final solutions"
+    },
+    {
+      "pass": true,
+      "message": "no browser runtime errors ()"
+    }
+  ],
+  "errors": [],
+  "answerModuleNetwork": [
+    {
+      "viewport": 1280,
+      "stage": "post-test-submission",
+      "url": "http://127.0.0.1:4173/English-Course/src/lessons/lesson40/SolutionsArea40.tsx?t=1792620198149"
+    },
+    {
+      "viewport": 1280,
+      "stage": "post-test-submission",
+      "url": "http://127.0.0.1:4173/English-Course/src/lessons/lesson40/solutionsData40.ts"
+    },
+    {
+      "viewport": 1280,
+      "stage": "teacher-password-accepted",
+      "url": "http://127.0.0.1:4173/English-Course/src/lessons/lesson40/TeacherGuide40.tsx?t=1792620377510"
+    },
+    {
+      "viewport": 1920,
+      "stage": "post-test-submission",
+      "url": "http://127.0.0.1:4173/English-Course/src/lessons/lesson40/SolutionsArea40.tsx?t=1792620198149"
+    },
+    {
+      "viewport": 1920,
+      "stage": "post-test-submission",
+      "url": "http://127.0.0.1:4173/English-Course/src/lessons/lesson40/solutionsData40.ts"
+    },
+    {
+      "viewport": 1920,
+      "stage": "teacher-password-accepted",
+      "url": "http://127.0.0.1:4173/English-Course/src/lessons/lesson40/TeacherGuide40.tsx?t=1792620377510"
+    }
+  ]
+}

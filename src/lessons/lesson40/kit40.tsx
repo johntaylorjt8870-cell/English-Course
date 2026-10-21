@@ -103,24 +103,28 @@ export function SourceLine40({
 export function SourceLedgerBlock40({
   section,
   skipIndexes = [],
+  unitIndexes,
+  includeTable = true,
   showReveal = false,
   children,
 }: {
   section: SourceSection40;
   skipIndexes?: readonly number[];
+  unitIndexes?: readonly number[];
+  includeTable?: boolean;
   showReveal?: boolean;
   children?: ReactNode;
 }) {
   const skip = new Set<number>(skipIndexes);
-  const table =
-    section.tableRows && section.tableHeaders ? (
-      <Table40
-        caption={section.tableLabel ?? `جدول القسم ${section.num ?? ""}`}
-        headers={section.tableHeaders}
-        rows={section.tableRows}
-      />
-    ) : null;
+  const table = includeTable && section.tableRows && section.tableHeaders ? (
+    <Table40
+      caption={section.tableLabel ?? `جدول القسم ${section.num ?? ""}`}
+      headers={section.tableHeaders}
+      rows={section.tableRows}
+    />
+  ) : null;
   const tableAfter = section.tableAfter ?? Number.MAX_SAFE_INTEGER;
+  const selectedIndexes = unitIndexes ?? section.units.map((_, index) => index);
 
   return (
     <section
@@ -142,8 +146,10 @@ export function SourceLedgerBlock40({
 
       <div className="space-y-3">
         {tableAfter === -1 ? table : null}
-        {section.units.map((line, index) => {
+        {selectedIndexes.map((index) => {
           if (skip.has(index)) return null;
+          const line = section.units[index];
+          if (line == null) return null;
           return (
             <Fragment key={`${section.id}-unit-${index}`}>
               <SourceLine40 line={line} index={index} sectionId={section.id} kind="unit" />

@@ -58,4 +58,4 @@ No unrelated lesson or shared/global implementation was modified to mask these p
 
 ## Branch and review status
 
-Work is on the Arena-assigned branch `arena/0126a99a-english-course`. Commit and pull-request state will be recorded here after the review branch is committed and the unmerged PR is opened.
+The rebuild is committed on the Arena-assigned branch `arena/0126a99a-english-course` as `a4a2349` (`Rebuild Lesson 40 future tense grand challenge`). [Pull request #73](https://github.com/johntaylorjt8870-cell/English-Course/pull/73) targets `main` and is **open, unmerged** for review.

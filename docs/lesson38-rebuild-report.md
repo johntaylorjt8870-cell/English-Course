@@ -120,8 +120,10 @@ Headless Chromium against the dev server (bound to `0.0.0.0`) at **390×844, 768
 |---|---|---|---|---|---|
 | 390×844 | 58 | 1595 px | 2610 px (`s22`) | 13 | 0 px |
 | 768×1024 | 58 | 1222 px | 1960 px | 0 | 0 px |
-| 1280×800 | 58 | 1222 px | 1960 px | 0 | 0 px |
-| 1920×1080 | 58 | 1195 px | 1960 px | 0 | 0 px |
+| 1280×800 | 58 | 1230 px | 2023 px (`s25b`) | 1 | 0 px |
+| 1920×1080 | 58 | 1195 px | 1960 px (`s24`) | 0 | 0 px |
+
+The two desktop rows are the post-fix numbers from §10 (laptop-first audit); the tablet/mobile rows are from the earlier pass and were not re-measured because mobile is out of scope for §10.
 
 Also verified in the browser: timeline lab read-out, practice items answering and revealing source keys, test submit → 25 graded panels with model answers and a score out of 25, Solutions Area unlocked with 25 cards, teacher form rejecting a wrong password and loading the guide with the right one.
 
@@ -155,3 +157,60 @@ No other shared file was modified; `src/index.css`, `src/shared/*`, and Lessons 
 - The PR is **not merged** and the branch is **not deleted**.
 - No project-wide refactor; the whole-project typecheck still has ~180 pre-existing errors in other lessons (unchanged), so `npm run build` is the typecheck for this work.
 - `npm run audit:english-direction` still aborts on its Lesson 41 scope guard (pre-existing), so the direction audits were run scoped to Lesson 38 (`audit:lesson38`, `check:english-direction`).
+
+---
+
+## 10. Desktop (laptop-first) presentation audit — 1280×800 and 1920×1080
+
+After the mobile pass above, the two desktop viewports were re-audited step by step; this section is the record of that pass. Mobile-only layout was deliberately left untouched.
+
+**Method.** Headless Chromium (puppeteer-core + `@sparticuz/chromium`) against the Vite dev server and again against the production `vite preview` build, gate unlocked, every step reached through the in-app “next” control. For each of the **58/58 steps at each viewport** the walk recorded: rendered step height, horizontal document overflow, elements painted outside the viewport, table fit, cell line counts, grid height variance, page/console errors, and a screenshot of every step (117 PNGs). Text was then checked at much higher resolution (DPR 2–3 element crops) wherever a Latin run occupied more than one line, and reading order was resolved from per-character client rects rather than from `innerText` (which stays correct even when the render is scrambled).
+
+**Structural results (58/58 per viewport)**
+
+| Metric | 1280×800 | 1920×1080 |
+|---|---|---|
+| Steps walked | 58 | 58 |
+| Median / p90 / max height | 1230 / 1754 / 2023 px | 1195 / 1753 / 1960 px |
+| Horizontal page overflow | 0 | 0 |
+| Elements outside viewport | 0 | 0 |
+| Overlapping elements | 0 | 0 |
+| Tables wider than their column | 0 of 8 | 0 of 8 |
+| Table cells wrapped to ≥3 lines | 0 | 0 |
+| Card-grid height variance | 0 | 0 |
+| App page/console errors | 0 | 0 |
+
+The only two console entries per run are `net::ERR_CONNECTION_CLOSED` for the Google Fonts stylesheet — the sandbox has no route to `fonts.googleapis.com`; they are network failures, not application errors, and they appear identically on the untouched Lesson 37.
+
+**Defects found in this pass and fixed**
+
+1. **Latin names split mid-phrase inside an Arabic sentence (§1 objectives / self-check).** Each objective sat in a half-width column (≈375 px at 1280), so «⑥ التمييز بين Future Simple وFuture Continuous وFuture Perfect.» broke between “Future” and “Perfect.”, and the continuation was laid out at the start of the next line: the step rendered «Future₉Future Continuous و Future Simple … / Perfect.» — unreadable. Fix: the checklist renders one objective per row below `2xl` (`grid gap-2 2xl:grid-cols-2`). No wording changed; measured height is unchanged (±8 px) because every row used two lines before and one now.
+2. **«الصحيح» clause merged into the LTR pair group (§25 · أخطاء شائعة, `errors-*`).** In «الخطأ: will داخل جملة by the time. الصحيح: By the time you arrive, I will have finished.» the pair heuristic binds the English clause ending in a period to the following Arabic word, so the group painted «by the time. الصحيح», and the correction sentence’s leading colon was stranded at the far left of the line. Fix is structural, not cosmetic: `Choice38` gained an optional `note`, and the correction now renders as its own block (`ChoiceList38`), which gives it its own paragraph direction. All twelve correction labels were split into `label` (error clause, ending in English) + `note` («الصحيح هو …»). The dash/colon that used to precede an LTR island was replaced by the Arabic connector «هو» so no punctuation is left dangling.
+3. **The §25 correction still could not fit a half-width card.** With two options per row, «الصحيح هو By the time you arrive, I will have finished.» wrapped and pushed “finished.” onto a third line under the card’s right edge. Fix: the new `wide` flag renders the `errors-e6` choices one per row below `2xl` and two per row on ≥1536 px screens. This is the only step whose desktop height moved — 1960 → 2023 px at 1280 (see gaps).
+4. **§25 · `errors-e7` had two Latin fragments in one label** («الصحيح: I will have been ready فقط، ولا تُستخدم will be ready.»), both splitting across lines. Fix: split into `label` «لا تُستخدم will be ready هنا.» + `note` «الصحيح هو I will have been ready فقط.» — the same claim, the same “فقط” nuance.
+5. **§25 · s25a note reordered two grammar terms.** «… تعود إلى has أو V1/V2 بدل V3.» put «has» and «V1/V2» into the alternatives wrapper («A أو B»), which paints the pair left-to-right inside an RTL sentence, so the line rendered «V1/V2 أو has». Fix: «… تعود إلى has، أو إلى V1/V2، بدل V3.» — inserting «إلى» breaks the alternatives match while keeping the sentence and its meaning. Verified from per-run rects before/after: `has@321, V1/V2@367, V3@268` → `has@381, V1/V2@289, V3@228` (correct right-to-left order).
+6. **§29 feedback note split a 29-character run** («by the time the guests arrive») across lines inside an Arabic sentence. Fix: «… أما الجملة التي تبدأ بـ by the time فتصف إنجازًا مكتملًا.» — same distinction between ⑥ and ⑦, but the inline island is now the two-word term.
+
+**Checked and judged not defects (evidence kept)**
+
+- **Page framing.** At 1280 and 1440 the shell is flush to the viewport with a 20 px inner gutter; at 1920 it is inset 224 px each side. That is a max-width container (≈1472 px) centring above ~1700 px, not a broken gutter — framing is consistent within each breakpoint, so no CSS was changed.
+- **The two banners at the top.** `.fp38-hero` is `position: relative` (it does **not** stick), and the second banner is the cover step itself. The header and the cover share the title, the subtitle and the three tense chips, so a 1280×800 screen shows 634 px of near-identical content before the first content step. Kept as the designed cover; recorded under gaps rather than rewritten.
+- **Long Latin runs.** 10 of 58 steps at 1280 and 3 of 58 at 1920 have a Latin run on more than one line; every one was opened at DPR 2–3 (`s06b`, `s10b`, `s11b`, `s13a`, `s20`, `s26a`, `s35b`, `s36a`): they are full English sentences in English-led blocks whose base direction is LTR, so they wrap left-aligned and read correctly. Only *short* runs that broke inside RTL sentences were treated as defects (items 1, 2, 4, 5 above); after the fixes, a 58-step re-scan at both viewports finds no short Latin run split across lines except `s06b`’s 45-character English option, which wraps correctly.
+- **Content-level BIDI audit of all mixed lines.** A run-order oracle was built from per-run client rects: for every leaf block whose computed direction is RTL and that mixes Arabic with Latin, the Latin runs that share a line must appear in right-to-left order, which they cannot fake by having a correct `innerText`. Swept over all 58 steps at 1280 and at 1920 after the fixes: **0 steps flagged at either viewport** (before the fixes it flagged `s25a`; the earlier rounds caught `s01`, `s25b` and `s29`).
+
+**Re-verification after the fixes**
+
+| Check | Result |
+|---|---|
+| `npm run audit:lesson38` | ✅ 315 assertions |
+| `npm run check:english-direction` | ✅ 59/59 BIDI rendering assertions |
+| `npm run build` | ✅ built in 10.9 s (only the pre-existing > 500 kB chunk warning) |
+| Production `vite preview` walk | ✅ 58/58 steps, median 1195 px at 1920, max 1960 px, 0 horizontal scroll |
+| Answer protection | unchanged — `testKey38-*.js` and `solutionsData38-*.js` remain separate lazy chunks, the student entry chunk still statically references only the dynamic import, and none of the edits touched test/solution data |
+
+**Remaining gaps (desktop)**
+
+- `s25b` is now the tallest desktop step at **2023 px @1280** (1933 @1920). The 63 px came from stacking `errors-e6` so its correction can be read; the step was left at 2023 px rather than shortening the correction or shrinking type.
+- The header/cover duplication described above is kept as designed; it is not “fixed” by deleting the cover title or the chips.
+- Chromium headless only (no Safari/Firefox, no physical laptop), and the sandbox cannot load Google Fonts, so the metrics above use the fallback stack.
+- Mobile (390 px) behaviour was not re-measured in this pass by design.

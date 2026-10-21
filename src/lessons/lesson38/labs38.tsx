@@ -62,7 +62,7 @@ function ChoiceList38({
   onSelect: (value: string) => void;
 }) {
   return (
-    <div className="mt-2 grid gap-2 sm:grid-cols-2">
+    <div className={`mt-2 grid gap-2 ${item.wide ? "2xl:grid-cols-2" : "sm:grid-cols-2"}`}>
       {item.choices.map((choice) => (
         <label
           key={choice.value}
@@ -79,8 +79,20 @@ function ChoiceList38({
             onChange={(event) => onSelect(event.currentTarget.value)}
             className={`${FOCUS_38} mt-1 h-4 w-4 accent-[#9f1239]`}
           />
+          {/*
+            التصحيح يُعرض في كتلة مستقلة: عندما يلي الفترة الإنجليزية كلمة «الصحيح»
+            يجمعهما عازل الزوج LTR فيسبق «الصحيح» العبارة الإنجليزية بصريًا وتختلّ
+            قراءة السطر. الكتلة الثانية تعيد ضبط اتجاه الفقرة فتُقرأ الجملتان بترتيبهما.
+          */}
           <span className="min-w-0" dir="auto">
-            <Rich text={choice.label} />
+            <span className="block">
+              <Rich text={choice.label} />
+            </span>
+            {choice.note ? (
+              <span className="mt-0.5 block">
+                <Rich text={choice.note} />
+              </span>
+            ) : null}
           </span>
         </label>
       ))}
@@ -185,7 +197,11 @@ export function ObjectivesChecklist38({ objectives }: { objectives: readonly str
   return (
     <div className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
       <p className="text-sm font-black text-[#3f1233]">علّم الأهداف التي تراها واضحة الآن (مراجعة ذاتية):</p>
-      <div className="mt-2 grid gap-2 sm:grid-cols-2">
+      {/*
+        عمود واحد حتى أعرض الشاشات: في العمودين الضيّقين ينقسم اسم إنجليزي
+        طويل مثل «Future Perfect» بين سطرين فيظهر مبعثرًا داخل الجملة العربية.
+      */}
+      <div className="mt-2 grid gap-2 2xl:grid-cols-2">
         {objectives.map((objective, index) => (
           <label key={objective} className="flex items-start gap-2 rounded-xl border border-[#f2ded8] bg-[#fffbf7] p-2.5 text-sm leading-6 text-[#2b1633]">
             <input
@@ -1214,7 +1230,7 @@ export function Tense29Lab38({
         ومطابق للمفتاح <span className="font-en tabular-nums">{score}</span>.
       </p>
       <PlatformNote38>
-        <Rich text="لاحظ الفرق بين السؤالين ⑥ و⑦؛ إنه من أهم الفروق في الدرس. جملة when you arrive تصف نشاطًا جاريًا، وجملة by the time the guests arrive تصف إنجازًا مكتملًا." />
+        <Rich text="لاحظ الفرق بين السؤالين ⑥ و⑦؛ إنه من أهم الفروق في الدرس. جملة when you arrive تصف نشاطًا جاريًا، أما الجملة التي تبدأ بـ by the time فتصف إنجازًا مكتملًا." />
       </PlatformNote38>
     </section>
   );

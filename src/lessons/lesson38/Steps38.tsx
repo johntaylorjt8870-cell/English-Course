@@ -556,7 +556,7 @@ export default function StepView38({
       case "errors-read":
         return (
           <p className="rounded-xl border border-[#f6c2c9] bg-[#fff1f2] px-3 py-2 text-sm font-bold leading-6 text-[#a41c36]">
-            <Rich text="قبل الانتقال: ضع إصبعك على الخطأ في كل زوج. كل الأخطاء الخمسة الأولى تعود إلى has أو V1/V2 بدل V3." />
+            <Rich text="قبل الانتقال: ضع إصبعك على الخطأ في كل زوج. كل الأخطاء الخمسة الأولى تعود إلى has، أو إلى V1/V2، بدل V3." />
           </p>
         );
       case "reading":

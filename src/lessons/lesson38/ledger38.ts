@@ -630,7 +630,7 @@ export const SOURCE_SECTIONS_38: SourceSection38[] = [
       "تبدأ الساعة الخامسة، وتنتهي الساعة السابعة.",
       "يمكننا قول:",
       "She will cook dinner tomorrow.",
-      "ستخبز أو تعد العشاء غدًا.",
+      "ستُعِدّ العشاء غدًا.",
       "At 6:00, she will be cooking dinner.",
       "عند السادسة، ستكون تعد العشاء.",
       "By 7:00, she will have cooked dinner.",

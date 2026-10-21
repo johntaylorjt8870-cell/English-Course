@@ -3,12 +3,14 @@
 // المصدر: أمثلة الدرس 38 وحلوله المورّدة.
 // ============================================================
 
-export type Choice38 = { value: string; label: string };
+export type Choice38 = { value: string; label: string; note?: string };
 export type ChoiceItem38 = {
   id: string;
   prompt: string;
   lines?: string[];
   choices: Choice38[];
+  /** خيارات طويلة تحتاج صفًا كاملًا لكل خيار بدل عمودين (يُفعَّل حيث يلزم فقط). */
+  wide?: boolean;
   accepted: string[];
   feedback: string;
   nuance?: string;
@@ -518,8 +520,8 @@ export const ERROR_ITEMS_38: ChoiceItem38[] = [
     id: "e1",
     prompt: "She will has finished.",
     choices: [
-      { value: "a", label: "الخطأ: has بعد will. الصحيح: She will have finished." },
-      { value: "b", label: "الخطأ: finished. الصحيح: finish." },
+      { value: "a", label: "الخطأ: has بعد will.", note: "الصحيح هو She will have finished." },
+      { value: "b", label: "الخطأ: finished.", note: "الصحيح هو finish." },
     ],
     accepted: ["a"],
     feedback: "① She will have finished. ✅ — have لا تتحول إلى has بعد will.",
@@ -528,8 +530,8 @@ export const ERROR_ITEMS_38: ChoiceItem38[] = [
     id: "e2",
     prompt: "I will have finish.",
     choices: [
-      { value: "a", label: "الخطأ: V1 بعد have. الصحيح: I will have finished." },
-      { value: "b", label: "الخطأ: will. الصحيح: would." },
+      { value: "a", label: "الخطأ: V1 بعد have.", note: "الصحيح هو I will have finished." },
+      { value: "b", label: "الخطأ: will.", note: "الصحيح هو would." },
     ],
     accepted: ["a"],
     feedback: "② I will have finished. ✅",
@@ -538,8 +540,8 @@ export const ERROR_ITEMS_38: ChoiceItem38[] = [
     id: "e3",
     prompt: "They will have went home.",
     choices: [
-      { value: "a", label: "الخطأ: V2 went. الصحيح: They will have gone home." },
-      { value: "b", label: "الخطأ: will have. الصحيح: will be." },
+      { value: "a", label: "الخطأ: V2 went.", note: "الصحيح هو They will have gone home." },
+      { value: "b", label: "الخطأ: will have.", note: "الصحيح هو will be." },
     ],
     accepted: ["a"],
     feedback: "③ They will have gone home. ✅",
@@ -548,8 +550,8 @@ export const ERROR_ITEMS_38: ChoiceItem38[] = [
     id: "e4",
     prompt: "He won't has arrived.",
     choices: [
-      { value: "a", label: "الخطأ: has بعد won't. الصحيح: He won't have arrived." },
-      { value: "b", label: "الخطأ: won't. الصحيح: isn't." },
+      { value: "a", label: "الخطأ: has بعد won't.", note: "الصحيح هو He won't have arrived." },
+      { value: "b", label: "الخطأ: won't.", note: "الصحيح هو isn't." },
     ],
     accepted: ["a"],
     feedback: "④ He won't have arrived. ✅ — بعد won't يأتي have لا has.",
@@ -558,8 +560,8 @@ export const ERROR_ITEMS_38: ChoiceItem38[] = [
     id: "e5",
     prompt: "Will she has completed the work?",
     choices: [
-      { value: "a", label: "الخطأ: has بعد الفاعل. الصحيح: Will she have completed the work?" },
-      { value: "b", label: "الخطأ: Will. الصحيح: Does." },
+      { value: "a", label: "الخطأ: has بعد الفاعل.", note: "الصحيح هو Will she have completed the work?" },
+      { value: "b", label: "الخطأ: Will.", note: "الصحيح هو Does." },
     ],
     accepted: ["a"],
     feedback: "⑤ Will she have completed the work? ✅ — في السؤال أيضًا have لا has.",
@@ -567,9 +569,10 @@ export const ERROR_ITEMS_38: ChoiceItem38[] = [
   {
     id: "e6",
     prompt: "By the time you will arrive, I will have finished.",
+    wide: true,
     choices: [
-      { value: "a", label: "الخطأ: will داخل جملة by the time. الصحيح: By the time you arrive, I will have finished." },
-      { value: "b", label: "الخطأ: will have finished. الصحيح: will finish." },
+      { value: "a", label: "الخطأ: will داخل جملة by the time.", note: "الصحيح هو By the time you arrive, I will have finished." },
+      { value: "b", label: "الخطأ: will have finished.", note: "الصحيح هو will finish." },
     ],
     accepted: ["a"],
     feedback: "⑥ By the time you arrive, I will have finished. ✅ — بعد by the time نستخدم Present Simple.",
@@ -578,8 +581,8 @@ export const ERROR_ITEMS_38: ChoiceItem38[] = [
     id: "e7",
     prompt: "I will have be ready.",
     choices: [
-      { value: "a", label: "إذا أردنا حالة مستقبلية بـ ready، فالصيغة الطبيعية: I will be ready." },
-      { value: "b", label: "الصحيح: I will have been ready فقط، ولا تُستخدم will be ready." },
+      { value: "a", label: "إذا أردنا حالة مستقبلية بـ ready، فالصيغة الطبيعية هي", note: "I will be ready." },
+      { value: "b", label: "لا تُستخدم will be ready هنا.", note: "الصحيح هو I will have been ready فقط." },
     ],
     accepted: ["a"],
     feedback: "⑦ المصدر: إذا أردنا التعبير عن حالة مستقبلية باستخدام ready، فالصيغة الطبيعية هي will be ready.",
@@ -833,5 +836,73 @@ export const SUMMARY_MATCH_38: ChoiceItem38[] = [
     ],
     accepted: ["a"],
     feedback: "Future Perfect: I will have written the report by 9:00.",
+  },
+];
+
+/** §19ب — أزواج الصواب/الخطأ من المصدر (wrote/went/built). */
+export const V3_PAIRS_38: ChoiceItem38[] = [
+  {
+    id: "v3p-written",
+    prompt: "أي الجملتين صحيحة من المصدر؟",
+    choices: [
+      { value: "a", label: "I will have written the report." },
+      { value: "b", label: "I will have wrote the report." },
+    ],
+    accepted: ["a"],
+    feedback: "المصدر: wrote هي V2، وبعد have نستخدم V3 = written.",
+  },
+  {
+    id: "v3p-gone",
+    prompt: "أي الجملتين صحيحة من المصدر؟",
+    choices: [
+      { value: "a", label: "She will have went home." },
+      { value: "b", label: "She will have gone home." },
+    ],
+    accepted: ["b"],
+    feedback: "went هي V2، وV3 للفعل go هي gone.",
+  },
+  {
+    id: "v3p-built",
+    prompt: "They will have ______ the bridge. اختر V3 الصحيح.",
+    choices: [
+      { value: "a", label: "build" },
+      { value: "b", label: "built" },
+    ],
+    accepted: ["b"],
+    feedback: "المصدر: They will have built the bridge. — built هي V3.",
+  },
+];
+
+/** §35ب — فحص فهم النموذج الإرشادي. */
+export const WRITING_MODEL_CHECK_38: ChoiceItem38[] = [
+  {
+    id: "wm-1",
+    prompt: "في النموذج: أي جملة تستخدم won't have + V3؟",
+    choices: [
+      { value: "a", label: "By the end of next year, I will have improved my English significantly." },
+      { value: "b", label: "I won't have wasted the time I spend practising." },
+    ],
+    accepted: ["b"],
+    feedback: "النموذج يضم جملة منفية واحدة بصيغة won't have + V3.",
+  },
+  {
+    id: "wm-2",
+    prompt: "أي جملة في النموذج تستخدم Future Continuous؟",
+    choices: [
+      { value: "a", label: "At this time next year, I will be working on a new educational project." },
+      { value: "b", label: "I will have completed several new courses." },
+    ],
+    accepted: ["a"],
+    feedback: "will be + V-ing هي Future Continuous، وتصف نشاطًا جاريًا في لحظة مستقبلية.",
+  },
+  {
+    id: "wm-3",
+    prompt: "النموذج يبدأ بـ by the time. ما الزمن المستخدم في جملة by the time؟",
+    choices: [
+      { value: "a", label: "المضارع البسيط: By the time the year ends…" },
+      { value: "b", label: "المستقبل: By the time the year will end…" },
+    ],
+    accepted: ["a"],
+    feedback: "القاعدة نفسها: بعد by the time نستخدم Present Simple، والنتيجة في الجملة الرئيسية بصيغة Future Perfect.",
   },
 ];

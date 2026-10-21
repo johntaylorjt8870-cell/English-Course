@@ -1,4 +1,4 @@
-import { sourceSection40 } from "./data";
+import { sourceSection40 } from "./ledger40";
 import { Callout40, Chip40, EnBidi, MixedBidi, SourceLedgerBlock40, normalizeEnglishInput40 } from "./kit40";
 import { SOLUTIONS_40, SOLUTIONS_PROVENANCE_NOTE_40 } from "./solutionsData40";
 
@@ -19,6 +19,12 @@ export function SolutionsArea40({
   onBackToStudent: () => void;
 }) {
   const s26 = sourceSection40("s26");
+  const machineScored = SOLUTIONS_40.filter((solution) => solution.level !== 4);
+  const matchedCount = machineScored.filter((solution) => {
+    const student = normalizeEnglishInput40(answers[solution.id] ?? "");
+    return student.length > 0 && solution.acceptedNormalized.some((accepted) => normalizeEnglishInput40(accepted) === student);
+  }).length;
+  const conceptualCount = SOLUTIONS_40.filter((solution) => solution.level === 4).length;
 
   return (
     <section
@@ -54,6 +60,12 @@ export function SolutionsArea40({
             العودة إلى خطوات الدرس
           </button>
         </div>
+      </div>
+
+      <div data-score-summary className="rounded-2xl border border-[#a9c8e5] bg-[#eef6ff] p-5 space-y-2">
+        <div className="flex flex-wrap items-baseline justify-between gap-2"><strong className="text-[#123d69]">المطابقة الآلية المحدودة</strong><span className="text-lg font-black text-[#075fe4]">{matchedCount} / {machineScored.length}</span></div>
+        <p className="text-sm font-semibold text-[#244865]">هذه مطابقة للإجابات القياسية والبدائل المسجلة في الأسئلة الموضوعية فقط، وليست حكمًا نهائيًا على كل صياغة إنجليزية سليمة. الأسئلة المفاهيمية الخمسة تحتاج مراجعة بشرية وفق سلم المعلم؛ والإجابة غير المطابقة تُحال للمراجعة ولا تُرفض آليًا.</p>
+        <p className="text-xs font-extrabold text-[#6947b8]">{conceptualCount} أسئلة مفاهيمية من أصل 25 · تقييم المعلم/المقارنة الذاتية</p>
       </div>
 
       {/* النص المصدري الكامل للقسم §26 حرفيًا */}
@@ -98,7 +110,7 @@ export function SolutionsArea40({
                         ? "مقارنة ذاتية بالمعنى"
                         : isExactMatch
                           ? "مطابق للمفتاح ✅"
-                          : "راجع الحل النموذجي 💡"
+                          : "مطابقة غير مؤكدة — راجع البدائل والسياق"
                   }
                   tone={!studentRaw ? "neutral" : isExactMatch ? "emerald" : "amber"}
                 />

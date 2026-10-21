@@ -13,7 +13,6 @@ import {
   SECTION_COUNT_40,
   SLIDES_40,
   STEP_COUNT_40,
-  slidesInChapter40,
 } from "./data";
 
 export type AreaId40 = "student" | "test" | "solutions" | "teacher";
@@ -78,7 +77,7 @@ export default function Lesson40({ onExit }: { onExit?: () => void }) {
   }
 
   return (
-    <div dir="rtl" data-lesson="40" className="min-h-screen bg-[#f5f3ed] text-[#24343b] pb-16">
+    <div dir="rtl" data-lesson="40" className="tc40 min-h-screen text-[#24343b] pb-16">
       {/* الترويسة الرئيسية للدرس 40 */}
       <header className="border-b border-[#d5d0c3] bg-[#fffdf8]">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 py-5 space-y-4">
@@ -108,7 +107,9 @@ export default function Lesson40({ onExit }: { onExit?: () => void }) {
             </div>
           </div>
 
-          <div className="space-y-1.5">
+          <div className="tc-brandline">
+            <span className="tc-brand-mark" aria-hidden="true">T//40</span>
+            <div className="space-y-1.5">
             <div
               dir="ltr"
               lang="en"
@@ -120,6 +121,10 @@ export default function Lesson40({ onExit }: { onExit?: () => void }) {
             <h1 className="text-xl sm:text-2xl font-extrabold text-[#17354a]">
               <MixedBidi>{LESSON_ARABIC_SUBTITLE_40}</MixedBidi>
             </h1>
+            </div>
+          </div>
+          <div className="tc-header-tracks" aria-label="خمسة مسارات لقراءة المستقبل">
+            <span className="will">WILL · DECISION</span><span className="going">GOING TO · PLAN</span><span className="continuous">CONTINUOUS · IN PROGRESS</span><span className="perfect">PERFECT · COMPLETE</span><span className="duration">PERFECT CONTINUOUS · DURATION</span>
           </div>
 
           {/* شريط المناطق الأربع المستقلة */}
@@ -236,25 +241,16 @@ export default function Lesson40({ onExit }: { onExit?: () => void }) {
                 })}
               </div>
 
-              <div className="flex flex-wrap gap-1.5 pt-1 border-t border-[#e4dfd2]">
-                {slidesInChapter40(currentChapter.id).map(({ slide, index }) => {
-                  const isCurrent = index === stepIndex;
-                  return (
-                    <button
-                      key={slide.id}
-                      type="button"
-                      aria-current={isCurrent ? "step" : undefined}
-                      onClick={() => setStepIndex(index)}
-                      className={`rounded-xl border px-3 py-1.5 text-xs font-extrabold transition cursor-pointer ${
-                        isCurrent
-                          ? "border-[#245f62] bg-[#245f62] text-[#ffffff]"
-                          : "border-[#d5d0c3] bg-[#ffffff] text-[#17354a] hover:border-[#245f62]"
-                      }`}
-                    >
-                      <MixedBidi>{slide.title}</MixedBidi>
-                    </button>
-                  );
-                })}
+              <div className="tc-direct-nav">
+                <label htmlFor="lesson40-step-select">انتقال مباشر إلى خطوة</label>
+                <select id="lesson40-step-select" value={stepIndex} onChange={(event) => setStepIndex(Number(event.target.value))}>
+                  {SLIDES_40.map((slide, index) => {
+                    const sectionLabel = slide.source.num == null ? "المقدمة" : `القسم ${slide.source.num}`;
+                    const pageLabel = slide.id.split("-").at(-1) ?? "1";
+                    return <option key={slide.id} value={index} data-step-id={slide.id}>{`الخطوة ${String(index + 1).padStart(2, "0")} — ${sectionLabel} — الصفحة ${pageLabel}`}</option>;
+                  })}
+                </select>
+                <progress value={stepIndex + 1} max={STEP_COUNT_40} aria-label={`تقدم الخطوات: ${stepIndex + 1} من ${STEP_COUNT_40}`} />
               </div>
             </div>
 

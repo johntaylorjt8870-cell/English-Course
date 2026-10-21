@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { COVERAGE_40, COVERAGE_ACCURACY_NOTES_40 } from "./coverage40";
-import { SLIDES_40, sourceSection40 } from "./data";
+import { SLIDES_40 } from "./data";
+import { sourceSection40 } from "./ledger40";
 import { Callout40, Chip40, EnBidi, MixedBidi, SourceLedgerBlock40 } from "./kit40";
 import {
   DETECTIVE21_ITEMS_40,
@@ -57,6 +59,14 @@ const LESSON_PLAN_PHASES_40 = [
   },
 ] as const;
 
+const CONCEPTUAL_RUBRIC_40 = [
+  { q: 16, criteria: "نقطة: يميز أن WILL قد يقدم فعلًا مستقبليًا/قرارًا لحظيًا؛ نقطة: يذكر أن BE GOING TO تبرز نية أو خطة مسبقة. تُقبل صياغة مكافئة." },
+  { q: 17, criteria: "نقطة: يصف Future Continuous نشاطًا جاريًا عند الثامنة؛ نقطة: يصف Future Perfect إنجازًا مكتملًا بحلول الثامنة." },
+  { q: 18, criteria: "نقطة: يحدد نتيجة/خمسة مقالات مكتملة؛ نقطة: يحدد مدة الكتابة الممتدة لأسبوعين. لا يُشترط نسخ الجواب النموذجي حرفيًا." },
+  { q: 19, criteria: "نقطة: يجيب لا؛ نقطة: يذكر صحة Future Simple مع by، ويفضل دعمها بالمثال الوارد. تُقبل الإشارة إلى اختلاف التركيز مع Future Perfect." },
+  { q: 20, criteria: "نقطة: يذكر Present Simple عادةً في جملة when الزمنية؛ نقطة: يميزها عن الجملة الرئيسية المستقبلية أو عن السؤال المباشر When will you arrive?" },
+] as const;
+
 export function TeacherGuide40({
   onJumpToStep,
   onOpenTest,
@@ -67,6 +77,7 @@ export function TeacherGuide40({
   onOpenSolutions: () => void;
 }) {
   const s26 = sourceSection40("s26");
+  const [jumpIndex, setJumpIndex] = useState(0);
 
   return (
     <div dir="rtl" className="space-y-6">
@@ -250,6 +261,12 @@ export function TeacherGuide40({
       {/* النص الكامل للقسم §26 + بطاقات الحلول الـ25 */}
       <SourceLedgerBlock40 section={s26} />
 
+      <div className="rounded-3xl border border-[#d4b475] bg-[#fff8e8] p-5 space-y-3" data-conceptual-rubric>
+        <h3 className="text-base font-extrabold text-[#704700]">سلم مراجعة المعلم للأسئلة المفاهيمية ⑯–⑳ · درجتان لكل سؤال</h3>
+        <p className="text-sm font-semibold text-[#49391c]">هذه البنود تُراجع بشريًا، لا بمطابقة كلمات مفتاحية. امنح نقطة لكل معيار، واقبل أي شرح مكافئ يثبت الفهم الصحيح.</p>
+        {CONCEPTUAL_RUBRIC_40.map((item) => <p key={item.q} className="rounded-lg border border-[#e5d09c] bg-white p-3 text-sm font-bold text-[#49391c]"><MixedBidi>{`السؤال ${item.q}: ${item.criteria}`}</MixedBidi></p>)}
+      </div>
+
       <div className="rounded-3xl border border-[#d5d0c3] bg-[#fffdf8] p-6 space-y-4">
         <h3 className="text-lg font-extrabold text-[#17354a]">
           بطاقات الحلول التفصيلية الـ25 للاختبار النهائي (مرجع المعلم)
@@ -320,20 +337,15 @@ export function TeacherGuide40({
         </div>
       </div>
 
-      {/* انتقال سريع إلى أي خطوة من خطوات الدرس الـ30 */}
-      <div className="rounded-3xl border border-[#d5d0c3] bg-[#fffdf8] p-6 space-y-3">
-        <h3 className="text-base font-extrabold text-[#17354a]">الانتقال السريع إلى خطوات الدرس (30 خطوة)</h3>
-        <div className="flex flex-wrap gap-2">
-          {SLIDES_40.map((slide, idx) => (
-            <button
-              key={slide.id}
-              type="button"
-              onClick={() => onJumpToStep(idx)}
-              className="rounded-xl border border-[#c7c2b4] bg-[#f5f3ed] px-3 py-1.5 text-xs font-extrabold text-[#17354a] hover:border-[#245f62] cursor-pointer"
-            >
-              <MixedBidi>{`${idx + 1}. ${slide.title}`}</MixedBidi>
-            </button>
-          ))}
+      {/* انتقال مباشر إلى أي خطوة دون ازدحام قائمة الأزرار */}
+      <div className="rounded-3xl border border-[#d5d0c3] bg-[#fffdf8] p-5 space-y-3">
+        <h3 className="text-base font-extrabold text-[#17354a]">الانتقال السريع إلى إحدى خطوات الدرس ({SLIDES_40.length} خطوة)</h3>
+        <div className="flex flex-wrap items-center gap-3">
+          <label htmlFor="teacher40-step-jump" className="text-sm font-bold text-[#17354a]">اختر الخطوة</label>
+          <select id="teacher40-step-jump" value={jumpIndex} onChange={(event) => setJumpIndex(Number(event.target.value))} className="min-w-0 flex-1 rounded-xl border border-[#b9c8c0] bg-white px-3 py-2 text-sm">
+            {SLIDES_40.map((slide, idx) => <option key={slide.id} value={idx}>{`${idx + 1}. ${slide.focus} — ${slide.title}`}</option>)}
+          </select>
+          <button type="button" onClick={() => onJumpToStep(jumpIndex)} className="rounded-xl bg-[#075fe4] px-4 py-2 text-sm font-extrabold text-white">افتح الخطوة المحددة</button>
         </div>
       </div>
     </div>

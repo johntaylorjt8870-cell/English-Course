@@ -1,462 +1,118 @@
 import { useState } from "react";
-import { SLIDES_40, sourceSection40 } from "./data";
-import { Callout40, Chip40, EnBidi, MixedBidi, SourceLedgerBlock40 } from "./kit40";
-import {
-  AdamThreeWayComparisonLab40,
-  CurriculumRoadmap29Lab40,
-  DecisionMapLab40,
-  DeepUnderstandingLab40,
-  Detective21Lab40,
-  Dialogue1Lab40,
-  Dialogue2Lab40,
-  Exercise19Lab40,
-  Fill20Lab40,
-  ForSinceAndStativeLab40,
-  FormulaBuilderLab40,
-  FutureContinuousRoundLab40,
-  FuturePerfectContinuousRoundLab40,
-  FuturePerfectRoundLab40,
-  GoldenSummary28Lab40,
-  GoldenTableLab40,
-  Iq22MultiAnswerLab40,
-  ObjectivesChecklistLab40,
-  Reading23Lab40,
-  SignalWordsLab40,
-  SituationLab40,
-  StoryAnalysis24Lab40,
-  StudyPerspectivesLab40,
-  TimeClausesExplorerLab40,
-  WhenVsByTheTimeLab40,
-  WillVsGoingToLab40,
-  WritingMission27Lab40,
-} from "./labs40";
+import { CHAPTERS_40, SLIDES_40 } from "./data";
+import { Callout40, MixedBidi, SourceLedgerBlock40, SourceLine40 } from "./kit40";
+import type { SourceSection40 } from "./ledger40";
+import { DIALOGUE1_LINES_40, DIALOGUE2_LINES_40 } from "./practiceData40";
+import "./lesson40.css";
 
-export function StepView40({
-  stepIndex,
-  testSubmitted,
-  teacherUnlocked,
-  onOpenTest,
-  onOpenSolutions,
-  onOpenTeacher,
-}: {
-  stepIndex: number;
-  testSubmitted: boolean;
-  teacherUnlocked: boolean;
-  onOpenTest: () => void;
-  onOpenSolutions: () => void;
-  onOpenTeacher: () => void;
+function ChoicePanel40({ title, choices, answer, explanation }: { title: string; choices: string[]; answer: number; explanation: string }) {
+  const [selected, setSelected] = useState<number | null>(null);
+  return <section className="tc-activity" aria-label={title}>
+    <div className="tc-activity-head"><span className="tc-kicker">ACTIVE CHECK</span><h3>{title}</h3></div>
+    <div className="tc-choice-row" role="group" aria-label={title}>
+      {choices.map((choice, index) => <button type="button" key={choice} aria-pressed={selected === index} className={selected === index ? "tc-choice selected" : "tc-choice"} onClick={() => setSelected(index)}>{choice}</button>)}
+    </div>
+    {selected !== null && <p className={selected === answer ? "tc-feedback correct" : "tc-feedback review"} role="status">{selected === answer ? "اتجاه صحيح — " : "أعد فحص زاوية المعنى — "}{explanation}</p>}
+  </section>;
+}
+
+function DecisionConsole40() {
+  const prompts = [
+    ["هل أتخذ القرار الآن؟", "WILL", "قرار لحظي؛ The phone is ringing. I'll answer it."],
+    ["هل توجد نية أو خطة مسبقة؟", "BE GOING TO", "خطة سابقة؛ I'm going to join a programming course next month."],
+    ["ما النشاط الجاري في تلك اللحظة؟", "Future Continuous", "نشاط عند نقطة مستقبلية؛ At 8:00 tomorrow, I'll be studying."],
+    ["ما النتيجة المكتملة بحلول النقطة؟", "Future Perfect", "نتيجة مكتملة؛ By 9:00, I'll have finished my homework."],
+    ["ما مدة النشاط حتى النقطة؟", "Future Perfect Continuous", "مدة ممتدة؛ By 9:00, I'll have been studying for three hours."],
+    ["هل أقدم وعدًا أو توقعًا أو عرضًا؟", "WILL", "الوعد: I promise I'll help you."],
+  ];
+  const [active, setActive] = useState<number | null>(null);
+  return <section className="tc-console" aria-label="Six-question future decision console">
+    <div className="tc-console-title"><span>01 / DECISION SEQUENCE</span><strong>السؤال هو الذي يحدد زاوية النظر</strong></div>
+    <div className="tc-six-grid">{prompts.map(([q], index) => <button key={q} type="button" aria-expanded={active === index} className={active === index ? "tc-decision active" : "tc-decision"} onClick={() => setActive(active === index ? null : index)}><b>{String(index + 1).padStart(2, "0")}</b><span>{q}</span></button>)}</div>
+    {active !== null && <div className={`tc-readout tc-form-${active}`} role="status"><span className="tc-readout-label">TENSE ROUTE · {prompts[active][1]}</span><p>{prompts[active][2]}</p></div>}
+  </section>;
+}
+
+function TimelineCommand40() {
+  const forms = [
+    { id: "will", label: "WILL", lens: "قرار / وعد / توقع", color: "coral", mark: "◇" },
+    { id: "going", label: "BE GOING TO", lens: "خطة / دليل حاضر", color: "blue", mark: "↗" },
+    { id: "continuous", label: "FUTURE CONTINUOUS", lens: "نشاط عند نقطة", color: "mint", mark: "━━" },
+    { id: "perfect", label: "FUTURE PERFECT", lens: "نتيجة مكتملة بحلول نقطة", color: "amber", mark: "●" },
+    { id: "duration", label: "FUTURE PERFECT CONTINUOUS", lens: "مدة حتى نقطة مرجعية", color: "violet", mark: "◷" },
+  ];
+  const [selected, setSelected] = useState("continuous");
+  return <section className="tc-timeline" aria-label="Future event timeline selector">
+    <div className="tc-activity-head"><span className="tc-kicker">TIMELINE / REFERENCE POINT</span><h3>اختر ما تريد أن تراه حول النقطة المستقبلية</h3></div>
+    <div className="tc-track" aria-hidden="true"><i className="tc-track-span"/><b className="tc-marker">T</b><span className="tc-now">NOW</span><span className="tc-later">FUTURE REFERENCE</span></div>
+    <div className="tc-form-grid">{forms.map((form) => <button key={form.id} type="button" aria-pressed={selected === form.id} className={`tc-form-card ${form.color} ${selected === form.id ? "selected" : ""}`} onClick={() => setSelected(form.id)}><b>{form.mark}</b><span>{form.label}</span><small>{form.lens}</small></button>)}</div>
+    <p className="tc-caption" role="status">{forms.find((form) => form.id === selected)?.lens} — النقطة المرجعية واحدة؛ الذي يتغير هو التركيز.</p>
+  </section>;
+}
+
+function DialogueTranslations40({ slide }: { slide: (typeof SLIDES_40)[number] }) {
+  if (slide.sourceId !== "s16" && slide.sourceId !== "s17") return null;
+  const dialogue = slide.sourceId === "s16" ? DIALOGUE1_LINES_40 : DIALOGUE2_LINES_40;
+  const turns = slide.unitIndexes.flatMap((unitIndex) => {
+    const line = slide.source.units[unitIndex];
+    const separator = line.indexOf(":");
+    if (separator < 0) return [];
+    const speaker = line.slice(0, separator);
+    const english = line.slice(separator + 1).trim();
+    const translation = dialogue.find((turn) => turn.en === english);
+    return translation ? [{ speaker, english, arabic: translation.ar }] : [];
+  });
+  if (!turns.length) return null;
+  return <div className="tc-translations"><div className="tc-activity-head"><span className="tc-kicker">BILINGUAL DEBRIEF · PLATFORM TRANSLATION SUPPORT</span><h3>ترجمة عربية مساندة للحوار</h3></div>{turns.map((turn,index)=><div className="tc-translation-row" key={`${slide.id}-translation-${index}`}><span>{turn.speaker}</span><div dir="ltr" lang="en">{turn.english}</div><p dir="rtl">{turn.arabic}</p></div>)}</div>;
+}
+
+function SourceReveal40({ section, label, revealIndexes }: { section: SourceSection40; label: string; revealIndexes?: readonly number[] }) {
+  const [attempt, setAttempt] = useState("");
+  const [revealed, setRevealed] = useState(false);
+  if (!section.revealUnits?.length) return null;
+  const indexes = revealIndexes ?? section.revealUnits.map((_, index) => index);
+  return <div className="tc-reveal" data-answer-key-for={section.id}>
+    <label htmlFor={`attempt-${section.id}`}>{label}</label>
+    <div className="tc-attempt"><input id={`attempt-${section.id}`} dir="auto" value={attempt} onChange={(event) => setAttempt(event.target.value)} placeholder="اكتب محاولة قصيرة أولًا"/><button type="button" disabled={!attempt.trim()} onClick={() => setRevealed(true)}>تحقق من المحاولة واعرض الشرح</button></div>
+    {revealed ? <div className="tc-answer" aria-live="polite">{indexes.map((index) => <SourceLine40 key={index} line={section.revealUnits![index]} index={index} sectionId={section.id} kind="reveal" />)}</div> : <p className="tc-muted">مفتاح الإجابة والتفسير غير معروضين حتى إرسال محاولة.</p>}
+  </div>;
+}
+
+function ExtraActivity40({ slide, section }: { slide: (typeof SLIDES_40)[number]; section: SourceSection40 }) {
+  const n = slide.id.endsWith("-01");
+  if (slide.sourceId === "s02" && n) return <DecisionConsole40/>;
+  if ((slide.sourceId === "s04" && n) || (slide.sourceId === "s09" && n)) return <TimelineCommand40/>;
+  if (slide.sourceId === "s12" && n) return <ChoicePanel40 title="Temporal clause or direct question?" choices={["When you will arrive, I'll call.", "When you arrive, I'll call."]} answer={1} explanation="في الجملة الزمنية المستقبلية نستخدم Present Simple بعد when؛ السؤال المباشر مختلف: When will you arrive?"/>;
+  if (slide.sourceId === "s14" && n) return <ChoicePanel40 title="اختبر نقطة البداية أم المدة" choices={["for 2023", "since 2023"]} answer={1} explanation="since يحدد نقطة البداية؛ for يحدد طول المدة. ومع know بمعنى المعرفة لا نستخدم عادة الصيغة المستمرة."/>;
+  if (slide.sourceId === "s15" && n) return <ChoicePanel40 title="اختر الصيغة الصحيحة بعد will have" choices={["will have wrote", "will have written"]} answer={1} explanation="Future Perfect = will have + V3؛ written هو التصريف الثالث من write."/>;
+  if (slide.sourceId === "s17" && slide.id.endsWith("-03")) return <ChoicePanel40 title="Family Trip · classify the cloud prediction" choices={["BE GOING TO — present evidence", "BE GOING TO — only a prior plan"]} answer={0} explanation="الغيوم الداكنة دليل حاضر يدعم التوقع. لا نخلط هذا الاستخدام بالخطة المسبقة في مغادرة العائلة."/>;
+  if (slide.sourceId === "s17" && slide.id.endsWith("-04")) return <SourceReveal40 key={slide.id} section={section} label="أرسل تصنيفك للحوار قبل إظهار مفتاح البنود الستة"/>;
+  if (slide.sourceId === "s19" && slide.id.endsWith("-05")) return <SourceReveal40 section={section} label="أجب عن سؤال اختيار واحد على الأقل قبل مراجعة الإجابات المشروحة"/>;
+  if (slide.sourceId === "s20" && slide.id.endsWith("-02")) return <SourceReveal40 section={section} label="اكتب إجابة من تدريبات الإكمال قبل عرض الحلول الثمانية"/>;
+  if (slide.sourceId === "s21" && (slide.id.endsWith("-01") || slide.id.endsWith("-02"))) return <SourceReveal40 key={slide.id} section={section} revealIndexes={slide.id.endsWith("-01") ? [0,1,2,3,4,5] : [6,7,8,9,10,11]} label="حاول تصحيح بند من هذه المجموعة قبل عرض تصحيحها"/>;
+  if (slide.sourceId === "s23" && slide.id.endsWith("-03")) return <ChoicePanel40 title="Reading inference · identify the prediction" choices={["The centre will inspire many students.", "They will have installed all the equipment."]} answer={0} explanation="The teacher says ‘I'm sure…’, which signals a belief or prediction; the other sentence emphasizes a completed result by a future deadline."/>;
+  if (slide.sourceId === "s23" && (slide.id.endsWith("-04") || slide.id.endsWith("-05"))) return <SourceReveal40 key={slide.id} section={section} revealIndexes={slide.id.endsWith("-04") ? [0,1,2,3] : [4,5,6,7]} label="اكتب إجابة فهم واحدة قبل عرض إجابات هذه المجموعة"/>;
+  if (slide.sourceId === "s25") return <Callout40 tone="navy" title="ورقة اختبار مستقلة" badge="25 سؤالًا"><p>تجد الاختبار ذي الخمسة مستويات في منطقة الاختبار. لا تظهر الإجابات في خطوات الطالب.</p></Callout40>;
+  if (slide.sourceId === "s26") return <Callout40 tone="amber" title="مفتاح المعلم خارج منطقة الطالب" badge="بعد التسليم"><p>المفاتيح التفصيلية موجودة في وحدات الحلول/المعلم المحمّلة عند الحاجة؛ هذا التنبيه لا يحتوي على إجابات.</p></Callout40>;
+  if (slide.sourceId === "s28" && slide.id.endsWith("-01")) return <TimelineCommand40/>;
+  if (slide.sourceId === "s29" && slide.id.endsWith("-06")) return <div className="tc-next"><span>UP NEXT · LESSON 41</span><a href="#/lesson/41"><span dir="ltr" lang="en">Master Auxiliary Verbs</span><span dir="rtl">الإتقان الشامل للأفعال المساعدة · افتح الدرس التالي ←</span></a></div>;
+  return null;
+}
+
+export function StepView40({ stepIndex, testSubmitted, teacherUnlocked, onOpenTest, onOpenSolutions, onOpenTeacher }: {
+  stepIndex: number; testSubmitted: boolean; teacherUnlocked: boolean;
+  onOpenTest: () => void; onOpenSolutions: () => void; onOpenTeacher: () => void;
 }) {
-  const [revealedUnits, setRevealedUnits] = useState<Record<string, boolean>>({});
   const slide = SLIDES_40[stepIndex] ?? SLIDES_40[0];
-  const section = sourceSection40(slide.sourceId);
-  const id = slide.sourceId;
-
-  function toggleRevealUnit(unitId: string) {
-    setRevealedUnits((prev) => ({ ...prev, [unitId]: !prev[unitId] }));
-  }
-
-  if (id === "cover") {
-    return (
-      <div dir="rtl" className="space-y-5">
-        <div className="rounded-3xl border border-[#b9c8c0] bg-[#eef4f0] p-6 sm:p-8 shadow-sm space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="rounded-full border border-[#245f62] bg-[#ffffff] px-3.5 py-1 text-xs font-extrabold text-[#245f62]">
-              منظومة المستقبل الكاملة — الدروس 34–40
-            </span>
-            <span className="rounded-full border border-[#76531e] bg-[#fbf6eb] px-3.5 py-1 text-xs font-extrabold text-[#76531e]">
-              المستوى: تأسيسي متقدم — IQ200
-            </span>
-          </div>
-
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17354a] leading-[1.5]">
-            <MixedBidi>الدرس 40: Future Tenses Master Review — المراجعة الشاملة وإتقان أزمنة المستقبل</MixedBidi>
-          </h1>
-
-          <div
-            dir="ltr"
-            lang="en"
-            style={{ direction: "ltr", unicodeBidi: "isolate", textAlign: "left" }}
-            className="rounded-2xl border border-[#95b8b1] bg-[#fffdf8] px-4 py-3 font-mono text-base sm:text-lg font-extrabold text-[#17354a]"
-          >
-            <EnBidi>The Future Tenses Grand Challenge 🚀 — Master Review Lab</EnBidi>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 pt-1">
-            {[
-              { station: "① محطة 34", name: "Future Simple — WILL" },
-              { station: "② محطة 35", name: "BE GOING TO" },
-              { station: "③ محطة 36", name: "WILL vs BE GOING TO" },
-              { station: "④ محطة 37", name: "Future Continuous" },
-              { station: "⑤ محطة 38", name: "Future Perfect" },
-              { station: "⑥ محطة 39", name: "Future Perfect Continuous" },
-            ].map((item) => (
-              <div
-                key={item.station}
-                className="rounded-xl border border-[#c8c3b4] bg-[#fffdf8] p-2.5 text-right space-y-1"
-              >
-                <div className="text-xs font-extrabold text-[#245f62]">{item.station}</div>
-                <div
-                  dir="ltr"
-                  lang="en"
-                  style={{ direction: "ltr", unicodeBidi: "isolate", textAlign: "left" }}
-                  className="font-mono text-xs font-bold text-[#17354a]"
-                >
-                  <EnBidi>{item.name}</EnBidi>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <SourceLedgerBlock40 section={section}>
-          <Callout40
-            tone="teal"
-            title="من 6 محطات دراسية إلى 5 صيغ مستقبلية رئيسية"
-            badge="دليل المراجعة"
-          >
-            <p>
-              <MixedBidi>
-                في الدروس 34–39 درسنا ست محطات تعليمية (لأن الدرس 36 خُصّص للمقارنة بين WILL وBE GOING TO)، وفي هذا الدرس نجمع الصيغ الخمس الرئيسية في نظام قرار واحد ينقلك من معرفة القواعد إلى التحكم بها.
-              </MixedBidi>
-            </p>
-          </Callout40>
-        </SourceLedgerBlock40>
-      </div>
-    );
-  }
-
-  if (id === "s01") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <ObjectivesChecklistLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s02") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <DecisionMapLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s03") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <GoldenTableLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s04") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <StudyPerspectivesLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s05") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <WillVsGoingToLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s06") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <FutureContinuousRoundLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s07") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <FuturePerfectRoundLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s08") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <FuturePerfectContinuousRoundLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s09") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <AdamThreeWayComparisonLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s10") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <DeepUnderstandingLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s11") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <SignalWordsLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s12") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <TimeClausesExplorerLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s13") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <WhenVsByTheTimeLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s14") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <ForSinceAndStativeLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s15") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <FormulaBuilderLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s16") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <Dialogue1Lab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s17") {
-    const revealed = Boolean(revealedUnits["s17-solution"]);
-    return (
-      <SourceLedgerBlock40 section={section} showReveal={revealed}>
-        <Dialogue2Lab40
-          revealed={revealed}
-          onReveal={() => toggleRevealUnit("s17-solution")}
-        />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s18") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <SituationLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s19") {
-    const revealed = Boolean(revealedUnits["s19-solutions"]);
-    return (
-      <SourceLedgerBlock40 section={section} showReveal={revealed}>
-        <Exercise19Lab40
-          revealed={revealed}
-          onReveal={() => toggleRevealUnit("s19-solutions")}
-        />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s20") {
-    const revealed = Boolean(revealedUnits["s20-solutions"]);
-    return (
-      <SourceLedgerBlock40 section={section} showReveal={revealed}>
-        <Fill20Lab40
-          revealed={revealed}
-          onReveal={() => toggleRevealUnit("s20-solutions")}
-        />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s21") {
-    const revealed = Boolean(revealedUnits["s21-solutions"]);
-    return (
-      <SourceLedgerBlock40 section={section} showReveal={revealed}>
-        <Detective21Lab40
-          revealed={revealed}
-          onReveal={() => toggleRevealUnit("s21-solutions")}
-        />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s22") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <Iq22MultiAnswerLab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s23") {
-    const revealed = Boolean(revealedUnits["s23-solutions"]);
-    return (
-      <SourceLedgerBlock40 section={section} showReveal={revealed}>
-        <Reading23Lab40
-          revealed={revealed}
-          onReveal={() => toggleRevealUnit("s23-solutions")}
-        />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s24") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <StoryAnalysis24Lab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s25") {
-    return (
-      <SourceLedgerBlock40
-        section={section}
-        skipIndexes={section.units.map((_, idx) => idx).slice(2)}
-      >
-        <div className="rounded-2xl border border-[#9dbbb5] bg-[#eef4f0] p-5 space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <h3 className="text-base sm:text-lg font-extrabold text-[#17354a]">
-              منطقة الاختبار النهائي الشامل المستقلة (25 سؤالًا في 5 مستويات)
-            </h3>
-            <Chip40
-              label={testSubmitted ? "تم تسليم الاختبار ✅" : "جاهز للبدء — 25 سؤالًا"}
-              tone={testSubmitted ? "emerald" : "teal"}
-            />
-          </div>
-          <p className="text-sm font-semibold text-[#24343b] leading-[1.85]">
-            <MixedBidi>
-              يتكوّن الاختبار النهائي الشامل من 25 سؤالًا موزعة على خمسة مستويات (5 × 5): اختيار الإجابة الصحيحة (①–⑤)، إكمال الجمل (⑥–⑩)، تصحيح الأخطاء (⑪–⑮)، فهم المعنى والسبب النحوي (⑯–⑳)، والقصة المتكاملة The Big School Project (㉑–㉕). انتقل إلى منطقة الاختبار المستقلة لأداء التقييم دون كشف الحلول قبل التسليم.
-            </MixedBidi>
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={onOpenTest}
-              className="rounded-xl bg-[#17354a] px-5 py-2.5 text-sm font-extrabold text-[#ffffff] hover:bg-[#245f62] cursor-pointer"
-            >
-              فتح منطقة الاختبار النهائي الشامل (25 سؤالًا)
-            </button>
-            {testSubmitted || teacherUnlocked ? (
-              <button
-                type="button"
-                onClick={onOpenSolutions}
-                className="rounded-xl border border-[#28533b] bg-[#edf5ee] px-5 py-2.5 text-sm font-extrabold text-[#28533b] cursor-pointer"
-              >
-                استعراض الحلول التفصيلية المفتوحة
-              </button>
-            ) : null}
-          </div>
-        </div>
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s26") {
-    const canViewSolutions = testSubmitted || teacherUnlocked;
-    return (
-      <SourceLedgerBlock40
-        section={section}
-        skipIndexes={section.units.map((_, idx) => idx).slice(2)}
-      >
-        <div className="rounded-2xl border border-[#d4b475] bg-[#fbf6eb] p-5 space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <h3 className="text-base sm:text-lg font-extrabold text-[#76531e]">
-              بوابة الحلول التفصيلية للاختبار النهائي (§26)
-            </h3>
-            <Chip40
-              label={canViewSolutions ? "الحلول مفتوحة الآن ✅" : "مقفلة حتى تسليم الاختبار 🔒"}
-              tone={canViewSolutions ? "emerald" : "amber"}
-            />
-          </div>
-          <p className="text-sm font-semibold text-[#24343b] leading-[1.85]">
-            <MixedBidi>
-              التزامًا بتوجيه المصدر («يفضّل عدم عرض هذا القسم للطالب إلا بعد انتهاء الاختبار»)، تُحفظ الحلول التفصيلية للأسئلة الـ25 داخل «منطقة الحلول» المستقلة و«منطقة المعلم»، ولا تُعرض هنا قبل تسليم الاختبار.
-            </MixedBidi>
-          </p>
-          <div className="flex flex-wrap gap-3">
-            {canViewSolutions ? (
-              <button
-                type="button"
-                onClick={onOpenSolutions}
-                className="rounded-xl bg-[#28533b] px-5 py-2.5 text-sm font-extrabold text-[#ffffff] cursor-pointer"
-              >
-                الانتقال إلى منطقة الحلول التفصيلية الكاملة
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={onOpenTest}
-                className="rounded-xl bg-[#17354a] px-5 py-2.5 text-sm font-extrabold text-[#ffffff] hover:bg-[#245f62] cursor-pointer"
-              >
-                اذهب إلى منطقة الاختبار لتسليمه وفتح الحلول
-              </button>
-            )}
-            <button
-              type="button"
-              onClick={onOpenTeacher}
-              className="rounded-xl border border-[#76531e] bg-[#fffdf8] px-4 py-2.5 text-xs sm:text-sm font-extrabold text-[#76531e] cursor-pointer"
-            >
-              دخول مساحة المعلم
-            </button>
-          </div>
-        </div>
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s27") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <WritingMission27Lab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s28") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <GoldenSummary28Lab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  if (id === "s29") {
-    return (
-      <SourceLedgerBlock40 section={section}>
-        <CurriculumRoadmap29Lab40 />
-      </SourceLedgerBlock40>
-    );
-  }
-
-  return <SourceLedgerBlock40 section={section} />;
+  const section = slide.source;
+  const chapter = CHAPTERS_40.find((item) => item.id === slide.section)!;
+  return <div className="tc-step" data-step-id={slide.id} data-source-section={slide.sourceId}>
+    <div className="tc-step-head"><div><span className="tc-kicker">{chapter.en} · STEP {slide.step} / {SLIDES_40.length}</span><h1><MixedBidi>{slide.title}</MixedBidi></h1><p>{slide.focus}</p></div><span className="tc-step-dot">{String(slide.step).padStart(2, "0")}</span></div>
+    <SourceLedgerBlock40 section={section} unitIndexes={slide.unitIndexes} includeTable={slide.includeTable}>
+      <DialogueTranslations40 slide={slide}/>
+      <ExtraActivity40 slide={slide} section={section}/>
+      {slide.sourceId === "s25" ? <div className="tc-actions"><button type="button" onClick={onOpenTest}>افتح الاختبار النهائي · 25 سؤالًا</button></div> : null}
+      {slide.sourceId === "s26" ? <div className="tc-actions"><button type="button" onClick={onOpenTeacher}>مساحة المعلم</button>{(testSubmitted || teacherUnlocked) && <button type="button" onClick={onOpenSolutions}>الحلول التفصيلية</button>}</div> : null}
+    </SourceLedgerBlock40>
+  </div>;
 }

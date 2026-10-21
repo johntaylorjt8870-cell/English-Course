@@ -373,7 +373,7 @@ export function FormulaOrderLab39() {
           })
         )}
       </div>
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div dir="ltr" className="mt-3 flex flex-wrap gap-2">
         {remaining.map((piece) => (
           <button
             key={piece.id}

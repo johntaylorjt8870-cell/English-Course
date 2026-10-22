@@ -12,7 +12,7 @@
     }
   ],
   "slides": 120,
-  "checks": 2204,
+  "checks": 2207,
   "failures": [],
   "errors": [],
   "externalNetworkErrors": [
@@ -224,6 +224,7 @@
   "inactiveContrastExemptions": 118,
   "textOverBackgroundImages": 282,
   "screenshots": [
+    "docs/lesson41-visual/1280-hub-card.png",
     "docs/lesson41-visual/1280-cover.png",
     "docs/lesson41-visual/1280-practice-before-attempt.png",
     "docs/lesson41-visual/1280-practice-revealed.png",

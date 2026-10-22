@@ -476,7 +476,7 @@ const CARDS: Card[] = [
     emoji: "⚙️",
     stats: "40 قسمًا · 120 شريحة قصيرة · BE / DO / HAVE · اختبار 25 سؤالًا",
     href: "#/lesson/41",
-    grad: "from-[#101c32] to-[#4338a5]",
+    grad: "from-sky-500 to-emerald-500",
   },
   {
     n: 42,

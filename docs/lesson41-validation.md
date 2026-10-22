@@ -17,7 +17,7 @@ All numbers below come from commands actually executed in this branch. Commands 
 | Production build | `npm run build` | **exit 0**, built in 9.6 s (only the repo-wide >500 kB chunk warning) |
 | Static / data audit | `node scripts/audit-lesson41.mjs` | **passed — 891 assertions**, 41 sections, 883 source units (0 uncovered), 120 slides, 66 practice items, 25 questions / 5 levels, authored answer sheet 25/25 |
 | DOM audit (React + JSDOM) | `node scripts/audit-lesson41-dom.mjs` | **passed — 4282 assertions**, all 120 slides navigated, practice gating, chain builder, test submit/reset, teacher gate, 10 BIDI cases |
-| Real Chromium audit | `node scripts/audit-lesson41-browser.mjs` | **passed — 2204 checks, 0 failures, 0 page errors** at 1280×800 and 1920×1080 (4600 contrast samples, colour resolver self-test 10/10) |
+| Real Chromium audit | `node scripts/audit-lesson41-browser.mjs` | **passed — 2207 checks, 0 failures, 0 page errors** at 1280×800 and 1920×1080 (4600 contrast samples, colour resolver self-test 10/10) |
 | English direction | `node scripts/check-english-direction.mjs` | **passed** (1701 assertions, 44 lessons) |
 | Final-test cross-lesson audit | `node scripts/audit-final-test.mjs` | **passed** (1253 checks) |
 | Source-reveal audit | `node scripts/audit-source-reveal.mjs` | **1 failure — pre-existing** (`src/lessons/lesson38/Steps38.tsx` uses `<details>`); reproduces on a pristine `origin/main` worktree |
@@ -42,7 +42,8 @@ All numbers below come from commands actually executed in this branch. Commands 
 3. Final test: level 1 shows 5 questions, no key text and no solution nodes in the DOM → answer all 25 across the 10 test pages → submit appears only on the last page → after submit the score renders and exactly 25 `data-solution-id` blocks mount.
 4. Teacher gate: wrong password shows `role="alert"`; `somer173` mounts the lazy guide with 66 practice-key blocks and all 25 detailed test solutions, each carrying the correct answer and the teaching explanation (25/25 with both sections, asserted in both the DOM and the Chromium run).
 5. Keyboard: ArrowLeft advances and ArrowRight returns (RTL reading direction), arrows are ignored while typing in a field, and the counter round-trips to the same slide.
-6. JSDOM additionally covers reset (answers cleared, results re-locked) and step navigation on all 120 slides.
+6. Hub card: the Lesson 41 card reuses Lesson 1's gradient family and badge treatment (asserted on the live DOM).
+7. JSDOM additionally covers reset (answers cleared, results re-locked) and step navigation on all 120 slides.
 
 ### Solution-leak evidence
 

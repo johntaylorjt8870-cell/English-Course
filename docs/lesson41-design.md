@@ -36,7 +36,11 @@ Lesson 41 keeps the platform's **original visual identity** (Lessons 1–3), not
 
 No decorative or dead buttons: every control above changes state, and each audit exercises them (see `lesson41-validation.md`).
 
+## Hub card
+
+`src/App.tsx` is a shared file, so Lesson 41 keeps its existing card entry and only corrects its values: `stats` now reports the real 120 slides, and `grad` was changed from a lesson-specific `from-[#101c32] to-[#4338a5]` (the navy/indigo identity of the old 38–40-style build) to **`from-sky-500 to-emerald-500` — the exact gradient of Lesson 1**. The audit asserts that the rendered gradient equals Lesson 1's on the live hub.
+
 ## Deliberate departures (accessibility only)
 
-- Meta labels use `slate-500` instead of `slate-400` and the cover engine tiles use `sky-700` / `orange-700` / `emerald-800` so that all text clears WCAG AA 4.5:1 (measured in Chromium, see `lesson41-visual-verification.md`). Palette and layout are unchanged otherwise.
+- Meta labels use `slate-500` instead of `slate-400`, and the cover engine tiles use `sky-700` / `orange-800` / `emerald-800` with full-opacity bold captions so that all text clears WCAG AA 4.5:1 (measured in Chromium with the corrected `oklch`-aware resolver: 5.86:1, 7.37:1, 7.61:1). Palette family and layout are unchanged otherwise.
 - Slides were split (120 total) instead of shrinking type: the tallest card is 1140 px at 1280×800.

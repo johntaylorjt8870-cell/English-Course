@@ -475,6 +475,44 @@ for (const item of colorSelfTest.results) ok(item.ok, `colour resolver: ${item.n
 ok(Math.abs(colorSelfTest.reference - 21) < 0.1, `colour resolver: white/black reference ratio is 21:1 (got ${colorSelfTest.reference})`);
 ok(Math.abs(colorSelfTest.midGrey - 4.48) < 0.05, `colour resolver: #fff on #777 is 4.48:1 (got ${colorSelfTest.midGrey})`);
 
+// Design-origin check on the hub: the Lesson 41 card must use the same gradient
+// family as Lesson 1 instead of a lesson-specific identity.
+await stage("hub card 1280x800", async () => {
+  // The sandbox Chromium is single-process, so each extra page gets its own browser.
+  const hubBrowser = await launchBrowser();
+  const page = await hubBrowser.newPage({ viewport: { width: 1280, height: 800 }, reducedMotion: "reduce" });
+  await page.addInitScript(() => localStorage.setItem("englishwithsomer-site-unlocked", "unlocked"));
+  await page.goto(base.split("#")[0], { waitUntil: "domcontentloaded" });
+  await page.addStyleTag({ content: "*,*::before,*::after{animation:none!important;transition:none!important}" });
+  const cardText = page.locator("a", { hasText: "Master Auxiliary Verbs" }).first();
+  await cardText.waitFor({ timeout: 20000 });
+  const gradients = await page.evaluate(() => {
+    const cards = [...document.querySelectorAll("a")];
+    const badgeOf = (card) => card.querySelector(".h-12.w-12");
+    const find = (num) => cards.find((card) => (badgeOf(card)?.textContent || "").trim() === String(num));
+    const read = (card) => {
+      if (!card) return "";
+      const bar = card.querySelector(".h-2");
+      return bar ? getComputedStyle(bar).backgroundImage : "";
+    };
+    const one = find(1);
+    const fortyOne = find(41);
+    return {
+      lesson1: read(one),
+      lesson41: read(fortyOne),
+      found: Boolean(fortyOne),
+      badgeMatches: Boolean(one && fortyOne) && badgeOf(one).className === badgeOf(fortyOne).className,
+    };
+  });
+  ok(gradients.found, "Lesson 41 hub card exists");
+  ok(gradients.lesson41 === gradients.lesson1, `Lesson 41 hub card reuses the Lesson 1 gradient family (${gradients.lesson41.slice(0, 52)})`);
+  ok(gradients.badgeMatches, "Lesson 41 number badge uses the same gradient treatment as Lesson 1");
+  await cardText.scrollIntoViewIfNeeded();
+  await shot(page, "1280-hub-card");
+  await page.close();
+  await hubBrowser.close();
+});
+
 await shot(desktop, "1280-cover");
 await stage("walk 1280x800", () => walk(desktop, 1280, 800));
 

@@ -10,7 +10,7 @@ Raw data: `docs/lesson41-visual/verification.json`.
 |---|---|
 | Viewports | 1280×800, 1920×1080 |
 | Slides walked | 120 at each viewport |
-| Checks | 2204 |
+| Checks | 2207 |
 | Failures | 0 |
 | Page errors | 0 |
 | Contrast samples (text nodes measured) | 4600 |
@@ -30,7 +30,8 @@ Raw data: `docs/lesson41-visual/verification.json`.
 - step pill covers no button/input/textarea/select at maximum scroll;
 - all ARIA references resolve;
 - every visible text node passes WCAG AA (4.5:1; 3:1 for large text) — see **Contrast method** below;
-- card height recorded for every slide.
+- card height recorded for every slide;
+- hub card check: the Lesson 41 card gradient is byte-identical to Lesson 1's (`from-sky-500 to-emerald-500`) and its number badge uses the same classes.
 
 ## Contrast method (fixed in this revision)
 
@@ -65,6 +66,7 @@ The floating step pill and the site lock are now checked twice — at the top **
 | `1280-solutions.png` | Result slide with score and the 25 lazy solutions after submission |
 | `1280-teacher-guide.png` | Guided teacher area with the 66 practice keys |
 | `1920-reading.png` | Reading challenge passage at 1920×1080 |
+| `1280-hub-card.png` | The hub card for Lesson 41, side by side with 42–44: it now uses the same gradient family as Lesson 1 (was the lesson-specific navy→indigo) |
 | `reference-lesson1.png`, `reference-lesson2.png`, `reference-lesson3.png` | The platform's original early lessons captured at 1280×800 with the same harness, for the side-by-side design check (white `rounded-[2rem]` card, slate-900 number badge, Changa heading, coloured tile row, right rail, floating pill + site lock) |
 
 ## Animation note

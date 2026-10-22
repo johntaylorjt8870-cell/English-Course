@@ -12,7 +12,7 @@
     }
   ],
   "slides": 120,
-  "checks": 1701,
+  "checks": 2204,
   "failures": [],
   "errors": [],
   "externalNetworkErrors": [
@@ -29,11 +29,200 @@
     "viewport": "1280x800",
     "slide": 113,
     "card": 1188,
-    "scroll": 691
+    "scroll": 691,
+    "inactiveFaded": []
   },
-  "cardsOver1200": [],
   "reservedBottomSpacePx": 128,
   "cardsTallerThanViewport": 170,
+  "colorSelfTest": {
+    "results": [
+      {
+        "name": "oklch slate-500 (Tailwind v4)",
+        "color": "oklch(0.554 0.046 257.417)",
+        "got": [
+          98,
+          116,
+          142,
+          1
+        ],
+        "expected": [
+          98,
+          116,
+          142,
+          1
+        ],
+        "ok": true
+      },
+      {
+        "name": "oklch slate-400",
+        "color": "oklch(0.704 0.04 256.788)",
+        "got": [
+          144,
+          161,
+          185,
+          1
+        ],
+        "expected": [
+          144,
+          161,
+          185,
+          1
+        ],
+        "ok": true
+      },
+      {
+        "name": "oklab",
+        "color": "oklab(0.7 0.05 -0.03)",
+        "got": [
+          179,
+          146,
+          176,
+          1
+        ],
+        "expected": "alpha 1 (channels unchecked)",
+        "ok": true
+      },
+      {
+        "name": "hex",
+        "color": "#aabbcc",
+        "got": [
+          170,
+          187,
+          204,
+          1
+        ],
+        "expected": [
+          170,
+          187,
+          204,
+          1
+        ],
+        "ok": true
+      },
+      {
+        "name": "hsl",
+        "color": "hsl(200 50% 40%)",
+        "got": [
+          51,
+          119,
+          153,
+          1
+        ],
+        "expected": [
+          51,
+          119,
+          153,
+          1
+        ],
+        "ok": true
+      },
+      {
+        "name": "rgb",
+        "color": "rgb(255, 255, 255)",
+        "got": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "expected": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "ok": true
+      },
+      {
+        "name": "rgb space-slash alpha",
+        "color": "rgb(0 0 0 / 25%)",
+        "got": [
+          0,
+          0,
+          0,
+          0.251
+        ],
+        "expected": [
+          0,
+          0,
+          0,
+          0.25
+        ],
+        "ok": true
+      },
+      {
+        "name": "rgba numeric alpha",
+        "color": "rgba(255, 255, 255, 0.5)",
+        "got": [
+          255,
+          255,
+          255,
+          0.502
+        ],
+        "expected": [
+          255,
+          255,
+          255,
+          0.5
+        ],
+        "ok": true
+      },
+      {
+        "name": "color(srgb)",
+        "color": "color(srgb 0.2 0.4 0.6)",
+        "got": [
+          51,
+          102,
+          153,
+          1
+        ],
+        "expected": [
+          51,
+          102,
+          153,
+          1
+        ],
+        "ok": true
+      },
+      {
+        "name": "transparent keyword",
+        "color": "transparent",
+        "got": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "expected": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "ok": true
+      }
+    ],
+    "reference": 21,
+    "midGrey": 4.48
+  },
+  "contrastMethod": "canvas black/white alpha solve → sRGB, composited over the full ancestor backdrop (oklch, oklab, lab, lch, rgb, rgba, hsl, hsla, hex, color(), named, transparent)",
+  "colorFormatsSeen": {
+    "oklch": 5284,
+    "oklab": 624,
+    "lab": 0,
+    "lch": 0,
+    "rgb": 600,
+    "rgba": 360,
+    "hsl": 120,
+    "hsla": 0,
+    "hex": 120,
+    "colorFn": 120,
+    "named": 0,
+    "other": 0
+  },
+  "contrastSamples": 4600,
+  "inactiveContrastExemptions": 118,
+  "textOverBackgroundImages": 282,
   "screenshots": [
     "docs/lesson41-visual/1280-cover.png",
     "docs/lesson41-visual/1280-practice-before-attempt.png",

@@ -16,8 +16,8 @@ All numbers below come from commands actually executed in this branch. Commands 
 | TypeScript (strict) | `npx tsc --noEmit --jsx react-jsx --module esnext --target es2022 --moduleResolution bundler --strict --skipLibCheck src/lessons/lesson41/Lesson41.tsx` | **0 errors** |
 | Production build | `npm run build` | **exit 0**, built in 9.6 s (only the repo-wide >500 kB chunk warning) |
 | Static / data audit | `node scripts/audit-lesson41.mjs` | **passed — 891 assertions**, 41 sections, 883 source units (0 uncovered), 120 slides, 66 practice items, 25 questions / 5 levels, authored answer sheet 25/25 |
-| DOM audit (React + JSDOM) | `node scripts/audit-lesson41-dom.mjs` | **passed — 4231 assertions**, all 120 slides navigated, practice gating, chain builder, test submit/reset, teacher gate, 10 BIDI cases |
-| Real Chromium audit | `node scripts/audit-lesson41-browser.mjs` | **passed — 1701 checks, 0 failures, 0 page errors** at 1280×800 and 1920×1080 |
+| DOM audit (React + JSDOM) | `node scripts/audit-lesson41-dom.mjs` | **passed — 4282 assertions**, all 120 slides navigated, practice gating, chain builder, test submit/reset, teacher gate, 10 BIDI cases |
+| Real Chromium audit | `node scripts/audit-lesson41-browser.mjs` | **passed — 2204 checks, 0 failures, 0 page errors** at 1280×800 and 1920×1080 (4600 contrast samples, colour resolver self-test 10/10) |
 | English direction | `node scripts/check-english-direction.mjs` | **passed** (1701 assertions, 44 lessons) |
 | Final-test cross-lesson audit | `node scripts/audit-final-test.mjs` | **passed** (1253 checks) |
 | Source-reveal audit | `node scripts/audit-source-reveal.mjs` | **1 failure — pre-existing** (`src/lessons/lesson38/Steps38.tsx` uses `<details>`); reproduces on a pristine `origin/main` worktree |
@@ -31,7 +31,8 @@ All numbers below come from commands actually executed in this branch. Commands 
 - the floating step pill never overlaps the site-lock button;
 - the pill covers **no** interactive control at maximum scroll (128 px reserved under it);
 - every `aria-controls` / `aria-labelledby` / `aria-describedby` target exists;
-- every visible text node clears WCAG AA (4.5:1, or 3:1 for large text) — measured by resolving Tailwind v4 `oklch()` colours through a canvas back to sRGB;
+- every visible text node clears WCAG AA (4.5:1, or 3:1 for large text); every colour (`oklch`/`oklab`/`rgb`/`rgba`/`hsl`/hex/`color(srgb …)`/`transparent`) is resolved by painting it over black and over white in Chromium and solving alpha + sRGB, then composited over the full ancestor backdrop. The resolver is self-tested (10 syntaxes, 21:1 and 4.48:1 reference ratios) before any slide is measured;
+- the step pill is checked against the site lock at top **and** maximum scroll, and against every control by bounding box **and** `elementFromPoint()` hit test;
 - layout metrics: tallest card **1188 px**, no card over the 1200 px target, at either viewport.
 
 ### Interaction smoke test (real Chromium, desktop 1280×800)
@@ -39,8 +40,9 @@ All numbers below come from commands actually executed in this branch. Commands 
 1. Practice §30 item 1: «قارن إجابتي بالحل» disabled → type `is` + `reading` → enabled → key `is → reading` and the reason appear.
 2. Chain lab: «كوّن سؤالًا» disabled → choose `She studies.` → pick `لا يوجد` → builder unlocks → renders `Does she study?`.
 3. Final test: level 1 shows 5 questions, no key text and no solution nodes in the DOM → answer all 25 across the 10 test pages → submit appears only on the last page → after submit the score renders and exactly 25 `data-solution-id` blocks mount.
-4. Teacher gate: wrong password shows `role="alert"`; `somer173` mounts the lazy guide with 66 practice-key blocks.
-5. JSDOM additionally covers reset (answers cleared, results re-locked) and keyboard/step navigation on all 120 slides.
+4. Teacher gate: wrong password shows `role="alert"`; `somer173` mounts the lazy guide with 66 practice-key blocks and all 25 detailed test solutions, each carrying the correct answer and the teaching explanation (25/25 with both sections, asserted in both the DOM and the Chromium run).
+5. Keyboard: ArrowLeft advances and ArrowRight returns (RTL reading direction), arrows are ignored while typing in a field, and the counter round-trips to the same slide.
+6. JSDOM additionally covers reset (answers cleared, results re-locked) and step navigation on all 120 slides.
 
 ### Solution-leak evidence
 

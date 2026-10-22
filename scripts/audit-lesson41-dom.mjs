@@ -207,6 +207,11 @@ await act(async () => {
 });
 ok(document.querySelector("[data-teacher-guide]"), "teacher guide mounts after the correct password");
 ok(document.querySelectorAll("[data-teacher-answer]").length === 66, "teacher guide lists all 66 practice keys");
+ok(document.querySelectorAll("[data-solution-id]").length === 25, "teacher area renders all 25 detailed test solutions");
+for (const solution of document.querySelectorAll("[data-solution-id]")) {
+  ok(solution.textContent.includes("الإجابة الصحيحة"), `teacher solution ${solution.getAttribute("data-solution-id")} states the correct answer`);
+  ok(solution.textContent.includes("التفسير التعليمي"), `teacher solution ${solution.getAttribute("data-solution-id")} includes the teaching explanation`);
+}
 ok(document.body.textContent.includes("مفاتيح التدريبات"), "practice key section is real content, not a placeholder");
 
 await act(async () => root.unmount());

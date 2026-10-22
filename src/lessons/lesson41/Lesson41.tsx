@@ -49,12 +49,12 @@ function Cover41({ slide }: { slide: Slide41 }) {
         <div className="pop pop-4 mt-7 flex flex-wrap items-center justify-center gap-3" dir="ltr">
           {[
             { name: "BE", ar: "البناء والربط", tone: "bg-sky-700" },
-            { name: "DO", ar: "السؤال والنفي", tone: "bg-orange-700" },
+            { name: "DO", ar: "السؤال والنفي", tone: "bg-orange-800" },
             { name: "HAVE", ar: "الأزمنة التامة", tone: "bg-emerald-800" },
           ].map((engine) => (
             <div key={engine.name} className={`rounded-2xl ${engine.tone} px-6 py-3 text-white shadow-md`}>
               <div className="font-en text-2xl font-extrabold md:text-3xl">{engine.name}</div>
-              <div dir="rtl" className="text-sm font-semibold opacity-90">
+              <div dir="rtl" className="text-sm font-bold">
                 {engine.ar}
               </div>
             </div>

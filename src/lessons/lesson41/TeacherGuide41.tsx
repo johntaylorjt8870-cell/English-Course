@@ -1,24 +1,112 @@
-import { Panel41, Lines41, Text41 } from './kit41';
-import { section41, STATIONS_41 } from './ledger41';
-import { PRACTICE_41 } from './practiceData41';
-import { practiceReason41 } from './practiceNotes41';
-import { COVERAGE_41 } from './coverage41';
-import SolutionsArea41 from './SolutionsArea41';
+import { Text41, Panel41 } from "./design";
+import { PRACTICE_41 } from "./practice41";
+import { SLIDES_41, STATIONS_41 } from "./slides41";
+import { SOURCE_SECTIONS_41, SOURCE_UNIT_COUNT_41 } from "./ledger41";
+import SolutionsArea41 from "./SolutionsArea41";
+
+const ROUTE = [
+  { time: "10 دقائق", title: "الانطلاق", body: "اعرض الجمل الخمس واطلب من الطلاب تحديد النشاط الثابت (study) وما تغيّر في كل جملة. لا تعطِ المصطلحات بعد." },
+  { time: "25 دقيقة", title: "Main vs Auxiliary", body: "استخدم الأقسام من 2 إلى 4 والمختبر 1. اطلب من كل طالب جملة من عنده وحدد الوظيفة، ثم انتقل إلى تمييز DO/HAVE الرئيسية." },
+  { time: "30 دقيقة", title: "محرك BE", body: "الأقسام من 5 إلى 10: اربط الحالة (She is happy) بالاستمرار (She is studying) بالمبني للمجهول (The bridge was built). ركّز على منع does مع BE." },
+  { time: "35 دقيقة", title: "محرك DO", body: "الأقسام من 11 إلى 17: انقل علامة الزمن إلى does/did وأعد الفعل إلى V1. ميّز بين Do you do…? والتأكيد I do understand." },
+  { time: "30 دقيقة", title: "محرك HAVE", body: "الأقسام من 18 إلى 23: قارن Has she finished? بـ Does she have a bicycle? ثم ابنِ التام المستمر HAVE + BEEN + V-ing." },
+  { time: "30 دقيقة", title: "السلسلة والخوارزمية", body: "الأقسام من 24 إلى 29: درّب على تحديد المساعد الأول في will have been studying، ثم طبّق الخوارزمية على أسئلة جديدة، ثم حلّل الأخطاء العشرة." },
+  { time: "40 دقيقة", title: "التطبيق والقراءة", body: "الأقسام من 30 إلى 35: نفّذ التدريبات الخمسة والقراءة. اطلب إثباتًا نصيًا لكل إجابة قراءة." },
+  { time: "35 دقيقة", title: "الاختبار والكتابة", body: "الأقسام من 36 إلى 40: الاختبار 25 سؤالًا دون كشف الحلول، ثم مهمة الكتابة من 12 إلى 15 جملة، ثم الملخص وخريطة التقدم." },
+];
+
+const MISCONCEPTIONS = [
+  "«كل فعل رئيسي يحتاج do» — BE الرابط استثناء واضح: Is she happy? وليس Does she is happy?.",
+  "«did + V2» — did تحمل الماضي، فيبقى الفعل الرئيسي V1: Did he go?.",
+  "«has = مساعد دائمًا» — has قبل اسم قد تكون رئيسيًا (has a car / has lunch)، وقبل V3 مساعدة.",
+  "«being بعد have» — الصيغة will have been working، وbeen هي V3 من BE.",
+  "«نحرّك كل السلسلة» — نحرّك المساعد الأول فقط، أو نضع not بعده.",
+  "«Have you got a car? خطأ» — تركيب شائع في الإنجليزية البريطانية، والمصدر يذكره كملاحظة لغوية.",
+];
+
 export default function TeacherGuide41() {
- return <div data-teacher-guide="41"><Panel41 kicker="DELIVERY GUIDE / PLATFORM-AUTHORED" title="دليل التدريس — من ملاحظة الشكل إلى فهم الوظيفة"><p>هذا الدليل والشروح التفصيلية إضافات المنصة. نصوص الأسئلة والمفاتيح الموسومة «حل المصدر» من المادة الموردة. استخدم جلسات متعددة عند الحاجة؛ لا تختزل التدريبات إلى عينة.</p><h3>الأهداف الأصلية</h3><Lines41 lines={section41(1).lines}/><h3>تسلسل مقترح وفحوص فهم</h3><ol className="teacherList41"><li>الانطلاق (10 دقائق): اعرض الجمل الخمس؛ اطلب تحديد النشاط الثابت وما يتغير في التركيب.</li><li>محطة BE (20 دقيقة): فرّق بين happy وstudying؛ ابنِ المستمر مع V-ing والمبني للمجهول مع V3. تحقق: لماذا لا نضيف does إلى Is she happy?</li><li>محطة DO (20 دقيقة): انقل علامة الزمن إلى does/did ثم أعد الرئيسي إلى V1. تحقق من double-DO ومن الفرق بين التأكيد والسؤال.</li><li>محطة HAVE (20 دقيقة): قارن possession وperfect. اطلب شرح الفرق بين Does she have? وHas she finished? ثم ابنِ التام المستمر.</li><li>محطة السلاسل (20 دقيقة): اطلب تحديد will فقط في will have been studying؛ حرّك الأول ولا تغيّر ترتيب البقية. حل الأخطاء العشرة مع تبرير.</li><li>محطة التطبيق (30–45 دقيقة): أكمل §§30–35 بجميع البنود؛ ناقش شاهدًا نصيًا لكل جواب قراءة. اعمل فرديًا ثم قارن.</li><li>اختبار مستقل (25–35 دقيقة): 25 سؤالًا، دون كشف مفاتيح قبل التسليم. التفسيرات تصحح بالمعنى لا بالتطابق الحرفي.</li><li>كتابة وتأمل: اكتب 12–15 جملة؛ راجع المعايير العشرة، ثم الملخص وخريطة المنهج.</li></ol></Panel41>
- <Panel41 title="التصورات الخاطئة وخطة التصحيح"><Lines41 lines={[
- 'BE الرئيسي الرابط يمكنه السؤال والنفي مباشرة. خوارزمية §27 تُقرأ مع استثناء BE الواضح في §9، لا مع افتراض أن كل فعل رئيسي يأخذ DO.',
- 'بعد does أو did، حتى في التأكيد، نستخدم V1: He did finish، وليس He did finished.',
- 'HAVE قبل اسم قد يكون رئيسيًا، وقبل V3 يبني التام؛ لا تعتمد على الكلمة وحدها.',
- 'Future Perfect Continuous: will + have + been + V-ing. been هو V3 من BE؛ being لا يحل محله بعد have.',
- 'He hasn\'t a car صيغة ممكنة في بعض الأنواع، خاصة البريطانية؛ المصدر يفضّل تعليميًا He doesn\'t have a car. Have you got a car? بديل شائع، لا خطأ.',
- 'BE + V3 هو نمط المبني للمجهول المقدم هنا، لا ادعاء أنه كل أنواع المبني للمجهول. closed قد يكون صفة في سياقات أخرى؛ every evening يدعم قراءة الحدث في مثال المصدر.',
- 'لا تقلب كل السلسلة ولا تضف DO إلى مساعد قائم. في She studies نحتاج does؛ في She has been studying نستخدم has.',
- ]}/></Panel41>
- <Panel41 title="سلم تقييم Writing Mission — إضافة المنصة"><p>المجموع المقترح 20: عشر نقاط، نقطة لكل معيار مصدر مستوفى فعلًا؛ أربع نقاط لدقة الصيغ والتطابق؛ ثلاث نقاط للترابط والمفردات؛ ثلاث نقاط للأصالة ووضوح المعنى وهدف 12–15 جملة. لا تُمنح نقطة لمجرد وجود كلمة مستهدفة.</p><Lines41 lines={section41(38).lines.slice(0,section41(38).lines.indexOf('نموذج إرشادي'))}/><p className="feedback41">نموذج المصدر ثماني جمل؛ لا يحقق شرط الطول أو DID للتأكيد أو السؤالين. احتفظ به كإلهام جزئي، ولا تقدمه بوصفه إجابة كاملة. عدّاد الطالب تقريبي؛ راجع حدود الجمل والقواعد يدويًا.</p><h3>نموذج المصدر المحفوظ</h3><Lines41 lines={section41(38).lines.slice(section41(38).lines.indexOf('نموذج إرشادي')+1)}/></Panel41>
- <Panel41 title="مفاتيح كل التدريبات — المصدر ثم شرح المنصة">{PRACTICE_41.map(item=><article className="exercise41" key={item.id} data-teacher-answer={item.id}><h4>§{item.section} · {item.number}</h4><b>الأصل</b><Lines41 lines={[item.prompt,...item.options]}/><b>حل المصدر</b><Lines41 lines={[item.sourceAnswer]}/><b>السبب والخطوات — شرح المنصة</b><Lines41 lines={[practiceReason41(item.section,item.number)]}/></article>)}</Panel41>
- <SolutionsArea41 teacher/>
- <Panel41 title="المحطات ومصفوفة التغطية"><div className="actions41">{STATIONS_41.map(station=><span className="label41" key={station.start}><Text41 text={`${station.name}: §§${station.start}–${station.end}`}/></span>)}</div><p>41 مدخلًا: الغلاف والأقسام 1–40. كل سطر محفوظ كوحدة مصدر؛ بنود الممارسة مرتبطة بمعرّف مستقل، بما فيها الأجزاء المتعددة.</p>{COVERAGE_41.map(row=><details key={row.id}><summary><Text41 text={`${row.id} — ${row.title} · ${row.units.length} وحدات`}/></summary><p><Text41 text={`${row.destination} → ${row.answerLocation}`}/></p><Lines41 lines={row.items.map(item=>`${item.id}: ${item.parts.join(' / ')}`)}/><Lines41 lines={row.units.map(unit=>unit.text)}/></details>)}</Panel41>
- <Panel41 title="حدود المصدر والوصول"><p>§37 يحتوي عنوانًا وزر عرض فقط، لا مفتاحًا فعليًا. المفاتيح 1–20 أُعدت للمنصة؛ مفاتيح 21–25 من متطلبات المهمة. لا توجد خدمة خادم: كلمة المرور بوابة تربوية وفق آلية المنصة القائمة، وليست حماية من فحص ملفات JavaScript العامة. لا تُحمّل واجهة الحلول أو دليل المعلم أثناء المسار العادي قبل استحقاق الوصول.</p><p>اسم تحدي القراءة A Busy School Week وعنوان النص A Week of Learning محفوظان كما وردا. أزيلت فواصل الزينة وأعلام الإيموجي، وطُبّعت الجداول وأسطرها وكيانات &amp; فقط. الدرس 42 خريطة نصية، لا مسار جديد.</p></Panel41>
- </div>;
+  const practice = PRACTICE_41;
+  return (
+    <div className="mx-auto max-w-5xl space-y-4" data-teacher-guide="41">
+      <Panel41 title="دليل التدريس — من الشكل إلى الوظيفة" kicker="DELIVERY GUIDE">
+        <p className="text-base leading-8 text-slate-700">
+          <Text41 text="الدرس يعيد بناء أربعين قسمًا في شرائح قصيرة. استخدم المحطات كوحدات جلسة، ولا تختزل التدريبات في عينة. الشروح في هذا الدليل إضافات المنصة، أما نصوص الأسئلة والأمثلة فمن المصدر." />
+        </p>
+        <div className="mt-3 grid gap-2 md:grid-cols-2">
+          {ROUTE.map((step) => (
+            <div key={step.title} className="rounded-2xl border border-slate-200 bg-white p-3">
+              <p className="text-xs font-extrabold text-violet-700">{step.time}</p>
+              <p className="font-head text-base font-bold text-slate-900">{step.title}</p>
+              <p className="mt-1 text-sm leading-7 text-slate-600">
+                <Text41 text={step.body} />
+              </p>
+            </div>
+          ))}
+        </div>
+      </Panel41>
+
+      <Panel41 title="أهداف الدرس الأصلية" kicker="§1">
+        <ul className="grid gap-1.5 md:grid-cols-2">
+          {SOURCE_SECTIONS_41.find((s) => s.num === 1)!.lines.slice(1).map((line) => (
+            <li key={line} className="text-base font-semibold text-slate-700">
+              <Text41 text={line.replace(/^[①-⑩]/, "")} />
+            </li>
+          ))}
+        </ul>
+      </Panel41>
+
+      <Panel41 title="أخطاء شائعة وخطة تصحيح" kicker="MISCONCEPTIONS">
+        <ul className="space-y-2">
+          {MISCONCEPTIONS.map((item) => (
+            <li key={item} className="rounded-xl border border-slate-200 bg-white p-2.5 text-sm font-semibold leading-7 text-slate-700">
+              <Text41 text={item} />
+            </li>
+          ))}
+        </ul>
+      </Panel41>
+
+      <Panel41 title="مفاتيح التدريبات الـ66" kicker="PRACTICE KEYS">
+        <div className="space-y-2">
+          {practice.map((item) => (
+            <details key={item.id} className="rounded-xl border border-slate-200 bg-white p-3" data-teacher-answer={item.id}>
+              <summary className="cursor-pointer text-sm font-bold text-slate-700">
+                §{item.section} · {item.number} — <span dir="ltr" className="font-en">{item.prompt}</span>
+              </summary>
+              {item.options && (
+                <p dir="ltr" className="font-en mt-2 text-sm font-semibold text-slate-600">
+                  {item.options.map((option, i) => `${String.fromCharCode(65 + i)}. ${option}`).join("   ")}
+                </p>
+              )}
+              <p className="mt-2 text-sm font-bold text-emerald-800">
+                <Text41 text="الإجابة:" /> <span dir="auto" className="font-en">{item.answer}</span>
+              </p>
+              <p className="mt-1 text-sm leading-7 text-slate-600">
+                <Text41 text={item.reason} />
+              </p>
+            </details>
+          ))}
+        </div>
+      </Panel41>
+
+      <Panel41 title="سلم تقييم Writing Mission" kicker="RUBRIC">
+        <p className="text-sm leading-7 text-slate-700">
+          <Text41 text="المجموع 20: عشر نقاط لعشرة معايير مصدرية (نقطة لكل معيار مستوفى فعليًا)، أربع نقاط لدقة الصيغ والتطابق، ثلاث للترابط والمفردات، ثلاث للأصالة والالتزام بكتابة من 12 إلى 15 جملة. لا تُمنح نقطة لمجرد ظهور كلمة مستهدفة. عدد الجمل في الواجهة تقريبي ويحتاج مراجعة بشرية." />
+        </p>
+        <p className="mt-2 text-sm leading-7 text-slate-600">
+          <Text41 text="النموذج الإرشادي في §38 مؤلف من ثماني جمل، ولا يستوفي شرط الطول ولا DID للتأكيد ولا السؤالين. استخدمه كإلهام جزئي فقط." />
+        </p>
+      </Panel41>
+
+      <Panel41 title="التغطية" kicker="COVERAGE">
+        <p className="text-sm font-semibold text-slate-600">
+          <Text41 text={`${SOURCE_SECTIONS_41.length} مدخلًا (الغلاف + 40 قسمًا) · ${SOURCE_UNIT_COUNT_41} وحدة مصدر · ${SLIDES_41.length} شريحة · ${STATIONS_41.length} محطات.`} />
+        </p>
+        <p className="mt-1 text-xs text-slate-500">
+          <Text41 text="تفاصيل كل قسم وشريحة في docs/lesson41-coverage.md" />
+        </p>
+      </Panel41>
+
+      <SolutionsArea41 teacher />
+    </div>
+  );
 }

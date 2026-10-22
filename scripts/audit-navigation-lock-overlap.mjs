@@ -294,7 +294,6 @@ const TAB_TRANSITION_SCENARIOS = [
   { lesson: 38, tabs: ["منطقة الاختبار", "منطقة المعلم", "منطقة الطالب"] },
   { lesson: 39, tabs: ["منطقة الاختبار", "منطقة المعلم", "منطقة الطالب"] },
   { lesson: 40, tabs: ["منطقة الاختبار", "مساحة المعلم", "منطقة الطالب"] },
-  { lesson: 41, tabs: ["الاختبار", "المعلم", "التعلّم"] },
   { lesson: 44, tabs: ["الاختبار", "المعلم", "التعلّم"] },
 ];
 
@@ -319,6 +318,25 @@ for (const scenario of TAB_TRANSITION_SCENARIOS) {
     });
   }
 }
+
+// Lesson 41 is a single ordered step flow (original Lessons 1–9 shell): it has no
+// area tabs, so its Lock-button behaviour is verified through step transitions.
+await navigateTo("#/lesson/41");
+check('Lesson 41: step flow keeps exactly one visible "قفل الموقع" button next to "التالي ←"', () => {
+  const navHost = document.querySelector("[data-site-lock-host]");
+  assert.ok(navHost, "Lesson 41: expected a normal-flow lock host");
+  assert.equal([...document.querySelectorAll("[data-site-lock-button='true']")].filter(isNodeVisible).length, 1, "Lesson 41: expected one visible lock button");
+  assert.ok((navHost.textContent || "").includes("التالي"), "Lesson 41: lock host must share the step navigation bar");
+});
+check('Lesson 41: advancing a step re-docks the lock button without overlap', () => {
+  const before = document.querySelector(".pointer-events-auto button:last-child");
+  assert.ok(before, "Lesson 41: expected a Next button");
+  M.flushSync(() => before.click());
+  const navHost = document.querySelector("[data-site-lock-host]");
+  assert.ok(navHost, "Lesson 41: lock host survives the step change");
+  assert.equal([...document.querySelectorAll("[data-site-lock-button='true']")].filter(isNodeVisible).length, 1, "Lesson 41: still exactly one visible lock button");
+  assert.equal([...document.querySelectorAll("[data-site-lock-host]")].filter((h) => !isNodeVisible(h)).length, 0, "Lesson 41: no hidden lock hosts");
+});
 
 // Check Next-step progression and Lock-site behavior on Lesson 33
 await navigateTo("#/lesson/33");

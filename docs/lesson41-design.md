@@ -1,73 +1,46 @@
-# Lesson 41 — Sentence Engine Studio
+# Lesson 41 — design origin and component reuse
 
-## New generation, scoped to one lesson
+## Decision
 
-Lesson 40's cream/teal/ochre editorial treatment is unchanged. Lesson 41 uses a midnight structural masthead, a dark sentence-blueprint cover, an indigo interaction vocabulary, cyan first-auxiliary accents and neutral reading surfaces. There are no decorative gradients, glows, background images or animation dependencies in the lesson. The home card uses the existing hub gradient extension point only.
+Lesson 41 keeps the platform's **original visual identity** (Lessons 1–3), not the per-lesson identity used by the 38–40 rebuild. No new tokens, no lesson-scoped stylesheet, no custom CSS file: the lesson is assembled from the same Tailwind classes and shared components the first lessons already use. Lessons 38–40 were consulted for **code architecture only** (separate modules, lazy assessment split, gated teacher area, audit chain).
 
-All new CSS selectors are scoped beneath `.lesson41`. Shared components, global typography, other lessons and site access remain untouched. `Signature` is reused above the lesson; the site's pre-existing shared signature and lock button are outside the lesson contrast scope.
+## References inspected before writing code
 
-## Tokens
-
-| Token | Value | Purpose / paired surface |
+| Reference | What was reused | Evidence in this build |
 |---|---|---|
-| ink | `#17243b` | Primary text on white / paper |
-| muted | `#4d5c72` | Secondary labels; readable disabled text |
-| navy | `#101c32` | Structural masthead and cover; white text |
-| paper | `#f4f6fa` | Canvas and English example surfaces |
-| white | `#ffffff` | Explanation and activity panels |
-| line | `#ccd4e1` | Non-semantic separators; not a text color |
-| indigo | `#4338a5` | Selected engine, primary actions, visible focus |
-| indigo-soft | `#eeecff` | Selected / auxiliary surface |
-| teal | `#086373` | Eyebrows, progress, first auxiliary label |
-| cyan | `#77e9ec` | Cover accent on navy, not text on white |
-| cyan-soft | `#e8f9fa` | First auxiliary surface |
-| amber | `#825000` | Main verb / reference text |
-| amber-soft | `#fff3d9` | Main verb and reference surface |
-| green / green-soft | `#176343` / `#eaf6ef` | Correct construction or post-attempt comparison |
-| red / red-soft | `#a02639` / `#fff0f2` | Error feedback, with explanatory text |
-| disabled | `#e4e8ef` | Locked/disabled background; muted text |
+| `src/lessons/lesson1/Lesson1.tsx` (1147 lines) | Application shell: `style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#f4f6fb] text-slate-800` (L1069), right rail `hidden w-72 … border-l border-slate-200 bg-white/80 backdrop-blur` (L1077), floating step pill `rounded-full border border-slate-200 bg-white/95 p-1.5 shadow-xl backdrop-blur` (L1115) | `Lesson41.tsx` uses the same shell string, the same `w-72` rail markup and the same floating pill (class list is byte-identical) |
+| `src/lessons/lesson1/Lesson1.tsx` (L100, L377, L382, L386, L413) | Slide card `relative rounded-[2rem] border border-slate-200 bg-white p-6 … md:p-10`, drifting mascot `absolute left-6 top-5 text-5xl anim-drift md:text-6xl`, `font-head` step badge on `bg-slate-900`, `font-head` title, cover mascot `text-7xl anim-drift` | `design.tsx` → `Frame41`, `Num41`, `Cover41` reproduce these primitives |
+| `src/lessons/lesson2/Lesson2.tsx`, `src/lessons/lesson3/Lesson3.tsx` | Same card/pill/tone vocabulary across the early lessons (Lesson 3 uses the identical shell with `bg-[#f7f8fc]`), `pop` entrance animations, slate/white surfaces, violet accent for interactive state | Same palette and `pop pop-1…5` staging in Lesson 41 |
+| `src/index.css` | `--ink`/`--paper` tokens, `.font-head` (Changa) `.font-en` (Fredoka) `.font-body` (Tajawal), `.pop`/`.tada` animations, `.site-lock-btn` | Imported unchanged; no additions for Lesson 41 |
+| `src/shared/LessonStepNav.tsx`, `SitePasswordGate.tsx`, `Signature.tsx`, `bidi.tsx` | Site lock button contract (`data-site-lock-button`), attribution signature, `LatinRuns` bidi isolation | Reused as-is; gate password unchanged |
+| `docs/lesson38-rebuild-report.md`, `docs/lesson39-rebuild-report.md`, `docs/lesson40-rebuild-report.md` | Module layout and audit architecture only | `lesson41/` module set mirrors the same split (data / kit / test / key / solutions / teacher / coverage) |
 
-Normal text targets at least 4.5:1. Static token calculations and browser computed-style checks cover text/control foregrounds against ancestor backgrounds. The final browser report records the observed minimum (at least 5.53:1 in this run). These measurements do not claim to certify third-party/shared UI or substitute for visual inspection.
+## Visual system (inherited, not invented)
 
-## Semantic roles: never color alone
+- Surface: `bg-[#f4f6fb]` app canvas, white `rounded-[2rem]` slide card with `border-slate-200` and the early-lesson soft shadow.
+- Type: Changa headings (`.font-head`), Tajawal body (`.font-body`), Fredoka for English examples (`.font-en`, always inside `dir="ltr"`).
+- Accent: `violet-600` for primary interaction, `slate-900` for the step badge and primary buttons, and the engine tints already used by the early lessons (`sky` = BE, `orange` = DO, `emerald` = HAVE).
+- Motion: the original `pop`/`anim-drift` classes only; `prefers-reduced-motion` respected by `index.css`.
+- Proportions: desktop-first; rail visible from `lg`, mobile uses the same bottom-sheet index as the early lessons.
 
-- **Subject:** neutral token explicitly labelled الفاعل.
-- **Auxiliary:** indigo token explicitly labelled مساعد.
-- **Main verb:** amber token explicitly labelled رئيسي.
-- **First auxiliary:** cyan-soft token, heavier border, explicit المساعد الأول label.
-- **Verb form:** outlined neutral token with a literal V1/V3/V-ing label where relevant.
+## Interaction vocabulary
 
-In the Future Perfect Continuous builder, **will alone** is marked first; have and been are separate auxiliaries. In the role lab, two occurrences of DO have separate questions, and the experiment item asks for both roles.
+| Interaction | Component | Behaviour |
+|---|---|---|
+| Practice answer + key | `PracticeCard41` / `PracticeSet41` | «قارن إجابتي بالحل» stays disabled until every field of that item is filled; the key and the reason then render in a ✓/✕ card |
+| Role discrimination (6 items) | `RoleLab41` | Per-sentence رئيسي/مساعد choice with instant feedback |
+| Engine function from context | `EngineLab41` | Engine tabs + 6 context sentences; options come from the chosen engine's real function list |
+| BE builder, DO question/negation machine, HAVE tense chain, first-auxiliary analyser | `BeLab41`, `DoLab41`, `HaveLab41`, `ChainLab41` | Stepwise, stateful; each step gates the next (e.g. the question builder unlocks only after the correct first auxiliary) |
+| Final test | `TestArea41` → lazy `key41` → `SolutionsArea41` | 25 questions, submit only on the last page of level 5, score on the result slide |
+| Teacher area | `TeacherArea41` → lazy `TeacherGuide41` | Existing `somer173` mechanism, 25 detailed solutions + 66 practice keys |
 
-## Typography and spacing
+No decorative or dead buttons: every control above changes state, and each audit exercises them (see `lesson41-validation.md`).
 
-- Lesson font stack: Arial, Tahoma, sans-serif; no new font download dependency. Shared `Rich` English runs retain the platform direction conventions, with a lesson-local font-family override to inherit this system stack.
-- Body 17px desktop / 16px mobile, generous 1.85 line height; examples 17/16px.
-- Editorial h1 26–42px; cover 32–52px; section titles 23–32px.
-- Label/eyebrow sizes 12px; subordinate token labels 10px (not instructions or body text). Core controls are at least 46px high.
-- Main spacing units: 8/12/16/20/24/28/32px; 20px primary card radius, 10–14px controls and exercise cards.
-- Desktop: 230px station rail + flexible main column, maximum 1280px shell. Below 850px the rail becomes a labelled expandable navigation panel. At 375px engine tabs stay three columns while comparison cards stack; tables scroll inside their own container.
-- Source table headings and row content are genuine table markup. Long source explanations are native section steps, not one long route-level article.
+## Hub card
 
-## Interaction states
+`src/App.tsx` is a shared file, so Lesson 41 keeps its existing card entry and only corrects its values: `stats` now reports the real 120 slides, and `grad` was changed from a lesson-specific `from-[#101c32] to-[#4338a5]` (the navy/indigo identity of the old 38–40-style build) to **`from-sky-500 to-emerald-500` — the exact gradient of Lesson 1**. The audit asserts that the rendered gradient equals Lesson 1's on the live hub.
 
-- Selected: indigo border/background + `aria-pressed` or `aria-current`.
-- Focus: 3px outline with 4px offset; cyan outline for links on the dark masthead.
-- Hover: indigo boundary; active: cyan-soft surface; no transforms that shift content.
-- Disabled/locked: actual disabled controls, readable text, explicit locked label.
-- Error: red surface + rule explanation, not color alone.
-- Success: explanatory text; free-text practice explicitly says comparison is **not automatic correctness**.
-- Reduced motion: transitions disabled. Step navigation scrolls without animation.
-- Navigation ignores arrow shortcuts while focus is inside a control. Section headings receive programmatic focus after navigation. Visited-step progress explicitly does not imply mastery.
+## Deliberate departures (accessibility only)
 
-## BIDI
-
-Reuse `Rich`/LatinRuns for mixed prose and explicit LTR isolation for English lines, formulas, options, counters and tokens. For plain mixed runs, Text41 reuses the shared splitMixedText parser and keeps boundary whitespace outside the LTR isolate. Complex glossary/alternative groups still use Rich unchanged. This fixes touching Arabic/English boundaries locally without changing the shared parser. Two-digit section numbers cannot shrink/wrap. No Unicode bidi override/invisible direction characters are introduced.
-
-## Authored additions versus source
-
-The cover's “Small verbs. Extraordinary power.” line, labelled diagrams, selectors, builders, correction explanations, counters, delivery guide and rubric are platform-authored enhancements. The complete supplied source is retained in the ledger and integrated into the ordered section flow. Practice source keys are attempt-bound; final keys are in a separate lazy module. All exact source/unit destinations are listed in `lesson41-coverage.md`.
-
-## Browser review
-
-See `lesson41-visual-verification.md` and `lesson41-visual/verification.json` for actual Chromium execution, screenshots, viewports, fixes and limitations. This is not a design claim based only on JSDOM.
+- Meta labels use `slate-500` instead of `slate-400`, and the cover engine tiles use `sky-700` / `orange-800` / `emerald-800` with full-opacity bold captions so that all text clears WCAG AA 4.5:1 (measured in Chromium with the corrected `oklch`-aware resolver: 5.86:1, 7.37:1, 7.61:1). Palette family and layout are unchanged otherwise.
+- Slides were split (120 total) instead of shrinking type: the tallest card is 1140 px at 1280×800.

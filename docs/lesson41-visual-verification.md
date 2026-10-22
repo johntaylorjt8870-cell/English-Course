@@ -1,66 +1,85 @@
-# Lesson 41 — real-browser verification
+# Lesson 41 — real-browser evidence
 
-## Actual environment and outcome
+Produced by `node scripts/audit-lesson41-browser.mjs` against `http://127.0.0.1:5174/English-Course/#/lesson/41` (Vite dev server) with headless Chromium from `playwright-core` + `@sparticuz/chromium`.
 
-- Browser: **Chromium 153.0.8010.0**, headless, driven by Playwright (not JSDOM).
-- Actual app: Vite route `/English-Course/#/lesson/41`; the existing site gate was unlocked through its existing local-storage state for automation.
-- Desktop: **1280 × 900**. Mobile: **375 × 812**. Reduced-motion preference enabled.
-- Command: `node scripts/audit-lesson41-browser.mjs` — **exit 0**, **347 checks, zero assertion failures**.
-- **103 rendered states**, **15,358 text/control observations** (includes repeated elements across states), minimum measured normal-text contrast **5.53:1**.
-- All 41 student steps checked at both widths; no page-level horizontal overflow. Tables may scroll within their own containers.
-- 26 actual browser screenshots retained in `lesson41-visual/`; machine results in [verification.json](lesson41-visual/verification.json).
+Raw data: `docs/lesson41-visual/verification.json`.
 
-## What was exercised
+## Summary
 
-Engine switching; role error/success feedback; BE and DO builders; Future Perfect Continuous composition with only **will** marked first; first-auxiliary questions/negatives and the no-auxiliary case; attempt-gated error correction requiring both repair and reason; complete passage and ten reading questions; writing counter and ten criteria; separately labelled partial model.
+| Metric | Value |
+|---|---|
+| Viewports | 1280×800, 1920×1080 |
+| Slides walked | 120 at each viewport |
+| Checks | 2207 |
+| Failures | 0 |
+| Page errors | 0 |
+| Contrast samples (text nodes measured) | 4600 |
+| Colour formats resolved | `oklch` 5284, `oklab` 624, `rgb` 600, `rgba` 360, `hsl` 120, `hex` 120, `color(srgb …)` 120 |
+| Faded disabled-control contrast exemptions (WCAG 1.4.3 inactive) | 118 |
+| Run-time console errors | 0 (only the blocked Google-Fonts request, recorded separately as `externalNetworkErrors`) |
+| Tallest slide card | 1188 px (1280×800, slide 113 — result slide with 25 solutions) |
+| Cards over the 1200 px target | none |
+| Reserved space under the floating step pill | 128 px |
 
-All 25 test questions (26 fields because Q8 has two blanks); incomplete and completed-but-unsubmitted states; lazy solution loading only after submission; reset clears responses and relocks solutions; incorrect teacher credentials; authorized guide loading; teacher relocking; authorized Solutions Area access on mobile. Teacher guide contains all 66 practice solutions.
+## Per-slide assertions (both viewports)
 
-Computed styles were checked for normal, selected, focus, hover, active, disabled, locked, error and success states. Keyboard focus was exercised with a real Tab event; the visible focus screenshot is below. All ARIA references were checked in rendered states. Target BIDI examples also have ten separate DOM/simulator cases in the standard audit (English-only and mixed Arabic contexts).
+- step counter `n / 120` correct for all 120 slides;
+- `document.scrollWidth − innerWidth ≤ 1` (no horizontal overflow);
+- no clipped readable element (decorative `aria-hidden` blobs excluded);
+- floating step pill never overlaps the site-lock button;
+- step pill covers no button/input/textarea/select at maximum scroll;
+- all ARIA references resolve;
+- every visible text node passes WCAG AA (4.5:1; 3:1 for large text) — see **Contrast method** below;
+- card height recorded for every slide;
+- hub card check: the Lesson 41 card gradient is byte-identical to Lesson 1's (`from-sky-500 to-emerald-500`) and its number badge uses the same classes.
 
-## Screenshot review and fixes
+## Contrast method (fixed in this revision)
 
-Actual screenshots were opened and visually reviewed, including the cover/focus state, BE/DO/HAVE stations, first-auxiliary station, reading, test, teacher area and mobile solutions. Automated sweep of all steps supplements, but does not equal, manual reading of every line.
+The previous version parsed the numeric digits out of `getComputedStyle(...).color`. That is wrong for this project: Tailwind v4 compiles its palette to **`oklch()`**, where the three numbers are lightness/chroma/hue, not sRGB channels, and percentages/alpha were misread. It reported 269 phantom failures and could also have hidden real ones.
 
-Review found and corrected:
-1. A two-digit section number wrapping vertically under a long bilingual heading; it now has a non-shrinking, non-wrapping width.
-2. Mixed Arabic/English boundary whitespace appearing on the wrong side of the isolate; a local rendering adapter reuses the shared parser, retaining plain boundary whitespace/colon separators in the surrounding flow. Complex glossary groups still use the shared renderer.
-3. RTL progress fractions; counters now have explicit LTR boundaries.
-4. Mobile BE / DO / HAVE masthead grouping; the engine group stays together rather than splitting around the Arabic dash.
+The measurement is now format-agnostic and delegated to Chromium itself:
 
-### Representative evidence
+1. **Alpha + colour solve.** Each colour is painted twice by the same `CanvasRenderingContext2D` — once over black and once over white:
+   `P(black) = a·C` and `P(white) = a·C + (1−a)·255`, so `a = 1 − (Pwhite − Pblack)/255` and `C = P(black)/a`.
+   This is exact for `oklch()`, `oklab()`, `lab()`, `lch()`, `rgb()`, `rgba()`, `hsl()`, `hsla()`, hex, `color(srgb …)`, named colours and `transparent`. Unparseable values are rejected through `CSS.supports("color", …)` instead of silently reusing the previous `fillStyle`.
+2. **Real backdrop.** The whole ancestor chain is composited (white page → outermost → element), so text sitting on `bg-slate-50`, on a translucent `bg-white/80` rail or inside a coloured panel is measured against what the user actually sees.
+3. **Opacity and state.** Ancestor `opacity` is multiplied into the text alpha; text over `background-image` gradients is counted separately.
+4. **AA thresholds.** 4.5:1 normally, 3:1 for large text (≥24 px, or ≥18.66 px at weight ≥700).
+5. **Self-test before measuring.** Ten colour syntaxes with known expected values plus two reference ratios (white/black = 21:1, white/#777 = 4.48:1) are asserted on the live page; the audit aborts its contrast claims if any of them is wrong. Result: **10/10 resolvers, 21:1, 4.48:1**.
+6. **Disabled controls.** Buttons using `disabled:opacity-40` are exempt per WCAG 1.4.3 (inactive UI); they are counted (118 samples) rather than silently dropped, and the **enabled** state of each gated control ("قارن إجابتي بالحل", "كوّن سؤالًا", "تسليم الاختبار النهائي") is asserted separately at ≥4.5:1 after it unlocks.
 
-| Surface | Desktop | Mobile |
-|---|---|---|
-| Cover | [Cover](lesson41-visual/desktop-cover.png) | [Cover](lesson41-visual/mobile-step-0.png) |
-| Keyboard selection | [Selected engine & focus](lesson41-visual/desktop-selected-focus.png) | — |
-| BE | [Laboratory](lesson41-visual/desktop-station-5.png) | [Laboratory](lesson41-visual/mobile-step-5.png) |
-| DO | [Builder](lesson41-visual/desktop-station-11.png) | [Builder](lesson41-visual/mobile-step-11.png) |
-| HAVE | [Perfect engine](lesson41-visual/desktop-station-18.png) | [Perfect continuous](lesson41-visual/mobile-step-18.png) |
-| First auxiliary | [Chain lab](lesson41-visual/desktop-station-25.png) | [Chain lab](lesson41-visual/mobile-step-25.png) |
-| Error detective | [Attempt feedback](lesson41-visual/desktop-error-detective.png) | [Practice](lesson41-visual/mobile-step-29.png) |
-| Reading | [Reading](lesson41-visual/desktop-reading.png) | [Reading](lesson41-visual/mobile-step-35.png) |
-| Writing | [Writing](lesson41-visual/desktop-writing.png) | [Writing](lesson41-visual/mobile-step-38.png) |
-| Test | [Test](lesson41-visual/desktop-test.png) | [Test](lesson41-visual/mobile-test.png) |
-| Solutions | [Solutions](lesson41-visual/desktop-solutions.png) | [Solutions](lesson41-visual/mobile-solutions.png) |
-| Teacher | [Guide](lesson41-visual/desktop-teacher.png) | [Guide](lesson41-visual/mobile-teacher-guide.png) |
-| Locked teacher | [Gate](lesson41-visual/desktop-teacher-locked.png) | [Gate](lesson41-visual/mobile-teacher-gate.png) |
+One real issue was found by the stricter method and fixed in the lesson: the DO tile on the cover was `bg-orange-700` at `opacity-90` text (4.49:1) → now `bg-orange-800` with full-opacity bold text (**7.37:1 measured**).
 
-## Provisioning and honest limitations
+## Overlap method (fixed in this revision)
 
-The first browser launch failed because this sandbox lacked `libnspr4.so` / NSS libraries. The npm Chromium distribution already includes compatible libraries; the script extracts those into ignored `node_modules/.lesson41-browser` and sets the process library path. No host packages, browser binaries or dependencies were committed.
+The floating step pill and the site lock are now checked twice — at the top **and** at maximum scroll — and the pill is checked against every interactive control two ways: bounding-box intersection and a real `document.elementFromPoint()` hit test at each control's centre. The lesson reserves 128 px under the pill (`pb-32`) and the audit confirms nothing is covered or unclickable on any of the 120 slides at either viewport.
 
-Reproduce after `npm ci`:
+## Interaction evidence captured
 
-```sh
+| Screenshot | What it shows |
+|---|---|
+| `1280-cover.png`, `1920-cover.png` | Original early-lesson cover: white `rounded-[2rem]` card, drifting mascot, `pop` staging, BE/DO/HAVE engine tiles |
+| `1280-practice-before-attempt.png` | §30 practice card before an attempt — «قارن إجابتي بالحل» visibly disabled, no key in the DOM |
+| `1280-practice.png`, `1280-practice-revealed.png`, `1920-practice.png` | The same card after typing both fields, and after pressing the compare button with the key + reason revealed |
+| `1280-lab.png` | Chain lab after building `Does she study?` from a sentence without an auxiliary |
+| `1280-test-level1.png`, `1920-test-level1.png` | Final test level 1 — questions only, no key text in the DOM |
+| `1280-solutions.png` | Result slide with score and the 25 lazy solutions after submission |
+| `1280-teacher-guide.png` | Guided teacher area with the 66 practice keys |
+| `1920-reading.png` | Reading challenge passage at 1920×1080 |
+| `1280-hub-card.png` | The hub card for Lesson 41, side by side with 42–44: it now uses the same gradient family as Lesson 1 (was the lesson-specific navy→indigo) |
+| `reference-lesson1.png`, `reference-lesson2.png`, `reference-lesson3.png` | The platform's original early lessons captured at 1280×800 with the same harness, for the side-by-side design check (white `rounded-[2rem]` card, slate-900 number badge, Changa heading, coloured tile row, right rail, floating pill + site lock) |
+
+## Animation note
+
+The audit injects `*,*::before,*::after{animation:none;transition:none}` after load so that screenshots and contrast measurements reflect the settled UI rather than a mid-`pop` frame. The lesson's own `pop`/`anim-drift` motion is unchanged for real users and still respects `prefers-reduced-motion`.
+
+## Reproduce
+
+```bash
+npm ci --no-audit --no-fund
 npm install --no-save --package-lock=false playwright-core @sparticuz/chromium
-npm run dev -- --host 0.0.0.0
-# In another shell:
-node scripts/audit-lesson41-browser.mjs
+npm run dev -- --port 5174 --host 0.0.0.0
+LESSON41_URL="http://127.0.0.1:5174/English-Course/#/lesson/41" node scripts/audit-lesson41-browser.mjs
 ```
 
-The first browser audit also caught a focus-test setup error (programmatic focus after pointer input was not keyboard focus). The test now uses Tab before checking the focus outline; no CSS assertion was weakened.
-
-The existing global Google Fonts request is blocked by this sandbox's outbound allowlist. That one external network error is retained separately in `verification.json`, not disguised as a successful download. Lesson 41 explicitly uses a local system font stack, including its English runs. There were no lesson application/page errors in the final run. Shared Signature/site-lock UI is unchanged and outside Lesson 41's contrast scope.
-
-This is Chromium desktop/mobile-viewport evidence, not Safari/Firefox, physical-phone, screen-reader or exhaustive zoom certification. Browser scripts inspect ordinary UI/network behavior; they do not claim client-side passwords protect public bundles from determined inspection.
+The browser audit is optional and not part of `npm run audit:english-direction`: it needs the extra Chromium packages, which are intentionally not committed.

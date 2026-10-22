@@ -1,288 +1,87 @@
-// Source-derived §36 prompts only. Intentionally has no ledger, practice, or solutions imports.
-export const TEST_LEVELS_41 = [
+// أسئلة الاختبار النهائي (§36) كما وردت في المصدر، بلا أي إجابات أو شروح.
+// مفتاح التصحيح التفصيلي في key41.ts ولا يُحمَّل إلا بعد التسليم أو عبر مساحة المعلم.
+
+export type TestField41 = { key: string; label: string; placeholder?: string };
+
+export type TestQuestion41 = {
+  id: string;
+  number: number;
+  level: number;
+  type: "mcq" | "complete" | "correct" | "function" | "dialogue";
+  lines: string[];
+  options?: string[];
+  fields: TestField41[];
+  rows?: number;
+};
+
+export type TestLevel41 = {
+  level: number;
+  title: string;
+  context?: string[];
+  questions: TestQuestion41[];
+};
+
+const field = (label: string, placeholder?: string, key = "answer"): TestField41 => ({ key, label, placeholder });
+
+export const TEST_LEVELS_41: TestLevel41[] = [
   {
-    "level": 1,
-    "title": "المستوى الأول: Multiple Choice",
-    "context": [],
-    "questions": [
-      {
-        "id": "q1",
-        "number": 1,
-        "lines": [
-          "______ she speak English?"
-        ],
-        "options": [
-          "A. Do",
-          "B. Does",
-          "C. Is"
-        ],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q2",
-        "number": 2,
-        "lines": [
-          "______ they studying now?"
-        ],
-        "options": [
-          "A. Do",
-          "B. Are",
-          "C. Have"
-        ],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q3",
-        "number": 3,
-        "lines": [
-          "______ you completed your homework?"
-        ],
-        "options": [
-          "A. Have",
-          "B. Do",
-          "C. Are"
-        ],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q4",
-        "number": 4,
-        "lines": [
-          "______ he visit the museum yesterday?"
-        ],
-        "options": [
-          "A. Does",
-          "B. Did",
-          "C. Was"
-        ],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q5",
-        "number": 5,
-        "lines": [
-          "______ she ready for the exam?"
-        ],
-        "options": [
-          "A. Does",
-          "B. Is",
-          "C. Has"
-        ],
-        "fields": [
-          "إجابتك"
-        ]
-      }
-    ]
+    level: 1,
+    title: "المستوى الأول: Multiple Choice",
+    questions: [
+      { id: "q1", number: 1, level: 1, type: "mcq", lines: ["______ she speak English?"], options: ["Do", "Does", "Is"], fields: [field("إجابتك")] },
+      { id: "q2", number: 2, level: 1, type: "mcq", lines: ["______ they studying now?"], options: ["Do", "Are", "Have"], fields: [field("إجابتك")] },
+      { id: "q3", number: 3, level: 1, type: "mcq", lines: ["______ you completed your homework?"], options: ["Have", "Do", "Are"], fields: [field("إجابتك")] },
+      { id: "q4", number: 4, level: 1, type: "mcq", lines: ["______ he visit the museum yesterday?"], options: ["Does", "Did", "Was"], fields: [field("إجابتك")] },
+      { id: "q5", number: 5, level: 1, type: "mcq", lines: ["______ she ready for the exam?"], options: ["Does", "Is", "Has"], fields: [field("إجابتك")] },
+    ],
   },
   {
-    "level": 2,
-    "title": "المستوى الثاني: Complete the Sentences",
-    "context": [],
-    "questions": [
+    level: 2,
+    title: "المستوى الثاني: Complete the Sentences",
+    context: ["أكمل الفراغ بالصيغة الصحيحة. في السؤال 8 فراغان: الفعل المساعد ثم صيغة الفعل."],
+    questions: [
+      { id: "q6", number: 6, level: 2, type: "complete", lines: ["She ______ (not / like) coffee."], fields: [field("إجابتك", "doesn't like")] },
+      { id: "q7", number: 7, level: 2, type: "complete", lines: ["They ______ (not / finish) the project yet."], fields: [field("إجابتك", "haven't finished")] },
       {
-        "id": "q6",
-        "number": 6,
-        "lines": [
-          "She ______ (not / like) coffee."
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
+        id: "q8",
+        number: 8,
+        level: 2,
+        type: "complete",
+        lines: ["______ you ______ (watch) television at 8:00 yesterday?"],
+        fields: [field("الفعل المساعد — الفراغ الأول", "Were", "aux"), field("صيغة الفعل — الفراغ الثاني", "watching", "form")],
       },
-      {
-        "id": "q7",
-        "number": 7,
-        "lines": [
-          "They ______ (not / finish) the project yet."
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q8",
-        "number": 8,
-        "lines": [
-          "______ you ______ (watch) television at 8:00 yesterday?"
-        ],
-        "options": [],
-        "fields": [
-          "الفعل المساعد — الفراغ الأول",
-          "صيغة الفعل — الفراغ الثاني"
-        ]
-      },
-      {
-        "id": "q9",
-        "number": 9,
-        "lines": [
-          "He ______ (not / have) a bicycle."
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q10",
-        "number": 10,
-        "lines": [
-          "By Friday, we ______ (complete) the report. استخدم Future Perfect."
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      }
-    ]
+      { id: "q9", number: 9, level: 2, type: "complete", lines: ["He ______ (not / have) a bicycle."], fields: [field("إجابتك", "doesn't have")] },
+      { id: "q10", number: 10, level: 2, type: "complete", lines: ["By Friday, we ______ (complete) the report. استخدم Future Perfect."], fields: [field("إجابتك", "will have completed")] },
+    ],
   },
   {
-    "level": 3,
-    "title": "المستوى الثالث: Correct the Mistakes",
-    "context": [],
-    "questions": [
-      {
-        "id": "q11",
-        "number": 11,
-        "lines": [
-          "Does she studies English?"
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q12",
-        "number": 12,
-        "lines": [
-          "Did he went home?"
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q13",
-        "number": 13,
-        "lines": [
-          "Do you are ready?"
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q14",
-        "number": 14,
-        "lines": [
-          "She has finish the assignment."
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q15",
-        "number": 15,
-        "lines": [
-          "They will have being working for three hours by noon."
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      }
-    ]
+    level: 3,
+    title: "المستوى الثالث: Correct the Mistakes",
+    context: ["أعد كتابة الجملة كاملة بعد تصحيح الخطأ."],
+    questions: [
+      { id: "q11", number: 11, level: 3, type: "correct", lines: ["Does she studies English?"], fields: [field("الجملة الصحيحة")] },
+      { id: "q12", number: 12, level: 3, type: "correct", lines: ["Did he went home?"], fields: [field("الجملة الصحيحة")] },
+      { id: "q13", number: 13, level: 3, type: "correct", lines: ["Do you are ready?"], fields: [field("الجملة الصحيحة")] },
+      { id: "q14", number: 14, level: 3, type: "correct", lines: ["She has finish the assignment."], fields: [field("الجملة الصحيحة")] },
+      { id: "q15", number: 15, level: 3, type: "correct", lines: ["They will have being working for three hours by noon."], fields: [field("الجملة الصحيحة")] },
+    ],
   },
   {
-    "level": 4,
-    "title": "المستوى الرابع: Understand the Function",
-    "context": [],
-    "questions": [
-      {
-        "id": "q16",
-        "number": 16,
-        "lines": [
-          "ما وظيفة have في الجملة:",
-          "I have a laptop."
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q17",
-        "number": 17,
-        "lines": [
-          "ما وظيفة have في الجملة:",
-          "I have bought a laptop."
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q18",
-        "number": 18,
-        "lines": [
-          "لماذا نقول:",
-          "Does she work?",
-          "ولا نقول:",
-          "Does she works?"
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q19",
-        "number": 19,
-        "lines": [
-          "ما الفرق بين:",
-          "I understand you.",
-          "I do understand you!"
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q20",
-        "number": 20,
-        "lines": [
-          "لماذا نقول:",
-          "Has she been studying?",
-          "ولا نقول:",
-          "Does she has been studying?"
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      }
-    ]
+    level: 4,
+    title: "المستوى الرابع: Understand the Function",
+    context: ["أجب بجملة قصيرة تشرح الوظيفة أو السبب."],
+    questions: [
+      { id: "q16", number: 16, level: 4, type: "function", lines: ["ما وظيفة have في الجملة:", "I have a laptop."], fields: [field("إجابتك")], rows: 2 },
+      { id: "q17", number: 17, level: 4, type: "function", lines: ["ما وظيفة have في الجملة:", "I have bought a laptop."], fields: [field("إجابتك")], rows: 2 },
+      { id: "q18", number: 18, level: 4, type: "function", lines: ["لماذا نقول:", "Does she work?", "ولا نقول:", "Does she works?"], fields: [field("إجابتك")], rows: 2 },
+      { id: "q19", number: 19, level: 4, type: "function", lines: ["ما الفرق بين:", "I understand you.", "I do understand you!"], fields: [field("إجابتك")], rows: 2 },
+      { id: "q20", number: 20, level: 4, type: "function", lines: ["لماذا نقول:", "Has she been studying?", "ولا نقول:", "Does she has been studying?"], fields: [field("إجابتك")], rows: 2 },
+    ],
   },
   {
-    "level": 5,
-    "title": "المستوى الخامس: Final IQ200 Boss",
-    "context": [
+    level: 5,
+    title: "المستوى الخامس: Final IQ200 Boss",
+    context: [
       "أكمل الحوار بالفعل المساعد الصحيح.",
       "The Project Meeting",
       "Maya: ______ you enjoy science?",
@@ -294,67 +93,34 @@ export const TEST_LEVELS_41 = [
       "Maya: ______ you test the robot yesterday?",
       "Omar: Yes, I did.",
       "Maya: ______ you have completed everything by Friday?",
-      "Omar: I hope so!"
+      "Omar: I hope so!",
     ],
-    "questions": [
-      {
-        "id": "q21",
-        "number": 21,
-        "lines": [
-          "السؤال الأول."
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q22",
-        "number": 22,
-        "lines": [
-          "السؤال الثاني."
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q23",
-        "number": 23,
-        "lines": [
-          "السؤال الثالث."
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q24",
-        "number": 24,
-        "lines": [
-          "السؤال الرابع."
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      },
-      {
-        "id": "q25",
-        "number": 25,
-        "lines": [
-          "السؤال الخامس."
-        ],
-        "options": [],
-        "fields": [
-          "إجابتك"
-        ]
-      }
-    ]
-  }
+    questions: [
+      { id: "q21", number: 21, level: 5, type: "dialogue", lines: ["السؤال الأول: ______ you enjoy science?"], fields: [field("الفعل المساعد")] },
+      { id: "q22", number: 22, level: 5, type: "dialogue", lines: ["السؤال الثاني: ______ you working on a new project now?"], fields: [field("الفعل المساعد")] },
+      { id: "q23", number: 23, level: 5, type: "dialogue", lines: ["السؤال الثالث: ______ you finished the design yet?"], fields: [field("الفعل المساعد")] },
+      { id: "q24", number: 24, level: 5, type: "dialogue", lines: ["السؤال الرابع: ______ you test the robot yesterday?"], fields: [field("الفعل المساعد")] },
+      { id: "q25", number: 25, level: 5, type: "dialogue", lines: ["السؤال الخامس: ______ you have completed everything by Friday?"], fields: [field("الفعل المساعد")] },
+    ],
+  },
 ];
-export const TEST_QUESTIONS_41 = TEST_LEVELS_41.flatMap(level => level.questions);
-export type TestAnswers41 = Record<string,string>;
-export function testComplete41(answers:TestAnswers41) { return TEST_QUESTIONS_41.every(q=>q.fields.every((_,i)=>Boolean(answers[`${q.id}-${i}`]?.trim()))); }
+
+export const TEST_QUESTIONS_41: TestQuestion41[] = TEST_LEVELS_41.flatMap((level) => level.questions);
+
+export type TestAnswers41 = Record<string, string>;
+
+export function answerKey41(questionId: string, fieldKey: string) {
+  return `${questionId}-${fieldKey}`;
+}
+
+export function testComplete41(answers: TestAnswers41): boolean {
+  return TEST_QUESTIONS_41.every((question) =>
+    question.fields.every((f) => Boolean(answers[answerKey41(question.id, f.key)]?.trim())),
+  );
+}
+
+export function answeredCount41(answers: TestAnswers41): number {
+  return TEST_QUESTIONS_41.filter((question) =>
+    question.fields.every((f) => Boolean(answers[answerKey41(question.id, f.key)]?.trim())),
+  ).length;
+}

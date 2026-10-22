@@ -1,14 +1,14 @@
-# Lesson 41 — preflight and source-readability audit
+# Lesson 41 — source inventory, normalization and linguistic review
 
-**Status: implemented; final validation recorded.** The preflight below was completed before coding and its baseline was preserved. See `lesson41-validation.md` for implementation results, `lesson41-coverage.md` for all 883 source units, and `lesson41-visual-verification.md` for actual Chromium evidence.
+**Status: rebuilt in this branch; see `lesson41-validation.md` for measurement and `lesson41-coverage.md` for the section → slide map of all 883 source units.**
 
-## Inspection completed before implementation
+## Repository inspection before implementation
 
-- Session branch: `arena/c285c802-english-course` (fixed by Arena; independent of prior lesson branches).
-- HEAD and fetched `origin/main`: `e7a2e473c0c1062a42d723af18c80e0048ddd159`.
-- PR #52: **MERGED**, 2026-10-14T23:52:26Z, into main; verified with `gh pr view 52`.
-- All open PRs inspected: #41, “Repair BIDI boundaries, assessment reset state, and teacher navigation”. Its changes span old lessons/shared BIDI/tests. None imported or modified.
-- No merge, branch deletion, branch switch, or unrelated push performed.
+- Work branch: `arena/e4c38820-english-course`, branched from `2e2c64a7d798bddc3d189d65355fa0a8be1f5a62` (`main`).
+- Only open PR at inspection time: #69 (Lesson 37). Untouched.
+- Existing Lesson 41 folder, its five docs, its audit scripts and its 26 screenshots were the previous per-lesson “studio” identity; they were replaced, not extended.
+- Instruction files read: `README.md`, `ARENA_PROMPT.md`, `LESSON_WORKFLOW.md`, `vite.config.ts`, `package.json`.
+- No merge, branch deletion, branch switch or unrelated push performed.
 
 ## Readability and authoritative source
 
@@ -71,33 +71,25 @@ The complete Arabic/English lesson was supplied in the request as readable text.
 7. Source references Lesson 42 and a 120-lesson curriculum as roadmap prose, not registration instructions.
 8. The brief's summary groups sections imprecisely (e.g. §10 is passive); actual numbered source is authoritative.
 
-## Existing architecture and reusable elements
+## Architecture actually used
 
-Inspected Lessons 38–40: each has a native step index, chapter grouping, independent student/test/solutions/teacher areas, parent-owned test answers/submission/unlock state, lazy solutions and teacher guide. Lesson 40 uses 30 steps and an editorial cream/teal/ochre palette. Earlier lessons must remain untouched.
-
-- `src/App.tsx`: explicit imports/routes and CARDS array, shared LessonNumberNav; navigation derives length from cards. Add only Lesson 41 import/card/route.
-- Shared `Rich`/`En` and underlying LatinRuns supply mixed-direction isolation; reuse rather than global BIDI rewrites.
-- Shared `Signature` supplies attribution/contact; do not duplicate contact strings.
-- Teacher access in recent lessons is a client-side password comparison followed by lazy guide render. Preserve the existing password. This is a pedagogical gate, NOT server-side security: determined users can inspect public bundles. Lazy imports prevent ordinary initial loading, not authorized server enforcement.
-- Test submission convention is manual comparison in Solutions Area, not automatic grading of free text. Preserve completed-test requirement and reset relocking.
-- Source-reveal audit forbids student “show original text” panels; integrate source into steps/attempt-bound feedback, not a raw-source toggle.
-- Vite has preview-compatible host settings; base is `/English-Course/`; dynamic imports are supported (single-file plugin is not enabled).
-- Existing audit scripts: direction/static and bidi rendering, render-direction, lesson-navigation, final-test, final-test-coverage, source-reveal, mixed-BIDI, lesson38–40. Older generic final-test coverage does not exercise new lesson architecture; targeted audit needed.
-- No tsconfig, lint script, or generic test npm script exists. Typecheck command below is explicit/reproducible.
+- `src/lessons/lesson41/` — `Lesson41.tsx` (shell, navigation, slide switch), `design.tsx` (Frame41/Text41/En41/Num41/Panel41/Note41/Sentence41/Table41), `slides41.ts` (120 slides + 8 stations), `ledger41.ts` (source ledger), `source41.ts` (transcription), `practice41.ts` (66 items), `kit41.tsx` (six labs, practice card, reading, writing, summary, next), `testData41.ts` (25 questions, no keys), `TestArea41.tsx` (assessment surface), `key41.ts` (grader + `SOLUTIONS_41`), `SolutionsArea41.tsx`, `TeacherArea41.tsx`, `TeacherGuide41.tsx`, `coverage41.ts`, `data.ts`.
+- `src/App.tsx` — one import, one route (`#/lesson/41`), one `CARDS` entry (`stats: "40 قسمًا · 120 شريحة قصيرة · …"`). Nothing else touched.
+- Shared components reused unchanged: `SitePasswordGate` (`CloseYourEyes173`), `TeachersSpace` password constant (`somer173`), `Signature`/`SignatureGhost`, `bidi.LatinRuns`, `index.css` tokens and animations.
+- Assessment isolation: `TestArea41` imports the grader only through `await import("./key41")` inside the submit handler; `SolutionsArea41` and `TeacherGuide41` are `lazy()` chunks. Verified by the esbuild chunk graph in `scripts/audit-lesson41.mjs` and by network/DOM checks in the browser audit.
 
 ## Baseline before implementation
 
 | Command | Exit | Result |
 |---|---:|---|
-| `npm ci` | 0 | Installed locked dependencies |
-| `npm run build` | 0 | Production bundle built |
-| `npm run audit:lesson40` | 0 | Existing latest-lesson audit passes |
-| `npx tsc --noEmit --jsx react-jsx --module esnext --target es2022 --moduleResolution bundler --allowSyntheticDefaultImports --skipLibCheck src/main.tsx` | 2 | 179 pre-existing TS diagnostics; lessons 6, 10, 11, 14, 18, 21, 24, 27, 28 |
+| `npm ci --no-audit --no-fund` | 0 | Locked dependencies installed |
+| `npm run build` | 0 | Production bundle built (only the pre-existing >500 kB chunk warning) |
+| `node scripts/audit-navigation-lock-overlap.mjs` (on a pristine `origin/main` worktree) | 1 | 101 passed / 5 failed — Lessons 38–39 only, i.e. pre-existing |
+| `node scripts/audit-source-reveal.mjs` (same worktree) | 1 | 1 failure — `Steps38.tsx` `<details>` |
+| `node scripts/audit-bidi-mixed.mjs` (same worktree) | 1 | 3 strict violations — Lesson 38 |
 
-Full baseline diagnostics: `docs/lesson41-baseline-typescript.txt`. Other existing checks must be recorded individually during validation, not assumed passing from this baseline.
+Those four scripts are re-run after the rebuild and produce the same failures; they are documented as baseline, not introduced here.
 
-## Planned implementation / affected files
+## Design origin
 
-Lesson-specific `src/lessons/lesson41/` modules for source ledger/coverage, steps, labs, practice, independent test data/component, lazy solutions and teacher guide, local kit and CSS. Add `scripts/audit-lesson41.mjs`, npm audit command, docs and three App integration points. No shared design replacement, changes to Lessons 1–40, or Lesson 42 registration.
-
-Design direction: **Sentence Engine Studio** — midnight structural shell, spacious neutral explanation panels, indigo selection, cyan first-auxiliary markers and restrained amber challenge accents. Editorial cover plus sentence-machine diagrams; labeled semantic tokens (subject, auxiliary, main verb, V1/V3/V-ing) never color alone. Compact chapter rail and source-section pagination. Scoped CSS and reduced-motion-safe interactions. Required new components: engine explorer, role classifier, transformation/form builders, first-auxiliary chain analyzer, attempt-gated correction cards, reading lab, writing counter/checklist, and independent assessment surfaces. Real-browser status must be reported from actual evidence, not JSDOM.
+See `lesson41-design.md`: the shell, card, typography, floating step pill and motion classes are the ones already used by Lessons 1–3. No lesson-scoped CSS file exists, and `scripts/audit-lesson41.mjs` asserts that no `lesson41.css`, `--navy`, `SENTENCE ENGINE STUDIO`, `.cover41/.token41/.panel41` selector survives.

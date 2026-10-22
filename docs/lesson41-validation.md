@@ -1,71 +1,70 @@
-# Lesson 41 — implementation and validation report
+# Lesson 41 — validation record
 
-## Delivered scope
+All numbers below come from commands actually executed in this branch. Commands that could not be executed are listed under **Limitations** instead of being claimed.
 
-- Native ordered flow: opening + §§1–40, **41 steps** with chapter/section navigation and explicitly labelled visited-step progress.
-- **883 normalized source units**, hashed source manifest, per-unit coverage document; **66 practice items** with all required subparts and full teacher explanations.
-- Stateful BE/DO/HAVE explorer; role identification including both DO occurrences; BE and DO laboratories; perfect/perfect-continuous composition; first-auxiliary analyzer including do-support; ten repair/reason challenges; full reading passage and ten questions; writing area with approximate sentence count, ten source criteria, separate original partial model; complete golden summary and roadmap.
-- Independent **25-question, five-level** final test, with **26 response fields** because Q8 retains both blanks. Free-text answers use the established post-submission comparison pattern, not misleading automatic grading.
-- Test dependency graph has no ledger/practice keys/solutions/teacher imports. Final keys and guide load only through gated lazy paths. Submission is revalidated; reset clears responses and relocks solutions unless teacher authorization remains active.
-- Teacher access uses the existing password mechanism without changing the password. Shared Signature supplies attribution/contact.
-- Lesson-local visual generation, token documentation, real Chromium screenshots and verification. No application source for Lessons 1–40 changed; no Lesson 42 folder, card or route.
+## Environment
 
-## Source provenance and caveats
+- Repo: `johntaylorjt8870-cell/English-Course`, branch `arena/e4c38820-english-course`, base `2e2c64a7d798bddc3d189d65355fa0a8be1f5a62` (`main`).
+- Node 22.22.3, Vite 7.3.2, React 19, Tailwind v4.
+- Real browser: `playwright-core` + `@sparticuz/chromium` installed with `--no-save` (not committed); the audit script extracts the packaged libraries into `node_modules/.lesson41-browser`.
+- Dev server used by the browser audit: `npm run dev -- --port 5174 --host 0.0.0.0`, URL `http://127.0.0.1:5174/English-Course/#/lesson/41`.
 
-§37 contains no actual detailed final key: Q1–20 keys and all explanatory notes are labelled platform-authored. Q21–25 auxiliary keys come from the implementation brief. §38 model remains the original eight sentences, with an explicit note that it is partial and lacks DID emphasis and the two required questions. British possessive HAVE alternatives, linking BE, and the scope of the introductory passive rule are documented rather than silently “corrected.”
+## Results
 
-The source manifest protects the checked-in transcription against later omissions/changes. It is not an independent OCR/original-document oracle: initial fidelity rests on transcription of the supplied conversation and the disclosed normalization, with all units available for reviewer comparison.
+| Check | Command | Result |
+|---|---|---|
+| TypeScript (strict) | `npx tsc --noEmit --jsx react-jsx --module esnext --target es2022 --moduleResolution bundler --strict --skipLibCheck src/lessons/lesson41/Lesson41.tsx` | **0 errors** |
+| Production build | `npm run build` | **exit 0**, built in 9.6 s (only the repo-wide >500 kB chunk warning) |
+| Static / data audit | `node scripts/audit-lesson41.mjs` | **passed — 891 assertions**, 41 sections, 883 source units (0 uncovered), 120 slides, 66 practice items, 25 questions / 5 levels, authored answer sheet 25/25 |
+| DOM audit (React + JSDOM) | `node scripts/audit-lesson41-dom.mjs` | **passed — 4231 assertions**, all 120 slides navigated, practice gating, chain builder, test submit/reset, teacher gate, 10 BIDI cases |
+| Real Chromium audit | `node scripts/audit-lesson41-browser.mjs` | **passed — 1701 checks, 0 failures, 0 page errors** at 1280×800 and 1920×1080 |
+| English direction | `node scripts/check-english-direction.mjs` | **passed** (1701 assertions, 44 lessons) |
+| Final-test cross-lesson audit | `node scripts/audit-final-test.mjs` | **passed** (1253 checks) |
+| Source-reveal audit | `node scripts/audit-source-reveal.mjs` | **1 failure — pre-existing** (`src/lessons/lesson38/Steps38.tsx` uses `<details>`); reproduces on a pristine `origin/main` worktree |
+| Mixed-BIDI audit | `node scripts/audit-bidi-mixed.mjs` | **3 strict violations — pre-existing**, all in Lesson 38 |
+| Navigation / lock overlap | `node scripts/audit-navigation-lock-overlap.mjs` | **101 passed / 5 failed — pre-existing** (Lesson 38 lock visibility ×2, Lesson 39 tab labels ×3) |
 
-## Actual validation commands
+### What the Chrome audit asserts on every slide (both viewports)
 
-| Command | Exit | Result |
-|---|---:|---|
-| `npm run audit:lesson41` | 0 | 460 source/data/scope assertions + 1,231 DOM/BIDI/interaction assertions passed. |
-| `npm run check:english-direction` | 0 | 1,680 direction assertions across 41 lessons; 59/59 BIDI-rendering cases passed. |
-| `npm run audit:lesson-navigation` | 0 | 152 assertions passed, including actual Lesson 41 route/card and last-window checks. |
-| `node scripts/audit-render-direction.mjs` | 0 | 1,463 assertions passed; existing React special-key warning remains. |
-| `node scripts/audit-source-reveal.mjs` | 0 | 63 checks passed; no student raw-source reveal control introduced. |
-| `node scripts/audit-final-test.mjs` | 0 | 1,248 checks passed; independent Lesson 41 assessment registered. Existing duplicate-key warnings in older lessons remain. |
-| `node scripts/audit-final-test-coverage.mjs` | 0 | 633 checks passed for its existing coverage; Lesson 41 behavior is covered by the targeted audit, not claimed as part of the older generic suite. |
-| `node scripts/audit-bidi-mixed.mjs` | 0 | Passed under existing baseline rules; legacy non-strict findings are not fixed by this PR. |
-| `npm run audit:lesson38` | 0 | 267 assertions passed. |
-| `npm run audit:lesson39` | 0 | 357 assertions passed. |
-| `npm run audit:lesson40` | 0 | 1,055 assertions passed; old source roadmap preserved. |
-| `npm run build` | 0 | Production build succeeds; existing large-bundle warning remains. |
-| `npx tsc --noEmit --jsx react-jsx --module esnext --target es2022 --moduleResolution bundler --allowSyntheticDefaultImports --skipLibCheck src/lessons/lesson41/Lesson41.tsx` | 0 | Lesson 41 plus its imported shared dependencies: no diagnostics. |
-| `npx tsc --noEmit --jsx react-jsx --module esnext --target es2022 --moduleResolution bundler --allowSyntheticDefaultImports --skipLibCheck src/main.tsx` | 2 | 179 pre-existing diagnostics; output byte-for-byte identical to the preserved baseline. |
-| `npm run audit:english-direction` | 0 | Entire existing audit chain plus Lesson 41 static/DOM checks completed, not a partial run. Legacy mixed-BIDI report contains 785 unique findings under existing baseline rules. |
-| `node scripts/audit-lesson41-browser.mjs` | 0 | Actual Chromium: 347 checks, zero assertion failures; 26 screenshots; external blocked Google Fonts request documented separately. |
-| `git diff --check` | 0 | No whitespace errors. |
+- step counter matches the expected `n / 120`;
+- no horizontal document overflow and no clipped readable element;
+- the floating step pill never overlaps the site-lock button;
+- the pill covers **no** interactive control at maximum scroll (128 px reserved under it);
+- every `aria-controls` / `aria-labelledby` / `aria-describedby` target exists;
+- every visible text node clears WCAG AA (4.5:1, or 3:1 for large text) — measured by resolving Tailwind v4 `oklch()` colours through a canvas back to sRGB;
+- layout metrics: tallest card **1188 px**, no card over the 1200 px target, at either viewport.
 
-`npm ci` exited 0 before implementation validation. Optional `npm install --no-save --package-lock=false playwright-core @sparticuz/chromium` exited 0 for browser verification; package-lock and application dependencies are unchanged. The repository has no lint command, generic test command or tsconfig; explicit TypeScript commands above are used.
+### Interaction smoke test (real Chromium, desktop 1280×800)
 
-Machine results: `lesson41-validation-results.json`. Whole-repository diagnostic baseline: `lesson41-baseline-typescript.txt` (preserved unchanged). Browser details: `lesson41-visual-verification.md` and `lesson41-visual/verification.json`.
+1. Practice §30 item 1: «قارن إجابتي بالحل» disabled → type `is` + `reading` → enabled → key `is → reading` and the reason appear.
+2. Chain lab: «كوّن سؤالًا» disabled → choose `She studies.` → pick `لا يوجد` → builder unlocks → renders `Does she study?`.
+3. Final test: level 1 shows 5 questions, no key text and no solution nodes in the DOM → answer all 25 across the 10 test pages → submit appears only on the last page → after submit the score renders and exactly 25 `data-solution-id` blocks mount.
+4. Teacher gate: wrong password shows `role="alert"`; `somer173` mounts the lazy guide with 66 practice-key blocks.
+5. JSDOM additionally covers reset (answers cleared, results re-locked) and keyboard/step navigation on all 120 slides.
 
-## Integration failures found and resolved
+### Solution-leak evidence
 
-The initial post-implementation run failed assertions that assumed exactly 40 lessons, expected the last hub window to end at 40, denied a Lesson 41 route, or did not recognize its independent test. These were genuine integration failures, not claimed as baseline passes. A second navigation attempt initially placed the new test after unmounting the fixture; the fixture ordering was corrected and the full navigation audit now passes. The full chain then revealed the same inventory assumption in the Lesson 31 audit; its two course-inventory assertions were updated. All final commands above completed with actual exit statuses.
+`scripts/audit-lesson41.mjs` bundles `Lesson41.tsx` with esbuild and inspects the emitted chunks:
 
-Necessary existing-script changes are limited to:
-- `check-english-direction` and `audit-render-direction`: 41-folder/course inventory and route coverage.
-- `audit-lesson-navigation`: keep existing Lesson 40 behavior, add Lesson 41 route/current/window checks.
-- `audit-final-test`: recognize and verify Lesson 41's independent 25-question/five-level shape.
-- `audit-lesson31`, `audit-lesson37`, `audit-lesson38`, `audit-lesson39`, `audit-lesson40`: update meta-assertions about course inventory; old future-route prohibitions now guard Lesson 42. No original lesson-content, direction, reveal or contrast assertion is removed.
-- `package.json`: add the targeted audit and include it in the existing full chain.
+- the entry chunk contains none of the solution strings (`تكرر التطابق`, the Q20 key text) and no `SOLUTIONS_41` symbol;
+- exactly three independent lazy chunks exist — grader (`key41`), solutions (`SolutionsArea41`), teacher guide (`TeacherGuide41`);
+- `testData41.ts` has no `reason:`, `accept:` or `keywords:` fields;
+- `TestArea41.tsx` imports the grader only through `await import("./key41")` inside the submit handler;
+- the solutions area renders only when `submitted && graded`; reset clears answers and re-locks.
 
-## Remaining limitations — not blockers disguised as passes
+## Limitations (honest scope)
 
-- Existing 179 TypeScript errors remain untouched. This PR introduces no additional diagnostics.
-- Existing global large-bundle and older React/JSDOM warnings remain. The legacy mixed-BIDI checker passes its established baseline, not zero findings across the whole course.
-- Teacher access is the platform's existing **client-side pedagogical gate**, not server-backed authorization. Lazy loading prevents ordinary premature access; a determined user can inspect public JavaScript assets.
-- Student activity/writing/test state lasts for the mounted lesson session, not across a reload. The UI does not claim saved cloud progress or grammatical auto-evaluation.
-- Writing sentence count is punctuation-based and approximate; the rubric requires human assessment.
-- Browser coverage is Chromium at the stated widths; screen-reader, Safari/Firefox and physical-device certification are not claimed. The existing external Google Fonts request is blocked in this sandbox; the new lesson uses its own local font stack.
+- The Chromium audit runs against the Vite dev server, not a served production build.
+- `docs/lesson41-visual/1280-*.png` / `1920-*.png` are headless Chromium screenshots with `reducedMotion: "reduce"`; fonts load from Google Fonts, and the sandbox blocks that request, so the screenshots fall back to local font stacks. Layout, colour and contrast measurements are unaffected, but glyph shapes in the PNGs differ from a networked browser.
+- Teacher access is the platform's existing client-side gate, not server-side authorisation: the lazy chunks are not in the initial bundle, but a determined user can fetch them once known.
+- Free-text practice answers are compared after the attempt (self-review), matching the platform convention; they are not auto-graded as correct/incorrect beyond the authored accepted answers.
+- The five failures in `audit-source-reveal`, `audit-bidi-mixed` and `audit-navigation-lock-overlap` are pre-existing Lesson 38/39 issues, reproduced on an untouched `origin/main` worktree; fixing them is outside Lesson 41 scope.
 
-## Review entry points
+## Source issues found and handled (no silent deletion)
 
-1. Open `#/lesson/41` (Vite preview base: `/English-Course/#/lesson/41`).
-2. Review `lesson41-coverage.md` for every source unit and numbered item, and `lesson41-source-audit.md` for source ambiguities.
-3. Review `lesson41-design.md` and `lesson41-visual-verification.md` for the scoped design and actual evidence.
-4. Exercise the incomplete-test lock, complete submission, reset/relock, and protected teacher guide.
-5. Merge is intentionally left to the repository owner. No PR has been merged and no branch has been deleted.
+| Source | Issue | Handling |
+|---|---|---|
+| §37 | Contains only the heading and “عرض الحلول التفصيلية” — no actual key | Page renders protected access plus platform-authored 25 solutions and 66 practice keys, explicitly labelled as platform-authored |
+| §38 | Model paragraph is 8 sentences (brief asks 12–15), has emphatic `do` but no `did`, no questions | Model kept verbatim, labelled as a partial reference; the ten criteria remain the requirement |
+| §15 | DO described as “فعل رئيسي بمعنى يُنجز” without distinguishing `do` + object vs full lexical `do` | Kept, with one clarifying sentence added in the slide (not a rewrite of the source line) |
+| §27 | Algorithm treats linking BE as a “main verb” yet BE still forms questions directly | Slide explains that “main” here means “not an auxiliary of another verb”, so the First Auxiliary Rule still applies |

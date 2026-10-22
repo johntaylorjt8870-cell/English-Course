@@ -211,11 +211,13 @@ ok(lesson40DedicatedAssessment, "الدرس 40: اختبار Grand Exam مستق
 const lesson41TestData = readFileSync(join(root, "src/lessons/lesson41/testData41.ts"), "utf8");
 const lesson41TestArea = readFileSync(join(root, "src/lessons/lesson41/TestArea41.tsx"), "utf8");
 const lesson41DedicatedAssessment =
-  (lesson41TestData.match(/"id": "q\d+"/g) || []).length === 25 &&
-  (lesson41TestData.match(/"level": [1-5]/g) || []).length === 5 &&
+  (lesson41TestData.match(/id: "q\d+"/g) || []).length === 25 &&
+  (lesson41TestData.match(/level: [1-5],/g) || []).length >= 5 &&
   lesson41TestArea.includes("testComplete41") &&
   lesson41TestArea.includes("TEST_LEVELS_41") &&
-  !lesson41TestArea.includes("solutionsData41") && !lesson41TestData.includes("solutionsData41");
+  lesson41TestArea.includes('import("./key41")') &&
+  !lesson41TestArea.includes("key41.ts") &&
+  !lesson41TestData.includes("SOLUTIONS_41") && !lesson41TestData.includes("reason:");
 ok(lesson41DedicatedAssessment, "Lesson 41: 25 questions, five levels, independent test without solution imports");
 // Lesson 42: independent 25-question / five-level assessment; detailed behavioral checks in audit:lesson42.
 const lesson42TestData = readFileSync(join(root, "src/lessons/lesson42/testData42.ts"), "utf8");

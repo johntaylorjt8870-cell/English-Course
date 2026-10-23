@@ -481,11 +481,11 @@ const CARDS: Card[] = [
   {
     n: 42,
     title: "الدرس 42: CAN & COULD — القدرة، والإمكانية، والاستئذان، والطلبات المهذبة",
-    en: "Language Control Lab · Mastering Ability and Polite Communication",
-    emoji: "🧪",
-    stats: "44 قسمًا · 45 خطوة · مختبر المعاني ومختبر البناء · اختبار 25 سؤالًا",
+    en: "From Ability to Polite Communication",
+    emoji: "🚀",
+    stats: "44 قسمًا · 144 شريحة قصيرة · 17 مختبرًا تفاعليًا · اختبار 25 سؤالًا",
     href: "#/lesson/42",
-    grad: "from-[#C2410C] to-[#A21CAF]",
+    grad: "from-sky-500 to-emerald-500",
   },
   {
     n: 43,

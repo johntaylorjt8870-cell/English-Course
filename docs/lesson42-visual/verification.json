@@ -1,937 +1,259 @@
 {
-  "browser": "153.0.8010.0",
   "url": "http://127.0.0.1:5173/English-Course/#/lesson/42",
+  "browser": "chromium (playwright-core + @sparticuz/chromium)",
   "viewports": [
     {
       "width": 1280,
-      "height": 900
+      "height": 800
     },
     {
-      "width": 375,
-      "height": 812
+      "width": 1920,
+      "height": 1080
     }
   ],
-  "checks": 334,
-  "failures": [],
+  "slides": 135,
+  "checks": 2760,
+  "failures": [
+    "stage practice interaction 1280x800: locator.check: Timeout 30000ms exceeded.",
+    "assembled order marked correct",
+    "no answer text on the test slides",
+    "no slide card exceeds the 1200px target (13@1280x800=1630, 47@1280x800=1223, 53@1280x800=1254, 89@1280x800=1602, 95@1280x800=1611, 105@1280x800=1417, 108@1280x800=1220, 122@1280x800=1417, 123@1280x800=1338, 127@1280x800=1239, 13@1920x1080=1630, 47@1920x1080=1223, 53@1920x1080=1254, 89@1920x1080=1602, 95@1920x1080=1611, 105@1920x1080=1417, 122@1920x1080=1417, 123@1920x1080=1338, 127@1920x1080=1239)"
+  ],
   "errors": [],
   "externalNetworkErrors": [
     {
       "url": "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap",
       "message": "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap",
+      "message": "Failed to load resource: net::ERR_CONNECTION_CLOSED"
     }
   ],
+  "lazyChunksRequested": [
+    "http://127.0.0.1:5173/English-Course/src/lessons/lesson42/key42.ts",
+    "http://127.0.0.1:5173/English-Course/src/lessons/lesson42/SolutionsArea42.tsx",
+    "http://127.0.0.1:5173/English-Course/src/lessons/lesson42/TeacherGuide42.tsx"
+  ],
+  "tallestCard": {
+    "viewport": "1280x800",
+    "slide": 13,
+    "card": 1630,
+    "scroll": 1133,
+    "inactiveFaded": []
+  },
+  "reservedBottomSpacePx": 128,
+  "cardsTallerThanViewport": 177,
+  "colorSelfTest": {
+    "results": [
+      {
+        "name": "oklch slate-500 (Tailwind v4)",
+        "color": "oklch(0.554 0.046 257.417)",
+        "got": [
+          98,
+          116,
+          142,
+          1
+        ],
+        "expected": [
+          98,
+          116,
+          142,
+          1
+        ],
+        "ok": true
+      },
+      {
+        "name": "oklch slate-400",
+        "color": "oklch(0.704 0.04 256.788)",
+        "got": [
+          144,
+          161,
+          185,
+          1
+        ],
+        "expected": [
+          144,
+          161,
+          185,
+          1
+        ],
+        "ok": true
+      },
+      {
+        "name": "oklab",
+        "color": "oklab(0.7 0.05 -0.03)",
+        "got": [
+          179,
+          146,
+          176,
+          1
+        ],
+        "expected": "alpha 1 (channels unchecked)",
+        "ok": true
+      },
+      {
+        "name": "hex",
+        "color": "#aabbcc",
+        "got": [
+          170,
+          187,
+          204,
+          1
+        ],
+        "expected": [
+          170,
+          187,
+          204,
+          1
+        ],
+        "ok": true
+      },
+      {
+        "name": "hsl",
+        "color": "hsl(200 50% 40%)",
+        "got": [
+          51,
+          119,
+          153,
+          1
+        ],
+        "expected": [
+          51,
+          119,
+          153,
+          1
+        ],
+        "ok": true
+      },
+      {
+        "name": "rgb",
+        "color": "rgb(255, 255, 255)",
+        "got": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "expected": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "ok": true
+      },
+      {
+        "name": "rgb space-slash alpha",
+        "color": "rgb(0 0 0 / 25%)",
+        "got": [
+          0,
+          0,
+          0,
+          0.251
+        ],
+        "expected": [
+          0,
+          0,
+          0,
+          0.25
+        ],
+        "ok": true
+      },
+      {
+        "name": "rgba numeric alpha",
+        "color": "rgba(255, 255, 255, 0.5)",
+        "got": [
+          255,
+          255,
+          255,
+          0.502
+        ],
+        "expected": [
+          255,
+          255,
+          255,
+          0.5
+        ],
+        "ok": true
+      },
+      {
+        "name": "color(srgb)",
+        "color": "color(srgb 0.2 0.4 0.6)",
+        "got": [
+          51,
+          102,
+          153,
+          1
+        ],
+        "expected": [
+          51,
+          102,
+          153,
+          1
+        ],
+        "ok": true
+      },
+      {
+        "name": "transparent keyword",
+        "color": "transparent",
+        "got": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "expected": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "ok": true
+      }
+    ],
+    "reference": 21,
+    "midGrey": 4.48
+  },
+  "contrastMethod": "canvas black/white alpha solve → sRGB, composited over the full ancestor backdrop (oklch, oklab, lab, lch, rgb, rgba, hsl, hsla, hex, color(), named, transparent)",
+  "colorFormatsSeen": {
+    "oklch": 6619,
+    "oklab": 437,
+    "lab": 0,
+    "lch": 0,
+    "rgb": 675,
+    "rgba": 405,
+    "hsl": 135,
+    "hsla": 0,
+    "hex": 135,
+    "colorFn": 135,
+    "named": 0,
+    "other": 0
+  },
+  "contrastSamples": 5275,
+  "inactiveContrastExemptions": 106,
+  "textOverBackgroundImages": 342,
   "screenshots": [
-    "docs/lesson42-visual/desktop-cover.png",
-    "docs/lesson42-visual/desktop-test.png",
-    "docs/lesson42-visual/desktop-solutions.png",
-    "docs/lesson42-visual/desktop-teacher-locked.png",
-    "docs/lesson42-visual/desktop-teacher.png",
-    "docs/lesson42-visual/mobile-step-0.png",
-    "docs/lesson42-visual/mobile-step-4.png",
-    "docs/lesson42-visual/mobile-step-8.png",
-    "docs/lesson42-visual/mobile-step-17.png",
-    "docs/lesson42-visual/mobile-step-21.png",
-    "docs/lesson42-visual/mobile-step-31.png",
-    "docs/lesson42-visual/mobile-step-38.png",
-    "docs/lesson42-visual/mobile-step-39.png",
-    "docs/lesson42-visual/mobile-step-42.png",
-    "docs/lesson42-visual/mobile-step-44.png",
-    "docs/lesson42-visual/mobile-test.png",
-    "docs/lesson42-visual/mobile-teacher-gate.png",
-    "docs/lesson42-visual/mobile-teacher-guide.png",
-    "docs/lesson42-visual/mobile-solutions.png"
-  ],
-  "renderedChecks": [
-    {
-      "label": "desktop-cover",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 135,
-      "min": 5.178415705888697,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-0",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 135,
-      "min": 5.178415705888697,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-1",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 112,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-2",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 112,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-3",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 133,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-4",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 165,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-5",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 133,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-6",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 131,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-7",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 114,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-8",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 112,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-9",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 109,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-10",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 117,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-11",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 131,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-12",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 127,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-13",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 110,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-14",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 99,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-15",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 96,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-16",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 113,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-17",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 146,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-18",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 91,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-19",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 111,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-20",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 167,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-21",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 130,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-22",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 154,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-23",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 108,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-24",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 119,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-25",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 136,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-26",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 112,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-27",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 110,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-28",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 100,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-29",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 124,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-30",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 114,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-31",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 179,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-32",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 260,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-33",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 168,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-34",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 205,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-35",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 159,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-36",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 157,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-37",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 166,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-38",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 202,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-39",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 185,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-40",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 77,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-41",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 77,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-42",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 128,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-43",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 162,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-44",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 84,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-test",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 175,
-      "min": 6.445473328071788,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-solutions",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 284,
-      "min": 6.1372761220429455,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-teacher-locked",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 29,
-      "min": 6.445473328071788,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "desktop-teacher",
-      "width": 1280,
-      "scroll": 1280,
-      "tested": 2343,
-      "min": 6.1372761220429455,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-0",
-      "width": 375,
-      "scroll": 375,
-      "tested": 90,
-      "min": 5.178415705888697,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-1",
-      "width": 375,
-      "scroll": 375,
-      "tested": 67,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-2",
-      "width": 375,
-      "scroll": 375,
-      "tested": 67,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-3",
-      "width": 375,
-      "scroll": 375,
-      "tested": 88,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-4",
-      "width": 375,
-      "scroll": 375,
-      "tested": 120,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-5",
-      "width": 375,
-      "scroll": 375,
-      "tested": 88,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-6",
-      "width": 375,
-      "scroll": 375,
-      "tested": 83,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-7",
-      "width": 375,
-      "scroll": 375,
-      "tested": 66,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-8",
-      "width": 375,
-      "scroll": 375,
-      "tested": 64,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-9",
-      "width": 375,
-      "scroll": 375,
-      "tested": 61,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-10",
-      "width": 375,
-      "scroll": 375,
-      "tested": 69,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-11",
-      "width": 375,
-      "scroll": 375,
-      "tested": 83,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-12",
-      "width": 375,
-      "scroll": 375,
-      "tested": 83,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-13",
-      "width": 375,
-      "scroll": 375,
-      "tested": 66,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-14",
-      "width": 375,
-      "scroll": 375,
-      "tested": 55,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-15",
-      "width": 375,
-      "scroll": 375,
-      "tested": 52,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-16",
-      "width": 375,
-      "scroll": 375,
-      "tested": 69,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-17",
-      "width": 375,
-      "scroll": 375,
-      "tested": 110,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-18",
-      "width": 375,
-      "scroll": 375,
-      "tested": 55,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-19",
-      "width": 375,
-      "scroll": 375,
-      "tested": 75,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-20",
-      "width": 375,
-      "scroll": 375,
-      "tested": 131,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-21",
-      "width": 375,
-      "scroll": 375,
-      "tested": 94,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-22",
-      "width": 375,
-      "scroll": 375,
-      "tested": 113,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-23",
-      "width": 375,
-      "scroll": 375,
-      "tested": 67,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-24",
-      "width": 375,
-      "scroll": 375,
-      "tested": 78,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-25",
-      "width": 375,
-      "scroll": 375,
-      "tested": 95,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-26",
-      "width": 375,
-      "scroll": 375,
-      "tested": 70,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-27",
-      "width": 375,
-      "scroll": 375,
-      "tested": 68,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-28",
-      "width": 375,
-      "scroll": 375,
-      "tested": 58,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-29",
-      "width": 375,
-      "scroll": 375,
-      "tested": 82,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-30",
-      "width": 375,
-      "scroll": 375,
-      "tested": 73,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-31",
-      "width": 375,
-      "scroll": 375,
-      "tested": 138,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-32",
-      "width": 375,
-      "scroll": 375,
-      "tested": 219,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-33",
-      "width": 375,
-      "scroll": 375,
-      "tested": 127,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-34",
-      "width": 375,
-      "scroll": 375,
-      "tested": 155,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-35",
-      "width": 375,
-      "scroll": 375,
-      "tested": 109,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-36",
-      "width": 375,
-      "scroll": 375,
-      "tested": 107,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-37",
-      "width": 375,
-      "scroll": 375,
-      "tested": 116,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-38",
-      "width": 375,
-      "scroll": 375,
-      "tested": 152,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-39",
-      "width": 375,
-      "scroll": 375,
-      "tested": 135,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-40",
-      "width": 375,
-      "scroll": 375,
-      "tested": 34,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-41",
-      "width": 375,
-      "scroll": 375,
-      "tested": 34,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-42",
-      "width": 375,
-      "scroll": 375,
-      "tested": 85,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-43",
-      "width": 375,
-      "scroll": 375,
-      "tested": 119,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-step-44",
-      "width": 375,
-      "scroll": 375,
-      "tested": 41,
-      "min": 4.590749538859037,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-test",
-      "width": 375,
-      "scroll": 375,
-      "tested": 175,
-      "min": 6.445473328071788,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-teacher-gate",
-      "width": 375,
-      "scroll": 375,
-      "tested": 28,
-      "min": 5.178415705888697,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-teacher-guide",
-      "width": 375,
-      "scroll": 375,
-      "tested": 2343,
-      "min": 6.1372761220429455,
-      "issues": [],
-      "refs": []
-    },
-    {
-      "label": "mobile-solutions",
-      "width": 375,
-      "scroll": 375,
-      "tested": 284,
-      "min": 6.1372761220429455,
-      "issues": [],
-      "refs": []
-    }
+    "docs/lesson42-visual/1280-hub-card.png",
+    "docs/lesson42-visual/1280-cover.png",
+    "docs/lesson42-visual/1280-writing-editor.png",
+    "docs/lesson42-visual/1280-practice-before-attempt.png",
+    "docs/lesson42-visual/1280-lab-build.png",
+    "docs/lesson42-visual/1280-lab-build-wrong.png",
+    "docs/lesson42-visual/1280-lab-build-correct.png",
+    "docs/lesson42-visual/1280-lab-able.png",
+    "docs/lesson42-visual/1280-lab-wh.png",
+    "docs/lesson42-visual/1280-reading.png",
+    "docs/lesson42-visual/1280-test-level1.png",
+    "docs/lesson42-visual/1280-solutions.png",
+    "docs/lesson42-visual/1280-teacher-guide.png",
+    "docs/lesson42-visual/1920-cover.png",
+    "docs/lesson42-visual/1920-rule.png",
+    "docs/lesson42-visual/1920-table.png",
+    "docs/lesson42-visual/1920-test-level1.png",
+    "docs/lesson42-visual/1920-practice.png",
+    "docs/lesson42-visual/1920-reading.png",
+    "docs/lesson42-visual/1920-summary.png",
+    "docs/lesson42-visual/1920-progress.png"
   ]
 }

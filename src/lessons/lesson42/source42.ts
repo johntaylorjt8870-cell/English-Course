@@ -1,7 +1,12 @@
-// Authoritative supplied text for Lesson 42. Only blank lines, decorative
-// separator bars, heading emoji/GB flags and table layout were normalized.
-// @@ marks section boundaries, not displayed content. Practice keys are
-// attempt-gated; final keys live in the teacher-only modules.
+// Authoritative supplied text for Lesson 42 — the student-facing part.
+// Only blank lines, decorative separator bars, heading emoji/GB flags and
+// table layout were normalized. @@ marks section boundaries, not displayed
+// content. Practice keys are attempt-gated.
+//
+// §41 (مساحة المعلم — الحلول التفصيلية) is deliberately NOT here. It contains
+// the complete final-test answer key, so it lives in teacherSource42.ts and is
+// only reachable through the lazily-loaded teacher modules. Keeping it in this
+// statically-imported file would ship the key inside the initial student bundle.
 export const SOURCE_TEXT_42 = `@@0 الدرس 42: CAN & COULD
 القدرة، والإمكانية، والاستئذان، والطلبات المهذبة
 From Ability to Polite Communication 🚀
@@ -837,63 +842,6 @@ Maya: Great! After a few months of practice, I think I ______ build more advance
 ㉓ طلب المساعدة بصورة مهذبة.
 ㉔ تقديم اقتراح.
 ㉕ التعبير عن قدرة مستقبلية.
-@@41 مساحة المعلم — الحلول التفصيلية للاختبار النهائي
-مفتاح تصحيح الدرس 42
-يُفضّل عدم عرض هذا القسم للطالب إلا بعد الانتهاء من الاختبار.
-حلول المستوى الأول
-① A — can.
-السبب: التعبير عن القدرة الحالية.
-② B — could.
-السبب: قدرة عامة في الماضي.
-③ B — Could.
-السبب: طلب مهذب.
-④ A — couldn't.
-السبب: عدم القدرة في الماضي.
-⑤ B — be able to.
-السبب: بعد will نستخدم be able to للتعبير عن القدرة المستقبلية.
-حلول المستوى الثاني
-⑥ can't.
-She can't drive a car.
-⑦ Can you play.
-Can you play the piano?
-⑧ could.
-When my father was young, he could run very fast.
-⑨ were able to.
-The task was difficult, but we were able to finish it yesterday.
-السبب: نجاح في موقف ماضٍ محدد.
-⑩ will be able to.
-Next year, I will be able to speak English more confidently.
-حلول المستوى الثالث
-⑪ He can swim very well.
-⑫ Can you help me?
-⑬ She could play the piano when she was young.
-⑭ I will be able to finish the project tomorrow.
-⑮ Could you repeat the question?
-حلول المستوى الرابع
-⑯ الأولى تعبّر عن قدرة حالية، والثانية عن قدرة عامة في الماضي.
-⑰ طلب مهذب.
-⑱ احتمال مستقبلي.
-⑲ لأن الجملة تبرز نجاحها في حل مشكلة محددة في الماضي، وليس مجرد امتلاك قدرة عامة.
-⑳ نعم. قد يكون السؤال عن القدرة إذا كنا نريد معرفة ما إذا كان الشخص يستطيع فتح الباب، وقد يكون طلبًا إذا كنا نريده أن يفتح الباب لنا. السياق هو الذي يحدد المعنى.
-حلول المستوى الخامس
-㉑ Can.
-Can you design a simple robot?
-㉒ couldn't.
-But when I was younger, I couldn't understand electronic circuits.
-㉓ Could.
-Could you help me build a small robot, please?
-㉔ could.
-We could work together after school.
-㉕ will be able to.
-I think I will be able to build more advanced robots.
-ملاحظة للمعلم
-لا يكفي أن يختار الطالب CAN أو COULD اختيارًا صحيحًا؛ ينبغي أن يستطيع تفسير الوظيفة المقصودة:
-هل يتحدث عن قدرة؟
-أم إذن؟
-أم طلب؟
-أم احتمال؟
-أم اقتراح؟
-فهذا هو الهدف الحقيقي من الدرس.
 @@42 Writing Mission — My Abilities: Past, Present & Future
 اكتب فقرة من 12 إلى 15 جملة باللغة الإنجليزية بعنوان:
 My Abilities: Past, Present & Future

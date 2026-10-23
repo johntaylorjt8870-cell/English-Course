@@ -327,14 +327,14 @@ export function LatinRuns({ text }: { text: string }) {
         if (seg.kind === "text") return <Fragment key={i}>{seg.text}</Fragment>;
         if (seg.kind === "en") {
           return (
-            <span key={i} dir="ltr" className="font-en">
+            <span key={i} dir="ltr" lang="en" className="font-en">
               {seg.text}
             </span>
           );
         }
         if (seg.kind === "alts") {
           return (
-            <span key={i} dir="ltr" className="ltr-pair">
+            <span key={i} dir="ltr" lang="en" className="ltr-pair">
               {seg.items.map((item, j) => (
                 <Fragment key={j}>
                   {j > 0 && (

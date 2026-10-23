@@ -1,7 +1,12 @@
-// Authoritative supplied text for Lesson 43. Only blank lines, decorative
-// separator bars, heading emoji/GB flags and table layout were normalized.
-// @@ marks section boundaries, not displayed content. Practice keys are
-// attempt-gated; final keys live in the teacher-only modules.
+// Authoritative supplied text for Lesson 43 — the student-facing part.
+// Only blank lines, decorative separator bars, heading emoji/GB flags and table
+// layout were normalized. @@ marks section boundaries, not displayed content.
+// Practice keys are attempt-gated; the final-test key is NOT here.
+//
+// §34 (مساحة المعلم — الحلول التفصيلية) holds the complete final-test answer
+// key, so it lives in teacherSource43.ts and is only reachable through the
+// lazily-loaded teacher modules. Keeping it in this statically-imported file
+// would ship the key inside the initial student bundle.
 export const SOURCE_TEXT_43 = `@@0 الدرس 43: MAY & MIGHT
 الاحتمال، وعدم اليقين، والاستئذان
 The Art of Speaking Without Being 100% Sure 🔮
@@ -731,59 +736,6 @@ Teacher: That's all right. ______ he has a good reason.
 ㉓ طلب مهذب باستخدام MAY.
 ㉔ احتمال عدم حدوث شيء باستخدام MAY.
 ㉕ استخدم MAYBE بوصفها كلمة مستقلة.
-@@34 مساحة المعلم — الحلول التفصيلية للاختبار النهائي
-مفتاح تصحيح الدرس 43
-يُفضّل عدم عرض هذا القسم للطالب إلا بعد انتهاء الاختبار.
-حلول المستوى الأول
-① A — may.
-السبب: MAY فعل ناقص ثابت الصيغة.
-② B — arrive.
-السبب: بعد MIGHT نستخدم V1.
-③ A — May.
-السبب: طلب إذن مهذب.
-④ B — know.
-السبب: بعد MAY NOT نستخدم V1.
-⑤ C — missed.
-السبب: MAY HAVE + V3.
-حلول المستوى الثاني
-⑥ may rain.
-It may rain tomorrow.
-⑦ might be.
-He might be tired.
-⑧ may not come.
-They may not come today.
-⑨ might have forgotten.
-She might have forgotten the meeting.
-⑩ may have made.
-We may have made a mistake.
-حلول المستوى الثالث
-⑪ She may be at home.
-⑫ He might come tomorrow.
-⑬ They may visit us.
-⑭ She may have gone home.
-⑮ Maybe he is tired.
-أو:
-He may be tired.
-حلول المستوى الرابع
-⑯ الأولى تقدم المعلومة بوصفها حقيقة، والثانية تعبّر عن احتمال.
-⑰ لا. قد تبدو MIGHT أكثر تحفظًا في بعض السياقات، لكن لا توجد قاعدة ثابتة تجعلها دائمًا أضعف من MAY بنسبة محددة.
-⑱ الأولى تستخدم Maybe ظرفًا مستقلًا، والثانية تستخدم may فعلًا ناقصًا يتبعه be. المعنى متقارب، لكن التركيب مختلف.
-⑲ ربما نسي الموعد. الجملة تعبّر عن احتمال يتعلق بالماضي.
-⑳ طلب إذن مهذب.
-حلول المستوى الخامس
-㉑ may.
-He may be at the library.
-㉒ might.
-He might have missed the bus.
-㉓ May.
-May I ask everyone to take their seats, please?
-㉔ may.
-Omar may not arrive on time.
-㉕ Maybe.
-Maybe he has a good reason.
-ملاحظة للمعلم
-في أسئلة الاحتمال المفتوحة، يمكن قبول MAY أو MIGHT عندما تكون كلتاهما صحيحة في السياق.
-أما الأسئلة التي تطلب تركيبًا محددًا أو وظيفة محددة، فيجب الالتزام بالمطلوب.
 @@35 Writing Mission — A Day of Possibilities
 اكتب فقرة إنجليزية من 12 إلى 15 جملة بعنوان:
 A Day of Possibilities

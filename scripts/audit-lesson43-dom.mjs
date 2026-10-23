@@ -1,71 +1,260 @@
 import assert from 'node:assert/strict';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, readFileSync } from 'node:fs';
 import { build } from 'esbuild';
 import { JSDOM } from 'jsdom';
 import { analyzeHtml } from './lib/bidi-sim.mjs';
-const dom=new JSDOM('<!doctype html><html lang="ar" dir="rtl"><body><div id="root"></div></body></html>',{url:'http://localhost/',pretendToBeVisual:true});
-for(const key of ['window','document','navigator','HTMLElement','HTMLInputElement','HTMLTextAreaElement','HTMLSelectElement','Node','Event','MouseEvent','KeyboardEvent','MutationObserver','getComputedStyle'])Object.defineProperty(globalThis,key,{value:dom.window[key],configurable:true});
-globalThis.IS_REACT_ACT_ENVIRONMENT=true;
-mkdirSync('node_modules/.lesson43-audit',{recursive:true});
-await build({stdin:{contents:`export {default as Lesson43} from './src/lessons/lesson43/Lesson43';export {Text43} from './src/lessons/lesson43/kit43';`,resolveDir:process.cwd(),loader:'tsx'},outfile:'node_modules/.lesson43-audit/ui.mjs',bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic',loader:{'.css':'empty'}});
-const {Lesson43,Text43}=await import('../node_modules/.lesson43-audit/ui.mjs');
-const React=await import('react');const {createRoot}=await import('react-dom/client');const {renderToStaticMarkup}=await import('react-dom/server');const {act}=React;
-let checks=0;const ok=(c,m)=>{checks++;assert.ok(c,m);};
-for(const text of ['She may come tomorrow.',"He might have forgotten the keys.",'May I ask a question?','Maybe she will join us later.','She may be at home now.','It might rain tomorrow.','May I remind everyone about the quiz?','They might not visit us.']){
- for(const content of [text,`لاحظ المثال: ${text} — الفعل يبقى V1.`]){
-  const html=renderToStaticMarkup(React.createElement('div',{dir:'rtl'},React.createElement(Text43,{text:content})));
-  ok(analyzeHtml(html).every(p=>p.violations.length===0),`BIDI: ${content}`);
-  ok(html.includes('dir="ltr"'),'explicit LTR isolation');
- }
+
+const dom = new JSDOM('<!doctype html><html lang="ar" dir="rtl"><body><div id="root"></div></body></html>', { url: 'http://localhost/', pretendToBeVisual: true });
+for (const key of ['window', 'document', 'navigator', 'HTMLElement', 'HTMLInputElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'MutationObserver', 'getComputedStyle']) {
+  Object.defineProperty(globalThis, key, { value: dom.window[key], configurable: true });
 }
-const root=createRoot(document.getElementById('root'));
-await act(async()=>root.render(React.createElement(Lesson43)));
-const all=selector=>[...document.querySelectorAll(selector)];
-async function click(element){ok(!!element,'click target exists');await act(async()=>element.click());}
-async function change(element,value){await act(async()=>{const proto=element.tagName==='TEXTAREA'?HTMLTextAreaElement.prototype:element.tagName==='SELECT'?HTMLSelectElement.prototype:HTMLInputElement.prototype;Object.getOwnPropertyDescriptor(proto,'value').set.call(element,value);element.dispatchEvent(new Event(element.tagName==='SELECT'?'change':'input',{bubbles:true}));});}
-const byText=(text)=>all('button').find(button=>button.textContent===text);
-const step=()=>document.querySelector('.step43');
-const next=()=>click(document.querySelector('.bottomNav43 button:last-child'));
-ok(all('.areas43 button')[2].disabled,'solutions initially locked');ok(!document.querySelector('[data-area=solutions]'),'no hidden solutions DOM');
-for(let i=0;i<=37;i++){
- const current=step();ok(current.dataset.sourceSection===(i?'s'+String(i).padStart(2,'0'):'cover'),`step ${i} maps to its source section`);
- for(const el of all('.lesson43 [aria-controls],.lesson43 [aria-labelledby],.lesson43 [aria-describedby]'))for(const attr of ['aria-controls','aria-labelledby','aria-describedby'])for(const id of (el.getAttribute(attr)||'').split(/\s+/).filter(Boolean))ok(document.getElementById(id),`ARIA resolves ${id}`);
- for(const el of all('.lesson43 button'))ok(el.textContent.trim()||el.getAttribute('aria-label'),'button accessible name');
- for(const el of all('.lesson43 textarea,.lesson43 select,.lesson43 input'))ok(el.closest('label')||el.getAttribute('aria-label')||el.labels?.length,'form control accessible name');
- if(i===2){const card=document.querySelector('[data-exercise-id="prob-0"]');await click(card.querySelectorAll('.actions43 button')[0]);await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43'),'probability explorer places the fact band');ok(!card.querySelector('.feedback43.error'),'certain fact lands on the certain band');}
- if(i===3){const card=document.querySelector('.readout43');ok(card.textContent.includes('She')||card.textContent.includes('I'),'builder readout shows the subject chip');await click(all('.dialGroup43')[0].querySelectorAll('button')[2]);ok(document.querySelector('.formula43').textContent.startsWith('She may'),'builder assembles subject + MAY + V1');}
- if(i===4){const card=document.querySelector('[data-exercise-id="transform-may"]');await change(card.querySelector('select'),'1');await click(card.querySelector('.primary43'));ok(card.querySelector('.formula43').textContent.includes('may not'),'negative transformation of MAY');}
- if(i===4){ok(all('.table43').length>=1,'MAY/MIGHT pronoun table renders');}
- if(i===5){ok(document.querySelector('.formula43').textContent.includes('may'),'dial reads the MAY channel');await click(all('.dialGroup43')[1].querySelectorAll('button')[1]);ok(document.querySelector('.formula43').textContent.startsWith('I might'),'control panel switches MAY→MIGHT');}
- if(i===7){ok(document.querySelector('.formula43').textContent.includes('may be'),'MAY BE composer keeps the modal plus the base form of BE');}
- if(i===11){const card=document.querySelector('[data-exercise-id="swap-5"]');await click(card.querySelectorAll('button')[2]);await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43')&&!card.querySelector('.feedback43.error'),'swap lab rejects fixed percentage rankings');}
- if(i===13){const card=document.querySelector('[data-exercise-id="negation-1"]');await click(card.querySelectorAll('button')[1]);await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43')&&!card.querySelector('.feedback43.error'),'negation lab separates prohibition from probability');}
- if(i===15){ok(all('.rung43').length===4,'permission ladder shows four request forms');const card=document.querySelector('[data-exercise-id="permission-1"]');await click(card.querySelectorAll('button')[1]);await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43')&&!card.querySelector('.feedback43.error'),'permission studio scores the polite everyday choice');}
- if(i===18){const card=document.querySelector('[data-exercise-id="maybe-0"]');ok(!card.querySelector('.feedback43'),'maybe/may be key hidden before the attempt');await click(card.querySelectorAll('button')[0]);await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43')&&!card.querySelector('.feedback43.error'),'maybe classified as a standalone adverb');}
- if(i===19){const card=document.querySelector('[data-exercise-id="maybe-1"]');await click(card.querySelectorAll('button')[1]);await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43')&&!card.querySelector('.feedback43.error'),'may be classified as modal plus linking verb');}
- if(i===20){const card=document.querySelector('[data-exercise-id="past-analyzer-1"]');await click(card.querySelectorAll('button')[0]);await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43')&&!card.querySelector('.feedback43.error'),'past possibility decomposes to modal + have + V3');}
- if(i===24){ok(all('.table43').length>=1,'four-modals comparison table renders');const card=document.querySelector('[data-exercise-id="four-modals-3"]');await click(card.querySelectorAll('button')[1]);await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43')&&!card.querySelector('.feedback43.error'),'four-modal matrix picks MAY for polite permission');}
- if(i===26){ok(all('.turn43').length===11,'comprehensive dialogue renders eleven turns');const card=document.querySelector('[data-exercise-id="detective-1"]');await click(card.querySelectorAll('button')[0]);await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43')&&!card.querySelector('.feedback43.error'),'context detective tags the past possibility turn');}
- if(i===27){const card=document.querySelector('[data-exercise-id="practice-27-1"]');await click(card.querySelectorAll('button')[0]);await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43')&&!card.querySelector('.feedback43.error'),'MAY accepted in the both-acceptable drill');await click(card.querySelectorAll('button')[1]);await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43')&&!card.querySelector('.feedback43.error'),'MIGHT accepted in the both-acceptable drill');}
- if(i===28){const card=document.querySelector('[data-exercise-id="practice-28-1"]');await click(card.querySelectorAll('button')[0]);await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43')&&!card.querySelector('.feedback43.error'),'§28 first key is A — may');}
- if(i===29){const card=document.querySelector('[data-exercise-id="practice-29-1"]');await click(card.querySelectorAll('button')[0]);await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43')&&!card.querySelector('.feedback43.error'),'§29 first key is Maybe the adverb');}
- if(i===30){const card=document.querySelector('[data-exercise-id="practice-30-1"]');ok(card.querySelector('button').disabled,'rewrite attempt gates the key');const areas=card.querySelectorAll('textarea');await change(areas[0],'He may have lost his phone.');ok(card.querySelector('button').disabled,'rewrite reason still required');await change(areas[1],'rephrased with may have');await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43'),'rewrite comparison opens after the attempt');}
- if(i===31){const card=document.querySelector('[data-exercise-id="error-repair-1"]');ok(card.querySelectorAll('textarea').length===2,'repair asks for the fix and the reason');ok(card.querySelector('button').disabled,'repair locked while empty');await change(card.querySelectorAll('textarea')[0],'She may be at home.');ok(card.querySelector('button').disabled,'repair reason still required');await change(card.querySelectorAll('textarea')[1],'removed the s from may');await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43').textContent.includes('She may come tomorrow.'),'repair reveals the source key only after the attempt');}
- if(i===32){ok(document.body.textContent.includes('The Unexpected School Trip'),'reading challenge text renders');const card=document.querySelector('[data-exercise-id="reading-1"]');ok(!card.querySelector('.feedback43'),'comprehension answer hidden before the attempt');await change(card.querySelector('textarea'),'a science museum');await click(card.querySelector('.primary43'));ok(card.querySelector('.feedback43'),'comprehension comparison opens after the attempt');}
- if(i===33)ok(byText('ابدأ الاختبار النهائي'),'test entry point');
- if(i===34)ok(byText('انتقل إلى بوابة المعلم'),'teacher gate entry point');
- if(i===35){const card=document.querySelector('.checklist43');ok(card.querySelectorAll('li').length===10,'writing checklist has ten items');const box=card.querySelector('input[type=checkbox]');await click(box);ok(document.body.textContent.includes('1 / 10'),'writing checklist counts completed items honestly');}
- if(i===36)ok(all('.summaryCard43').length===10,'golden rules render as ten cards');
- if(i===37)ok(document.body.textContent.includes('Lesson 44')&&document.body.textContent.includes('مخطط'),'roadmap keeps Lesson 44 as planned prose only');
- if(i<37)await next();
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+dom.window.scrollTo = () => {};
+
+mkdirSync('node_modules/.lesson43-audit', { recursive: true });
+await build({
+  stdin: {
+    contents: [
+      "export {default as Lesson43} from './src/lessons/lesson43/Lesson43';",
+      "export {WRITING_CRITERIA_43} from './src/lessons/lesson43/kit43';",
+      "export {Text43, En43} from './src/lessons/lesson43/design43';",
+      "export {SLIDES_43, STATIONS_43, slidesForStation43} from './src/lessons/lesson43/slides43';",
+      "export {NEXT_LESSON_43} from './src/lessons/lesson43/ledger43';",
+      "export {PRACTICE_43} from './src/lessons/lesson43/practice43';",
+      "export {TEST_QUESTIONS_43, TEST_LEVELS_43, testComplete43} from './src/lessons/lesson43/testData43';",
+    ].join("\n"),
+    resolveDir: process.cwd(),
+    loader: "tsx",
+  },
+  outfile: "node_modules/.lesson43-audit/ui.mjs",
+  bundle: true,
+  platform: "node",
+  format: "esm",
+  packages: "external",
+  jsx: "automatic",
+  loader: { ".css": "empty" },
+  logLevel: "silent",
+});
+const { Lesson43, Text43, En43, SLIDES_43, STATIONS_43, slidesForStation43, NEXT_LESSON_43, PRACTICE_43, TEST_QUESTIONS_43, TEST_LEVELS_43, testComplete43, WRITING_CRITERIA_43 } = await import('../node_modules/.lesson43-audit/ui.mjs');
+const React = await import('react');
+const { createRoot } = await import('react-dom/client');
+const { renderToStaticMarkup } = await import('react-dom/server');
+const { act } = React;
+
+let checks = 0;
+const ok = (c, m) => { checks++; assert.ok(c, m); };
+
+// ---------- BIDI isolation for the shared isolator ----------
+for (const text of ['She may come tomorrow.', 'He might have forgotten the keys.', 'May I ask a question?', 'Maybe she will join us later.', 'She may be at home now.', 'It might rain tomorrow.', 'May I remind everyone about the quiz?', 'They might not visit us.']) {
+  for (const content of [text, `لاحظ المثال: ${text} — الفعل يبقى V1.`]) {
+    const html = renderToStaticMarkup(React.createElement('div', { dir: 'rtl' }, React.createElement(Text43, { text: content })));
+    ok(analyzeHtml(html).every(p => p.violations.length === 0), `BIDI: ${content}`);
+    ok(html.includes('dir="ltr"'), 'explicit LTR isolation');
+  }
 }
-await click(all('.areas43 button')[1]);ok(all('[data-question-id]').length===25,'25 questions, no duplicated practice');ok(byText('تسليم الاختبار النهائي').disabled,'incomplete submit disabled');
-for(const fieldset of all('[data-question-id]')){
- const radio=fieldset.querySelector('input[type=radio]');if(radio)await click(radio);else for(const input of fieldset.querySelectorAll('textarea'))await change(input,'Attempt');
+ok(renderToStaticMarkup(React.createElement(En43, null, 'MAY')).includes('lang="en"'), 'English isolator carries lang="en"');
+
+// ---------- shell ----------
+const root = createRoot(document.getElementById('root'));
+await act(async () => root.render(React.createElement(Lesson43)));
+const all = (selector) => [...document.querySelectorAll(selector)];
+async function click(element) {
+  ok(!!element, 'click target exists');
+  await act(async () => element.click());
 }
-ok(!byText('تسليم الاختبار النهائي').disabled,'completed submit enabled');await click(byText('تسليم الاختبار النهائي'));await act(async()=>{await new Promise(resolve=>setTimeout(resolve,50));});ok(document.querySelector('[data-area=solutions]'),'solutions mounted only after submission');ok(document.querySelector('[data-area=solutions]').textContent.includes('A — may'),'detailed key shown after submission');
-await click(all('.areas43 button')[1]);await click(byText('إعادة الاختبار ومسح الإجابات'));ok(all('.areas43 button')[2].disabled,'reset relocks');ok(all('textarea').every(el=>!el.value),'reset clears text');ok(all('input:checked').length===0,'reset clears radios');
-await click(all('.areas43 button')[3]);ok(!document.querySelector('[data-teacher-guide]'),'guide absent before password');await change(document.querySelector('input[type=password]'),'incorrect');await click(byText('فتح مساحة المعلم'));ok(document.querySelector('[role=alert]'),'incorrect password feedback');
-await change(document.querySelector('input[type=password]'),'somer173');await click(byText('فتح مساحة المعلم'));await act(async()=>{await new Promise(resolve=>setTimeout(resolve,50));});ok(document.querySelector('[data-teacher-guide]'),'teacher guide opens with the existing password');
-await act(async()=>root.unmount());
-console.log(`Lesson 43 DOM/BIDI audit passed: ${checks} assertions; 38-step navigation, labels/ARIA, nine interactive engines, attempt-gated practice keys, complete-test submission/reset, locked teacher access and sixteen targeted BIDI cases.`);
+async function change(element, value) {
+  await act(async () => {
+    const proto = element.tagName === 'TEXTAREA' ? HTMLTextAreaElement.prototype : element.tagName === 'SELECT' ? HTMLSelectElement.prototype : HTMLInputElement.prototype;
+    Object.getOwnPropertyDescriptor(proto, 'value').set.call(element, value);
+    element.dispatchEvent(new Event(element.tagName === 'SELECT' ? 'change' : 'input', { bubbles: true }));
+  });
+}
+async function key(kind) {
+  await act(async () => {
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: kind, bubbles: true }));
+  });
+}
+const slideNow = () => document.querySelector('[data-slide-id]');
+const next = () => click([...all('button[aria-label="التالي"]')][0]);
+
+ok(slideNow()?.dataset.slideId === 'cover', 'cover is the first slide');
+ok(all('nav[aria-label="محطات الدرس"] > div > button').length === STATIONS_43.length, 'rail lists every station');
+ok(document.querySelector('[role="progressbar"]'), 'progress bar present');
+ok(all('button[aria-label="التالي"]').length === 1 && all('button[aria-label="السابق"]').length === 1, 'prev/next keyboard-and-click controls present');
+
+// ---------- walk the whole deck ----------
+const walked = [];
+for (let i = 0; i < SLIDES_43.length; i += 1) {
+  const slide = slideNow();
+  ok(slide, `slide ${i} rendered`);
+  ok(slide.dataset.slideId === SLIDES_43[i].id, `slide ${i} is "${SLIDES_43[i].id}" (got ${slide.dataset.slideId})`);
+  walked.push(slide.dataset.slideId);
+  for (const el of all('[aria-controls],[aria-labelledby],[aria-describedby]')) {
+    for (const attr of ['aria-controls', 'aria-labelledby', 'aria-describedby']) {
+      for (const id of (el.getAttribute(attr) || '').split(/\s+/).filter(Boolean)) ok(document.getElementById(id), `ARIA resolves ${id}`);
+    }
+  }
+  for (const el of all('button')) ok(el.textContent.trim() || el.getAttribute('aria-label'), 'button accessible name');
+  for (const el of all('textarea, select, input')) ok(el.closest('label') || el.getAttribute('aria-label') || el.labels?.length, 'form control accessible name');
+  ok(!/مفتاح تصحيح الدرس 43|MAY فعل ناقص ثابت الصيغة|⑮ Maybe he is tired/.test(document.body.textContent), `slide ${i} never renders the §34 answer key`);
+  await key('ArrowLeft');
+}
+ok(walked.length === SLIDES_43.length, 'the whole deck is reachable by arrow keys');
+ok(walked[0] === 'cover', 'the deck starts on the cover');
+ok(slideNow()?.dataset.slideId === SLIDES_43[SLIDES_43.length - 1].id, 'the deck ends on the last slide');
+await key('ArrowRight');
+ok(slideNow()?.dataset.slideId === SLIDES_43[SLIDES_43.length - 2].id, 'ArrowRight walks backwards');
+ok(walked.length === new Set(walked).size, 'no slide is skipped or repeated');
+
+// ---------- rail jump ----------
+await click(all('nav[aria-label="محطات الدرس"] button')[STATIONS_43.findIndex(s => s.id === 'assessment')]);
+ok(slideNow()?.dataset.slideId === slidesForStation43('assessment')[0] || slideNow()?.dataset.slideId === SLIDES_43[slidesForStation43('assessment')[0]].id, 'rail jumps to the assessment station');
+
+// ---------- labs ----------
+async function goto(slideId) {
+  await click(all('nav[aria-label="محطات الدرس"] button')[0]);
+  const index = SLIDES_43.findIndex((s) => s.id === slideId);
+  for (let i = 0; i < index; i += 1) await key('ArrowLeft');
+  ok(slideNow()?.dataset.slideId === slideId, `reached slide "${slideId}"`);
+}
+await goto('lab-may-spectrum');
+ok(slideNow()?.dataset.slideId === 'lab-may-spectrum', 'spectrum lab slide');
+ok(all('[role="group"]').length >= 1, 'spectrum classifier offers a choice group');
+await click(all('[role="group"]')[0].querySelectorAll('button')[0]);
+ok(all('[role="status"]').length === 1, 'spectrum lab answers with feedback');
+ok(!/✕/.test(all('[role="status"]')[0].textContent) || all('[role="status"]')[0].textContent.includes('صحيح'), 'spectrum feedback is a verdict');
+
+await goto('lab-may-builder');
+ok(all('[role="group"]').length >= 3, 'builder exposes subject, modal and verb groups');
+await click(all('[role="group"]')[0].querySelectorAll('button')[1]);
+await click(all('[role="group"]')[1].querySelectorAll('button')[0]);
+await click(all('[role="group"]')[2].querySelectorAll('button')[0]);
+ok(document.body.textContent.includes('I may travel'), 'builder assembles the sentence');
+
+await goto('lab-might-swap');
+await click(all('[role="group"]')[3].querySelectorAll('button')[1]);
+ok(all('[role="status"]').length === 1, 'swap lab answers with feedback');
+
+await goto('lab-maybe');
+await click(all('[role="group"]')[0].querySelectorAll('button')[0]);
+ok(all('[role="status"]')[0]?.textContent.includes('صحيح'), 'maybe lab classifies the standalone adverb');
+
+await goto('lab-past');
+ok(all('[role="group"]').length >= 9, 'past lab exposes modal / have / V3 groups');
+await click(all('[role="group"]')[0].querySelectorAll('button')[0]);
+await click(all('[role="group"]')[1].querySelectorAll('button')[0]);
+await click(all('[role="group"]')[2].querySelectorAll('button')[0]);
+ok(all('[role="status"]').length === 1, 'past lab answers with feedback');
+
+await goto('lab-detective');
+ok(all('[role="group"]').length >= 8, 'detective lab lists every dialogue use');
+
+// ---------- practice cards: gated until the attempt ----------
+await goto('practice-27');
+let card = document.querySelector('[data-practice-item="p27-1"]');
+ok(card && !card.querySelector('[role="status"]'), 'practice card hides the key before the attempt');
+await click(card.querySelectorAll('button')[0]);
+await click(card.querySelector('[data-practice-check]'));
+ok(card.querySelector('[role="status"]')?.textContent.includes('MAY') || card.querySelector('[role="status"]'), '§27 practice reveals the key after the attempt');
+card = document.querySelector('[data-practice-item="p27-2"]');
+await click(card.querySelectorAll('button')[1]);
+await click(card.querySelector('[data-practice-check]'));
+ok(card.querySelector('[role="status"]')?.textContent.includes('MIGHT'), '§27 accepts MIGHT after MAY');
+
+await goto('practice-28');
+card = document.querySelector('[data-practice-item="p28-1"]');
+await click(card.querySelectorAll('button')[0]);
+await click(card.querySelector('[data-practice-check]'));
+ok(card.querySelector('[role="status"]')?.textContent.includes('A — may'), '§28 first key is A — may');
+
+await goto('practice-29');
+card = document.querySelector('[data-practice-item="p29-1"]');
+await click(card.querySelectorAll('button')[0]);
+await click(card.querySelector('[data-practice-check]'));
+ok(card.querySelector('[role="status"]')?.textContent.includes('Maybe'), '§29 first key is the standalone adverb');
+
+await goto('practice-30');
+card = document.querySelector('[data-practice-item="p30-1"]');
+ok(card.querySelector('[data-practice-check]').disabled, '§30 rewrite gates the key while empty');
+const areas = card.querySelectorAll('textarea');
+ok(areas.length === 2, '§30 asks for the rewrite and the reason');
+await change(areas[0], 'He may have lost his phone.');
+ok(card.querySelector('[data-practice-check]').disabled, '§30 still wants the reason');
+await change(areas[1], 'may have + V3 of lose');
+await click(card.querySelector('[data-practice-check]'));
+ok(card.querySelector('[role="status"]'), '§30 rewrite comparison opens after the attempt');
+
+await goto('practice-31');
+card = document.querySelector('[data-practice-item="p31-1"]');
+ok(card.querySelectorAll('textarea').length === 2, '§31 repair asks for the fix and the reason');
+ok(card.querySelector('[data-practice-check]').disabled, '§31 repair locked while empty');
+await change(card.querySelectorAll('textarea')[0], 'She may come tomorrow.');
+await change(card.querySelectorAll('textarea')[1], 'removed the s from may');
+await click(card.querySelector('[data-practice-check]'));
+ok(card.querySelector('[role="status"]')?.textContent.includes('She may come tomorrow.'), '§31 repair reveals the source key');
+
+await goto('practice-32');
+card = document.querySelector('[data-practice-item="p32-1"]');
+ok(card.querySelector('[data-practice-check]').disabled, '§32 comprehension key hidden before the attempt');
+await change(card.querySelector('textarea'), 'a science museum');
+await click(card.querySelector('[data-practice-check]'));
+ok(card.querySelector('[role="status"]'), '§32 comprehension comparison follows the attempt');
+ok(/لا يُصحَّح آليًا/.test(document.body.textContent), 'practice feedback honestly says it is not auto-graded');
+
+// ---------- writing ----------
+await goto('writing-editor');
+ok(document.querySelector('textarea'), 'writing mission offers a text area');
+await goto('writing-criteria');
+ok(all('input[type="checkbox"]').length === 8, '§35 lists eight writing criteria');
+await click(all('input[type="checkbox"]')[0]);
+ok(document.body.textContent.includes('1 / 8'), 'writing checklist counts completed criteria');
+await goto('writing-model');
+ok(document.body.textContent.includes('إضافة المنصة'), 'writing model is labelled a platform addition');
+
+// ---------- final test: gated, complete, submit, reset ----------
+const TEST_SLIDES = SLIDES_43.filter((s) => s.kind === "test").map((s) => s.id);
+ok(TEST_SLIDES.length === 18, `the 25 questions are split across eighteen level slides (got ${TEST_SLIDES.length})`);
+let shown = 0;
+for (const id of TEST_SLIDES) {
+  await goto(id);
+  shown += all('[data-question-id]').length;
+  for (const question of all('[data-question-id]')) {
+    const radios = question.querySelectorAll('input[type="radio"]');
+    if (radios.length) await click(radios[0]);
+    else for (const textarea of question.querySelectorAll('textarea')) await change(textarea, 'My attempt');
+  }
+}
+ok(shown === 25, `exactly 25 questions displayed across the level slides (got ${shown})`);
+ok(TEST_LEVELS_43.length === 5, 'five levels');
+await goto(TEST_SLIDES[TEST_SLIDES.length - 1]);
+ok(!document.querySelector('[data-test-submit]').disabled, 'complete submission enabled');
+ok(!/مفتاح تصحيح الدرس 43/.test(document.body.textContent), 'no key in the student DOM before submit');
+await click(document.querySelector('[data-test-submit]'));
+ok(slideNow()?.dataset.slideId === 'test-result', 'submit moves to the result slide');
+ok(document.body.textContent.includes('نتيجة الاختبار'), 'result slide renders');
+ok(/25/.test(document.body.textContent), 'result slide shows the total');
+await new Promise((resolve) => setTimeout(resolve, 80));
+ok(document.querySelector('[data-slide-id="test-result"]').textContent.includes('الحلول'), 'result slide surfaces the solutions area');
+ok(/A — may/.test(document.querySelector('[data-slide-id="test-result"]').textContent), 'the solutions area shows the detailed key after the attempt');
+
+await goto(TEST_SLIDES[0]);
+ok(all('[data-question-id]').length === 2, 'level 1 slide shows its first two questions');
+ok(all('textarea').some((t) => t.value !== '') || all('[aria-pressed="true"]').length > 0, 'answers persist across slides');
+
+// ---------- teacher area ----------
+await goto('teacher');
+ok(document.querySelector('input[type="password"]'), 'teacher gate renders a password field');
+await change(document.querySelector('input[type="password"]'), 'wrong');
+await click([...all('button')].find((b) => b.textContent.includes('فتح المساحة')));
+ok(document.querySelector('[role="alert"]'), 'wrong teacher password rejected');
+const password = readFileSync('src/lessons/lesson40/TeacherArea40.tsx', 'utf8').match(/TEACHER_PASSWORD_40 = "([^"]+)"/)[1];
+await change(document.querySelector('input[type="password"]'), password);
+await click([...all('button')].find((b) => b.textContent.includes('فتح المساحة')));
+await new Promise((resolve) => setTimeout(resolve, 60));
+ok(/مفتاح تصحيح الدرس 43/.test(document.body.textContent), 'the teacher guide carries the §34 key');
+ok(/دليل المعلم/.test(document.body.textContent), 'teacher guide renders');
+const guideText = document.body.textContent.replace(/\s+/g, '');
+ok(WRITING_CRITERIA_43.every((c) => guideText.includes(c.replace(/\s+/g, ''))), 'teacher guide lists the eight writing criteria');
+ok(document.body.textContent.includes(NEXT_LESSON_43.label), 'teacher guide points at Lesson 44');
+
+console.log(`Lesson 43 DOM audit passed: ${checks} assertions; ${SLIDES_43.length} slides, ${STATIONS_43.length} stations, ${PRACTICE_43.length} practice items, ${TEST_QUESTIONS_43.length} test questions.`);

@@ -34,6 +34,7 @@ export function SignatureGhost() {
   return (
     <div className="pointer-events-none fixed inset-0 z-0 grid place-items-center overflow-hidden">
       <span
+        aria-hidden="true"
         className="select-none text-center text-4xl font-extrabold text-slate-900/[0.04] md:text-6xl"
         style={{ transform: "rotate(-18deg)" }}
       >

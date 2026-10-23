@@ -1,85 +1,105 @@
-import { SOURCE_SECTIONS_43 } from './ledger43';
-import { PRACTICE_43 } from './practiceData43';
-import { TEST_QUESTIONS_43 } from './testData43';
+import { SOURCE_SECTIONS_43 } from "./ledger43";
+import { TEACHER_SECTIONS_43, type TeacherSection43 } from "./teacherSource43";
+import { SLIDES_43, STATIONS_43, type Slide43 } from "./slides43";
 
-// Every source section maps to its destination in the experience.
-// Destination steps are 0-indexed (step index === section number).
-const DESTINATIONS: Record<number, { destination: string; answerLocation: string }> = {
-  0: { destination: 'الغلاف — الخطوة 0 (Cover43)', answerLocation: 'لا مفاتيح — تعريف المقرر' },
-  1: { destination: 'الخطوة 1 — GoalList43', answerLocation: 'لا مفاتيح — أهداف المقرر' },
-  2: { destination: 'الخطوة 2 — المصدر + ProbabilityExplorer43', answerLocation: 'الطيف الكيفي — تغذية راجعة فورية' },
-  3: { destination: 'الخطوة 3 — المصدر + BuilderLab43', answerLocation: 'باني الجمل — قراءة فورية' },
-  4: { destination: 'الخطوة 4 — المصدر + TransformMay43', answerLocation: 'تحويل الإثبات إلى نفي وسؤال' },
-  5: { destination: 'الخطوة 5 — جدول الضمائر + DialLab43', answerLocation: 'قراءة فورية من القرص' },
-  6: { destination: 'الخطوة 6 — المصدر + WILL vs MAY + WillMayCompare43', answerLocation: 'WILL ليست ضمانًا' },
-  7: { destination: 'الخطوة 7 — المصدر + MayBeComposer43', answerLocation: 'مركّب MAY BE' },
-  8: { destination: 'الخطوة 8 — المصدر + ModalFamily43Intro', answerLocation: 'لا مفاتيح — تعريف القناة' },
-  9: { destination: 'الخطوة 9 — المصدر + فحص قاعدة MIGHT', answerLocation: 'ChoiceLab مغلق بالمحاولة' },
-  10: { destination: 'الخطوة 10 — جدول الضمائر + DialLab43', answerLocation: 'قراءة فورية من القرص' },
-  11: { destination: 'الخطوة 11 — المصدر + SwapLab43', answerLocation: 'اختبار التبديل MAY ↔ MIGHT' },
-  12: { destination: 'الخطوة 12 — المصدر + TransformMay43', answerLocation: 'تحويلات MAY NOT' },
-  13: { destination: 'الخطوة 13 — المصدر + NegationLab43', answerLocation: 'احتمال أم منع؟' },
-  14: { destination: 'الخطوة 14 — المصدر + MustNotCompare43', answerLocation: 'MAY NOT ≠ MUST NOT' },
-  15: { destination: 'الخطوة 15 — المصدر + PermissionStudio43', answerLocation: 'سلم اللباقة' },
-  16: { destination: 'الخطوة 16 — المصدر + أمثلة الاستئذان', answerLocation: 'ChoiceLab درجات اللباقة' },
-  17: { destination: 'الخطوة 17 — حوار المدير + PermissionStudio43', answerLocation: 'وسم الأدوار في الحوار' },
-  18: { destination: 'الخطوة 18 — المصدر + MaybeLab43', answerLocation: 'مصنّف الوظيفة' },
-  19: { destination: 'الخطوة 19 — المصدر + MaybeLab43 + تركيب MAYBE/MAY BE', answerLocation: 'تغطي أمثلة §19 وأسئلة §29' },
-  20: { destination: 'الخطوة 20 — المصدر + PastPossibilityAnalyzer43', answerLocation: 'فك التركيب MAY HAVE + V3' },
-  21: { destination: 'الخطوة 21 — المصدر + محلل الماضي + أزواج حاضر/ماضٍ', answerLocation: 'ChoiceLab مغلق بالمحاولة' },
-  22: { destination: 'الخطوة 22 — حوار مايا وعمر + الجدول + المحلل', answerLocation: 'وسم التخمين الماضٍ' },
-  23: { destination: 'الخطوة 23 — المصدر + MAY HAVE BEEN', answerLocation: 'ChoiceLab حالة سابقة' },
-  24: { destination: 'الخطوة 24 — جدول الأفعال الأربعة + FourModalMatrix43', answerLocation: 'مصفوفة المعاني' },
-  25: { destination: 'الخطوة 25 — الأسئلة الستة + DecisionGuide43', answerLocation: 'دليل القرار قبل الكتابة' },
-  26: { destination: 'الخطوة 26 — الحوار الشامل + ContextDetective43', answerLocation: 'وسم الاستخدامات الثمانية' },
-  27: { destination: 'الخطوة 27 — PracticeSet43(27)', answerLocation: 'مفتاح §27 بعد المحاولة — MAY أو MIGHT كلاهما مقبول' },
-  28: { destination: 'الخطوة 28 — PracticeSet43(28)', answerLocation: 'مفتاح §28 بعد المحاولة' },
-  29: { destination: 'الخطوة 29 — PracticeSet43(29) + MaybeLab43', answerLocation: 'مفتاح §29 بعد المحاولة' },
-  30: { destination: 'الخطوة 30 — PracticeSet43(30)', answerLocation: 'مفتاح §30 بعد المحاولة — MAY وMIGHT قابلان للتبديل' },
-  31: { destination: 'الخطوة 31 — ErrorRepair43 (تدريب §31 كاملًا)', answerLocation: 'مفتاح §31 بعد المحاولة' },
-  32: { destination: 'الخطوة 32 — ReadingChallenge43 (تدريب §32 كاملًا)', answerLocation: 'مفاتيح §32 بعد المحاولة' },
-  33: { destination: 'منطقة الاختبار المستقلة — TestArea43', answerLocation: 'مفاتيح §34 — لا تُعرض قبل التسليم' },
-  34: { destination: 'بوابة المعلم — TeacherArea43 + SolutionsArea43 (lazy)', answerLocation: 'مفاتيح §34 كاملة' },
-  35: { destination: 'الخطوة 35 — WritingMission43', answerLocation: 'قائمة تحقق من 10 بنود — لا تصحيح آلي للنثر' },
-  36: { destination: 'الخطوة 36 — SummaryCards43 + المصدر', answerLocation: 'بطاقات القواعد الذهبية' },
-  37: { destination: 'الخطوة 37 — Roadmap43 + المصدر', answerLocation: 'خريطة المنهج — الدرس 44 مخطط فقط' },
+/**
+ * سجل التغطية: يرتب كل قسم من المصدر والادعاء بأنه معروض، مع القائمة
+ * الفعلية للشرائح التي تغطيه. يُبنى من `SLIDES_43` نفسه لكي لا ينفصل
+ * سجل التغطية عن الهيكل الحقيقي للدرس.
+ */
+export type CoverageEntry43 = {
+  num: number;
+  title: string;
+  units: number;
+  slides: string[];
+  station: string;
+  teacherOnly: boolean;
 };
 
-export type CoverageRow43 = { id: string; number: number; title: string; destination: string; answerLocation: string; units: { id: string; text: string }[]; items: { id: string; parts: string[] }[] };
+export const COVERAGE_43: CoverageEntry43[] = [
+  ...SOURCE_SECTIONS_43.map((section) => {
+    const slides = SLIDES_43.filter((slide) => slide.section === section.num);
+    return {
+      num: section.num,
+      title: section.title,
+      units: section.lines.length,
+      slides: slides.map((slide) => slide.id),
+      station: slides[0]?.station ?? STATIONS_43[0].id,
+      teacherOnly: false,
+    };
+  }),
+  {
+    num: TEACHER_SECTIONS_43[0].num,
+    title: TEACHER_SECTIONS_43[0].title,
+    units: TEACHER_SECTIONS_43[0].lines.length,
+    slides: SLIDES_43.filter((slide) => slide.kind === "teacher").map((slide) => slide.id),
+    station: "teacher",
+    teacherOnly: true,
+  },
+].sort((a, b) => a.num - b.num);
 
-export const COVERAGE_43: CoverageRow43[] = SOURCE_SECTIONS_43.map(section => {
-  const meta = DESTINATIONS[section.num] ?? { destination: 'الخطوة الدراسية', answerLocation: 'المصدر' };
-  const items = PRACTICE_43.filter(item => item.section === section.num).map(item => ({
-    id: item.id, parts: [item.parts.join('+'), item.options.length ? `خيارات: ${item.options.length}` : 'كتابة حرة', `مفتاح: ${item.sourceAnswer}`],
-  }));
-  const testItems = section.num === 33 ? TEST_QUESTIONS_43.map(q => ({ id: q.id, parts: q.fields })) : [];
-  return { id: section.id, number: section.num, title: section.title, destination: meta.destination, answerLocation: meta.answerLocation, units: section.units, items: [...items, ...testItems] };
-});
-
-export const COVERAGE_ACCURACY_NOTES_43 = [
-  'نُقلت أقسام المصدر الـ38 (الغلاف + §§1–37) كاملة دون حذف أي قسم أو مثال أو سؤال أو إجابة.',
-  'مفاتيح التدريبات §§27–32 من المصدر حرفيًا: §28 مفاتيح A B A C B A؛ §29 مفاتيح Maybe/may be بالتناوب؛ §30 نماذج إعادة صياغة؛ §31 الإصلاحات العشر بما فيها البند ⑧ المتعدد الحلول؛ §32 إجابات الفهم العشر.',
-  'مفاتيح الاختبار الـ25 من §34 حرفيًا، بما فيها الحقول الثلاثة للسؤالين 9 و10 (الفعل الناقص / HAVE / V3).',
-  '§27 يقرر صراحة قبول MAY أو MIGHT في كل البنود الستة — والمحرك يقبل الصيغتين ولا يرفض أيًّا منهما.',
-  '§31 ⑧ يحتفظ بتعدد الحلول: May she come? صياغة ممكنة نحويًا، والاستخدام اليومي يفضل إعادة صياغة بحسب المعنى مثل Is she likely to come? — لا تُفرض إعادة صياغة واحدة.',
-  'موقف المصدر من النسب محفوظ: لا توجد نسب مئوية ثابتة لـ MAY أو MIGHT، وMAY ليست دائمًا أقوى من MIGHT.',
-  'التطبيعات الموثقة: إزالة الإيموجي وأعلام الأعلام من العناوين، وحذف أشرطة الزينة ━━━، وربط خلايا الجداول بـ | ، وإزالة الأسطر الفارغة الزائدة. لا تغيير في أي نص تعليمي.',
-  'أسئلة §33 الخمسة والعشرون محفوظة في testData43 حرفيًا بما فيها سياق الحوار ذي الأسطر العشرة؛ ومفاتيحها في solutionsData43 مطابقة لـ §34 حرفيًا.',
+/**
+ * ملاحظات الدقة: مواضع يحتاج المعلم/الطالب فيها إلى تنبيه دقيق لأن المصدر
+ * نفسه يرفض تبسيطًا جامدًا. هذه ملاحظات توثيقية لا تغيّر النص المصدر.
+ */
+export const COVERAGE_ACCURACY_NOTES_43: string[] = [
+  "§5 لا يربط MAY وMIGHT بنسبة مئوية ثابتة، ولا يفرض الترتيب بينهما — الاختيار يعتمد على الأسلوب ودرجة التحفظ.",
+  "§6 يرفض أي ترتيب نسبٍ ثابت، لذا لا تُقدَّم نسبة 70%/30% أو ما شابه في أي مكان في الدرس.",
+  "§7 MAY + BE تُلفظان معًا، أما MAYBE فكلمة واحدة مستقلة في بداية الجملة غالبًا.",
+  "§13 MAY NOT تعني في الأغلب «احتمال عدم الحدوث»، وقد تحمل معنى المنع في سياقات رسمية فقط.",
+  "§15 طلب الإذن يقبل Can I وCould I وMay I بحسب الرسمية، وMight I صيغة قديمة رسمية.",
+  "§19 السؤال May I...? وجوابه Yes, you may — لا MIGHT في الجواب اليومي المعتاد.",
+  "§20 MAY HAVE + V3 احتمال يتعلق بالماضي، ولا يؤكد أن الحدث وقع.",
+  "§23 MAY HAVE وMIGHT HAVE تُستعملان للاحتمال الماضي، واختيار إحداهما أسلوبي.",
+  "§25 الفعل الناقص يُختيار من المعنى أولًا ثم السياق، لا من ترجمة آلية لكلمة واحدة.",
+  "§31 ⑧ يُبيِّن أن May she come? صيغة نحوية ممكنة في سياقات معينة، لكن الاستعمال اليومي يفضّل Is she likely to come?.",
+  "§34 المفتاح يُفضّل عدم عرضه للطالب إلا بعد انتهاء الاختبار.",
+  "§37 يصف الدرس 44 على أنه مسجّل فعلًا في المنصة، فلا يُقال إنه غير موجود.",
 ];
 
-export const COVERAGE_PLATFORM_ADDITIONS_43 = [
-  'ProbabilityExplorer43: طيف احتمال كيفي (مؤكد/مرجح/ممكن/بعيد/مستحيل) بلا نسب مئوية — بنود تصنيف من إعداد المنصة.',
-  'BuilderLab43 وDialLab43: أقراص تركيب الجمل — واجهة المنصة، أمثلة من سياق الدرس.',
-  'SwapLab43: اختبار التبديل MAY ↔ MIGHT — بنود المنصة المستندة إلى أمثلة §11.',
-  'NegationLab43 وMustNotCompare43: تصنيف الاحتمال السلبي مقابل المنع — بنود المنصة.',
-  'PermissionStudio43: سلم اللباقة (Can I / Could I / May I / Might I) — ترتيب المنصة التربوي لمحتوى §§15–17.',
-  'MaybeLab43: مصنّف وظيفة الكلمة (ظرف مقابل فعل ناقص + رابط) — يغطي أمثلة §19 وأسئلة §29 معًا.',
-  'PastPossibilityAnalyzer43: فك تركيب MAY HAVE + V3 وخريطة المسار الزمني — واجهة المنصة.',
-  'FourModalMatrix43 وDecisionGuide43: مصفوفة الأفعال الأربعة والأسئلة الستة — أسئلة المنصة المستندة إلى §24–25.',
-  'ContextDetective43: وسم الاستخدامات الثمانية في حوار §26 — أزواج سؤال/جواب من إعداد المنصة.',
-  'practiceNotes43.ts: سبب كل مفتاح تدريب — شرح المنصة، المفتاح نفسه من المصدر.',
-  'solutionsData43.ts: جملة السبب لكل سؤال اختبار — شرح المنصة، المفتاح من §34.',
-  'WritingMission43: نموذج إرشادي موسوم «إضافة المنصة» وقائمة التحقق العشرية.',
-  'دليل المعلم: تسلسل زمني مقترح وتصورات خاطئة وسلم تقييم — كلها من إعداد المنصة.',
-  'الهوية البصرية «مرصد الاحتمالات» وألوان القنوات (teal لـ MAY وamber لـ MIGHT) — تصميم المنصة.',
+/**
+ * الإضافات التي تضيفها المنصة ولا وجود لها في النص المصدر: الأنشطة
+ * التفاعلية، بنك التدريب، أسئلة الفهم، أسئلة الاختبار، ومهمة الكتابة.
+ */
+export const COVERAGE_PLATFORM_ADDITIONS_43: { section: number; kind: string; detail: string }[] = [
+  { section: 2, kind: "lab", detail: "الطيف الاحتمالي الكيفي: تصنيف الأحكام إلى مؤكد/احتمال، مع تنبيه بعدم وجود نسب مئوية ثابتة." },
+  { section: 3, kind: "lab", detail: "باني الجملة: يفكّك الجملة إلى فاعل وفعل ناقص وفعل رئيسي، ويسمّي القاعدة المكسورة إن وجدت." },
+  { section: 4, kind: "lab", detail: "آلة الفاعل: تثبت أن MAY وMIGHT ثابتتان مع جميع الضمائر." },
+  { section: 5, kind: "lab", detail: "قرص الاحتمال: يحدد زمن الاحتمال (حاضر/مستقبل/ماضٍ) من السياق." },
+  { section: 7, kind: "lab", detail: "مركّب MAY BE: تصنيف الجملة إلى MAY+BE أو MAY+V1 أو MAY+have+V3." },
+  { section: 11, kind: "lab", detail: "تبديل MAY وMIGHT: إظهار أن التبديل ممكن في كثير من الجمل وليس في طلب الإذن." },
+  { section: 13, kind: "lab", detail: "MAY NOT: تمييز الاحتمال السلبي من المنع في السياق الرسمي." },
+  { section: 14, kind: "lab", detail: "MAY NOT أم MUST NOT: اختيار الصيغة بحسب ما يعبّر عنه السياق." },
+  { section: 15, kind: "lab", detail: "سلم اللباقة: تصنيف المواقف إلى Can I / Could I / May I / Might I." },
+  { section: 17, kind: "lab", detail: "صِل الموقف بالصيغة: تطبيق آخر على اختيار صيغة طلب الإذن." },
+  { section: 18, kind: "lab", detail: "MAYBE مقابل MAY BE: تصنيف التعابير إلى ظرف مستقل أو فعل ناقص + be." },
+  { section: 20, kind: "lab", detail: "احتمال الماضي: تفكيك MAY/MIGHT + have + V3." },
+  { section: 24, kind: "lab", detail: "مصفوفة الأفعال الأربعة: تصنيف الجمل إلى وظيفة الفعل الناقص." },
+  { section: 25, kind: "lab", detail: "دليل القرار: اختيار الفعل الناقص من المعنى المقصود." },
+  { section: 26, kind: "lab", detail: "محلّل الحوار: وسم الاستخدامات المختلفة لـ MAY وMIGHT في الحوار الشامل." },
+  { section: 27, kind: "practice", detail: "بنك تدريب: 6 جمل يُختار فيها MAY أو MIGHT، وكلتاهما مقبولة." },
+  { section: 28, kind: "practice", detail: "بنك تدريب: 6 جمل متعددة الخيارات (A/B/C) مع مفتاح الحرف." },
+  { section: 29, kind: "practice", detail: "بنك تدريب: 6 جمل تفرّق بين Maybe و may be." },
+  { section: 30, kind: "practice", detail: "بنك تدريب: 5 إعادة صياغة باستخدام MAY HAVE أو MIGHT HAVE، مع ملاحظة إمكانية التبديل." },
+  { section: 31, kind: "practice", detail: "بنك تدريب: 10 إصلاحات لأخطاء نحوية شائعة." },
+  { section: 32, kind: "reading", detail: "نص قراءة مقسّم على شريحتين + 10 أسئلة فهم مصحوبة بحلولها." },
+  { section: 33, kind: "test", detail: "اختبار ختامي من 25 سؤالًا على خمسة مستويات، لا يحتوي مفتاح التصحيح." },
+  { section: 34, kind: "teacher", detail: "مفتاح تصحيح كامل ومنحني تدريس — يُحمّل عند الطلب بعد التحقق من كلمة مرور المعلم." },
+  { section: 35, kind: "writing", detail: "مهمة كتابة من 12–15 جملة، مع قائمة معايير ومُجَسِّم فقرة نموذجية وتحدّي إضافي." },
+  { section: 36, kind: "summary", detail: "الملخص الذهني المجمّع للدرس." },
+  { section: 37, kind: "roadmap", detail: "خارطة التقدم إلى الدرس 44 مع شريط تقدم 43/120." },
 ];
+
+/** عدد الشريحة لكل محطة — يُستخدم في تدقيق التغطية والتنقل. */
+export function slidesPerStation43(): Record<string, number> {
+  const counts: Record<string, number> = {};
+  for (const slide of SLIDES_43) counts[slide.station] = (counts[slide.station] ?? 0) + 1;
+  return counts;
+}
+
+/** الأقسام التي لا يغطيها أي شريحة تعليمية (لا ينبغي أن يكون العدد صفرًا). */
+export function uncoveredSections43(): number[] {
+  return COVERAGE_43.filter((entry) => entry.slides.length === 0).map((entry) => entry.num);
+}
+
+export type { Slide43 };

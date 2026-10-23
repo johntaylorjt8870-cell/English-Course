@@ -235,14 +235,16 @@ ok(lesson42DedicatedAssessment, "Lesson 42: 25 questions, five levels, independe
 // Lesson 43: independent 25-question / five-level assessment; detailed behavioral checks in audit:lesson43.
 const lesson43TestData = readFileSync(join(root, "src/lessons/lesson43/testData43.ts"), "utf8");
 const lesson43TestArea = readFileSync(join(root, "src/lessons/lesson43/TestArea43.tsx"), "utf8");
-const lesson43Solutions = readFileSync(join(root, "src/lessons/lesson43/solutionsData43.ts"), "utf8");
+const lesson43Key = readFileSync(join(root, "src/lessons/lesson43/key43.ts"), "utf8");
 const lesson43DedicatedAssessment =
-  (lesson43TestData.match(/"id": "q\d+"/g) || []).length === 25 &&
-  (lesson43TestData.match(/"level": [1-5]/g) || []).length === 5 &&
+  (lesson43TestData.match(/id: "q\d+"/g) || []).length === 25 &&
+  (lesson43TestData.match(/level: [1-5],/g) || []).length >= 5 &&
   lesson43TestArea.includes("testComplete43") &&
   lesson43TestArea.includes("TEST_LEVELS_43") &&
-  !lesson43TestArea.includes("solutionsData43") && !lesson43TestData.includes("solutionsData43") &&
-  lesson43Solutions.includes("Source key:") && !lesson43TestData.includes("Source key:");
+  lesson43TestArea.includes('import("./key43")') &&
+  !lesson43TestArea.includes("key43.ts") &&
+  !lesson43TestData.includes("SOLUTIONS_43") && !lesson43TestData.includes("reason:") &&
+  lesson43Key.includes("SOLUTIONS_43") && lesson43Key.includes("provenance");
 ok(lesson43DedicatedAssessment, "Lesson 43: 25 questions, five levels, independent test without solution imports");
 // Lesson 44: independent 25-question / five-level assessment; detailed behavioral checks in audit:lesson44.
 const lesson44TestData = readFileSync(join(root, "src/lessons/lesson44/testData44.ts"), "utf8");

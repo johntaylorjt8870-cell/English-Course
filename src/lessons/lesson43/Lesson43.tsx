@@ -1,136 +1,241 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
-import { Signature } from '../../shared/Signature';
-import { SOURCE_SECTIONS_43, STATIONS_43, LESSON_TITLE_43, LESSON_SUBTITLE_43, LESSON_STEP_COUNT_43, LESSON_IDENTITY_43 } from './data';
-import { Workspace43, Text43 } from './kit43';
-import { Steps43 } from './Steps43';
-import { TestArea43 } from './TestArea43';
-import { TeacherArea43 } from './TeacherArea43';
-import { testComplete43, type TestAnswers43 } from './testData43';
-import './lesson43.css';
+import { Suspense, lazy, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { En43, Text43, Panel43 } from "./design43";
+import { Signature, SignatureGhost } from "../../shared/Signature";
+import { Workspace43Provider } from "./kit43";
+import { SlideBody43, type TestControls43 } from "./Steps43";
+import { SLIDES_43, STATIONS_43, type Slide43 } from "./slides43";
 
-const SolutionsArea43 = lazy(() => import('./SolutionsArea43'));
-type Area43 = 'student' | 'test' | 'solutions' | 'teacher';
-const LAST_STEP = LESSON_STEP_COUNT_43 - 1;
-
+/**
+ * الدرس 43 — MAY vs MIGHT
+ * الهيكل مطابق للدرس 41/42: rail يسار، شريط تقدم، تنقّل بالأسهم،
+ * ومساحة الحلول تُحمّل عند الطلب فقط بعد تسجيل محاولة في التقييم.
+ */
 export default function Lesson43({ onExit }: { onExit?: () => void }) {
-  const [area, setArea] = useState<Area43>('student');
-  const [step, setStep] = useState(0);
-  const [visited, setVisited] = useState<number[]>([0]);
-  const [values, setValues] = useState<Record<string, string>>({});
-  const [answers, setAnswers] = useState<TestAnswers43>({});
+  return (
+    <Workspace43Provider>
+      <LessonShell43 onExit={onExit} />
+    </Workspace43Provider>
+  );
+}
+
+function LessonShell43({ onExit }: { onExit?: () => void }) {
+  const [index, setIndex] = useState(0);
+  const [menu, setMenu] = useState(false);
+  const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
-  const [teacher, setTeacher] = useState(false);
-  const [mobileNav, setMobileNav] = useState(false);
-  const unlocked = submitted || teacher;
-  const station = STATIONS_43.find(s => step >= s.start && step <= s.end)!;
+  const [graded, setGraded] = useState<{ score: number; total: number } | null>(null);
+  const mainRef = useRef<HTMLElement>(null);
+  const total = SLIDES_43.length;
+  const slide = SLIDES_43[index];
+  const station = STATIONS_43.find((item) => item.id === slide.station) ?? STATIONS_43[0];
+  const progress = ((index + 1) / total) * 100;
 
-  function navigate(index: number) {
-    const next = Math.max(0, Math.min(LAST_STEP, index));
-    setStep(next); setArea('student'); setMobileNav(false);
-    setVisited(v => v.includes(next) ? v : [...v, next]);
-  }
+  const go = useMemo(
+    () => ({
+      next: () => setIndex((value) => Math.min(value + 1, total - 1)),
+      prev: () => setIndex((value) => Math.max(value - 1, 0)),
+    }),
+    [total],
+  );
+
   useEffect(() => {
-    if (!/jsdom/i.test(navigator.userAgent)) {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      document.getElementById('step-title-43')?.focus({ preventScroll: true });
-    }
-  }, [step, area]);
-  useEffect(() => {
-    const handler = (event: KeyboardEvent) => {
-      if (area !== 'student' || event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) return;
-      if ((event.target as HTMLElement)?.closest('input,textarea,select,button,a,[contenteditable]')) return;
-      if (event.key === 'ArrowLeft') { event.preventDefault(); navigate(step + 1); }
-      else if (event.key === 'ArrowRight') { event.preventDefault(); navigate(step - 1); }
+    const onKey = (event: KeyboardEvent) => {
+      if (menu) return;
+      const target = event.target as HTMLElement | null;
+      if (target && /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)) return;
+      if (target?.isContentEditable) return;
+      if (event.key === "ArrowLeft") go.next();
+      if (event.key === "ArrowRight") go.prev();
     };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [area, step]);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [go, menu]);
 
-  const labels: Record<Area43, string> = {
-    student: 'التعلّم', test: 'الاختبار', solutions: unlocked ? 'الحلول' : 'الحلول · مقفلة', teacher: 'المعلم',
+  useEffect(() => {
+    mainRef.current?.scrollTo?.({ top: 0 });
+    if (!/jsdom/i.test(navigator.userAgent)) {
+      document.getElementById("l43-title")?.focus({ preventScroll: true });
+    }
+  }, [index]);
+
+  const testControls: TestControls43 = {
+    answers,
+    submitted,
+    graded,
+    onChange: (key, value) => {
+      if (!submitted) setAnswers((current) => ({ ...current, [key]: value }));
+    },
+    onSubmit: (result) => {
+      setGraded(result);
+      setSubmitted(true);
+      const target = SLIDES_43.findIndex((item) => item.id === "test-result");
+      if (target >= 0) setIndex(target);
+    },
+    onReset: () => {
+      setAnswers({});
+      setSubmitted(false);
+      setGraded(null);
+    },
   };
-  return <>
-    <Signature/>
-    <div className="lesson43" dir="rtl" data-lesson="43">
-      <header className="masthead43">
-        <div className="mastheadInner43">
-          <a href="#/" onClick={() => onExit?.()} className="brand43">
-            <span className="brandMark43" aria-hidden="true">43</span>
-            <span dir="ltr">English Course<small>{LESSON_IDENTITY_43.toUpperCase()}</small></span>
-          </a>
-          <a href="#/lesson/42">الدرس السابق ←</a>
+
+  const rail = (
+    <aside className="flex h-full flex-col">
+      <div className="border-b border-slate-100 p-5">
+        <button onClick={onExit} className="text-sm font-semibold text-slate-500 transition hover:text-slate-800">
+          → جميع الدروس
+        </button>
+        <div className="font-head mt-2 text-xl font-bold text-slate-900">
+          الدرس 43 <span className="text-slate-300">·</span> <En43>MAY &amp; MIGHT</En43>
         </div>
-      </header>
-      <div className="lessonTop43">
-        <div>
-          <p className="eyebrow43">الاحتمال وعدم اليقين والاستئذان / IQ200</p>
-          <h1><Text43 text={LESSON_TITLE_43}/></h1>
-          <p>{LESSON_SUBTITLE_43}</p>
-        </div>
-        <div className="lessonMetric43">
-          <b>{visited.length}<span>/ {LESSON_STEP_COUNT_43}</span></b>
-          <small>خطوات زرتها — لا تعني الإتقان</small>
-          <progress aria-label="خطوات تمت زيارتها" max={LESSON_STEP_COUNT_43} value={visited.length}/>
+        <En43 className="text-xs font-semibold text-slate-500">Possibility · Uncertainty · Permission</En43>
+      </div>
+      <nav className="flex-1 overflow-y-auto p-3" aria-label="محطات الدرس">
+        {STATIONS_43.map((stationItem) => {
+          const stationSlides = SLIDES_43.map((item, i) => ({ item, i })).filter(({ item }) => item.station === stationItem.id);
+          const active = slide.station === stationItem.id;
+          const first = stationSlides[0]?.i ?? 0;
+          return (
+            <div key={stationItem.id} className="mb-2">
+              <button
+                onClick={() => {
+                  setIndex(first);
+                  setMenu(false);
+                }}
+                aria-expanded={active}
+                data-station={stationItem.id}
+                className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-right text-sm font-bold transition ${active ? "bg-violet-600 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}
+              >
+                <span aria-hidden="true">{stationItem.emoji}</span>
+                <span className="truncate"><Text43 text={stationItem.name} /></span>
+                <span className={`mr-auto text-xs ${active ? "text-white/80" : "text-slate-500"}`}>{stationSlides.length}</span>
+              </button>
+              {active && (
+                <div className="mt-1 space-y-1 pr-2">
+                  {stationSlides.map(({ item, i }) => (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        setIndex(i);
+                        setMenu(false);
+                      }}
+                      aria-current={i === index ? "step" : undefined}
+                      className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-right text-xs font-semibold transition ${i === index ? "bg-slate-900 text-white" : "text-slate-500 hover:bg-slate-100"}`}
+                    >
+                      <span className={`grid h-5 w-6 shrink-0 place-items-center rounded ${i === index ? "bg-white/20" : "bg-slate-100"}`}>{i + 1}</span>
+                      <span className="truncate"><Text43 text={item.title} /></span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </nav>
+      <div className="border-t border-slate-100 p-4 text-xs text-slate-500">التنقل: الأسهم ← → · {total} شريحة</div>
+    </aside>
+  );
+
+  return (
+    <div dir="rtl" className="style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#f4f6fb] text-slate-800" data-lesson="43">
+      <Signature />
+      <div className="relative flex min-h-0 flex-1">
+        <SignatureGhost />
+        <div className="relative z-10 hidden w-72 shrink-0 border-l border-slate-200 bg-white/80 backdrop-blur lg:block">{rail}</div>
+
+        <div className="relative z-10 flex min-w-0 flex-1 flex-col">
+          <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
+            <button
+              onClick={() => setMenu(true)}
+              className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-lg shadow-sm lg:hidden"
+              aria-label="فهرس الدرس"
+            >
+              ☰
+            </button>
+            <div className="min-w-0 flex-1">
+              <div className="truncate text-sm font-bold text-slate-500">
+                <Text43 text={station.name} /> <span aria-hidden="true">{"\u2022"}</span> <Text43 text={slide.title} className="text-slate-800" />
+              </div>
+              <div role="progressbar" aria-label="تقدم الدرس" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100} className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+                <div className="h-full rounded-full bg-gradient-to-l from-sky-500 via-violet-400 to-emerald-500 transition-all duration-500" style={{ width: `${progress}%` }} />
+              </div>
+            </div>
+            <span className="rounded-lg bg-white px-3 py-1 text-sm font-bold text-slate-500 shadow-sm">
+              <bdi dir="ltr">{index + 1} / {total}</bdi>
+            </span>
+          </header>
+
+          <main ref={mainRef} id="l43-main" data-slide-count={SLIDES_43.length} className="flex-1 overflow-y-auto px-3 pb-32 pt-4 md:px-6 lg:px-10">
+            <div key={slide.id} data-slide-id={slide.id} data-slide-kind={slide.kind} className="pop mx-auto max-w-4xl">
+              <SlideBody43 slide={slide} index={index} test={testControls} />
+              {slide.kind === "testResult" && <SolutionsSpace submitted={submitted} />}
+            </div>
+          </main>
+
+          <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center px-3">
+            <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/95 p-1.5 shadow-xl backdrop-blur">
+              <button
+                aria-label="السابق"
+                onClick={go.prev}
+                disabled={index === 0}
+                className="rounded-full px-4 py-2 text-sm font-bold text-slate-700 transition enabled:hover:bg-slate-100 disabled:opacity-30"
+              >
+                → السابق
+              </button>
+              <span className="h-6 w-px bg-slate-200" />
+              <button
+                aria-label="التالي"
+                onClick={go.next}
+                disabled={index === total - 1}
+                className="rounded-full bg-slate-900 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-slate-700 disabled:opacity-30"
+              >
+                التالي ←
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-      <nav className="areas43" aria-label="مناطق الدرس">
-        {(['student', 'test', 'solutions', 'teacher'] as const).map((id, i) =>
-          <button key={id} aria-current={area === id ? 'page' : undefined} disabled={id === 'solutions' && !unlocked} onClick={() => setArea(id)}>
-            <span aria-hidden="true">0{i + 1}</span>{labels[id]}
-          </button>)}
-      </nav>
-      <Workspace43.Provider value={{ values, set: (key, value) => setValues(v => ({ ...v, [key]: value })) }}>
-        <div className={area === 'student' ? 'layout43' : 'areaLayout43'}>
-          {area === 'student' && <aside className="sidebar43">
-            <button className="mobileToggle43" aria-expanded={mobileNav} aria-controls="lesson43-step-nav" onClick={() => setMobileNav(!mobileNav)}>
-              خريطة المرصد · الخطوة <bdi dir="ltr">{step + 1} / {LESSON_STEP_COUNT_43}</bdi>
-            </button>
-            <div id="lesson43-step-nav" className={mobileNav ? 'navContent43 open' : 'navContent43'}>
-              <p className="eyebrow43">محطات المرصد</p>
-              <nav aria-label="محطات الدرس">
-                {STATIONS_43.map((s, i) => <div className="station43" key={s.start}>
-                  <button aria-pressed={s === station} onClick={() => navigate(s.start)}>
-                    <span className="stationIndex43">{String(i + 1).padStart(2, '0')}</span>
-                    <span>{s.name}<small dir="ltr">{s.en}</small></span>
-                  </button>
-                  {s === station && <nav aria-label={`أقسام ${s.name}`} className="sectionsNav43">
-                    {SOURCE_SECTIONS_43.filter(sec => sec.num >= s.start && sec.num <= s.end).map(sec =>
-                      <button key={sec.id} aria-current={sec.num === step ? 'step' : undefined} onClick={() => navigate(sec.num)}>
-                        <span dir="ltr" className="ltr-pair navLabel43"><bdi dir="ltr">{sec.num === 0 ? '◉' : sec.num}</bdi><Text43 text={sec.title}/></span>
-                      </button>)}
-                  </nav>}
-                </div>)}
-              </nav>
-              <p className="sidebarNote43">بدّل القناة. لاحظ السياق.<br/>← التالي · → السابق</p>
-            </div>
-          </aside>}
-          <main id="lesson43-main">
-            {area === 'student' ? <>
-              <Steps43 index={step} onTest={() => setArea('test')} onTeacher={() => setArea('teacher')}/>
-              <nav className="bottomNav43" aria-label="تنقل الخطوات">
-                <button type="button" disabled={step === 0} onClick={() => navigate(step - 1)}>→ السابق</button>
-                <span>{step + 1} / {LESSON_STEP_COUNT_43}</span>
-                <button className="primary43" type="button" onClick={() => step === LAST_STEP ? setArea('test') : navigate(step + 1)}>{step === LAST_STEP ? 'ابدأ الاختبار' : 'التالي ←'}</button>
-              </nav>
-            </> : null}
-            {area === 'test' && <TestArea43
-              answers={answers}
-              change={(id, value) => { if (!submitted) setAnswers(a => ({ ...a, [id]: value })); }}
-              submitted={submitted}
-              submit={() => { if (testComplete43(answers)) { setSubmitted(true); setArea('solutions'); } }}
-              reset={() => { setAnswers({}); setSubmitted(false); setArea('test'); }}
-              openSolutions={() => { if (unlocked) setArea('solutions'); }}/>}
-            {area === 'solutions' && unlocked && <Suspense fallback={<p role="status">جارٍ تحميل الحلول…</p>}><SolutionsArea43 answers={answers}/></Suspense>}
-            {area === 'teacher' && <TeacherArea43 unlocked={teacher} unlock={() => setTeacher(true)} lock={() => setTeacher(false)}/>}
-            {area !== 'student' && <button className="back43" type="button" onClick={() => setArea('student')}>العودة إلى خطوات التعلّم</button>}
-          </main>
+
+      {menu && (
+        <div className="fixed inset-0 z-50 flex lg:hidden" onClick={() => setMenu(false)}>
+          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" />
+          <div className="relative z-10 h-full w-80 max-w-[85vw] bg-white shadow-2xl" onClick={(event) => event.stopPropagation()}>
+            {rail}
+          </div>
         </div>
-      </Workspace43.Provider>
-      <footer className="footer43">
-        <span dir="ltr">MAY · MIGHT</span>
-        <p>لا تترجم MAY وMIGHT آليًا؛ حدّد الوظيفة داخل الموقف.</p>
-        <a href="#/" onClick={() => onExit?.()}>كل الدروس</a>
-      </footer>
+      )}
     </div>
-  </>;
+  );
+}
+
+/**
+ * مساحة الحلول: تُحمّل عند الطلب فقط، وتُفتح بعد تسجيل محاولة في التقييم.
+ * لا تدخل حزمة الطالب الأساسية، ولا تُعرض قبل التسليم.
+ */
+const LazySolutionsArea = lazy(() => import("./SolutionsArea43"));
+
+/**
+ * مساحة الحلول: تُحمّل عند الطلب فقط، وتُفتح بعد تسجيل محاولة في التقييم.
+ * لا تدخل حزمة الطالب الأساسية، ولا تُعرض قبل التسليم.
+ */
+function SolutionsSpace({ submitted }: { submitted: boolean }): ReactNode {
+  if (!submitted) {
+    return (
+      <Panel43 title="الحلول محجوبة">
+        <p className="text-base font-bold text-slate-700">
+          <Text43 text="سجّل محاولتك في مساحة التقييم أولًا، أو افتح مساحة المعلم للمراجعة." />
+        </p>
+      </Panel43>
+    );
+  }
+  return (
+    <Suspense
+      fallback={
+        <p role="status" className="mt-4 rounded-2xl border border-slate-100 bg-white p-4 text-sm font-bold text-slate-500">
+          <Text43 text="جارٍ تحميل الحلول…" />
+        </p>
+      }
+    >
+      <LazySolutionsArea />
+    </Suspense>
+  );
 }

@@ -97,7 +97,7 @@ const parenClauseCases = [
   "الفرق بينهما + when / while (الدرسان 25 و26).",
   "حدث ماضٍ واحد: Yesterday, I visited… (بلا had).",
 ];
-const enRunsOf = (html) => [...html.matchAll(/<span dir="ltr" class="[^"]*">([^<]*)<\/span>/g)].map((x) => x[1]);
+const enRunsOf = (html) => [...html.matchAll(/<span dir="ltr"( lang="en")? class="[^"]*">([^<]*)<\/span>/g)].map((x) => x[2]);
 for (const text of parenClauseCases) {
   const html = ssr(h(LatinRuns, { text }));
   const { viol } = inspect(html);
@@ -154,7 +154,7 @@ for (const text of altCases) {
 }
 {
   const html = ssr(h(LatinRuns, { text: "IQ200 — had danced أم was dancing؟" }));
-  const group = /^<span dir="ltr" class="ltr-pair[^"]*">/.test(html);
+  const group = /^<span dir="ltr"( lang="en")? class="ltr-pair[^"]*">/.test(html);
   const firstAt = html.indexOf("IQ200 — had danced");
   const connectorAt = html.indexOf("أم");
   const secondAt = html.indexOf("was dancing");

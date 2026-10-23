@@ -445,7 +445,7 @@ async function walk(page, width, height) {
   ok(true, `${label} walked ${heights.filter((entry) => entry.viewport === label).length} slides`);
 }
 
-const TEST_SLIDES = ["test-l1-a", "test-l1-b", "test-l2-a", "test-l2-b", "test-l3-a", "test-l3-b", "test-l4-a", "test-l4-b", "test-l4-c", "test-l5-a", "test-l5-b", "test-l5-c"];
+const TEST_SLIDES = ["test-l1-a", "test-l1-b", "test-l2-a", "test-l2-b", "test-l3-a", "test-l3-b", "test-l4-a", "test-l4-b", "test-l4-c", "test-l5-a", "test-l5-b", "test-l5-c", "test-l5-d"];
 
 async function answerTest(page) {
   for (const id of TEST_SLIDES) {
@@ -588,7 +588,7 @@ await stage("sentence builder lab 1280x800", async () => {
 });
 
 await stage("classifier lab 1280x800", async () => {
-  await goToSlide(desktop, slideNumber("lab-able"));
+  await goToSlide(desktop, slideNumber("lab-able-1"));
   await shot(desktop, "1280-lab-able");
   const first = desktop.locator("section.rounded-3xl").first();
   await first.locator("button", { hasText: "نجاح محدد" }).first().click();
@@ -601,7 +601,8 @@ await stage("word-order lab 1280x800", async () => {
   await goToSlide(desktop, slideNumber("lab-wh"));
   const panel = desktop.locator("section.rounded-3xl").first();
   for (const token of ["What", "can", "you", "do"]) await panel.locator(`button:has-text("${token}")`).first().click();
-  ok((await panel.innerText()).includes("What can you do?"), "WH question assembled in order");
+  ok((await panel.innerText()).includes("What can you do"), "WH question assembled in order");
+  ok(!(await panel.innerText()).includes("الترتيب الصحيح"), "no correction text shown for the correct order");
   ok((await panel.innerText()).includes("✓ صحيح"), "assembled order marked correct");
   await shot(desktop, "1280-lab-wh");
 });
@@ -610,7 +611,9 @@ await stage("reading 1280x800", async () => {
   await goToSlide(desktop, slideNumber("read-passage-1"));
   await shot(desktop, "1280-reading");
   ok((await desktop.locator("body").innerText()).includes("The Young Inventor"), "reading passage title renders");
-  ok((await desktop.locator("body").innerText()).includes("was able to repair it"), "the specific-success sentence from the source is present");
+  ok(!(await desktop.locator("body").innerText()).includes("was able to repair it"), "passage half 1 stops before the repair sentence (source line 8)");
+  await goToSlide(desktop, slideNumber("read-passage-2"));
+  ok((await desktop.locator("body").innerText()).includes("was able to repair it"), "the specific-success sentence from the source is present in half 2");
   await goToSlide(desktop, slideNumber("read-q-1"));
   ok((await desktop.locator("[data-question-id]").count()) === 0, "reading questions are practice cards, not test questions");
   ok((await desktop.locator("article").count()) === 3, "reading part 1 renders three comprehension items");

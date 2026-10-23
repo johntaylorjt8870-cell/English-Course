@@ -58,13 +58,17 @@ The first browser run found 10 slides above the 1200px card target that Lesson 4
 | `lab-adventure` (7 rows) | 1611px | `lab-adventure-1` / `-2` |
 | `lab-repair` (4 tasks) | 1602px | `lab-repair-1` / `-2` |
 | `p38-1` (4 two-field items) | 1417px | `p38-1` [1,2] / `p38-2` [3,4] |
-| `test-l5-a` / `-b` | 1417 / 1338px | `test-l5-a` / `-b` / `-c` |
+| `test-l5-a` / `-b` | 1417 / 1338px | `test-l5-a` / `-b` / `-c` / `-d` (one or two items per page) |
 | `lab-able` (6 rows) | 1254px | `lab-able-1` / `-2` |
 | `write-criteria` | 1239px | `write-criteria` (source list) + `write-checklist` (interactive tracker) |
 | `lab-time` (5 rows) | 1223px | `lab-time-1` / `-2` |
 | `read-passage` (14 lines) | 1220px | `read-passage-1` / `-2` |
 
-Slide count went **135 → 144**; labs **12 → 17**; hub-card stats updated to match. Coverage stayed at **0 uncovered units** and the audit's "each unit shown once" check caught (and I fixed) a duplicate introduced by the `write-criteria` split.
+Slide count went **135 → 145**; labs **12 → 17**; hub-card stats updated to match. Coverage stayed at **0 uncovered units**, and the audit's "each unit shown once" check caught (and I fixed) a duplicate introduced by the `write-criteria` split.
+
+Measured effect in Chromium: the tallest card fell from **1630px to 1338px**, and the number of cards above the 1200px target fell from **10 to 1**. That last one was `test-l5-c`, still holding two long IQ200 dialogue items, so it was split again into `-c` / `-d`; the confirming run is reported in §8.
+
+A dedicated JSDOM check verified the splits moved content rather than duplicating or dropping it: for each split lab, every source row appears in **exactly one** half (`lab-build` 2+2, `lab-time` 3+2, `lab-able` 3+3, `lab-repair` 2+2, `lab-adventure` 4+3), and the two reading halves cover source lines 1–7 and 8–14 with no overlap and neither pulling in the Arabic question heading.
 
 ## 5. Defects found and fixed in my own rebuild
 
@@ -77,6 +81,8 @@ Slide count went **135 → 144**; labs **12 → 17**; hub-card stats updated to 
 | §39 Arabic heading inside the LTR passage | source line map | slice narrowed |
 
 Audit-harness defects were also corrected **without weakening assertions**: the browser script probed `input[type="radio"]` where `PracticeCard42` renders `aria-pressed` buttons, and probed the string `الإجابة الصحيحة`, which is the *source level heading*, not a key marker — replaced with the markers only the graded key can produce (`شرح المنصة`, `سبب §41 كما ورد في المصدر`, `الوظيفة النحوية المختبَرة`, `[data-solution-id]`).
+
+The first browser run also exposed three **stale references in my own browser script**, left behind by the slide renames: `slideNumber("lab-able")` (now `-1`/`-2`), a WH-lab assertion expecting `"What can you do?"` (after the fix the assembled sentence correctly has no `?`, and the correction text only renders for a *wrong* order), and a reading assertion looking for the source's repair sentence on passage half 1 (it is line 8, which now lives in half 2). All three were corrected to assert the real behaviour — the reading one now checks **both** that half 1 stops before line 8 and that half 2 contains it.
 
 `scripts/audit-final-test.mjs` also still asserted the removed Lesson 42 conventions (`"id": "q1"` quoted keys); its Lesson 42 block was aligned with the Lesson 41 block, which is the repo's current convention. That took it from 2 failures to **1253 checks passed**.
 

@@ -229,13 +229,15 @@ ok(document.body.textContent.includes("لم يتم التسليم بعد"), "res
 ok(!document.querySelector('[data-area="solutions"]'), "no solutions DOM before submission");
 ok(document.querySelectorAll("[data-solution-id]").length === 0, "no solution nodes before submission");
 
-const TEST_PAGES = ["test-l1-a", "test-l1-b", "test-l2-a", "test-l2-b", "test-l3-a", "test-l3-b", "test-l4-a", "test-l4-b", "test-l4-c", "test-l5-a", "test-l5-b", "test-l5-c"];
+const TEST_PAGES = ["test-l1-a", "test-l1-b", "test-l2-a", "test-l2-b", "test-l3-a", "test-l3-b", "test-l4-a", "test-l4-b", "test-l4-c", "test-l5-a", "test-l5-b", "test-l5-c", "test-l5-d"];
 let answered = 0;
 let cards = 0;
+const seenIds = [];
 for (const page of TEST_PAGES) {
   await goto(page);
   const pageCards = all("[data-question-id]");
   cards += pageCards.length;
+  pageCards.forEach((element) => seenIds.push(element.getAttribute("data-question-id")));
   ok(pageCards.length > 0, `${page} renders its questions`);
   for (const fieldset of pageCards) {
     const radio = fieldset.querySelector('input[type="radio"]');
@@ -251,7 +253,8 @@ for (const page of TEST_PAGES) {
   }
 }
 ok(cards === 25, `all 25 question cards render across the eleven test pages (got ${cards})`);
-ok(new Set(all("[data-question-id]").map((element) => element.getAttribute("data-question-id"))).size > 1, "question ids are per question");
+ok(new Set(seenIds).size === 25, `every question id appears exactly once across the test pages (${new Set(seenIds).size} distinct of ${seenIds.length} rendered)`);
+ok(seenIds.length === 25, "no question card is rendered on two pages");
 // 25 questions + the extra blank on Q7 = 26 answer fields.
 ok(answered === 26, `all 26 answer fields filled (25 questions, Q7 has two blanks) — got ${answered}`);
 ok(cards === 25, "the twelve test pages render all 25 question cards exactly once");

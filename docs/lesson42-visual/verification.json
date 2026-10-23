@@ -11,13 +11,13 @@
       "height": 1080
     }
   ],
-  "slides": 135,
-  "checks": 2760,
+  "slides": 144,
+  "checks": 2945,
   "failures": [
-    "stage practice interaction 1280x800: locator.check: Timeout 30000ms exceeded.",
-    "assembled order marked correct",
-    "no answer text on the test slides",
-    "no slide card exceeds the 1200px target (13@1280x800=1630, 47@1280x800=1223, 53@1280x800=1254, 89@1280x800=1602, 95@1280x800=1611, 105@1280x800=1417, 108@1280x800=1220, 122@1280x800=1417, 123@1280x800=1338, 127@1280x800=1239, 13@1920x1080=1630, 47@1920x1080=1223, 53@1920x1080=1254, 89@1920x1080=1602, 95@1920x1080=1611, 105@1920x1080=1417, 122@1920x1080=1417, 123@1920x1080=1338, 127@1920x1080=1239)"
+    "stage classifier lab 1280x800: unknown slide lab-able",
+    "WH question assembled in order",
+    "the specific-success sentence from the source is present",
+    "no slide card exceeds the 1200px target (131@1280x800=1338, 131@1920x1080=1338)"
   ],
   "errors": [],
   "externalNetworkErrors": [
@@ -32,18 +32,20 @@
   ],
   "lazyChunksRequested": [
     "http://127.0.0.1:5173/English-Course/src/lessons/lesson42/key42.ts",
-    "http://127.0.0.1:5173/English-Course/src/lessons/lesson42/SolutionsArea42.tsx",
-    "http://127.0.0.1:5173/English-Course/src/lessons/lesson42/TeacherGuide42.tsx"
+    "http://127.0.0.1:5173/English-Course/src/lessons/lesson42/SolutionsArea42.tsx?t=1792717882756",
+    "http://127.0.0.1:5173/English-Course/src/lessons/lesson42/TeacherGuide42.tsx?t=1792719189026"
   ],
   "tallestCard": {
     "viewport": "1280x800",
-    "slide": 13,
-    "card": 1630,
-    "scroll": 1133,
-    "inactiveFaded": []
+    "slide": 131,
+    "card": 1338,
+    "scroll": 841,
+    "inactiveFaded": [
+      "تسليم الاختبار النهائي"
+    ]
   },
   "reservedBottomSpacePx": 128,
-  "cardsTallerThanViewport": 177,
+  "cardsTallerThanViewport": 191,
   "colorSelfTest": {
     "results": [
       {
@@ -217,20 +219,20 @@
   },
   "contrastMethod": "canvas black/white alpha solve → sRGB, composited over the full ancestor backdrop (oklch, oklab, lab, lch, rgb, rgba, hsl, hsla, hex, color(), named, transparent)",
   "colorFormatsSeen": {
-    "oklch": 6619,
-    "oklab": 437,
+    "oklch": 7082,
+    "oklab": 470,
     "lab": 0,
     "lch": 0,
-    "rgb": 675,
-    "rgba": 405,
-    "hsl": 135,
+    "rgb": 720,
+    "rgba": 432,
+    "hsl": 144,
     "hsla": 0,
-    "hex": 135,
-    "colorFn": 135,
+    "hex": 144,
+    "colorFn": 144,
     "named": 0,
     "other": 0
   },
-  "contrastSamples": 5275,
+  "contrastSamples": 5504,
   "inactiveContrastExemptions": 106,
   "textOverBackgroundImages": 342,
   "screenshots": [
@@ -238,10 +240,10 @@
     "docs/lesson42-visual/1280-cover.png",
     "docs/lesson42-visual/1280-writing-editor.png",
     "docs/lesson42-visual/1280-practice-before-attempt.png",
+    "docs/lesson42-visual/1280-practice-revealed.png",
     "docs/lesson42-visual/1280-lab-build.png",
     "docs/lesson42-visual/1280-lab-build-wrong.png",
     "docs/lesson42-visual/1280-lab-build-correct.png",
-    "docs/lesson42-visual/1280-lab-able.png",
     "docs/lesson42-visual/1280-lab-wh.png",
     "docs/lesson42-visual/1280-reading.png",
     "docs/lesson42-visual/1280-test-level1.png",

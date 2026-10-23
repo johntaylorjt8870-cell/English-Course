@@ -4,7 +4,7 @@
 
 - Source blocks: **45** (cover, §1–§44).
 - Normalized source units: **932** — all rendered exactly once (uncovered: **0**).
-- Slides: **144** across **10** learning stations (الانطلاق، محطة CAN، محطة COULD، COULD أم ABLE TO، الاستئذان، الطلبات المهذبة، الإمكانية والاحتمال، تراكيب متقدمة، التطبيق العملي، الإتقان).
+- Slides: **145** across **10** learning stations (الانطلاق، محطة CAN، محطة COULD، COULD أم ABLE TO، الاستئذان، الطلبات المهذبة، الإمكانية والاحتمال، تراكيب متقدمة، التطبيق العملي، الإتقان).
 - Practice items: **46** (§16، §34، §35، §36، §37، §38، §39), each with an attempt-gated answer and explanation.
 - Final test: **25** questions in **5** levels (§40), teacher key + 25 detailed solutions (§41).
 - Frozen source inventory: `docs/lesson42-source-manifest.json` — every section hash **matches** the shipped ledger.
@@ -64,7 +64,7 @@
 | 37 | التدريب الرابع: COULD أم WAS/WERE ABLE TO? | 29 / 29 | `p37-1`, `p37-2` | بطاقة التدريب بعد المحاولة + TeacherGuide42 |
 | 38 | Grammar Detective — اكتشف الأخطاء | 22 / 22 | `p38-1`, `p38-2`, `p38-3`, `p38-4` | بطاقة التدريب بعد المحاولة + TeacherGuide42 |
 | 39 | Reading Challenge — A New Skill | 37 / 37 | `read-passage-1`, `read-passage-2`, `read-q-1`, `read-q-2`, `read-q-3`, `read-q-4` | بطاقة التدريب بعد المحاولة + TeacherGuide42 |
-| 40 | الاختبار النهائي — CAN & COULD Master Test | 60 / 60 | `test-l1-a`, `test-l1-b`, `test-l2-a`, `test-l2-b`, `test-l3-a`, `test-l3-b`, `test-l4-a`, `test-l4-b`, `test-l4-c`, `test-l5-a`, `test-l5-b`, `test-l5-c`, `test-result` | TestArea42 ثم SolutionsArea42 (بعد التسليم) |
+| 40 | الاختبار النهائي — CAN & COULD Master Test | 60 / 60 | `test-l1-a`, `test-l1-b`, `test-l2-a`, `test-l2-b`, `test-l3-a`, `test-l3-b`, `test-l4-a`, `test-l4-b`, `test-l4-c`, `test-l5-a`, `test-l5-b`, `test-l5-c`, `test-l5-d`, `test-result` | TestArea42 ثم SolutionsArea42 (بعد التسليم) |
 | 42 | Writing Mission — My Abilities: Past, Present & Future | 25 / 25 | `write-editor`, `write-criteria`, `write-checklist`, `write-model` | داخل الشريحة |
 | 43 | الملخص الذهبي — CAN & COULD | 41 / 41 | `summary-can`, `summary-could`, `summary-forms`, `summary-advanced` | داخل الشريحة |
 | 44 | خريطة تقدم المنهج والمحطة القادمة | 16 / 16 | `next-progress`, `next-may`, `next-close` | داخل الشريحة |
@@ -83,7 +83,7 @@
 | 🌍 الإمكانية والاحتمال (Possibility & Suggestion) | 11 | §§26–29 |
 | 🧠 تراكيب متقدمة (Meaning, Errors & Context) | 14 | §§30–33 |
 | ✍️ التطبيق العملي (Practice & Reading) | 20 | §§16–39 |
-| 🏆 الإتقان (Assessment & Writing) | 25 | §§40–44 |
+| 🏆 الإتقان (Assessment & Writing) | 26 | §§40–44 |
 
 ## Practice sets (attempt-gated)
 
@@ -113,7 +113,8 @@
 | `test-l4-c` | 4 | 20–20 | المستوى الرابع: فهم المعنى |
 | `test-l5-a` | 5 | 21–22 | المستوى الخامس: Final IQ200 Boss |
 | `test-l5-b` | 5 | 23–23 | المستوى الخامس: Final IQ200 Boss |
-| `test-l5-c` | 5 | 24–25 | المستوى الخامس: Final IQ200 Boss |
+| `test-l5-c` | 5 | 24–24 | المستوى الخامس: Final IQ200 Boss |
+| `test-l5-d` | 5 | 25–25 | المستوى الخامس: Final IQ200 Boss |
 
 | Level | Function tested | Questions |
 |---:|---|---|
@@ -130,7 +131,7 @@
 | lesson | 82 | `Frame42` + `SourceLines42` / `NumberCards42` / `Panel42` |
 | lab | 17 | `BuildLab42`, `FormLab42`, `ShortLab42`, `WhLab42`, `TimeLab42`, `AbleLab42`, `PermissionLab42`, `ResponseLab42`, `PossibilityLab42`, `RepairLab42`, `MeaningLab42`, `AdventureLab42` |
 | practice | 14 | `PracticeSet42` + `PracticeCard42` |
-| test | 12 | `TestArea42` |
+| test | 13 | `TestArea42` |
 | reading | 6 | `Reading42` |
 | summary | 4 | `GoldenSummary42` |
 | writing | 3 | `WritingMission42` |

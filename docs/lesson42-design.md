@@ -1,58 +1,60 @@
-# Lesson 42 — Language Control Lab
+# Lesson 42 — design origin and component reuse
 
-## New generation, scoped to one lesson
+## Decision
 
-Lesson 41's midnight "Sentence Engine Studio" identity is unchanged. Lesson 42 is a different instrument: a warm-paper **control-room** built around two signal channels — orange `CAN` (present ability) and fuchsia `COULD` (past ability / politeness). Dark instrument panels, monospace readouts and dial rows carry the "lab" idea; no decorative gradients, glows, background images or animation dependencies are used. The home card uses the existing hub gradient extension point only.
+Lesson 42 keeps the platform's **original visual identity** (Lessons 1–3), not the per-lesson identity used by the 38–40 rebuild. No new tokens, no lesson-scoped stylesheet, no custom CSS file: the lesson is assembled from the same Tailwind classes and shared components the first lessons already use. Lessons 38–40 were consulted for **code architecture only** (separate modules, lazy assessment split, gated teacher area, audit chain). Lesson 41 — the most recent rebuild on the original identity — is the direct structural reference.
 
-All new CSS selectors are scoped beneath `.lesson42`. Shared components (`Rich`, `LatinRuns`, `splitMixedText`, `LessonNumberNav`, `SitePasswordGate`, `Signature`), global typography, other lessons and site access remain untouched.
+The previous Lesson 42 implementation (a separate `lesson42.css` "Language Control Lab" identity with `.station42` / `.masthead42` / `.token42` classes) was **removed**, along with `Steps42.tsx`, `labs42.tsx`, `practiceData42.ts`, `practiceNotes42.ts`, `solutionsData42.ts` and `tools42.tsx`.
 
-## Tokens
+## References inspected before writing code
 
-| Token | Value | Purpose / paired surface |
+| Reference | What was reused | Evidence in this build |
 |---|---|---|
-| ink | `#1C1A17` | Primary text on paper / white |
-| muted | `#5B554B` | Secondary labels; readable disabled text |
-| canvas | `#F4F1EA` | Warm paper canvas |
-| surface | `#FFFFFF` | Explanation and activity panels |
-| paper-2 | `#FBF8F1` | Source-quote surfaces |
-| line / line-strong | `#E9E3D6` / `#C9C1B0` | Non-semantic separators (not text colors) |
-| panel | `#14110D` | Instrument panels, cover, masthead; white text |
-| panel-2 | `#241F18` | Nested panel rows; signal text |
-| primary | `#C2410C` | CAN channel, primary actions, visible focus |
-| primary-ink | `#9A3412` | Primary text on soft orange surfaces |
-| primary-soft | `#FDECE1` | CAN surface |
-| secondary | `#A21CAF` | COULD channel |
-| secondary-ink | `#86198F` | COULD text on soft fuchsia surfaces |
-| secondary-soft | `#FBEAFB` | COULD surface |
-| signal | `#F5B301` | Panel accent (never text on paper) |
-| ok / ok-soft | `#14663C` / `#E6F3EB` | Correct construction, post-attempt comparison |
-| bad / bad-soft | `#A4133C` / `#FCEAEF` | Error feedback with explanatory text |
-| note / note-soft | `#3F4A54` / `#EEF1F4` | Neutral informational chips |
+| `src/lessons/lesson1/Lesson1.tsx` (1147 lines) | Application shell `style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#f4f6fb] text-slate-800` (L1069), right rail `hidden w-72 shrink-0 border-l border-slate-200 bg-white/80 backdrop-blur lg:block` (L1077), floating step pill `rounded-full border border-slate-200 bg-white/95 p-1.5 shadow-xl backdrop-blur` (L1115) | `Lesson42.tsx` uses the same shell string, the same `w-72` rail markup and the same floating pill. `scripts/audit-lesson42.mjs` asserts the shell and pill class strings are **byte-identical to the Lesson 41 rebuild** |
+| `src/lessons/lesson1/Lesson1.tsx` (L376, L377, L382, L386, L413) | Slide card `rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_10px_40px_-15px_rgba(30,27,75,0.15)] md:p-10`, drifting mascot `absolute left-6 top-5 text-5xl anim-drift md:text-6xl`, `font-head` step badge on `bg-slate-900`, `font-head` title, cover mascot `text-7xl anim-drift` | `design42.tsx` → `Frame42`, `Num42`, `Cover42` reproduce these primitives |
+| `src/lessons/lesson41/` (the previous rebuild on this identity) | Module split (`ledger` / `slides` / `kit` / `testData` / `key` / `SolutionsArea` / `TeacherArea` / `TeacherGuide` / `coverage`), submit gating, lazy-chunk strategy, `pb-32` bottom clearance, `ArrowLeft`=next / `ArrowRight`=prev | Mirrored 1:1 with the `41`→`42` suffix. The one structural addition is the §41 source split (see below) |
+| `src/index.css` | `--ink`/`--paper` tokens, `.font-head` (Changa) `.font-en` (Fredoka) `.font-body` (Tajawal), `.pop`/`.tada` animations, `.site-lock-btn` | Imported unchanged; **no additions for Lesson 42** |
+| `src/shared/LessonStepNav.tsx`, `SitePasswordGate.tsx`, `Signature.tsx`, `bidi.tsx` | Site lock button contract (`data-site-lock-button`), attribution signature, `LatinRuns` bidi isolation | Reused as-is; gate password unchanged |
+| `docs/lesson38-rebuild-report.md` … `lesson40-rebuild-report.md` | Module layout and audit architecture only | `lesson42/` mirrors the same split |
 
-Normal text targets at least 4.5:1. 33 static token pairings are asserted in `scripts/audit-lesson42.mjs`; the browser audit measures computed styles on every rendered state and records the observed minimum (4.59:1 in this run). These measurements do not claim to certify third-party/shared UI or substitute for visual inspection.
+## Visual system (inherited, not invented)
 
-## Structure
+- **Surface:** `bg-[#f4f6fb]` app canvas, white `rounded-[2rem]` slide card with `border-slate-200` and the early-lesson soft shadow.
+- **Type:** Changa headings (`.font-head`), Tajawal body (`.font-body`), Fredoka for English examples (`.font-en`, always inside `dir="ltr"`).
+- **Accent:** `violet-600` for primary interaction, `slate-900` for the step badge and primary buttons, and the tints already used by the early lessons (`sky`, `orange`, `emerald`) for CAN / COULD / BE ABLE TO groupings.
+- **Motion:** the original `pop`/`anim-drift` classes only (`pop pop-1…5`); `prefers-reduced-motion` respected by `index.css`.
+- **Proportions:** desktop-first; rail visible from `lg`, mobile uses the same bottom-sheet index as the early lessons. Verified at 1280×800 and 1920×1080.
 
-- **Masthead + lesson header** — instrument-panel masthead, `42` badge, visit counter, four-area navigation (التعلم / الاختبار / الحلول · مقفلة / المعلم).
-- **Station rail** — ten stations, each with a per-station section list; the rail is the single source of step navigation and is mirrored by a mobile toggle.
-- **Step shell** — every step renders `data-source-section` (`cover`, `s01`…`s44`) so coverage is auditable in the DOM. Mixed source headings such as «CAN vs COULD — مقارنة القدرة» render as two isolated lines (English label + Arabic title) under the shared BIDI contract.
-- **Panel tones** — rule / example / compare / dialog / drill / challenge / lab / read / write / plain, applied per pedagogical function.
+## Interaction vocabulary
 
-## Responsive behaviour
+| Interaction | Component | Behaviour |
+|---|---|---|
+| Practice answer + key | `PracticeCard42` / `PracticeSet42` | «قارن إجابتي بالحل» stays disabled until every field of that item is filled; the key and the reason then render in a ✓/✕ card |
+| Sentence builder (§3) | `BuildLab42` | Subject + modal + verb-form choices; a wrong verb form names the broken V1 rule, the correct build confirms it |
+| Form / short answers / WH-questions / time markers | `FormLab42`, `ShortLab42`, `WhLab42`, `TimeLab42` | Stepwise, stateful; each choice gates the next reveal |
+| General ability vs specific success | `AbleLab42` | Classifier over `could` / `was able to` / `couldn't` |
+| Permission vs request | `PermissionLab42`, `ResponseLab42` | Function classification with instant feedback |
+| Possibility & suggestion | `PossibilityLab42` | Present vs future possibility discrimination |
+| Error repair / meaning in context / mixed adventure | `RepairLab42`, `MeaningLab42`, `AdventureLab42` | Multi-item, stateful |
+| Final test | `TestArea42` → lazy `key42` → `SolutionsArea42` | 25 questions, submit only on the last page of level 5, score on the result slide |
+| Teacher area | `TeacherArea42` → lazy `TeacherGuide42` | Existing `somer173` mechanism, 25 detailed solutions + 46 practice keys |
 
-- ≥ 1200px: cover splits into two columns; the lesson body is a grid with a sticky station rail beside the content column.
-- ≤ 850px: the body collapses to one column and the station rail moves behind the mobile toggle; panels stack.
-- ≤ 500px: dial rows, option grids, the checklist and the writing surface become single-column; the 46px minimum control height is preserved.
-- Verified in Chromium at 1280×900 and 375×812 with no horizontal overflow in any of the 99 measured states.
+No decorative or dead buttons: every control above changes state, and each audit exercises them (see `lesson42-implementation-report.md`).
 
-## Accessibility
+## Hub card
 
-- Every interactive control has an accessible name (button text or `aria-label`); every field is wrapped in a `<label>`.
-- `aria-pressed` on channel/subject/verb toggles, `aria-current="step"` on the active section, `role="status"` on all feedback, `role="alert"` on the teacher-password error.
-- `aria-controls` / `aria-labelledby` / `aria-describedby` targets resolve (asserted in both the DOM and browser audits).
-- Visible 3px focus ring on all focusable elements; `prefers-reduced-motion` disables transitions.
-- RTL document with explicit `dir="ltr"` isolation on every English run; the full-course BIDI crawl reports zero violations for Lesson 42.
+`src/App.tsx` is a shared file, so Lesson 42 keeps its existing card entry and only corrects its values: `stats` now reports the real 144 slides / 44 sections / 17 labs / 25 questions, `en` is "From Ability to Polite Communication", the emoji is 🚀, and `grad` is **`from-sky-500 to-emerald-500` — the exact gradient of Lesson 1 and of the Lesson 41 rebuild**. `scripts/audit-lesson42.mjs` asserts all three gradients are equal, and `scripts/audit-lesson42-browser.mjs` re-checks the rendered gradient on the live hub.
 
-## Provenance labelling
+## Answer-key protection (structural, not stylistic)
 
-Platform-authored material is labelled in the UI (`شرح المنصة`, `إضافة المنصة`, `PLATFORM-AUTHORED`, `DELIVERY GUIDE / PLATFORM-AUTHORED`). Source material is rendered from `source42.ts` without alteration beyond the documented normalization in `docs/lesson42-coverage.md`.
+Lesson 42's source is unusual: **§41 of the supplied document is the final-test answer key itself.** Because `ledger42.ts` → `source42.ts` is statically imported by the student bundle, keeping §41 in the student source shipped the complete key inside `dist/assets/index-*.js`. This was verified, not assumed: a baseline build of `HEAD` contains §41's reason strings, and the current build does not.
+
+The fix is a **physical split**: §41 now lives in `teacherSource42.ts`, imported only by the lazy `TeacherGuide42`. Reassembly of the two files is byte-identical to the original `source42.ts` (all 45 section hashes still match `docs/lesson42-source-manifest.json`).
+
+This is client-side separation, not server-side security, and the UI says so in both the locked and unlocked states of the teacher gate.
+
+## Deliberate departures
+
+- **Accessibility:** meta labels use `slate-500` instead of `slate-400`, and the cover tiles use `sky-700` / `violet-700` so that all text clears WCAG AA 4.5:1. Palette family and layout are unchanged otherwise. Measured contrast values are in `docs/lesson42-implementation-report.md`.
+- **Slide count over density:** the lesson is split into **144** short slides rather than shrinking type or compressing sections. Every slide declares an explicit inclusive `range` of source units, and `uncoveredUnits42()` is asserted empty.
+- **Direction separators:** where the original Lesson 1 chrome joins a Latin token to Arabic text with `·` or `—`, Lesson 42 uses `•`. Both are in the BIDI oracle's separator set, which flags "Latin + separator + Arabic" pairs in an RTL paragraph; Lesson 42 is in that audit's strict set, so the chrome uses a non-separator bullet. Teaching content is unaffected — it goes through `Text42` / `LatinRuns`.

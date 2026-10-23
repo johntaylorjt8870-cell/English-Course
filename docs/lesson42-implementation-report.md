@@ -66,7 +66,7 @@ The first browser run found 10 slides above the 1200px card target that Lesson 4
 
 Slide count went **135 → 145**; labs **12 → 17**; hub-card stats updated to match. Coverage stayed at **0 uncovered units**, and the audit's "each unit shown once" check caught (and I fixed) a duplicate introduced by the `write-criteria` split.
 
-Measured effect in Chromium: the tallest card fell from **1630px to 1338px**, and the number of cards above the 1200px target fell from **10 to 1**. That last one was `test-l5-c`, still holding two long IQ200 dialogue items, so it was split again into `-c` / `-d`; the confirming run is reported in §8.
+Measured effect in Chromium across three runs: tallest card **1630px → 1338px → 1186px**, and cards above the 1200px target **10 → 1 → none**. The intermediate 1338px card was `test-l5-c`, still holding two long IQ200 dialogue items, so it was split again into `-c` / `-d`. The final tallest card is 1186px, in line with Lesson 41's 1140px.
 
 A dedicated JSDOM check verified the splits moved content rather than duplicating or dropping it: for each split lab, every source row appears in **exactly one** half (`lab-build` 2+2, `lab-time` 3+2, `lab-able` 3+3, `lab-repair` 2+2, `lab-adventure` 4+3), and the two reading halves cover source lines 1–7 and 8–14 with no overlap and neither pulling in the Arabic question heading.
 
@@ -123,10 +123,38 @@ Results are recorded in §8 below.
 
 ## 8. Browser results
 
-_(filled in from the run that follows the slide-height fixes)_
+Real Chromium via `playwright-core` + `@sparticuz/chromium`, driven against the Vite dev server at `http://127.0.0.1:5173/English-Course/#/lesson/42`, at **1280×800** and **1920×1080**. Environment: this sandbox's dev server (`npm run dev`), not the production build — see the limitation below.
+
+**Final run (after the slide-height fixes):**
+
+```
+Lesson 42 browser audit: 2969 checks · 0 failures · 0 page errors
+colour resolver self-test 10/10 · white/black 21:1 · mid-grey 4.48:1
+contrast: 5542 text samples · formats {"oklch":7137,"oklab":475,"rgb":725,
+  "rgba":435,"hsl":145,"hex":145,"colorFn":145} · 106 faded disabled-control exemptions
+tallest card 1186px (1280x800 slide 96) · cards over 1200px: none
+screenshots: 23 files in docs/lesson42-visual
+EXIT=0
+```
+
+- **Contrast:** 5542 text samples measured from **computed** colours, with **7137 `oklch`** values resolved (plus `oklab`, `rgb`, `rgba`, `hsl`, `hex` and `color()`); the resolver passed its own 10/10 self-test (white/black 21:1, mid-grey 4.48:1). **No contrast failures.** The 106 exemptions are faded *disabled* controls, which WCAG exempts.
+- **Overlap:** element-geometry checks passed at both viewports, including the site-lock control against the Next button at the top of the deck and at maximum scroll.
+- **Page errors: 0.** The only console error the harness ever saw is the sandbox's blocked `fonts.googleapis.com` request, filtered by URL.
+- **Lazy-chunk discipline:** `key42`, `SolutionsArea42` and `TeacherGuide42` are asserted **not** to be requested before the test is submitted or the teacher gate is unlocked.
+- **Slide height:** tallest card **1186px**, **none** over the 1200px target.
+- 23 screenshots committed under `docs/lesson42-visual/`.
+
+**Progression across the three runs** (each failure diagnosed, not suppressed):
+
+| Run | Checks | Failures | Tallest card | Over 1200px |
+|---|---:|---:|---:|---:|
+| 1 (135 slides) | 2760 | 4 | 1630px | 10 |
+| 2 (144 slides) | 2945 | 4 | 1338px | 1 |
+| 3 (145 slides, final) | **2969** | **0** | **1186px** | **none** |
 
 ## 9. Limitations
 
 - **Fonts:** the sandbox cannot reach `fonts.googleapis.com`, so Chromium falls back to system fonts. Every console error observed is that single blocked request, which the harness filters by URL. Typography *families* are therefore not visually confirmed; layout, spacing, colour and geometry are.
+- **Production-build browser pass not performed.** The Chromium run drives the Vite **dev** server, which is what the harness targets. The production bundle was separately verified by `npm run build`, by the esbuild chunk graph in the static audit, and by grepping `dist/assets/index-*.js` for §41 key text — but the rendered production bundle was not driven in a browser.
 - **Client-side gating only** — see §3.
 - The `tsc` baseline of 186 errors is pre-existing and out of scope; it was used as a regression yardstick, not fixed.

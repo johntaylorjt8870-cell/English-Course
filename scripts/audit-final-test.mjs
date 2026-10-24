@@ -299,7 +299,9 @@ async function mountLesson(n, Comp) {
 }
 async function goToLastStep(host, n) {
   let steps = 0;
-  while (!host.querySelector(`[data-final-test="${n}"]`) && steps < 90) {
+  // سقف أمان مرتفع: بعض الدروس أطول من 90 خطوة (الدرس 32 = 120 صفحة).
+  // التوقّف الطبيعي عند آخر خطوة أو عند تعطيل «التالي»، مع حارس عدم تقدّم.
+  while (!host.querySelector(`[data-final-test="${n}"]`) && steps < 400) {
     const btns = exactText(host, "التالي ←");
     const b = btns[btns.length - 1];
     if (!b || b.disabled) break;

@@ -710,10 +710,11 @@ ok(!src["Lesson32.tsx"].includes("l32-fab-next absolute"), "nav: شريط الت
 ok(src["Lesson32.tsx"].includes("<LessonStepNav"), "nav: شريط التنقل المشترك مستخدم");
 ok(
   src["Lesson32.tsx"].includes("prevDisabled={index === 0}") &&
-    /nextDisabled=\{index === (?:PAGES_32\.length|PAGE_COUNT_32) - 1\}/.test(src["Lesson32.tsx"]),
+    /nextDisabled=\{index === (?:PAGES_32\.length|PAGE_COUNT_32|SLIDE_COUNT_32) - 1\}/.test(src["Lesson32.tsx"]),
   "nav: تعطيل السابق/التالي في الطرفين",
 );
 ok(m.PAGE_COUNT_32 === m.PAGES_32.length, "nav: الثابت المستخدم في الطرف الأخير مطابق لعدد الصفحات");
+ok(/const SLIDE_COUNT_32 = PAGES_32\.length;/.test(src["Lesson32.tsx"]), "nav: SLIDE_COUNT_32 مشتق من عدد الصفحات لا رقم مكتوب");
 
 // ============================================================
 // 9) الغلاف والتسجيل

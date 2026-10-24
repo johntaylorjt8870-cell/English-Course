@@ -22,6 +22,9 @@ import { LESSON_TITLE_32, LESSON_SUBTITLE_32, SECTIONS_32 } from "./data";
 import { FOCUS32, Frame32 } from "./kit32";
 import { StepBody32, navLabel32 } from "./Steps32";
 import { PAGES_32, PAGE_COUNT_32, type Page32 } from "./pages32";
+
+/** عدد شرائح الدرس — الاسم الذي يفهمه تدقيق الاختبار النهائي المشترك. */
+const SLIDE_COUNT_32 = PAGES_32.length;
 import TestArea32, { Solutions32 } from "./TestArea32";
 import TeacherArea32 from "./TeacherArea32";
 import FinalTest from "../../shared/finalTest";
@@ -394,7 +397,7 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
             onPrev={() => goSlide(index - 1)}
             onNext={() => goSlide(index + 1)}
             prevDisabled={index === 0}
-            nextDisabled={index === PAGE_COUNT_32 - 1}
+            nextDisabled={index === SLIDE_COUNT_32 - 1}
             prevLabel={<>→ <Rich text="السابق" /></>}
             nextLabel="التالي ←"
             prevClassName={`l32-fab l32-fab-prev ${FOCUS32}`}

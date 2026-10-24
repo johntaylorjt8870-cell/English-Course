@@ -1101,7 +1101,7 @@ export function RibbonMaker32({ seq, activities, maxHours, model, modelAr, onDon
           className={`l32-tap px-3.5 text-sm font-black ${still ? "l32-tap-primary" : "l32-tap-gold"} ${FOCUS32}`}>
           {still ? "🏃 ما زال مستمرًا الآن" : "🛑 توقف قبل قليل، والأثر باقٍ"}
         </button>
-        <span className="text-xs font-bold text-slate-500"><Rich text="الجملة واحدة في الحالتين — الواقع يتغيّر، والجملة لا تتغيّر (المصدر §18)." /></span>
+        <span className="text-xs font-bold text-slate-500"><Rich text="الجملة واحدة في الحالتين — الواقع يتغيّر، والجملة لا تتغيّر (المصدر قسم 18)." /></span>
       </div>
 
       <div className="l32-card l32-card-aqua p-3">

@@ -392,20 +392,20 @@ function LabPage({ page }: { page: Page32 }) {
                     stem: "الجدار مكتمل الطلاء بالكامل — أي عدسة؟",
                     opts: ["النتيجة — Present Perfect", "النشاط — Present Perfect Continuous"],
                     answer: 0,
-                    why: "المصدر §14: I have painted the room — التركيز على الإنجاز.",
+                    why: "المصدر قسم 14: I have painted the room — التركيز على الإنجاز.",
                   },
                   {
                     stem: "الفرشاة ما زالت تتحرك على الجدار — أي عدسة؟",
                     opts: ["النتيجة — Present Perfect", "النشاط — Present Perfect Continuous"],
                     answer: 1,
-                    why: "المصدر §14: I have been painting the room — التركيز على النشاط.",
+                    why: "المصدر قسم 14: I have been painting the room — التركيز على النشاط.",
                   },
                 ]}
               />
             )}
             <div className="rounded-2xl border-2 border-indigo-200 bg-indigo-50/60 p-3">
               <p className="text-xs font-bold text-indigo-900">
-                <Rich text="مثال المصدر المؤسِّس (§14) — نفس الغرفة، عدستان:" />
+                <Rich text="مثال المصدر المؤسِّس (قسم 14) — نفس الغرفة، عدستان:" />
               </p>
               <div dir="ltr" className="mt-1 space-y-0.5">
                 <p><En className="text-base font-extrabold text-indigo-900">{CANVAS_S14.result.en}</En></p>
@@ -484,8 +484,8 @@ function LabPage({ page }: { page: Page32 }) {
         answer: c.tense === "PP" ? 0 : 1,
         why:
           c.tense === "PP"
-            ? "الكلمة وحدها لا تكفي: هنا الإنجاز واضح ← Present Perfect (المصدر §20)."
-            : "الكلمة وحدها لا تكفي: هنا النشاط الممتد ← Present Perfect Continuous (المصدر §20).",
+            ? "الكلمة وحدها لا تكفي: هنا الإنجاز واضح ← Present Perfect (المصدر قسم 20)."
+            : "الكلمة وحدها لا تكفي: هنا النشاط الممتد ← Present Perfect Continuous (المصدر قسم 20).",
       }));
       return (
         <LabShell page={page} emoji="⚠️" label="CUE WORDS" ar="الكلمة وحدها لا تكفي">

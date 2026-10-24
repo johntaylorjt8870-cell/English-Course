@@ -64,35 +64,35 @@ export type TeacherNote32 = { head: string; lines: string[] };
 export const TEACHER_32_NOTES: TeacherNote32[] = [
   { head: "الفكرة الأم للدرس", lines: [
     "Platform Explanation: الطالب يعتقد أن الزمن يتحدد بالماضي أو الحاضر فقط. الدرس يقول: الزمن يتحدد بزاوية النظر — هل أهتم بالنتيجة، أم بالنشاط والمدة؟",
-    "المصدر (§14، §35): «هل أهتم بما تم إنجازه؟ ← PP · هل أهتم بالنشاط أو المدة؟ ← PPC».",
+    "المصدر (قسم 14، قسم 35): «هل أهتم بما تم إنجازه؟ ← PP · هل أهتم بالنشاط أو المدة؟ ← PPC».",
   ] },
   { head: "المدة مقابل نقطة البداية", lines: [
     "اختبار سريع للطلاب: هل الكلمة المتبعة «مسافة» أم «علامة على الطريق»؟ three hours = مسافة (for) · Monday = علامة (since).",
-    "المصدر (§7): for + مدة · since + بداية. لا تشرح القاعدة قبل أن يصنّف الطلاب العبارات بأنفسهم في معمل for/since (خطوات 7–9).",
+    "المصدر (قسم 7): for + مدة · since + بداية. لا تشرح القاعدة قبل أن يصنّف الطلاب العبارات بأنفسهم في معمل for/since (خطوات 7–9).",
   ] },
   { head: "لماذا يُعتبر التركيز على النشاط أصعب؟", lines: [
     "Platform Explanation: في PP يكون الإنجاز واضحًا في الجملة؛ في PPC يحتاج الطالب إلى «رؤية» النشاط. استخدم الأدلة المرئية (اللهاث، اليدان المتسختان، الأرض المبللة) لتجسيد النشاط.",
   ] },
   { head: "نقطة المرجع (Reference Point)", lines: [
     "Platform Explanation: حرّك نقطة المرجع أمام الطلاب من 8:00 إلى NOW ثم إلى «حدث ماضٍ آخر». الطالب الذي يرى الزمن يتغيّر مع النقطة يفهم الفرق بين PPC وPast Continuous وPast Perfect Continuous.",
-    "المصدر (§25–§26): «لاحظ كيف تغيرت نقطة المرجع».",
+    "المصدر (قسم 25–قسم 26): «لاحظ كيف تغيرت نقطة المرجع».",
   ] },
   { head: "الأفعال الحالية (Stative verbs)", lines: [
-    "المصدر (§23): know, believe, understand, want, need, remember, like, love, hate — مع كلمة «عادةً» في أمثلة المصدر. درّس الحذر من التعميم؛ لا تقل «ممنوع» بشكل مطلق دون الإشارة إلى أن المصدر يقول «عادةً».",
+    "المصدر (قسم 23): know, believe, understand, want, need, remember, like, love, hate — مع كلمة «عادةً» في أمثلة المصدر. درّس الحذر من التعميم؛ لا تقل «ممنوع» بشكل مطلق دون الإشارة إلى أن المصدر يقول «عادةً».",
   ] },
   { head: "لا تعتمد على كلمة واحدة", lines: [
-    "المصدر (§20): today قد تأتي مع PP («I have studied three chapters today»)، وrecently قد تأتي مع PPC. المعنى هو الذي يحدد الزمن.",
+    "المصدر (قسم 20): today قد تأتي مع PP («I have studied three chapters today»)، وrecently قد تأتي مع PPC. المعنى هو الذي يحدد الزمن.",
     "أعد الطلاب إلى السؤال: هل أتحدث عن ماذا أُنجز أم عن كم استمر؟",
   ] },
   { head: "تصنيف مُتنازَع فيه في المصدر (تنبيه للمعلم)", lines: [
-    "المصدر (§33): «Adam has studied robotics for three years» مصنّفة Present Perfect، مع سبب «المدة والتجربة المرتبطة بالحاضر».",
+    "المصدر (قسم 33): «Adam has studied robotics for three years» مصنّفة Present Perfect، مع سبب «المدة والتجربة المرتبطة بالحاضر».",
     "Platform Explanation: الجملة تحوي مدة (for three years)، وفي الاستعمال الإنجليزي يُقبل أيضًا has been studying في سياق مشابه، لأن الدرس يفرّق بين التجربة/الإنجاز والنشاط الممتد. الإجابة المعتمدة هي إجابة المصدر، ويُنصح بعرض التصنيف كما هو مع النقاش، لا تغييره بصمت.",
   ] },
   { head: "أخطاء المصدر المتعمدة", lines: [
     "المصدر يحتوي 12 جملة خاطئة متعمدة (انظر القائمة أدناه). لا تُصححها للطالب قبل أن يحاول: اطلب منه أن يمسّ الجزء الخاطئ أولًا.",
   ] },
   { head: "الإجابات القصيرة", lines: [
-    "المصدر (§11): Yes, I have. ✅ · Yes, I have been. ❌ — المعلم يشرح أن الإجابة القصيرة تستعمل have/has، وأن been لا تُعاد.",
+    "المصدر (قسم 11): Yes, I have. ✅ · Yes, I have been. ❌ — المعلم يشرح أن الإجابة القصيرة تستعمل have/has، وأن been لا تُعاد.",
   ] },
   { head: "الاحتفاظ بالمصطلحات الإنجليزية", lines: [
     "Platform Explanation: كل صيغة إنجليزية تُعرض LTR معزولة. عند الشرح بالعربية، اكتب الجملة الإنجليزية أولًا ثم الترجمة (مثال: I have been studying ← لقد كنت أدرس).",
@@ -101,47 +101,47 @@ export const TEACHER_32_NOTES: TeacherNote32[] = [
 
 export type TeacherSolution32 = { head: string; lines: string[] };
 
-/** حلول تمارين المصدر — مع المرجع «المصدر §X» في كل مجموعة */
+/** حلول تمارين المصدر — مع المرجع «المصدر قسم X» في كل مجموعة */
 export const TEACHER_32_SOLUTIONS: TeacherSolution32[] = [
-  { head: "§11 · الإجابات القصيرة (المصدر)", lines: [
+  { head: "قسم 11 · الإجابات القصيرة (المصدر)", lines: [
     "Have you been studying? → Yes, I have. ✅ / No, I haven't. · Has she been working? → Yes, she has. / No, she hasn't. · Have they been waiting? → Yes, they have. / No, they haven't.",
     "Yes, I have been. ❌ — خطأ متعمد في المصدر.",
   ] },
-  { head: "§12 · Wh Questions (المصدر)", lines: [
+  { head: "قسم 12 · Wh Questions (المصدر)", lines: [
     "What have you been doing? · Where have they been staying? · Why has she been crying? · How long have you been waiting? · Who has been using my computer?",
     "Platform Explanation: في Who has been using my computer؟ الكلمة who هي الفاعل، لذلك لا يأتي has قبلها.",
   ] },
-  { head: "§16 · مثال IQ200 (المصدر)", lines: [
+  { head: "قسم 16 · مثال IQ200 (المصدر)", lines: [
     "A: I have written five pages. ← التركيز على النتيجة والكمية. B: I have been writing for three hours. ← التركيز على النشاط والمدة.",
   ] },
-  { head: "§23 · الأفعال الحالية (المصدر)", lines: [
+  { head: "قسم 23 · الأفعال الحالية (المصدر)", lines: [
     "I have known him for ten years. ✅ · She has understood the problem. ✅",
     "I have been knowing him for ten years. ❌ · She has been understanding the problem. ❌ (عادةً).",
   ] },
-  { head: "§27 · Grammar Detective (المصدر — 8 أخطاء)", lines: [
+  { head: "قسم 27 · Grammar Detective (المصدر — 8 أخطاء)", lines: [
     "① She has been studying for two hours. ② I have been working for three hours. ③ He has known her for years. ④ Have you been waiting long? ⑤ They have been playing all afternoon. ⑥ She hasn't been sleeping well. ⑦ How long has he been working here? ⑧ I have written five emails.",
     "⑧: نركز على عدد مكتمل (five emails) ← have written، وليس have been written.",
   ] },
-  { head: "§28 · تحدي الاختيار (المصدر)", lines: [
+  { head: "قسم 28 · تحدي الاختيار (المصدر)", lines: [
     "① have read · ② have been reading · ③ has made · ④ has been making · ⑤ have cleaned · ⑥ have been cleaning.",
     "الشرح: العدد أو الإنجاز الواضح ← Present Perfect؛ النشاط والمدة ← Present Perfect Continuous.",
   ] },
-  { head: "§29 · IQ200 — نفس الفعل (المصدر)", lines: [
+  { head: "قسم 29 · IQ200 — نفس الفعل (المصدر)", lines: [
     "I have repaired my bicycle → الدراجة أصبحت مُصلحة (نتيجة) · I have been repairing my bicycle → كنت أعمل على إصلاحها، وقد لا أكون انتهيت (نشاط).",
     "المعلم يسأل الطالب: «ما الذي أريد أن أُبرزه؟» قبل «أي زمن أصعب؟».",
   ] },
-  { head: "§32 · Boss Challenge (المصدر — 8 جمل)", lines: [
+  { head: "قسم 32 · Boss Challenge (المصدر — 8 جمل)", lines: [
     "① play — Present Simple · ② are playing — Present Continuous · ③ have read — Present Perfect · ④ have been studying — Present Perfect Continuous · ⑤ studies — Present Simple · ⑥ is studying — Present Continuous · ⑦ has been studying — Present Perfect Continuous · ⑧ has read — Present Perfect.",
     "المصدر: «لاحظ كيف أصبح لدينا الآن أربع درجات مختلفة من الزمن في الحاضر».",
   ] },
-  { head: "§33 · Final IQ200 (المصدر — فقرة Adam)", lines: [
+  { head: "قسم 33 · Final IQ200 (المصدر — فقرة Adam)", lines: [
     "has studied → Present Perfect · has built → Present Perfect (six robots) · has been working → Present Perfect Continuous (since January) · has been testing → Present Perfect Continuous (every afternoon).",
     "انظر ملاحظة التصنيف في قسم الملاحظات: has studied for three years.",
   ] },
-  { head: "§34 · Final Boss (المصدر — قصة Maya)", lines: [
+  { head: "قسم 34 · Final Boss (المصدر — قصة Maya)", lines: [
     "She has been studying science for several months. · She has read eight books so far. · She has been working on her project since January. · She has completed most of the experiments. · She is tired because she has been working all day.",
   ] },
-  { head: "§31 · since و for (المصدر)", lines: [
+  { head: "قسم 31 · since و for (المصدر)", lines: [
     "المصدر: I have been studying since three hours. ❌ ← الصحيح: I have been studying for three hours. ✅ · since 5:00 نقطة بداية.",
   ] },
 ];
@@ -163,32 +163,32 @@ export const TEACHER_32_RUBRICS: TeacherRubric32[] = [
 ];
 
 export const TEACHER_32_MISTAKES: TeacherNote32[] = [
-  { head: "١. been + V-ing بعد Yes/No", lines: ["Yes, I have been. ❌ — المصدر (§11). العلاج: اطلب الجواب القصير بعد كل سؤال وتصحيح اللفظ بصوت عالٍ."] },
-  { head: "٢. verb-ing بعد been مع أفعال الحالة", lines: ["I have been knowing him. ❌ — المصدر (§23). العلاج: كوّن قائمة بأفعال الحالة قبل الدرس ولاحظ V3 لكل فعل."] },
-  { head: "٣. since مع مدة", lines: ["since three hours ❌ — المصدر (§31). العلاج: قاعدة «مدة = for · بداية = since»، وتصنيف سريع."] },
+  { head: "١. been + V-ing بعد Yes/No", lines: ["Yes, I have been. ❌ — المصدر (قسم 11). العلاج: اطلب الجواب القصير بعد كل سؤال وتصحيح اللفظ بصوت عالٍ."] },
+  { head: "٢. verb-ing بعد been مع أفعال الحالة", lines: ["I have been knowing him. ❌ — المصدر (قسم 23). العلاج: كوّن قائمة بأفعال الحالة قبل الدرس ولاحظ V3 لكل فعل."] },
+  { head: "٣. since مع مدة", lines: ["since three hours ❌ — المصدر (قسم 31). العلاج: قاعدة «مدة = for · بداية = since»، وتصنيف سريع."] },
   { head: "٤. V2 بعد been", lines: ["been went / been ate ❌. العلاج: بعد been دائمًا verb-ing، وبعد have/has V3."] },
   { head: "٥. نسيان been", lines: ["She has studying ❌. العلاج: اعتبر been «المفتاح» بين have/has وverb-ing، وقطّعها بصوت."] },
   { head: "٦. استخدام PPC مع عدد مكتمل", lines: ["I have been writing five emails ❌ (إذا كان التركيز على العدد). العلاج: five emails = PP."] },
-  { head: "٧. تطبيق «لاحظ الكلمة» بلا فكر", lines: ["today تفرض PP؟ recently تفرض PPC؟ ❌ — المعنى هو الذي يحدد (§20)."] },
+  { head: "٧. تطبيق «لاحظ الكلمة» بلا فكر", lines: ["today تفرض PP؟ recently تفرض PPC؟ ❌ — المعنى هو الذي يحدد (قسم 20)."] },
   { head: "٨. الخلط بين PPC وPast Continuous", lines: ["I have been studying at 8:00 ✗ للحدث الماضي المحدد. العلاج: حرّك نقطة المرجع أمام الطلاب."] },
   { head: "٩. الخلط بين PPC وPast Perfect Continuous", lines: ["I have been studying when she called ✗ — النقطة المرجعية حدث ماضٍ آخر ← had been."] },
-  { head: "١٠. تأكيد الانتهاء من PPC", lines: ["I have been reading the book ⇒ «انتهيت» ✗. المصدر (§21): «قد لا أكون انتهيت منه»."] },
+  { head: "١٠. تأكيد الانتهاء من PPC", lines: ["I have been reading the book ⇒ «انتهيت» ✗. المصدر (قسم 21): «قد لا أكون انتهيت منه»."] },
 ];
 
 /** الأخطاء المتعمدة المحفوظة في المصدر — تُعرض في منطقة المعلم كقائمة تدقيق */
 export const INTENTIONALLY_WRONG_32: { id: string; wrong: string; right: string; note: string; section: string }[] = [
-  { id: "E1", wrong: "Yes, I have been. ❌", right: "Yes, I have. ✅", note: "جواب قصير بـ been", section: "§11" },
-  { id: "E2", wrong: "I have been knowing him for ten years. ❌", right: "I have known him for ten years. ✅", note: "فعل حالة", section: "§23" },
-  { id: "E3", wrong: "She has been understanding the problem. ❌", right: "She has understood the problem. ✅", note: "فعل حالة (المصدر: عادةً)", section: "§23" },
-  { id: "E4", wrong: "She has been study for two hours.", right: "She has been studying for two hours.", note: "verb-ing بعد been", section: "§27 ①" },
-  { id: "E5", wrong: "I have been working since three hours.", right: "I have been working for three hours.", note: "مدة مع since", section: "§27 ②" },
-  { id: "E6", wrong: "He has been knowing her for years.", right: "He has known her for years.", note: "فعل حالة", section: "§27 ③" },
-  { id: "E7", wrong: "Have you been wait long?", right: "Have you been waiting long?", note: "verb-ing بعد been", section: "§27 ④" },
-  { id: "E8", wrong: "They has been playing all afternoon.", right: "They have been playing all afternoon.", note: "they ← have", section: "§27 ⑤" },
-  { id: "E9", wrong: "She hasn't been sleep well.", right: "She hasn't been sleeping well.", note: "verb-ing بعد been", section: "§27 ⑥" },
-  { id: "E10", wrong: "How long has he been work here?", right: "How long has he been working here?", note: "verb-ing بعد been", section: "§27 ⑦" },
-  { id: "E11", wrong: "I have been written five emails.", right: "I have written five emails.", note: "عدد مكتمل ← PP", section: "§27 ⑧" },
-  { id: "E12", wrong: "I have been studying since three hours. ❌", right: "I have been studying for three hours. ✅", note: "مدة مع since", section: "§31" },
+  { id: "E1", wrong: "Yes, I have been. ❌", right: "Yes, I have. ✅", note: "جواب قصير بـ been", section: "قسم 11" },
+  { id: "E2", wrong: "I have been knowing him for ten years. ❌", right: "I have known him for ten years. ✅", note: "فعل حالة", section: "قسم 23" },
+  { id: "E3", wrong: "She has been understanding the problem. ❌", right: "She has understood the problem. ✅", note: "فعل حالة (المصدر: عادةً)", section: "قسم 23" },
+  { id: "E4", wrong: "She has been study for two hours.", right: "She has been studying for two hours.", note: "verb-ing بعد been", section: "قسم 27 ①" },
+  { id: "E5", wrong: "I have been working since three hours.", right: "I have been working for three hours.", note: "مدة مع since", section: "قسم 27 ②" },
+  { id: "E6", wrong: "He has been knowing her for years.", right: "He has known her for years.", note: "فعل حالة", section: "قسم 27 ③" },
+  { id: "E7", wrong: "Have you been wait long?", right: "Have you been waiting long?", note: "verb-ing بعد been", section: "قسم 27 ④" },
+  { id: "E8", wrong: "They has been playing all afternoon.", right: "They have been playing all afternoon.", note: "they ← have", section: "قسم 27 ⑤" },
+  { id: "E9", wrong: "She hasn't been sleep well.", right: "She hasn't been sleeping well.", note: "verb-ing بعد been", section: "قسم 27 ⑥" },
+  { id: "E10", wrong: "How long has he been work here?", right: "How long has he been working here?", note: "verb-ing بعد been", section: "قسم 27 ⑦" },
+  { id: "E11", wrong: "I have been written five emails.", right: "I have written five emails.", note: "عدد مكتمل ← PP", section: "قسم 27 ⑧" },
+  { id: "E12", wrong: "I have been studying since three hours. ❌", right: "I have been studying for three hours. ✅", note: "مدة مع since", section: "قسم 31" },
 ];
 
 /** مؤشرات التدقيق للمعلم حول مفاتيح الأسئلة الصعبة */

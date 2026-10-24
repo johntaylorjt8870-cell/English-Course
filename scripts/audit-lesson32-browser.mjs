@@ -28,6 +28,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import chromium from "@sparticuz/chromium";
 import { chromium as playwright } from "playwright-core";
 import { localFontCss } from "./lib/local-fonts.mjs";
+import { collectStudentFacingCopy, findEditorialSourceLabels } from "./lib/student-copy-audit.mjs";
 
 // ---------------- بيانات الاختبار: تُقرأ من المصدر نفسه لا من نسخة يدوية ----------------
 const require = createRequire(import.meta.url);
@@ -87,7 +88,22 @@ const errors = [];
 const externalNetworkErrors = [];
 const rendered = [];
 const pageHeights = {};
+const studentCopyFindings = new Map();
+let studentCopyScans = 0;
+let studentCopyOccurrences = 0;
 const ok = (condition, message) => { checks++; if (!condition) failures.push(message); };
+function recordStudentCopy(copy, context) {
+  studentCopyScans++;
+  const findings = findEditorialSourceLabels(copy);
+  studentCopyOccurrences += findings.length;
+  for (const finding of findings) {
+    const record = studentCopyFindings.get(finding.text) ?? { text: finding.text, rules: new Set(), contexts: new Set() };
+    for (const rule of finding.rules) record.rules.add(rule);
+    record.contexts.add(context);
+    studentCopyFindings.set(finding.text, record);
+  }
+  return findings;
+}
 
 // المقاسان المعتمدان في المراجعة
 const DESKTOP_1280 = { width: 1280, height: 800 };
@@ -172,7 +188,7 @@ async function gotoPage(id) {
 
 /** فحص صفحة واحدة: الارتفاع، الفيض، البطاقة الفارغة، الخط، الاتجاه، تغطية زر التالي */
 async function measurePage() {
-  return page.evaluate(() => {
+  const measured = await page.evaluate(() => {
     const step = document.querySelector("[data-lesson-step]");
     const sec = step?.closest("section") ?? null;
     const root = document.querySelector(".l32-shell");
@@ -206,6 +222,15 @@ async function measurePage() {
       nextVisible: !!next && next.getBoundingClientRect().width > 0,
     };
   });
+  measured.studentCopy = await page.locator(".lesson32").evaluate(collectStudentFacingCopy);
+  return measured;
+}
+
+async function auditStudentFacingApp(context) {
+  const copy = await page.locator(".lesson32").evaluate(collectStudentFacingCopy);
+  const findings = recordStudentCopy(copy, context);
+  ok(findings.length === 0, `${context}: no source/provenance or internal section labels (${findings.slice(0, 2).map((x) => x.text).join(" | ")})`);
+  return findings;
 }
 
 /** فحص الطبقة المرئية: لا فيض أفقي، تباين AA، ومراجع ARIA موجودة */
@@ -301,8 +326,11 @@ try {
     const rows = [];
     for (let i = 0; i < PAGES.length; i++) {
       await goTo(i);
-      const r = await measurePage();
+      const measured = await measurePage();
+      const copyFindings = recordStudentCopy(measured.studentCopy, `sweep:${key}:${measured.id}`);
+      const { studentCopy: _studentCopy, ...r } = measured;
       rows.push(r);
+      ok(copyFindings.length === 0, `sweep ${key} ${r.id}: no source/provenance or internal section labels (${copyFindings.slice(0, 2).map((x) => x.text).join(" | ")})`);
       ok(r.id === PAGES[i].id, `sweep ${key}: step ${i + 1} expected ${PAGES[i].id} got ${r.id}`);
       ok(r.ox === 0 && r.mainOx === 0, `sweep ${key} ${r.id}: no horizontal overflow (${r.ox}/${r.mainOx})`);
       ok(r.hasTitle, `sweep ${key} ${r.id}: card has a title`);
@@ -462,6 +490,7 @@ try {
   // ---------------- منطقة الاختبار ----------------
   await page.locator('[data-tab="test"]').click();
   await page.locator('[data-area="l32-test"]').waitFor();
+  await auditStudentFacingApp("1280-assessment-before-submit");
   ok((await page.locator("[data-test-q]").count()) === 20, "test: 20 questions rendered");
   const testText0 = await page.locator('[data-area="l32-test"]').textContent();
   ok(!/الدرجة:|✓ صحيح|✕ غير صحيح|شرح التصحيح/.test(testText0), "test: neutral before submit — no score, no correctness");
@@ -480,6 +509,7 @@ try {
   ok((await page.locator('[data-area="l32-test"]').textContent()).includes("أجبت: 1/20"), "test: answering updates the counter");
   await page.getByRole("button", { name: /إرسال الاختبار/ }).first().click();
   await page.waitForTimeout(120);
+  await auditStudentFacingApp("1280-assessment-incomplete-submit");
   ok(!/الدرجة:/.test(await page.locator('[data-area="l32-test"]').textContent()), "test: partial answers still block completion (no reveal, no answers shown)");
   // إعادة الضبط
   await page.getByRole("button", { name: /إعادة الاختبار كاملًا/ }).first().click();
@@ -489,6 +519,7 @@ try {
   // ---------------- الحلول: مقفلة قبل الإرسال ----------------
   await page.locator('[data-tab="solutions"]').click();
   await page.locator('[data-area="l32-solutions"]').waitFor();
+  await auditStudentFacingApp("1280-solutions-locked");
   const solLocked = await page.locator('[data-area="l32-solutions"]').textContent();
   ok(/الحلول مقفلة/.test(solLocked), "solutions: locked before the test is submitted");
   ok(!/الإجابة المقبولة/.test(solLocked), "solutions: no answer key leaks while locked");
@@ -526,6 +557,7 @@ try {
   ok(answered === 20, `test: all 20 questions answered in the browser (${answered}/20)`);
   await page.getByRole("button", { name: /إرسال الاختبار/ }).first().click();
   await page.waitForTimeout(250);
+  await auditStudentFacingApp("1280-assessment-after-submit");
   const scored = await page.locator('[data-area="l32-test"]').textContent();
   ok(/الدرجة:\s*\d+\s*من\s*20/.test(scored), "test: per-question status appears after submit");
   ok(/✓ صحيح/.test(scored), "test: correctness markers appear only after submit");
@@ -534,6 +566,7 @@ try {
   await page.locator('[data-tab="solutions"]').click();
   await page.locator('[data-area="l32-solutions"]').waitFor();
   await page.waitForTimeout(120);
+  await auditStudentFacingApp("1280-solutions-unlocked");
   const solOpen = await page.locator('[data-area="l32-solutions"]').textContent();
   ok((solOpen.match(/المجموعة/g) || []).length === 4, "solutions: four groups unlock after submitting");
   ok(solOpen.includes("Platform Explanation"), "solutions: explanations are labelled as platform commentary");
@@ -547,6 +580,7 @@ try {
   await page.locator('[data-nav-toggle="steps"]').click();
   await page.waitForTimeout(100);
   ok(await page.locator("#l32-drawer").isVisible(), "mobile: the steps drawer opens");
+  await auditStudentFacingApp("mobile-drawer");
   await inspect("mobile-drawer");
   await shot("mobile-drawer");
   await page.locator("#l32-drawer .l32-rail-step").nth(indexOf("s14-lab")).evaluate((el) => el.click());
@@ -555,6 +589,7 @@ try {
   await inspect("mobile-s14");
   await shot("mobile-s14-lens");
 
+  ok(studentCopyFindings.size === 0, `student-copy: no source/provenance or internal-section labels (${studentCopyScans} rendered states, ${studentCopyFindings.size} distinct strings, ${studentCopyOccurrences} occurrences)`);
   ok(errors.length === 0, `no console/page errors (${errors.slice(0, 3).join(" | ")})`);
   ok(externalNetworkErrors.length >= 0, "external font requests were aborted by design");
 } finally {
@@ -569,6 +604,14 @@ try {
     pageHeights,
     checks,
     failures,
+    studentCopyScans,
+    studentCopyDistinctLeaks: studentCopyFindings.size,
+    studentCopyOccurrences,
+    studentCopyFindings: [...studentCopyFindings.values()].map((entry) => ({
+      text: entry.text,
+      rules: [...entry.rules],
+      contexts: [...entry.contexts],
+    })),
     errors,
     externalNetworkErrors,
     screenshots,
@@ -624,7 +667,7 @@ async function answerAllInBrowser() {
   return answered;
 }
 
-console.log(`Real Chromium Lesson 32: ${checks} checks, ${failures.length} failures, ${screenshots.length} screenshots.`);
+console.log(`Real Chromium Lesson 32: ${checks} checks, ${failures.length} failures, ${screenshots.length} screenshots; ${studentCopyScans} rendered-copy scans, ${studentCopyFindings.size} distinct source-label leaks.`);
 if (failures.length) {
   console.error(failures.map((f) => ` ✕ ${f}`).join("\n"));
   process.exitCode = 1;

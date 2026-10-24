@@ -150,7 +150,7 @@ export default function TeacherArea32({ unlocked, onUnlockChange, onGoSolutions 
         <p className="text-xs font-bold text-[#46507f]">
           <Rich text="الإجابات المعتمدة هي إجابات المصدر. الأخطاء المتعمدة تُدرَّس كتصحيح، ولا تُغيَّر صيغها في السجل." />
         </p>
-        <div className="flex flex-wrap items-center gap-2"><SourceBadge32 src /></div>
+        <div className="flex flex-wrap items-center gap-2"><SourceBadge32 src teacherOnly /></div>
         {TEACHER_32_SOLUTIONS.map((s, i) => (
           <Sub key={i} head={s.head}>
             <ul className="l32-teach">{s.lines.map((l, j) => <li key={j}><LatinRuns text={l} /></li>)}</ul>

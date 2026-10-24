@@ -23,6 +23,7 @@ import { createRequire } from "node:module";
 import { readFileSync, readdirSync, rmSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { auditRenderedStudentCopy, findEditorialSourceLabels } from "./lib/student-copy-audit.mjs";
 
 const require = createRequire(import.meta.url);
 const esbuild = require("esbuild");
@@ -33,9 +34,24 @@ const L32 = join(root, "src", "lessons", "lesson32");
 
 const failures = [];
 let checks = 0;
+const studentCopyFindings = new Map();
+let studentCopyScans = 0;
+let studentCopyOccurrences = 0;
 const ok = (cond, msg) => {
   checks++;
   if (!cond) failures.push(msg);
+};
+const auditStudentRoot = (rootNode, context) => {
+  studentCopyScans++;
+  const findings = auditRenderedStudentCopy(rootNode);
+  studentCopyOccurrences += findings.length;
+  for (const finding of findings) {
+    const record = studentCopyFindings.get(finding.text) ?? { text: finding.text, rules: new Set(), contexts: new Set() };
+    for (const rule of finding.rules) record.rules.add(rule);
+    record.contexts.add(context);
+    studentCopyFindings.set(finding.text, record);
+  }
+  return findings;
 };
 
 // ---------------- jsdom globals ----------------
@@ -119,6 +135,17 @@ const decodeEnt = (t) =>
     .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
     .replace(/&#x27;/g, "'").replace(/&#39;/g, "'").replace(/&quot;/g, '"')
     .replace(/&nbsp;/g, " ");
+
+// يفحص النص والاسم المتاحي في DOM الفعلي، مع استثناء سمات data-* الداخلية.
+{
+  const internalTrace = win.document.createElement("div");
+  internalTrace.innerHTML = '<span data-source-section="s2">تحليل الجملة</span>';
+  ok(auditRenderedStudentCopy(internalTrace).length === 0, "student copy: سمات تتبّع data-source-* لا تُعامل كنص ظاهر");
+  const exposedName = win.document.createElement("div");
+  exposedName.innerHTML = '<button aria-label="source section 2">ابدأ</button>';
+  ok(auditRenderedStudentCopy(exposedName).length === 1, "student copy: فحص الاسم المتاحي يلتقط مصدرًا/قسمًا داخليًا");
+  ok(findEditorialSourceLabels(["المصدر قسم 2 — تحليل المثال"]).length === 1, "student copy: الفحص يلتقط عنوانًا عربيًا محررًا للمصدر");
+}
 
 // ============================================================
 // 1) سجل المصدر — الأرقام مستخرجة من السجل لا مكتوبة يدويًا
@@ -204,6 +231,9 @@ for (const page of PAGES) {
     failures.push(`render: صفحة ${page.id} رمت استثناءً: ${e.message}`);
     continue;
   }
+  const renderedCopyRoot = win.document.createElement("div");
+  renderedCopyRoot.innerHTML = html;
+  auditStudentRoot(renderedCopyRoot, `page:${page.id}`);
   ok(html.includes(`data-lesson-step="${page.id}"`), `render: ${page.id} ترسم جسمها`);
   ok(html.includes("data-source-section"), `render: ${page.id} تحمل شارة القسم المصري`);
   ok(html.includes("data-journey-section"), `render: ${page.id} تحمل شريط الرحلة`);
@@ -530,6 +560,7 @@ const labPages = PAGES.filter((p) => p.lab);
 let labsDriven = 0;
 for (const page of labPages) {
   const el = await mountPage(page);
+  auditStudentRoot(el, `lab-before:${page.id}`);
   const controls = el.querySelectorAll("button, input, select, textarea, [role='radiogroup'], [data-explore]");
   ok(controls.length > 0, `lab ${page.id}: فيه عنصر تفاعلي حقيقي (${controls.length})`);
   ok(!!q(el, "[data-teach-panel]"), `lab ${page.id}: شرح المنصة ظاهر`);
@@ -543,6 +574,7 @@ for (const page of labPages) {
   }
   await driver(el, page);
   await tick(20);
+  auditStudentRoot(el, `lab-after:${page.id}`);
   const done = gateOf(el, page.id);
   ok(done, `lab ${page.id} (${page.lab}): التفاعل يصل إلى الإتمام فعليًا`);
   if (done) labsDriven += 1;
@@ -567,6 +599,7 @@ ok(TEST.every((x) => x.skill), "test: كل سؤال مرتبط بمهارة من
 
 {
   const el = await mountTest();
+  auditStudentRoot(el, "assessment-before-submit");
   const before = textOf(el);
   ok(!/الإجابة الصحيحة|شرح التصحيح|الدرجة:|✓ صحيح|✕ خطأ/.test(before), "test: لا كشف لأي إجابة قبل الإرسال");
   ok(/أجبت:\s*0\//.test(before.replace(/\s+/g, " ")) || /0\s*\/\s*\d+/.test(before), "test: العدّاد يبدأ من صفر");
@@ -574,6 +607,7 @@ ok(TEST.every((x) => x.skill), "test: كل سؤال مرتبط بمهارة من
   // إرسال بلا إجابة: يبقى محايدًا
   clickEl(btnWith(el, "أرسل") || btnWith(el, "إرسال"));
   await tick(30);
+  auditStudentRoot(el, "assessment-incomplete-submit");
   ok(!/الإجابة الصحيحة|الدرجة:/.test(textOf(el)), "test: الإرسال فارغًا لا يكشف الإجابات");
   const submittedEmpty = /أكمل|بلا إجابة|لم تُجب|أجب عن/.test(textOf(el));
   ok(submittedEmpty || true, "test: سلوك الإرسال الفارغ مقروء");
@@ -585,6 +619,7 @@ ok(TEST.every((x) => x.skill), "test: كل سؤال مرتبط بمهارة من
   await tick(20);
   clickEl(btnWith(el, "أرسل") || btnWith(el, "إرسال"));
   await tick(40);
+  auditStudentRoot(el, "assessment-after-submit");
   const after = textOf(el);
   ok(new RegExp(`${TEST.length}\\s*/\\s*${TEST.length}`).test(after) || after.includes(`${TEST.length}/${TEST.length}`), `test: الدرجة الكاملة تُحتسب بعد الإرسال (${TEST.length}/${TEST.length})`);
   ok(/الإجابة الصحيحة|شرح التصحيح|تثبيت المفهوم/.test(after), "test: شرح الإجابات يظهر بعد الإرسال فقط");
@@ -599,8 +634,10 @@ ok(TEST.every((x) => x.skill), "test: كل سؤال مرتبط بمهارة من
 // ============================================================
 {
   const el = await mountNode(m.React.createElement(m.Solutions32, { unlocked: false, onGoTest: () => {}, onGoTeacher: () => {} }));
+  auditStudentRoot(el, "solutions-locked");
   ok(/مقفل/.test(textOf(el)), "solutions: مقفلة قبل الإرسال");
   const el2 = await mountNode(m.React.createElement(m.Solutions32, { unlocked: true, onGoTest: () => {}, onGoTeacher: () => {} }));
+  auditStudentRoot(el2, "solutions-unlocked");
   ok(textOf(el2).length > 400, "solutions: تُفتح بعد الإرسال وتعرض الحلول");
 }
 {
@@ -730,6 +767,7 @@ ok(Object.keys(pkg.dependencies).sort().join(",") === "clsx,react,react-dom,tail
 
 {
   const shell = await mountNode(m.React.createElement(m.Lesson32, { onExit: () => {} }));
+  auditStudentRoot(shell, "student-shell-and-navigation");
   const t = textOf(shell);
   ok(["📖", "🧪", "🔑", "👩‍🏫"].every((e) => t.includes(e)), "shell: أزرار المناطق الأربع موجودة");
   ok(!!q(shell, '[data-area="l32-lesson"]'), "shell: منطقة الدرس هي الافتراضية");
@@ -782,6 +820,17 @@ ok(FT.every((x) => x.why && x.concept), "final test: كل سؤال له شرح �
   ok(/title = "🏁 الاختبار النهائي"/.test(sharedFinal), "two tests: مكوّن الاختبار النهائي يعنون نفسه «الاختبار النهائي»");
 }
 
+// ---------------- التدقيق المشترك للنص الطلابي المرسوم ----------------
+const sourceCopyReport = [...studentCopyFindings.values()].map((entry) => ({
+  text: entry.text,
+  rules: [...entry.rules],
+  contexts: [...entry.contexts],
+}));
+ok(
+  sourceCopyReport.length === 0,
+  `student copy: لا تسميات مصدر/تقسيمات تحريرية في النص والاسم المتاحي (${studentCopyScans} حالة مرسومة؛ ${sourceCopyReport.length} نص فريد، ${studentCopyOccurrences} ظهورًا)`,
+);
+
 // ---------------- التنظيف والتقرير ----------------
 rmSync(outFile, { force: true });
 if (existsSync(outCss)) rmSync(outCss, { force: true });
@@ -789,6 +838,9 @@ const summary = {
   checks,
   failures: failures.length,
   pages: PAGES.length,
+  studentCopyScans,
+  studentCopyDistinctLeaks: sourceCopyReport.length,
+  studentCopyOccurrences,
   labs: labPages.length,
   labsDriven,
   sourceSections: ledger.length,
@@ -798,6 +850,12 @@ const summary = {
   finalTest: FT.length,
 };
 console.log(JSON.stringify(summary));
+if (sourceCopyReport.length) {
+  console.error("Student-copy source-label findings:");
+  for (const finding of sourceCopyReport) {
+    console.error(`  - ${finding.text} [${finding.rules.join(", ")}; ${finding.contexts.slice(0, 4).join(", ")}]`);
+  }
+}
 if (failures.length) {
   console.error(`Lesson 32 audit: ${checks - failures.length} passed, ${failures.length} FAILED`);
   for (const f of failures) console.error(" ✕ " + f);

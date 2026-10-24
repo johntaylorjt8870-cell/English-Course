@@ -45,7 +45,7 @@ function Gate({ id, done, label = "أتممت هذا التفاعل" }: { id: st
       <span aria-hidden className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-emerald-600 text-xs font-black text-white">
         ✓
       </span>
-      <Rich text={`${label} — يمكنك الآن قراءة أمثلة المصدر في الصفحة التالية.`} />
+      <Rich text={`${label} — يمكنك الآن مراجعة الأمثلة والتطبيقات في الصفحة التالية.`} />
     </p>
   );
 }
@@ -129,16 +129,16 @@ function CoverPage({ page, onGoTest }: { page: Page32; onGoTest: () => void }) {
       <div className="rounded-3xl border border-slate-200 bg-white p-3.5">
         <div className="mb-2 flex flex-wrap items-center gap-2">
           <SourceBadge32 src />
-          <span className="text-[11px] font-bold text-slate-500"><Rich text="عنوان الدرس كما ورد في المصدر" /></span>
+          <span className="text-[11px] font-bold text-slate-500"><Rich text="عنوان الدرس" /></span>
         </div>
         <SourceDeck32 blocks={deckRange32("cover", page.deck)} />
       </div>
 
       <div className="grid grid-cols-3 gap-2">
         {[
-          { n: "٣٦", t: "قسمًا مرقّمًا", e: "📚" },
-          { n: "٥٨٧", t: "سطرًا مصدريًا", e: "📜" },
-          { n: "١٦", t: "تمرينًا تفاعليًا", e: "🎯" },
+          { n: "٤", t: "أزمنة للحاضر", e: "📚" },
+          { n: "٢", t: "تركيزان: نتيجة ونشاط", e: "🎨" },
+          { n: "٤١", t: "تفاعلًا للتدرّب", e: "🎯" },
         ].map((s) => (
           <div key={s.t} className="rounded-2xl border border-slate-200 bg-slate-50 px-2 py-2.5 text-center">
             <div aria-hidden className="text-base">{s.e}</div>
@@ -165,7 +165,7 @@ function DeckPage({ page, onGoTest }: { page: Page32; onGoTest: () => void }) {
     <div className="space-y-3">
       <SourceDeck32 blocks={blocks} />
       {page.sec === "objectives" && (
-        <Platform32>{"الأهداف التسعة هي خريطة الدرس: كل هدف يقابله قسم واحد على الأقل، وكل قسم ينتهي بتفاعل يثبته."}</Platform32>
+        <Platform32>{"الأهداف التسعة ترسم مسار الدرس: لكل هدف فكرة تتدرّب عليها، وينتهي كل محور بتفاعل يثبّت ما تعلّمته."}</Platform32>
       )}
       {page.cta === "test" && (
         <div data-lesson-test-cta="20" className="rounded-3xl border-2 border-indigo-200 bg-indigo-50/60 p-4">
@@ -394,20 +394,20 @@ function LabPage({ page }: { page: Page32 }) {
                     stem: "الجدار مكتمل الطلاء بالكامل — أي عدسة؟",
                     opts: ["النتيجة — Present Perfect", "النشاط — Present Perfect Continuous"],
                     answer: 0,
-                    why: "المصدر قسم 14: I have painted the room — التركيز على الإنجاز.",
+                    why: "I have painted the room — التركيز هنا على الإنجاز والنتيجة.",
                   },
                   {
                     stem: "الفرشاة ما زالت تتحرك على الجدار — أي عدسة؟",
                     opts: ["النتيجة — Present Perfect", "النشاط — Present Perfect Continuous"],
                     answer: 1,
-                    why: "المصدر قسم 14: I have been painting the room — التركيز على النشاط.",
+                    why: "I have been painting the room — التركيز هنا على النشاط والمدة.",
                   },
                 ]}
               />
             )}
             <div className="rounded-2xl border-2 border-indigo-200 bg-indigo-50/60 p-3">
               <p className="text-xs font-bold text-indigo-900">
-                <Rich text="مثال المصدر المؤسِّس (قسم 14) — نفس الغرفة، عدستان:" />
+                <Rich text="مثال الطلاء: الغرفة نفسها، وعدستان للمعنى:" />
               </p>
               <div dir="ltr" className="mt-1 space-y-0.5">
                 <p><En className="text-base font-extrabold text-indigo-900">{CANVAS_S14.result.en}</En></p>
@@ -486,8 +486,8 @@ function LabPage({ page }: { page: Page32 }) {
         answer: c.tense === "PP" ? 0 : 1,
         why:
           c.tense === "PP"
-            ? "الكلمة وحدها لا تكفي: هنا الإنجاز واضح ← Present Perfect (المصدر قسم 20)."
-            : "الكلمة وحدها لا تكفي: هنا النشاط الممتد ← Present Perfect Continuous (المصدر قسم 20).",
+            ? "الكلمة وحدها لا تكفي: هنا الإنجاز واضح ← Present Perfect."
+            : "الكلمة وحدها لا تكفي: هنا النشاط الممتد ← Present Perfect Continuous.",
       }));
       return (
         <LabShell page={page} emoji="⚠️" label="CUE WORDS" ar="الكلمة وحدها لا تكفي">
@@ -735,7 +735,7 @@ function SummaryPage({ page }: { page: Page32 }) {
 
       <div className="rounded-3xl border border-slate-200 bg-white p-4">
         <p className="font-head mb-2 text-sm font-bold text-slate-900">
-          <Rich text="منظومة الحاضر الأربع — المس كل ترس لتقارن جملة المصدر:" />
+          <Rich text="منظومة الحاضر الأربع — المس كل ترس لمقارنة الجملة:" />
         </p>
         <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="تروس الحاضر">
           {FOUR_PRESENT_32.map((g, i) => (

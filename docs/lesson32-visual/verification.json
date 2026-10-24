@@ -739,8 +739,8 @@
       },
       {
         "id": "closing-src1",
-        "h": 492,
-        "cardH": 492
+        "h": 512,
+        "cardH": 512
       }
     ],
     "1920x1080": [
@@ -1341,12 +1341,12 @@
       },
       {
         "id": "closing-src1",
-        "h": 492,
-        "cardH": 492
+        "h": 512,
+        "cardH": 512
       }
     ]
   },
-  "checks": 2568,
+  "checks": 2575,
   "failures": [],
   "errors": [],
   "externalNetworkErrors": [

@@ -168,17 +168,19 @@ function DeckPage({ page, onGoTest }: { page: Page32; onGoTest: () => void }) {
         <Platform32>{"الأهداف التسعة هي خريطة الدرس: كل هدف يقابله قسم واحد على الأقل، وكل قسم ينتهي بتفاعل يثبته."}</Platform32>
       )}
       {page.cta === "test" && (
-        <div className="rounded-3xl border-2 border-indigo-200 bg-indigo-50/60 p-4">
-          <p className="font-head text-lg font-bold text-slate-900"><Rich text="انتهى الدرس — وقت الاختبار" /></p>
+        <div data-lesson-test-cta="20" className="rounded-3xl border-2 border-indigo-200 bg-indigo-50/60 p-4">
+          <p className="font-head text-lg font-bold text-slate-900">
+            <Rich text="تقييم الدرس — ٢٠ سؤالًا (منفصل عن الاختبار النهائي)" />
+          </p>
           <p className="mt-1 text-sm font-semibold text-slate-600">
-            <Rich text="اختبار من ٢٠ سؤالًا على محتوى الدرس 32. تُكشف الإجابات والشرح بعد الإرسال فقط." />
+            <Rich text="اختبار قصير على محتوى الدرس 32 وحده، منفصل واختياري — وليس الاختبار النهائي للدورة. الاختبار النهائي (١٥ سؤالًا) يظهر أسفل هذه الصفحة. لا تُكشف الإجابات والشرح إلا بعد الإرسال." />
           </p>
           <button
             type="button"
             onClick={onGoTest}
             className={`mt-3 rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-slate-700 ${FOCUS32}`}
           >
-            🧪 <Rich text="ابدأ اختبار الدرس 32" />
+            🧪 <Rich text="ابدأ تقييم الدرس — ٢٠ سؤالًا" />
           </button>
         </div>
       )}

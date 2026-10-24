@@ -1,8 +1,9 @@
 // ============================================================
 // فحص الدرس 32 في متصفح حقيقي (Chromium) — دليل بصري وتفاعلي.
 //
-// التجهيز (أدوات تطوير فقط — لا تُحفظ في package.json):
-//   npm install --no-save --no-package-lock=false playwright-core @sparticuz/chromium
+// التجهيز: الحزم المطلوبة مثبّتة في devDependencies (playwright-core،
+// @sparticuz/chromium، @fontsource/rubik|changa|noto-color-emoji) — يكفي:
+//   npm ci
 //
 // التشغيل (يحتاج خادم معاينة يستمع فعلًا):
 //   npm run build && npx vite preview --host 127.0.0.1 --port 4173
@@ -328,6 +329,21 @@ try {
     }
     await gotoPage("cover-src1");
   }
+
+  // ---------------- الاختباران: تقييم الدرس (20) مقابل الاختبار النهائي (15) ----------------
+  await page.setViewportSize(DESKTOP_1280);
+  await gotoPage("closing-src1");
+  const cta = page.locator('[data-lesson-test-cta="20"]');
+  ok((await cta.count()) === 1, "closing: exactly one lesson-assessment CTA (20 questions)");
+  const ctaText = (await cta.textContent()) || "";
+  ok(/منفصل عن الاختبار النهائي/.test(ctaText), "closing: CTA labels the 20-question assessment as separate from the final test");
+  ok(/٢٠/.test(ctaText), "closing: CTA states its own 20-question count");
+  ok(/١٥/.test(ctaText), "closing: CTA names the 15-question final test below");
+  const finalBlock = page.locator('[data-final-test="32"]');
+  ok((await finalBlock.count()) === 1, "closing: the official 15-question final test renders once");
+  const finalTitle = (await finalBlock.innerText()).slice(0, 80);
+  ok(/الاختبار النهائي/.test(finalTitle), `closing: final test keeps its own title (${finalTitle.replace(/\s+/g, " ").slice(0, 40)})`);
+  ok((await page.locator('#l32-q1').count()) === 0, "closing: lesson-assessment questions are not embedded in the closing page");
 
   // ---------------- التفاعلات: تُدار فعليًا في المتصفح ----------------
   await page.setViewportSize(DESKTOP_1280);

@@ -760,6 +760,28 @@ ok(FT.every((x) => x.why && x.concept), "final test: كل سؤال له شرح �
   ok(firstWhy.length === 0 || !html.includes(firstWhy), "final test: شرح الإجابات غير موجود في HTML الأولي للصفحة الأخيرة");
 }
 
+// ============================================================
+// 11) الاختباران منفصلان: تقييم الدرس (20) مقابل الاختبار النهائي (15)
+// ============================================================
+{
+  ok(TEST.length !== FT.length, `two tests: عدد الأسئلة مختلف (تقييم ${TEST.length} · نهائي ${FT.length})`);
+  const lessonTexts = new Set(TEST.map((x) => (x.ar || "").trim()));
+  const finalTexts = FT.map((x) => (x.ar || "").trim());
+  ok(finalTexts.every((t) => !lessonTexts.has(t)), "two tests: لا سؤال مشترك بين بنك الدرس وبنك الاختبار النهائي");
+
+  // تسمية منطقة الاختبار: «اختبار الدرس»، لا «الاختبار النهائي»
+  ok(/اختبار الدرس 32/.test(src["TestArea32.tsx"]), "two tests: عنوان منطقة الاختبار يسمّيها اختبار الدرس");
+  ok(/data-lesson-test-cta="20"/.test(src["Steps32.tsx"]), "two tests: بطاقة الخاتمة تحمل علامة تقييم الدرس (20)");
+  ok(/منفصل عن الاختبار النهائي/.test(src["Steps32.tsx"]), "two tests: بطاقة الخاتمة تنصّ على أنه منفصل عن الاختبار النهائي");
+  ok(/١٥/.test(src["Steps32.tsx"]), "two tests: بطاقة الخاتمة تذكر عدد أسئلة الاختبار النهائي (١٥)");
+  ok(
+    /index === PAGE_COUNT_32 - 1 && \(\s*<FinalTest/.test(src["Lesson32.tsx"]),
+    "two tests: الاختبار النهائي مربوط بآخر صفحة فقط",
+  );
+  const sharedFinal = readFileSync(join(root, "src", "shared", "finalTest.tsx"), "utf8");
+  ok(/title = "🏁 الاختبار النهائي"/.test(sharedFinal), "two tests: مكوّن الاختبار النهائي يعنون نفسه «الاختبار النهائي»");
+}
+
 // ---------------- التنظيف والتقرير ----------------
 rmSync(outFile, { force: true });
 if (existsSync(outCss)) rmSync(outCss, { force: true });

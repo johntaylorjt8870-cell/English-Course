@@ -9,7 +9,7 @@
 //     أسفل المحتوى، وله مساحة محفوظة.
 //
 // أربع مناطق: الدرس · الاختبار · حلول الاختبار · منطقة المعلم.
-// الدرس = 119 صفحة قصيرة (سجل الصفحات في pages32.ts).
+// الدرس = 120 صفحة قصيرة (سجل الصفحات في pages32.ts).
 // ============================================================
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -17,7 +17,7 @@ import { En, Rich } from "../../shared/lessonKit";
 import { LatinRuns } from "../../shared/bidi";
 import { Signature, SignatureGhost } from "../../shared/Signature";
 import LessonStepNav from "../../shared/LessonStepNav";
-import { SOURCE_NUMBERED_COUNT_32, SOURCE_LEDGER_COUNT_32, SOURCE_SECTIONS, SEC_32 } from "./ledger32";
+import { SEC_32 } from "./ledger32";
 import { LESSON_TITLE_32, LESSON_SUBTITLE_32, SECTIONS_32 } from "./data";
 import { FOCUS32, Frame32 } from "./kit32";
 import { StepBody32, navLabel32 } from "./Steps32";
@@ -38,9 +38,6 @@ const AREAS_32: { id: Area32; emoji: string; ar: string }[] = [
   { id: "solutions", emoji: "🔑", ar: "حلول الاختبار" },
   { id: "teacher", emoji: "👩‍🏫", ar: "منطقة المعلم" },
 ];
-
-/** عدد أسطر المصدر الحرفية المعروضة عبر صفحات الدرس */
-const SOURCE_LINES_32 = SOURCE_SECTIONS.reduce((n, sec) => n + sec.units.length, 0);
 
 /** لا تُشغّل التنقّل العام بالأسهم عندما يكون التركيز داخل عنصر تفاعلي يستعمل الأسهم */
 function isArrowLocked(target: EventTarget | null): boolean {
@@ -237,9 +234,7 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
         );
       })}
       <p className="px-1 pt-1 text-[11px] font-semibold leading-relaxed text-slate-500">
-        <Rich
-          text={`📜 المصدر: ${SOURCE_NUMBERED_COUNT_32} قسمًا مرقّمًا من ${SOURCE_LEDGER_COUNT_32} قسمًا · ${SOURCE_LINES_32} سطرًا مصدريًا · ${PAGE_COUNT_32} صفحة قصيرة، وكل سطر مصدر يظهر مرة واحدة.`}
-        />
+        <Rich text={`📖 ${PAGE_COUNT_32} صفحة قصيرة — من التأسيس إلى التطبيق.`} />
       </p>
     </nav>
   );

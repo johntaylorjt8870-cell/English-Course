@@ -224,10 +224,13 @@ export function StemLine({ parts, filled }: { parts: string[]; filled: string | 
  * وسم فيدلية واحد: يفرّق سطر المصدر الحرفي عن مثال تدريبي أنشأته المنصة.
  * وسام ساكن (لا يُفتح بالضغط) — النص نفسه معروض دائمًا.
  */
-export function SourceBadge32({ src }: { src: boolean }) {
+export function SourceBadge32({ src, teacherOnly = false }: { src: boolean; teacherOnly?: boolean }) {
+  const text = teacherOnly
+    ? (src ? "📜 من المصدر" : "🛠️ مثال تدريبي للمنصة — ليس من المصدر")
+    : (src ? "📘 من أمثلة الدرس" : "🛠️ مثال إضافي");
   return (
     <span className={src ? "l32-badge-src" : "l32-badge-plat"}>
-      <Rich text={src ? "📜 من المصدر" : "🛠️ مثال تدريبي للمنصة — ليس من المصدر"} />
+      <Rich text={text} />
     </span>
   );
 }
@@ -353,14 +356,15 @@ function groupBlocks(blocks: DeckBlock32[]): DeckBlock32[][] {
 export function SourceDeck32({ blocks, sectionTitle }: { blocks: DeckBlock32[]; sectionTitle?: string }) {
   const examples = blocks.filter((b) => b.kind === "example").length;
   const translated = blocks.filter((b) => b.kind === "example" && b.ar).length;
+  const contentSummary = examples > 0
+    ? `${examples} مثالًا${translated > 0 ? ` · ${translated} بترجمة عربية` : ""}`
+    : "قواعد وأفكار";
   if (blocks.length === 0) return null;
   return (
-    <section className="l32-deck" aria-label="أمثلة المصدر وشرحها لهذه الخطوة">
+    <section className="l32-deck" aria-label="الأمثلة والقواعد في هذه الخطوة">
       <div className="l32-deck-head">
-        <span className="l32-kicker">📚 نص المصدر — كما ورد حرفيًا</span>
-        <span className="l32-chip">
-          <Rich text={`${blocks.length} سطرًا مصدريًا${examples > 0 ? ` · ${examples} مثالًا إنجليزيًا` : ""}${translated > 0 ? ` · ${translated} منها بترجمة عربية` : ""}`} />
-        </span>
+        <span className="l32-kicker">📚 أمثلة وقواعد</span>
+        <span className="l32-chip"><Rich text={contentSummary} /></span>
         {sectionTitle && <span className="l32-chip l32-chip-indigo"><Rich text={sectionTitle} /></span>}
       </div>
       <div className="space-y-1.5" data-deck-count={blocks.length}>
@@ -1101,7 +1105,7 @@ export function RibbonMaker32({ seq, activities, maxHours, model, modelAr, onDon
           className={`l32-tap px-3.5 text-sm font-black ${still ? "l32-tap-primary" : "l32-tap-gold"} ${FOCUS32}`}>
           {still ? "🏃 ما زال مستمرًا الآن" : "🛑 توقف قبل قليل، والأثر باقٍ"}
         </button>
-        <span className="text-xs font-bold text-slate-500"><Rich text="الجملة واحدة في الحالتين — الواقع يتغيّر، والجملة لا تتغيّر (المصدر قسم 18)." /></span>
+        <span className="text-xs font-bold text-slate-500"><Rich text="الجملة واحدة في الحالتين — الواقع يتغيّر، والجملة لا تتغيّر." /></span>
       </div>
 
       <div className="l32-card l32-card-aqua p-3">
@@ -1212,7 +1216,7 @@ export function StativeGate32({ seq, verbs, onDone }: { seq: string; verbs: { ve
           </div>
         </div>
       )}
-      {cur !== null && <p className="text-xs font-bold text-slate-600"><Rich text="المصدر يقول «عادةً» — هذه قاعدة الاستعمال الشائعة، ليست تحريمًا مطلقًا (انظر ملاحظة المعلم)." /></p>}
+      {cur !== null && <p className="text-xs font-bold text-slate-600"><Rich text="كلمة «عادةً» تعني أن هذا استعمال شائع، لا قاعدة مطلقة." /></p>}
     </div>
   );
 }
@@ -1658,7 +1662,7 @@ export function LensStage32({ seq, pairs, axis, onBothSeen }: {
       <div className="l32-card p-3">
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
           <span className="l32-chip l32-chip-indigo"><Rich text={`${pair.emoji} ${pair.topic}`} /></span>
-          <span className="l32-chip"><Rich text={`مثال ${p + 1} من ${pairs.length} · ${pair.ref}`} /></span>
+          <span className="l32-chip"><Rich text={`المثال ${p + 1} من ${pairs.length}`} /></span>
         </div>
         <div className="l32-scene" data-mode={lens === "result" ? "done" : "active"} aria-hidden>
           <span className="l32-scene-clock">{lens === "result" ? "🏁 ended" : "⏳ in progress"}</span>
@@ -1693,7 +1697,7 @@ export function LensStage32({ seq, pairs, axis, onBothSeen }: {
           <button type="button" onClick={() => move(1)} className={`l32-tap px-3 text-sm ${FOCUS32}`}>← <Rich text="المثال التالي" /></button>
         </div>
         <p className="mt-2 text-center text-xs font-bold text-slate-500">
-          <Rich text={`بدّل العدستين (${seenLenses.size}/2) وتنقّل بين أمثلة المصدر (${seenPairs.size}/${pairs.length}).`} />
+          <Rich text={`بدّل العدستين (${seenLenses.size}/2) وتنقّل بين الأمثلة (${seenPairs.size}/${pairs.length}).`} />
         </p>
       </div>
     </div>

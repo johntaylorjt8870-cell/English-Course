@@ -1,7 +1,7 @@
 // ============================================================
 // الدرس 32 — سجل الصفحات (Page Registry)
 //
-// 119 صفحة قصيرة، كل صفحة = شاشة واحدة مريحة على سطح المكتب.
+// 120 صفحة قصيرة، كل صفحة = شاشة واحدة مريحة على سطح المكتب.
 // المرجع البصري والبنائي: الدرس 1 والدرس 41 — بطاقة بيضاء واحدة،
 // عنوان واضح، أمثلة بارزة، ثم تفاعل حقيقي واحد.
 //
@@ -110,8 +110,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 5], title: "المصدر قسم 1 — الفكرة والصيغة", lead: "ما معنى Present Perfect Continuous؟ وما صيغته؟" },
-      { r: [6, 10], title: "المصدر قسم 1 — المثال ومعناه", lead: "I have been studying — الفكرة ليست أنني درست فقط." },
+      { r: [0, 5], title: "فكرة Present Perfect Continuous وصيغته", lead: "ما معنى Present Perfect Continuous؟ وما صيغته؟" },
+      { r: [6, 10], title: "مثال: I have been studying", lead: "I have been studying — الفكرة ليست أنني درست فقط." },
     ],
   },
   {
@@ -128,8 +128,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 5], title: "المصدر قسم 2 — وظيفة كل قطعة", lead: "have/has تربط الحدث بالحاضر، وbeen شكل V3 من be." },
-      { r: [6, 11], title: "المصدر قسم 2 — تحليل She has been reading", lead: "كل كلمة في الجملة لها سبب وجود." },
+      { r: [0, 5], title: "دور have/has وbeen وV-ing", lead: "have/has تربط الحدث بالحاضر، وbeen شكل V3 من be." },
+      { r: [6, 11], title: "تحليل الجملة: She has been reading", lead: "كل كلمة في الجملة لها سبب وجود." },
     ],
   },
   {
@@ -146,8 +146,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 7], title: "المصدر قسم 3 — جدول have / has", lead: "الاختيار قرار الفاعل وحده." },
-      { r: [8, 15], title: "المصدر قسم 3 — الجمل السبع كاملة", lead: "كل ضمير مع جملته، كما وردت في المصدر." },
+      { r: [0, 7], title: "متى نستخدم have أو has؟", lead: "الاختيار قرار الفاعل وحده." },
+      { r: [8, 15], title: "سبعة ضمائر في جمل كاملة", lead: "كل ضمير مع جملة توضّح القاعدة." },
     ],
   },
   {
@@ -164,8 +164,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 5], title: "المصدر قسم 4 — المثال وخط الزمن", lead: "I have been studying for three hours." },
-      { r: [6, 11], title: "المصدر قسم 4 — مثال الانتظار", lead: "She has been waiting for thirty minutes." },
+      { r: [0, 5], title: "خط زمني لنشاط يمتد حتى الآن", lead: "I have been studying for three hours." },
+      { r: [6, 11], title: "مثال: انتظار دام ثلاثين دقيقة", lead: "She has been waiting for thirty minutes." },
     ],
   },
   {
@@ -182,8 +182,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 6], title: "المصدر قسم 5 — عبارات for", lead: "ست عبارات مدة من المصدر، كما هي." },
-      { r: [7, 11], title: "المصدر قسم 5 — أمثلة for الأربعة", lead: "كل مثال مع ترجمته العربية." },
+      { r: [0, 6], title: "عبارات المدة مع for", lead: "ست عبارات تساعدك على التعبير عن المدة." },
+      { r: [7, 11], title: "أمثلة for مع الترجمة", lead: "كل مثال مع ترجمته العربية." },
     ],
   },
   {
@@ -200,8 +200,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 5], title: "المصدر قسم 6 — عبارات since", lead: "خمس نقاط بداية من المصدر." },
-      { r: [6, 10], title: "المصدر قسم 6 — أمثلة since الأربعة", lead: "كل مثال مع ترجمته العربية." },
+      { r: [0, 5], title: "نقاط البداية مع since", lead: "خمس عبارات تحدد نقطة البداية." },
+      { r: [6, 10], title: "أمثلة since مع الترجمة", lead: "كل مثال مع ترجمته العربية." },
     ],
   },
   {
@@ -218,8 +218,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 4], title: "المصدر قسم 7 — القاعدة المزدوجة", lead: "for + مدة · since + بداية." },
-      { r: [5, 11], title: "المصدر قسم 7 — قارن الجملتين", lead: "نفس الفعل، ونقطتان مختلفتان في الزمن." },
+      { r: [0, 4], title: "القاعدة: for للمدة وsince للبداية", lead: "for + مدة · since + بداية." },
+      { r: [5, 11], title: "قارن جملتي for وsince", lead: "نفس الفعل، ونقطتان مختلفتان في الزمن." },
     ],
   },
   {
@@ -236,8 +236,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 4], title: "المصدر قسم 8 — السؤال الأول", lead: "How long have you been studying?" },
-      { r: [5, 10], title: "المصدر قسم 8 — الإجابات ومثال آخر", lead: "I have been studying for two hours · since 6:00." },
+      { r: [0, 4], title: "اسأل عن المدة: How long?", lead: "How long have you been studying?" },
+      { r: [5, 10], title: "إجابات How long: for أو since", lead: "I have been studying for two hours · since 6:00." },
     ],
   },
   {
@@ -254,8 +254,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 4], title: "المصدر قسم 9 — القاعدة والمثالان الأولان", lead: "I haven't been sleeping well." },
-      { r: [5, 9], title: "المصدر قسم 9 — بقية الأمثلة والاختصارات", lead: "have not → haven't · has not → hasn't." },
+      { r: [0, 4], title: "قاعدة النفي ومثالان", lead: "I haven't been sleeping well." },
+      { r: [5, 9], title: "اختصارات النفي في أمثلة الجمل", lead: "have not → haven't · has not → hasn't." },
     ],
   },
   {
@@ -272,8 +272,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 4], title: "المصدر قسم 10 — قاعدتا السؤال", lead: "Have + subject + been + verb-ing?" },
-      { r: [5, 9], title: "المصدر قسم 10 — الأمثلة الأربعة", lead: "كل سؤال مع ترجمته العربية." },
+      { r: [0, 4], title: "ترتيب الكلمات في السؤال", lead: "Have + subject + been + verb-ing?" },
+      { r: [5, 9], title: "أمثلة على الأسئلة", lead: "كل سؤال مع ترجمته العربية." },
     ],
   },
   {
@@ -290,8 +290,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 8], title: "المصدر قسم 11 — الأزواج الثلاثة", lead: "Yes/No لكل سؤال، كما وردت في المصدر." },
-      { r: [9, 17], title: "المصدر قسم 11 — لاحظ الفرق", lead: "Yes, I have ✅ · Yes, I have been ❌." },
+      { r: [0, 8], title: "أزواج Yes/No للإجابة القصيرة", lead: "قارن إجابتي Yes وNo لكل سؤال." },
+      { r: [9, 17], title: "الفرق بين have وhave been في الإجابة", lead: "Yes, I have ✅ · Yes, I have been ❌." },
     ],
   },
   {
@@ -307,7 +307,7 @@ const SPEC: SecSpec[] = [
         tip: "المدة ← How long · المكان ← Where · السبب ← Why.",
       },
     ],
-    src: [{ r: [0, 4], title: "المصدر قسم 12 — أسئلة Wh الخمسة", lead: "كل سؤال مع ترجمته العربية." }],
+    src: [{ r: [0, 4], title: "خمسة أسئلة بأدوات Wh", lead: "كل سؤال مع ترجمته العربية." }],
   },
   {
     sec: "s13",
@@ -323,9 +323,9 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 5], title: "المصدر قسم 13 — الفكرة والمثال الأول", lead: "You are out of breath. You have been running." },
-      { r: [6, 11], title: "المصدر قسم 13 — مثال الحديقة", lead: "Her hands are dirty. She has been gardening." },
-      { r: [12, 17], title: "المصدر قسم 13 — مثال المطر والخلاصة", lead: "The floor is wet. It has been raining." },
+      { r: [0, 5], title: "الأثر الآن يكشف نشاطًا سابقًا", lead: "You are out of breath. You have been running." },
+      { r: [6, 11], title: "مثال: أثر العمل في الحديقة", lead: "Her hands are dirty. She has been gardening." },
+      { r: [12, 17], title: "مثال: المطر والأرض المبللة", lead: "The floor is wet. It has been raining." },
     ],
   },
   {
@@ -342,8 +342,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 5], title: "المصدر قسم 14 — الجملتان والمعنى", lead: "I have painted the room · I have been painting the room." },
-      { r: [6, 10], title: "المصدر قسم 14 — ماذا تعني كل جملة؟", lead: "ربما انتهيت، وربما ما زلت أعمل." },
+      { r: [0, 5], title: "النتيجة أم النشاط؟ مثال الغرفة", lead: "I have painted the room · I have been painting the room." },
+      { r: [6, 10], title: "معنى جملتي الطلاء", lead: "ربما انتهيت، وربما ما زلت أعمل." },
     ],
   },
   {
@@ -360,9 +360,9 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 4], title: "المصدر قسم 15 — سؤالان قبل الاختيار", lead: "ما الذي أهتم به الآن؟" },
-      { r: [5, 9], title: "المصدر قسم 15 — مثال المطبخ", lead: "I have cleaned the kitchen." },
-      { r: [10, 13], title: "المصدر قسم 15 — الوجه الآخر للمطبخ", lead: "I have been cleaning the kitchen." },
+      { r: [0, 4], title: "سؤالان قبل اختيار الزمن", lead: "ما الذي أهتم به الآن؟" },
+      { r: [5, 9], title: "نتيجة تنظيف المطبخ", lead: "I have cleaned the kitchen." },
+      { r: [10, 13], title: "نشاط تنظيف المطبخ", lead: "I have been cleaning the kitchen." },
     ],
   },
   {
@@ -379,8 +379,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 4], title: "المصدر قسم 16 — الجملتان", lead: "نفس الفعل، وزاويتان مختلفتان." },
-      { r: [5, 9], title: "المصدر قسم 16 — الفرق", lead: "النتيجة والكمية، أم النشاط والمدة." },
+      { r: [0, 4], title: "مثال: جملتان بزاويتين مختلفتين", lead: "نفس الفعل، وزاويتان مختلفتان." },
+      { r: [5, 9], title: "النتيجة والكمية أم النشاط والمدة؟", lead: "النتيجة والكمية، أم النشاط والمدة." },
     ],
   },
   {
@@ -396,7 +396,7 @@ const SPEC: SecSpec[] = [
         tip: "three pictures ← PP · all afternoon ← PPC.",
       },
     ],
-    src: [{ r: [0, 7], title: "المصدر قسم 17 — المثال كاملًا", lead: "She has painted three pictures · She has been painting all afternoon." }],
+    src: [{ r: [0, 7], title: "ثلاث لوحات أم الرسم طوال بعد الظهر؟", lead: "She has painted three pictures · She has been painting all afternoon." }],
   },
   {
     sec: "s18",
@@ -411,7 +411,7 @@ const SPEC: SecSpec[] = [
         tip: "الجملة لا تتغيّر… الذي يتغيّر هو الواقع.",
       },
     ],
-    src: [{ r: [0, 6], title: "المصدر قسم 18 — الإجابة الكاملة", lead: "لا. وهذه نقطة متقدمة جدًا." }],
+    src: [{ r: [0, 6], title: "هل يستمر الفعل حتى لحظة الكلام؟", lead: "لا. وهذه نقطة متقدمة جدًا." }],
   },
   {
     sec: "s19",
@@ -427,8 +427,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 9], title: "المصدر قسم 19 — قائمة الكلمات", lead: "for · since · all day · all morning · …" },
-      { r: [10, 15], title: "المصدر قسم 19 — الأمثلة الخمسة", lead: "كل كلمة داخل جملة من المصدر." },
+      { r: [0, 9], title: "كلمات شائعة مع Present Perfect Continuous", lead: "for · since · all day · all morning · …" },
+      { r: [10, 15], title: "الكلمات الشائعة داخل جمل", lead: "لاحظ كل كلمة داخل جملة كاملة." },
     ],
   },
   {
@@ -445,8 +445,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 6], title: "المصدر قسم 20 — القاعدة", lead: "وجود today أو recently لا يعني تلقائيًا PPC." },
-      { r: [7, 13], title: "المصدر قسم 20 — المثالان", lead: "I have studied three chapters today · I have been studying all morning." },
+      { r: [0, 6], title: "لماذا لا تكفي كلمة الوقت؟", lead: "وجود today أو recently لا يعني تلقائيًا PPC." },
+      { r: [7, 13], title: "مثالان: today وall morning", lead: "I have studied three chapters today · I have been studying all morning." },
     ],
   },
   {
@@ -463,8 +463,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 6], title: "المصدر قسم 21 — الزوج الأول (الكتاب)", lead: "I have read the book · I have been reading the book." },
-      { r: [7, 13], title: "المصدر قسم 21 — الزوجان الثاني والثالث", lead: "الجدار، ثم الآلة." },
+      { r: [0, 6], title: "الكتاب: النتيجة أم النشاط؟", lead: "I have read the book · I have been reading the book." },
+      { r: [7, 13], title: "مقارنة الجدار والآلة", lead: "الجدار، ثم الآلة." },
     ],
   },
   {
@@ -480,7 +480,7 @@ const SPEC: SecSpec[] = [
         tip: "عدد الأشياء المكتملة يسحب الجملة إلى Present Perfect.",
       },
     ],
-    src: [{ r: [0, 6], title: "المصدر قسم 22 — القاعدة والمثالان", lead: "I have written five emails · I have been writing emails all morning." }],
+    src: [{ r: [0, 6], title: "عدد مكتمل أم نشاط ممتد؟", lead: "I have written five emails · I have been writing emails all morning." }],
   },
   {
     sec: "s23",
@@ -496,8 +496,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 11], title: "المصدر قسم 23 — قائمة أفعال الحالة", lead: "تسعة أفعال تصف حالات لا أنشطة." },
-      { r: [12, 19], title: "المصدر قسم 23 — الأمثلة المقبولة والمرفوضة", lead: "I have known him for ten years ✅ · I have been knowing him ❌." },
+      { r: [0, 11], title: "قائمة أفعال الحالة", lead: "تسعة أفعال تصف حالات لا أنشطة." },
+      { r: [12, 19], title: "أمثلة على أفعال الحالة", lead: "I have known him for ten years ✅ · I have been knowing him ❌." },
     ],
   },
   {
@@ -514,9 +514,9 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 6], title: "المصدر قسم 24 — الجملتان", lead: "I was studying at 8:00 · I have been studying since 8:00." },
-      { r: [7, 12], title: "المصدر قسم 24 — خطا الزمن", lead: "نقطة في الماضي مقابل امتداد نحو NOW." },
-      { r: [13, 18], title: "المصدر قسم 24 — بقية الرسم", lead: "PAST X ──→ NOW · studying." },
+      { r: [0, 6], title: "قارن الجملتين عند 8:00", lead: "I was studying at 8:00 · I have been studying since 8:00." },
+      { r: [7, 12], title: "نقطة مرجعية أم امتداد إلى الآن؟", lead: "نقطة في الماضي مقابل امتداد نحو NOW." },
+      { r: [13, 18], title: "المسار الزمني من الماضي إلى الآن", lead: "PAST X ──→ NOW · studying." },
     ],
   },
   {
@@ -533,8 +533,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 6], title: "المصدر قسم 25 — الجملتان", lead: "I have been studying for three hours · I had been studying when my friend called." },
-      { r: [7, 12], title: "المصدر قسم 25 — الخلاصة", lead: "PPC ← قبل الآن · Past Perfect Continuous ← قبل حدث ماضٍ آخر." },
+      { r: [0, 6], title: "نشاط ممتد الآن أم قبل حدث ماضٍ؟", lead: "I have been studying for three hours · I had been studying when my friend called." },
+      { r: [7, 12], title: "متى تقع نقطة المرجع؟", lead: "PPC ← قبل الآن · Past Perfect Continuous ← قبل حدث ماضٍ آخر." },
     ],
   },
   {
@@ -550,7 +550,7 @@ const SPEC: SecSpec[] = [
         tip: "الفرق الوحيد بين الأزمنة الثلاثة هو موضع نقطة المرجع.",
       },
     ],
-    src: [{ r: [0, 3], title: "المصدر قسم 26 — الخريطة الكاملة", lead: "ثلاث جمل وثلاث نقاط مرجعية." }],
+    src: [{ r: [0, 3], title: "ثلاث نقاط مرجعية على خريطة الزمن", lead: "ثلاث جمل وثلاث نقاط مرجعية." }],
   },
   {
     sec: "s27",
@@ -575,9 +575,9 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 8], title: "المصدر قسم 27 — الجمل الثمانية الخاطئة", lead: "فكر أولًا… ثم راجع الحلول في الصفحة التالية." },
-      { r: [9, 17], title: "المصدر قسم 27 — الحلول الثمانية", lead: "كل خطأ مع تصحيحه." },
-      { r: [18, 24], title: "المصدر قسم 27 — لماذا؟ (الملف ⑧)", lead: "خمسة رسائل = عدد مكتمل ← have written." },
+      { r: [0, 8], title: "ثماني جمل تحتاج إلى تصحيح", lead: "فكر أولًا… ثم راجع الحلول في الصفحة التالية." },
+      { r: [9, 17], title: "حلول الجمل الثماني", lead: "كل خطأ مع تصحيحه." },
+      { r: [18, 24], title: "لماذا نستخدم have written في المثال الثامن؟", lead: "خمسة رسائل = عدد مكتمل ← have written." },
     ],
   },
   {
@@ -603,9 +603,9 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 12], title: "المصدر قسم 28 — الأسئلة الستة", lead: "كل سؤال مع الفعل بين قوسين." },
-      { r: [13, 19], title: "المصدر قسم 28 — الحلول الستة", lead: "have read · have been reading · has made …" },
-      { r: [20, 23], title: "المصدر قسم 28 — لماذا؟", lead: "العدد أو الإنجاز ← Present Perfect." },
+      { r: [0, 12], title: "تحدي الصيغة: ست جمل", lead: "كل سؤال مع الفعل بين قوسين." },
+      { r: [13, 19], title: "إجابات التحدي الست", lead: "have read · have been reading · has made …" },
+      { r: [20, 23], title: "لماذا نختار Present Perfect؟", lead: "العدد أو الإنجاز ← Present Perfect." },
     ],
   },
   {
@@ -622,8 +622,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 8], title: "المصدر قسم 29 — المعنيان", lead: "الدراجة أصبحت مُصلحة… أم كنت أعمل عليها." },
-      { r: [9, 16], title: "المصدر قسم 29 — السؤال الصحيح", lead: "النتيجة؟ ← PP · النشاط أو المدة؟ ← PPC." },
+      { r: [0, 8], title: "معنيان لإصلاح الدراجة", lead: "الدراجة أصبحت مُصلحة… أم كنت أعمل عليها." },
+      { r: [9, 16], title: "اختر الزمن وفق المعنى", lead: "النتيجة؟ ← PP · النشاط أو المدة؟ ← PPC." },
     ],
   },
   {
@@ -639,7 +639,7 @@ const SPEC: SecSpec[] = [
         tip: "أثر النشاط (فرشاة، بقع) ← PPC · الجدار المكتمل ← PP.",
       },
     ],
-    src: [{ r: [0, 8], title: "المصدر قسم 30 — الموقفان", lead: "You have been painting · You have painted the wall." }],
+    src: [{ r: [0, 8], title: "أثر الطلاء أم الجدار المكتمل؟", lead: "You have been painting · You have painted the wall." }],
   },
   {
     sec: "s31",
@@ -655,8 +655,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 4], title: "المصدر قسم 31 — التصحيح", lead: "I have been studying since three hours ❌ ← for three hours ✅." },
-      { r: [5, 8], title: "المصدر قسم 31 — لماذا؟", lead: "three hours مدة، وsince 5:00 نقطة بداية." },
+      { r: [0, 4], title: "صحّح استخدام since وfor", lead: "I have been studying since three hours ❌ ← for three hours ✅." },
+      { r: [5, 8], title: "لماذا نستخدم for أو since؟", lead: "three hours مدة، وsince 5:00 نقطة بداية." },
     ],
   },
   {
@@ -682,8 +682,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 12], title: "المصدر قسم 32 — الجمل الثمانية", lead: "Present Simple · Present Continuous · Present Perfect · PPC." },
-      { r: [13, 22], title: "المصدر قسم 32 — الحلول الثمانية", lead: "كل جملة مع زمنها." },
+      { r: [0, 12], title: "ثماني جمل لاختيار الزمن المناسب", lead: "Present Simple · Present Continuous · Present Perfect · PPC." },
+      { r: [13, 22], title: "حلول التحدي: ثماني جمل", lead: "كل جملة مع زمنها." },
     ],
   },
   {
@@ -700,8 +700,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 6], title: "المصدر قسم 33 — الفقرة والتحليل الأول", lead: "Adam has studied robotics for three years." },
-      { r: [7, 13], title: "المصدر قسم 33 — بقية التحليل", lead: "has built · has been working · has been testing." },
+      { r: [0, 6], title: "تحليل فقرة Adam: الزمن ومعناه", lead: "Adam has studied robotics for three years." },
+      { r: [7, 13], title: "تابع تحليل فقرة Adam", lead: "has built · has been working · has been testing." },
     ],
   },
   {
@@ -718,9 +718,9 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 6], title: "المصدر قسم 34 — القصة والفراغات", lead: "Maya is preparing for a science competition." },
-      { r: [7, 12], title: "المصدر قسم 34 — الحلول الخمسة", lead: "has been studying · has read · has been working · has completed · has been working." },
-      { r: [13, 17], title: "المصدر قسم 34 — لماذا؟", lead: "نشاط + مدة · عدد/إنجاز · نشاط ممتد · نتائج مكتملة · نشاط وسبب التعب." },
+      { r: [0, 6], title: "قصة Maya: أكمِل الفراغات", lead: "Maya is preparing for a science competition." },
+      { r: [7, 12], title: "إجابات قصة Maya الخمس", lead: "has been studying · has read · has been working · has completed · has been working." },
+      { r: [13, 17], title: "أسباب اختيار الأزمنة في قصة Maya", lead: "نشاط + مدة · عدد/إنجاز · نشاط ممتد · نتائج مكتملة · نشاط وسبب التعب." },
     ],
   },
   {
@@ -737,8 +737,8 @@ const SPEC: SecSpec[] = [
       },
     ],
     src: [
-      { r: [0, 4], title: "المصدر قسم 35 — النمط الأول", lead: "have/has + V3 ← النتيجة أو الإنجاز أو التجربة." },
-      { r: [5, 9], title: "المصدر قسم 35 — النمط الثاني", lead: "have/has + been + V-ing ← النشاط أو المدة أو الآثار." },
+      { r: [0, 4], title: "Present Perfect: النتيجة والإنجاز والتجربة", lead: "have/has + V3 ← النتيجة أو الإنجاز أو التجربة." },
+      { r: [5, 9], title: "Present Perfect Continuous: النشاط والمدة والأثر", lead: "have/has + been + V-ing ← النشاط أو المدة أو الآثار." },
     ],
   },
   {
@@ -750,11 +750,11 @@ const SPEC: SecSpec[] = [
         key: "gears",
         badge: "㊱ الخريطة",
         title: "أربعة تروس للحاضر — فعّل كل ترس",
-        lead: "كل ترس له جملة من المصدر.",
+        lead: "افتح كل ترس لترى جملة توضّح الفرق.",
         tip: "أصبحت عندك أربع درجات للحاضر: عادة · الآن · نتيجة · نشاط ممتد.",
       },
     ],
-    src: [{ r: [0, 7], title: "المصدر قسم 36 — الخريطة الكاملة", lead: "Present Simple · Present Continuous · Present Perfect · PPC." }],
+    src: [{ r: [0, 7], title: "خريطة أزمنة الحاضر الأربعة", lead: "Present Simple · Present Continuous · Present Perfect · PPC." }],
   },
   {
     sec: "summary",
@@ -780,7 +780,7 @@ const SPEC: SecSpec[] = [
     sec: "closing",
     group: "END",
     mascot: "🚀",
-    src: [{ r: [0, 0], title: "الخطوة التالية", lead: "الخطوة التالية في المنهج كما وردت في المصدر." }],
+    src: [{ r: [0, 0], title: "الخطوة التالية", lead: "بعد مراجعة أزمنة الحاضر الأربعة، انتقل إلى زمن المستقبل." }],
   },
 ];
 
@@ -808,7 +808,11 @@ export const PAGES_32: Page32[] = SPEC.flatMap((s) => {
       sec: s.sec,
       group: s.group,
       mascot: s.mascot,
-      badge: `المصدر · ${s.sec === "cover" ? "الغلاف" : s.sec === "objectives" ? "الأهداف" : s.sec === "summary" ? "الملخص" : s.sec === "closing" ? "الخاتمة" : `القسم ${s.sec.slice(1)}`}`,
+      badge: s.sec === "cover" ? "بداية الدرس"
+        : s.sec === "objectives" ? "أهداف الدرس"
+          : s.sec === "summary" ? "خلاصة الدرس"
+            : s.sec === "closing" ? "الخطوة التالية"
+              : "أمثلة وقواعد",
       title: src.title,
       lead: src.lead,
       tip: src.tip,

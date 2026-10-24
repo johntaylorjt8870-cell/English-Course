@@ -288,7 +288,7 @@ export const FOR_ROUNDS_S5 = [
   {
     stem: ["We have been waiting", "___", "."],
     options: [
-      { text: "for a long time", ok: true, why: "a long time = مدة غير محددة، وهي من أمثلة المصدر." },
+      { text: "for a long time", ok: true, why: "a long time = مدة غير محددة." },
       { text: "since a long time", ok: false, why: "since + مدة خطأ؛ since تحتاج لحظة بداية." },
       { text: "a long time ago", ok: false, why: "ago تعني قبل كذا، وهي لا تُستعمل هنا مع المدة الممتدة." },
     ],
@@ -316,7 +316,7 @@ export const SINCE_ROUNDS_S6 = [
   {
     stem: ["It has been raining", "___", "."],
     options: [
-      { text: "since early morning", ok: true, why: "early morning = نقطة بداية في الصباح، وهي من المصدر." },
+      { text: "since early morning", ok: true, why: "early morning = نقطة بداية في الصباح." },
       { text: "for early morning", ok: false, why: "early morning هنا نقطة بداية، لا مدة." },
       { text: "early morning", ok: false, why: "بدون since لا تكتمل جملة البداية." },
     ],
@@ -394,7 +394,7 @@ export const QUESTION_ROUNDS_S10: BlockRound32[] = [
 /** خطوة ⑪ — الإجابات القصيرة (الصحيح مع الفخ الوارد في المصدر) */
 export const SHORT_ROWS_S11 = [
   { stem: "Have you been studying?", opts: ["Yes, I have.", "Yes, I have been."], answer: 0,
-    why: "الجواب القصير يستخدم have/has؛ أما Yes, I have been ❌ فخطأ مذكور في المصدر." },
+    why: "الجواب القصير يستخدم have/has؛ أما Yes, I have been ❌ فتركيب غير صحيح هنا." },
   { stem: "Has she been working?", opts: ["Yes, she has been.", "Yes, she has."], answer: 1,
     why: "الصحيح: Yes, she has. — لا نُعيد been في الجواب القصير." },
   { stem: "Have they been waiting?", opts: ["No, they haven't been.", "No, they haven't."], answer: 1,
@@ -412,7 +412,7 @@ export const WH_ROWS_S12 = [
   { stem: "She has been crying because of the news.", opts: ["What", "Where", "Why", "How long", "Who"], answer: 2,
     why: "Why = لماذا؟ — الجواب عن السبب." },
   { stem: "Ahmed has been using my computer.", opts: ["What", "Where", "Why", "How long", "Who"], answer: 4,
-    why: "Who = من؟ — تدريب للمنصة: Who هنا هي الفاعل، لذلك لا يأتي have/has قبلها (Who has been using my computer? كما في المصدر)." },
+    why: "Who = من؟ — Who هنا هي الفاعل، لذلك لا يأتي have/has قبلها: Who has been using my computer?" },
 ];
 
 /** خطوة ⑬ — أدلة مرئية الآن ← السياق ← الجملة التي تفسّرها (أسطر المصدر قسم 13) */
@@ -438,7 +438,7 @@ export const EVIDENCE_S13 = [
     context: "النشاط قد يكون انتهى، لكن النتيجة واضحة الآن.", reason: "التراب على اليدين هو أثر العمل في الحديقة.",
     options: [
       { text: "She has been gardening.", ar: "لقد كانت تعمل في الحديقة.", ok: true,
-        why: "المصدر: Her hands are dirty ← She has been gardening — الدليل التراب." },
+        why: "Her hands are dirty ← She has been gardening — التراب هو الدليل." },
       { text: "She has been swimming.", ar: "لقد كانت تسبح.", ok: false,
         why: "السباحة تترك بللًا لا تربة على اليدين." },
       { text: "She has been reading.", ar: "لقد كانت تقرأ.", ok: false,
@@ -452,7 +452,7 @@ export const EVIDENCE_S13 = [
     context: "المطر ربما توقف قبل قليل.", reason: "الأرض المبللة أثرٌ باقٍ لنشاط المطر.",
     options: [
       { text: "It has been raining.", ar: "لقد كانت السماء تمطر.", ok: true,
-        why: "المصدر: The floor is wet ← It has been raining — المطر يفسر الأرض المبللة." },
+        why: "The floor is wet ← It has been raining — المطر يفسّر الأرض المبللة." },
       { text: "It has been sunny.", ar: "لقد كانت الشمس ساطعة.", ok: false,
         why: "الشمس وحدها لا تُبلل الأرض." },
       { text: "She has been reading.", ar: "لقد كانت تقرأ.", ok: false,
@@ -480,17 +480,17 @@ export const DOORS_S15: { text: string; bucket: number; why: string }[] = [
 /** خطوة ⑯ — شخصان: أيّ زاوية؟ */
 export const SPEAKERS_S16 = [
   { stem: "A: I have written five pages.", opts: ["التركيز على النتيجة والكمية", "التركيز على النشاط والمدة"], answer: 0,
-    why: "المصدر: التركيز على النتيجة / الكمية — كتبت خمس صفحات." },
+    why: "التركيز على النتيجة والكمية: كتبت خمس صفحات." },
   { stem: "B: I have been writing for three hours.", opts: ["التركيز على النتيجة والكمية", "التركيز على النشاط والمدة"], answer: 1,
-    why: "المصدر: التركيز على النشاط والمدة — كنت أكتب لمدة ثلاث ساعات." },
+    why: "التركيز على النشاط والمدة: كنت أكتب لمدة ثلاث ساعات." },
 ];
 
 /** خطوة ⑰ — مثال آخر */
 export const ANOTHER_S17 = [
   { stem: "She has painted three pictures.", opts: ["النتيجة والعدد", "النشاط والمدة"], answer: 0,
-    why: "المصدر: النتيجة والعدد — ثلاث لوحات." },
+    why: "التركيز على النتيجة والعدد: ثلاث لوحات." },
   { stem: "She has been painting all afternoon.", opts: ["النتيجة والعدد", "النشاط والمدة"], answer: 1,
-    why: "المصدر: النشاط والمدة — طوال فترة بعد الظهر." },
+    why: "التركيز على النشاط والمدة: طوال فترة بعد الظهر." },
 ];
 
 /** خطوة ⑱ — الجملة نفسها، والواقع يختلف */
@@ -509,11 +509,11 @@ export const KEYWORDS_S19: { en: string; ar: string; ex: string; exAr: string; s
   { en: "all day", ar: "طوال اليوم", ex: "She has been working all day.", exAr: "", src: true },
   { en: "all morning", ar: "طوال الصباح", ex: "I have been studying all morning.", exAr: "", src: true },
   { en: "all afternoon", ar: "طوال فترة بعد الظهر", ex: "She has been painting all afternoon.", exAr: "كانت ترسم طوال فترة بعد الظهر.", src: true },
-  { en: "all evening", ar: "طوال المساء", ex: "I have been reading all evening.", exAr: "مثال تدريبي للمنصة — ليس من المصدر.", src: false },
+  { en: "all evening", ar: "طوال المساء", ex: "I have been reading all evening.", exAr: "مثال إضافي للتدريب.", src: false },
   { en: "recently", ar: "مؤخرًا", ex: "He has been exercising recently.", exAr: "", src: true },
   { en: "lately", ar: "مؤخرًا (في الفترة الأخيرة)", ex: "They have been practicing lately.", exAr: "", src: true },
   { en: "how long", ar: "منذ متى؟ / كم من الوقت؟", ex: "How long have you been waiting?", exAr: "منذ متى وأنت تنتظر؟", src: true },
-  { en: "these days", ar: "هذه الأيام", ex: "I have been sleeping badly these days.", exAr: "مثال تدريبي للمنصة — ليس من المصدر.", src: false },
+  { en: "these days", ar: "هذه الأيام", ex: "I have been sleeping badly these days.", exAr: "مثال إضافي للتدريب.", src: false },
 ];
 
 /** خطوة ⑳ — الكلمة وحدها لا تكفي */
@@ -526,21 +526,21 @@ export const CUE_S20 = [
 /** خطوة ㉑ — أزواج: أيّ جملة تقصد هذا التركيز؟ */
 export const PAIRS_S21 = [
   { stem: "التركيز: الكتاب انتهى (الإنجاز).", opts: ["I have read the book.", "I have been reading the book."], answer: 0,
-    why: "المصدر: I have read the book = لقد قرأت الكتاب — التركيز على الإنجاز." },
+    why: "I have read the book = لقد قرأت الكتاب — التركيز على الإنجاز." },
   { stem: "التركيز: النشاط نفسه والجدار يُدهن.", opts: ["She has painted the wall.", "She has been painting the wall."], answer: 1,
-    why: "المصدر: She has been painting the wall = لقد كانت تدهن الجدار — النشاط مهم." },
+    why: "She has been painting the wall = لقد كانت تدهن الجدار — التركيز على النشاط." },
   { stem: "التركيز: الآلة تعمل الآن (النتيجة).", opts: ["They have repaired the machine.", "They have been repairing the machine."], answer: 0,
-    why: "المصدر: They have repaired the machine — النتيجة: الآلة تعمل." },
+    why: "They have repaired the machine — النتيجة: الآلة تعمل." },
 ];
 
 /** خطوة ㉒ — عدد مكتمل أم نشاط ومدة؟ */
 export const COUNT_ROWS_S22 = [
   { stem: "I have written five emails.", opts: ["عدد مكتمل — Present Perfect", "نشاط ومدة — Present Perfect Continuous"], answer: 0,
-    why: "المصدر: نهتم بالعدد five emails → Present Perfect." },
+    why: "نهتم بالعدد five emails → Present Perfect." },
   { stem: "I have been writing emails all morning.", opts: ["عدد مكتمل — Present Perfect", "نشاط ومدة — Present Perfect Continuous"], answer: 1,
-    why: "المصدر: نهتم بالنشاط والمدة → Present Perfect Continuous." },
+    why: "نهتم بالنشاط والمدة → Present Perfect Continuous." },
   { stem: "She has made five cakes this week.", opts: ["عدد مكتمل — Present Perfect", "نشاط ومدة — Present Perfect Continuous"], answer: 0,
-    why: "تدريب للمنصة: five cakes عدد مكتمل، لذلك Present Perfect (انظر تحدي المصدر ㉘)." },
+    why: "five cakes عدد مكتمل، لذلك Present Perfect — لاحظ طريقة الاختيار في التحدي." },
 ];
 
 /** خطوة ㉓ — بوابة الأفعال الحالية (المصدر: know، believe، understand…) */
@@ -576,21 +576,21 @@ export const RAIL_S26: RailSnap32[] = [
 export type Detective32 = { segments: string[]; bad: number[]; fixOpts: string[]; fix: string; why: string; n: number };
 export const DETECTIVE_S27: Detective32[] = [
   { n: 1, segments: ["She", "has", "been", "study", "for", "two", "hours."], bad: [3], fixOpts: ["studying", "studied", "to study"], fix: "studying",
-    why: "بعد been نستخدم verb-ing: studying (المصدر ①)." },
+    why: "بعد been نستخدم verb-ing: studying." },
   { n: 2, segments: ["I", "have", "been", "working", "since", "three", "hours."], bad: [4], fixOpts: ["for", "since", "during"], fix: "for",
-    why: "three hours = مدة، لذلك for (المصدر ②)." },
+    why: "three hours = مدة، لذلك for." },
   { n: 3, segments: ["He", "has", "been", "knowing", "her", "for", "years."], bad: [2, 3], fixOpts: ["known", "knowing", "been known"], fix: "known",
-    why: "know فعل حالة لا يأخذ continuous عادةً: has known (المصدر ③)." },
+    why: "know فعل حالة لا يأخذ continuous عادةً: has known." },
   { n: 4, segments: ["Have", "you", "been", "wait", "long?"], bad: [3], fixOpts: ["waiting", "waited", "wait"], fix: "waiting",
-    why: "بعد been نستخدم verb-ing: waiting (المصدر ④)." },
+    why: "بعد been نستخدم verb-ing: waiting." },
   { n: 5, segments: ["They", "has", "been", "playing", "all", "afternoon."], bad: [1], fixOpts: ["have", "has", "having"], fix: "have",
-    why: "They تأخذ have، لا has (المصدر ⑤)." },
+    why: "They تأخذ have، لا has." },
   { n: 6, segments: ["She", "hasn't", "been", "sleep", "well."], bad: [3], fixOpts: ["sleeping", "slept", "sleep"], fix: "sleeping",
-    why: "بعد been نستخدم verb-ing: sleeping (المصدر ⑥)." },
+    why: "بعد been نستخدم verb-ing: sleeping." },
   { n: 7, segments: ["How", "long", "has", "he", "been", "work", "here?"], bad: [5], fixOpts: ["working", "worked", "work"], fix: "working",
-    why: "بعد been نستخدم verb-ing: working (المصدر ⑦)." },
+    why: "بعد been نستخدم verb-ing: working." },
   { n: 8, segments: ["I", "have", "been", "written", "five", "emails."], bad: [2, 3], fixOpts: ["written", "been writing", "wrote"], fix: "written",
-    why: "المصدر ⑧: نركز على عدد مكتمل (five emails) ← have written، وليس have been written." },
+    why: "في المثال الثامن نركّز على عدد مكتمل (five emails) ← have written، لا have been written." },
 ];
 
 /** خطوة ㉘ — تحدي الاختيار: الكتابة الصحيحة للصيغة */
@@ -606,9 +606,9 @@ export const TYPED_S28 = [
 /** خطوة ㉙ — IQ200: هل انتهى الأمر؟ */
 export const BIKE_S29 = [
   { stem: "I have repaired my bicycle.", opts: ["✓ انتهى — الدراجة مُصلحة", "؟ غير مؤكد — ربما لم أنتهِ"], answer: 0,
-    why: "المصدر: الدراجة أصبحت مُصلحة — النتيجة هي التركيز." },
+    why: "الدراجة أصبحت مُصلحة، لذا يكون التركيز على النتيجة." },
   { stem: "I have been repairing my bicycle.", opts: ["✓ انتهى — الدراجة مُصلحة", "؟ غير مؤكد — ربما لم أنتهِ"], answer: 1,
-    why: "المصدر: قد أكون انتهيت، وقد لا أكون انتهيت — التركيز على النشاط." },
+    why: "قد أكون انتهيت وقد لا أكون؛ التركيز على النشاط لا على النتيجة." },
 ];
 
 /** خطوة ㉚ — مشهد المعنى (حالتان) — أسطر المصدر قسم 30 */
@@ -620,7 +620,7 @@ export const SCENE_S30 = [
     context: "الأثر على الشخص نفسه، لا على الجدار.", reason: "لأننا نرى آثار النشاط.",
     options: [
       { text: "You have been painting.", ar: "لقد كنت تدهن.", ok: true,
-        why: "المصدر: لأننا نرى آثار النشاط — الفرشاة وبقع الطلاء." },
+        why: "نرى آثار النشاط — الفرشاة وبقع الطلاء — لذلك نركّز على النشاط." },
       { text: "You have painted the wall.", ar: "لقد دهنت الجدار.", ok: false,
         why: "الجدار لم يُذكر في هذا المشهد؛ الدليل هو آثار النشاط على الشخص." },
     ] },
@@ -631,7 +631,7 @@ export const SCENE_S30 = [
     context: "النتيجة أمامك: الجدار انتهى.", reason: "التركيز هنا على النتيجة: الجدار أصبح مطليًا.",
     options: [
       { text: "You have painted the wall.", ar: "لقد دهنت الجدار.", ok: true,
-        why: "المصدر: التركيز هنا على النتيجة — الجدار أصبح مطليًا." },
+        why: "التركيز هنا على النتيجة — الجدار أصبح مطليًا." },
       { text: "You have been painting.", ar: "لقد كنت تدهن.", ok: false,
         why: "هنا المهمة المنتهية هي المهمّة، لا آثار النشاط." },
     ] },
@@ -643,13 +643,13 @@ export const FIX_S31 = {
   bad: [4],
   fixOpts: ["for", "since", "from"],
   fix: "for",
-  why: "three hours = مدة، لذلك for. أما since 5:00 فنقطة بداية (المصدر).",
+  why: "three hours = مدة، لذلك for. أما since 5:00 فنقطة بداية.",
 };
 export const FORSINCE_ROWS_S31 = [
   { stem: "I have been studying ___ 5:00.", opts: ["since", "for"], answer: 0,
-    why: "5:00 = نقطة بداية ← since (المصدر: I have been studying since 5:00)." },
+    why: "5:00 = نقطة بداية ← since: I have been studying since 5:00." },
   { stem: "I have been studying ___ three hours.", opts: ["since", "for"], answer: 1,
-    why: "three hours = مدة ← for (المصدر: I have been studying for three hours)." },
+    why: "three hours = مدة ← for: I have been studying for three hours." },
 ];
 
 /** خطوة ㉜ — الزعيم: ثمانية أهداف، أربعة أزمنة */
@@ -680,10 +680,10 @@ export const ADAM_TEXT_S33 = {
   ],
   answers: ["Present Perfect", "Present Perfect", "Present Perfect Continuous", "Present Perfect Continuous"] as const,
   why: [
-    "المصدر: نهتم بالمدة والتجربة المرتبطة بالحاضر — تصنيف المصدر Present Perfect (انظر ملاحظة المعلم).",
-    "المصدر: لأننا نركز على النتيجة: six robots.",
-    "المصدر: لأن التركيز على النشاط الممتد since January.",
-    "المصدر: لأننا نركز على النشاط المتكرر خلال هذه الفترة.",
+    "هنا نركّز على تجربة مرتبطة بالحاضر، لذا اختير Present Perfect. وقد تُستعمل has been studying للتأكيد على النشاط الممتد (انظر ملاحظة المعلم).",
+    "التركيز على النتيجة والعدد: six robots.",
+    "التركيز على النشاط الممتد منذ January.",
+    "التركيز على نشاط الاختبار المتكرر خلال هذه الفترة.",
   ],
 };
 
@@ -715,7 +715,7 @@ export const GEARS_S36 = [
 ];
 
 /** كلمات تمهيدية للمنصة: الشرح يُوسم دائمًا */
-export const PLATFORM_NOTE_S18 = "الجملة لم تتغيّر، لكن الواقع يختلف: Present Perfect Continuous يهتم بالنشاط الذي امتد إلى قرب الحاضر وبآثاره، وليس شرطًا أن يكون مستمرًا في الثانية نفسها (المصدر ⑱).";
+export const PLATFORM_NOTE_S18 = "الجملة لم تتغيّر، لكن الواقع يختلف: Present Perfect Continuous يصف نشاطًا امتد إلى قرب الحاضر وترك أثرًا؛ لا يشترط أن يستمر الفعل في هذه اللحظة.";
 
 // ============================================================
 // 🌊 تيّار المدة — مجموعات بيانات إضافية (إعادة البناء)
@@ -884,7 +884,7 @@ export const TEACH_32: Record<string, string[]> = {
   ],
   s14: [
     "هذا هو محور الدرس: الجملة نفسها تقريبًا، والفرق كله في زاوية النظر — ما أُنجز أم ما استمر.",
-    "بدّل العدسة ثم تنقّل بين أمثلة المصدر التسعة؛ ستلاحظ أن الدليل البصري هو الذي يحسم الاختيار.",
+    "بدّل العدسة وتنقّل بين الأمثلة التسعة؛ ستلاحظ أن الدليل البصري هو الذي يحسم الاختيار.",
   ],
   s15: [
     "سؤالان قبل أي اختيار: هل أهتم بما تم إنجازه؟ ← PP · هل أهتم بالنشاط أو المدة؟ ← PPC.",
@@ -899,19 +899,19 @@ export const TEACH_32: Record<string, string[]> = {
     "نقطة متقدمة: الجملة لا تخبرك إن كان الفعل مستمرًا الآن، بل تخبرك أن النشاط امتد إلى قرب الحاضر وله أثر.",
   ],
   s19: [
-    "الكلمات الشائعة إشارات لا قوانين: تسع كلمات من المصدر، ومثال تدريبي واحد من المنصة حيث لا مثال في المصدر.",
+    "الكلمات الشائعة إشارات لا قوانين: تعرّف إلى تسع كلمات، ولاحظ استخدامها في أمثلة تساعدك على فهم السياق.",
   ],
   s20: [
     "today قد تأتي مع PP (three chapters today) وrecently قد تأتي مع PPC — المعنى هو الحكم.",
   ],
   s21: [
-    "ثلاثة أزواج من المصدر: الكتاب، الجدار، والآلة. في كل زوج الجملة صحيحة، والمختلف هو التركيز.",
+    "ثلاثة أزواج عن الكتاب والجدار والآلة: الجملتان في كل زوج صحيحتان، والاختلاف في التركيز.",
   ],
   s22: [
     "إذا كان التركيز على عدد الأشياء المكتملة فاستعمل PP؛ وإذا كان على النشاط والمدة فاستعمل PPC.",
   ],
   s23: [
-    "أفعال الحالة (know، believe، want…) تُستعمل عادةً بلا continuous؛ المصدر يقول «عادةً» فلا نحوّلها إلى تحريم مطلق.",
+    "أفعال الحالة (know، believe، want…) تُستعمل عادةً بلا continuous؛ كلمة «عادةً» تعني أن هذا استعمال شائع لا قاعدة مطلقة.",
   ],
   s24: [
     "نقطة المرجع تصنع الزمن: نقطة داخل الماضي ← Past Continuous · امتداد إلى NOW ← PPC.",
@@ -923,7 +923,7 @@ export const TEACH_32: Record<string, string[]> = {
     "الخريطة الكبرى تجمع الأزمنة الثلاثة في صورة واحدة؛ الفرق الوحيد هو موضع نقطة المرجع.",
   ],
   s27: [
-    "الملفات الثمانية هي أخطاء المصدر نفسها. لا تُصحَّح قبل المحاولة: المس الجزء الخاطئ أولًا ثم اختر الإصلاح.",
+    "في هذه الجمل الثماني أخطاء مقصودة. لا تُصحّحها قبل المحاولة: المس الجزء الخاطئ أولًا ثم اختر الإصلاح.",
     "الملف الثامن خاص: have been written ← have written، لأن التركيز على عدد مكتمل (five emails).",
   ],
   s28: [
@@ -933,7 +933,7 @@ export const TEACH_32: Record<string, string[]> = {
     "السؤال ليس «أي زمن أصعب؟» بل «ما الذي أريد أن أُبرزه؟» — النتيجة أم النشاط.",
   ],
   s30: [
-    "مشهدان من المصدر: آثار النشاط على الشخص (فرشاة وبقع طلاء) مقابل الجدار المكتمل.",
+    "مشهدان يوضّحان الفرق: آثار النشاط على الشخص (فرشاة وبقع طلاء) مقابل الجدار المكتمل.",
   ],
   s31: [
     "three hours مدة ← for، و5:00 لحظة ← since. الخطأ الشائع هو ترجمة «منذ» العربية إلى since دائمًا.",
@@ -942,8 +942,8 @@ export const TEACH_32: Record<string, string[]> = {
     "الزعيم يجمع أزمنة الحاضر الأربعة: ابحث أولًا عن كلمة الزمن، ثم اسأل عن النتيجة أو النشاط.",
   ],
   s33: [
-    "فقرة Adam من المصدر: has studied (مدة وتجربة) · has built (عدد) · has been working (since January) · has been testing (نشاط متكرر).",
-    "تصنيف has studied robotics for three years هو تصنيف المصدر نفسه، ويُناقش لا يُغيَّر (انظر ملاحظة المعلم).",
+    "في فقرة Adam: has studied (مدة وتجربة) · has built (عدد) · has been working (since January) · has been testing (نشاط متكرر).",
+    "تُصنَّف has studied robotics for three years هنا بوصفها Present Perfect، ويُناقش هذا الاختيار دون تغييره (انظر ملاحظة المعلم).",
   ],
   s34: [
     "قصة Maya تدريب نهائي على القرار: studying + مدة ← PPC · eight books ← PP · since January ← PPC · completed ← PP · tired + all day ← PPC.",
@@ -955,9 +955,9 @@ export const TEACH_32: Record<string, string[]> = {
     "أصبحت عندك أربع درجات للحاضر: عادة · يحدث الآن · ماضٍ مرتبط بالحاضر · نشاط ممتد نحو الحاضر.",
   ],
   summary: [
-    "الملخص يعيد الصيغة والاستخدامات الثلاثة والكلمات المهمة والفرق الذهبي — وكلها من المصدر حرفيًا في الأسفل.",
+    "الملخص يعيد الصيغة والاستخدامات الثلاثة والكلمات المهمة والفرق الذهبي، مع أمثلة توضحها في الأسفل.",
   ],
   closing: [
-    "الخطوة التالية في المنهج كما وردت في المصدر: تثبيت أزمنة الحاضر الأربعة في درس شامل، ثم الانتقال إلى المستقبل.",
+    "الخطوة التالية: مراجعة أزمنة الحاضر الأربعة في درس شامل، ثم الانتقال إلى المستقبل.",
   ],
 };

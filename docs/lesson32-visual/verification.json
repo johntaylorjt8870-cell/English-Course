@@ -2,7 +2,7 @@
   "lesson": 32,
   "identity": "THE DURATION STREAM / تيّار المدة",
   "browser": "153.0.8010.0",
-  "url": "http://127.0.0.1:4173/English-Course/#/lesson/32",
+  "url": "http://127.0.0.1:4174/English-Course/#/lesson/32",
   "pages": [
     "cover-src1",
     "objectives-lab",
@@ -654,8 +654,8 @@
       },
       {
         "id": "s33-lab",
-        "h": 734,
-        "cardH": 734
+        "h": 756,
+        "cardH": 756
       },
       {
         "id": "s33-src1",
@@ -1256,8 +1256,8 @@
       },
       {
         "id": "s33-lab",
-        "h": 734,
-        "cardH": 734
+        "h": 756,
+        "cardH": 756
       },
       {
         "id": "s33-src1",
@@ -1346,8 +1346,12 @@
       }
     ]
   },
-  "checks": 2575,
+  "checks": 2822,
   "failures": [],
+  "studentCopyScans": 246,
+  "studentCopyDistinctLeaks": 0,
+  "studentCopyOccurrences": 0,
+  "studentCopyFindings": [],
   "errors": [],
   "externalNetworkErrors": [
     {
@@ -1432,7 +1436,7 @@
       "label": "1280-s4-lab",
       "width": 1280,
       "scroll": 1280,
-      "tested": 83,
+      "tested": 90,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1451,7 +1455,7 @@
       "label": "1280-s7-lab",
       "width": 1280,
       "scroll": 1280,
-      "tested": 102,
+      "tested": 110,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1508,7 +1512,7 @@
       "label": "1280-s27-lab1",
       "width": 1280,
       "scroll": 1280,
-      "tested": 121,
+      "tested": 128,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1527,7 +1531,7 @@
       "label": "1280-s30-lab",
       "width": 1280,
       "scroll": 1280,
-      "tested": 86,
+      "tested": 93,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1546,7 +1550,7 @@
       "label": "1280-s32-lab1",
       "width": 1280,
       "scroll": 1280,
-      "tested": 92,
+      "tested": 99,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1565,7 +1569,7 @@
       "label": "1280-s36-lab",
       "width": 1280,
       "scroll": 1280,
-      "tested": 62,
+      "tested": 64,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1584,7 +1588,7 @@
       "label": "1280-summary-lab",
       "width": 1280,
       "scroll": 1280,
-      "tested": 91,
+      "tested": 93,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1603,7 +1607,7 @@
       "label": "1280-closing-src1",
       "width": 1280,
       "scroll": 1280,
-      "tested": 239,
+      "tested": 241,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1660,7 +1664,7 @@
       "label": "1920-s4-lab",
       "width": 1920,
       "scroll": 1920,
-      "tested": 83,
+      "tested": 90,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1679,7 +1683,7 @@
       "label": "1920-s7-lab",
       "width": 1920,
       "scroll": 1920,
-      "tested": 102,
+      "tested": 110,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1736,7 +1740,7 @@
       "label": "1920-s27-lab1",
       "width": 1920,
       "scroll": 1920,
-      "tested": 121,
+      "tested": 128,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1755,7 +1759,7 @@
       "label": "1920-s30-lab",
       "width": 1920,
       "scroll": 1920,
-      "tested": 86,
+      "tested": 93,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1774,7 +1778,7 @@
       "label": "1920-s32-lab1",
       "width": 1920,
       "scroll": 1920,
-      "tested": 92,
+      "tested": 99,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1793,7 +1797,7 @@
       "label": "1920-s36-lab",
       "width": 1920,
       "scroll": 1920,
-      "tested": 62,
+      "tested": 64,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1812,7 +1816,7 @@
       "label": "1920-summary-lab",
       "width": 1920,
       "scroll": 1920,
-      "tested": 91,
+      "tested": 93,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1831,7 +1835,7 @@
       "label": "1920-closing-src1",
       "width": 1920,
       "scroll": 1920,
-      "tested": 239,
+      "tested": 241,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1850,7 +1854,7 @@
       "label": "1280-s32-interactive",
       "width": 1280,
       "scroll": 1280,
-      "tested": 92,
+      "tested": 99,
       "min": 4.76,
       "issues": [],
       "gradients": [
@@ -1964,7 +1968,7 @@
       "label": "mobile-drawer",
       "width": 390,
       "scroll": 390,
-      "tested": 366,
+      "tested": 403,
       "min": 4.76,
       "issues": [],
       "gradients": [

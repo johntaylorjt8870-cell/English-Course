@@ -14,7 +14,7 @@ import {
   TEST_32, TEST_32_LEVEL_COUNTS, LEVEL_LABEL_32, TEST_32_SOLUTIONS, normalizeTyped32,
   type TestLevel32, type TestQ32,
 } from "./testData";
-import { FOCUS32, SourceBadge32 } from "./kit32";
+import { FOCUS32 } from "./kit32";
 
 const TYPE_LABEL: Record<TestQ32["type"], string> = {
   single: "اختيار واحد",
@@ -498,11 +498,10 @@ export function Solutions32({ unlocked, onGoTest, onGoTeacher }: { unlocked: boo
       <header className="l32-card l32-card-indigo space-y-2">
         <h2 className="l32-h text-lg font-black text-[#312a8f]"><Rich text="🔑 حلول الاختبار (20 سؤالًا)" /></h2>
         <p className="text-sm font-bold text-[#3c4670]">
-          <Rich text="أربع مجموعات من خمسة أسئلة. كل حل يشمل الإجابة والمهارة ومرجعها في الدرس وشرح المنصة والفخّ المتوقع." />
+          <Rich text="أربع مجموعات من خمسة أسئلة. كل حل يشمل الإجابة والمهارة والشرح التعليمي والفخّ المتوقع." />
         </p>
         <div className="flex flex-wrap items-center gap-2">
-          <SourceBadge32 src={false} />
-          <span className="l32-chip l32-chip-aqua"><Rich text="شرح المنصة — لا نص منقول من المصدر" /></span>
+          <span className="l32-chip l32-chip-aqua"><Rich text="شروح تعليمية للإجابات" /></span>
         </div>
       </header>
       {groups.map((grp, gi) => (
@@ -517,7 +516,6 @@ export function Solutions32({ unlocked, onGoTest, onGoTeacher }: { unlocked: boo
                 <span className={`l32-tier l32-tier-${s.level}`}><En>{LEVEL_LABEL_32[s.level]}</En></span>
                 <span className="l32-chip"><Rich text={`${TYPE_ICON[s.type]} ${TYPE_LABEL[s.type]}`} /></span>
                 <span className="l32-chip l32-chip-aqua"><Rich text={`🎯 ${s.skill}`} /></span>
-                <span className="l32-chip l32-chip-gold"><Rich text={s.ref} /></span>
               </div>
               <p className="text-sm font-black text-[#131b3f]"><Rich text={`الإجابة: ${s.answer}`} /></p>
               <p className="text-sm font-semibold text-[#3c4670]"><PlatformTag /> <Rich text={s.why} /></p>

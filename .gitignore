@@ -4,3 +4,8 @@ dist/
 scripts/.audit-bundle.mjs
 *.local
 .DS_Store
+
+# مخرجات مؤقتة لتدقيق الدرس 32 (حزم esbuild ولقطات استكشافية)
+scripts/.probe/
+scripts/.*.mjs
+scripts/.*.css

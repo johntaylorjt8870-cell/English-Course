@@ -116,21 +116,30 @@ export default function TestArea32({ onCheckedChange, onShowSolutions }: { onChe
   const [key, setKey] = useState(0);
 
   const score = useMemo(() => Object.values(resultMap).filter(Boolean).length, [resultMap]);
+  const [submitMsg, setSubmitMsg] = useState("");
   const answeredCount = TEST_32.filter((q) => isAnswered32(q, answers[q.n])).length;
   const answeredPct = Math.round((answeredCount / TEST_32.length) * 100);
 
   const set = (n: number, v: Ans) => setAnswers((a) => ({ ...a, [n]: v }));
+  const missingCount = TEST_32.length - answeredCount;
   const submit = () => {
+    // لا يُعتبر الاختبار مكتملًا إذا بقي سؤال مطلوب بلا إجابة.
+    if (missingCount > 0) {
+      setSubmitMsg(`أكمل جميع الأسئلة أولًا — بقي ${missingCount} سؤالًا بلا إجابة.`);
+      return;
+    }
     const map: Record<number, boolean> = {};
     TEST_32.forEach((q) => { map[q.n] = gradeOne32(q, answers[q.n]); });
     setResultMap(map);
     setSubmitted(true);
+    setSubmitMsg("");
     onCheckedChange(true);
   };
   const reset = () => {
     setAnswers({});
     setResultMap({});
     setSubmitted(false);
+    setSubmitMsg("");
     onCheckedChange(false);
     setKey((k) => k + 1);
   };
@@ -185,6 +194,11 @@ export default function TestArea32({ onCheckedChange, onShowSolutions }: { onChe
                 ↺ <Rich text="إعادة الاختبار كاملًا" />
               </button>
             </div>
+            {submitMsg && !submitted && (
+              <p role="alert" className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-bold text-amber-900">
+                <Rich text={submitMsg} />
+              </p>
+            )}
             {submitted && (
               <span className="l32-chip l32-chip-indigo"><Rich text={`✓ أُرسل — ${score}/20`} /></span>
             )}

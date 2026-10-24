@@ -284,7 +284,7 @@ function QuestionCard({
           {index + 1}
         </span>
         <div className="min-w-0 flex-1">
-          <div className="text-xs font-black text-slate-400">
+          <div className="text-xs font-black text-slate-600">
             <Localized text={FINAL_TEST_TYPES[type]} />
           </div>
           <Localized text={prompt} className="font-bold text-slate-800" />
@@ -413,7 +413,7 @@ export default function FinalTest({
           </span>
           <div className="min-w-0 flex-1">
             <h2 className="font-head text-xl font-black text-slate-900 sm:text-2xl">
-              <Localized text={title} /> <span className="font-en text-base font-black text-slate-400">— Lesson {lesson}</span>
+              <Localized text={title} /> <span className="font-en text-base font-black text-slate-600">— Lesson {lesson}</span>
             </h2>
             <p className="mt-0.5 text-sm font-bold text-slate-500">
               <Localized text={`${questions.length} أسئلة على محتوى الدرس كله · أجب عن الأسئلة كلها، والتصحيح في النهاية فقط.`} />
@@ -506,7 +506,7 @@ export default function FinalTest({
                 <div className="text-sm font-semibold text-slate-500">
                   <Localized text={resultMessage(result.pct)} />
                 </div>
-                <div className="text-xs font-bold text-slate-400">
+                <div className="text-xs font-bold text-slate-600">
                   <Localized text="ظهرت الآن الإجابات الصحيحة والشروح أسفل كل سؤال." />
                 </div>
               </div>
@@ -666,7 +666,7 @@ function QuestionControl({
       <div className="space-y-2">
         <div dir="ltr" className="ltr-row min-h-[3rem] rounded-2xl border-2 border-dashed border-slate-300 bg-white p-2">
           {value.length === 0 ? (
-            <span dir="rtl" className="block p-2 text-center text-sm font-bold text-slate-400">
+            <span dir="rtl" className="block p-2 text-center text-sm font-bold text-slate-600">
               <Localized text="اختر الترتيب الصحيح واحدًا واحدًا…" />
             </span>
           ) : (
@@ -805,7 +805,7 @@ export function FinalTestAnswerKey({
               <span className="font-black text-slate-800">
                 {i + 1}. <Localized text={q.ar} />
               </span>
-              <span className="rounded-full bg-white px-2 py-0.5 text-xs font-black text-slate-400">
+              <span className="rounded-full bg-white px-2 py-0.5 text-xs font-black text-slate-600">
                 {FINAL_TEST_TYPES[q.type]}
               </span>
             </div>

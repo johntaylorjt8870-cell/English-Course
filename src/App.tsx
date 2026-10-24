@@ -393,7 +393,7 @@ const CARDS: Card[] = [
     title: "الدرس 32: Present Perfect Continuous — المضارع التام المستمر",
     en: "Present Perfect Continuous — The Duration Stream",
     emoji: "🌊",
-    stats: "36 قسمًا مرقّمًا · 40 خطوة · تيّار المدة PAST→NOW · عدسة النتيجة/النشاط · اختبار 20 سؤالًا · IQ200",
+    stats: "36 قسمًا مرقّمًا · 120 صفحة قصيرة · تيّار المدة PAST→NOW · عدسة النتيجة/النشاط · اختبار 20 سؤالًا · IQ200",
     href: "#/lesson/32",
     grad: "from-cyan-500 to-indigo-600",
   },

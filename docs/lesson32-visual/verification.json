@@ -3,17 +3,1350 @@
   "identity": "THE DURATION STREAM / تيّار المدة",
   "browser": "153.0.8010.0",
   "url": "http://127.0.0.1:4173/English-Course/#/lesson/32",
+  "pages": [
+    "cover-src1",
+    "objectives-lab",
+    "objectives-src1",
+    "objectives-src2",
+    "s1-lab",
+    "s1-src1",
+    "s1-src2",
+    "s2-lab",
+    "s2-src1",
+    "s2-src2",
+    "s3-lab",
+    "s3-src1",
+    "s3-src2",
+    "s4-lab",
+    "s4-src1",
+    "s4-src2",
+    "s5-lab",
+    "s5-src1",
+    "s5-src2",
+    "s6-lab",
+    "s6-src1",
+    "s6-src2",
+    "s7-lab",
+    "s7-src1",
+    "s7-src2",
+    "s8-lab",
+    "s8-src1",
+    "s8-src2",
+    "s9-lab",
+    "s9-src1",
+    "s9-src2",
+    "s10-lab",
+    "s10-src1",
+    "s10-src2",
+    "s11-lab",
+    "s11-src1",
+    "s11-src2",
+    "s12-lab",
+    "s12-src1",
+    "s13-lab",
+    "s13-src1",
+    "s13-src2",
+    "s13-src3",
+    "s14-lab",
+    "s14-src1",
+    "s14-src2",
+    "s15-lab",
+    "s15-src1",
+    "s15-src2",
+    "s15-src3",
+    "s16-lab",
+    "s16-src1",
+    "s16-src2",
+    "s17-lab",
+    "s17-src1",
+    "s18-lab",
+    "s18-src1",
+    "s19-lab",
+    "s19-src1",
+    "s19-src2",
+    "s20-lab",
+    "s20-src1",
+    "s20-src2",
+    "s21-lab",
+    "s21-src1",
+    "s21-src2",
+    "s22-lab",
+    "s22-src1",
+    "s23-lab",
+    "s23-src1",
+    "s23-src2",
+    "s24-lab",
+    "s24-src1",
+    "s24-src2",
+    "s24-src3",
+    "s25-lab",
+    "s25-src1",
+    "s25-src2",
+    "s26-lab",
+    "s26-src1",
+    "s27-lab1",
+    "s27-lab2",
+    "s27-src1",
+    "s27-src2",
+    "s27-src3",
+    "s28-lab1",
+    "s28-lab2",
+    "s28-src1",
+    "s28-src2",
+    "s28-src3",
+    "s29-lab",
+    "s29-src1",
+    "s29-src2",
+    "s30-lab",
+    "s30-src1",
+    "s31-lab",
+    "s31-src1",
+    "s31-src2",
+    "s32-lab1",
+    "s32-lab2",
+    "s32-src1",
+    "s32-src2",
+    "s33-lab",
+    "s33-src1",
+    "s33-src2",
+    "s34-lab",
+    "s34-src1",
+    "s34-src2",
+    "s34-src3",
+    "s35-lab",
+    "s35-src1",
+    "s35-src2",
+    "s36-lab",
+    "s36-src1",
+    "summary-lab",
+    "summary-src1",
+    "summary-src2",
+    "summary-src3",
+    "summary-src4",
+    "closing-src1"
+  ],
   "viewports": [
     {
-      "width": 1440,
-      "height": 900
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "width": 1920,
+      "height": 1080
     },
     {
       "width": 390,
       "height": 844
     }
   ],
-  "checks": 247,
+  "targetMaxHeight": 1200,
+  "pageHeights": {
+    "1280x800": [
+      {
+        "id": "cover-src1",
+        "h": 939,
+        "cardH": 939
+      },
+      {
+        "id": "objectives-lab",
+        "h": 988,
+        "cardH": 988
+      },
+      {
+        "id": "objectives-src1",
+        "h": 746,
+        "cardH": 746
+      },
+      {
+        "id": "objectives-src2",
+        "h": 635,
+        "cardH": 635
+      },
+      {
+        "id": "s1-lab",
+        "h": 786,
+        "cardH": 786
+      },
+      {
+        "id": "s1-src1",
+        "h": 547,
+        "cardH": 547
+      },
+      {
+        "id": "s1-src2",
+        "h": 490,
+        "cardH": 490
+      },
+      {
+        "id": "s2-lab",
+        "h": 700,
+        "cardH": 700
+      },
+      {
+        "id": "s2-src1",
+        "h": 456,
+        "cardH": 456
+      },
+      {
+        "id": "s2-src2",
+        "h": 391,
+        "cardH": 391
+      },
+      {
+        "id": "s3-lab",
+        "h": 697,
+        "cardH": 697
+      },
+      {
+        "id": "s3-src1",
+        "h": 344,
+        "cardH": 344
+      },
+      {
+        "id": "s3-src2",
+        "h": 638,
+        "cardH": 638
+      },
+      {
+        "id": "s4-lab",
+        "h": 1035,
+        "cardH": 1035
+      },
+      {
+        "id": "s4-src1",
+        "h": 545,
+        "cardH": 545
+      },
+      {
+        "id": "s4-src2",
+        "h": 550,
+        "cardH": 550
+      },
+      {
+        "id": "s5-lab",
+        "h": 741,
+        "cardH": 741
+      },
+      {
+        "id": "s5-src1",
+        "h": 401,
+        "cardH": 401
+      },
+      {
+        "id": "s5-src2",
+        "h": 607,
+        "cardH": 607
+      },
+      {
+        "id": "s6-lab",
+        "h": 741,
+        "cardH": 741
+      },
+      {
+        "id": "s6-src1",
+        "h": 353,
+        "cardH": 353
+      },
+      {
+        "id": "s6-src2",
+        "h": 607,
+        "cardH": 607
+      },
+      {
+        "id": "s7-lab",
+        "h": 744,
+        "cardH": 744
+      },
+      {
+        "id": "s7-src1",
+        "h": 399,
+        "cardH": 399
+      },
+      {
+        "id": "s7-src2",
+        "h": 540,
+        "cardH": 540
+      },
+      {
+        "id": "s8-lab",
+        "h": 702,
+        "cardH": 702
+      },
+      {
+        "id": "s8-src1",
+        "h": 509,
+        "cardH": 509
+      },
+      {
+        "id": "s8-src2",
+        "h": 560,
+        "cardH": 560
+      },
+      {
+        "id": "s9-lab",
+        "h": 758,
+        "cardH": 758
+      },
+      {
+        "id": "s9-src1",
+        "h": 540,
+        "cardH": 540
+      },
+      {
+        "id": "s9-src2",
+        "h": 495,
+        "cardH": 495
+      },
+      {
+        "id": "s10-lab",
+        "h": 758,
+        "cardH": 758
+      },
+      {
+        "id": "s10-src1",
+        "h": 475,
+        "cardH": 475
+      },
+      {
+        "id": "s10-src2",
+        "h": 607,
+        "cardH": 607
+      },
+      {
+        "id": "s11-lab",
+        "h": 836,
+        "cardH": 836
+      },
+      {
+        "id": "s11-src1",
+        "h": 527,
+        "cardH": 527
+      },
+      {
+        "id": "s11-src2",
+        "h": 634,
+        "cardH": 634
+      },
+      {
+        "id": "s12-lab",
+        "h": 1093,
+        "cardH": 1093
+      },
+      {
+        "id": "s12-src1",
+        "h": 646,
+        "cardH": 646
+      },
+      {
+        "id": "s13-lab",
+        "h": 692,
+        "cardH": 692
+      },
+      {
+        "id": "s13-src1",
+        "h": 566,
+        "cardH": 566
+      },
+      {
+        "id": "s13-src2",
+        "h": 556,
+        "cardH": 556
+      },
+      {
+        "id": "s13-src3",
+        "h": 566,
+        "cardH": 566
+      },
+      {
+        "id": "s14-lab",
+        "h": 1056,
+        "cardH": 1056
+      },
+      {
+        "id": "s14-src1",
+        "h": 528,
+        "cardH": 528
+      },
+      {
+        "id": "s14-src2",
+        "h": 489,
+        "cardH": 489
+      },
+      {
+        "id": "s15-lab",
+        "h": 1049,
+        "cardH": 1049
+      },
+      {
+        "id": "s15-src1",
+        "h": 510,
+        "cardH": 510
+      },
+      {
+        "id": "s15-src2",
+        "h": 474,
+        "cardH": 474
+      },
+      {
+        "id": "s15-src3",
+        "h": 437,
+        "cardH": 437
+      },
+      {
+        "id": "s16-lab",
+        "h": 722,
+        "cardH": 722
+      },
+      {
+        "id": "s16-src1",
+        "h": 505,
+        "cardH": 505
+      },
+      {
+        "id": "s16-src2",
+        "h": 557,
+        "cardH": 557
+      },
+      {
+        "id": "s17-lab",
+        "h": 722,
+        "cardH": 722
+      },
+      {
+        "id": "s17-src1",
+        "h": 620,
+        "cardH": 620
+      },
+      {
+        "id": "s18-lab",
+        "h": 917,
+        "cardH": 917
+      },
+      {
+        "id": "s18-src1",
+        "h": 624,
+        "cardH": 624
+      },
+      {
+        "id": "s19-lab",
+        "h": 918,
+        "cardH": 918
+      },
+      {
+        "id": "s19-src1",
+        "h": 346,
+        "cardH": 346
+      },
+      {
+        "id": "s19-src2",
+        "h": 543,
+        "cardH": 543
+      },
+      {
+        "id": "s20-lab",
+        "h": 836,
+        "cardH": 836
+      },
+      {
+        "id": "s20-src1",
+        "h": 547,
+        "cardH": 547
+      },
+      {
+        "id": "s20-src2",
+        "h": 615,
+        "cardH": 615
+      },
+      {
+        "id": "s21-lab",
+        "h": 836,
+        "cardH": 836
+      },
+      {
+        "id": "s21-src1",
+        "h": 678,
+        "cardH": 678
+      },
+      {
+        "id": "s21-src2",
+        "h": 669,
+        "cardH": 669
+      },
+      {
+        "id": "s22-lab",
+        "h": 942,
+        "cardH": 942
+      },
+      {
+        "id": "s22-src1",
+        "h": 585,
+        "cardH": 585
+      },
+      {
+        "id": "s23-lab",
+        "h": 588,
+        "cardH": 588
+      },
+      {
+        "id": "s23-src1",
+        "h": 436,
+        "cardH": 436
+      },
+      {
+        "id": "s23-src2",
+        "h": 604,
+        "cardH": 604
+      },
+      {
+        "id": "s24-lab",
+        "h": 816,
+        "cardH": 816
+      },
+      {
+        "id": "s24-src1",
+        "h": 622,
+        "cardH": 622
+      },
+      {
+        "id": "s24-src2",
+        "h": 438,
+        "cardH": 438
+      },
+      {
+        "id": "s24-src3",
+        "h": 470,
+        "cardH": 470
+      },
+      {
+        "id": "s25-lab",
+        "h": 775,
+        "cardH": 775
+      },
+      {
+        "id": "s25-src1",
+        "h": 578,
+        "cardH": 578
+      },
+      {
+        "id": "s25-src2",
+        "h": 614,
+        "cardH": 614
+      },
+      {
+        "id": "s26-lab",
+        "h": 1121,
+        "cardH": 1121
+      },
+      {
+        "id": "s26-src1",
+        "h": 541,
+        "cardH": 541
+      },
+      {
+        "id": "s27-lab1",
+        "h": 1005,
+        "cardH": 1005
+      },
+      {
+        "id": "s27-lab2",
+        "h": 1005,
+        "cardH": 1005
+      },
+      {
+        "id": "s27-src1",
+        "h": 713,
+        "cardH": 713
+      },
+      {
+        "id": "s27-src2",
+        "h": 686,
+        "cardH": 686
+      },
+      {
+        "id": "s27-src3",
+        "h": 530,
+        "cardH": 530
+      },
+      {
+        "id": "s28-lab1",
+        "h": 866,
+        "cardH": 866
+      },
+      {
+        "id": "s28-lab2",
+        "h": 866,
+        "cardH": 866
+      },
+      {
+        "id": "s28-src1",
+        "h": 821,
+        "cardH": 821
+      },
+      {
+        "id": "s28-src2",
+        "h": 591,
+        "cardH": 591
+      },
+      {
+        "id": "s28-src3",
+        "h": 437,
+        "cardH": 437
+      },
+      {
+        "id": "s29-lab",
+        "h": 722,
+        "cardH": 722
+      },
+      {
+        "id": "s29-src1",
+        "h": 647,
+        "cardH": 647
+      },
+      {
+        "id": "s29-src2",
+        "h": 648,
+        "cardH": 648
+      },
+      {
+        "id": "s30-lab",
+        "h": 692,
+        "cardH": 692
+      },
+      {
+        "id": "s30-src1",
+        "h": 665,
+        "cardH": 665
+      },
+      {
+        "id": "s31-lab",
+        "h": 900,
+        "cardH": 900
+      },
+      {
+        "id": "s31-src1",
+        "h": 510,
+        "cardH": 510
+      },
+      {
+        "id": "s31-src2",
+        "h": 465,
+        "cardH": 465
+      },
+      {
+        "id": "s32-lab1",
+        "h": 988,
+        "cardH": 988
+      },
+      {
+        "id": "s32-lab2",
+        "h": 988,
+        "cardH": 988
+      },
+      {
+        "id": "s32-src1",
+        "h": 724,
+        "cardH": 724
+      },
+      {
+        "id": "s32-src2",
+        "h": 505,
+        "cardH": 505
+      },
+      {
+        "id": "s33-lab",
+        "h": 734,
+        "cardH": 734
+      },
+      {
+        "id": "s33-src1",
+        "h": 609,
+        "cardH": 609
+      },
+      {
+        "id": "s33-src2",
+        "h": 464,
+        "cardH": 464
+      },
+      {
+        "id": "s34-lab",
+        "h": 1137,
+        "cardH": 1137
+      },
+      {
+        "id": "s34-src1",
+        "h": 591,
+        "cardH": 591
+      },
+      {
+        "id": "s34-src2",
+        "h": 571,
+        "cardH": 571
+      },
+      {
+        "id": "s34-src3",
+        "h": 346,
+        "cardH": 346
+      },
+      {
+        "id": "s35-lab",
+        "h": 949,
+        "cardH": 949
+      },
+      {
+        "id": "s35-src1",
+        "h": 474,
+        "cardH": 474
+      },
+      {
+        "id": "s35-src2",
+        "h": 483,
+        "cardH": 483
+      },
+      {
+        "id": "s36-lab",
+        "h": 727,
+        "cardH": 727
+      },
+      {
+        "id": "s36-src1",
+        "h": 733,
+        "cardH": 733
+      },
+      {
+        "id": "summary-lab",
+        "h": 992,
+        "cardH": 992
+      },
+      {
+        "id": "summary-src1",
+        "h": 523,
+        "cardH": 523
+      },
+      {
+        "id": "summary-src2",
+        "h": 531,
+        "cardH": 531
+      },
+      {
+        "id": "summary-src3",
+        "h": 474,
+        "cardH": 474
+      },
+      {
+        "id": "summary-src4",
+        "h": 484,
+        "cardH": 484
+      },
+      {
+        "id": "closing-src1",
+        "h": 512,
+        "cardH": 512
+      }
+    ],
+    "1920x1080": [
+      {
+        "id": "cover-src1",
+        "h": 939,
+        "cardH": 939
+      },
+      {
+        "id": "objectives-lab",
+        "h": 988,
+        "cardH": 988
+      },
+      {
+        "id": "objectives-src1",
+        "h": 746,
+        "cardH": 746
+      },
+      {
+        "id": "objectives-src2",
+        "h": 635,
+        "cardH": 635
+      },
+      {
+        "id": "s1-lab",
+        "h": 786,
+        "cardH": 786
+      },
+      {
+        "id": "s1-src1",
+        "h": 547,
+        "cardH": 547
+      },
+      {
+        "id": "s1-src2",
+        "h": 490,
+        "cardH": 490
+      },
+      {
+        "id": "s2-lab",
+        "h": 700,
+        "cardH": 700
+      },
+      {
+        "id": "s2-src1",
+        "h": 456,
+        "cardH": 456
+      },
+      {
+        "id": "s2-src2",
+        "h": 391,
+        "cardH": 391
+      },
+      {
+        "id": "s3-lab",
+        "h": 697,
+        "cardH": 697
+      },
+      {
+        "id": "s3-src1",
+        "h": 344,
+        "cardH": 344
+      },
+      {
+        "id": "s3-src2",
+        "h": 638,
+        "cardH": 638
+      },
+      {
+        "id": "s4-lab",
+        "h": 1035,
+        "cardH": 1035
+      },
+      {
+        "id": "s4-src1",
+        "h": 545,
+        "cardH": 545
+      },
+      {
+        "id": "s4-src2",
+        "h": 550,
+        "cardH": 550
+      },
+      {
+        "id": "s5-lab",
+        "h": 741,
+        "cardH": 741
+      },
+      {
+        "id": "s5-src1",
+        "h": 401,
+        "cardH": 401
+      },
+      {
+        "id": "s5-src2",
+        "h": 607,
+        "cardH": 607
+      },
+      {
+        "id": "s6-lab",
+        "h": 741,
+        "cardH": 741
+      },
+      {
+        "id": "s6-src1",
+        "h": 353,
+        "cardH": 353
+      },
+      {
+        "id": "s6-src2",
+        "h": 607,
+        "cardH": 607
+      },
+      {
+        "id": "s7-lab",
+        "h": 744,
+        "cardH": 744
+      },
+      {
+        "id": "s7-src1",
+        "h": 399,
+        "cardH": 399
+      },
+      {
+        "id": "s7-src2",
+        "h": 540,
+        "cardH": 540
+      },
+      {
+        "id": "s8-lab",
+        "h": 702,
+        "cardH": 702
+      },
+      {
+        "id": "s8-src1",
+        "h": 509,
+        "cardH": 509
+      },
+      {
+        "id": "s8-src2",
+        "h": 560,
+        "cardH": 560
+      },
+      {
+        "id": "s9-lab",
+        "h": 758,
+        "cardH": 758
+      },
+      {
+        "id": "s9-src1",
+        "h": 540,
+        "cardH": 540
+      },
+      {
+        "id": "s9-src2",
+        "h": 495,
+        "cardH": 495
+      },
+      {
+        "id": "s10-lab",
+        "h": 758,
+        "cardH": 758
+      },
+      {
+        "id": "s10-src1",
+        "h": 475,
+        "cardH": 475
+      },
+      {
+        "id": "s10-src2",
+        "h": 607,
+        "cardH": 607
+      },
+      {
+        "id": "s11-lab",
+        "h": 836,
+        "cardH": 836
+      },
+      {
+        "id": "s11-src1",
+        "h": 527,
+        "cardH": 527
+      },
+      {
+        "id": "s11-src2",
+        "h": 634,
+        "cardH": 634
+      },
+      {
+        "id": "s12-lab",
+        "h": 1093,
+        "cardH": 1093
+      },
+      {
+        "id": "s12-src1",
+        "h": 646,
+        "cardH": 646
+      },
+      {
+        "id": "s13-lab",
+        "h": 692,
+        "cardH": 692
+      },
+      {
+        "id": "s13-src1",
+        "h": 566,
+        "cardH": 566
+      },
+      {
+        "id": "s13-src2",
+        "h": 556,
+        "cardH": 556
+      },
+      {
+        "id": "s13-src3",
+        "h": 566,
+        "cardH": 566
+      },
+      {
+        "id": "s14-lab",
+        "h": 1056,
+        "cardH": 1056
+      },
+      {
+        "id": "s14-src1",
+        "h": 528,
+        "cardH": 528
+      },
+      {
+        "id": "s14-src2",
+        "h": 489,
+        "cardH": 489
+      },
+      {
+        "id": "s15-lab",
+        "h": 1049,
+        "cardH": 1049
+      },
+      {
+        "id": "s15-src1",
+        "h": 510,
+        "cardH": 510
+      },
+      {
+        "id": "s15-src2",
+        "h": 474,
+        "cardH": 474
+      },
+      {
+        "id": "s15-src3",
+        "h": 437,
+        "cardH": 437
+      },
+      {
+        "id": "s16-lab",
+        "h": 722,
+        "cardH": 722
+      },
+      {
+        "id": "s16-src1",
+        "h": 505,
+        "cardH": 505
+      },
+      {
+        "id": "s16-src2",
+        "h": 557,
+        "cardH": 557
+      },
+      {
+        "id": "s17-lab",
+        "h": 722,
+        "cardH": 722
+      },
+      {
+        "id": "s17-src1",
+        "h": 620,
+        "cardH": 620
+      },
+      {
+        "id": "s18-lab",
+        "h": 917,
+        "cardH": 917
+      },
+      {
+        "id": "s18-src1",
+        "h": 624,
+        "cardH": 624
+      },
+      {
+        "id": "s19-lab",
+        "h": 918,
+        "cardH": 918
+      },
+      {
+        "id": "s19-src1",
+        "h": 346,
+        "cardH": 346
+      },
+      {
+        "id": "s19-src2",
+        "h": 543,
+        "cardH": 543
+      },
+      {
+        "id": "s20-lab",
+        "h": 836,
+        "cardH": 836
+      },
+      {
+        "id": "s20-src1",
+        "h": 547,
+        "cardH": 547
+      },
+      {
+        "id": "s20-src2",
+        "h": 615,
+        "cardH": 615
+      },
+      {
+        "id": "s21-lab",
+        "h": 836,
+        "cardH": 836
+      },
+      {
+        "id": "s21-src1",
+        "h": 678,
+        "cardH": 678
+      },
+      {
+        "id": "s21-src2",
+        "h": 669,
+        "cardH": 669
+      },
+      {
+        "id": "s22-lab",
+        "h": 942,
+        "cardH": 942
+      },
+      {
+        "id": "s22-src1",
+        "h": 585,
+        "cardH": 585
+      },
+      {
+        "id": "s23-lab",
+        "h": 588,
+        "cardH": 588
+      },
+      {
+        "id": "s23-src1",
+        "h": 436,
+        "cardH": 436
+      },
+      {
+        "id": "s23-src2",
+        "h": 604,
+        "cardH": 604
+      },
+      {
+        "id": "s24-lab",
+        "h": 816,
+        "cardH": 816
+      },
+      {
+        "id": "s24-src1",
+        "h": 622,
+        "cardH": 622
+      },
+      {
+        "id": "s24-src2",
+        "h": 438,
+        "cardH": 438
+      },
+      {
+        "id": "s24-src3",
+        "h": 470,
+        "cardH": 470
+      },
+      {
+        "id": "s25-lab",
+        "h": 775,
+        "cardH": 775
+      },
+      {
+        "id": "s25-src1",
+        "h": 578,
+        "cardH": 578
+      },
+      {
+        "id": "s25-src2",
+        "h": 614,
+        "cardH": 614
+      },
+      {
+        "id": "s26-lab",
+        "h": 1121,
+        "cardH": 1121
+      },
+      {
+        "id": "s26-src1",
+        "h": 541,
+        "cardH": 541
+      },
+      {
+        "id": "s27-lab1",
+        "h": 1005,
+        "cardH": 1005
+      },
+      {
+        "id": "s27-lab2",
+        "h": 1005,
+        "cardH": 1005
+      },
+      {
+        "id": "s27-src1",
+        "h": 713,
+        "cardH": 713
+      },
+      {
+        "id": "s27-src2",
+        "h": 686,
+        "cardH": 686
+      },
+      {
+        "id": "s27-src3",
+        "h": 530,
+        "cardH": 530
+      },
+      {
+        "id": "s28-lab1",
+        "h": 866,
+        "cardH": 866
+      },
+      {
+        "id": "s28-lab2",
+        "h": 866,
+        "cardH": 866
+      },
+      {
+        "id": "s28-src1",
+        "h": 821,
+        "cardH": 821
+      },
+      {
+        "id": "s28-src2",
+        "h": 591,
+        "cardH": 591
+      },
+      {
+        "id": "s28-src3",
+        "h": 437,
+        "cardH": 437
+      },
+      {
+        "id": "s29-lab",
+        "h": 722,
+        "cardH": 722
+      },
+      {
+        "id": "s29-src1",
+        "h": 647,
+        "cardH": 647
+      },
+      {
+        "id": "s29-src2",
+        "h": 648,
+        "cardH": 648
+      },
+      {
+        "id": "s30-lab",
+        "h": 692,
+        "cardH": 692
+      },
+      {
+        "id": "s30-src1",
+        "h": 665,
+        "cardH": 665
+      },
+      {
+        "id": "s31-lab",
+        "h": 900,
+        "cardH": 900
+      },
+      {
+        "id": "s31-src1",
+        "h": 510,
+        "cardH": 510
+      },
+      {
+        "id": "s31-src2",
+        "h": 465,
+        "cardH": 465
+      },
+      {
+        "id": "s32-lab1",
+        "h": 988,
+        "cardH": 988
+      },
+      {
+        "id": "s32-lab2",
+        "h": 988,
+        "cardH": 988
+      },
+      {
+        "id": "s32-src1",
+        "h": 724,
+        "cardH": 724
+      },
+      {
+        "id": "s32-src2",
+        "h": 505,
+        "cardH": 505
+      },
+      {
+        "id": "s33-lab",
+        "h": 734,
+        "cardH": 734
+      },
+      {
+        "id": "s33-src1",
+        "h": 609,
+        "cardH": 609
+      },
+      {
+        "id": "s33-src2",
+        "h": 464,
+        "cardH": 464
+      },
+      {
+        "id": "s34-lab",
+        "h": 1137,
+        "cardH": 1137
+      },
+      {
+        "id": "s34-src1",
+        "h": 591,
+        "cardH": 591
+      },
+      {
+        "id": "s34-src2",
+        "h": 571,
+        "cardH": 571
+      },
+      {
+        "id": "s34-src3",
+        "h": 346,
+        "cardH": 346
+      },
+      {
+        "id": "s35-lab",
+        "h": 949,
+        "cardH": 949
+      },
+      {
+        "id": "s35-src1",
+        "h": 474,
+        "cardH": 474
+      },
+      {
+        "id": "s35-src2",
+        "h": 483,
+        "cardH": 483
+      },
+      {
+        "id": "s36-lab",
+        "h": 727,
+        "cardH": 727
+      },
+      {
+        "id": "s36-src1",
+        "h": 733,
+        "cardH": 733
+      },
+      {
+        "id": "summary-lab",
+        "h": 992,
+        "cardH": 992
+      },
+      {
+        "id": "summary-src1",
+        "h": 523,
+        "cardH": 523
+      },
+      {
+        "id": "summary-src2",
+        "h": 531,
+        "cardH": 531
+      },
+      {
+        "id": "summary-src3",
+        "h": 474,
+        "cardH": 474
+      },
+      {
+        "id": "summary-src4",
+        "h": 484,
+        "cardH": 484
+      },
+      {
+        "id": "closing-src1",
+        "h": 512,
+        "cardH": 512
+      }
+    ]
+  },
+  "checks": 2575,
   "failures": [],
   "errors": [],
   "externalNetworkErrors": [
@@ -23,1089 +1356,607 @@
     }
   ],
   "screenshots": [
-    "docs/lesson32-visual/desktop-01-cover.png",
-    "docs/lesson32-visual/desktop-02-s4-duration-stream.png",
-    "docs/lesson32-visual/desktop-03-s7-for-since.png",
-    "docs/lesson32-visual/desktop-04-s14-lens.png",
-    "docs/lesson32-visual/desktop-05-s24-reference-rail.png",
-    "docs/lesson32-visual/desktop-06-s27-detective.png",
-    "docs/lesson32-visual/desktop-07-s30-meaning-board.png",
-    "docs/lesson32-visual/desktop-08-s32-boss.png",
-    "docs/lesson32-visual/desktop-09-s36-gear-map.png",
-    "docs/lesson32-visual/desktop-10-summary.png",
-    "docs/lesson32-visual/desktop-11-closing.png",
-    "docs/lesson32-visual/desktop-12-test-fresh.png",
-    "docs/lesson32-visual/desktop-13-test-scored.png",
-    "docs/lesson32-visual/desktop-14-solutions.png",
-    "docs/lesson32-visual/desktop-15-teacher-locked.png",
-    "docs/lesson32-visual/desktop-16-teacher-open.png",
-    "docs/lesson32-visual/mobile-01-drawer.png",
-    "docs/lesson32-visual/mobile-02-s14-lens.png",
-    "docs/lesson32-visual/mobile-03-s4-stream.png",
-    "docs/lesson32-visual/mobile-04-test.png"
+    "docs/lesson32-visual/1280-cover-src1.png",
+    "docs/lesson32-visual/1280-objectives-lab.png",
+    "docs/lesson32-visual/1280-s4-lab.png",
+    "docs/lesson32-visual/1280-s7-lab.png",
+    "docs/lesson32-visual/1280-s14-lab.png",
+    "docs/lesson32-visual/1280-s24-lab.png",
+    "docs/lesson32-visual/1280-s27-lab1.png",
+    "docs/lesson32-visual/1280-s30-lab.png",
+    "docs/lesson32-visual/1280-s32-lab1.png",
+    "docs/lesson32-visual/1280-s36-lab.png",
+    "docs/lesson32-visual/1280-summary-lab.png",
+    "docs/lesson32-visual/1280-closing-src1.png",
+    "docs/lesson32-visual/1920-cover-src1.png",
+    "docs/lesson32-visual/1920-objectives-lab.png",
+    "docs/lesson32-visual/1920-s4-lab.png",
+    "docs/lesson32-visual/1920-s7-lab.png",
+    "docs/lesson32-visual/1920-s14-lab.png",
+    "docs/lesson32-visual/1920-s24-lab.png",
+    "docs/lesson32-visual/1920-s27-lab1.png",
+    "docs/lesson32-visual/1920-s30-lab.png",
+    "docs/lesson32-visual/1920-s32-lab1.png",
+    "docs/lesson32-visual/1920-s36-lab.png",
+    "docs/lesson32-visual/1920-summary-lab.png",
+    "docs/lesson32-visual/1920-closing-src1.png",
+    "docs/lesson32-visual/1280-test-fresh.png",
+    "docs/lesson32-visual/1280-solutions-locked.png",
+    "docs/lesson32-visual/1280-teacher-locked.png",
+    "docs/lesson32-visual/1280-teacher-open.png",
+    "docs/lesson32-visual/1280-test-scored.png",
+    "docs/lesson32-visual/1280-solutions-open.png",
+    "docs/lesson32-visual/mobile-drawer.png",
+    "docs/lesson32-visual/mobile-s14-lens.png"
   ],
   "renderedChecks": [
     {
-      "label": "desktop-cover",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 44,
-      "min": 5.36,
+      "label": "1280-cover-src1",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 69,
+      "min": 4.55,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🧱 الصيغة والأساس",
+        "12",
+        "ابنِ الجملة"
       ],
       "refs": []
     },
     {
-      "label": "desktop-s4-timeline",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 72,
-      "min": 5.36,
+      "label": "1280-objectives-lab",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 78,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🧱 الصيغة والأساس",
+        "12",
+        "ابنِ الجملة"
       ],
       "refs": []
     },
     {
-      "label": "desktop-s7-forsince",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 92,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-s14-lens",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 119,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-s24-reference",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 145,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-s27-detective",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 209,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-s30-meaning",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 132,
-      "min": 4.93,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-s32-boss",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 190,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-s36-map",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 142,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-summary",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 201,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-closing",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 320,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-1-cover",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 44,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-2-objectives",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 81,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-3-s1",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 61,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-4-s2",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 74,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-5-s3",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 73,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-6-s4",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 72,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-7-s5",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 84,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-8-s6",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 82,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-9-s7",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 92,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-10-s8",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 79,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-11-s9",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 85,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-12-s10",
-      "width": 1440,
-      "scroll": 1440,
+      "label": "1280-s4-lab",
+      "width": 1280,
+      "scroll": 1280,
       "tested": 83,
-      "min": 5.36,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-13-s11",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 90,
-      "min": 5.36,
+      "label": "1280-s7-lab",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 102,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-14-s12",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 100,
-      "min": 5.36,
+      "label": "1280-s14-lab",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 97,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-15-s13",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 104,
-      "min": 4.93,
+      "label": "1280-s24-lab",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 78,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-16-s14",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 105,
-      "min": 5.36,
+      "label": "1280-s27-lab1",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 121,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-17-s15",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 109,
-      "min": 5.36,
+      "label": "1280-s30-lab",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 86,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-18-s16",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 100,
-      "min": 5.36,
+      "label": "1280-s32-lab1",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 92,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-19-s17",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 88,
-      "min": 5.36,
+      "label": "1280-s36-lab",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 62,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-20-s18",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 98,
-      "min": 5.36,
+      "label": "1280-summary-lab",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 91,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-21-s19",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 138,
-      "min": 5.36,
+      "label": "1280-closing-src1",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 239,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-22-s20",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 115,
-      "min": 5.36,
+      "label": "1920-cover-src1",
+      "width": 1920,
+      "scroll": 1920,
+      "tested": 69,
+      "min": 4.55,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🧱 الصيغة والأساس",
+        "12",
+        "ابنِ الجملة"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-23-s21",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 126,
-      "min": 5.36,
+      "label": "1920-objectives-lab",
+      "width": 1920,
+      "scroll": 1920,
+      "tested": 78,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🧱 الصيغة والأساس",
+        "12",
+        "ابنِ الجملة"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-24-s22",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 122,
-      "min": 5.36,
+      "label": "1920-s4-lab",
+      "width": 1920,
+      "scroll": 1920,
+      "tested": 83,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-25-s23",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 126,
-      "min": 5.36,
+      "label": "1920-s7-lab",
+      "width": 1920,
+      "scroll": 1920,
+      "tested": 102,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-26-s24",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 143,
-      "min": 5.36,
+      "label": "1920-s14-lab",
+      "width": 1920,
+      "scroll": 1920,
+      "tested": 97,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-27-s25",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 139,
-      "min": 5.36,
+      "label": "1920-s24-lab",
+      "width": 1920,
+      "scroll": 1920,
+      "tested": 78,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-28-s26",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 149,
-      "min": 5.36,
+      "label": "1920-s27-lab1",
+      "width": 1920,
+      "scroll": 1920,
+      "tested": 121,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-29-s27",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 203,
-      "min": 5.36,
+      "label": "1920-s30-lab",
+      "width": 1920,
+      "scroll": 1920,
+      "tested": 86,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-30-s28",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 173,
-      "min": 5.36,
+      "label": "1920-s32-lab1",
+      "width": 1920,
+      "scroll": 1920,
+      "tested": 92,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-31-s29",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 137,
-      "min": 5.36,
+      "label": "1920-s36-lab",
+      "width": 1920,
+      "scroll": 1920,
+      "tested": 62,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-32-s30",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 128,
-      "min": 4.93,
+      "label": "1920-summary-lab",
+      "width": 1920,
+      "scroll": 1920,
+      "tested": 91,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-33-s31",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 151,
-      "min": 5.36,
+      "label": "1920-closing-src1",
+      "width": 1920,
+      "scroll": 1920,
+      "tested": 239,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-34-s32",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 190,
-      "min": 5.36,
+      "label": "1280-s32-interactive",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 92,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-step-35-s33",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 141,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-36-s34",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 175,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-37-s35",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 158,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-38-s36",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 142,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-39-summary",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 201,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-step-40-closing",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 320,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
-        "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
-        "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
-      ],
-      "refs": []
-    },
-    {
-      "label": "desktop-test-fresh",
-      "width": 1440,
-      "scroll": 1440,
+      "label": "1280-test-fresh",
+      "width": 1280,
+      "scroll": 1280,
       "tested": 324,
       "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-test-scored",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 494,
+      "label": "1280-solutions-locked",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 11,
       "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-solutions",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 365,
-      "min": 5.36,
+      "label": "1280-teacher-locked",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 14,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-teacher-locked",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 9,
-      "min": 5.36,
+      "label": "1280-teacher-open",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 1749,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
     {
-      "label": "desktop-teacher-open",
-      "width": 1440,
-      "scroll": 1440,
-      "tested": 1014,
-      "min": 4.89,
+      "label": "1280-test-scored",
+      "width": 1280,
+      "scroll": 1280,
+      "tested": 568,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous",
-        "المضارع التام المستمر",
+        "جميع الدروس",
+        "الدرس 32",
+        "Present Perfect Continuous",
         "🌊 تيّار المدة — نشاط انطلق قبل الآن وامتد نحو ، وأثره ما زا",
         "NOW",
-        "have/has + been + V-ing",
-        "التيّار يمتد من الماضي إلى"
+        "🌊 البداية",
+        "4",
+        "الغلاف"
       ],
       "refs": []
     },
@@ -1113,18 +1964,11 @@
       "label": "mobile-drawer",
       "width": 390,
       "scroll": 390,
-      "tested": 188,
-      "min": 4.93,
+      "tested": 366,
+      "min": 4.76,
       "issues": [],
       "gradients": [
-        "OBJECTIVES",
-        "علّم كل هدف بعد أن تتقنه",
-        "شرح المنصة",
-        "علّم الهدف بعد أن تنجز تفاعل الخطوة لا بعد قراءتها؛ الأهداف ",
-        "كل هدف تتقنه يضيف قطعة إلى تيّار المدة .",
-        "THE DURATION STREAM",
-        "الدرس",
-        "32: Present Perfect Continuous"
+        "الصفحة 2 من 120: تسعة أهداف — علّم كل هدف بعد أن تتقنه"
       ],
       "refs": []
     },
@@ -1132,50 +1976,11 @@
       "label": "mobile-s14",
       "width": 390,
       "scroll": 390,
-      "tested": 52,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "RESULT vs ACTIVITY",
-        "العدستان على المشهد نفسه",
-        "عدسة النتيجة",
-        "Present Perfect",
-        "عدسة النشاط",
-        "Present Perfect Continuous",
-        "شرح المنصة",
-        "هذا هو محور الدرس : الجملة نفسها تقريبًا، والفرق كله في زاوي"
-      ],
-      "refs": []
-    },
-    {
-      "label": "mobile-s4",
-      "width": 390,
-      "scroll": 390,
-      "tested": 55,
-      "min": 5.36,
-      "issues": [],
-      "gradients": [
-        "THE DURATION STREAM",
-        "متى نستخدمه؟",
-        "شرح المنصة",
-        "حرّك نقطة البداية فترى المدة تتغيّر، وحرّك حالة التيّار فترى",
-        "الأثر الظاهر ( اللهاث، الطلاء، البلل ) هو دليل الطالب على أن",
-        "النشاط يبدأ في الماضي ويمتد إلى ، وقد يتوقف قبلها تاركًا أثر",
-        "NOW"
-      ],
-      "refs": []
-    },
-    {
-      "label": "mobile-test",
-      "width": 390,
-      "scroll": 390,
-      "tested": 324,
+      "tested": 47,
       "min": 4.76,
       "issues": [],
       "gradients": [
-        "🧪 اختبار الدرس 32 — تيّار المدة",
-        "20 سؤالًا جديدًا",
-        "· 6 Basic · 7 Medium · 4 Advanced · 3 Thinking"
+        "الصفحة 44 من 120: عدستان على الغرفة نفسها : النتيجة والنشاط"
       ],
       "refs": []
     }

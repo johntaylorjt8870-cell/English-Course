@@ -262,7 +262,7 @@ export const RIBBON_S4 = {
       traces: ["👀 أنظر إلى الساعة كل دقيقة", "🚶 أقف عند الباب"] },
   ],
   maxHours: 6,
-  /** الجملة النموذج كما وردت في المصدر (§4) */
+  /** الجملة النموذج كما وردت في المصدر (قسم 4) */
   model: "I have been studying for three hours.",
   modelAr: "لقد كنت أدرس منذ ثلاث ساعات.",
 };
@@ -415,7 +415,7 @@ export const WH_ROWS_S12 = [
     why: "Who = من؟ — تدريب للمنصة: Who هنا هي الفاعل، لذلك لا يأتي have/has قبلها (Who has been using my computer? كما في المصدر)." },
 ];
 
-/** خطوة ⑬ — أدلة مرئية الآن ← السياق ← الجملة التي تفسّرها (أسطر المصدر §13) */
+/** خطوة ⑬ — أدلة مرئية الآن ← السياق ← الجملة التي تفسّرها (أسطر المصدر قسم 13) */
 export const EVIDENCE_S13 = [
   {
     scene: "🏃", title: "أنت تلهث الآن.",
@@ -611,7 +611,7 @@ export const BIKE_S29 = [
     why: "المصدر: قد أكون انتهيت، وقد لا أكون انتهيت — التركيز على النشاط." },
 ];
 
-/** خطوة ㉚ — مشهد المعنى (حالتان) — أسطر المصدر §30 */
+/** خطوة ㉚ — مشهد المعنى (حالتان) — أسطر المصدر قسم 30 */
 export const SCENE_S30 = [
   { scene: "🖌️", title: "رجل يحمل فرشاة طلاء، وعلى ملابسه آثار طلاء.",
     clues: ["🖌️ فرشاة في اليد", "🎨 بقع طلاء على الملابس", "🪣 دلو الطلاء مفتوح"],
@@ -740,47 +740,47 @@ export type LensPair32 = {
 
 export const LENS_S14: LensPair32[] = [
   {
-    key: "room", emoji: "🎨", topic: "طلاء الغرفة", ref: "§14", src: true,
+    key: "room", emoji: "🎨", topic: "طلاء الغرفة", ref: "قسم 14", src: true,
     result: { en: "I have painted the room.", ar: "الغرفة مطلية / المهمة أُنجزت.", see: "الجدار مكتمل الطلاء، والفرشاة مغسولة وموضوعة جانبًا." },
     activity: { en: "I have been painting the room.", ar: "كنت أقوم بالطلاء لفترة.", see: "الفرشاة في اليد، وبقع طلاء على الملابس — ربما انتهيت وربما لا." },
   },
   {
-    key: "kitchen", emoji: "🧽", topic: "تنظيف المطبخ", ref: "§15", src: true,
+    key: "kitchen", emoji: "🧽", topic: "تنظيف المطبخ", ref: "قسم 15", src: true,
     result: { en: "I have cleaned the kitchen.", ar: "المطبخ أصبح نظيفًا.", see: "الأرضية لامعة، ولا شيء في الحوض." },
     activity: { en: "I have been cleaning the kitchen.", ar: "كنت أقوم بعملية التنظيف.", see: "الماء ما زال جارياً، والإسفنجة في اليد." },
   },
   {
-    key: "book", emoji: "📖", topic: "قراءة الكتاب", ref: "§21 ①②", src: true,
+    key: "book", emoji: "📖", topic: "قراءة الكتاب", ref: "قسم 21 ①②", src: true,
     result: { en: "I have read the book.", ar: "لقد قرأت الكتاب.", see: "الكتاب مغلق وموضوع على الرف — التركيز على الإنجاز." },
     activity: { en: "I have been reading the book.", ar: "لقد كنت أقرأ الكتاب.", see: "الكتاب مفتوح والعلامة بين الصفحات — قد لا أكون انتهيت منه." },
   },
   {
-    key: "wall", emoji: "🧱", topic: "دهان الجدار", ref: "§21 ①②", src: true,
+    key: "wall", emoji: "🧱", topic: "دهان الجدار", ref: "قسم 21 ①②", src: true,
     result: { en: "She has painted the wall.", ar: "لقد دهنت الجدار.", see: "الجدار بلون واحد جديد — النتيجة مهمة." },
     activity: { en: "She has been painting the wall.", ar: "لقد كانت تدهن الجدار.", see: "نصف الجدار ما زال بلونه القديم — النشاط مهم." },
   },
   {
-    key: "machine", emoji: "⚙️", topic: "إصلاح الآلة", ref: "§21 ①②", src: true,
+    key: "machine", emoji: "⚙️", topic: "إصلاح الآلة", ref: "قسم 21 ①②", src: true,
     result: { en: "They have repaired the machine.", ar: "لقد أصلحوا الآلة.", see: "الآلة تعمل الآن — النتيجة." },
     activity: { en: "They have been repairing the machine.", ar: "لقد كانوا يعملون على إصلاح الآلة.", see: "العدة مفتوحة والأيدي عليها — التركيز على النشاط." },
   },
   {
-    key: "emails", emoji: "✉️", topic: "الرسائل والبريد", ref: "§22", src: true,
+    key: "emails", emoji: "✉️", topic: "الرسائل والبريد", ref: "قسم 22", src: true,
     result: { en: "I have written five emails.", ar: "لأننا نهتم بالعدد: five emails.", see: "خمسة رسائل في صندوق الصادر — عدد مكتمل." },
     activity: { en: "I have been writing emails all morning.", ar: "لأننا نهتم بالنشاط والمدة.", see: "الشاشة ما زالت مفتوحة والصباح كلّه كتابة." },
   },
   {
-    key: "bicycle", emoji: "🚲", topic: "الدراجة", ref: "§29", src: true,
+    key: "bicycle", emoji: "🚲", topic: "الدراجة", ref: "قسم 29", src: true,
     result: { en: "I have repaired my bicycle.", ar: "الدراجة أصبحت مُصلحة.", see: "الدراجة جاهزة للركوب." },
     activity: { en: "I have been repairing my bicycle.", ar: "كنت أعمل على إصلاح الدراجة.", see: "قد أكون انتهيت، وقد لا أكون انتهيت." },
   },
   {
-    key: "pages", emoji: "📄", topic: "الصفحات والساعات", ref: "§16", src: true,
+    key: "pages", emoji: "📄", topic: "الصفحات والساعات", ref: "قسم 16", src: true,
     result: { en: "I have written five pages.", ar: "التركيز على النتيجة / الكمية.", see: "خمس صفحات على الطاولة." },
     activity: { en: "I have been writing for three hours.", ar: "التركيز على النشاط والمدة.", see: "ثلاث ساعات متواصلة من الكتابة." },
   },
   {
-    key: "pictures", emoji: "🖼️", topic: "اللوحات وبعد الظهر", ref: "§17", src: true,
+    key: "pictures", emoji: "🖼️", topic: "اللوحات وبعد الظهر", ref: "قسم 17", src: true,
     result: { en: "She has painted three pictures.", ar: "النتيجة والعدد — ثلاث لوحات.", see: "ثلاث لوحات معلّقة." },
     activity: { en: "She has been painting all afternoon.", ar: "النشاط والمدة — طوال بعد الظهر.", see: "بعد الظهر كلّه أمام اللوحة." },
   },

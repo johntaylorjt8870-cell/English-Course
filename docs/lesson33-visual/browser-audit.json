@@ -1,0 +1,129 @@
+{
+  "generatedAt": "2026-10-24T23:25:32.007Z",
+  "baseUrl": "http://127.0.0.1:4173/English-Course/",
+  "checks": 139,
+  "failures": 0,
+  "slides": 71,
+  "viewports": [
+    "1920x1080",
+    "1280x800",
+    "768x900",
+    "375x812"
+  ],
+  "viewportMetrics": [
+    {
+      "viewport": "1920x1080",
+      "scrollWidth": 1920,
+      "clientWidth": 1920,
+      "overflowingElements": []
+    },
+    {
+      "viewport": "1280x800",
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "overflowingElements": []
+    },
+    {
+      "viewport": "768x900",
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflowingElements": []
+    },
+    {
+      "viewport": "375x812",
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "overflowingElements": []
+    }
+  ],
+  "lensContrast": [
+    {
+      "id": "PS",
+      "ratio": 8.89,
+      "background": "oklch(0.977 0.013 236.62)"
+    },
+    {
+      "id": "PC",
+      "ratio": 8.73,
+      "background": "oklch(0.987 0.022 95.277)"
+    },
+    {
+      "id": "PP",
+      "ratio": 9.14,
+      "background": "oklch(0.979 0.021 166.113)"
+    },
+    {
+      "id": "PPC",
+      "ratio": 10.05,
+      "background": "oklch(0.969 0.016 293.756)"
+    }
+  ],
+  "bidi": [
+    {
+      "slide": "s1-a",
+      "leavesWithBothScripts": 0,
+      "latinLeaves": 0,
+      "arabicLeaves": 12,
+      "problems": []
+    },
+    {
+      "slide": "s2-a",
+      "leavesWithBothScripts": 0,
+      "latinLeaves": 8,
+      "arabicLeaves": 5,
+      "problems": []
+    },
+    {
+      "slide": "s7-a",
+      "leavesWithBothScripts": 0,
+      "latinLeaves": 8,
+      "arabicLeaves": 5,
+      "problems": []
+    },
+    {
+      "slide": "s16-a",
+      "leavesWithBothScripts": 0,
+      "latinLeaves": 6,
+      "arabicLeaves": 2,
+      "problems": []
+    },
+    {
+      "slide": "s17-a",
+      "leavesWithBothScripts": 0,
+      "latinLeaves": 30,
+      "arabicLeaves": 7,
+      "problems": []
+    },
+    {
+      "slide": "s23-b",
+      "leavesWithBothScripts": 0,
+      "latinLeaves": 0,
+      "arabicLeaves": 6,
+      "problems": []
+    }
+  ],
+  "screenshots": [
+    "01-cover-1440.png",
+    "02-cover-1280.png",
+    "03-cover-768.png",
+    "04-s3-nora-lab-1440.png",
+    "05-s4-decision-1440.png",
+    "06-s8-duel1-1440.png",
+    "07-s16-reading-1440.png",
+    "08-s12-detective-1440.png",
+    "09-test-1440.png",
+    "browser-lesson33-1280x800-cover.png",
+    "browser-lesson33-1280x800-final-test.png",
+    "browser-lesson33-1280x800-solutions-locked.png",
+    "browser-lesson33-1280x800-steps.png",
+    "browser-lesson33-1920x1080-cover.png",
+    "browser-lesson33-1920x1080-solutions.png",
+    "browser-lesson33-1920x1080-teacher.png",
+    "browser-lesson33-1920x1080-test.png",
+    "browser-lesson33-375x812-cover.png",
+    "browser-lesson33-375x812-drawer.png",
+    "browser-lesson33-768x900-cover.png"
+  ],
+  "consoleErrors": 0,
+  "blockedExternalResources": 1
+}

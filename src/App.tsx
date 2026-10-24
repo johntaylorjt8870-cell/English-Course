@@ -399,12 +399,12 @@ const CARDS: Card[] = [
   },
   {
     n: 33,
-    title: "الدرس 33: The Four Present Tenses — المراجعة الشاملة",
-    en: "The Four Present Tenses — Present Tenses Mastery",
-    emoji: "🧭",
-    stats: "24 قسمًا مرقّمًا · 26 خطوة · بوصلة الحاضر والمواجهات الثلاث · اختبار 25 سؤالًا · IQ200",
+    title: "الدرس 33: The Four Present Tenses",
+    en: "المراجعة الشاملة لأزمنة الحاضر الأربعة — Present Tenses Mastery",
+    emoji: "🧪",
+    stats: "24 قسمًا مرقّمًا · 71 شريحة قصيرة · عدسة الأزمنة الأربعة · 3 مواجهات · اختبار 25 سؤالًا · IQ200",
     href: "#/lesson/33",
-    grad: "from-amber-600 to-rose-600",
+    grad: "from-sky-500 via-emerald-500 to-violet-600",
   },
   {
     n: 34,

@@ -1,386 +1,127 @@
 /* ============================================================
-   Lesson 33 — THE PRESENT LAB / مختبر الحاضر
-   Warm ivory canvas + four distinct present-tense identities
+   الدرس 33 — مختبر أزمنة الحاضر الأربعة
+   هوية المنصة (الدروس 1 و41): خلفية #f4f6fb، بطاقات بيضاء بحواف 2rem،
+   Changa للعناوين، Fredoka/Rubik للإنجليزية، شريط خطوات عائم في التدفق
+   الطبيعي (لا تداخل مع زر قفل الموقع).
 
-   Visual metaphor:
-     Present = a light-table with four lenses.
-     Each lens looks at the same moment from a different angle.
-     The lab is bright, tactile, paper-like — not dark.
+   شخصية الدرس: عدسة لونية ثابتة لكل زمن
+     🔁 Present Simple              = sky
+     ▶️ Present Continuous           = amber
+     ✅ Present Perfect              = emerald
+     ⏳ Present Perfect Continuous   = violet
 
-   Accent identities (never just 4 cards of same shape):
-     • Present Simple — teal/leaf  #0E9B6B · fresh, stable, habits
-     • Present Continuous — sky     #2E96FF · airy, in-progress
-     • Present Perfect — violet     #7C5CFF · vivid, present-relevant
-     • Present Perfect Continuous — coral #FF6B4A · warm, durational
-
-   Scoped under .lesson33 only.
+   ملاحظة: `.lesson-step-nav*` و`.site-lock-*` معرَّفة في src/index.css
+   ولا تُعاد تعريفها هنا إلا بما يخدم مظهر الدرس (بلا !important).
    ============================================================ */
 
 .lesson33 {
-  --l33-ink: #1a1f2e;
-  --l33-ink-soft: #47506a;
-  --l33-ink-mute: #667290;
-  --l33-paper: #FFFBF0;
-  --l33-paper-2: #FFF4DC;
-  --l33-card: #ffffff;
-  --l33-line: #efe4c8;
-  --l33-line-soft: #f5edd8;
-
-  --l33-teal: #0E9B6B;
-  --l33-teal-deep: #0b7a55;
-  --l33-teal-soft: #e6f7f0;
-  --l33-teal-line: #b7e6d6;
-  --l33-teal-mid: #2fbf8a;
-
-  --l33-sky: #2E96FF;
-  --l33-sky-deep: #1a6fcf;
-  --l33-sky-soft: #eaf3ff;
-  --l33-sky-line: #bfd8ff;
-  --l33-sky-mid: #6ab0ff;
-
-  --l33-violet: #7C5CFF;
-  --l33-violet-deep: #5a3ad1;
-  --l33-violet-soft: #f0ebff;
-  --l33-violet-line: #d4c9ff;
-  --l33-violet-mid: #a996ff;
-
-  --l33-coral: #FF6B4A;
-  --l33-coral-deep: #d94a2e;
-  --l33-coral-soft: #fff0ec;
-  --l33-coral-line: #ffccbf;
-  --l33-coral-mid: #ff8f73;
-
-  --l33-amber: #c57a00;
-  --l33-amber-soft: #fff7e6;
-
-  --l33-ok: #15803d;
-  --l33-ok-soft: #eaf7ee;
-  --l33-err: #b91c1c;
-  --l33-err-soft: #fdecec;
-
-  --l33-font-ar: "Tajawal", "Baloo Bhaijaan 2", "Segoe UI", system-ui, sans-serif;
-  --l33-font-ar-head: "Changa", "Tajawal", system-ui, sans-serif;
-  --l33-font-en: "Rubik", system-ui, sans-serif;
-  --l33-font-en-display: "Fredoka", system-ui, sans-serif;
-
-  --l33-r: 20px;
-  --l33-r-lg: 28px;
-  --l33-shadow: 0 14px 40px -24px rgba(26, 31, 46, 0.22);
-  --l33-shadow-lift: 0 18px 44px -18px rgba(26, 31, 46, 0.2);
-
-  background: var(--l33-paper);
-  color: var(--l33-ink);
-  font-family: var(--l33-font-ar);
+  --l33-sky: #0284c7;
+  --l33-amber: #f59e0b;
+  --l33-emerald: #059669;
+  --l33-violet: #7c3aed;
+  --l33-ink: #0f172a;
+  font-family: "Rubik", "Tajawal", sans-serif;
 }
 
-.lesson33 .font-en,
-.lesson33 .ltr,
-.lesson33.style-b .font-en {
-  font-family: var(--l33-font-en);
-  letter-spacing: 0.01em;
-}
-.lesson33 .font-en { display: inline-block; max-width: 100%; }
-.lesson33 .l33-en-display { font-family: var(--l33-font-en-display); letter-spacing: 0.02em; }
-.lesson33 .font-head,
-.lesson33 h1, .lesson33 h2, .lesson33 h3 { font-family: var(--l33-font-ar-head); }
-
-/* background layers — subtle dot grid + soft paper glow */
+/* ---------- خلفية المختبر ---------- */
 .lesson33 .l33-bg {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(900px 600px at 12% -8%, rgba(46,150,255,0.07), transparent 60%),
-    radial-gradient(900px 700px at 88% 0%, rgba(124,92,255,0.08), transparent 60%),
-    radial-gradient(800px 500px at 55% 100%, rgba(255,107,74,0.06), transparent 60%),
-    linear-gradient(180deg, #FFFBF0 0%, #FFF6E2 100%);
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
-}
-.lesson33 .l33-bg::after {
-  content: ""; position: absolute; inset: 0;
-  background-image: radial-gradient(rgba(26,31,46,0.08) 1px, transparent 1px);
-  background-size: 22px 22px;
-  opacity: 0.22;
-}
-
-/* rail */
-.lesson33 .l33-rail {
-  background: linear-gradient(180deg, #ffffff 0%, #FFF9EA 100%);
-  border-left: 1px solid var(--l33-line);
-}
-.lesson33 .l33-rail-head {
-  background: linear-gradient(180deg, #1A1F2E 0%, #242B45 100%);
-  position: relative;
-  overflow: hidden;
-}
-.lesson33 .l33-rail-head::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 14px;
-  background: radial-gradient(10px 10px at 10px 6px, #FFFBF0 10px, transparent 11px);
-  background-size: 20px 14px;
-  background-repeat: repeat-x;
-  opacity: 1;
-}
-.lesson33 .l33-rail-step[aria-current="step"] {
-  background: var(--l33-ink);
-  color: #fff;
-  box-shadow: 0 6px 16px -10px rgba(26,31,46,0.6);
-}
-.lesson33 .l33-rail-sec[data-active="true"] {
-  background: #FFF4DC;
-  border-color: var(--l33-line);
+  background:
+    radial-gradient(38rem 22rem at 88% -6%, rgba(2, 132, 199, 0.1), transparent 62%),
+    radial-gradient(34rem 20rem at 8% 4%, rgba(245, 158, 11, 0.1), transparent 60%),
+    radial-gradient(40rem 24rem at 78% 104%, rgba(5, 150, 105, 0.1), transparent 62%),
+    radial-gradient(30rem 20rem at 12% 96%, rgba(124, 58, 237, 0.09), transparent 60%);
 }
 
-/* shell & header */
-.lesson33 .l33-shell { min-height: 0; }
+.lesson33 .l33-skip {
+  z-index: 60;
+}
+
+/* ---------- الترويسة ---------- */
 .lesson33 .l33-header {
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--l33-line-soft);
-  box-shadow: 0 2px 12px -8px rgba(26,31,46,0.25);
-}
-.lesson33 .l33-header,
-.lesson33 .l33-header-controls { min-width: 0; }
-.lesson33 .l33-chip {
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-size: 11px; font-weight: 900;
-  border: 1px solid var(--l33-line);
-  background: #fff;
-  color: var(--l33-ink);
-}
-.lesson33 .l33-chip-teal { background: var(--l33-teal); color: #fff; border-color: var(--l33-teal-deep); }
-.lesson33 .l33-chip-sky { background: var(--l33-sky); color: #fff; border-color: var(--l33-sky-deep); }
-.lesson33 .l33-chip-violet { background: var(--l33-violet); color: #fff; border-color: var(--l33-violet-deep); }
-.lesson33 .l33-chip-coral { background: var(--l33-coral); color: #fff; border-color: var(--l33-coral-deep); }
-
-.lesson33 .l33-progress-track {
-  background: var(--l33-line-soft);
-  border: 1px solid var(--l33-line);
-}
-.lesson33 .l33-progress-fill {
-  background: linear-gradient(90deg, var(--l33-teal) 0%, var(--l33-sky) 33%, var(--l33-violet) 66%, var(--l33-coral) 100%);
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04), 0 10px 24px -22px rgba(15, 23, 42, 0.4);
 }
 
 .lesson33 .l33-tap {
-  min-height: 40px;
-  border-radius: 999px;
-  border: 1px solid var(--l33-line);
-  background: #fff;
-  font-weight: 900;
-  font-size: 12px;
-  box-shadow: 0 2px 8px -6px rgba(26,31,46,0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
-.lesson33 .l33-tap-soft { background: #fff; }
-.lesson33 .l33-tap-primary {
-  background: var(--l33-ink);
-  color: #fff;
-  border-color: var(--l33-ink);
+
+.lesson33 .l33-tap:active {
+  transform: scale(0.97);
 }
+
+/* ---------- رقاقة عدّاد الخطوات ---------- */
+.lesson33 .l33-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 9999px;
+  border: 1px solid #e2e8f0;
+  background: linear-gradient(90deg, rgba(2, 132, 199, 0.08), rgba(245, 158, 11, 0.08), rgba(5, 150, 105, 0.08), rgba(124, 58, 237, 0.08));
+  padding: 0.3rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+.lesson33 .l33-chip--nav {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+/* ---------- ألسنة المناطق الأربع ---------- */
 .lesson33 .l33-tab {
-  min-height: 38px;
-  border: 1px solid transparent;
-  background: #fff;
-  color: var(--l33-ink);
-  border-radius: 999px;
-  box-shadow: 0 1px 6px -4px rgba(26,31,46,0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 40px;
+  border: 1.5px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #475569;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
+
+.lesson33 .l33-tab:hover {
+  border-color: #cbd5e1;
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
 .lesson33 .l33-tab[aria-current="true"] {
-  background: var(--l33-ink);
-  color: #fff;
-  border-color: var(--l33-ink);
-}
-.lesson33 .l33-scroll { overscroll-behavior: contain; scrollbar-gutter: stable; }
-
-/* journey strip — 8-section roadmap, four-color */
-.lesson33 .l33-journey {
-  border: 1px solid var(--l33-line);
-  background: #fff;
-  border-radius: 999px;
-  padding: 6px 8px;
-  box-shadow: 0 4px 16px -10px rgba(26,31,46,0.25);
-}
-.lesson33 .l33-journey-dot {
-  border-radius: 999px;
-  border: 1px solid var(--l33-line);
-  min-width: 0;
-}
-.lesson33 .l33-journey-past { background: #eaf7ee; border-color: #b6e0c4; color: #14532d; }
-.lesson33 .l33-journey-now {
-  background: linear-gradient(90deg, var(--l33-teal) 0%, var(--l33-sky) 50%, var(--l33-violet) 100%);
-  color: #fff; border-color: transparent;
-  box-shadow: 0 6px 16px -10px rgba(26,31,46,0.45);
-}
-.lesson33 .l33-journey-future { background: #f5edd8; border-color: var(--l33-line); color: var(--l33-ink-mute); }
-.lesson33 .l33-journey-link {
-  flex: 0 0 14px; height: 2px; border-radius: 999px;
-  background: linear-gradient(90deg, var(--l33-line), var(--l33-line-soft));
-}
-.lesson33 .l33-journey-link.done { background: linear-gradient(90deg, var(--l33-teal-mid), var(--l33-sky-mid)); }
-
-/* hero */
-.lesson33 .l33-hero {
-  border: 1px solid var(--l33-line);
-  border-radius: var(--l33-r-lg);
-  background: #fff;
-  box-shadow: var(--l33-shadow);
-  overflow: hidden;
-}
-.lesson33 .l33-hero-band {
-  background:
-    linear-gradient(100deg, #0E9B6B 0%, #2E96FF 44%, #7C5CFF 76%, #FF6B4A 100%);
-  color: #fff;
-  padding: 18px 18px 22px;
-  position: relative;
-}
-.lesson33 .l33-hero-band::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 14px;
-  background: radial-gradient(10px 10px at 10px 6px, #ffffff 10px, transparent 11px);
-  background-size: 20px 14px;
-  background-repeat: repeat-x;
-}
-.lesson33 .l33-hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(255,255,255,0.18);
-  border: 1px solid rgba(255,255,255,0.32);
-  border-radius: 999px;
-  padding: 4px 10px;
-  font-size: 10px; font-weight: 900; letter-spacing: 0.14em;
-}
-.lesson33 .l33-hero-title {
-  margin-top: 8px;
-  font-size: clamp(22px, 3.2vw, 30px);
-  font-weight: 900; line-height: 1.2; text-wrap: balance;
-}
-.lesson33 .l33-hero-formula {
-  display: inline-flex; flex-wrap: wrap; gap: 6px;
-  margin-top: 10px;
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(255,255,255,0.28);
-  border-radius: 999px;
-  padding: 8px 10px;
-}
-.lesson33 .l33-hero-formula span {
-  background: #fff; color: var(--l33-ink);
-  border-radius: 999px; padding: 4px 9px;
-  font-size: 11px; font-weight: 900;
-}
-.lesson33 .l33-hero-mark {
-  position: absolute; inset-inline-end: 12px; top: 10px;
-  width: 86px; height: 86px; opacity: 0.18;
-  pointer-events: none;
-}
-.lesson33 .l33-hero-body { padding: 14px; background: #fff; }
-@media (min-width: 640px){ .lesson33 .l33-hero-body { padding: 18px; } }
-
-/* frame — every teaching card gets subtle 4-color side accent */
-.lesson33 .l33-frame > section {
-  border: 1px solid var(--l33-line);
-  border-radius: var(--l33-r-lg);
-  background: rgba(255,255,255,0.98);
-  box-shadow: var(--l33-shadow);
-  padding: clamp(1.15rem, 2.4vw, 2rem);
-  position: relative;
-  overflow: hidden;
-}
-.lesson33 .l33-frame > section::before {
-  content: ""; position: absolute; inset-inline-start: 0; top: 0; bottom: 0; width: 7px;
-  background: linear-gradient(180deg, var(--l33-teal) 0%, var(--l33-sky) 36%, var(--l33-violet) 72%, var(--l33-coral) 100%);
-  border-radius: 0;
-}
-.lesson33 .l33-frame > section > .l33-mascot {
-  position: absolute; inset-inline-start: auto; inset-inline-end: 12px; top: 12px;
-  font-size: 34px; opacity: 0.95; pointer-events: none;
-}
-@media (min-width: 768px){ .lesson33 .l33-frame > section > .l33-mascot { font-size: 42px; inset-inline-end: 16px; } }
-
-.lesson33 .l33-kicker {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--l33-ink); color: #fff;
-  border-radius: 999px; padding: 6px 10px;
-  font-size: 11px; font-weight: 900;
-}
-.lesson33 .l33-badge {
-  border-radius: 999px; padding: 6px 10px;
-  font-size: 11px; font-weight: 900; border: 1px solid var(--l33-line);
-  background: #fff;
-}
-.lesson33 .l33-badge-teal { background: var(--l33-teal-soft); border-color: var(--l33-teal-line); color: var(--l33-teal-deep); }
-.lesson33 .l33-badge-sky { background: var(--l33-sky-soft); border-color: var(--l33-sky-line); color: var(--l33-sky-deep); }
-.lesson33 .l33-badge-violet { background: var(--l33-violet-soft); border-color: var(--l33-violet-line); color: var(--l33-violet-deep); }
-.lesson33 .l33-badge-coral { background: var(--l33-coral-soft); border-color: var(--l33-coral-line); color: var(--l33-coral-deep); }
-
-/* lab — content panels */
-.lesson33 .l33-lab {
-  border: 1px solid var(--l33-line);
-  background: linear-gradient(180deg, #ffffff 0%, #FFFBF0 100%);
-  border-radius: var(--l33-r);
-}
-.lesson33 .l33-lab-head {
-  border: 1px solid var(--l33-line-soft);
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 10px -8px rgba(26,31,46,0.25);
+  border-color: transparent;
+  background-color: var(--l33-ink);
+  color: #ffffff;
+  box-shadow: 0 8px 18px -12px rgba(15, 23, 42, 0.9);
 }
 
-/* four-tense pillars */
-.lesson33 .l33-pillars { display: grid; gap: 10px; }
-@media (min-width: 640px){ .lesson33 .l33-pillars { grid-template-columns: repeat(4, minmax(0,1fr)); } }
-.lesson33 .l33-pillar {
-  border-radius: 18px; border: 1px solid var(--l33-line);
-  background: #fff; padding: 12px;
-  position: relative; overflow: hidden;
-}
-.lesson33 .l33-pillar::before {
-  content: ""; position: absolute; inset-inline-start: 0; top: 0; bottom: 0; width: 4px;
-}
-.lesson33 .l33-pillar[data-tense="PS"]::before { background: var(--l33-teal); }
-.lesson33 .l33-pillar[data-tense="PC"]::before { background: var(--l33-sky); }
-.lesson33 .l33-pillar[data-tense="PP"]::before { background: var(--l33-violet); }
-.lesson33 .l33-pillar[data-tense="PPC"]::before { background: var(--l33-coral); }
-.lesson33 .l33-pillar[data-tense="PS"] { border-color: var(--l33-teal-line); }
-.lesson33 .l33-pillar[data-tense="PC"] { border-color: var(--l33-sky-line); }
-.lesson33 .l33-pillar[data-tense="PP"] { border-color: var(--l33-violet-line); }
-.lesson33 .l33-pillar[data-tense="PPC"] { border-color: var(--l33-coral-line); }
-
-/* decision orbs */
-.lesson33 .l33-orbs { display: grid; gap: 10px; }
-@media (min-width: 640px){ .lesson33 .l33-orbs { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-.lesson33 .l33-orb {
-  border-radius: 22px; border: 2px solid var(--l33-line);
-  background: #fff; padding: 12px 14px;
-  display: flex; align-items: center; gap: 12px;
-}
-.lesson33 .l33-orb-dot {
-  width: 34px; height: 34px; border-radius: 999px;
-  display: grid; place-items: center; font-size: 16px; flex-shrink: 0;
-  border: 1px solid var(--l33-line);
-  background: var(--l33-paper-2);
-}
-.lesson33 .l33-orb[data-tone="teal"] .l33-orb-dot { background: var(--l33-teal-soft); border-color: var(--l33-teal-line); }
-.lesson33 .l33-orb[data-tone="sky"] .l33-orb-dot { background: var(--l33-sky-soft); border-color: var(--l33-sky-line); }
-.lesson33 .l33-orb[data-tone="violet"] .l33-orb-dot { background: var(--l33-violet-soft); border-color: var(--l33-violet-line); }
-.lesson33 .l33-orb[data-tone="coral"] .l33-orb-dot { background: var(--l33-coral-soft); border-color: var(--l33-coral-line); }
-
-/* contrast lens */
-.lesson33 .l33-lens {
-  border-radius: 18px; border: 1px solid var(--l33-line);
-  background: #fff; overflow: hidden;
-}
-.lesson33 .l33-lens-head {
-  display: flex; gap: 8px; padding: 10px 12px;
-  border-bottom: 1px solid var(--l33-line-soft);
-  background: linear-gradient(180deg, #fff 0%, #FFFAEB 100%);
-}
-.lesson33 .l33-lens-chip {
-  border-radius: 999px; padding: 5px 10px;
-  font-size: 11px; font-weight: 900; border: 1px solid var(--l33-line);
-  background: #fff;
+.lesson33 .l33-tab:active {
+  transform: scale(0.97);
 }
 
-/* step navigation (normal flex flow via shared LessonStepNav) */
+/* ---------- شريط التنقّل: في التدفق الطبيعي، لا تداخل أبدًا ---------- */
 .lesson33 .l33-step-nav {
-  border-top: 1px solid var(--l33-line-soft);
-  background: rgba(255, 250, 240, 0.92);
+  flex-shrink: 0;
+  align-self: center;
+  width: calc(100% - 1rem);
+  max-width: 60rem;
+  margin: 0 auto 0.6rem;
+  border-radius: 9999px;
+  border: 1px solid #e2e8f0;
+  background-color: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(8px);
+  box-shadow: 0 18px 34px -26px rgba(15, 23, 42, 0.7);
+  padding: 0.4rem 0.6rem;
+  gap: 0.4rem 0.6rem;
 }
+
+/* أزرار السابق/التالي — position ثابتة في التدفق (ليست absolute) */
 .lesson33 .l33-fab {
   position: relative;
   display: inline-flex;
@@ -388,83 +129,160 @@
   justify-content: center;
   gap: 0.35rem;
   min-height: 42px;
-  border-radius: 999px;
-  padding: 0 16px;
-  font-size: 13px;
-  font-weight: 900;
-  border: 1px solid var(--l33-line);
-  background: #fff;
-  color: var(--l33-ink);
-  box-shadow: var(--l33-shadow);
-  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 800;
+  line-height: 1.3;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
 }
-.lesson33 .l33-fab:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.lesson33 .l33-fab:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.lesson33 .l33-fab:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.lesson33 .l33-fab-prev {
+  border: 1.5px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #334155;
+}
+
+.lesson33 .l33-fab-prev:hover:not(:disabled) {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
 .lesson33 .l33-fab-next {
-  background: var(--l33-ink); color: #fff; border-color: var(--l33-ink);
+  background-image: linear-gradient(100deg, var(--l33-sky), var(--l33-violet) 48%, var(--l33-emerald));
+  background-color: var(--l33-violet);
+  color: #ffffff;
+  box-shadow: 0 12px 22px -14px rgba(124, 58, 237, 0.95);
 }
 
-/* drawer */
-.lesson33 .l33-drawer-scrim { position: fixed; inset: 0; z-index: 40; background: rgba(26,31,46,0.42); backdrop-filter: blur(6px); }
+.lesson33 .l33-fab-next:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
+
+/* ---------- قائمة المحطات ---------- */
+.lesson33 .l33-rail-step {
+  min-height: 38px;
+}
+
+.lesson33 .l33-rail-step:active {
+  transform: scale(0.99);
+}
+
+/* ---------- الدرج الجانبي (الشاشات الصغيرة) ---------- */
 .lesson33 .l33-drawer {
-  position: absolute; inset-inline-start: 0; top: 0; bottom: 0;
-  width: 84vw; max-width: 320px;
-  background: #fff; display: flex; flex-direction: column;
-  box-shadow: 0 10px 40px -10px rgba(26,31,46,0.5);
+  animation: l33-drawer-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* keep content readable */
-.lesson33 .l33-content-wrap .max-w-4xl,
-.lesson33 .l33-content-wrap .max-w-2xl { max-width: none; }
-.lesson33 .l33-prose { line-height: 1.75; }
-
-/* reinterpret amber utilities inside lesson33 as warm neutrals (avoid dark) */
-.lesson33 .bg-amber-600 { background-color: var(--l33-amber) !important; }
-.lesson33 .bg-amber-500 { background-color: #e09a1a !important; }
-.lesson33 .from-amber-600 { --tw-gradient-from: var(--l33-amber) !important; }
-.lesson33 .to-rose-600, .lesson33 .to-rose-500 { --tw-gradient-to: var(--l33-coral) !important; }
-.lesson33 .border-amber-200 { border-color: var(--l33-line) !important; }
-.lesson33 .border-amber-100 { border-color: var(--l33-line-soft) !important; }
-.lesson33 .bg-amber-50 { background-color: var(--l33-amber-soft) !important; }
-.lesson33 .bg-amber-100 { background-color: #fff3d6 !important; }
-.lesson33 .text-amber-900 { color: var(--l33-ink) !important; }
-.lesson33 .text-amber-800 { color: var(--l33-ink-soft) !important; }
-.lesson33 .text-amber-700 { color: var(--l33-ink-mute) !important; }
-
-/* distinctive interaction skins — four lenses */
-.lesson33 [data-cover-gate="Present Simple"],
-.lesson33 [data-tense-gate="Present Simple"] { border-color: var(--l33-teal-line) !important; }
-.lesson33 [data-cover-gate="Present Continuous"],
-.lesson33 [data-tense-gate="Present Continuous"] { border-color: var(--l33-sky-line) !important; }
-.lesson33 [data-cover-gate="Present Perfect"],
-.lesson33 [data-tense-gate="Present Perfect"] { border-color: var(--l33-violet-line) !important; }
-.lesson33 [data-cover-gate="Present Perfect Continuous"],
-.lesson33 [data-tense-gate="Present Perfect Continuous"] { border-color: var(--l33-coral-line) !important; }
-
-.lesson33 [data-cover-gate="Present Simple"][aria-pressed="true"] { background: var(--l33-teal-soft) !important; border-color: var(--l33-teal) !important; }
-.lesson33 [data-cover-gate="Present Continuous"][aria-pressed="true"] { background: var(--l33-sky-soft) !important; border-color: var(--l33-sky) !important; }
-.lesson33 [data-cover-gate="Present Perfect"][aria-pressed="true"] { background: var(--l33-violet-soft) !important; border-color: var(--l33-violet) !important; }
-.lesson33 [data-cover-gate="Present Perfect Continuous"][aria-pressed="true"] { background: var(--l33-coral-soft) !important; border-color: var(--l33-coral) !important; }
-
-/* Lab inner — keep generous but not narrow */
-.lesson33 .rounded-3xl.border { border-color: var(--l33-line) !important; }
-
-/* Improve readability of interactive cards */
-.lesson33 [data-row] { border-radius: 16px !important; }
-
-/* focus */
-.lesson33 :focus-visible { outline: none; }
-.lesson33 .focus-visible\:ring-4:focus-visible { box-shadow: 0 0 0 4px rgba(46,150,255,0.28); }
-
-/* responsive tweaks */
-@media (max-width: 639px){
-  .lesson33 .l33-hero-title { font-size: 22px; }
-  .lesson33 .l33-hero-formula { padding: 6px 8px; }
-  .lesson33 .l33-journey { border-radius: 18px; }
+@keyframes l33-drawer-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
-@media (prefers-reduced-motion: reduce){
-  .lesson33 *, .lesson33 *::before, .lesson33 *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+
+.lesson33 .l33-drawer-scrim {
+  animation: l33-fade-in 0.2s ease both;
+}
+
+@keyframes l33-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------- التمرير ---------- */
+.lesson33 .l33-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.lesson33 .l33-scroll::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.lesson33 .l33-scroll::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 9999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.lesson33 .l33-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------- الجداول: حدود واضحة وتمرير أفقي آمن ---------- */
+.lesson33 table {
+  border-spacing: 0;
+}
+
+.lesson33 th,
+.lesson33 td {
+  overflow-wrap: anywhere;
+}
+
+/* ---------- مقاسات كبيرة ---------- */
+@media (min-width: 1600px) {
+  .lesson33 .l33-step-nav {
+    max-width: 68rem;
+  }
+
+  .lesson33 main > .pop {
+    max-width: 58rem;
+  }
+}
+
+@media (min-width: 1900px) {
+  .lesson33 aside {
+    width: 20rem;
+  }
+}
+
+/* ---------- الشاشات الصغيرة ---------- */
+@media (max-width: 640px) {
+  .lesson33 .l33-step-nav {
+    width: calc(100% - 0.75rem);
+    border-radius: 1.5rem;
+    padding: 0.4rem 0.5rem;
+  }
+
+  .lesson33 .l33-fab {
+    min-height: 44px;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.8125rem;
+  }
+
+  .lesson33 .l33-tab {
+    min-height: 44px;
+    padding: 0.5rem 0.6rem;
+  }
+}
+
+/* ---------- احترام تفضيل تقليل الحركة ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .lesson33 *,
+  .lesson33 *::before,
+  .lesson33 *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }

@@ -1,0 +1,385 @@
+[
+  {
+    "id": "cover",
+    "num": null,
+    "title": "الدرس 33: The Four Present Tenses",
+    "units": 4,
+    "sha256": "3b347a386431ed9db4881022e4b0369318d72ed041da3e5795d119a1ae72882f",
+    "slides": [
+      "cover",
+      "s0-why"
+    ],
+    "renderedUnits": 4,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "objectives",
+    "num": null,
+    "title": "🎯 أهداف الدرس",
+    "units": 8,
+    "sha256": "5d7587a8d13090a2af4750d365bc2ea77ae43420cef61cbf6437e9bba8448c29",
+    "slides": [
+      "obj-a",
+      "obj-b"
+    ],
+    "renderedUnits": 8,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s1",
+    "num": 1,
+    "title": "🧠 الخريطة الذهبية لأزمنة الحاضر",
+    "units": 22,
+    "sha256": "4d09bc51da28a7ef713cdff5a07f383120613e2ae6e500374ec938fb0f03d99e",
+    "slides": [
+      "s1-a",
+      "s1-b",
+      "s1-c"
+    ],
+    "renderedUnits": 22,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s2",
+    "num": 2,
+    "title": "⭐ جدول البناء الأساسي",
+    "units": 11,
+    "sha256": "7764b8654f8897398f29fa321ede0279bf3072df7918eae6c60e51f21c2b646e",
+    "slides": [
+      "s2-a",
+      "s2-b"
+    ],
+    "renderedUnits": 11,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s3",
+    "num": 3,
+    "title": "🔬 مختبر المعنى: الفعل نفسه بأربعة أزمنة",
+    "units": 16,
+    "sha256": "cdcb27ef858a023ed128ffa3c7b322dbf739c7c588d4d0ac1e9a60ea8971d3cc",
+    "slides": [
+      "s3-a",
+      "s3-b",
+      "s3-c"
+    ],
+    "renderedUnits": 16,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s4",
+    "num": 4,
+    "title": "🧠 السؤال الذي يحدد الزمن",
+    "units": 26,
+    "sha256": "4bed4a878acb747f63369395ae3d23bd9e523ad53c0f491e8397dc172ff78ef5",
+    "slides": [
+      "s4-a",
+      "s4-b",
+      "s4-c"
+    ],
+    "renderedUnits": 26,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s5",
+    "num": 5,
+    "title": "⚙️ الإثبات والنفي والسؤال في الأزمنة الأربعة",
+    "units": 49,
+    "sha256": "682bd8e2319276f1fe0366a79ef29d03df0ae03cc2dac319c12c63ad2291ed0b",
+    "slides": [
+      "s5-a",
+      "s5-b",
+      "s5-c",
+      "s5-d",
+      "s5-e"
+    ],
+    "renderedUnits": 49,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s6",
+    "num": 6,
+    "title": "🚨 لا تخلط الأفعال المساعدة",
+    "units": 11,
+    "sha256": "4df7ff74ca4c9d78d86e4cbdde599dd7f356c08ea36cda29319648f9562e681e",
+    "slides": [
+      "s6-a",
+      "s6-b"
+    ],
+    "renderedUnits": 11,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s7",
+    "num": 7,
+    "title": "⏰ الكلمات الدالة: أدوات مساعدة وليست قوانين مطلقة",
+    "units": 13,
+    "sha256": "99d72e19e3c63f039a7880552fc1a2bd7cbe17d46d890c564c360bc9ad22ea39",
+    "slides": [
+      "s7-a",
+      "s7-b"
+    ],
+    "renderedUnits": 13,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s8",
+    "num": 8,
+    "title": "🔥 Present Simple vs Present Continuous",
+    "units": 21,
+    "sha256": "27a24a530f0ff683797b97b246ff6fbf3c3274112bed09be917ca00ee8fe6f44",
+    "slides": [
+      "s8-a",
+      "s8-b",
+      "s8-c"
+    ],
+    "renderedUnits": 18,
+    "gatedUnits": 3,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s9",
+    "num": 9,
+    "title": "🔥 Present Continuous vs Present Perfect Continuous",
+    "units": 18,
+    "sha256": "b7945770fdd0e3f377a0017bab06fd7f64055ad6e74058c7297131b5a3aae494",
+    "slides": [
+      "s9-a",
+      "s9-b"
+    ],
+    "renderedUnits": 18,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s10",
+    "num": 10,
+    "title": "🔥 Present Perfect vs Present Perfect Continuous",
+    "units": 20,
+    "sha256": "27ebbee56c277f3ec2f70d1476e86416a8b193784715a553eef3eb2e08cc2855",
+    "slides": [
+      "s10-a",
+      "s10-b"
+    ],
+    "renderedUnits": 15,
+    "gatedUnits": 5,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s11",
+    "num": 11,
+    "title": "🧠 أفعال الحالة — Stative Verbs",
+    "units": 23,
+    "sha256": "ae888cfb336fac70db9d18496348e56f3ebdb8c4488a2b8a88ca31852fb2ae42",
+    "slides": [
+      "s11-a",
+      "s11-b",
+      "s11-c"
+    ],
+    "renderedUnits": 23,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s12",
+    "num": 12,
+    "title": "🕵️ Grammar Detective — المستوى الأول",
+    "units": 20,
+    "sha256": "ab2bec02951ce79eb437d5021b6c81c2e0add6fec210e5dfaead20e17f7fcf35",
+    "slides": [
+      "s12-a",
+      "s12-b"
+    ],
+    "renderedUnits": 10,
+    "gatedUnits": 10,
+    "answerLocation": "بطاقة المحقق بعد المحاولة + TeacherGuide33"
+  },
+  {
+    "id": "s13",
+    "num": 13,
+    "title": "✍️ التدريب الأول: اختر الزمن المناسب",
+    "units": 13,
+    "sha256": "5c675080c9b2cd98efb6cbc277cd24d145a66a74f6b660843e230e87b57d17f0",
+    "slides": [
+      "s13-a",
+      "s13-b"
+    ],
+    "renderedUnits": 13,
+    "gatedUnits": 0,
+    "answerLocation": "بطاقة التدريب بعد المحاولة + TeacherGuide33"
+  },
+  {
+    "id": "s14",
+    "num": 14,
+    "title": "🧩 التدريب الثاني: أربع جمل، أربعة أزمنة",
+    "units": 17,
+    "sha256": "bf164baca34deb81c4fa6bfcb27b543dcd4e4fc23abdfbca30c0391f0442557f",
+    "slides": [
+      "s14-a",
+      "s14-b",
+      "s14-c"
+    ],
+    "renderedUnits": 12,
+    "gatedUnits": 5,
+    "answerLocation": "بطاقة التدريب بعد المحاولة + TeacherGuide33"
+  },
+  {
+    "id": "s15",
+    "num": 15,
+    "title": "🧠 مستوى IQ200: متى تكون إجابتان صحيحتين؟",
+    "units": 17,
+    "sha256": "2444f51359784f775c782729d2ff1ca1f1588968234e032c5a01de49fcd64872",
+    "slides": [
+      "s15-a",
+      "s15-b"
+    ],
+    "renderedUnits": 12,
+    "gatedUnits": 5,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s16",
+    "num": 16,
+    "title": "📖 Reading Challenge — قصة الأزمنة الأربعة",
+    "units": 8,
+    "sha256": "7b88b97ed6360556801f89edd14f763c75e429eb56ef78419f6cd67bebdf671e",
+    "slides": [
+      "s16-a",
+      "s16-b"
+    ],
+    "renderedUnits": 8,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s17",
+    "num": 17,
+    "title": "🔍 تحليل القصة",
+    "units": 13,
+    "sha256": "c5f05968fd2cdc9c6b50b4724c3f3717123e16d21d68d7245d323bdc110d4194",
+    "slides": [
+      "s17-a",
+      "s17-b"
+    ],
+    "renderedUnits": 13,
+    "gatedUnits": 0,
+    "answerLocation": "بطاقة التحليل بعد الاختيار + TeacherGuide33"
+  },
+  {
+    "id": "s18",
+    "num": 18,
+    "title": "🕵️ Grammar Detective — المستوى المتقدم",
+    "units": 18,
+    "sha256": "e4c0d3b430564f923a8c79db14ea294b86a5ec401a975ab1a7b1e6bab83d6568",
+    "slides": [
+      "s18-a",
+      "s18-b",
+      "s18-c",
+      "s18-d"
+    ],
+    "renderedUnits": 6,
+    "gatedUnits": 12,
+    "answerLocation": "محقق الفقرة بعد إصلاح كل المواضع + TeacherGuide33"
+  },
+  {
+    "id": "s19",
+    "num": 19,
+    "title": "🚀 IQ200 — تحدي اختلاف المعنى",
+    "units": 17,
+    "sha256": "cdde462bc0fe983df7f2f24fc25057f40fab54f552db65d5883ad739bc2b6d5a",
+    "slides": [
+      "s19-a",
+      "s19-b"
+    ],
+    "renderedUnits": 13,
+    "gatedUnits": 4,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s20",
+    "num": 20,
+    "title": "🏆 الاختبار النهائي — Present Tenses Master Test",
+    "units": 39,
+    "sha256": "f43ef4bdcb0e23d77f572cb7eca9b815ca6afa43c0852f16d91edf1d8b2035d8",
+    "slides": [
+      "s20-intro",
+      "test-l1",
+      "test-l2",
+      "test-l3",
+      "test-l4a",
+      "test-l4b",
+      "test-l5a",
+      "test-l5b",
+      "test-result"
+    ],
+    "renderedUnits": 39,
+    "gatedUnits": 0,
+    "answerLocation": "TestArea33 ثم SolutionsArea33 (بعد التسليم)"
+  },
+  {
+    "id": "s21",
+    "num": 21,
+    "title": "🔐 مساحة الحلول التفصيلية",
+    "units": 3,
+    "sha256": "462a6670b82c8c3c7e870080b3a73b737074f592e5e9abe788f0ce2c23478281",
+    "slides": [
+      "s21"
+    ],
+    "renderedUnits": 3,
+    "gatedUnits": 0,
+    "answerLocation": "SolutionsArea33 (مقفلة حتى التسليم)"
+  },
+  {
+    "id": "s22",
+    "num": 22,
+    "title": "✍️ مهمة الإنتاج اللغوي — Writing Mission",
+    "units": 13,
+    "sha256": "4a566bbd949c61d44c0a93c9810614db1813800efeac98e5a7ab09b980325f44",
+    "slides": [
+      "s22-a",
+      "s22-b",
+      "s22-c"
+    ],
+    "renderedUnits": 13,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s23",
+    "num": 23,
+    "title": "🧠 الملخص الذهبي للدرس 33",
+    "units": 23,
+    "sha256": "b95965724e2480905f9a180648c13356490197218786af9c589aa7194754f5d8",
+    "slides": [
+      "s23-a",
+      "s23-b",
+      "s23-c"
+    ],
+    "renderedUnits": 23,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  },
+  {
+    "id": "s24",
+    "num": 24,
+    "title": "🗺️ خريطة تقدمنا في المنهج",
+    "units": 11,
+    "sha256": "daae1d5ea438f006025d1205fa650fe7013ca89550613ca4005fe78dda931359",
+    "slides": [
+      "s24-a",
+      "s24-b"
+    ],
+    "renderedUnits": 11,
+    "gatedUnits": 0,
+    "answerLocation": "داخل الشريحة"
+  }
+]

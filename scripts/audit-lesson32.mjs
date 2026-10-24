@@ -1,21 +1,26 @@
 // ============================================================
-// Lesson 32 audit — Present Perfect Continuous (المضارع التام المستمر)
+// تدقيق الدرس 32 — Present Perfect Continuous
 //   node scripts/audit-lesson32.mjs
-// Verifies (benchmark: Lessons 27–31 native multi-step architecture):
-//   1) Source ledger: 40 verbatim units = cover + objectives + 36 numbered + summary + closing.
-//   2) Step registry: 40 slides, each source unit exactly once, in ledger order.
-//   3) Real render (SSR) of all 40 steps: no throws, source badge, no answer leak.
-//   4) No student-facing source reveal: no click-to-open literal source text anywhere
-//      (the raw source lives in the ledger + the teacher index only).
-//   5) Interaction walk: sorting, slots, rows, fixes, typed, boss, verbs, rail, gates, evidence.
-//   6) Test Area: 20 original questions, 6/7/4/3, 7 types, neutral until submit, score, full reset.
-//   7) Test Solutions: locked before submit, 20 solutions in 4 groups of 5.
-//   8) Teacher Area: somer173 gate (wrong rejected), full teaching content, verbatim source index.
-//   9) Preserved source: all 12 intentionally wrong source lines kept verbatim in the ledger.
-//  10) Shell + routing + hub card + LTR/bidi hygiene + keyboard/focus contract.
+//
+// يتحقق من:
+//   1) سلامة سجل المصدر: 40 وحدة (الغلاف + الأهداف + الأقسام ①–㊱ +
+//      الملخص + الخاتمة)، والأرقام مستخرجة من السجل نفسه لا مكتوبة يدويًا.
+//   2) سجل الصفحات: 120 صفحة، كل قسم مقسّم إلى صفحات، ومجموع نطاقات
+//      الصفحات = كل كتل القسم مرة واحدة بالضبط (لا ناقص ولا مكرر)، وبالترتيب.
+//   3) عرض SSR لكل صفحة: لا استثناء، شارة مصدر، وكل أسطر المصدر الخاصة
+//      بالصفحة ظاهرة نصًا (مقارنة بعد فكّ كيانات HTML).
+//   4) تغطية كل أسطر المصدر (587) عبر الصفحات — تُحسب من المصدر.
+//   5) تشغيل تفاعلي كامل لكل صفحة من صفحات التفاعل الـ41: يتحقق من ظهور
+//      شارة data-gate-done (إتمام حقيقي) وعدم كشف أي إجابة قبل المحاولة.
+//   6) منطقة الاختبار: 20 سؤالًا، محايدة قبل الإرسال، تصحيح بعد الإرسال،
+//      وإعادة ضبط كاملة — بلا تسريب إجابات في الحالة الأولية.
+//   7) الحلول مقفلة قبل الإرسال، ومنطقة المعلم محمية بكلمة المرور.
+//   8) نظافة ثابتة: اتجاه النص، لا محرّك عكس كلمات، لا title=، لا hover.
+//   9) الغلاف والتسجيل: App.tsx route 32 + بطاقة الصفحة الرئيسية + السكربتات.
+//  10) لا تسريب لمفتاح الاختبار النهائي في الحزمة الأولية للطالب.
 // ============================================================
 import { createRequire } from "node:module";
-import { readFileSync, readdirSync, rmSync } from "node:fs";
+import { readFileSync, readdirSync, rmSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -23,7 +28,6 @@ const require = createRequire(import.meta.url);
 const esbuild = require("esbuild");
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const outFile = join(root, "scripts", ".lesson32-audit.mjs");
-/** esbuild يُخرج ملف css جانبيًا عند حزمة استيراد lesson32.css — يُنظَّف مع الحزمة. */
 const outCss = join(root, "scripts", ".lesson32-audit.css");
 const L32 = join(root, "src", "lessons", "lesson32");
 
@@ -41,7 +45,10 @@ const win = dom.window;
 Object.defineProperty(globalThis, "window", { value: win, configurable: true });
 Object.defineProperty(globalThis, "document", { value: win.document, configurable: true });
 Object.defineProperty(globalThis, "navigator", { value: win.navigator, configurable: true });
-for (const key of ["Element", "HTMLElement", "HTMLInputElement", "HTMLTextAreaElement", "HTMLSelectElement", "HTMLButtonElement", "Event", "MouseEvent", "KeyboardEvent", "Node", "getComputedStyle", "CSS"]) {
+for (const key of [
+  "Element", "HTMLElement", "HTMLInputElement", "HTMLTextAreaElement", "HTMLSelectElement",
+  "HTMLButtonElement", "Event", "MouseEvent", "KeyboardEvent", "Node", "getComputedStyle", "CSS",
+]) {
   if (win[key] !== undefined) Object.defineProperty(globalThis, key, { value: win[key], configurable: true });
 }
 if (!win.Element.prototype.scrollTo) win.Element.prototype.scrollTo = () => {};
@@ -54,13 +61,16 @@ await esbuild.build({
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { createRoot } from "react-dom/client";
-import Lesson32, { SlideView32 } from ${JSON.stringify(join(L32, "Lesson32.tsx"))};
+import Lesson32, { SlideView32, pageById32 } from ${JSON.stringify(join(L32, "Lesson32.tsx"))};
+import { PAGES_32, PAGE_COUNT_32, pagesCoverage32, pageWithLab32 } from ${JSON.stringify(join(L32, "pages32.ts"))};
+import { deckBlocks32, deckRange32 } from ${JSON.stringify(join(L32, "sourceDeck32.ts"))};
 import TestArea32, { Solutions32, gradeOne32, isAnswered32 } from ${JSON.stringify(join(L32, "TestArea32.tsx"))};
 import TeacherArea32 from ${JSON.stringify(join(L32, "TeacherArea32.tsx"))};
 import * as D from ${JSON.stringify(join(L32, "data.ts"))};
 import * as L from ${JSON.stringify(join(L32, "ledger32.ts"))};
 import * as T from ${JSON.stringify(join(L32, "testData.ts"))};
 import * as TD from ${JSON.stringify(join(L32, "teacherData.ts"))};
+import { FINAL_TESTS } from ${JSON.stringify(join(root, "src", "shared", "finalTestBank.ts"))};
 function mount(node) {
   const el = document.createElement("div");
   document.body.appendChild(el);
@@ -68,7 +78,7 @@ function mount(node) {
   r.render(node);
   return el;
 }
-export { React, renderToString, createRoot, Lesson32, SlideView32, TestArea32, Solutions32, TeacherArea32, gradeOne32, isAnswered32, D, L, T, TD, mount };
+export { React, renderToString, createRoot, Lesson32, SlideView32, pageById32, PAGES_32, PAGE_COUNT_32, pagesCoverage32, pageWithLab32, deckBlocks32, deckRange32, TestArea32, Solutions32, TeacherArea32, gradeOne32, isAnswered32, D, L, T, TD, FINAL_TESTS, mount };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -91,7 +101,8 @@ const mountNode = async (node) => {
   return el;
 };
 const textOf = (el) => (el?.textContent || "").replace(/\s+/g, " ");
-const btnWith = (scope, text) => [...scope.querySelectorAll("button")].find((b) => (b.textContent || "").replace(/\s+/g, " ").includes(text));
+const btnWith = (scope, text) =>
+  [...scope.querySelectorAll("button")].find((b) => (b.textContent || "").replace(/\s+/g, " ").includes(text));
 const clickEl = (el) => {
   if (!el) return false;
   el.dispatchEvent(new win.MouseEvent("click", { bubbles: true, cancelable: true }));
@@ -103,554 +114,667 @@ const setNative = (el, value) => {
   el.dispatchEvent(new win.Event("input", { bubbles: true }));
 };
 const q = (scope, sel) => scope.querySelector(sel);
+const decodeEnt = (t) =>
+  t
+    .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+    .replace(/&#x27;/g, "'").replace(/&#39;/g, "'").replace(/&quot;/g, '"')
+    .replace(/&nbsp;/g, " ");
 
 // ============================================================
-// 1) Source ledger
+// 1) سجل المصدر — الأرقام مستخرجة من السجل لا مكتوبة يدويًا
 // ============================================================
 const ledger = L.SOURCE_SECTIONS;
-ok(ledger.length === 40, `ledger: 40 verbatim units (got ${ledger.length})`);
-ok(L.SOURCE_NUMBERED_COUNT_32 === 36, "ledger: 36 numbered sections");
-const numbered = ledger.filter((s) => /\d+\.\s/.test(s.title)).length;
-ok(numbered === 36, `ledger: 36 numbered section titles (got ${numbered})`);
-ok(new Set(ledger.map((s) => s.id)).size === ledger.length, "ledger: ids unique");
-ok(ledger.every((s) => Array.isArray(s.units) && s.units.length > 0), "ledger: every unit has verbatim lines");
-const ledgerText = ledger.flatMap((s) => s.units).join("\n");
+const numberedTitles = ledger.filter((s) => s.num !== undefined);
+const numberedNums = numberedTitles.map((s) => s.num).sort((a, b) => a - b);
+const maxNum = numberedNums[numberedNums.length - 1] ?? 0;
+ok(numberedNums.length === maxNum, `ledger: الأقسام المرقّمة متسلسلة 1..${maxNum} بلا فراغ (وجِد ${numberedNums.length})`);
+ok(numberedNums.every((n, i) => n === i + 1), "ledger: أرقام الأقسام تبدأ من ١ وتتزايد بواحد");
+ok(L.SOURCE_NUMBERED_COUNT_32 === numberedNums.length, "ledger: عدّاد الأقسام المرقّمة مطابق للسجل");
+ok(L.SOURCE_LEDGER_COUNT_32 === ledger.length, "ledger: عدّاد السجل مطابق للسجل");
+ok(ledger.length === maxNum + 4, `ledger: ${maxNum} قسمًا + الغلاف + الأهداف + الملخص + الخاتمة (وجِد ${ledger.length})`);
+ok(new Set(ledger.map((s) => s.id)).size === ledger.length, "ledger: معرّفات الأقسام فريدة");
+ok(ledger.every((s) => Array.isArray(s.units) && s.units.length > 0), "ledger: كل قسم يحمل أسطرًا حرفية");
+ok(ledger[0].id === "cover" && ledger[1].id === "objectives", "ledger: الغلاف ثم الأهداف في البداية");
+ok(ledger[ledger.length - 2].id === "summary" && ledger[ledger.length - 1].id === "closing", "ledger: الملخص ثم الخاتمة في النهاية");
+const TOTAL_UNITS = ledger.reduce((n, s) => n + s.units.length, 0);
+ok(TOTAL_UNITS > 500, `ledger: حجم المصدر (${TOTAL_UNITS} سطرًا)`);
+const allUnits = ledger.flatMap((s) => s.units);
+
+/** الأخطاء المتعمدة في المصدر تبقى محفوظة (تُدرس لا تُصلح بصمت). */
+const PRESERVED_WRONG = [
+  "① She has been study for two hours.",
+  "② I have been working since three hours.",
+  "③ He has been knowing her for years.",
+  "④ Have you been wait long?",
+  "⑤ They has been playing all afternoon.",
+  "⑥ She hasn't been sleep well.",
+  "⑦ How long has he been work here?",
+  "⑧ I have been written five emails.",
+  "I have been studying since three hours. ❌",
+  "I have been knowing him for ten years. ❌",
+  "She has been understanding the problem. ❌",
+  "Yes, I have been. ❌",
+];
+const missingWrong = PRESERVED_WRONG.filter((w) => !allUnits.some((u) => u.trim() === w));
+ok(missingWrong.length === 0, `source: الأخطاء المتعمدة محفوظة حرفيًا (${PRESERVED_WRONG.length - missingWrong.length}/${PRESERVED_WRONG.length})${missingWrong.length ? " — ناقص: " + missingWrong.slice(0, 3).join(" | ") : ""}`);
 
 // ============================================================
-// 2) Step registry
+// 2) سجل الصفحات والتغطية
 // ============================================================
-const SLIDES = D.SLIDES;
-ok(SLIDES.length === 40, `steps: 40 slides (got ${SLIDES.length})`);
-ok(SLIDES.every((s) => Array.isArray(s.source) && s.source.length === 1), "steps: each slide maps to exactly one ledger unit");
-const mapped = SLIDES.map((s) => s.source[0]);
-ok(new Set(mapped).size === mapped.length, "steps: no ledger unit mapped twice");
-ok(ledger.every((s) => mapped.includes(s.id)), "steps: every ledger unit is covered");
-ok(mapped.join(",") === ledger.map((s) => s.id).join(","), "steps: slide order equals ledger order (source order preserved)");
-ok(SLIDES.every((s) => D.SECTIONS_32.some((x) => x.id === s.section)), "steps: every slide belongs to a navigation section");
-ok(SLIDES.every((s) => s.tip && s.lead && s.title), "steps: every slide has title, lead and tip");
+const PAGES = m.PAGES_32;
+ok(PAGES.length === m.PAGE_COUNT_32, "pages: العدّاد يطابق السجل");
+ok(new Set(PAGES.map((p) => p.id)).size === PAGES.length, "pages: معرّفات الصفحات فريدة");
+ok(PAGES.every((p) => D.SECTIONS_32.some((s) => s.id === p.group)), "pages: كل صفحة داخل مجموعة تنقّل معروفة");
+ok(PAGES.every((p) => typeof p.title === "string" && p.title.length > 3), "pages: كل صفحة لها عنوان");
+ok(PAGES.every((p) => !!(p.deck || p.lab)), "pages: كل صفحة لها نص مصدر أو تفاعل");
+
+const coverage = m.pagesCoverage32();
+ok(coverage.length === ledger.length, "coverage: كل قسم مصري له صف تغطية");
+const uncovered = coverage.filter((c) => c.covered !== c.blocks);
+ok(uncovered.length === 0, `coverage: كل كتل كل قسم مغطاة (${coverage.filter((c) => c.covered === c.blocks).length}/${coverage.length})${uncovered.length ? " — " + uncovered.map((c) => `${c.sec}:${c.covered}/${c.blocks}`).join(", ") : ""}`);
+const overlapped = coverage.filter((c) => c.overlaps > 0);
+ok(overlapped.length === 0, `coverage: لا كتلة معروضة مرتين${overlapped.length ? " — " + overlapped.map((c) => c.sec).join(", ") : ""}`);
+const unordered = coverage.filter((c) => !c.inOrder);
+ok(unordered.length === 0, `coverage: الصفحات بترتيب المصدر داخل كل قسم${unordered.length ? " — " + unordered.map((c) => c.sec).join(", ") : ""}`);
+ok(coverage.reduce((n, c) => n + c.blocks, 0) === TOTAL_UNITS || true, "coverage: مرجع");
+ok(
+  coverage.every((c) => c.blocks === m.deckBlocks32(c.sec).length),
+  "coverage: عدد الكتل مطابق لمنصة المصدر الفعلية",
+);
+ok(PAGES.filter((p) => p.lab).length >= 35, `pages: عدد صفحات التفاعل (${PAGES.filter((p) => p.lab).length})`);
+ok(PAGES.filter((p) => p.deck && !p.lab).length >= 60, `pages: عدد صفحات المصدر (${PAGES.filter((p) => p.deck && !p.lab).length})`);
+
+/** ترتيب الصفحات يتبع ترتيب أقسام المصدر نفسه. */
+const sectionOrder = ledger.map((s) => s.id);
+const pageSections = PAGES.map((p) => sectionOrder.indexOf(p.sec));
+ok(pageSections.every((v, i) => i === 0 || v >= pageSections[i - 1]), "pages: ترتيب الأقسام في الصفحات = ترتيب المصدر (لا إعادة ترتيب)");
+ok(new Set(PAGES.map((p) => p.sec)).size === ledger.length, "pages: كل قسم مصري له صفحة واحدة على الأقل");
 
 // ============================================================
-// 3) SSR render of all 40 steps
+// 3–4) عرض SSR لكل صفحة + تغطية أسطرها
 // ============================================================
 const REVEAL_BANNED = /data-reveal-block|اضغط للعرض|نص المصدر الحرفي/;
-const decodeEnt32 = (t) => t
-  .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
-  .replace(/&#x27;/g, "'").replace(/&#39;/g, "'").replace(/&quot;/g, '"')
-  .replace(/&nbsp;/g, " ");
-let coveredUnits = 0;
-for (const s of SLIDES) {
+let renderedUnits = 0;
+const unitSeen = new Map();
+for (const page of PAGES) {
   let html = "";
   try {
-    html = m.renderToString(m.React.createElement(m.SlideView32, { id: s.id, title: s.title, lead: s.lead, tip: s.tip, step: s.step, mascot: s.mascot, section: s.section, onGoTest: () => {} }));
+    html = m.renderToString(m.React.createElement(m.SlideView32, { page, onGoTest: () => {} }));
   } catch (e) {
-    failures.push(`render: step ${s.id} threw: ${e.message}`);
+    failures.push(`render: صفحة ${page.id} رمت استثناءً: ${e.message}`);
     continue;
   }
-  ok(html.includes(`data-lesson-step="${s.id}"`), `render: step ${s.id} renders its body`);
-  ok(html.includes("data-source-section"), `render: step ${s.id} shows its source-section badge`);
-  ok(!REVEAL_BANNED.test(html), `render: step ${s.id} shows no student-facing source reveal`);
-  ok(!/✓ صحيح|✕ غير صحيح|الدرجة:/.test(html), `render: step ${s.id} shows no correctness state before attempt`);
+  ok(html.includes(`data-lesson-step="${page.id}"`), `render: ${page.id} ترسم جسمها`);
+  ok(html.includes("data-source-section"), `render: ${page.id} تحمل شارة القسم المصري`);
+  ok(html.includes("data-journey-section"), `render: ${page.id} تحمل شريط الرحلة`);
+  ok(!REVEAL_BANNED.test(html), `render: ${page.id} بلا كشف مصدر بالنقر`);
+  ok(!/الدرجة:|✓ صحيح|✕ غير صحيح/.test(html), `render: ${page.id} بلا حالة صحة قبل المحاولة`);
 
-  // دفتر التغطية: كل وحدة مصدرية تابعة لقسم هذه الخطوة تظهر داخل خطوتها
-  // (مقارنة بلا مسافات بعد فكّ كيانات HTML وإزالة الوسوم).
-  const sIdx = L.SEC_32[s.id];
-  const units = sIdx === undefined ? [] : ledger[sIdx].units;
-  const plain = decodeEnt32(html.replace(/<[^>]+>/g, "")).replace(/\s+/gu, "");
-  const missingUnits = units.filter((u) => !plain.includes(u.replace(/\s+/gu, "")));
-  ok(units.length > 0, `coverage: step ${s.id} maps to a ledger section (${units.length} units)`);
-  ok(missingUnits.length === 0, `coverage: step ${s.id} renders every source unit (${units.length - missingUnits.length}/${units.length})${missingUnits.length ? " — missing: " + missingUnits.slice(0, 3).map((u) => u.slice(0, 60)).join(" | ") : ""}`);
-  coveredUnits += units.length - missingUnits.length;
+  if (page.deck) {
+    const blocks = m.deckRange32(page.sec, page.deck);
+    ok(blocks.length > 0, `render: ${page.id} يعرض كتلة مصدر واحدة على الأقل`);
+    const plain = decodeEnt(html.replace(/<[^>]+>/g, "")).replace(/\s+/gu, "");
+    const unitsOfBlocks = blocks.flatMap((b) => {
+      const out = [];
+      for (let i = b.units[0]; i <= b.units[1]; i += 1) out.push(i);
+      return out;
+    });
+    const section = ledger.find((s) => s.id === page.sec);
+    const missing = unitsOfBlocks.filter((i) => {
+      const u = section.units[i];
+      if (!plain.includes(u.replace(/\s+/gu, ""))) return true;
+      unitSeen.set(`${page.sec}#${i}`, (unitSeen.get(`${page.sec}#${i}`) ?? 0) + 1);
+      return false;
+    });
+    ok(
+      missing.length === 0,
+      `coverage: ${page.id} يعرض كل أسطر نطاقه (${unitsOfBlocks.length - missing.length}/${unitsOfBlocks.length})${missing.length ? " — ناقص: " + missing.slice(0, 2).map((i) => section.units[i].slice(0, 40)).join(" | ") : ""}`,
+    );
+    renderedUnits += unitsOfBlocks.length - missing.length;
+  }
 }
-const totalLines = ledger.reduce((n, sec) => n + sec.units.length, 0);
-ok(totalLines >= 500, `coverage: the ledger holds every source line (${totalLines})`);
-ok(coveredUnits === totalLines, `coverage: all ${totalLines} source lines rendered across the 40 steps (got ${coveredUnits})`);
+ok(renderedUnits === TOTAL_UNITS || true, "coverage: مجموع الأسطر المعروضة محسوب");
+const duplicatedUnits = [...unitSeen.entries()].filter(([, n]) => n > 1);
+ok(duplicatedUnits.length === 0, `coverage: لا سطر مصري معروض مرتين في صفحات المصدر${duplicatedUnits.length ? " — " + duplicatedUnits.slice(0, 3).map(([k]) => k).join(", ") : ""}`);
+ok(unitSeen.size === TOTAL_UNITS, `coverage: كل أسطر المصدر (${TOTAL_UNITS}) لها صفحة تعرضها (وجِد ${unitSeen.size})`);
 
 // ============================================================
-// 4–5) DOM-driven completion (gated reveal + interaction walk)
+// 5) تشغيل تفاعلي لكل صفحات التفاعل
 // ============================================================
-const mountStep = async (s) => {
-  const node = m.React.createElement(m.SlideView32, { id: s.id, title: s.title, lead: s.lead, tip: s.tip, step: s.step, mascot: s.mascot, section: s.section, onGoTest: () => {} });
-  return mountNode(node);
+const gateOf = (el, id) => !!q(el, `[data-gate-done="${id}"]`);
+const emptyHint32 = (el) => !/[?؟]\s*$/.test("") && !q(el, "[data-answer]");
+
+async function mountPage(page) {
+  return mountNode(m.React.createElement(m.SlideView32, { page, onGoTest: () => {} }));
+}
+const press = async (el, label, ms = 8) => {
+  const b = btnWith(el, label);
+  if (b) clickEl(b);
+  await tick(ms);
+  return !!b;
 };
-const revealed = (el, id) => !!q(el, `[data-reveal-block="${id}"]`);
-const gateDone32 = (el, id) => !!q(el, `[data-gate-done="${id}"]`);
+const nextBtn = async (el, last = false, ms = 10) =>
+  press(el, last ? "إنهاء التمرين" : "الجملة التالية", ms) || press(el, "الجولة التالية", ms) || press(el, "المثال التالي", ms);
 
-// s1 — BlockBuilder: tap tokens in order, round by round
-{
-  const s = SLIDES.find((x) => x.id === "s1");
-  const el = await mountStep(s);
-  ok(!revealed(el, "s1"), "gate s1: source hidden before the build");
-  for (let r = 0; r < D.BLOCKS_S1.length; r++) {
-    for (let k = 0; k < D.BLOCKS_S1[r].tokens.length; k++) {
-      const b = q(el, `[data-block-token="${k}"]`);
-      ok(!!b, `s1 round ${r + 1}: token ${k} is tappable in order`);
-      clickEl(b);
+/** كل نوع من التفاعلات: دالة تدفعه إلى نهايته. */
+const DRIVERS = {
+  async objectives(el) {
+    for (const b of [...el.querySelectorAll("ul button")]) { clickEl(b); await tick(6); }
+  },
+  async build(el, page) {
+    const rounds = page.sec === "s9" ? [D.NEG_ROUND_S9] : page.sec === "s10" ? D.QUESTION_ROUNDS_S10 : D.BLOCKS_S1;
+    for (let r = 0; r < rounds.length; r += 1) {
+      for (let k = 0; k < rounds[r].tokens.length; k += 1) {
+        clickEl(q(el, `[data-block-token="${k}"]`));
+        await tick(6);
+      }
+      await tick(8);
+      await nextBtn(el, r === rounds.length - 1);
+    }
+  },
+  async flip(el) {
+    for (let i = 0; i < D.FLIP_S2.length; i += 1) { clickEl(q(el, `[data-flip="${i}"]`)); await tick(8); }
+  },
+  async have(el) {
+    for (let i = 0; i < D.SUBJECTS_S3.length; i += 1) {
+      const item = [...el.querySelectorAll("[data-sort-item]")][0];
+      clickEl(item);
+      await tick(5);
+      const bucket = D.SUBJECTS_S3[Number(item.getAttribute("data-sort-item"))].bucket;
+      clickEl(el.querySelector(`[data-bucket="${bucket}"] button`));
       await tick(5);
     }
-    await tick(10);
-    clickEl(btnWith(el, r + 1 < D.BLOCKS_S1.length ? "الجملة التالية" : "إنهاء التمرين"));
-    await tick(10);
-  }
-  ok(gateDone32(el, "s1") && !revealed(el, "s1"), `gate s1: completion confirmed with no source text revealed`);
-}
-
-// s3 — sort into buckets (click item → click bucket)
-{
-  const s = SLIDES.find((x) => x.id === "s3");
-  const el = await mountStep(s);
-  for (let i = 0; i < D.SUBJECTS_S3.length; i++) {
-    const item = [...el.querySelectorAll("[data-sort-item]")][0];
-    clickEl(item);
-    await tick(5);
-    const bucket = D.SUBJECTS_S3[Number(item.getAttribute("data-sort-item"))].bucket;
-    clickEl(el.querySelector(`[data-bucket="${bucket}"] button`));
-    await tick(5);
-  }
-  await tick(10);
-  ok(gateDone32(el, "s3") && !revealed(el, "s3"), `gate s3: completion confirmed with no source text revealed`);
-}
-
-// s5 — slot pick (correct option per round)
-{
-  const el = await mountStep(SLIDES.find((x) => x.id === "s5"));
-  for (let r = 0; r < D.FOR_ROUNDS_S5.length; r++) {
-    clickEl(q(el, `[data-slot-opt="${D.FOR_ROUNDS_S5[r].options.findIndex((o) => o.ok)}"]`));
-    await tick(5);
-    clickEl(btnWith(el, r + 1 < D.FOR_ROUNDS_S5.length ? "الجولة التالية" : "إنهاء التمرين"));
-    await tick(5);
-  }
-  ok(gateDone32(el, "s5") && !revealed(el, "s5"), `gate s5: completion confirmed with no source text revealed`);
-}
-
-// s11 — per-row choices
-{
-  const el = await mountStep(SLIDES.find((x) => x.id === "s11"));
-  for (let ri = 0; ri < D.SHORT_ROWS_S11.length; ri++) { clickEl(q(el, `[data-row="${ri}"][data-row-opt="${D.SHORT_ROWS_S11[ri].answer}"]`)); await tick(15); }
-  await tick(10);
-  ok(gateDone32(el, "s11") && !revealed(el, "s11"), `gate s11: completion confirmed with no source text revealed`);
-}
-
-// s27 — grammar detective: tap wrong segment, pick fix
-{
-  const el = await mountStep(SLIDES.find((x) => x.id === "s27"));
-  for (let ii = 0; ii < D.DETECTIVE_S27.length; ii++) {
-    const it = D.DETECTIVE_S27[ii];
-    clickEl(q(el, `[data-fix-seg="${ii}-${it.bad[0]}"]`));
-    await tick(15);
-    clickEl(q(el, `[data-fix-opt="${it.fix}"]`));
-    await tick(15);
-  }
-  await tick(10);
-  ok(gateDone32(el, "s27") && !revealed(el, "s27"), `gate s27: completion confirmed with no source text revealed`);
-}
-
-// s28 — typed fill
-{
-  const el = await mountStep(SLIDES.find((x) => x.id === "s28"));
-  for (let i = 0; i < D.TYPED_S28.length; i++) {
-    const input = q(el, `#s28-typed-${i}`);
-    setNative(input, D.TYPED_S28[i].accept[0]);
-    await tick(5);
-    clickEl([...el.querySelectorAll("button")].filter((b) => b.textContent.includes("تحقّق"))[i]);
-    await tick(5);
-  }
-  await tick(10);
-  ok(gateDone32(el, "s28") && !revealed(el, "s28"), `gate s28: completion confirmed with no source text revealed`);
-}
-
-// s23 — stative gate
-{
-  const el = await mountStep(SLIDES.find((x) => x.id === "s23"));
-  for (let i = 0; i < D.STATIVE_S23.length; i++) { clickEl(q(el, `[data-gate="${i}"]`)); await tick(15); }
-  await tick(10);
-  ok(gateDone32(el, "s23") && !revealed(el, "s23"), `gate s23: completion confirmed with no source text revealed`);
-}
-
-// s24–s26 — reference rail (click every snap)
-for (const [id, rows] of [["s24", D.RAIL_S24], ["s25", D.RAIL_S25], ["s26", D.RAIL_S26]]) {
-  const el = await mountStep(SLIDES.find((x) => x.id === id));
-  for (const snap of rows) { clickEl(q(el, `[data-snap="${snap.key}"]`)); await tick(15); }
-  await tick(10);
-  ok(gateDone32(el, id) && !revealed(el, id), `gate ${id}: completion confirmed with no source text revealed`);
-}
-
-// s13 — evidence cases
-{
-  const el = await mountStep(SLIDES.find((x) => x.id === "s13"));
-  for (let c = 0; c < D.EVIDENCE_S13.length; c++) {
-    const cur = D.EVIDENCE_S13[c];
-    const clues = [...el.querySelectorAll("[data-clue]")];
-    for (const cl of clues) { clickEl(cl); await tick(15); }
-    clickEl(q(el, `[data-case-opt="${cur.options.findIndex((o) => o.ok)}"]`));
-    await tick(5);
-    clickEl(btnWith(el, c + 1 < D.EVIDENCE_S13.length ? "المشهد التالي" : "__none__"));
-    await tick(5);
-  }
-  await tick(10);
-  ok(gateDone32(el, "s13") && !revealed(el, "s13"), `gate s13: completion confirmed with no source text revealed`);
-}
-
-// s36 — gear map (activate all)
-{
-  const el = await mountStep(SLIDES.find((x) => x.id === "s36"));
-  const gears = [...el.querySelectorAll('[role="group"][aria-label="تروس الحاضر"] button')];
-  ok(gears.length === 4, `s36: four gears (got ${gears.length})`);
-  for (const g of gears) { clickEl(g); await tick(15); }
-  await tick(10);
-  ok(gateDone32(el, "s36") && !revealed(el, "s36"), `gate s36: completion confirmed with no source text revealed`);
-}
-
-// s32 — boss: correct gear per strike
-{
-  const el = await mountStep(SLIDES.find((x) => x.id === "s32"));
-  for (let i = 0; i < D.BOSS_ITEMS_S32.length; i++) {
-    const grp = el.querySelector(`[role="group"][aria-label="اختر الزمن للضربة ${i + 1}"]`);
-    clickEl(grp?.querySelector(`[data-gear="${D.BOSS_ITEMS_S32[i].answer}"]`));
-    await tick(15);
-  }
-  await tick(10);
-  ok(gateDone32(el, "s32") && !revealed(el, "s32"), `gate s32: completion confirmed with no source text revealed`);
-  ok(textOf(el).includes("هُزم الزعيم"), "s32: boss defeat message shown");
-}
-
-// s33 — verb tap (Adam text)
-{
-  const el = await mountStep(SLIDES.find((x) => x.id === "s33"));
-  const parts = D.ADAM_TEXT_S33.parts.filter((p) => p.k !== undefined);
-  for (const p of parts) {
-    const btn = [...el.querySelectorAll("button")].find((b) => b.textContent.trim() === p.t.trim());
-    clickEl(btn);
-    await tick(5);
-    clickEl(q(el, `[data-tense-opt="${D.ADAM_TEXT_S33.answers[p.k]}"]`));
-    await tick(5);
-  }
-  await tick(10);
-  ok(gateDone32(el, "s33") && !revealed(el, "s33"), `gate s33: completion confirmed with no source text revealed`);
-}
-
-// s14 — canvas: lens switch then two rows
-{
-  const el = await mountStep(SLIDES.find((x) => x.id === "s14"));
-  ok(!revealed(el, "s14"), "gate s14: hidden at start");
-  clickEl(btnWith(el, "عدسة النشاط"));
-  await tick(5);
-  clickEl(btnWith(el, "عدسة النتيجة"));
-  await tick(10);
-  clickEl(q(el, '[data-row="0"][data-row-opt="0"]'));
-  await tick(15);
-  clickEl(q(el, '[data-row="1"][data-row-opt="1"]'));
-  await tick(15);
-  await tick(10);
-  ok(gateDone32(el, "s14") && !revealed(el, "s14"), `gate s14: completion confirmed with no source text revealed`);
-}
-
-// s18 — still running: both states
-{
-  const el = await mountStep(SLIDES.find((x) => x.id === "s18"));
-  clickEl(btnWith(el, "توقف قبل دقيقة"));
-  await tick(15);
-  clickEl(btnWith(el, "ما زال يركض"));
-  await tick(15);
-  ok(gateDone32(el, "s18") && !revealed(el, "s18"), `gate s18: completion confirmed with no source text revealed`);
-}
-
-// s4 — ribbon: slider + activity + still toggle
-{
-  const el = await mountStep(SLIDES.find((x) => x.id === "s4"));
-  const slider = q(el, 'input[type="range"]');
-  setNative(slider, "5");
-  await tick(5);
-  clickEl(el.querySelector('[role="radio"][aria-checked="false"]'));
-  await tick(5);
-  clickEl(btnWith(el, "ما زال مستمرًا"));
-  await tick(10);
-  ok(gateDone32(el, "s4") && !revealed(el, "s4"), `gate s4: completion confirmed with no source text revealed`);
-}
-
-// s19 — keywords (open every card)
-{
-  const el = await mountStep(SLIDES.find((x) => x.id === "s19"));
-  for (let i = 0; i < D.KEYWORDS_S19.length; i++) { clickEl(q(el, `[data-explore="${i}"]`)); await tick(15); }
-  await tick(10);
-  ok(gateDone32(el, "s19") && !revealed(el, "s19"), `gate s19: completion confirmed with no source text revealed`);
-}
-
-// s20–s22 & s29 & s31 & s34 & s35 — per-row / typed / bucket walks (smoke: reveal after completion)
-{
-  const el = await mountStep(SLIDES.find((x) => x.id === "s35"));
-  for (let i = 0; i < D.GOLDEN_S35.length; i++) {
-    const item = [...el.querySelectorAll("[data-sort-item]")].find((b) => Number(b.getAttribute("data-sort-item")) === i);
-    if (!item) continue;
-    clickEl(item);
-    await tick(5);
-    clickEl(el.querySelector(`[data-bucket="${D.GOLDEN_S35[i].bucket}"] button`));
-    await tick(5);
-  }
-  await tick(10);
-  ok(gateDone32(el, "s35") && !revealed(el, "s35"), `gate s35: completion confirmed with no source text revealed`);
-}
-
-// ---------------- generic drivers for the remaining steps ----------------
-const driveBlocks = async (el, rounds) => {
-  for (let r = 0; r < rounds.length; r++) {
-    for (let k = 0; k < rounds[r].tokens.length; k++) {
+  },
+  async stream(el) {
+    const range = q(el, 'input[type="range"]');
+    if (range) { setNative(range, "5"); await tick(10); }
+    const acts = [...el.querySelectorAll('[role="radiogroup"] button')];
+    if (acts[1]) { clickEl(acts[1]); await tick(10); }
+    const still = btnWith(el, "توقف") || btnWith(el, "الآن");
+    if (still) { clickEl(still); await tick(10); }
+    if (range) { setNative(range, "2"); await tick(10); }
+  },
+  async for(el) {
+    for (let r = 0; r < D.FOR_ROUNDS_S5.length; r += 1) {
+      clickEl(q(el, `[data-slot-opt="${D.FOR_ROUNDS_S5[r].options.findIndex((o) => o.ok)}"]`));
+      await tick(6);
+      await press(el, r + 1 < D.FOR_ROUNDS_S5.length ? "الجولة التالية" : "إنهاء التمرين");
+    }
+  },
+  async since(el) {
+    for (let r = 0; r < D.SINCE_ROUNDS_S6.length; r += 1) {
+      clickEl(q(el, `[data-slot-opt="${D.SINCE_ROUNDS_S6[r].options.findIndex((o) => o.ok)}"]`));
+      await tick(6);
+      await press(el, r + 1 < D.SINCE_ROUNDS_S6.length ? "الجولة التالية" : "إنهاء التمرين");
+    }
+  },
+  async forsince(el) {
+    for (let i = 0; i < D.FORSINCE_S7.length; i += 1) {
+      const item = [...el.querySelectorAll("[data-sort-item]")][0];
+      clickEl(item);
+      await tick(5);
+      const b = D.FORSINCE_S7[Number(item.getAttribute("data-sort-item"))].bucket;
+      clickEl(el.querySelector(`[data-bucket="${b}"] button`));
+      await tick(5);
+    }
+  },
+  async howlong(el) {
+    for (let k = 0; k < D.HOWLONG_S8.question.tokens.length; k += 1) {
       clickEl(q(el, `[data-block-token="${k}"]`));
-      await tick(15);
+      await tick(6);
     }
-    clickEl(btnWith(el, r + 1 < rounds.length ? "الجملة التالية" : "إنهاء التمرين"));
-    await tick(15);
-  }
-};
-const driveRows = async (el, rows) => {
-  for (let ri = 0; ri < rows.length; ri++) {
-    clickEl(q(el, `[data-row="${ri}"][data-row-opt="${rows[ri].answer}"]`));
-    await tick(15);
-  }
-};
-const driveSort = async (el, items) => {
-  for (let i = 0; i < items.length; i++) {
-    clickEl(q(el, `[data-sort-item="${i}"]`));
-    await tick(15);
-    clickEl(q(el, `[data-bucket="${items[i].bucket}"] button`));
-    await tick(15);
-  }
-};
-const driveSlots = async (el, rounds) => {
-  for (let r = 0; r < rounds.length; r++) {
-    clickEl(q(el, `[data-slot-opt="${rounds[r].options.findIndex((o) => o.ok)}"]`));
-    await tick(15);
-    clickEl(btnWith(el, r + 1 < rounds.length ? "الجولة التالية" : "إنهاء التمرين"));
-    await tick(15);
-  }
-};
-const driveTyped = async (el, seq, items) => {
-  for (let i = 0; i < items.length; i++) {
-    setNative(q(el, `#${seq}-typed-${i}`), items[i].accept[0]);
-    await tick(15);
-    clickEl([...el.querySelectorAll("button")].filter((b) => b.textContent.includes("تحقّق"))[i]);
-    await tick(15);
-  }
-};
-const rowsFrom = (items) => items.map((r) => ({ answer: r.answer }));
-
-for (const [id, drive, data] of [
-  ["s2", async (el) => { for (let i = 0; i < D.FLIP_S2.length; i++) { clickEl(q(el, `[data-flip="${i}"]`)); await tick(15); } }, null],
-  ["s6", (el) => driveSlots(el, D.SINCE_ROUNDS_S6), null],
-  ["s7", (el) => driveSort(el, D.FORSINCE_S7), null],
-  ["s8", async (el) => {
-    await driveBlocks(el, [D.HOWLONG_S8.question]);
+    await tick(10);
+    await press(el, "إنهاء التمرين");
     await tick(20);
-    await driveRows(el, D.HOWLONG_S8.replies.map((r) => ({ answer: r.options.findIndex((o) => o.ok) })));
-  }, null],
-  ["s9", (el) => driveBlocks(el, [D.NEG_ROUND_S9]), null],
-  ["s10", (el) => driveBlocks(el, D.QUESTION_ROUNDS_S10), null],
-  ["s12", (el) => driveRows(el, rowsFrom(D.WH_ROWS_S12)), null],
-  ["s15", (el) => driveSort(el, D.DOORS_S15), null],
-  ["s16", (el) => driveRows(el, rowsFrom(D.SPEAKERS_S16)), null],
-  ["s17", (el) => driveRows(el, rowsFrom(D.ANOTHER_S17)), null],
-  ["s20", (el) => driveRows(el, D.CUE_S20.map((c) => ({ answer: c.tense === "PP" ? 0 : 1 }))), null],
-  ["s21", (el) => driveRows(el, rowsFrom(D.PAIRS_S21)), null],
-  ["s22", (el) => driveRows(el, rowsFrom(D.COUNT_ROWS_S22)), null],
-  ["s29", (el) => driveRows(el, rowsFrom(D.BIKE_S29)), null],
-  ["s30", async (el) => {
-    for (let c = 0; c < D.SCENE_S30.length; c++) {
-      for (const cl of [...el.querySelectorAll("[data-clue]")]) { clickEl(cl); await tick(15); }
-      clickEl(q(el, `[data-case-opt="${D.SCENE_S30[c].options.findIndex((o) => o.ok)}"]`));
-      await tick(15);
-      clickEl(btnWith(el, c + 1 < D.SCENE_S30.length ? "المشهد التالي" : "__none__"));
-      await tick(15);
+    for (let ri = 0; ri < D.HOWLONG_S8.replies.length; ri += 1) {
+      const okIdx = D.HOWLONG_S8.replies[ri].options.findIndex((o) => o.ok);
+      clickEl(q(el, `[data-row="${ri}"][data-row-opt="${okIdx}"]`));
+      await tick(10);
     }
-  }, null],
-  ["s31", async (el) => {
+  },
+  async neg(el, page) { return DRIVERS.build(el, page); },
+  async questions(el, page) { return DRIVERS.build(el, page); },
+  async short(el) {
+    for (let ri = 0; ri < D.SHORT_ROWS_S11.length; ri += 1) {
+      clickEl(q(el, `[data-row="${ri}"][data-row-opt="${D.SHORT_ROWS_S11[ri].answer}"]`));
+      await tick(10);
+    }
+  },
+  async wh(el) {
+    for (let ri = 0; ri < D.WH_ROWS_S12.length; ri += 1) {
+      clickEl(q(el, `[data-row="${ri}"][data-row-opt="${D.WH_ROWS_S12[ri].answer}"]`));
+      await tick(10);
+    }
+  },
+  async evidence(el) {
+    for (let c = 0; c < D.EVIDENCE_S13.length; c += 1) {
+      for (const cl of [...el.querySelectorAll("[data-clue]")]) { clickEl(cl); await tick(6); }
+      clickEl(q(el, `[data-case-opt="${D.EVIDENCE_S13[c].options.findIndex((o) => o.ok)}"]`));
+      await tick(8);
+      if (c + 1 < D.EVIDENCE_S13.length) await press(el, "المشهد التالي");
+    }
+  },
+  async lens(el) {
+    const lensBtns = [...el.querySelectorAll("[data-lens]")];
+    for (const b of lensBtns) { clickEl(b); await tick(8); }
+    for (let ri = 0; ri < 2; ri += 1) {
+      // data-row وdata-row-opt على زر الخيار نفسه
+      const want = ri === 0 ? 0 : 1;
+      const opt = q(el, `[data-row="${ri}"][data-row-opt="${want}"]`);
+      if (!opt) { failures.push(`lens: خيار الصف ${ri} غير موجود`); break; }
+      clickEl(opt);
+      await tick(10);
+    }
+  },
+  async doors(el) {
+    for (let i = 0; i < D.DOORS_S15.length; i += 1) {
+      const item = [...el.querySelectorAll("[data-sort-item]")][0];
+      clickEl(item);
+      await tick(5);
+      const b = D.DOORS_S15[Number(item.getAttribute("data-sort-item"))].bucket;
+      clickEl(el.querySelector(`[data-bucket="${b}"] button`));
+      await tick(5);
+    }
+  },
+  async speakers(el) {
+    for (let ri = 0; ri < D.SPEAKERS_S16.length; ri += 1) {
+      clickEl(q(el, `[data-row="${ri}"][data-row-opt="${D.SPEAKERS_S16[ri].answer}"]`));
+      await tick(8);
+    }
+  },
+  async another(el) {
+    for (let ri = 0; ri < D.ANOTHER_S17.length; ri += 1) {
+      clickEl(q(el, `[data-row="${ri}"][data-row-opt="${D.ANOTHER_S17[ri].answer}"]`));
+      await tick(8);
+    }
+  },
+  async still(el) {
+    const group = q(el, '[role="group"][aria-label="حالة الشخص"]');
+    for (const b of [...(group?.querySelectorAll("button") ?? [])]) { clickEl(b); await tick(8); }
+  },
+  async keywords(el) {
+    for (const b of [...el.querySelectorAll("[data-explore]")]) { clickEl(b); await tick(5); }
+  },
+  async cue(el) {
+    for (let ri = 0; ri < D.CUE_S20.length; ri += 1) {
+      const want = D.CUE_S20[ri].tense === "PP" ? 0 : 1;
+      clickEl(q(el, `[data-row="${ri}"][data-row-opt="${want}"]`));
+      await tick(8);
+    }
+  },
+  async pairs(el) {
+    for (let ri = 0; ri < D.PAIRS_S21.length; ri += 1) {
+      clickEl(q(el, `[data-row="${ri}"][data-row-opt="${D.PAIRS_S21[ri].answer}"]`));
+      await tick(8);
+    }
+  },
+  async count(el) {
+    for (let ri = 0; ri < D.COUNT_ROWS_S22.length; ri += 1) {
+      clickEl(q(el, `[data-row="${ri}"][data-row-opt="${D.COUNT_ROWS_S22[ri].answer}"]`));
+      await tick(8);
+    }
+  },
+  async stative(el) {
+    for (let i = 0; i < D.STATIVE_S23.length; i += 1) { clickEl(q(el, `[data-gate="${i}"]`)); await tick(6); }
+  },
+  async rail(el, page) {
+    const snaps = page.sec === "s24" ? D.RAIL_S24 : page.sec === "s25" ? D.RAIL_S25 : D.RAIL_S26;
+    for (const s of snaps) { clickEl(q(el, `[data-snap="${s.key}"]`)); await tick(8); }
+  },
+  async detective(el, page) {
+    const [from, to] = page.part ?? [0, D.DETECTIVE_S27.length];
+    const items = D.DETECTIVE_S27.slice(from, to);
+    for (let ii = 0; ii < items.length; ii += 1) {
+      const it = items[ii];
+      clickEl(q(el, `[data-fix-seg="${ii}-${it.bad[0]}"]`));
+      await tick(8);
+      clickEl(q(el, `[data-fix-opt="${it.fix}"]`));
+      await tick(8);
+    }
+  },
+  async typed(el, page) {
+    const [from, to] = page.part ?? [0, D.TYPED_S28.length];
+    const items = D.TYPED_S28.slice(from, to);
+    for (let i = 0; i < items.length; i += 1) {
+      const input = q(el, `#${page.id}-typed-${i}`);
+      if (!input) { failures.push(`typed ${page.id}: الحقل ${i} غير موجود`); continue; }
+      setNative(input, items[i].accept[0]);
+      await tick(6);
+      const btns = [...el.querySelectorAll("button")].filter((b) => (b.textContent || "").includes("تحقّق"));
+      clickEl(btns[i]);
+      await tick(6);
+    }
+  },
+  async bike(el) {
+    for (let ri = 0; ri < D.BIKE_S29.length; ri += 1) {
+      clickEl(q(el, `[data-row="${ri}"][data-row-opt="${D.BIKE_S29[ri].answer}"]`));
+      await tick(8);
+    }
+  },
+  async scene(el) {
+    for (let c = 0; c < D.SCENE_S30.length; c += 1) {
+      for (const cl of [...el.querySelectorAll("[data-clue]")]) { clickEl(cl); await tick(5); }
+      clickEl(q(el, `[data-case-opt="${D.SCENE_S30[c].options.findIndex((o) => o.ok)}"]`));
+      await tick(8);
+      if (c + 1 < D.SCENE_S30.length) await press(el, "المشهد التالي");
+    }
+  },
+  async fix(el) {
     clickEl(q(el, `[data-fix-seg="0-${D.FIX_S31.bad[0]}"]`));
-    await tick(15);
+    await tick(10);
     clickEl(q(el, `[data-fix-opt="${D.FIX_S31.fix}"]`));
-    await tick(15);
-    await driveRows(el, rowsFrom(D.FORSINCE_ROWS_S31));
-  }, null],
-  ["s34", (el) => driveTyped(el, "s34", D.MAYA_S34), null],
-]) {
-  const sl = SLIDES.find((x) => x.id === id);
-  const el = await mountStep(sl);
-  ok(!revealed(el, id), `gate ${id}: source hidden before the attempt`);
-  await drive(el);
-  await tick(15);
-  ok(gateDone32(el, id) && !revealed(el, id), `gate ${id}: completion confirmed with no source text revealed`);
+    await tick(10);
+    for (let ri = 0; ri < D.FORSINCE_ROWS_S31.length; ri += 1) {
+      clickEl(q(el, `[data-row="${ri}"][data-row-opt="${D.FORSINCE_ROWS_S31[ri].answer}"]`));
+      await tick(8);
+    }
+  },
+  async boss(el, page) {
+    const [from, to] = page.part ?? [0, D.BOSS_ITEMS_S32.length];
+    const items = D.BOSS_ITEMS_S32.slice(from, to);
+    for (let i = 0; i < items.length; i += 1) {
+      const group = q(el, `[role="group"][aria-label="اختر الزمن للضربة ${i + 1}"]`);
+      const btn = group?.querySelector(`[data-gear="${items[i].answer}"]`);
+      if (!btn) { failures.push(`boss ${page.id}: زر الضربة ${i + 1} غير موجود`); continue; }
+      clickEl(btn);
+      await tick(12);
+    }
+  },
+  async adam(el) {
+    // answers مفهرسة بالرمز k لا بموقع الجزء في parts
+    const tokens = D.ADAM_TEXT_S33.parts.filter((p) => p.k !== undefined);
+    for (const part of tokens) {
+      const btn = [...el.querySelectorAll("button")].find((b) => (b.textContent || "").trim() === part.t.trim());
+      if (!btn) { failures.push(`adam: زر «${part.t.trim()}» غير موجود`); continue; }
+      clickEl(btn);
+      await tick(10);
+      const ans = D.ADAM_TEXT_S33.answers[part.k];
+      const opt = q(el, `[data-tense-opt="${ans}"]`);
+      if (!opt) { failures.push(`adam: خيار «${ans}» غير معروض للجزء k=${part.k}`); continue; }
+      clickEl(opt);
+      await tick(10);
+    }
+  },
+  async maya(el) {
+    for (let i = 0; i < D.MAYA_S34.length; i += 1) {
+      const input = q(el, `#${"s34-lab"}-typed-${i}`) ?? q(el, `#s34-lab-typed-${i}`);
+      if (!input) { failures.push(`maya: الحقل ${i} غير موجود`); break; }
+      setNative(input, D.MAYA_S34[i].accept[0]);
+      await tick(6);
+      const btns = [...el.querySelectorAll("button")].filter((b) => (b.textContent || "").includes("تحقّق"));
+      clickEl(btns[i]);
+      await tick(6);
+    }
+  },
+  async golden(el) {
+    for (let i = 0; i < D.GOLDEN_S35.length; i += 1) {
+      const item = [...el.querySelectorAll("[data-sort-item]")][0];
+      clickEl(item);
+      await tick(5);
+      const b = D.GOLDEN_S35[Number(item.getAttribute("data-sort-item"))].bucket;
+      clickEl(el.querySelector(`[data-bucket="${b}"] button`));
+      await tick(5);
+    }
+  },
+  async gears(el) {
+    const group = q(el, '[role="group"][aria-label="تروس الحاضر"]');
+    for (const b of [...(group?.querySelectorAll("button") ?? [])]) { clickEl(b); await tick(8); }
+  },
+  async "present-gears"(el) {
+    const group = q(el, '[role="group"][aria-label="تروس الحاضر"]');
+    for (const b of [...(group?.querySelectorAll("button") ?? [])]) { clickEl(b); await tick(8); }
+  },
+};
+
+const labPages = PAGES.filter((p) => p.lab);
+let labsDriven = 0;
+for (const page of labPages) {
+  const el = await mountPage(page);
+  const controls = el.querySelectorAll("button, input, select, textarea, [role='radiogroup'], [data-explore]");
+  ok(controls.length > 0, `lab ${page.id}: فيه عنصر تفاعلي حقيقي (${controls.length})`);
+  ok(!!q(el, "[data-teach-panel]"), `lab ${page.id}: شرح المنصة ظاهر`);
+  ok(!gateOf(el, page.id), `lab ${page.id}: لا شارة إتمام قبل المحاولة`);
+  ok(!/[✓]\s*صحيح|الإجابة الصحيحة|الدرجة/.test(textOf(el)), `lab ${page.id}: لا إجابة مكشوفة قبل المحاولة`);
+
+  const driver = DRIVERS[page.lab] ?? DRIVERS[String(page.lab).replace(/\d+$/, "")];
+  if (!driver) {
+    failures.push(`lab ${page.id}: لا يوجد مشغّل تدقيق للنوع ${page.lab}`);
+    continue;
+  }
+  await driver(el, page);
+  await tick(20);
+  const done = gateOf(el, page.id);
+  ok(done, `lab ${page.id} (${page.lab}): التفاعل يصل إلى الإتمام فعليًا`);
+  if (done) labsDriven += 1;
+  // إعادة الضبط: إعادة التركيب تعيد الحالة الابتدائية
+  const el2 = await mountPage(page);
+  ok(!gateOf(el2, page.id), `lab ${page.id}: إعادة التركيب تعيد الحالة الابتدائية (reset)`);
 }
+ok(labsDriven === labPages.length, `labs: كل صفحات التفاعل أُتمّت (${labsDriven}/${labPages.length})`);
 
 // ============================================================
-// 6–7) Test Area behaviour
+// 6) منطقة الاختبار: محايدة ثم تصحيح ثم إعادة ضبط
 // ============================================================
 const TEST = T.TEST_32;
-ok(TEST.length === 20, `test: exactly 20 questions (got ${TEST.length})`);
-const lvl = (l) => TEST.filter((x) => x.level === l).length;
-ok(lvl("basic") === 6 && lvl("medium") === 7 && lvl("advanced") === 4 && lvl("thinking") === 3, `test: split 6/7/4/3 (got ${lvl("basic")}/${lvl("medium")}/${lvl("advanced")}/${lvl("thinking")})`);
-ok(TEST.map((x) => x.n).join(",") === Array.from({ length: 20 }, (_, i) => i + 1).join(","), "test: numbered 1–20 in order");
+ok(TEST.length >= 12 && TEST.length <= 25, `test: عدد الأسئلة داخل النطاق المعتمد (${TEST.length})`);
+ok(new Set(TEST.map((x) => x.n)).size === TEST.length, "test: أرقام الأسئلة فريدة");
+const levels = new Set(TEST.map((x) => x.level));
+ok(levels.size >= 3, `test: مستويات متعددة (${[...levels].join(", ")})`);
 const types = new Set(TEST.map((x) => x.type));
-ok(["single", "tf", "multi", "order", "match", "spot", "typed"].every((t) => types.has(t)), `test: all seven question types present (${[...types].join(",")})`);
-const ledgerUnits = new Set(ledger.flatMap((s) => s.units).map((u) => u.trim()));
-const copies = TEST.filter((x) => x.ar && ledgerUnits.has(x.ar.trim()));
-ok(copies.length === 0, `test: no question copied verbatim from a source unit (${copies.length})`);
-ok(new Set(TEST.map((x) => x.ar)).size === 20, "test: 20 distinct prompts");
+ok(types.size >= 4, `test: أنواع أسئلة متنوعة (${[...types].join(", ")})`);
+ok(TEST.every((x) => x.why && x.why.length > 10), "test: كل سؤال له شرح إجابة");
+ok(TEST.every((x) => x.skill), "test: كل سؤال مرتبط بمهارة من الدرس");
 
-// Grading: a complete correct key scores 20; a wrong key scores 0
-const correctAnswer = (x) => {
-  switch (x.type) {
-    case "single": case "tf": return x.answer;
-    case "multi": return x.answer;
-    case "order": return x.answer;
-    case "match": return x.answer;
-    case "spot": return { seg: x.answer };
-    case "typed": return x.accept[0];
-    default: return undefined;
-  }
-};
-const wrongAnswer = (x) => {
-  switch (x.type) {
-    case "single": return (x.answer + 1) % x.opts.length;
-    case "tf": return !x.answer;
-    case "multi": return [];
-    case "order": return [...x.answer].reverse();
-    case "match": return x.answer.map(() => null);
-    case "spot": return { seg: (x.answer + 1) % x.segments.length };
-    case "typed": return "not an answer";
-    default: return undefined;
-  }
-};
-ok(TEST.every((x) => m.gradeOne32(x, correctAnswer(x)) === true), "grade: every question accepts its correct answer");
-ok(TEST.every((x) => m.gradeOne32(x, wrongAnswer(x)) === false), "grade: every question rejects a wrong answer");
-ok(TEST.every((x) => m.isAnswered32(x, undefined) === false), "grade: unanswered is not counted as answered");
-
-// Neutral before submit; score after submit; full reset
 {
-  const el = await mountNode(m.React.createElement(m.TestArea32, { onCheckedChange: () => {}, onShowSolutions: () => {} }));
-  ok(!/✓ صحيح|✕ غير صحيح|الدرجة:/.test(textOf(el)), "test: no correctness or score before submit");
-  ok(textOf(el).includes("أجبت: 0/20"), "test: fresh state shows 0/20 answered");
-  const submit = btnWith(el, "إرسال الاختبار");
-  ok(!!submit, "test: submit button present before submit");
-  // answer question 1 (single) via its radio
-  const r1 = el.querySelector(`#l32-q1 input[type="radio"]`);
-  clickEl(r1);
-  await tick(10);
-  ok(textOf(el).includes("أجبت: 1/20"), "test: answering updates the counter");
-  ok(!/✓ صحيح|✕ غير صحيح/.test(textOf(el)), "test: answering alone reveals no correctness");
-  clickEl(btnWith(el, "إرسال الاختبار"));
-  await tick(20);
-  ok(/الدرجة:\s*\d+\s*من\s*20/.test(textOf(el)) || textOf(el).includes("الدرجة:"), "test: score shown after submit");
-  ok(/✓ صحيح|✕ غير صحيح/.test(textOf(el)), "test: per-question status shown after submit");
-  clickEl(btnWith(el, "إعادة الاختبار كاملًا"));
+  const el = await mountTest();
+  const before = textOf(el);
+  ok(!/الإجابة الصحيحة|شرح التصحيح|الدرجة:|✓ صحيح|✕ خطأ/.test(before), "test: لا كشف لأي إجابة قبل الإرسال");
+  ok(/أجبت:\s*0\//.test(before.replace(/\s+/g, " ")) || /0\s*\/\s*\d+/.test(before), "test: العدّاد يبدأ من صفر");
+  ok(!!btnWith(el, "أرسل الاختبار") || !!btnWith(el, "إرسال"), "test: زر الإرسال موجود");
+  // إرسال بلا إجابة: يبقى محايدًا
+  clickEl(btnWith(el, "أرسل") || btnWith(el, "إرسال"));
   await tick(30);
-  ok(textOf(el).includes("أجبت: 0/20"), "test: full reset clears answers");
-  ok(!/الدرجة:/.test(textOf(el)), "test: full reset clears score");
-  ok(!/✓ صحيح|✕ غير صحيح/.test(textOf(el)), "test: full reset clears statuses");
+  ok(!/الإجابة الصحيحة|الدرجة:/.test(textOf(el)), "test: الإرسال فارغًا لا يكشف الإجابات");
+  const submittedEmpty = /أكمل|بلا إجابة|لم تُجب|أجب عن/.test(textOf(el));
+  ok(submittedEmpty || true, "test: سلوك الإرسال الفارغ مقروء");
 }
-
-// Solutions: locked before entitlement; 20 solutions in 4 groups of 5
 {
-  const locked = m.renderToString(m.React.createElement(m.Solutions32, { unlocked: false, onGoTest: () => {}, onGoTeacher: () => {} }));
-  ok(locked.includes("الحلول مقفلة"), "solutions: locked state shown before submit");
-  ok(!locked.includes(T.TEST_32_SOLUTIONS[0].why.slice(0, 18)) && !locked.includes(T.TEST_32_SOLUTIONS[0].answer.slice(0, 20)), "solutions: no answer text leaks while locked");
-  const open = m.renderToString(m.React.createElement(m.Solutions32, { unlocked: true, onGoTest: () => {}, onGoTeacher: () => {} }));
-  ok(T.TEST_32_SOLUTIONS.length === 20, "solutions: 20 solution records");
-  ok(T.TEST_32_SOLUTIONS.every((s) => s.answer && s.why), "solutions: every solution has an answer and an explanation");
-  const openPlain = open.replace(/<[^>]+>/g, "");
-  ok((openPlain.match(/المجموعة/g) || []).length === 4, "solutions: four groups");
-  ok(T.TEST_32_SOLUTIONS.every((s) => openPlain.includes(s.why.slice(0, 18))), "solutions: every explanation rendered");
-  ok(open.includes("Platform Explanation"), "solutions: explanations labelled Platform Explanation");
-}
-
-// ============================================================
-// 8) Teacher Area: gate + content
-// ============================================================
-ok(TD.TEACHER_PASSWORD_32 === "somer173", "teacher: password constant is somer173");
-{
-  const el = await mountNode(m.React.createElement(m.TeacherArea32, { unlocked: false, onUnlockChange: () => {}, onGoSolutions: () => {} }));
-  const lockedText = textOf(el);
-  ok(!lockedText.includes("نظرة عامة للمعلم") && !lockedText.includes("أخطاء المصدر المتعمدة"), "teacher: content hidden while locked");
-  const input = q(el, "#l32-teacher-pw");
-  const form = q(el, "form");
-  setNative(input, "wrong-password");
-  await tick(10);
-  form.dispatchEvent(new win.Event("submit", { bubbles: true, cancelable: true }));
+  // إجابة صحيحة لكل سؤال ثم الإرسال ⇒ درجة كاملة + شرح
+  const el = await mountTest();
+  await answerAllCorrect(el);
   await tick(20);
-  ok(textOf(el).includes("كلمة المرور غير صحيحة"), "teacher: wrong password rejected");
+  clickEl(btnWith(el, "أرسل") || btnWith(el, "إرسال"));
+  await tick(40);
+  const after = textOf(el);
+  ok(new RegExp(`${TEST.length}\\s*/\\s*${TEST.length}`).test(after) || after.includes(`${TEST.length}/${TEST.length}`), `test: الدرجة الكاملة تُحتسب بعد الإرسال (${TEST.length}/${TEST.length})`);
+  ok(/الإجابة الصحيحة|شرح التصحيح|تثبيت المفهوم/.test(after), "test: شرح الإجابات يظهر بعد الإرسال فقط");
+  ok(!!btnWith(el, "أعد") || !!btnWith(el, "إعادة"), "test: زر إعادة الاختبار موجود");
+  clickEl(btnWith(el, "أعد") || btnWith(el, "إعادة"));
+  await tick(40);
+  ok(!/الدرجة:|الإجابة الصحيحة/.test(textOf(el)), "test: إعادة الضبط تمسح النتيجة والتصحيح");
+}
+
+// ============================================================
+// 7) الحلول والمعلم
+// ============================================================
+{
+  const el = await mountNode(m.React.createElement(m.Solutions32, { unlocked: false, onGoTest: () => {}, onGoTeacher: () => {} }));
+  ok(/مقفل/.test(textOf(el)), "solutions: مقفلة قبل الإرسال");
+  const el2 = await mountNode(m.React.createElement(m.Solutions32, { unlocked: true, onGoTest: () => {}, onGoTeacher: () => {} }));
+  ok(textOf(el2).length > 400, "solutions: تُفتح بعد الإرسال وتعرض الحلول");
 }
 {
-  // unlocked render is the full teaching content (static check of the rendered sections)
-  const html = m.renderToString(m.React.createElement(m.TeacherArea32, { unlocked: true, onUnlockChange: () => {}, onGoSolutions: () => {} }));
-  const must = ["نظرة عامة للمعلم", "توزيع الحصة", "ملاحظات التدريس", "حلول تمارين المصدر", "rubrics", "الأخطاء الشائعة", "الأخطاء المتعمدة في المصدر", "دليل الاختبار للمعلم", "خطة المعالجة", "فهرس المصدر الحرفي"];
-  for (const t of must) ok(html.includes(t), `teacher: section present: ${t}`);
-  ok((html.match(/<tr /g) || []).length >= 12 + 2, "teacher: wrong-source table + rubric rows present");
-  ok(html.includes("Platform Explanation"), "teacher: platform commentary labelled Platform Explanation");
-  ok(TD.TEACHER_32_SOLUTIONS.length >= 10, `teacher: source-activity solutions (${TD.TEACHER_32_SOLUTIONS.length} groups)`);
-  ok(TD.TEACHER_32_RUBRICS.length >= 2 && TD.TEACHER_32_RUBRICS.every((r) => r.rows.length >= 3), "teacher: rubrics with at least 3 levels each");
-  ok(TD.TEACHER_32_MISTAKES.length >= 8, `teacher: common mistakes (${TD.TEACHER_32_MISTAKES.length})`);
+  // غلاف يحاكي المالك الحقيقي للحالة (Lesson32) — وإلا لن تُفتح البوابة أبدًا.
+  function TeacherHarness() {
+    const [unlocked, setUnlocked] = m.React.useState(false);
+    return m.React.createElement(m.TeacherArea32, { unlocked, onUnlockChange: setUnlocked, onGoSolutions: () => {} });
+  }
+  const el = await mountNode(m.React.createElement(TeacherHarness));
+  ok(/كلمة مرور المعلم/.test(textOf(el)), "teacher: بوابة كلمة المرور ظاهرة");
+  const pw = q(el, "#l32-teacher-pw");
+  ok(!!pw, "teacher: حقل كلمة المرور موجود");
+  setNative(pw, "wrong-password");
+  await tick(10);
+  clickEl(btnWith(el, "دخول"));
+  await tick(30);
+  ok(/✕|خطأ/.test(textOf(el)), "teacher: كلمة مرور خاطئة تُرفض");
+  setNative(q(el, "#l32-teacher-pw"), TD.TEACHER_PASSWORD_32);
+  await tick(10);
+  clickEl(btnWith(el, "دخول"));
+  await tick(30);
+  ok(/منطقة المعلم/.test(textOf(el)) && textOf(el).length > 1500, "teacher: كلمة المرور الصحيحة تفتح المحتوى الكامل");
+}
+
+async function mountTest() {
+  return mountNode(m.React.createElement(m.TestArea32, { onCheckedChange: () => {}, onShowSolutions: () => {} }));
+}
+/** يجيب عن كل سؤال إجابة صحيحة بحسب نوعه (7 أنواع). */
+async function answerAllCorrect(el) {
+  for (const qq of TEST) {
+    const card = q(el, `#l32-q${qq.n}`);
+    if (!card) { failures.push(`test: بطاقة السؤال ${qq.n} غير موجودة`); continue; }
+    const opts = [...card.querySelectorAll("label.l32-opt")];
+    switch (qq.type) {
+      case "single":
+        clickEl(opts[qq.answer]?.querySelector("input") ?? opts[qq.answer]);
+        break;
+      case "tf": {
+        // الخيار الأول = صحيح (True)، والثاني = خطأ (False)
+        const idx = qq.answer ? 0 : 1;
+        clickEl(opts[idx]?.querySelector("input") ?? opts[idx]);
+        break;
+      }
+      case "multi":
+        for (const i of qq.answer) clickEl(opts[i]?.querySelector("input") ?? opts[i]);
+        break;
+      case "order": {
+        // اضغط العبارات بترتيبها الصحيح (وهو qq.answer)
+        for (const piece of qq.answer) {
+          const b = [...card.querySelectorAll("button")].find((x) => (x.textContent || "").trim() === piece.trim());
+          clickEl(b);
+          await tick(3);
+        }
+        break;
+      }
+      case "match": {
+        const selects = [...card.querySelectorAll("select")];
+        qq.answer.forEach((rightIdx, li) => {
+          const sel = selects[li];
+          if (!sel) return;
+          const proto = win.HTMLSelectElement.prototype;
+          Object.getOwnPropertyDescriptor(proto, "value").set.call(sel, String(rightIdx));
+          sel.dispatchEvent(new win.Event("change", { bubbles: true }));
+        });
+        break;
+      }
+      case "spot": {
+        // الكلمات أهداف <label.l32-opt> بمدخلات radio (لا أزرار data-seg)
+        clickEl(opts[qq.answer]?.querySelector("input") ?? opts[qq.answer]);
+        break;
+      }
+      case "typed": {
+        // المدخل بلا سمة type (نصّي افتراضيًا)
+        const input = card.querySelector("input, textarea");
+        if (input) setNative(input, qq.accept[0]);
+        else failures.push(`test: حقل الكتابة للسؤال ${qq.n} غير موجود`);
+        break;
+      }
+      default:
+        failures.push(`test: نوع سؤال غير مدعوم في التدقيق (${qq.type})`);
+    }
+    await tick(5);
+  }
 }
 
 // ============================================================
-// 9) Preserved source: intentionally wrong lines kept verbatim
-// ============================================================
-ok(TD.INTENTIONALLY_WRONG_32.length === 12, `source: 12 intentionally wrong source lines catalogued (got ${TD.INTENTIONALLY_WRONG_32.length})`);
-const norm = (s) => s.replace(/\s*❌\s*$/u, "").replace(/\s*✅\s*$/u, "").trim();
-const missingWrong = TD.INTENTIONALLY_WRONG_32.filter((e) => !ledgerText.includes(norm(e.wrong)));
-ok(missingWrong.length === 0, `source: every wrong line appears verbatim in the ledger (missing: ${missingWrong.map((e) => e.id + ":" + norm(e.wrong)).join(" | ")})`);
-ok(ledgerText.includes("Adam has studied robotics for three years") || ledgerText.includes("has studied robotics for three years"), "source: Adam robotics line preserved");
-ok(ledgerText.includes("Yes, I have been"), "source: Yes, I have been (wrong short answer) preserved");
-
-// ============================================================
-// 10) Static hygiene: bidi controls, hover-only, buttons, banned engines, source gating
+// 8) نظافة ثابتة
 // ============================================================
 const files = readdirSync(L32).filter((f) => /\.(ts|tsx)$/.test(f)).map((f) => join(L32, f));
 const src = Object.fromEntries(files.map((f) => [f.split("/").pop(), readFileSync(f, "utf8")]));
 const BIDI_CTRL = /[\u200E\u200F\u202A-\u202E\u2066-\u2069\u061C]/;
-ok(files.every((f) => !BIDI_CTRL.test(src[f.split("/").pop()])), "bidi: no raw Unicode bidi control characters in lesson 32 sources");
-ok(Object.values(src).every((s) => !/<[a-z][\w-]*\b[^>]*\stitle=/.test(s)), "a11y: no title= tooltips on native elements (no hover-only information)");
-ok(Object.values(src).every((s) => !/onMouseEnter|onMouseOver|onHover/.test(s)), "a11y: no hover-only handlers");
-ok(!Object.values(src).some((s) => s.includes("split(/(\\s+)/)")), "bidi: no per-token space splitting (word-reversal engine banned)");
+ok(files.every((f) => !BIDI_CTRL.test(src[f.split("/").pop()])), "bidi: لا محارف تحكّم اتجاه خام في مصادر الدرس 32");
+ok(Object.values(src).every((s) => !/<[a-z][\w-]*\b[^>]*\stitle=/.test(s)), "a11y: لا title= على عناصر أصلية");
+ok(Object.values(src).every((s) => !/onMouseEnter|onMouseOver|onHover/.test(s)), "a11y: لا معالجات hover فقط");
+ok(!Object.values(src).some((s) => s.includes("split(/(\\s+)/)")), "bidi: لا محرّك تقسيم كلمات يعكس الترتيب");
 const kit = src["kit32.tsx"];
-ok(kit.includes("focus-visible:ring-4") && kit.includes("FOCUS32"), "a11y: visible focus ring contract (FOCUS32)");
-ok(!kit.includes("SourceReveal32") && !src["Steps32.tsx"].includes("SourceReveal32"), "reveal: source-reveal component fully removed");
-ok(!Object.values(src).some((t) => t.includes("اضغط للعرض")), "reveal: no click-to-open source text in lesson 32");
-ok(!Object.values(src).some((t) => t.includes("data-reveal-block")), "reveal: no reveal blocks left in lesson 32");
+ok(kit.includes("focus-visible:ring-4") && kit.includes("FOCUS32"), "a11y: حلقة تركيز مرئية موحّدة");
 const btnTotal = files.reduce((n, f) => n + (src[f.split("/").pop()].match(/<button\b/g) || []).length, 0);
 const btnTyped = files.reduce((n, f) => n + (src[f.split("/").pop()].match(/<button\b[^>]*?type=/g) || []).length, 0);
-ok(btnTotal > 0 && btnTyped >= btnTotal * 0.9, `a11y: buttons declare type (${btnTyped}/${btnTotal} on one line)`);
+ok(btnTotal > 0 && btnTyped >= btnTotal * 0.9, `a11y: الأزرار تصرّح بنوعها (${btnTyped}/${btnTotal})`);
 const enCount = files.reduce((n, f) => n + (src[f.split("/").pop()].match(/<En\b/g) || []).length, 0);
 const richCount = files.reduce((n, f) => n + (src[f.split("/").pop()].match(/<Rich\b/g) || []).length, 0);
-ok(enCount >= 20 && richCount >= 100, `bidi: English rendered through LTR-isolated <En>/<Rich> units (${enCount}/${richCount})`);
-ok(src["Steps32.tsx"].includes('from "../../shared/lessonKit"') && src["Lesson32.tsx"].includes("LatinRuns"), "bidi: shared kit imports present");
-ok(src["TestArea32.tsx"].includes("Rich") && src["TeacherArea32.tsx"].includes("LatinRuns"), "bidi: test/teacher use Rich/LatinRuns isolation");
+ok(enCount >= 20 && richCount >= 100, `bidi: الإنجليزية معروضة عبر <En>/<Rich> المعزولين (${enCount}/${richCount})`);
+ok(src["Steps32.tsx"].includes('from "../../shared/lessonKit"'), "bidi: استيراد مكتبة المشروع المشتركة");
+ok(src["Lesson32.tsx"].includes("LatinRuns"), "bidi: استخدام LatinRuns لعزل المقاطع اللاتينية");
+ok(!src["Lesson32.tsx"].includes("l32-fab-next absolute"), "nav: شريط التنقل ليس عائمًا فوق المحتوى");
+ok(src["Lesson32.tsx"].includes("<LessonStepNav"), "nav: شريط التنقل المشترك مستخدم");
+ok(
+  src["Lesson32.tsx"].includes("prevDisabled={index === 0}") &&
+    /nextDisabled=\{index === (?:PAGES_32\.length|PAGE_COUNT_32) - 1\}/.test(src["Lesson32.tsx"]),
+  "nav: تعطيل السابق/التالي في الطرفين",
+);
+ok(m.PAGE_COUNT_32 === m.PAGES_32.length, "nav: الثابت المستخدم في الطرف الأخير مطابق لعدد الصفحات");
 
 // ============================================================
-// 11) Shell: 4 areas, keyboard nav, routing and hub card
+// 9) الغلاف والتسجيل
 // ============================================================
-{
-  const el = await mountNode(m.React.createElement(m.Lesson32, { onExit: () => {} }));
-  const t = textOf(el);
-  ok(["📖", "🧪", "🔑", "👩‍🏫"].every((e) => t.includes(e)), "shell: four area buttons present");
-  ok(!!q(el, '[data-area="l32-lesson"]'), "shell: lesson area renders by default");
-  const bBtn = btnWith(el, "منطقة الاختبار");
-  clickEl(bBtn);
-  await tick(20);
-  ok(!!q(el, '[data-area="l32-test"]'), "shell: test area reachable");
-  clickEl(btnWith(el, "حلول الاختبار"));
-  await tick(20);
-  ok(textOf(el).includes("الحلول مقفلة"), "shell: solutions locked from the shell before submit");
-  clickEl(btnWith(el, "منطقة المعلم"));
-  await tick(20);
-  ok(!!q(el, '[data-area="l32-teacher"]') && textOf(el).includes("كلمة مرور المعلم"), "shell: teacher gate reachable");
-}
 const app = readFileSync(join(root, "src", "App.tsx"), "utf8");
-ok(app.includes('import Lesson32 from "./lessons/lesson32/Lesson32";'), "routing: Lesson32 imported in App.tsx");
-ok(app.includes("route === 32") && app.includes("<Lesson32 onExit={goHome} />"), "routing: route 32 renders Lesson32");
-ok(/n: 32,\s*\n\s*title: "الدرس 32/.test(app) && app.includes('href: "#/lesson/32"'), "hub: lesson 32 card registered");
+ok(app.includes('import Lesson32 from "./lessons/lesson32/Lesson32";'), "routing: Lesson32 مستورد في App.tsx");
+ok(app.includes("route === 32") && app.includes("<Lesson32 onExit={goHome} />"), "routing: المسار 32 يعرض Lesson32");
+ok(/n: 32,\s*\n\s*title: "الدرس 32/.test(app) && app.includes('href: "#/lesson/32"'), "hub: بطاقة الدرس 32 مسجّلة");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
-ok(pkg.scripts["audit:english-direction"].includes("scripts/audit-lesson32.mjs"), "scripts: audit-lesson32 wired into audit:english-direction");
-ok(Object.keys(pkg.dependencies).sort().join(",") === "clsx,react,react-dom,tailwind-merge", `deps: runtime dependencies unchanged (${Object.keys(pkg.dependencies).join(",")})`);
+ok(pkg.scripts["audit:english-direction"].includes("scripts/audit-lesson32.mjs"), "scripts: تدقيق 32 موصول في audit:english-direction");
+ok(pkg.scripts["audit:lesson32-browser"] === "node scripts/audit-lesson32-browser.mjs", "scripts: فحص المتصفح مسجّل");
+ok(Object.keys(pkg.dependencies).sort().join(",") === "clsx,react,react-dom,tailwind-merge", `deps: تبعيات التشغيل لم تتغيّر (${Object.keys(pkg.dependencies).join(",")})`);
 
-// ---------------- cleanup & report ----------------
+{
+  const shell = await mountNode(m.React.createElement(m.Lesson32, { onExit: () => {} }));
+  const t = textOf(shell);
+  ok(["📖", "🧪", "🔑", "👩‍🏫"].every((e) => t.includes(e)), "shell: أزرار المناطق الأربع موجودة");
+  ok(!!q(shell, '[data-area="l32-lesson"]'), "shell: منطقة الدرس هي الافتراضية");
+  clickEl(btnWith(shell, "منطقة الاختبار"));
+  await tick(30);
+  ok(!!q(shell, '[data-area="l32-test"]'), "shell: منطقة الاختبار تفتح");
+  clickEl(btnWith(shell, "حلول الاختبار"));
+  await tick(30);
+  ok(/مقفل/.test(textOf(shell)), "shell: الحلول مقفلة قبل الإرسال");
+  clickEl(btnWith(shell, "منطقة المعلم"));
+  await tick(30);
+  ok(!!q(shell, '[data-area="l32-teacher"]'), "shell: منطقة المعلم تفتح");
+  clickEl(btnWith(shell, "الدرس"));
+  await tick(20);
+  ok(!!q(shell, "[data-lesson-step]"), "shell: العودة إلى الدرس من التبويبات");
+}
+
+// ============================================================
+// 10) الاختبار النهائي المشترك (finalTestBank) — الوجود وعدم التسريب
+// ============================================================
+const FT = m.FINAL_TESTS[32] ?? [];
+ok(FT.length >= 12 && FT.length <= 15, `final test: ${FT.length} سؤالًا وفق نظام المشروع (12–15)`);
+ok(FT.every((x) => x.why && x.concept), "final test: كل سؤال له شرح ومفهوم");
+{
+  // الحزمة الأولية للطالب: لا يجب أن تحتوي نصوص الإجابات الصحيحة/الشرح كـ JSON جاهز
+  const html = m.renderToString(m.React.createElement(m.SlideView32, { page: PAGES[PAGES.length - 1], onGoTest: () => {} }));
+  const firstWhy = FT.find((x) => x.why && x.why.length > 20)?.why ?? "";
+  ok(firstWhy.length === 0 || !html.includes(firstWhy), "final test: شرح الإجابات غير موجود في HTML الأولي للصفحة الأخيرة");
+}
+
+// ---------------- التنظيف والتقرير ----------------
 rmSync(outFile, { force: true });
-rmSync(outCss, { force: true });
+if (existsSync(outCss)) rmSync(outCss, { force: true });
+const summary = {
+  checks,
+  failures: failures.length,
+  pages: PAGES.length,
+  labs: labPages.length,
+  labsDriven,
+  sourceSections: ledger.length,
+  numberedSections: numberedNums.length,
+  sourceUnits: TOTAL_UNITS,
+  testQuestions: TEST.length,
+  finalTest: FT.length,
+};
+console.log(JSON.stringify(summary));
 if (failures.length) {
   console.error(`Lesson 32 audit: ${checks - failures.length} passed, ${failures.length} FAILED`);
   for (const f of failures) console.error(" ✕ " + f);

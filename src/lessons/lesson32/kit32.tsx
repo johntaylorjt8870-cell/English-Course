@@ -19,13 +19,78 @@ import { normalizeTyped32 } from "./testData";
 import type { DeckBlock32 } from "./sourceDeck32";
 
 export const ACCENT32: FrameAccent = {
-  step: "bg-[#4338ca]",
-  badge: "bg-[#ebe9fd] text-[#312a8f]",
-  tip: "from-[#312a8f] to-[#0b5f77]",
-  shadow: "shadow-[0_16px_44px_-24px_rgba(14,116,144,0.45)]",
+  step: "bg-slate-900",
+  badge: "bg-indigo-100 text-indigo-800",
+  tip: "from-slate-900 to-slate-800",
+  shadow: "shadow-[0_10px_40px_-15px_rgba(30,27,75,0.15)]",
 };
 
-export const FOCUS32 = "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#22d3ee] focus-visible:ring-offset-2";
+export const FOCUS32 = "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-indigo-300 focus-visible:ring-offset-2";
+
+/**
+ * إطار الصفحة — نفس مفردات الدرس 1 والدرس 41:
+ * بطاقة بيضاء واحدة، تميمة متحركة، رقاقة رقم الخطوة، شارة القسم،
+ * عنوان Changa، سطر تمهيدي رمادي، ثم المحتوى، وأخيرًا شريط الـ🦉.
+ */
+export function Frame32({
+  mascot,
+  step,
+  badge,
+  title,
+  lead,
+  tip,
+  section,
+  children,
+}: {
+  mascot: string;
+  step?: number | string;
+  badge?: string;
+  title: ReactNode;
+  lead?: ReactNode;
+  tip?: ReactNode;
+  /** القسم المصري المعروض في هذه الصفحة (للتدقيق وشارة المصدر) */
+  section?: string;
+  children: ReactNode;
+}) {
+  return (
+    <section
+      data-source-section={section}
+      className="relative rounded-[2rem] border border-slate-200 bg-white p-5 shadow-[0_10px_40px_-15px_rgba(30,27,75,0.15)] md:p-8"
+    >
+      <div aria-hidden className="anim-drift pointer-events-none absolute left-5 top-4 select-none text-4xl md:left-7 md:top-5 md:text-5xl">
+        {mascot}
+      </div>
+      <div className="flex flex-wrap items-center gap-2.5">
+        {step !== undefined && (
+          <span className="font-head grid h-11 min-w-11 place-items-center rounded-2xl bg-slate-900 px-2 text-lg font-bold leading-none text-white shadow">
+            {step}
+          </span>
+        )}
+        {badge && (
+          <span className="rounded-full bg-indigo-100 px-3.5 py-1 text-xs font-bold text-indigo-800 md:text-sm">{badge}</span>
+        )}
+
+      </div>
+      <h2 tabIndex={-1} className="font-head mt-3 max-w-[88%] text-2xl font-bold leading-snug text-slate-900 outline-none md:text-3xl">
+        {typeof title === "string" ? <Rich text={title} /> : title}
+      </h2>
+      {lead && (
+        <p className="mt-1.5 max-w-[92%] text-base text-slate-500 md:text-lg">
+          {typeof lead === "string" ? <Rich text={lead} /> : lead}
+        </p>
+      )}
+      <div className="mt-5 space-y-3">{children}</div>
+      {tip && (
+        <div className="mt-5 flex items-start gap-3 rounded-2xl bg-slate-900 p-3.5 text-white">
+          <span aria-hidden className="text-xl">🦉</span>
+          <div className="text-sm font-semibold leading-relaxed md:text-base">
+            {typeof tip === "string" ? <Rich text={tip} /> : tip}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
 
 /** أدوار القطع في الجملة — ألوان + تسمية عربية (اللون ليس الوسيلة الوحيدة) */
 export const ROLE32: Record<string, RoleStyle> = {
@@ -44,18 +109,22 @@ const ROLE_CLASS = (role: string) => ROLE32[role]?.chip ?? "l32-role-s";
 // عناصر أساسية
 // ---------------------------------------------------------------
 
-/** حاوية تجربة تفاعلية (Lab) بهوية الدرس 32 */
+/** حاوية تجربة تفاعلية (Lab) — بطاقة بيضاء بطرف علوي هادئ كما في الدرس 41 */
 export function Lab32({ emoji, label, ar, seq, children }: { emoji: string; label: string; ar?: string; seq: string; children: ReactNode }) {
   return (
-    <div data-en-seq={seq} className="l32-card overflow-hidden">
-      <div className="flex flex-wrap items-center gap-2 border-b border-[#d6ddf2] bg-[linear-gradient(100deg,#e7f6fb_0%,#f4f8ff_52%,#ebe9fd_100%)] px-3 py-2">
-        <span aria-hidden className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-[#a9dcea] bg-white text-lg">{emoji}</span>
+    <div data-en-seq={seq} className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_10px_40px_-18px_rgba(30,27,75,0.18)]">
+      <div className="flex flex-wrap items-center gap-2.5 border-b border-slate-100 bg-slate-50/80 px-4 py-2.5">
+        <span aria-hidden className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-white text-lg shadow-sm">{emoji}</span>
         <span dir="ltr" className="ltr-pair inline-flex min-w-0 flex-wrap items-baseline gap-2">
-          <span dir="ltr" className="l32-en-display text-[11px] font-black uppercase tracking-[0.18em] text-[#0b5f77]">{label}</span>
-          {ar && <span dir="rtl" className="text-sm font-bold text-[#46507f]"><LatinRuns text={ar} /></span>}
+          <span dir="ltr" className="l32-en-display text-[10px] font-black uppercase text-indigo-700">{label}</span>
+          {ar && (
+            <span dir="rtl" className="text-sm font-bold text-slate-600">
+              <LatinRuns text={ar} />
+            </span>
+          )}
         </span>
       </div>
-      <div className="p-3 sm:p-4">{children}</div>
+      <div className="p-3.5 sm:p-4">{children}</div>
     </div>
   );
 }
@@ -63,11 +132,13 @@ export function Lab32({ emoji, label, ar, seq, children }: { emoji: string; labe
 /** شرح من المنصة — يُوسم دائمًا «Platform Explanation». */
 export function Platform32({ children }: { children: ReactNode }) {
   return (
-    <div className="l32-card l32-card-gold p-3">
+    <div className="rounded-2xl border-2 border-amber-200 bg-amber-50 p-3.5">
       <div className="mb-1.5 flex flex-wrap items-center gap-2">
         <PlatformTag />
       </div>
-      <div className="text-sm font-bold leading-relaxed text-[#3c4670]"><Rich text={String(children ?? "")} /></div>
+      <div className="text-sm font-semibold leading-relaxed text-slate-800 md:text-base">
+        <Rich text={String(children ?? "")} />
+      </div>
     </div>
   );
 }
@@ -76,15 +147,17 @@ export function Platform32({ children }: { children: ReactNode }) {
 export function Teach32({ items, head = "شرح المنصة" }: { items: string[]; head?: string }) {
   if (!items || items.length === 0) return null;
   return (
-    <div className="l32-teach" data-teach-panel>
-      <div dir="ltr" className="ltr-pair mb-1.5 flex flex-wrap items-center gap-2">
+    <div className="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-sm" data-teach-panel>
+      <div className="ltr-pair mb-2 flex flex-wrap items-center gap-2" dir="ltr">
         <PlatformTag />
-        <span dir="rtl" className="l32-h text-sm"><Rich text={head} /></span>
+        <span dir="rtl" className="font-head text-sm font-bold text-slate-900">
+          <Rich text={head} />
+        </span>
       </div>
       <ul className="space-y-1.5">
         {items.map((t, i) => (
-          <li key={i} className="flex items-start gap-2 text-sm font-semibold leading-relaxed text-[#3c4670]">
-            <span aria-hidden className="mt-1 shrink-0 text-[10px] text-[#4338ca]">◆</span>
+          <li key={i} className="flex items-start gap-2 text-sm font-semibold leading-relaxed text-slate-600">
+            <span aria-hidden className="mt-1 shrink-0 text-[10px] text-indigo-600">◆</span>
             <span className="min-w-0"><Rich text={t} /></span>
           </li>
         ))}
@@ -97,11 +170,11 @@ export function Teach32({ items, head = "شرح المنصة" }: { items: string
 export function Verdict32({ ok, text, why }: { ok: boolean; text?: string; why?: string }) {
   return (
     <div role="status" aria-live="polite"
-      className={`flex flex-wrap items-center gap-2 rounded-2xl border-2 p-2.5 text-sm font-bold ${ok ? "border-[#b6e0c4] bg-[#eaf7ee] text-[#14532d]" : "border-[#f2bcbc] bg-[#fdecec] text-[#7f1414]"}`}>
-      <span aria-hidden className={`grid h-7 w-7 shrink-0 place-items-center rounded-full font-black text-white ${ok ? "bg-[#15803d]" : "bg-[#b91c1c]"}`}>{ok ? "✓" : "✕"}</span>
+      className={`flex flex-wrap items-center gap-2 rounded-2xl border-2 p-2.5 text-sm font-bold ${ok ? "border-emerald-200 bg-emerald-50 text-emerald-900" : "border-rose-200 bg-rose-50 text-rose-900"}`}>
+      <span aria-hidden className={`grid h-7 w-7 shrink-0 place-items-center rounded-full font-black text-white ${ok ? "bg-emerald-600" : "bg-rose-600"}`}>{ok ? "✓" : "✕"}</span>
       {text && <span className="min-w-0 flex-1"><Rich text={text} /></span>}
       {why && (
-        <span className="w-full rounded-xl bg-white/80 px-2.5 py-1.5 text-xs font-semibold text-[#46507f]">
+        <span className="w-full rounded-xl bg-white/80 px-2.5 py-1.5 text-xs font-semibold text-slate-600">
           <span className="ms-1 inline-block"><PlatformTag /></span> <Rich text={why} />
         </span>
       )}
@@ -114,12 +187,12 @@ export function Progress32({ done, total, label }: { done: number; total: number
   const pct = total === 0 ? 0 : Math.round((done / total) * 100);
   return (
     <div className="flex items-center gap-2">
-      <span className="shrink-0 text-xs font-black text-[#0b5f77]"><Rich text={`${label} ${done}/${total}`} /></span>
+      <span className="shrink-0 text-xs font-black text-cyan-800"><Rich text={`${label} ${done}/${total}`} /></span>
       <div role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={done} aria-label={label}
         className="l32-progress-track h-2.5 min-w-0 flex-1 overflow-hidden rounded-full">
         <div className="l32-progress-fill h-full rounded-full transition-all" style={{ width: `${pct}%` } as CSSProperties} />
       </div>
-      <span aria-hidden className="font-en shrink-0 text-[11px] font-black text-[#46507f]">{pct}%</span>
+      <span aria-hidden className="font-en shrink-0 text-[11px] font-black text-slate-600">{pct}%</span>
     </div>
   );
 }
@@ -129,13 +202,13 @@ export function StemLine({ parts, filled }: { parts: string[]; filled: string | 
   const sentence = parts.map((p) => (p === "___" ? (filled ?? "___") : p)).join(" ").replace(/ ([.?,!])/g, "$1");
   if (filled) {
     return (
-      <div dir="ltr" className="ltr-row text-base font-bold text-[#131b3f] md:text-lg">
+      <div dir="ltr" className="ltr-row text-base font-bold text-slate-900 md:text-lg">
         <En>{sentence}</En>
       </div>
     );
   }
   return (
-    <div dir="ltr" className="ltr-row flex flex-wrap items-center gap-1.5 text-base font-bold text-[#131b3f] md:text-lg">
+    <div dir="ltr" className="ltr-row flex flex-wrap items-center gap-1.5 text-base font-bold text-slate-900 md:text-lg">
       {parts.map((p, i) => (p === "___"
         ? <span key={i} className="l32-slot l32-role-empty min-w-[6rem] text-base">?</span>
         : <En key={i}>{p}</En>))}
@@ -161,12 +234,50 @@ export function SourceBadge32({ src }: { src: boolean }) {
 
 const AR_CHAR32 = /[\u0600-\u06FF]/;
 
+/** هل السطر قصير بما يسمح بعرضه كرقاقة بدل صف كامل؟ */
+function isCompactBlock(block: DeckBlock32): boolean {
+  if (block.kind === "example") {
+    return !block.ar && block.en.trim().split(/\s+/).length <= 3 && !block.en.includes("→");
+  }
+  if (block.kind === "map") {
+    return block.left.split(/\s+/).length <= 4 && block.right.split(/\s+/).length <= 4;
+  }
+  return false;
+}
+
+/** رقاقة مصدر قصيرة — النص كما هو، مع سهم الخريطة إن وُجد. */
+function DeckChip32({ block }: { block: DeckBlock32 }) {
+  if (block.kind === "map") {
+    const arabicRight = AR_CHAR32.test(block.right);
+    return (
+      <span className="l32-deck-chip" data-kind="map">
+        {block.prefix.trim() && <span aria-hidden className="me-1 font-bold text-indigo-700">{block.prefix.trim()}</span>}
+        <span dir="ltr" className="font-en font-bold text-slate-800">{block.left}</span>
+        <span aria-hidden className={`mx-1 font-bold ${arabicRight ? "text-cyan-700" : "text-indigo-600"}`}>→</span>
+        <span className={arabicRight ? "font-bold text-cyan-900" : "font-en font-bold text-indigo-800"} dir={arabicRight ? "rtl" : "ltr"}>
+          {block.right}
+        </span>
+      </span>
+    );
+  }
+  if (block.kind !== "example") return null;
+  const wrong = block.mark === "wrong";
+  const ok = block.mark === "ok";
+  return (
+    <span className="l32-deck-chip" data-kind={wrong ? "wrong" : ok ? "fix" : "en"}>
+      <span dir="ltr" className="font-en font-bold text-slate-800">{block.en}</span>
+      {wrong && <span aria-hidden className="ms-1 text-rose-600">❌</span>}
+      {ok && <span aria-hidden className="ms-1 text-emerald-600">✅</span>}
+    </span>
+  );
+}
+
 /** سطر واحد من منصة المصدر — يُعرض كما ورد حرفيًا داخل بطاقة مصمّمة. */
 function DeckRow32({ block }: { block: DeckBlock32 }) {
   if (block.kind === "art") {
     return (
       <div className="l32-deck-item" data-kind="art">
-        <div dir="ltr" className="ltr-row overflow-x-auto whitespace-nowrap font-en text-sm font-bold tracking-wide text-[#334155]">
+        <div dir="ltr" className="ltr-row overflow-x-auto whitespace-nowrap font-en text-sm font-bold tracking-wide text-slate-700">
           <En>{block.text}</En>
         </div>
       </div>
@@ -181,12 +292,12 @@ function DeckRow32({ block }: { block: DeckBlock32 }) {
   }
   if (block.kind === "map") {
     const raw = `${block.prefix}${block.left} → ${block.right}`;
-    const tone = AR_CHAR32.test(block.right) ? "bg-[#0e7490]" : "bg-[#4338ca]";
+    const tone = AR_CHAR32.test(block.right) ? "bg-cyan-700" : "bg-indigo-700";
     return (
       <div className="l32-deck-item" data-kind="map">
         <div className="flex flex-wrap items-center gap-2">
           <span aria-hidden className={`h-2.5 w-2.5 shrink-0 rounded-full ${tone}`} />
-          <span className="min-w-0 flex-1"><Rich text={raw} className="l32-deck-ar font-bold text-[#131b3f]" /></span>
+          <span className="min-w-0 flex-1"><Rich text={raw} className="l32-deck-ar font-bold text-slate-900" /></span>
         </div>
       </div>
     );
@@ -206,11 +317,32 @@ function DeckRow32({ block }: { block: DeckBlock32 }) {
   return (
     <div className="l32-deck-item" data-kind={noteKind}>
       <p className="l32-deck-ar">
-        {block.prefix && <span aria-hidden className="me-1 font-black text-[#4338ca]">{block.prefix.trim()}</span>}
         <Rich text={block.text} />
       </p>
     </div>
   );
+}
+
+/**
+ * يجمع الأسطر القصيرة المتتابعة في مجموعة واحدة تُعرض كرقاقات،
+ * ويترك الأسطر الطويلة (مثال + ترجمة، قاعدة، رسم) في صفوفها الكاملة.
+ */
+function groupBlocks(blocks: DeckBlock32[]): DeckBlock32[][] {
+  const groups: DeckBlock32[][] = [];
+  let run: DeckBlock32[] = [];
+  for (const b of blocks) {
+    if (isCompactBlock(b)) {
+      run.push(b);
+      continue;
+    }
+    if (run.length) {
+      groups.push(run);
+      run = [];
+    }
+    groups.push([b]);
+  }
+  if (run.length) groups.push(run);
+  return groups;
 }
 
 /**
@@ -225,14 +357,22 @@ export function SourceDeck32({ blocks, sectionTitle }: { blocks: DeckBlock32[]; 
   return (
     <section className="l32-deck" aria-label="أمثلة المصدر وشرحها لهذه الخطوة">
       <div className="l32-deck-head">
-        <span className="l32-kicker">📚 سجل المصدر داخل هذه الخطوة</span>
+        <span className="l32-kicker">📚 نص المصدر — كما ورد حرفيًا</span>
         <span className="l32-chip">
           <Rich text={`${blocks.length} سطرًا مصدريًا${examples > 0 ? ` · ${examples} مثالًا إنجليزيًا` : ""}${translated > 0 ? ` · ${translated} منها بترجمة عربية` : ""}`} />
         </span>
         {sectionTitle && <span className="l32-chip l32-chip-indigo"><Rich text={sectionTitle} /></span>}
       </div>
-      <div className="grid gap-1.5 md:grid-cols-2">
-        {blocks.map((b, i) => <DeckRow32 key={i} block={b} />)}
+      <div className="space-y-1.5" data-deck-count={blocks.length}>
+        {groupBlocks(blocks).map((group, gi) =>
+          group.length > 1 || isCompactBlock(group[0]) ? (
+            <div key={gi} className="flex flex-wrap items-center gap-1.5">
+              {group.map((b, i) => <DeckChip32 key={i} block={b} />)}
+            </div>
+          ) : (
+            <DeckRow32 key={gi} block={group[0]} />
+          ),
+        )}
       </div>
     </section>
   );
@@ -273,7 +413,7 @@ export function StreamTimeline32({ start = 0.35, span, live, label, traces = [],
           <span className="l32-now-word">NOW</span>
         </div>
       </div>
-      {caption && <p className="mt-1.5 text-xs font-bold text-[#46507f]"><Rich text={caption} /></p>}
+      {caption && <p className="mt-1.5 text-xs font-bold text-slate-600"><Rich text={caption} /></p>}
       {traces.length > 0 && (
         <div className="mt-2 flex flex-wrap items-center gap-1.5">
           <span className="l32-chip l32-chip-coral"><Rich text="🔎 الأثر الآن:" /></span>
@@ -333,18 +473,18 @@ export function BlockBuilder32({ seq, rounds, formula, onDone }: {
   return (
     <div className="space-y-3">
       {formula && (
-        <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-[#c6c2f6] bg-[#f6f5ff] px-3 py-2">
+        <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-indigo-200 bg-indigo-50/60 px-3 py-2">
           <span className="l32-chip l32-chip-indigo"><Rich text="الصيغة" /></span>
-          <span dir="ltr" className="ltr-row font-en text-sm font-black tracking-wide text-[#312a8f] md:text-base"><En>{formula}</En></span>
+          <span dir="ltr" className="ltr-row font-en text-sm font-black tracking-wide text-indigo-800 md:text-base"><En>{formula}</En></span>
         </div>
       )}
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className="text-xs font-black text-[#0b5f77]"><Rich text={`الجملة ${r + 1} من ${rounds.length}`} /></span>
-        <span className="text-xs font-bold text-[#46507f]"><Rich text={`المعنى: ${round.ar}`} /></span>
+        <span className="text-xs font-black text-cyan-800"><Rich text={`الجملة ${r + 1} من ${rounds.length}`} /></span>
+        <span className="text-xs font-bold text-slate-600"><Rich text={`المعنى: ${round.ar}`} /></span>
       </div>
 
       {/* سكك الأدوار: فراغ لكل قطعة مع اسم دورها — يعلّم الترتيب بصريًا */}
-      <div dir="ltr" className="ltr-row flex flex-wrap items-end gap-1.5 rounded-2xl border-2 border-dashed border-[#a9dcea] bg-[#f9fdff] p-2.5">
+      <div dir="ltr" className="ltr-row flex flex-wrap items-end gap-1.5 rounded-2xl border-2 border-dashed border-cyan-200 bg-cyan-50/60 p-2.5">
         {round.tokens.map((t, i) => {
           const placed = built.includes(i);
           return (
@@ -356,10 +496,10 @@ export function BlockBuilder32({ seq, rounds, formula, onDone }: {
         })}
       </div>
 
-      <div className="rounded-2xl border border-[#d6ddf2] bg-white p-2.5">
-        <p className="mb-2 text-xs font-black text-[#46507f]"><Rich text="قطع الجملة — المسها بالترتيب:" /></p>
+      <div className="rounded-2xl border border-slate-200 bg-white p-2.5">
+        <p className="mb-2 text-xs font-black text-slate-600"><Rich text="قطع الجملة — المسها بالترتيب:" /></p>
         {complete ? (
-          <p className="text-center text-sm font-black text-[#0b5f77]"><Rich text="✓ اكتملت الجملة" /></p>
+          <p className="text-center text-sm font-black text-cyan-800"><Rich text="✓ اكتملت الجملة" /></p>
         ) : (
           <div className="flex flex-wrap gap-2" aria-label="قطع الجملة">
             {tray.map((i) => (
@@ -410,7 +550,7 @@ export function FlipParts32({ seq, parts, onDone }: { seq: string; parts: { text
               className={`group rounded-2xl border-2 p-3 text-start transition active:scale-[0.99] ${ROLE_CLASS(p.role)} ${seen ? "" : "border-dashed"} ${FOCUS32}`}>
               <span className="block font-en text-lg font-black">{p.text}</span>
               {seen ? (
-                <span dir="rtl" className="mt-1.5 block rounded-xl bg-white/85 px-2.5 py-1.5 text-sm font-bold text-[#131b3f]"><Rich text={p.back} /></span>
+                <span dir="rtl" className="mt-1.5 block rounded-xl bg-white/85 px-2.5 py-1.5 text-sm font-bold text-slate-900"><Rich text={p.back} /></span>
               ) : (
                 <span dir="rtl" className="mt-1.5 block text-xs font-bold opacity-80"><Rich text="المس لتكشف دورها ↻" /></span>
               )}
@@ -418,7 +558,7 @@ export function FlipParts32({ seq, parts, onDone }: { seq: string; parts: { text
           );
         })}
       </div>
-      <p className="text-xs font-bold text-[#5b6697]"><Rich text="كل قطعة لها وظيفة واحدة: الرابط بالحاضر، أو الاستمرار، أو الفاعل." /></p>
+      <p className="text-xs font-bold text-slate-500"><Rich text="كل قطعة لها وظيفة واحدة: الرابط بالحاضر، أو الاستمرار، أو الفاعل." /></p>
     </div>
   );
 }
@@ -476,13 +616,13 @@ export function SortBuckets32({ seq, items, buckets, onDone, itemLabel }: {
               className={`min-h-[7rem] rounded-2xl border-2 border-dashed p-2.5 ${bk.tone}`}>
               <button type="button" onClick={() => sel !== null && place(sel, b)} onKeyDown={(e) => onBucketKey(e, b)}
                 aria-label={`ضع العنصر المحدد في: ${bk.label}`}
-                className={`l32-tap l32-tap-bare w-full text-sm font-black text-[#131b3f] ${FOCUS32}`}>
+                className={`l32-tap l32-tap-bare w-full text-sm font-black text-slate-900 ${FOCUS32}`}>
                 <Rich text={bk.label} />
-                {sel !== null && <span className="ms-2 text-xs font-bold text-[#0b5f77]">← ضع هنا</span>}
+                {sel !== null && <span className="ms-2 text-xs font-bold text-cyan-800">← ضع هنا</span>}
               </button>
               <div dir="ltr" className="mt-2 flex flex-wrap gap-1.5">
                 {inside.map(({ it, i }) => (
-                  <span key={i} className="font-en rounded-lg bg-white px-2 py-1 text-sm font-extrabold text-[#14532d] shadow-sm ring-1 ring-[#b6e0c4]">✓ {it.text}</span>
+                  <span key={i} className="font-en rounded-lg bg-white px-2 py-1 text-sm font-extrabold text-emerald-900 shadow-sm ring-1 ring-emerald-200">✓ {it.text}</span>
                 ))}
               </div>
             </div>
@@ -502,7 +642,7 @@ export function SortBuckets32({ seq, items, buckets, onDone, itemLabel }: {
           );
         })}
       </div>
-      <p className="text-xs font-bold text-[#5b6697]"><Rich text="اسحب العنصر إلى الباب، أو اختره بالنقر ثم انقر الباب. (لوحة المفاتيح: Enter)" /></p>
+      <p className="text-xs font-bold text-slate-500"><Rich text="اسحب العنصر إلى الباب، أو اختره بالنقر ثم انقر الباب. (لوحة المفاتيح: Enter)" /></p>
       {msg && <Verdict32 ok={msg.ok} text={msg.text} why={msg.why} />}
     </div>
   );
@@ -541,7 +681,7 @@ export function SlotPick32({ seq, rounds, variant = "ruler", onDone }: { seq: st
   const ruler = variant === "ruler";
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-black text-[#855505]">
+      <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-black text-amber-800">
         <span><Rich text={`الجولة ${r + 1} من ${rounds.length}`} /></span>
         <span className="l32-chip l32-chip-gold">{ruler ? "📏 for — مسطرة المدة" : "🚩 since — علامة البداية"}</span>
       </div>
@@ -556,7 +696,7 @@ export function SlotPick32({ seq, rounds, variant = "ruler", onDone }: { seq: st
           : "since تضع علامة على اللحظة التي انطلق منها التيّار."}
       />
 
-      <div className={`rounded-2xl border-2 p-3 ${ruler ? "border-[#f0d99b] bg-[#fffdf6]" : "border-[#a9dcea] bg-[#f7fdff]"}`}>
+      <div className={`rounded-2xl border-2 p-3 ${ruler ? "border-amber-200 bg-amber-50" : "border-cyan-200 bg-cyan-50/60"}`}>
         <StemLine parts={round.stem} filled={filled} />
       </div>
       <div className="flex flex-wrap gap-2" role="group" aria-label="الخيارات">
@@ -603,10 +743,10 @@ export function PerRow32({ seq, rows, onDone, labels }: { seq: string; rows: Row
         const st = state[ri];
         return (
           <div key={ri} data-row-card={ri}
-            className={`rounded-2xl border-2 p-3 transition-colors ${st.ok ? "border-[#b6e0c4] bg-[#f6fdf8]" : st.picked !== null ? "border-[#f2bcbc] bg-[#fffafa]" : "border-[#d6ddf2] bg-white"}`}>
+            className={`rounded-2xl border-2 p-3 transition-colors ${st.ok ? "border-emerald-200 bg-emerald-50/60" : st.picked !== null ? "border-rose-200 bg-rose-50/60" : "border-slate-200 bg-white"}`}>
             <div className="flex items-start gap-2">
-              {labels?.[ri] && <span className="shrink-0 rounded-lg bg-[#4338ca] px-2 py-0.5 text-xs font-black text-white">{labels[ri]}</span>}
-              <div className="min-w-0 flex-1 text-base font-bold text-[#131b3f] md:text-lg">
+              {labels?.[ri] && <span className="shrink-0 rounded-lg bg-indigo-700 px-2 py-0.5 text-xs font-black text-white">{labels[ri]}</span>}
+              <div className="min-w-0 flex-1 text-base font-bold text-slate-900 md:text-lg">
                 <Rich text={row.stem} />
               </div>
             </div>
@@ -687,10 +827,10 @@ export function TapFix32({ seq, items, onDone }: { seq: string; items: Fix32[]; 
         const isFixed = fixed[ii] !== undefined;
         return (
           <div key={ii}
-            className={`rounded-2xl border-2 p-3 transition-colors ${isFixed ? "border-[#b6e0c4] bg-[#f6fdf8]" : sel[ii] ? "border-[#f7c6d3] bg-[#fffafc]" : "border-[#d6ddf2] bg-white"}`}>
+            className={`rounded-2xl border-2 p-3 transition-colors ${isFixed ? "border-emerald-200 bg-emerald-50/60" : sel[ii] ? "border-rose-200 bg-rose-50/50" : "border-slate-200 bg-white"}`}>
             <div className="mb-1.5 flex flex-wrap items-center gap-2">
               <span className="l32-chip l32-chip-indigo"><Rich text={`الملف ${it.n ?? ii + 1}`} /></span>
-              <span className="text-xs font-black text-[#5b6697]"><Rich text={isFixed ? "✅ مُغلق — تم الإصلاح" : sel[ii] ? "🔎 اختر الإصلاح" : "🔍 ابحث عن الخطأ"} /></span>
+              <span className="text-xs font-black text-slate-500"><Rich text={isFixed ? "✅ مُغلق — تم الإصلاح" : sel[ii] ? "🔎 اختر الإصلاح" : "🔍 ابحث عن الخطأ"} /></span>
             </div>
             <div dir="ltr" className="ltr-row flex flex-wrap gap-1.5" role="group" aria-label={`كلمات الجملة ${ii + 1}`}>
               {it.segments.map((s, si) => {
@@ -706,7 +846,7 @@ export function TapFix32({ seq, items, onDone }: { seq: string; items: Fix32[]; 
             </div>
             {sel[ii] && !isFixed && (
               <div className="mt-2 space-y-2">
-                <p className="text-xs font-black text-[#b91c1c]"><Rich text="اختر الإصلاح:" /></p>
+                <p className="text-xs font-black text-rose-700"><Rich text="اختر الإصلاح:" /></p>
                 <div className="flex flex-wrap gap-2" role="group" aria-label="خيارات الإصلاح">
                   {it.fixOpts.map((o) => (
                     <button key={o} type="button" onClick={() => chooseFix(ii, o)} data-fix-opt={o} dir="ltr"
@@ -716,7 +856,7 @@ export function TapFix32({ seq, items, onDone }: { seq: string; items: Fix32[]; 
               </div>
             )}
             {isFixed && (
-              <div dir="ltr" className="ltr-row mt-2 rounded-xl border border-[#b6e0c4] bg-white p-2 font-en text-base font-extrabold text-[#14532d]">
+              <div dir="ltr" className="ltr-row mt-2 rounded-xl border border-emerald-200 bg-white p-2 font-en text-base font-extrabold text-emerald-900">
                 <En>{`✓ ${corrected(it, fixed[ii])}`}</En>
               </div>
             )}
@@ -754,11 +894,11 @@ export function TypedFill32({ seq, items, onDone }: { seq: string; items: Typed3
         const st = status[i];
         return (
           <div key={i}
-            className={`rounded-2xl border-2 p-3 transition-colors ${st === "ok" ? "border-[#b6e0c4] bg-[#f6fdf8]" : st === "no" ? "border-[#f2bcbc] bg-[#fffafa]" : "border-[#d6ddf2] bg-white"}`}>
+            className={`rounded-2xl border-2 p-3 transition-colors ${st === "ok" ? "border-emerald-200 bg-emerald-50/60" : st === "no" ? "border-rose-200 bg-rose-50/60" : "border-slate-200 bg-white"}`}>
             <div dir="ltr" className="ltr-row flex flex-wrap items-center gap-2">
-              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-[#4338ca] font-en text-xs font-black text-white">{i + 1}</span>
-              <En className="text-base font-bold text-[#131b3f] md:text-lg">{it.prompt}</En>
-              {it.hint && <En className="text-sm font-bold text-[#855505]">{it.hint}</En>}
+              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-indigo-700 font-en text-xs font-black text-white">{i + 1}</span>
+              <En className="text-base font-bold text-slate-900 md:text-lg">{it.prompt}</En>
+              {it.hint && <En className="text-sm font-bold text-amber-800">{it.hint}</En>}
             </div>
             <div className="mt-2 flex flex-wrap items-center gap-2">
               <label className="sr-only" htmlFor={`${seq}-typed-${i}`}>الإجابة للجملة {i + 1}</label>
@@ -770,7 +910,7 @@ export function TypedFill32({ seq, items, onDone }: { seq: string; items: Typed3
                 onChange={(e) => { const v = [...vals]; v[i] = e.target.value; setVals(v); if (st !== "idle") setStatus(status.map((s, k) => (k === i ? "idle" : s)) as ("idle" | "ok" | "no")[]); }}
                 onKeyDown={(e) => { if (e.key === "Enter" && vals[i].trim()) check(i); }}
                 placeholder="اكتب الإجابة بالإنجليزية"
-                className={`font-en min-w-[12rem] flex-1 rounded-xl border-2 bg-white px-3 py-2.5 text-base font-bold text-[#131b3f] outline-none transition-colors focus:border-[#0e7490] disabled:bg-[#f6fdf8] ${st === "ok" ? "border-[#b6e0c4]" : st === "no" ? "border-[#f2bcbc]" : "border-[#d6ddf2]"}`}
+                className={`font-en min-w-[12rem] flex-1 rounded-xl border-2 bg-white px-3 py-2.5 text-base font-bold text-slate-900 outline-none transition-colors focus:border-cyan-700 disabled:bg-emerald-50/60 ${st === "ok" ? "border-emerald-200" : st === "no" ? "border-rose-200" : "border-slate-200"}`}
               />
               <button type="button" onClick={() => check(i)} disabled={!vals[i].trim() || st === "ok"}
                 className={`l32-tap l32-tap-primary disabled:opacity-40 ${FOCUS32}`}>
@@ -830,15 +970,15 @@ export function EvidenceCases32({ seq, cases, onDone }: { seq: string; cases: Ca
       {/* المشهد: الدليل المرئي الآن */}
       <div className="l32-card l32-card-coral p-3">
         <div className="flex items-start gap-3">
-          <span aria-hidden className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl border border-[#f7c6d3] bg-white text-3xl">{cur.scene}</span>
+          <span aria-hidden className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl border border-rose-200 bg-white text-3xl">{cur.scene}</span>
           <div className="min-w-0 flex-1">
             <p className="l32-h text-sm"><Rich text={`المشهد ${c + 1}: ${cur.title}`} /></p>
-            {cur.evidence && <p className="mt-1 text-sm font-bold text-[#46507f]"><Rich text={cur.evidence} /></p>}
-            {cur.evidenceAr && <p className="mt-0.5 text-sm text-[#5b6697]"><Rich text={cur.evidenceAr} /></p>}
+            {cur.evidence && <p className="mt-1 text-sm font-bold text-slate-600"><Rich text={cur.evidence} /></p>}
+            {cur.evidenceAr && <p className="mt-0.5 text-sm text-slate-500"><Rich text={cur.evidenceAr} /></p>}
           </div>
         </div>
         <div className="mt-2.5">
-          <p className="mb-1.5 text-xs font-black text-[#a32a4c]"><Rich text="١) اجمع الأدلة الظاهرة الآن:" /></p>
+          <p className="mb-1.5 text-xs font-black text-rose-800"><Rich text="١) اجمع الأدلة الظاهرة الآن:" /></p>
           <div className="flex flex-wrap gap-2" role="group" aria-label="الأدلة">
             {cur.clues.map((cl, i) => (
               <button key={i} type="button" onClick={() => tapClue(i)} aria-pressed={isClue(i)} data-clue={i}
@@ -847,22 +987,22 @@ export function EvidenceCases32({ seq, cases, onDone }: { seq: string; cases: Ca
               </button>
             ))}
           </div>
-          {!allClues && <p className="mt-2 text-xs font-bold text-[#5b6697]"><Rich text="المس كل الأدلة لتفعيل الاختيارات." /></p>}
+          {!allClues && <p className="mt-2 text-xs font-bold text-slate-500"><Rich text="المس كل الأدلة لتفعيل الاختيارات." /></p>}
         </div>
       </div>
 
       {/* السياق: ماذا يعني هذا الأثر؟ */}
       {allClues && (
         <div className="l32-card l32-card-gold p-3">
-          <p className="mb-1 text-xs font-black text-[#855505]"><Rich text="٢) السياق:" /></p>
-          <p className="text-sm font-bold text-[#3c4670]"><Rich text={cur.context ?? "الأثر ظاهر الآن، والنشاط امتد إلى قريب من هذه اللحظة."} /></p>
+          <p className="mb-1 text-xs font-black text-amber-800"><Rich text="٢) السياق:" /></p>
+          <p className="text-sm font-bold text-slate-600"><Rich text={cur.context ?? "الأثر ظاهر الآن، والنشاط امتد إلى قريب من هذه اللحظة."} /></p>
         </div>
       )}
 
       {/* الجملة التي تفسّر الأدلة */}
       {allClues && !isDone && solved.length === c && (
         <div className="space-y-2">
-          <p className="text-xs font-black text-[#0b5f77]"><Rich text="٣) أي جملة تفسّر هذه الأدلة؟" /></p>
+          <p className="text-xs font-black text-cyan-800"><Rich text="٣) أي جملة تفسّر هذه الأدلة؟" /></p>
           <div className="flex flex-col gap-2" role="group" aria-label="الجمل المقترحة">
             {cur.options.map((o, i) => (
               <button key={i} type="button" onClick={() => pick(o)} data-case-opt={i} dir="ltr"
@@ -879,10 +1019,10 @@ export function EvidenceCases32({ seq, cases, onDone }: { seq: string; cases: Ca
       {/* السبب: لماذا تفسّر هذه الجملة الأثر؟ */}
       {solvedNow && solvedOpt && (
         <div className="l32-card l32-card-aqua p-3">
-          <p className="mb-1 text-xs font-black text-[#0b5f77]"><Rich text="٤) السبب:" /></p>
+          <p className="mb-1 text-xs font-black text-cyan-800"><Rich text="٤) السبب:" /></p>
           <div dir="ltr" className="ltr-row"><span className="l32-deck-en"><En>{solvedOpt.text}</En></span></div>
           {solvedOpt.ar && <p className="l32-deck-ar mt-1"><Rich text={solvedOpt.ar} /></p>}
-          <p className="mt-1 text-sm font-semibold text-[#3c4670]"><Rich text={cur.reason ?? solvedOpt.why} /></p>
+          <p className="mt-1 text-sm font-semibold text-slate-600"><Rich text={cur.reason ?? solvedOpt.why} /></p>
           <div className="mt-1.5"><SourceBadge32 src /></div>
         </div>
       )}
@@ -937,14 +1077,14 @@ export function RibbonMaker32({ seq, activities, maxHours, model, modelAr, onDon
 
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="l32-card l32-card-gold block p-3">
-          <span className="text-xs font-black text-[#855505]"><Rich text={`📏 المدة: ${hours} ${hours === 1 ? "ساعة" : "ساعات"} — حرّكها لترى التيّار يطول أو يقصر`} /></span>
+          <span className="text-xs font-black text-amber-800"><Rich text={`📏 المدة: ${hours} ${hours === 1 ? "ساعة" : "ساعات"} — حرّكها لترى التيّار يطول أو يقصر`} /></span>
           <input type="range" min={1} max={maxHours} step={1} value={hours} data-keynav-lock
             aria-label="المدة بالساعات" aria-valuetext={`${hours} hours`}
             onChange={(e) => { setHours(Number(e.target.value)); mark("h"); }}
             className="l32-range mt-2 w-full" />
         </label>
         <div className="l32-card p-3">
-          <span className="text-xs font-black text-[#46507f]"><Rich text="🏃 النشاط" /></span>
+          <span className="text-xs font-black text-slate-600"><Rich text="🏃 النشاط" /></span>
           <div className="mt-2 flex flex-wrap gap-2" role="radiogroup" aria-label="النشاط">
             {activities.map((a, i) => (
               <button key={a.key} type="button" role="radio" aria-checked={act === i} onClick={() => { setAct(i); mark("a"); }}
@@ -961,19 +1101,19 @@ export function RibbonMaker32({ seq, activities, maxHours, model, modelAr, onDon
           className={`l32-tap px-3.5 text-sm font-black ${still ? "l32-tap-primary" : "l32-tap-gold"} ${FOCUS32}`}>
           {still ? "🏃 ما زال مستمرًا الآن" : "🛑 توقف قبل قليل، والأثر باقٍ"}
         </button>
-        <span className="text-xs font-bold text-[#5b6697]"><Rich text="الجملة واحدة في الحالتين — الواقع يتغيّر، والجملة لا تتغيّر (المصدر §18)." /></span>
+        <span className="text-xs font-bold text-slate-500"><Rich text="الجملة واحدة في الحالتين — الواقع يتغيّر، والجملة لا تتغيّر (المصدر §18)." /></span>
       </div>
 
       <div className="l32-card l32-card-aqua p-3">
-        <p className="mb-1 text-xs font-black text-[#0b5f77]"><Rich text="الجملة التي يصنعها التيّار:" /></p>
+        <p className="mb-1 text-xs font-black text-cyan-800"><Rich text="الجملة التي يصنعها التيّار:" /></p>
         <div dir="ltr" className="ltr-row text-center">
-          <En className="l32-deck-en text-[#0b3c4c]">{sentence}</En>
+          <En className="l32-deck-en text-cyan-900">{sentence}</En>
         </div>
-        <p className="mt-1 text-center text-sm font-bold text-[#3c4670]"><Rich text={`أنا ${activities[act].ar} منذ ${hours} ${hours === 1 ? "ساعة" : "ساعات"}.`} /></p>
+        <p className="mt-1 text-center text-sm font-bold text-slate-600"><Rich text={`أنا ${activities[act].ar} منذ ${hours} ${hours === 1 ? "ساعة" : "ساعات"}.`} /></p>
         {model && (
-          <div className="mt-2 rounded-xl border border-[#a9dcea] bg-white/80 p-2 text-center">
-            <div dir="ltr" className="ltr-row"><En className="text-sm font-black text-[#0b5f77]">{model}</En></div>
-            {modelAr && <p className="mt-0.5 text-xs font-bold text-[#46507f]"><Rich text={modelAr} /></p>}
+          <div className="mt-2 rounded-xl border border-cyan-200 bg-white/80 p-2 text-center">
+            <div dir="ltr" className="ltr-row"><En className="text-sm font-black text-cyan-800">{model}</En></div>
+            {modelAr && <p className="mt-0.5 text-xs font-bold text-slate-600"><Rich text={modelAr} /></p>}
           </div>
         )}
       </div>
@@ -1006,19 +1146,19 @@ export function ExploreGrid32({ seq, items, onDone }: { seq: string; items: Expl
           const seen = open.has(i);
           return (
             <button key={i} type="button" onClick={() => toggle(i)} aria-expanded={seen} data-explore={i}
-              className={`rounded-2xl border-2 p-3 text-start transition active:scale-[0.99] ${seen ? "border-[#a9dcea] bg-[#f2fbfd]" : "border-dashed border-[#d6ddf2] bg-white hover:border-[#67cfe6]"} ${FOCUS32}`}>
+              className={`rounded-2xl border-2 p-3 text-start transition active:scale-[0.99] ${seen ? "border-cyan-200 bg-cyan-50" : "border-dashed border-slate-200 bg-white hover:border-cyan-300"} ${FOCUS32}`}>
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <En className="text-base font-black text-[#131b3f]">{it.en}</En>
-                <span className="text-xs font-bold text-[#46507f]"><Rich text={it.ar} /></span>
+                <En className="text-base font-black text-slate-900">{it.en}</En>
+                <span className="text-xs font-bold text-slate-600"><Rich text={it.ar} /></span>
               </div>
               {seen ? (
                 <span className="mt-2 block space-y-1">
-                  <En className="block text-sm font-bold text-[#0b5f77]">{it.ex}</En>
-                  {it.exAr && <span className="block text-xs font-semibold text-[#46507f]"><Rich text={it.exAr} /></span>}
+                  <En className="block text-sm font-bold text-cyan-800">{it.ex}</En>
+                  {it.exAr && <span className="block text-xs font-semibold text-slate-600"><Rich text={it.exAr} /></span>}
                   <span className="mt-1 inline-block"><SourceBadge32 src={it.src} /></span>
                 </span>
               ) : (
-                <span className="mt-2 block text-xs font-bold text-[#5b6697]"><Rich text="المس لعرض المثال ↻" /></span>
+                <span className="mt-2 block text-xs font-bold text-slate-500"><Rich text="المس لعرض المثال ↻" /></span>
               )}
             </button>
           );
@@ -1050,7 +1190,7 @@ export function StativeGate32({ seq, verbs, onDone }: { seq: string; verbs: { ve
       <Progress32 done={tested.size} total={verbs.length} label="الأفعال المختبرة" />
       <div className="flex flex-wrap items-center gap-2">
         <span aria-hidden className="text-2xl">🚧</span>
-        <p className="text-xs font-black text-[#46507f]"><Rich text="بوابة -ing: مرّر كل فعل وشاهد هل يُفتح له التيّار." /></p>
+        <p className="text-xs font-black text-slate-600"><Rich text="بوابة -ing: مرّر كل فعل وشاهد هل يُفتح له التيّار." /></p>
       </div>
       <div className="flex flex-wrap gap-2" role="group" aria-label="أفعال الحالة">
         {verbs.map((v, i) => (
@@ -1062,17 +1202,17 @@ export function StativeGate32({ seq, verbs, onDone }: { seq: string; verbs: { ve
       </div>
       {cur !== null && (
         <div className="grid gap-2 sm:grid-cols-2" role="status" aria-live="polite">
-          <div className="rounded-2xl border-2 border-[#f2bcbc] bg-[#fdecec] p-3">
-            <div className="text-xs font-black text-[#7f1414]"><Rich text="✕ البوابة مغلقة" /></div>
-            <div dir="ltr" className="ltr-row mt-1"><En className="text-base font-bold text-[#7f1414] line-through decoration-[#f2bcbc]">{`I have been ${verbs[cur].ing} for years.`}</En></div>
+          <div className="rounded-2xl border-2 border-rose-200 bg-rose-50 p-3">
+            <div className="text-xs font-black text-rose-900"><Rich text="✕ البوابة مغلقة" /></div>
+            <div dir="ltr" className="ltr-row mt-1"><En className="text-base font-bold text-rose-900 line-through decoration-[#f2bcbc]">{`I have been ${verbs[cur].ing} for years.`}</En></div>
           </div>
-          <div className="rounded-2xl border-2 border-[#b6e0c4] bg-[#eaf7ee] p-3">
-            <div className="text-xs font-black text-[#14532d]"><Rich text="✓ المرور الصحيح" /></div>
-            <div dir="ltr" className="ltr-row mt-1"><En className="text-base font-bold text-[#14532d]">{`I have ${verbs[cur].v3} him for years.`}</En></div>
+          <div className="rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-3">
+            <div className="text-xs font-black text-emerald-900"><Rich text="✓ المرور الصحيح" /></div>
+            <div dir="ltr" className="ltr-row mt-1"><En className="text-base font-bold text-emerald-900">{`I have ${verbs[cur].v3} him for years.`}</En></div>
           </div>
         </div>
       )}
-      {cur !== null && <p className="text-xs font-bold text-[#46507f]"><Rich text="المصدر يقول «عادةً» — هذه قاعدة الاستعمال الشائعة، ليست تحريمًا مطلقًا (انظر ملاحظة المعلم)." /></p>}
+      {cur !== null && <p className="text-xs font-bold text-slate-600"><Rich text="المصدر يقول «عادةً» — هذه قاعدة الاستعمال الشائعة، ليست تحريمًا مطلقًا (انظر ملاحظة المعلم)." /></p>}
     </div>
   );
 }
@@ -1088,14 +1228,14 @@ export function TenseCompare32({ rows, activeTense }: { rows: TenseRow32Kit[]; a
         const on = activeTense === r.tense;
         return (
           <div key={r.tense}
-            className={`rounded-2xl border-2 p-3 transition-colors ${on ? "border-[#0e7490] bg-[#f2fbfd] shadow-[0_10px_24px_-20px_rgba(11,95,119,1)]" : "border-[#d6ddf2] bg-white"}`}>
+            className={`rounded-2xl border-2 p-3 transition-colors ${on ? "border-cyan-700 bg-cyan-50 shadow-[0_10px_24px_-20px_rgba(11,95,119,1)]" : "border-slate-200 bg-white"}`}>
             <div className="flex flex-wrap items-center gap-2">
-              <span dir="ltr" className="font-en text-sm font-black text-[#312a8f]"><En>{r.tense}</En></span>
+              <span dir="ltr" className="font-en text-sm font-black text-indigo-800"><En>{r.tense}</En></span>
               <span className="l32-chip l32-chip-aqua" dir="ltr"><span className="font-en">{r.form}</span></span>
               <span className="l32-chip l32-chip-gold"><Rich text={`📍 ${r.ref}`} /></span>
             </div>
-            <div dir="ltr" className="ltr-row mt-1.5"><En className="text-base font-bold text-[#131b3f]">{r.en}</En></div>
-            <p className="mt-0.5 text-sm font-semibold text-[#46507f]"><Rich text={r.ar} /></p>
+            <div dir="ltr" className="ltr-row mt-1.5"><En className="text-base font-bold text-slate-900">{r.en}</En></div>
+            <p className="mt-0.5 text-sm font-semibold text-slate-600"><Rich text={r.ar} /></p>
           </div>
         );
       })}
@@ -1152,8 +1292,8 @@ export function ReferenceRail32({ seq, snaps, compare, onDone }: { seq: string; 
           onPointerDown={(e) => { (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId); go(nearest(e.clientX)); }}
           onPointerMove={(e) => { if (e.buttons === 1) { const n = nearest(e.clientX); if (n !== idx) go(n); } }}
         >
-          <span dir="ltr" className="font-en absolute start-0 top-0 text-[11px] font-black tracking-widest text-[#5b6697]">PAST</span>
-          <span dir="ltr" className="font-en absolute end-0 top-0 text-[11px] font-black tracking-widest text-[#a32a4c]">NOW</span>
+          <span dir="ltr" className="font-en absolute start-0 top-0 text-[11px] font-black tracking-widest text-slate-500">PAST</span>
+          <span dir="ltr" className="font-en absolute end-0 top-0 text-[11px] font-black tracking-widest text-rose-800">NOW</span>
           <div className="absolute inset-x-0 top-9 h-2.5 rounded-full bg-[linear-gradient(90deg,#c6c2f6,#67cfe6_55%,#ef4d74)]" aria-hidden />
           {ordered.map((s, i) => (
             <button key={s.key} type="button" onClick={() => go(i)} aria-label={`نقطة المرجع: ${s.label}`} data-snap={s.key}
@@ -1172,7 +1312,7 @@ export function ReferenceRail32({ seq, snaps, compare, onDone }: { seq: string; 
             aria-valuenow={idx}
             aria-valuetext={`${cur.label} — ${cur.tense}`}
             onKeyDown={onKey}
-            className={`l32-rail-knob absolute top-5 h-11 w-11 -translate-x-1/2 rounded-full border-4 border-white bg-[#0e7490] shadow-[0_10px_22px_-12px_rgba(11,95,119,1)] transition-[inset-inline-start] duration-300 ${FOCUS32}`}
+            className={`l32-rail-knob absolute top-5 h-11 w-11 -translate-x-1/2 rounded-full border-4 border-white bg-cyan-700 shadow-[0_10px_22px_-12px_rgba(11,95,119,1)] transition-[inset-inline-start] duration-300 ${FOCUS32}`}
             style={{ insetInlineStart: `${cur.at * 100}%` } as CSSProperties}
           />
         </div>
@@ -1182,14 +1322,14 @@ export function ReferenceRail32({ seq, snaps, compare, onDone }: { seq: string; 
           label={refAtNow ? "المرجع = NOW" : "المرجع = نقطة في الماضي"} />
 
         <div className="mt-2 grid gap-2 sm:grid-cols-[auto_1fr] sm:items-center">
-          <span className="w-fit rounded-xl bg-[#4338ca] px-3 py-1.5 font-en text-sm font-black text-white"><En>{cur.tense}</En></span>
+          <span className="w-fit rounded-xl bg-indigo-700 px-3 py-1.5 font-en text-sm font-black text-white"><En>{cur.tense}</En></span>
           <div>
-            <div dir="ltr" className="ltr-row"><En className="text-base font-black text-[#131b3f]">{cur.en}</En></div>
-            <p className="mt-0.5 text-sm font-semibold text-[#46507f]"><Rich text={cur.ar} /></p>
+            <div dir="ltr" className="ltr-row"><En className="text-base font-black text-slate-900">{cur.en}</En></div>
+            <p className="mt-0.5 text-sm font-semibold text-slate-600"><Rich text={cur.ar} /></p>
           </div>
         </div>
       </div>
-      <p className="text-xs font-bold text-[#5b6697]"><Rich text="اسحب المؤشر، أو انقر النقطة، أو استعمل الأسهم (←/→) على المؤشر." /></p>
+      <p className="text-xs font-bold text-slate-500"><Rich text="اسحب المؤشر، أو انقر النقطة، أو استعمل الأسهم (←/→) على المؤشر." /></p>
       {compare && compare.length > 0 && <TenseCompare32 rows={compare} activeTense={cur.tense} />}
     </div>
   );
@@ -1226,7 +1366,7 @@ export function StillRunning32({ seq, en, states, note, onDone }: {
           <button key={s.key} type="button" onClick={() => pick(s.key)} aria-pressed={cur === s.key}
             className={`l32-tap l32-tap-card ${cur === s.key ? "l32-tap-primary" : ""} ${FOCUS32}`}>
             <span className="block text-sm font-black"><Rich text={s.label} /></span>
-            <span className={`mt-1 block text-xs font-bold ${cur === s.key ? "text-white" : "text-[#5b6697]"}`}><Rich text={s.ar} /></span>
+            <span className={`mt-1 block text-xs font-bold ${cur === s.key ? "text-white" : "text-slate-500"}`}><Rich text={s.ar} /></span>
           </button>
         ))}
       </div>
@@ -1241,8 +1381,8 @@ export function StillRunning32({ seq, en, states, note, onDone }: {
       <div className="l32-card l32-card-aqua flex flex-wrap items-center justify-around gap-3 p-3">
         <span aria-hidden className={`text-5xl ${running ? "l32-bob" : ""}`}>{running ? "🏃" : "🧍"}</span>
         <div className="min-w-0 text-center">
-          <div dir="ltr" className="ltr-row"><En className="l32-deck-en text-[#0b3c4c]">{en}</En></div>
-          <span className="mt-1 block text-xs font-bold text-[#0b5f77]"><Rich text={states[0].breath ? "🫁 يلهث في الحالتين — الأثر ظاهر" : ""} /></span>
+          <div dir="ltr" className="ltr-row"><En className="l32-deck-en text-cyan-900">{en}</En></div>
+          <span className="mt-1 block text-xs font-bold text-cyan-800"><Rich text={states[0].breath ? "🫁 يلهث في الحالتين — الأثر ظاهر" : ""} /></span>
         </div>
       </div>
       <Platform32>{note}</Platform32>
@@ -1276,13 +1416,13 @@ export function Boss32({ seq, items, gears, onDone }: { seq: string; items: Boss
   };
   return (
     <div className="space-y-3">
-      <div className="rounded-2xl border-2 border-[#f7c6d3] bg-[#fdeef2] p-3">
-        <div className="flex items-center justify-between text-xs font-black text-[#a32a4c]">
+      <div className="rounded-2xl border-2 border-rose-200 bg-rose-50 p-3">
+        <div className="flex items-center justify-between text-xs font-black text-rose-800">
           <span><Rich text="🐉 صحة الزعيم" /></span>
           <span dir="ltr" className="font-en">{hp}%</span>
         </div>
         <div role="progressbar" aria-label="صحة الزعيم" aria-valuemin={0} aria-valuemax={100} aria-valuenow={hp}
-          className="mt-1.5 h-3 overflow-hidden rounded-full bg-white ring-1 ring-[#f7c6d3]">
+          className="mt-1.5 h-3 overflow-hidden rounded-full bg-white ring-1 ring-rose-200">
           <div className="h-3 rounded-full bg-[linear-gradient(90deg,#ef4d74,#f5b301)] transition-all duration-500" style={{ width: `${hp}%` } as CSSProperties} />
         </div>
       </div>
@@ -1290,10 +1430,10 @@ export function Boss32({ seq, items, gears, onDone }: { seq: string; items: Boss
         const done = solved[i];
         return (
           <div key={i}
-            className={`rounded-2xl border-2 p-3 transition-colors ${done ? "border-[#b6e0c4] bg-[#f6fdf8]" : wrong[i] ? "border-[#f2bcbc] bg-[#fffafa]" : "border-[#d6ddf2] bg-white"}`}>
+            className={`rounded-2xl border-2 p-3 transition-colors ${done ? "border-emerald-200 bg-emerald-50/60" : wrong[i] ? "border-rose-200 bg-rose-50/60" : "border-slate-200 bg-white"}`}>
             <div className="flex flex-wrap items-center gap-2">
               <span className="l32-chip l32-chip-indigo"><Rich text={`⚔️ الضربة ${i + 1}`} /></span>
-              <span dir="ltr"><En className="text-base font-bold text-[#131b3f]">{it.en}</En></span>
+              <span dir="ltr"><En className="text-base font-bold text-slate-900">{it.en}</En></span>
             </div>
             <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label={`اختر الزمن للضربة ${i + 1}`}>
               {gears.map((g, gi) => (
@@ -1346,19 +1486,19 @@ export function VerbTap32({ seq, parts, answers, why, onDone }: {
   return (
     <div className="space-y-3">
       <Progress32 done={Object.keys(picked).length} total={answers.length} label="العبارات المحللة" />
-      <div dir="ltr" className="ltr-row rounded-2xl border-2 border-[#d6ddf2] bg-white p-4 text-base leading-loose text-[#131b3f] md:text-lg">
+      <div dir="ltr" className="ltr-row rounded-2xl border-2 border-slate-200 bg-white p-4 text-base leading-loose text-slate-900 md:text-lg">
         {parts.map((p, i) => p.k === undefined ? (
           <En key={i}>{p.t}</En>
         ) : (
           <button key={i} type="button" onClick={() => setActive(p.k!)} aria-pressed={active === p.k} disabled={picked[p.k!] !== undefined}
-            className={`mx-0.5 rounded-lg border-2 px-1.5 font-en font-black transition ${picked[p.k!] !== undefined ? "border-[#b6e0c4] bg-[#eaf7ee] text-[#14532d]" : active === p.k ? "border-[#f5b301] bg-[#fff7e2] text-[#855505]" : "border-dashed border-[#f0d99b] bg-white text-[#131b3f] hover:bg-[#fffdf6]"} ${FOCUS32}`}>
+            className={`mx-0.5 rounded-lg border-2 px-1.5 font-en font-black transition ${picked[p.k!] !== undefined ? "border-emerald-200 bg-emerald-50 text-emerald-900" : active === p.k ? "border-amber-400 bg-amber-50 text-amber-800" : "border-dashed border-amber-200 bg-white text-slate-900 hover:bg-amber-50"} ${FOCUS32}`}>
             {p.t}
           </button>
         ))}
       </div>
       {active !== null && picked[active] === undefined && (
         <div className="space-y-2">
-          <p className="text-xs font-black text-[#855505]"><Rich text={`ما زمن العبارة: «${phraseLabel(active).trim()}»؟`} /></p>
+          <p className="text-xs font-black text-amber-800"><Rich text={`ما زمن العبارة: «${phraseLabel(active).trim()}»؟`} /></p>
           <div className="flex flex-wrap gap-2" role="group" aria-label="اختيار الزمن">
             {["Present Perfect", "Present Perfect Continuous"].map((opt) => (
               <button key={opt} type="button" onClick={() => choose(active, opt)} data-tense-opt={opt} dir="ltr"
@@ -1403,8 +1543,8 @@ export function GearMap32({ seq, gears, onDone }: { seq: string; gears: { key: s
         ))}
       </div>
       <div className="l32-card l32-card-aqua p-3">
-        <div dir="ltr" className="ltr-row"><En className="l32-deck-en text-[#0b3c4c]">{g.en}</En></div>
-        <p className="mt-1 text-sm font-semibold text-[#3c4670]"><Rich text={g.ar} /></p>
+        <div dir="ltr" className="ltr-row"><En className="l32-deck-en text-cyan-900">{g.en}</En></div>
+        <p className="mt-1 text-sm font-semibold text-slate-600"><Rich text={g.ar} /></p>
         <div className="mt-1.5"><SourceBadge32 src /></div>
       </div>
     </div>
@@ -1414,13 +1554,18 @@ export function GearMap32({ seq, gears, onDone }: { seq: string; gears: { key: s
 // ---------------------------------------------------------------
 // 18) قائمة الأهداف — ObjectivesChecklist32
 // ---------------------------------------------------------------
-export function ObjectivesChecklist32({ items }: { items: { n: string; text: string }[] }) {
+export function ObjectivesChecklist32({ items, onDone }: { items: { n: string; text: string }[]; onDone?: () => void }) {
   const [checked, setChecked] = useState<Set<number>>(new Set());
+  const fired = useRef(false);
   const toggle = (i: number) => {
     const n = new Set(checked);
     if (n.has(i)) n.delete(i);
     else n.add(i);
     setChecked(n);
+    if (n.size === items.length && !fired.current) {
+      fired.current = true;
+      onDone?.();
+    }
   };
   return (
     <div className="space-y-3">
@@ -1432,7 +1577,7 @@ export function ObjectivesChecklist32({ items }: { items: { n: string; text: str
             <li key={i}>
               <button type="button" onClick={() => toggle(i)} aria-pressed={on}
                 className={`l32-tap l32-tap-card w-full gap-2 ${on ? "l32-tap-done" : ""} ${FOCUS32}`}>
-                <span aria-hidden className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg text-sm font-black ${on ? "bg-[#15803d] text-white" : "bg-[#eef1f7] text-[#46507f]"}`}>{on ? "✓" : o.n}</span>
+                <span aria-hidden className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg text-sm font-black ${on ? "bg-emerald-600 text-white" : "bg-slate-100 text-slate-600"}`}>{on ? "✓" : o.n}</span>
                 <span className="min-w-0 flex-1 text-sm font-bold"><Rich text={o.text} /></span>
               </button>
             </li>
@@ -1494,7 +1639,7 @@ export function LensStage32({ seq, pairs, axis, onBothSeen }: {
           <span aria-hidden className="text-xl">{axis.result.icon}</span>
           <span className="min-w-0">
             <span className="block text-sm font-black"><Rich text="عدسة النتيجة" /></span>
-            <span dir="ltr" className="block font-en text-[11px] font-bold text-[#312a8f]">{axis.result.tag}</span>
+            <span dir="ltr" className="block font-en text-[11px] font-bold text-indigo-800">{axis.result.tag}</span>
           </span>
         </button>
         <span className="l32-vs" aria-hidden>VS</span>
@@ -1504,7 +1649,7 @@ export function LensStage32({ seq, pairs, axis, onBothSeen }: {
           <span aria-hidden className="text-xl">{axis.activity.icon}</span>
           <span className="min-w-0">
             <span className="block text-sm font-black"><Rich text="عدسة النشاط" /></span>
-            <span dir="ltr" className="block font-en text-[11px] font-bold text-[#0b5f77]">{axis.activity.tag}</span>
+            <span dir="ltr" className="block font-en text-[11px] font-bold text-cyan-800">{axis.activity.tag}</span>
           </span>
         </button>
       </div>
@@ -1524,12 +1669,12 @@ export function LensStage32({ seq, pairs, axis, onBothSeen }: {
           <span className="l32-scene-drop" style={{ insetInlineStart: "70%", animationDelay: "1.3s" } as CSSProperties} />
         </div>
 
-        <div className={`mt-3 rounded-2xl border-2 p-3 ${lens === "result" ? "border-[#c6c2f6] bg-[#f7f6ff]" : "border-[#a9dcea] bg-[#f4fcfe]"}`}>
+        <div className={`mt-3 rounded-2xl border-2 p-3 ${lens === "result" ? "border-indigo-200 bg-indigo-50" : "border-cyan-200 bg-cyan-50/60"}`}>
           <div dir="ltr" className="ltr-row text-center">
-            <En className="l32-en-display text-lg font-black text-[#131b3f] md:text-2xl">{side.en}</En>
+            <En className="l32-en-display text-lg font-black text-slate-900 md:text-2xl">{side.en}</En>
           </div>
-          <p className="mt-1 text-center text-sm font-bold text-[#3c4670] md:text-base"><Rich text={side.ar} /></p>
-          <p className="mt-2 text-center text-xs font-bold text-[#46507f] md:text-sm">
+          <p className="mt-1 text-center text-sm font-bold text-slate-600 md:text-base"><Rich text={side.ar} /></p>
+          <p className="mt-2 text-center text-xs font-bold text-slate-600 md:text-sm">
             <Rich text={`${lens === "result" ? "🏆 ما تراه: " : "🎥 ما تراه: "}${side.see}`} />
           </p>
           <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
@@ -1542,12 +1687,12 @@ export function LensStage32({ seq, pairs, axis, onBothSeen }: {
           <button type="button" onClick={() => move(-1)} className={`l32-tap px-3 text-sm ${FOCUS32}`}>→ <Rich text="المثال السابق" /></button>
           <div className="flex items-center gap-1" aria-hidden>
             {pairs.map((_, i) => (
-              <span key={i} className={`h-2 w-2 rounded-full ${i === p ? "bg-[#0e7490]" : seenPairs.has(i) ? "bg-[#a9dcea]" : "bg-[#d6ddf2]"}`} />
+              <span key={i} className={`h-2 w-2 rounded-full ${i === p ? "bg-cyan-700" : seenPairs.has(i) ? "bg-cyan-200" : "bg-slate-200"}`} />
             ))}
           </div>
           <button type="button" onClick={() => move(1)} className={`l32-tap px-3 text-sm ${FOCUS32}`}>← <Rich text="المثال التالي" /></button>
         </div>
-        <p className="mt-2 text-center text-xs font-bold text-[#5b6697]">
+        <p className="mt-2 text-center text-xs font-bold text-slate-500">
           <Rich text={`بدّل العدستين (${seenLenses.size}/2) وتنقّل بين أمثلة المصدر (${seenPairs.size}/${pairs.length}).`} />
         </p>
       </div>

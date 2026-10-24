@@ -3,15 +3,16 @@
 //
 // الهدف: لا يضيع سطر واحد من المصدر. كل وحدة في ledger32.ts تُصنَّف
 // آليًا إلى نوع عرض مناسب (مثال إنجليزي + ترجمته، قاعدة، خريطة
-// «A → B»، رسم زمني، عنوان) ثم تُعرض داخل خطوة الدرس نفسها التي
-// تنتمي إليها الوحدة، بلا حذف ولا اختصار ولا إعادة صياغة.
+// «A → B»، رسم زمني، عنوان) ثم تُعرض داخل صفحة الدرس التي تنتمي
+// إليها الوحدة، بلا حذف ولا اختصار ولا إعادة صياغة.
 //
 // التصنيف اشتقاق runtime من SOURCE_SECTIONS (وليس ملفًا مولَّدًا)
 // فلا يمكن أن ينحرف عن المصدر أبدًا. النص نفسه يُعرض حرفيًا كما هو؛
 // التنسيق (لون/شارة/اتجاه) هو وحده ما تضيفه المنصة.
 //
-// ملاحظة: هذا الملف يقرأ دفتر المصدر، أما kit32.tsx (مكوّنات العرض)
-// فلا يستورده — البيانات تصله عبر Steps32.tsx.
+// كل كتلة تحمل `units` = فهارس أسطر المصدر التي تغطيها، لذلك يستطيع
+// التدقيق الآلي أن يثبت أن مجموع ما تعرضه الصفحات = كل أسطر المصدر
+// مرة واحدة بالضبط (لا سطر ناقص ولا سطر مكرر).
 // ============================================================
 
 import { SOURCE_SECTIONS } from "./ledger32";
@@ -19,12 +20,15 @@ import { SOURCE_SECTIONS } from "./ledger32";
 /** علامة الصحة كما وردت في المصدر (تبقى معروضة كما هي). */
 export type Mark32 = "ok" | "wrong" | "none";
 
+/** نطاق أسطر المصدر الذي تغطيه الكتلة [من، إلى] بترقيم يبدأ من صفر. */
+export type UnitRange32 = [number, number];
+
 export type DeckBlock32 =
-  | { kind: "example"; en: string; ar?: string; mark: Mark32; n?: string }
-  | { kind: "map"; left: string; right: string; mark: Mark32; n?: string; prefix: string }
-  | { kind: "art"; text: string }
-  | { kind: "head"; text: string; n?: string }
-  | { kind: "note"; text: string; mark: Mark32; n?: string; prefix: string };
+  | { kind: "example"; en: string; ar?: string; mark: Mark32; n?: string; units: UnitRange32 }
+  | { kind: "map"; left: string; right: string; mark: Mark32; n?: string; prefix: string; units: UnitRange32 }
+  | { kind: "art"; text: string; units: UnitRange32 }
+  | { kind: "head"; text: string; n?: string; units: UnitRange32 }
+  | { kind: "note"; text: string; mark: Mark32; n?: string; prefix: string; units: UnitRange32 };
 
 const AR_CHAR = /[\u0600-\u06FF]/;
 const LATIN_CHAR = /[A-Za-z]/;
@@ -108,7 +112,7 @@ export function deckFor32(id: string): DeckBlock32[] {
     if (!text) continue;
 
     if (isArt(text)) {
-      out.push({ kind: "art", text: raw.trim() });
+      out.push({ kind: "art", text: raw.trim(), units: [i, i] });
       continue;
     }
 
@@ -116,7 +120,7 @@ export function deckFor32(id: string): DeckBlock32[] {
     if (!hasAr(text) && hasLatin(text)) {
       const map = asMap(text);
       if (map) {
-        out.push({ kind: "map", left: map.left, right: map.right, mark, n, prefix });
+        out.push({ kind: "map", left: map.left, right: map.right, mark, n, prefix, units: [i, i] });
         continue;
       }
       let ar: string | undefined;
@@ -128,23 +132,52 @@ export function deckFor32(id: string): DeckBlock32[] {
           i += 1;
         }
       }
-      out.push({ kind: "example", en: raw.trim(), ar, mark, n });
+      out.push({ kind: "example", en: raw.trim(), ar, mark, n, units: [ar ? i - 1 : i, i] });
       continue;
     }
 
     // سطر عربي أو مختلط
     const map = asMap(text);
     if (map && (hasLatin(map.left) || hasLatin(map.right))) {
-      out.push({ kind: "map", left: map.left, right: map.right, mark, n, prefix });
+      out.push({ kind: "map", left: map.left, right: map.right, mark, n, prefix, units: [i, i] });
       continue;
     }
     if (isHead(text) && mark === "none" && !n) {
-      out.push({ kind: "head", text: raw.trim(), n });
+      out.push({ kind: "head", text: raw.trim(), n, units: [i, i] });
       continue;
     }
-    out.push({ kind: "note", text: raw.trim(), mark, n, prefix });
+    out.push({ kind: "note", text: raw.trim(), mark, n, prefix, units: [i, i] });
   }
   return out;
+}
+
+/** ذاكرة صغيرة: بناء الكتل مرة واحدة لكل قسم (الصفحات تُعاد بناؤها كثيرًا). */
+const BLOCK_CACHE = new Map<string, DeckBlock32[]>();
+
+/** كتل القسم مع مراجع أسطر المصدر (نفس ترتيب المصدر). */
+export function deckBlocks32(id: string): DeckBlock32[] {
+  const hit = BLOCK_CACHE.get(id);
+  if (hit) return hit;
+  const built = deckFor32(id);
+  BLOCK_CACHE.set(id, built);
+  return built;
+}
+
+/**
+ * شرائح الصفحة: من الكتلة `from` إلى الكتلة `to` (ضمنا).
+ * النطاق يُقصّ على حدود القسم فلا يمكن لصفحة أن «تسرق» كتل قسم آخر.
+ */
+export function deckRange32(id: string, range?: [number, number]): DeckBlock32[] {
+  const blocks = deckBlocks32(id);
+  if (!range) return blocks;
+  const from = Math.max(0, Math.min(range[0], blocks.length - 1));
+  const to = Math.max(from, Math.min(range[1], blocks.length - 1));
+  return blocks.slice(from, to + 1);
+}
+
+/** هل يغطي هذا النطاق كل أسطر القسم؟ (يُستخدم في التدقيق) */
+export function rangeCoversUnits32(id: string, range?: [number, number]): UnitRange32[] {
+  return deckRange32(id, range).map((b) => b.units);
 }
 
 /** عدّادات سريعة (لتقرير التغطية والتدقيق). */

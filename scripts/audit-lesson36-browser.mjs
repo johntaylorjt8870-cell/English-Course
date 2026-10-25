@@ -263,8 +263,9 @@ for (const question of TEST_36) {
   }
 }
 ok(await page.locator("[data-test-feedback]").count() === 0, "a fully answered but unsubmitted test still hides all corrections");
+ok(await page.locator("[role='progressbar']").getAttribute("aria-valuenow") === "25", "the progress indicator reaches 25 answered questions");
 ok(!hasSecretInLoadedJS() && !hasKeyChunkLoaded(), "answers typed but unsubmitted still load no key chunk");
-await page.locator("button", { hasText: "إرسال الاختبار" }).click();
+await page.getByRole("button", { name: "إرسال الاختبار" }).click();
 await page.waitForSelector("[data-test-result]", { timeout: 30000 });
 await page.waitForTimeout(150);
 const resultText = await page.locator("[data-test-result]").innerText();

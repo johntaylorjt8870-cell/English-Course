@@ -73,7 +73,7 @@ Screen readers: `fieldset`/`legend`, labelled inputs, `role="status"`/`aria-live
 | `npm run audit:lesson-navigation` | PASS — 176 checks, 0 failed |
 | `node scripts/audit-final-test.mjs` | 1,248 / 1,253; the same 5 Lesson 35 failures exist on `main` (see below) |
 | `node scripts/audit-final-test-coverage.mjs` | 630 / 633; the same 3 Lesson 35 failures exist on `main` |
-| `npm run audit:lesson36-browser` (new) | PASS — 87 / 87 across 1920×1080, 1280×800, 768×900, 375×812 |
+| `npm run audit:lesson36-browser` (new) | PASS — 88 / 88 across 1920×1080, 1280×800, 768×900, 375×812 |
 
 Note: `npm run audit:final-test` and `npm run audit:final-test-coverage` are not registered as npm scripts in this repository; the scripts were run directly. Their failures are byte-identical on a clean `main` worktree (`git worktree add /tmp/main-baseline main`), so they are baseline Lesson 35 failures, not regressions, and were not fixed here (out of scope).
 
@@ -90,7 +90,7 @@ Per viewport (1920×1080, 1280×800, 768×900, 375×812):
 - keyboard focus visibly ringed on an in-lesson control;
 - mobile drawer opens, navigates to a chosen step, and closes.
 
-Flow checks: locked solutions entry does not open the key; test renders 25 questions with submit blocked; answering all 25 still reveals nothing; submission shows the objective score and all 25 feedback panels; the key chunk is fetched only then; all 25 solutions are reachable through the five level tabs; the teacher password rejects a wrong value and reveals 25 keys + 27 coverage rows; RTL arrows move one step each way; one shared site-lock button; no console errors; no student-visible source labels.
+Flow checks: locked solutions entry does not open the key; the in-page test header reports `0/25` → `25/25`; the submit control lives at the end of the test (not floating over question cards); test renders 25 questions with submit blocked; answering all 25 still reveals nothing; submission shows the objective score and all 25 feedback panels; the key chunk is fetched only then; all 25 solutions are reachable through the five level tabs; the teacher password rejects a wrong value and reveals 25 keys + 27 coverage rows; RTL arrows move one step each way; one shared site-lock button; no console errors; no student-visible source labels.
 
 ## 9. Limitations
 

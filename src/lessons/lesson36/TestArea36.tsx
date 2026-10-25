@@ -107,7 +107,9 @@ export default function TestArea36({
           </span>
         </div>
         {!submitted ? (
-          <p className="mt-2 text-xs font-bold text-slate-500">لا يظهر أي تصحيح أو مفتاح إجابة قبل التسليم. يمكنك مراجعة إجاباتك والتنقل بين الأسئلة قبل الإرسال.</p>
+          <p className="mt-2 text-xs font-bold text-slate-500">
+            لا يظهر أي تصحيح أو مفتاح إجابة قبل التسليم. يمكنك مراجعة إجاباتك والتنقل بين الأسئلة قبل الإرسال؛ زر التسليم في نهاية الاختبار.
+          </p>
         ) : (
           <p className="mt-2 text-xs font-bold text-slate-500">تم التسليم؛ النتيجة والتصحيح ظاهران أدناه، والمفتاح التفصيلي في مساحة الحلول.</p>
         )}
@@ -171,7 +173,7 @@ export default function TestArea36({
       ))}
 
       {!submitted ? (
-        <div className="sticky bottom-20 z-10 rounded-2xl border border-slate-200 bg-white/95 p-3 shadow-lg backdrop-blur md:bottom-24">
+        <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
           <div className="space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <ActionButton36 onClick={submit} disabled={!ready || busy}>

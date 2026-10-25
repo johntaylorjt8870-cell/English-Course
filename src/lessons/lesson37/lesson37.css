@@ -218,96 +218,39 @@
   transition: width 220ms ease;
 }
 
-/* Shared LessonStepNav integration inside Lesson 37 */
-[data-lesson="37"] [data-lesson-step-nav="true"] {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.65rem;
-  border-radius: 1.25rem;
-  border: 1px solid #bae6fd;
-  background-color: #ffffff;
-  padding: 0.75rem 1rem;
-  box-shadow: 0 6px 20px -14px rgba(3, 105, 161, 0.2);
+/* ============================================================
+   تكامل الهيكل المشترك (Lesson1Shell)
+   شريط التنقل وزر القفل يأتيان من الهيكل المشترك بأنماط Tailwind؛
+   لا تتجاوز هذه الورقة أي مكوّن مشترك، بل تضيف طبقة الأفق فقط.
+   ============================================================ */
+
+[data-lesson="37"] .fh37-shell {
+  background-image:
+    radial-gradient(1200px 380px at 78% -12%, rgba(125, 211, 252, 0.35), transparent 68%),
+    linear-gradient(180deg, #f4faff 0%, #eef7ff 42%, #f6fbff 100%);
 }
 
-[data-lesson="37"] .lesson-step-nav__start,
-[data-lesson="37"] .lesson-step-nav__end {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
+/* شريط أفق علوي رقيق يربط رأس الخطوة بهوية المرصد */
+.fh37-stepper {
+  position: relative;
+  overflow: hidden;
 }
 
-[data-lesson="37"] .lesson-step-nav__center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
+.fh37-stepper::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0284c7 0%, #0d9488 32%, #2563eb 62%, #f97316 84%, #7c3aed 100%);
 }
 
-[data-lesson="37"] .lesson-step-nav__btn {
-  min-height: 2.75rem;
-  border-radius: 0.85rem;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
+[data-lesson="37"] [data-step-nav="next"] {
+  background-image: linear-gradient(120deg, #0f766e 0%, #0369a1 100%);
+}
+
+[data-lesson="37"] [data-area-tab][aria-pressed="true"] {
   font-weight: 900;
-  transition: background-color 150ms ease, border-color 150ms ease;
-}
-
-[data-lesson="37"] .lesson-step-nav__btn[data-step-nav="prev"] {
-  border: 1.5px solid #93c5fd;
-  background-color: #ffffff;
-  color: #0c4a6e;
-}
-
-[data-lesson="37"] .lesson-step-nav__btn[data-step-nav="prev"]:hover:not(:disabled) {
-  background-color: #e0f2fe;
-}
-
-[data-lesson="37"] .lesson-step-nav__btn[data-step-nav="next"] {
-  border: 1.5px solid #0f766e;
-  background-color: #0f766e;
-  color: #ffffff;
-}
-
-[data-lesson="37"] .lesson-step-nav__btn[data-step-nav="next"]:hover:not(:disabled) {
-  background-color: #115e59;
-}
-
-[data-lesson="37"] .lesson-step-nav__btn:disabled {
-  cursor: not-allowed;
-  border-color: #cbd5e1;
-  background-color: #f1f5f9;
-  color: #475569;
-}
-
-[data-lesson="37"] [data-site-lock-button="true"] {
-  min-height: 2.75rem;
-  border-radius: 0.85rem;
-  border: 1.5px solid #cbd5e1;
-  background-color: #f8fafc;
-  padding: 0.5rem 0.9rem;
-  font-size: 0.85rem;
-  font-weight: 800;
-  color: #1e293b;
-}
-
-[data-lesson="37"] [data-site-lock-button="true"]:hover {
-  background-color: #e2e8f0;
-}
-
-@media (max-width: 640px) {
-  [data-lesson="37"] [data-lesson-step-nav="true"] {
-    padding: 0.65rem 0.75rem;
-    gap: 0.5rem;
-  }
-  [data-lesson="37"] .lesson-step-nav__btn,
-  [data-lesson="37"] [data-site-lock-button="true"] {
-    padding: 0.45rem 0.75rem;
-    font-size: 0.82rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

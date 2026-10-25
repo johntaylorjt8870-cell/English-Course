@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Rich } from "../../shared/lessonKit";
 import { ActionButton37, FOCUS_37, Feedback37, SourceLine37 } from "./kit37";
-import { TEST_COUNT_37, TEST_INTRO_37, TEST_LEVELS_37, gradeTest37, type TestQuestion37 } from "./testData37";
+import { TEST_COUNT_37, TEST_37, TEST_INTRO_37, TEST_LEVELS_37, type TestQuestion37 } from "./testData37";
+import { formatScore37, type AnswerSpec37, type QuestionGrade37, type TestGradeSummary37 } from "./grading37";
 
 /* ============================================================
    منطقة الاختبار الرسمي — 25 سؤالًا / 5 مستويات / الدرس 37
@@ -19,32 +20,56 @@ export default function TestArea37({
 }) {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [summary, setSummary] = useState<TestGradeSummary37 | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const topRef = useRef<HTMLDivElement | null>(null);
 
   const answered = useMemo(
     () => TEST_LEVELS_37.flatMap((level) => level.questions).filter((question) => (answers[question.n] ?? "").trim().length > 0).length,
     [answers],
   );
   const ready = answered === TEST_COUNT_37;
-  const summary = useMemo(() => (submitted ? gradeTest37(answers) : null), [submitted, answers]);
+  const remaining = TEST_COUNT_37 - answered;
 
   const update = (n: number, value: string) => {
     if (submitted) return;
     setAnswers((current) => ({ ...current, [n]: value }));
   };
 
-  const submit = () => {
-    if (!ready || submitted) return;
-    setSubmitted(true);
-    onSubmitted();
+  /**
+   * الإرسال: المفتاح والتصحيح يُطلبان هنا فقط (dynamic import).
+   * قبل هذه اللحظة لا توجد إجابة أو تفسير في أي حزمة محمّلة.
+   */
+  const submit = async () => {
+    if (!ready || submitted || busy) return;
+    setBusy(true);
+    setError("");
+    try {
+      const [{ ANSWER_SPECS_37 }, { gradeTest37 }] = await Promise.all([import("./solutionsData37"), import("./grading37")]);
+      const result = gradeTest37(TEST_37, answers, ANSWER_SPECS_37 as Record<number, AnswerSpec37>);
+      setSummary(result);
+      setSubmitted(true);
+      onSubmitted();
+      topRef.current?.scrollIntoView?.({ block: "start" });
+    } catch {
+      setError("تعذّر فتح التصحيح الآن. تحقّق من الاتصال ثم أعد المحاولة.");
+    } finally {
+      setBusy(false);
+    }
   };
 
+  /** إعادة الاختبار: تمسح الإجابات والتصحيح معًا وتعيد الحالة المحايدة. */
   const restart = () => {
     setAnswers({});
     setSubmitted(false);
+    setSummary(null);
+    setError("");
+    topRef.current?.scrollIntoView?.({ block: "start" });
   };
 
   return (
-    <div data-area="lesson37-test" data-source-section="s34" className="space-y-3">
+    <div ref={topRef} data-area="lesson37-test" data-source-section="s34" className="space-y-3">
       <section className="overflow-hidden rounded-3xl border border-[#bae6fd] bg-white shadow-sm">
         <div className="fh37-header__beam" />
         <div className="p-4 sm:p-5">
@@ -57,9 +82,6 @@ export default function TestArea37({
             </span>
             <span className="rounded-full border border-[#5eead4] bg-[#ccfbf1] px-2.5 py-1 text-[11px] font-black text-[#115e59]">
               <Rich text="25 سؤالًا" />
-            </span>
-            <span className="font-en rounded-full border border-[#cbd5e1] bg-[#f8fbff] px-2.5 py-1 text-[11px] font-black text-[#0f172a]" dir="ltr">
-              §34
             </span>
           </div>
           <h2 className="mt-2 text-lg font-black leading-8 text-[#0f172a] sm:text-xl">
@@ -99,15 +121,18 @@ export default function TestArea37({
           <p className="text-xs font-black uppercase tracking-[.14em] text-[#115e59]">النتيجة</p>
           <div className="mt-1 flex flex-wrap items-end gap-3">
             <span dir="ltr" className="font-en text-4xl font-black tabular-nums text-[#115e59]">
-              {summary.correctCount} / {summary.total}
+              {formatScore37(summary)}
             </span>
             <span className="rounded-full border border-[#0f766e] bg-white px-3 py-1 text-sm font-black text-[#115e59]">
               <span dir="ltr" className="font-en tabular-nums">{summary.percentage}%</span>
             </span>
           </div>
           <p className="mt-2 text-sm font-bold leading-6 text-[#115e59]">
-            الأسئلة 1–5 و11–15 تُقارَن بالاختيار أو بالصيغة الصحيحة، والأسئلة 6–10 و21–25 تقبل كل الصيغ المكافئة المسجلة في مفتاح التصحيح،
-            والأسئلة 16–20 تُقاس بمعايير المعنى لا بمطابقة حرفية.
+            المستويات 1 و2 و3 و5 تُقارَن بالاختيار أو بالصيغة الصحيحة، وتقبل كل الصيغ المكافئة المسجلة في مفتاح التصحيح.
+            أما أسئلة فهم المعنى (16–20) فتُقيَّم بمعايير المعنى لا بمطابقة حرفية — راجع النموذج والسبب لكل سؤال.
+          </p>
+          <p className="mt-1 text-xs font-bold leading-5 text-[#115e59]">
+            التقييم على 25 سؤالًا: سؤال واحد = علامة واحدة. الأسئلة المفتوحة تحتاج مراجعة المعلم/الطالب للنموذج، والدرجة الظاهرة هي مؤشر لا حكم نهائي على جودة التعبير.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             <ActionButton37 onClick={onGoSolutions}>الحلول التفصيلية</ActionButton37>
@@ -157,15 +182,32 @@ export default function TestArea37({
         </section>
       ))}
 
-      <div className="sticky bottom-3 z-10 rounded-2xl border border-[#bae6fd] bg-white p-3 shadow-lg">
+      <div className="rounded-2xl border border-[#bae6fd] bg-white p-3 shadow-sm">
         {!submitted ? (
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <ActionButton37 disabled={!ready} onClick={submit}>
-              إرسال الاختبار
+            <ActionButton37 disabled={!ready || busy} onClick={submit} testId="true">
+              {busy ? "جارٍ التصحيح…" : "إرسال الاختبار"}
             </ActionButton37>
             <p className="text-sm font-bold text-[#334155]" aria-live="polite">
-              {ready ? "أصبحت إجاباتك جاهزة للإرسال." : `أكمل ${TEST_COUNT_37 - answered} سؤالًا متبقيًا.`}
+              {ready
+                ? "أصبحت إجاباتك جاهزة للإرسال."
+                : `لا يمكن الإرسال الآن: أكمل ${remaining} ${remaining === 1 ? "سؤالًا متبقيًا" : "أسئلة متبقية"} من 25.`}
             </p>
+            {remaining > 0 ? (
+              <p className="text-xs font-bold text-[#9a3412]">
+                الأسئلة غير المجابة:{" "}
+                <span dir="ltr" className="font-en tabular-nums">
+                  {TEST_37.filter((question) => (answers[question.n] ?? "").trim().length === 0)
+                    .map((question) => question.n)
+                    .join(", ")}
+                </span>
+              </p>
+            ) : null}
+            {error ? (
+              <p role="alert" className="text-sm font-black text-[#9f1239]">
+                {error}
+              </p>
+            ) : null}
           </div>
         ) : (
           <div className="flex flex-wrap items-center justify-center gap-3 text-sm font-black text-[#115e59]">
@@ -310,7 +352,7 @@ function Question37({
             </p>
           </Feedback37>
           <p className="mt-1 text-xs font-bold text-[#334155]">
-            هذا التصحيح مكتوب من المنصة اعتمادًا على قواعد الدرس §§1–33 وسياق السؤال، لأن قسم §35 في المصدر لا يحمل مفتاحًا فعليًا.
+            هذا التصحيح من إعداد المنصة/المعلم اعتمادًا على قواعد الدرس وسياق السؤال؛ الأسئلة المفتوحة تُقيَّم بالمعنى لا بمطابقة حرفية.
           </p>
         </div>
       ) : null}

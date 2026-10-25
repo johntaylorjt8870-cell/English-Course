@@ -67,10 +67,12 @@ import * as LEDGER from ${JSON.stringify(join(root, "src/lessons/lesson37/ledger
 import * as DATA from ${JSON.stringify(join(root, "src/lessons/lesson37/data.ts"))};
 import * as PRACTICE from ${JSON.stringify(join(root, "src/lessons/lesson37/practiceData37.ts"))};
 import * as TEST from ${JSON.stringify(join(root, "src/lessons/lesson37/testData37.ts"))};
+import * as GRADING from ${JSON.stringify(join(root, "src/lessons/lesson37/grading37.ts"))};
 import * as SOLUTIONS from ${JSON.stringify(join(root, "src/lessons/lesson37/solutionsData37.ts"))};
+import Lesson1Shell from ${JSON.stringify(join(root, "src/shared/Lesson1Shell.tsx"))};
 import * as COVERAGE from ${JSON.stringify(join(root, "src/lessons/lesson37/coverage37.ts"))};
 function mount(node) { const el = document.createElement("div"); document.body.appendChild(el); const root = createRoot(el); act(() => root.render(node)); return { el, root: { unmount() { act(() => root.unmount()); } } }; }
-export { React, act, createRoot, renderToString, Lesson37, StepView37, TestArea37, TeacherArea37, SolutionsArea37, TeacherGuide37, LEDGER, DATA, PRACTICE, TEST, SOLUTIONS, COVERAGE, mount };
+export { React, act, createRoot, renderToString, Lesson37, StepView37, TestArea37, TeacherArea37, SolutionsArea37, TeacherGuide37, Lesson1Shell, LEDGER, DATA, PRACTICE, TEST, GRADING, SOLUTIONS, COVERAGE, mount };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -91,8 +93,9 @@ const M = await import(pathToFileURL(outFile).href);
 
 const { SOURCE_SECTIONS_37, NUMBERED_SECTIONS_37, TIMELINE_ROWS_37, PRONOUN_ROWS_37, CONTINUOUS_ROWS_37, TIME_EXPRESSION_ROWS_37, sourceSection37 } = M.LEDGER;
 const { SLIDES_37, STEP_COUNT_37, CHAPTERS_37, LESSON_SUBTITLE_37, LESSON_ARABIC_SUBTITLE_37 } = M.DATA;
-const { TEST_LEVELS_37, TEST_37, TEST_COUNT_37, TEST_LEVEL_COUNT_37, TEST_INTRO_37, TEST_SOURCE_UNIT_INDEXES_37, TEST_SOURCE_UNIT_TOTAL_37, gradeTest37, gradeQuestion37 } = M.TEST;
-const { TEST_SOLUTIONS_37 } = M.SOLUTIONS;
+const { TEST_LEVELS_37, TEST_37, TEST_COUNT_37, TEST_LEVEL_COUNT_37, TEST_INTRO_37, TEST_SOURCE_UNIT_INDEXES_37, TEST_SOURCE_UNIT_TOTAL_37 } = M.TEST;
+const { gradeTest37, gradeQuestion37, MEANING_BASED_37 } = M.GRADING;
+const { ANSWER_SPECS_37, TEST_SOLUTIONS_37 } = M.SOLUTIONS;
 const {
   OBJECTIVES_37, ING_ITEMS_37, EXERCISE28_ITEMS_37, TRANSFORM29_ITEMS_37, DETECTIVE30_ITEMS_37, IQ200_ITEMS_37,
   READING32_QUESTIONS_37, READING32_ANALYSIS_37, WRITING36_CRITERIA_37, WRITING36_MODEL_37, DIALOGUE_LINES_37,
@@ -206,25 +209,65 @@ const modelAnswers = Object.fromEntries(
     return [question.n, TEST_SOLUTIONS_37.find((solution) => solution.n === question.n).answer];
   }),
 );
-const full = gradeTest37(modelAnswers);
+const full = gradeTest37(TEST_37, modelAnswers, ANSWER_SPECS_37);
 ok(full.correctCount === 25 && full.percentage === 100, `the grading key grades its 25 model answers as 25/25 (got ${full.correctCount}/25)`);
 ok(
   TEST_37.filter((question) => !full.results[question.n].isCorrect).length === 0,
   `no model answer is rejected by its own key (${TEST_37.filter((question) => !full.results[question.n].isCorrect).map((q) => q.n).join(", ") || "clean"})`,
 );
-const empty = gradeTest37({});
+const empty = gradeTest37(TEST_37, {}, ANSWER_SPECS_37);
 ok(empty.correctCount === 0, `empty answers grade 0/25 (got ${empty.correctCount})`);
-ok(gradeQuestion37(TEST_37[5], "the children will be sleeping").isCorrect, "Q6 accepts the full-sentence equivalent");
-ok(gradeQuestion37(TEST_37[8], "She will not be working at 5:00 tomorrow.").isCorrect, "Q9 accepts 'will not' as an equivalent of won't");
-ok(gradeQuestion37(TEST_37[10], "I will study tomorrow morning.").isCorrect, "Q11 accepts the minimal repair without be");
-ok(gradeQuestion37(TEST_37[13], "When he arrives, I will be sleeping.").isCorrect, "Q14 accepts the full repaired sentence");
-ok(!gradeQuestion37(TEST_37[13], "When he will arrive, I will be sleeping.").isCorrect, "Q14 rejects the uncorrected time clause");
-ok(gradeQuestion37(TEST_37[15], "الأولى حدث مستقبلي عام والثانية نشاط جارٍ عند الساعة 8:00").isCorrect, "Q16 grades meaning, not wording");
-ok(gradeQuestion37(TEST_37[17], "لا، نستخدم present simple بعد when الزمنية").isCorrect, "Q18 grades the 'no' answer in Arabic + English");
-ok(!gradeQuestion37(TEST_37[5], "will be work").isCorrect, "Q6 rejects the wrong V-ing form");
+ok(gradeQuestion37(TEST_37[5], "the children will be sleeping", ANSWER_SPECS_37).isCorrect, "Q6 accepts the full-sentence equivalent");
+ok(gradeQuestion37(TEST_37[8], "She will not be working at 5:00 tomorrow.", ANSWER_SPECS_37).isCorrect, "Q9 accepts 'will not' as an equivalent of won't");
+ok(gradeQuestion37(TEST_37[10], "I will study tomorrow morning.", ANSWER_SPECS_37).isCorrect, "Q11 accepts the minimal repair without be");
+ok(gradeQuestion37(TEST_37[13], "When he arrives, I will be sleeping.", ANSWER_SPECS_37).isCorrect, "Q14 accepts the full repaired sentence");
+ok(!gradeQuestion37(TEST_37[13], "When he will arrive, I will be sleeping.", ANSWER_SPECS_37).isCorrect, "Q14 rejects the uncorrected time clause");
+ok(gradeQuestion37(TEST_37[15], "الأولى حدث مستقبلي عام والثانية نشاط جارٍ عند الساعة 8:00", ANSWER_SPECS_37).isCorrect, "Q16 grades meaning, not wording");
+ok(gradeQuestion37(TEST_37[17], "لا، نستخدم present simple بعد when الزمنية", ANSWER_SPECS_37).isCorrect, "Q18 grades the 'no' answer in Arabic + English");
+ok(!gradeQuestion37(TEST_37[5], "will be work", ANSWER_SPECS_37).isCorrect, "Q6 rejects the wrong V-ing form");
 ok(TEST_SOLUTIONS_37.length === 25 && TEST_SOLUTIONS_37.every((solution, index) => solution.n === index + 1), "25 detailed solutions exist in order");
 ok(TEST_SOLUTIONS_37.every((solution) => solution.sourceStatus === "platform-authored-teacher-addition"), "every solution is labelled platform/teacher-authored");
 ok(TEST_SOLUTIONS_37.every((solution) => solution.answer && solution.explanation.length > 30), "every solution carries an answer and reasoning");
+/* ---- عقد مفتاح التصحيح: 25 سؤالًا ↔ 25 مدخلًا في المفتاح ---- */
+ok(Object.keys(ANSWER_SPECS_37).length === 25 && TEST_37.every((question) => ANSWER_SPECS_37[question.n]), "the grading key has exactly one entry per test question (25/25)");
+ok(
+  TEST_SOLUTIONS_37.every((solution) => TEST_37.some((question) => question.n === solution.n) && ANSWER_SPECS_37[solution.n]),
+  "every teacher-key entry maps onto an existing test question and onto the grading key",
+);
+ok(
+  TEST_SOLUTIONS_37.every((solution) => solution.answer === ANSWER_SPECS_37[solution.n].modelAnswer && solution.explanation === ANSWER_SPECS_37[solution.n].explanation),
+  "the solutions area and the teacher key read one single source of truth (no divergent answers)",
+);
+ok(MEANING_BASED_37.size === 5 && [...MEANING_BASED_37].join(",") === "16,17,18,19,20", "the five meaning questions are declared as meaning-based, not string-matched");
+ok(
+  gradeTest37(TEST_37, Object.fromEntries(TEST_37.map((q) => [q.n, "no idea"])), ANSWER_SPECS_37).results[16].status === "review",
+  "an empty meaning answer is sent to review rather than silently scored",
+);
+ok(TEST_LEVEL_LEVELS_ALIGNED_37(), "the five levels of the teacher key mirror the five test levels");
+function TEST_LEVEL_LEVELS_ALIGNED_37() {
+  return TEST_SOLUTIONS_37.every((solution) => solution.level === Math.min(5, Math.ceil(solution.n / 5)));
+}
+
+/* ---- عزل الإجابات: لا استيراد ثابت للمفتاح في أي مسار طالب ---- */
+{
+  const read37 = (file) => readFileSync(join(root, "src/lessons/lesson37", file), "utf8");
+  for (const file of ["Lesson37.tsx", "Steps37.tsx", "labs37.tsx", "testData37.ts", "kit37.tsx", "data.ts"]) {
+    ok(!/from\s+"\.\/solutionsData37"/.test(read37(file)), `${file}: never imports the answer key statically`);
+  }
+  ok(!/modelAnswer:\s*"/.test(read37("grading37.ts")) && !/check:\s*\(raw\)\s*=>/.test(read37("grading37.ts")), "grading37.ts carries comparison logic only — no answer text, no per-question check");
+  ok((read37("TestArea37.tsx").match(/import\("\.\/solutionsData37"\)/g) || []).length === 1, "the test area opens the key through exactly one deferred dynamic import");
+  ok(/import\("\.\/solutionsData37"\)/.test(read37("TestArea37.tsx")) && !/from\s+"\.\/solutionsData37"/.test(read37("TestArea37.tsx")), "the deferred import is the only way the test reaches the key");
+}
+
+
+/* ---- wiring: كل مختبر مربوط بمعرّف خطوة حقيقي، وكل خطوة مختبر تُصيَّر مختبرها ---- */
+const stepsSource37 = readFileSync(join(root, "src/lessons/lesson37/Steps37.tsx"), "utf8");
+const labCaseIds = [...stepsSource37.matchAll(/case "([a-z0-9]+)":/g)].map((match) => match[1]);
+const slideIds37 = new Set(SLIDES_37.map((slide) => slide.id));
+const orphanLabCases = [...new Set(labCaseIds)].filter((id) => !slideIds37.has(id));
+ok(orphanLabCases.length === 0, `every laboratory is wired to a real step id (orphans: ${orphanLabCases.join(", ") || "none"})`);
+const labStepIds37 = new Set(labCaseIds);
+ok(labStepIds37.size >= 30, `the sequence mounts ${labStepIds37.size} interactive laboratories`);
 
 /* ---------------------------------------------------------------- 4) كل خطوة تُصيَّر */
 const initialHtml = new Map();
@@ -236,6 +279,9 @@ for (const slide of SLIDES_37) {
     `${slide.id}: renders as a traceable step`,
   );
   ok(html.length > 600, `${slide.id}: renders substantive content (${html.length} chars)`);
+  if (labStepIds37.has(slide.id)) {
+    ok(html.includes("data-lab="), `${slide.id}: its interactive laboratory is mounted (a stale step id would drop it silently)`);
+  }
 }
 const allStepsHtml = [...initialHtml.values()].join("\n");
 const corpus = normalize(allStepsHtml.replace(/<[^>]+>/g, " "));
@@ -273,8 +319,18 @@ ok((testPreHtml.match(/data-test-question="\d+"/g) || []).length === 25, "pre-su
 ok(!testPreHtml.includes("data-test-feedback") && !testPreHtml.includes("data-test-score"), "before submit there is no feedback and no score block");
 ok(!/الإجابة النموذجية|النتيجة/.test(testPreHtml), "before submit no model answer or result text is rendered");
 ok(new Set((testPreHtml.match(/data-source-unit="s34-unit-\d+"/g) || [])).size >= 58, "the question, option, marker and trailing lines of §34 are all traced into the Test Area markup");
-ok(!readFileSync(join(root, "src/lessons/lesson37/TestArea37.tsx"), "utf8").includes("solutionsData37"), "the test component never imports the answer key");
+ok((readFileSync(join(root, "src/lessons/lesson37/TestArea37.tsx"), "utf8").match(/solutionsData37/g) || []).length === 1 && !/from\s+"\.\/solutionsData37"/.test(readFileSync(join(root, "src/lessons/lesson37/TestArea37.tsx"), "utf8")), "the test component reaches the key only through one deferred dynamic import (never a static one)");
 ok(!readFileSync(join(root, "src/lessons/lesson37/testData37.ts"), "utf8").includes("solutionsData37"), "the test data never imports the answer key");
+
+/** يُرسل النموذج وينتظر انتهاء التحميل المؤجل للمفتاح داخل act. */
+const submitAndSettle = async (el) => {
+  const submitButton = el.querySelector("[data-test-submit]") ?? findButton(el, "إرسال الاختبار");
+  await M.act(async () => {
+    submitButton.dispatchEvent(new win.MouseEvent("click", { bubbles: true, cancelable: true }));
+    for (let i = 0; i < 40 && !el.querySelector("[data-test-feedback]"); i += 1) await tick(10);
+  });
+  await tick(20);
+};
 
 {
   const { el, root: reactRoot } = M.mount(M.React.createElement(M.TestArea37, { onSubmitted() {}, onGoSolutions() {} }));
@@ -283,6 +339,8 @@ ok(!readFileSync(join(root, "src/lessons/lesson37/testData37.ts"), "utf8").inclu
   ok(cards.length === 25, `mounted Test Area exposes 25 question fieldsets (got ${cards.length})`);
   const submitButton = findButton(el, "إرسال الاختبار");
   ok(submitButton?.disabled === true, "submission stays disabled until all 25 are answered");
+  ok(normalize(el.textContent).includes("لا يمكن الإرسال الآن"), "an incomplete paper shows the Arabic 'cannot submit yet' message");
+  ok(/الأسئلة غير المجابة:\s*1/.test(normalize(el.textContent)), "the incomplete notice lists the still-unanswered question numbers");
   for (const question of TEST_37) {
     const card = el.querySelector(`[data-test-question="${question.n}"]`);
     if (question.options) {
@@ -295,13 +353,22 @@ ok(!readFileSync(join(root, "src/lessons/lesson37/testData37.ts"), "utf8").inclu
   }
   await tick(5);
   ok(findButton(el, "إرسال الاختبار")?.disabled === false, "answering all 25 enables submission");
-  click(findButton(el, "إرسال الاختبار"));
-  await tick(10);
+  ok(!el.querySelector("[data-test-feedback]") && !el.querySelector("[data-test-score]"), "a fully answered but unsubmitted paper still shows no correction");
+  await submitAndSettle(el);
   ok(el.querySelectorAll("[data-test-feedback]").length === 25, "after submit each of the 25 questions gets its own feedback block");
   const scoreText = normalize(el.querySelector("[data-test-score]")?.textContent ?? "");
   ok(/25\s*\/\s*25/.test(scoreText) && scoreText.includes("100"), `after submit the score reads 25/25 · 100% (got "${scoreText.slice(0, 60)}")`);
   ok(el.textContent.includes("الإجابة النموذجية:") && el.textContent.includes("السبب:"), "after submit the model answer and the reason are shown");
   ok(el.querySelectorAll("[data-test-feedback]").length === 25 && !el.querySelector("[data-solution]"), "the test never embeds the solutions-area cards");
+  ok(el.querySelector('[data-test-feedback="16"]')?.textContent.includes("إجابة مقبولة بالمعنى"), "the meaning questions are labelled as meaning-evaluated, not string matches");
+
+  // إعادة الاختبار: تمسح الإجابات والتصحيح معًا
+  click(findButton(el, "إعادة الاختبار"));
+  await tick(10);
+  ok(!el.querySelector("[data-test-feedback]") && !el.querySelector("[data-test-score]"), "retry clears every feedback block and the score");
+  const inputsAfterRetry = [...el.querySelectorAll("[data-test-question] input")];
+  ok(inputsAfterRetry.length > 0 && inputsAfterRetry.every((input) => (input.type === "radio" ? !input.checked : input.value === "")), "retry empties all 25 answers");
+  ok(findButton(el, "إرسال الاختبار")?.disabled === true, "retry returns the test to the un-submittable neutral state");
   reactRoot.unmount();
   el.remove();
 }
@@ -315,8 +382,7 @@ ok(!readFileSync(join(root, "src/lessons/lesson37/testData37.ts"), "utf8").inclu
     else setNative(card.querySelector("input[type=text], textarea"), "wrong answer");
     await tick(2);
   }
-  click(findButton(el, "إرسال الاختبار"));
-  await tick(10);
+  await submitAndSettle(el);
   const lowScore = normalize(el.querySelector("[data-test-score]")?.textContent ?? "");
   ok(/[0-3]\s*\/\s*25/.test(lowScore), `a paper of wrong answers scores near zero (got "${lowScore.slice(0, 24)}")`);
   ok(el.querySelectorAll("[data-test-feedback]").length === 25, "wrong answers still get 25 explanations");
@@ -392,8 +458,9 @@ ok(!readFileSync(join(root, "src/lessons/lesson37/testData37.ts"), "utf8").inclu
   ok(!!nav?.querySelector('[data-step-nav="prev"]') && !!nav?.querySelector('[data-step-nav="next"]'), "Previous and Next live in the same normal-flow navigation");
   ok(el.querySelector('[data-step-nav="prev"]')?.disabled === true, "Previous is disabled on the first step");
   ok(!!el.querySelector('[data-step-nav="next"]'), "Next is available on the first step");
-  const chips = el.querySelectorAll('[role="progressbar"]');
-  ok(chips.length >= 2, `progress is exposed on both desktop and mobile layouts (got ${chips.length})`);
+  const shellProgress = [...el.querySelectorAll("header div")].filter((node) => /width:\s*[\d.]+%/.test(node.getAttribute("style") || ""));
+  ok(shellProgress.length >= 1, `the shared shell header renders the step progress bar (got ${shellProgress.length})`);
+  ok(normalize(el.textContent).includes("1 / 58"), "the shared shell counter shows 1 / 58 on the first step");
   const next = el.querySelector('[data-step-nav="next"]');
   click(next);
   await tick(5);
@@ -408,7 +475,13 @@ ok(!readFileSync(join(root, "src/lessons/lesson37/testData37.ts"), "utf8").inclu
   await tick(5);
   ok(!!el.querySelector('[data-step-id="cover"]'), "ArrowRight goes back");
   ok(el.querySelector('[data-area-tab="solutions"]')?.textContent.includes("🔒"), "the Solutions tab is marked locked before submission");
-  ok(el.querySelector('[data-area="lesson37-teacher"]'), "the Teacher Area is a separate surface reachable from its own tab");
+  await M.act(async () => {
+    el.querySelector('[data-area-tab="teacher"]').dispatchEvent(new win.MouseEvent("click", { bubbles: true, cancelable: true }));
+    for (let i = 0; i < 30 && !el.querySelector("#l37-teacher-password"); i += 1) await tick(10);
+  });
+  ok(!!el.querySelector('[data-area="lesson37-teacher"]') && !!el.querySelector("#l37-teacher-password"), "the Teacher Area is a separate surface reachable from its own tab and starts password-gated");
+  click(el.querySelector('[data-area-tab="lesson"]'));
+  await tick(4);
   root.unmount();
   el.remove();
 }
@@ -540,7 +613,7 @@ ok(contrastFailures.length === 0, `the lesson palette meets WCAG AA 4.5:1 (${con
     ok(/sm:|lg:|md:/.test(read37(file)), `${file}: reflows at a breakpoint`);
   }
   ok(read37("TeacherGuide37.tsx").includes("overflow-x-auto") && read37("kit37.tsx").includes("overflow-x-auto"), "wide tables scroll horizontally instead of clipping");
-  ok(read37("Lesson37.tsx").includes("data-lesson=\"37\"") && read37("Lesson37.tsx").includes("min-w-0"), "the shell is RTL-scoped and lets long mixed rows shrink");
+  ok(read37("Lesson37.tsx").includes("rootDataLesson={37}") && read37("Lesson37.tsx").includes("rootDir=\"rtl\"") && read37("Lesson37.tsx").includes("min-w-0"), "the shell is RTL-scoped and lets long mixed rows shrink");
   ok(!/whitespace-nowrap/.test(read37("labs37.tsx")), "no nowrap rule can force horizontal overflow");
   const stepText = (id) => normalize(initialHtml.get(id).replace(/<[^>]+>/g, " ")).length;
   const lengths = SLIDES_37.map((slide) => ({ id: slide.id, chars: stepText(slide.id) }));
@@ -549,6 +622,39 @@ ok(contrastFailures.length === 0, `the lesson palette meets WCAG AA 4.5:1 (${con
   ok(longest[0].chars < 3200, `no step exceeds the density budget (longest ${longest[0].id}: ${longest[0].chars} chars)`);
   const median = [...lengths].sort((a, b) => a.chars - b.chars)[Math.floor(lengths.length / 2)];
   console.log(`  ↳ وسيط كثافة الخطوة: ${median.chars} حرفًا`);
+}
+
+/* ------------------------------------------------ 10ب) الهيكل المشترك وحياد المحتوى */
+{
+  const read37 = (file) => readFileSync(join(root, "src/lessons/lesson37", file), "utf8");
+  const lessonSrc = read37("Lesson37.tsx");
+  ok(/import Lesson1Shell[^;]*from "\.\.\/\.\.\/shared\/Lesson1Shell"/.test(lessonSrc), "Lesson 37 renders through the real shared `Lesson1Shell` component");
+  ok(!/<aside|<nav/.test(lessonSrc), "Lesson 37 keeps no bespoke sidebar or navigation markup of its own");
+  ok(!/data-lesson-step-nav/.test(lessonSrc) && !/SiteLockButton/.test(lessonSrc), "the lesson does not re-implement the shared step navigation or the site lock");
+  ok(lessonSrc.includes("railFooter") && lessonSrc.includes("groups=") && lessonSrc.includes("onSelectStep"), "the rail, chapters and step selection are supplied to the shared shell through its prop contract");
+  ok(readFileSync(join(root, "src/shared/Lesson1Shell.tsx"), "utf8").includes("useRegisterInlineLockHost(true)"), "the shell itself still hosts the inline site-lock button");
+
+  // لا ترقيم مصدر داخلي ولا وسوم تدقيق في أي سطح يراه الطالب
+  const studentSurface = [...initialHtml.values()].join("\n") + testPreHtml;
+  ok(!/§\s*\d/.test(studentSurface), "no internal source numbering (§) appears in student steps or the test");
+  ok(!/HORIZON 37|data-source-status="platform/.test(studentSurface), "no audit or source-ledger labels leak into student-facing markup");
+  ok(!/أقسام المصدر|خطوات الطالب|coverage|ledger/i.test(studentSurface), "no bookkeeping phrases ('source sections', 'student steps', coverage) are shown to the learner");
+  ok(!/النص الأصلي|نص المصدر الحرفي|اضغط للعرض/.test(studentSurface), "no literal-source reveal control exists on the student side");
+
+  // لا تسريب إجابات في المسار الأولي
+  const leakedExplanations = TEST_SOLUTIONS_37.filter((solution) => normalize(studentSurface).includes(normalize(solution.explanation)));
+  ok(leakedExplanations.length === 0, `no test answer explanation reaches the student steps or the pre-submit test (${leakedExplanations.length} leaked)`);
+  ok(!/ANSWER_SPECS_37|SOLUTION_NOTES_37/.test(studentSurface), "the rendered student surface never contains key identifiers");
+
+  // كل مختبر تفاعلي مذكور في الخطوات
+  const stepsSrc = read37("Steps37.tsx");
+  const labsSrc = read37("labs37.tsx");
+  const labExports = [...labsSrc.matchAll(/export function (\w+Lab37|ObjectivesChecklist37|ReadingAnalysis37)\b/g)].map((match) => match[1]);
+  // BuildLab37 وChoiceLab37 عنصران عامّان يُستخدمان داخل مختبرات أخرى.
+  const genericLabs = new Set(["BuildLab37", "ChoiceLab37"]);
+  const missingLabs = labExports.filter((name) => !genericLabs.has(name) && !stepsSrc.includes(`<${name}`));
+  ok(labExports.length >= 30 && missingLabs.length === 0, `every lesson-37 lab component is mounted in a step (${labExports.length} labs, missing: ${missingLabs.join(", ") || "none"})`);
+  ok((stepsSrc.match(/return <\w+Lab37/g) || []).length >= 10, "the labs are wired as learner interactions inside the step sequence");
 }
 
 /* ---------------------------------------------------------------- 11) التسجيل والوثائق */

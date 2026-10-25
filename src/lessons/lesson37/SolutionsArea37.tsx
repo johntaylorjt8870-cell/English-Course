@@ -150,6 +150,12 @@ export default function SolutionsArea37({
                 {openCards[solution.n] ? (
                   <div id={`solution-37-details-${solution.n}`} data-solution-details={solution.n} className="space-y-2">
                     <p>
+                      <strong className="text-[#0c4a6e]">صيغ مقبولة: </strong>
+                      <span dir="auto">
+                        <Rich text={solution.acceptedSummary} />
+                      </span>
+                    </p>
+                    <p>
                       <strong className="text-[#0c4a6e]">التفسير: </strong>
                       <span dir="auto">
                         <Rich text={solution.explanation} />
@@ -166,6 +172,17 @@ export default function SolutionsArea37({
                           ))}
                         </ul>
                       </div>
+                    ) : null}
+                    {solution.example ? (
+                      <p dir="ltr" className="font-en rounded-lg border border-[#bae6fd] bg-white px-3 py-1.5 text-left font-semibold text-[#0f172a]">
+                        {solution.example}
+                      </p>
+                    ) : null}
+                    {solution.judgment === "open-model" ? (
+                      <p className="rounded-xl border border-[#fcd34d] bg-[#fef3c7] p-3 text-sm leading-6 text-[#92400e]">
+                        هذا السؤال مفتوح: الدرجة تُمنح للمعنى لا للصياغة. تُقبل أي إجابة تفرّق بين الحدث المستقبلي العام والنشاط الجاري عند لحظة محددة،
+                        وتُطلب مراجعة المعلم/الطالب للنموذج عند اختلاف التعبير.
+                      </p>
                     ) : null}
                   </div>
                 ) : null}

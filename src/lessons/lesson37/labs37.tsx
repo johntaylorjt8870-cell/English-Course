@@ -236,7 +236,7 @@ export function FutureMomentLab37({ onComplete }: { onComplete?: () => void }) {
 
   return (
     <section data-lab="timeline" className={LAB_SHELL}>
-      <LabHeader eyebrow="§2 · الخط الزمني التفاعلي" title="ضع كاميرا الدرس على لحظة مستقبلية" />
+      <LabHeader eyebrow="الخط الزمني · اللحظة الجارية" title="ضع كاميرا الدرس على لحظة مستقبلية" />
       <PlatformNote37>
         خطة المصدر: دراسة من الساعة السادسة حتى التاسعة مساءً. حرّك المؤشر على اللحظات الثلاث، ثم أجب عن سؤال الكاميرا.
       </PlatformNote37>
@@ -364,7 +364,7 @@ export function FormulaOrderLab37({ onComplete }: { onComplete?: () => void }) {
 
   return (
     <section data-lab="formula-order" className={LAB_SHELL}>
-      <LabHeader eyebrow="§3 · ورشة بناء الصيغة" title="رتّب أجزاء الجملة من اليمين إلى اليسار" />
+      <LabHeader eyebrow="ورشة بناء الصيغة" title="رتّب أجزاء الجملة من اليمين إلى اليسار" />
       <PlatformNote37>
         انقر القطع بالترتيب الذي تبني به الجملة الإنجليزية: من الفاعل حتى الفعل مع <span dir="ltr" className="font-en font-black">-ing</span>.
       </PlatformNote37>
@@ -477,7 +477,7 @@ export function PartsLab37({ onComplete }: { onComplete?: () => void }) {
 
   return (
     <section data-lab="parts" className={LAB_SHELL}>
-      <LabHeader eyebrow="§4 · تشريح نحوي" title="لماذا be وليس is؟" />
+      <LabHeader eyebrow="تشريح نحوي" title="لماذا be وليس is؟" />
       <div className="mt-2 overflow-hidden rounded-2xl border border-[#bae6fd]">
         <table dir="ltr" aria-label="تحليل جملة She will be preparing dinner" className="w-full border-collapse text-left">
           <thead>
@@ -575,7 +575,7 @@ export function ConjugationLab37() {
   const [pronoun, setPronoun] = useState("I");
   return (
     <section data-lab="conjugation" className={LAB_SHELL}>
-      <LabHeader eyebrow="§5 · لوحة التصريف" title="اختر الضمير لترى أن الصيغة لا تتغير" />
+      <LabHeader eyebrow="لوحة التصريف" title="اختر الضمير لترى أن الصيغة لا تتغير" />
       <div className="mt-2 flex flex-wrap gap-2">
         {Object.keys(PRONOUN_SENTENCES_37).map((entry) => (
           <button
@@ -621,7 +621,7 @@ export function CameraLab37() {
   const current = CAMERA_POSITIONS_37.find((entry) => entry.id === position) ?? CAMERA_POSITIONS_37[2];
   return (
     <section data-lab="camera" className={LAB_SHELL}>
-      <LabHeader eyebrow="§7 · كاميرا الخط الزمني" title="حرّك الكاميرا وشاهد كيف تتغير الصيغة" />
+      <LabHeader eyebrow="كاميرا الخط الزمني" title="حرّك الكاميرا وشاهد كيف تتغير الصيغة" />
       <div className="mt-2 flex flex-wrap gap-2">
         {CAMERA_POSITIONS_37.map((entry) => (
           <button
@@ -671,7 +671,7 @@ export function DialogueLab37({ onComplete }: { onComplete?: () => void }) {
 
   return (
     <section data-lab="dialogue" className={LAB_SHELL}>
-      <LabHeader eyebrow="§14 · Tomorrow’s Schedule" title="افتح كل سطر لترى ترجمته وتحليله" />
+      <LabHeader eyebrow="حوار · Tomorrow’s Schedule" title="افتح كل سطر لترى ترجمته وتحليله" />
       <div className="mt-3 space-y-2">
         {DIALOGUE_LINES_37.map((line, index) => {
           const isOpen = !!open[line.id];
@@ -934,7 +934,7 @@ export function NegativeBuildLab37({ onComplete, half }: { onComplete?: () => vo
   return (
     <BuildLab37
       id="negative-build"
-      eyebrow="§18 · بانِي النفي"
+      eyebrow="ورشة النفي"
       title="حوّل كل جملة إلى النفي"
       note={
         <PlatformNote37>
@@ -960,7 +960,7 @@ export function YesNoBuildLab37({ onComplete, half }: { onComplete?: () => void;
   return (
     <BuildLab37
       id="yesno-build"
-      eyebrow="§20 · بانِي السؤال"
+      eyebrow="ورشة السؤال"
       title="كوّن سؤال نعم/لا من كل جملة"
       note={
         <PlatformNote37>
@@ -994,7 +994,7 @@ export function WhBuildLab37({ onComplete, half }: { onComplete?: () => void; ha
   return (
     <BuildLab37
       id="wh-build"
-      eyebrow="§22 · بانِي أسئلة Wh"
+      eyebrow="ورشة أسئلة المعلومات"
       title="ابنِ سؤال Wh من المعنى العربي"
       note={
         <PlatformNote37>
@@ -1021,18 +1021,18 @@ export function IngLab37({ onComplete }: { onComplete?: () => void }) {
 
   return (
     <section data-lab="ing" className={LAB_SHELL}>
-      <LabHeader eyebrow="§24 · ورشة -ing" title="اكتب الصيغة الصحيحة لكل فعل" />
+      <LabHeader eyebrow="ورشة إضافة -ing" title="اكتب الصيغة الصحيحة لكل فعل" />
       <PlatformNote37>
         اكتب صيغة -ing ثم تحقق. القواعد الأربع كما في المصدر: الإضافة المباشرة، وحذف e الصامتة، ومضاعفة الحرف الأخير في أفعال معينة،
         وتحوّل ie إلى ying.
       </PlatformNote37>
-      <div className="mt-3 grid gap-2 sm:grid-cols-2">
+      <div className="mt-3 grid gap-1.5 sm:grid-cols-2">
         {ING_ITEMS_37.map((item) => {
           const isChecked = !!checked[item.base];
           const ok = (values[item.base] ?? "").trim().toLowerCase() === item.answer;
           return (
-            <div key={item.base} data-ing-item={item.base} className={ITEM}>
-              <div className="flex min-w-0 items-center gap-2">
+            <div key={item.base} data-ing-item={item.base} className={`${ITEM} p-2.5`}>
+              <div className="flex min-w-0 flex-wrap items-center gap-2">
                 <span dir="ltr" className={`font-en shrink-0 text-base font-black ${isChecked && ok ? "text-[#115e59]" : "text-[#0c4a6e]"}`}>
                   {item.base}
                 </span>
@@ -1048,30 +1048,31 @@ export function IngLab37({ onComplete }: { onComplete?: () => void }) {
                     setValues((current) => ({ ...current, [item.base]: value }));
                   }}
                   aria-label={`صيغة ing للفعل ${item.base}`}
-                  className={`${FOCUS_37} min-w-0 flex-1 rounded-lg border border-[#7dd3fc] bg-white px-3 py-2 text-base text-[#0f172a]`}
+                  className={`${FOCUS_37} min-w-[6.5rem] flex-1 rounded-lg border border-[#7dd3fc] bg-white px-2.5 py-2 text-base text-[#0f172a]`}
                 />
+                {!isChecked ? (
+                  <ActionButton37
+                    className="shrink-0 px-3"
+                    disabled={!(values[item.base] ?? "").trim()}
+                    onClick={() => {
+                      setChecked((current) => {
+                        const next = { ...current, [item.base]: true };
+                        if (Object.keys(next).length === ING_ITEMS_37.length) onComplete?.();
+                        return next;
+                      });
+                    }}
+                  >
+                    تحقق
+                  </ActionButton37>
+                ) : null}
               </div>
-              {!isChecked ? (
-                <ActionButton37
-                  className="mt-2"
-                  disabled={!(values[item.base] ?? "").trim()}
-                  onClick={() => {
-                    setChecked((current) => {
-                      const next = { ...current, [item.base]: true };
-                      if (Object.keys(next).length === ING_ITEMS_37.length) onComplete?.();
-                      return next;
-                    });
-                  }}
-                >
-                  تحقق
-                </ActionButton37>
-              ) : (
-                <div className="mt-2">
+              {isChecked ? (
+                <div className="mt-1.5">
                   <Feedback37 state={ok ? "ok" : "review"} title={ok ? "صحيح." : `الصحيح: ${item.answer}`}>
                     <Rich text={item.rule} />
                   </Feedback37>
                 </div>
-              )}
+              ) : null}
             </div>
           );
         })}
@@ -1107,7 +1108,7 @@ export function Exercise28Lab37({ onComplete }: { onComplete?: () => void }) {
 
   return (
     <section data-lab="exercise28" className={LAB_SHELL}>
-      <LabHeader eyebrow="§28 · تدريب تأسيسي" title="اختر الصيغة الصحيحة (ستة أسئلة)" />
+      <LabHeader eyebrow="تدريب تأسيسي" title="اختر الصيغة الصحيحة (ستة أسئلة)" />
       <div className="space-y-3">
         {EXERCISE28_ITEMS_37.map((item) => {
           const isChecked = !!checked[item.n];
@@ -1192,7 +1193,7 @@ export function Transform29Lab37({ onComplete, half }: { onComplete?: () => void
 
   return (
     <section data-lab="transform29" className={LAB_SHELL}>
-      <LabHeader eyebrow="§29 · تدريب التحويلات" title="حوّل كل جملة إلى النفي ثم إلى السؤال" />
+      <LabHeader eyebrow="تدريب التحويلات" title="حوّل كل جملة إلى النفي ثم إلى السؤال" />
       <PlatformNote37>
         المثال في المصدر: <span dir="ltr" className="font-en font-black">She will be reading at 8:00.</span> ← النفي:{" "}
         <span dir="ltr" className="font-en font-black">She won’t be reading at 8:00.</span> — السؤال:{" "}
@@ -1280,7 +1281,7 @@ export function Detective30Lab37({
 
   return (
     <section data-lab="detective30" className={LAB_SHELL}>
-      <LabHeader eyebrow="§30 · ورشة اكتشاف الأخطاء" title={<Rich text="Grammar Detective — اكتب التصحيح" />} />
+      <LabHeader eyebrow="ورشة اكتشاف الأخطاء" title={<Rich text="Grammar Detective — اكتب التصحيح" />} />
       <PlatformNote37>
         كل جملة فيها خطأ واحد على الأقل. اكتب تصحيحك ثم اعرض تصحيح المصدر مع سبب الخطأ. لا يُطلب منك مطابقة الصياغة حرفيًا.
       </PlatformNote37>
@@ -1353,7 +1354,7 @@ export function IQ200Lab37({ onComplete, half }: { onComplete?: () => void; half
 
   return (
     <section data-lab="iq200" className={LAB_SHELL}>
-      <LabHeader eyebrow="§31 · تحدي IQ200" title="اختر الزمن المناسب بحسب المعنى" />
+      <LabHeader eyebrow="تحدي IQ200" title="اختر الزمن المناسب بحسب المعنى" />
       <div className="space-y-3">
         {source.map((item) => {
           const isChecked = !!checked[item.n];
@@ -1432,17 +1433,19 @@ export function IQ200Lab37({ onComplete, half }: { onComplete?: () => void; half
 
 export function ReadingAnalysis37() {
   return (
-    <div className="mt-3 space-y-2">
+    <div data-lab="reading-analysis-list" className="mt-2">
       <h3 className="text-sm font-black text-[#0c4a6e]">تحليل صيغ المستقبل في النص — إضافة من المنصة</h3>
-      {READING32_ANALYSIS_37.map((entry) => (
-        <div key={entry.line} className="rounded-xl border border-[#bae6fd] bg-[#f8fbff] p-3 text-sm leading-6 text-[#1e293b]">
-          <p dir="ltr" className="font-en text-left font-semibold text-[#0f172a]">{entry.line}</p>
-          <p className="mt-1">
-            <span dir="ltr" className="font-en block w-fit rounded bg-white px-2 font-black text-[#0c4a6e]">{entry.form}</span>
-            <Rich text={entry.why} />
-          </p>
-        </div>
-      ))}
+      <div className="mt-1.5 grid gap-1.5 md:grid-cols-2">
+        {READING32_ANALYSIS_37.map((entry) => (
+          <div key={entry.line} className="rounded-lg border border-[#bae6fd] bg-white px-2.5 py-1.5 text-xs leading-5 text-[#1e293b]">
+            <p dir="ltr" className="font-en text-left text-[13px] font-bold leading-5 text-[#0f172a]">{entry.line}</p>
+            <p className="mt-0.5">
+              <span dir="ltr" className="font-en block w-fit rounded bg-[#e0f2fe] px-1.5 text-[11px] font-black text-[#0c4a6e]">{entry.form}</span>
+              <Rich text={entry.why} />
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -1463,7 +1466,7 @@ export function ReadingLab37({
 
   return (
     <section data-lab="reading32" className={LAB_SHELL}>
-      <LabHeader eyebrow="§32 · أسئلة الفهم" title="أجب عن أسئلة الفهم الثمانية" />
+      <LabHeader eyebrow="أسئلة الفهم" title="أجب عن أسئلة الفهم الثمانية" />
       <label className="inline-flex cursor-pointer items-center gap-3 rounded-xl border border-[#bae6fd] bg-white px-3 py-2 text-sm font-bold text-[#1e293b]">
         <input
           type="checkbox"
@@ -1541,7 +1544,7 @@ export function WritingLab37() {
 
   return (
     <section data-lab="writing36" className={LAB_SHELL}>
-      <LabHeader eyebrow="§36 · Writing Mission" title={<Rich text="My Life at This Time Tomorrow — فقرة من 12 إلى 15 جملة" />} />
+      <LabHeader eyebrow="مهمة الكتابة · Writing Mission" title={<Rich text="My Life at This Time Tomorrow — فقرة من 12 إلى 15 جملة" />} />
       <PlatformNote37>
         اكتب فقرتك بالإنجليزية، ثم راجع بنود المصدر الثمانية بنفسك. لا يصدر النظام حكمًا آليًا على جودة الفقرة أو صحة تراكيبها؛ والعداد مساعد فقط.
       </PlatformNote37>
@@ -1616,7 +1619,7 @@ export function ObjectivesChecklist37({ objectives }: { objectives: readonly str
   const [checked, setChecked] = useState<Record<number, boolean>>({});
   const done = objectives.filter((_, index) => checked[index]).length;
   return (
-    <div className={INNER}>
+    <div data-lab="objectives" className={INNER}>
       <p className="text-sm font-black text-[#0c4a6e]">علّم الأهداف التي تراها واضحة الآن (مراجعة ذاتية):</p>
       <div className="mt-2 grid gap-2 sm:grid-cols-2">
         {objectives.map((objective, index) => (
@@ -1695,7 +1698,7 @@ export function SummaryMatchLab37() {
   return (
     <ChoiceLab37
       id="summary-match"
-      eyebrow="§37 · راجع الملخص بأمثلته"
+      eyebrow="راجع الملخص بأمثلته"
       title="صِل كل استخدام بمثاله من المصدر"
       items={SUMMARY_MATCH_37}
       note={
@@ -1744,12 +1747,12 @@ export function CurriculumPreviewLab37() {
   return (
     <ChoiceLab37
       id="curriculum-preview"
-      eyebrow="§38 · تمهيد الدرس القادم"
+      eyebrow="تمهيد الدرس القادم"
       title="محطة قادمة: Future Perfect"
       items={CURRICULUM_PREVIEW_37}
       note={
         <PlatformNote37>
-          الأسئلة أدناه مبنية حرفيًا على نص الخريطة والمثال التمهيدي في §38، للتحقق من فهم موقع درسنا في المنهج.
+          الأسئلة أدناه مبنية على خريطة المنهج والمثال التمهيدي للدرس القادم، للتحقق من فهم موقع هذا الدرس في الرحلة.
         </PlatformNote37>
       }
     />
@@ -1764,7 +1767,7 @@ export function MeaningLab37({ sectionId, onComplete }: { sectionId: keyof typeo
   return (
     <ChoiceLab37
       id={`meaning-${sectionId}`}
-      eyebrow={`§${String(sectionId).replace("s", "")} · مختبر المعنى`}
+      eyebrow="مختبر المعنى · نفس الحدث بزوايا مختلفة"
       title="اختر الزمن بحسب ما يقدّمه المتحدث"
       note={
         <PlatformNote37>
@@ -1781,7 +1784,7 @@ export function MomentLab37({ onComplete }: { onComplete?: () => void }) {
   return (
     <ChoiceLab37
       id="moment"
-      eyebrow="§6 · الاستخدام الأول"
+      eyebrow="الاستخدام الأول"
       title="نشاط سيكون جاريًا في لحظة مستقبلية محددة"
       note={
         <PlatformNote37>
@@ -1798,7 +1801,7 @@ export function TimeExpressionLab37() {
   return (
     <ChoiceLab37
       id="time-expression"
-      eyebrow="§8 · التعبيرات الزمنية"
+      eyebrow="التعبيرات الزمنية"
       title="مطابقة التعبير الزمني بمعناه"
       items={TIME_EXPRESSION_ITEMS_37}
       note={
@@ -1820,7 +1823,7 @@ export function TwoEventsLab37({ onComplete }: { onComplete?: () => void }) {
   return (
     <ChoiceLab37
       id="two-events"
-      eyebrow="§11 · حدثان في المستقبل"
+      eyebrow="حدثان في المستقبل"
       title="نشاط مستمر أثناء وقوع حدث مستقبلي آخر"
       items={TWO_EVENTS_ITEMS_37}
       onComplete={onComplete}
@@ -1832,7 +1835,7 @@ export function WhenClauseLab37({ onComplete }: { onComplete?: () => void }) {
   return (
     <ChoiceLab37
       id="when-clause"
-      eyebrow="§12 · when: جملة زمنية أم سؤال"
+      eyebrow="when: جملة زمنية أم سؤال"
       title="ميّز بين الحالتين"
       items={WHEN_ITEMS_37}
       onComplete={onComplete}
@@ -1849,7 +1852,7 @@ export function WhenClauseLab37({ onComplete }: { onComplete?: () => void }) {
 
 export function WhileLab37({ onComplete }: { onComplete?: () => void }) {
   return (
-    <ChoiceLab37 id="while" eyebrow="§13 · while" title="اربط نشاطين معًا" items={WHILE_ITEMS_37} onComplete={onComplete} />
+    <ChoiceLab37 id="while" eyebrow="while · نشاطان متزامنان" title="اربط نشاطين معًا" items={WHILE_ITEMS_37} onComplete={onComplete} />
   );
 }
 
@@ -1857,7 +1860,7 @@ export function RoutineLab37({ onComplete }: { onComplete?: () => void }) {
   return (
     <ChoiceLab37
       id="routine"
-      eyebrow="§15 · مجريات متوقعة"
+      eyebrow="مجريات متوقعة"
       title="نشاط متوقع ضمن برنامج أو سير الأمور المعتاد"
       items={ROUTINE_ITEMS_37}
       onComplete={onComplete}
@@ -1869,7 +1872,7 @@ export function NegativeErrorsLab37({ onComplete }: { onComplete?: () => void })
   return (
     <ChoiceLab37
       id="negative-errors"
-      eyebrow="§19 · أخطاء النفي"
+      eyebrow="أخطاء النفي الشائعة"
       title="شخّص الخطأ في كل صيغة"
       items={NEGATIVE_ERROR_ITEMS_37}
       onComplete={onComplete}
@@ -1886,7 +1889,7 @@ export function ShortAnswerLab37({ onComplete }: { onComplete?: () => void }) {
   return (
     <ChoiceLab37
       id="short-answers"
-      eyebrow="§21 · الإجابات القصيرة"
+      eyebrow="الإجابات القصيرة"
       title="اختر الإجابة القصيرة الصحيحة"
       items={SHORT_ANSWER_ITEMS_37}
       onComplete={onComplete}
@@ -1898,7 +1901,7 @@ export function WhoRoleLab37({ onComplete }: { onComplete?: () => void }) {
   return (
     <ChoiceLab37
       id="who-role"
-      eyebrow="§23 · وظيفة who"
+      eyebrow="وظيفة who"
       title="Who فاعل أم مفعول به؟"
       items={WHO_ROLE_ITEMS_37}
       onComplete={onComplete}
@@ -1910,7 +1913,7 @@ export function StateVerbLab37({ onComplete }: { onComplete?: () => void }) {
   return (
     <ChoiceLab37
       id="state-verbs"
-      eyebrow="§25 · أفعال الحالة"
+      eyebrow="أفعال الحالة"
       title="متى تصح الصيغة المستمرة؟"
       items={STATE_VERB_ITEMS_37}
       onComplete={onComplete}
@@ -1929,7 +1932,7 @@ export function ContinuousSelectLab37({ onComplete, half }: { onComplete?: () =>
   return (
     <ChoiceLab37
       id={`continuous-select${half ? `-${half}` : ""}`}
-      eyebrow="§26 · الأزمنة المستمرة الثلاثة"
+      eyebrow="الأزمنة المستمرة الثلاثة"
       title="حدّد النقطة المرجعية لكل نشاط"
       items={items}
       onComplete={onComplete}
@@ -1941,7 +1944,7 @@ export function AdvancedChallengeLab37({ onComplete }: { onComplete?: () => void
   return (
     <ChoiceLab37
       id="advanced-33"
-      eyebrow="§33 · تحدي متقدم"
+      eyebrow="تحدي متقدم"
       title="هل الزمنان صحيحان؟"
       items={ADVANCED33_ITEMS_37}
       onComplete={onComplete}

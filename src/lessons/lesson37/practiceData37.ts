@@ -713,7 +713,7 @@ export const STATE_VERB_ITEMS_37: ChoiceItem37[] = [
   },
   {
     id: "having-lunch",
-    prompt: "الفعل have في «يتناول الغداء» — أي صيغة صحيحة (كما في مثال §15)؟",
+    prompt: "الفعل have في «يتناول الغداء» — أي صيغة صحيحة (كما في مثال المصدر عن المجريات المتوقعة)؟",
     lines: ["Everyone ______ lunch at 1:00."],
     choices: [
       { value: "a", label: "will be having" },
@@ -870,7 +870,7 @@ export const ADVANCED33_ITEMS_37: ChoiceItem37[] = [
     ],
     accepted: ["no"],
     feedback: "المصدر: Future Continuous لا يحتاج دائمًا إلى ساعة محددة مثل 8:00 أو 9:00؛ يمكن استخدامه أيضًا للحديث عن نشاط جارٍ خلال فترة مستقبلية أو ضمن برنامج متوقع.",
-    nuance: "وقد رأينا في §15: The workers will be repairing the road throughout the weekend.",
+    nuance: "وقد رأينا في مثال المجريات المتوقعة: The workers will be repairing the road throughout the weekend.",
   },
 ];
 

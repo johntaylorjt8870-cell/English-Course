@@ -13,6 +13,7 @@
     "audit:navigation-lock": "node scripts/audit-navigation-lock-overlap.mjs",
     "audit:navigation-lock-browser": "node scripts/audit-navigation-lock-browser.mjs",
     "audit:lesson33": "node scripts/audit-lesson33.mjs",
+    "audit:lesson33-browser": "node scripts/audit-lesson33-browser.mjs",
     "audit:lesson34-browser": "node scripts/audit-lesson34-browser.mjs",
     "audit:lesson34": "node scripts/audit-lesson34.mjs",
     "audit:lesson35": "node scripts/audit-lesson35.mjs",

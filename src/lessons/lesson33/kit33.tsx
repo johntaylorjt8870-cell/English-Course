@@ -1,1196 +1,1695 @@
-// ============================================================
-// kit33 — مكوّنات تفاعل الدرس 33 (THE PRESENT COMPASS)
-// القواعد المشتركة: لا كشف للإجابات قبل فعل المتعلّم، Slate ثابت،
-// تركيز مرئي عبر FOCUS33، وكل الخيارات الإنجليزية تُعرض عبر LatinRuns.
-// ============================================================
-
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
-import { En, Rich } from "../../shared/lessonKit";
-import { LatinRuns } from "../../shared/bidi";
+import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { En33, Text33, Lens33, TONE33, FOCUS33, PlatformTag33, Note33, TENSES_33, tenseById33, type TenseId33 } from "./design33";
 import {
-  TENSE_OPTIONS_33,
-  type MatchRow33,
-  type RightRow33,
-  type Typed33,
-  type Detective33,
-  type TensePickRow33,
-  type StorySeg33,
-  type PhraseRow33,
-  type BestRow33,
-  type TenseGate33,
-  type FormTable33,
-} from "./data";
+  MENTAL_MODEL_33,
+  WORK_FORMS_33,
+  NORA_ROWS_33,
+  PROJECT_OPTIONS_33,
+  SHORT_ANSWERS_33,
+  AUX_PAIRS_33,
+  SIGNAL_WORDS_33,
+  SIGNAL_AMBIGUOUS_33,
+  DUEL1_CHALLENGE_33,
+  QUESTION_MATCH_33,
+  QUESTION_MATCH_EXTRA_33,
+  FOCUS_ROWS_33,
+  FOCUS_LIVED_33,
+  STATIVE_VERBS_33,
+  THINK_SPLIT_33,
+  DETECTIVE_33,
+  ALL_PRACTICE_33,
+  BOTH_CORRECT_33,
+  STORY_PARAGRAPHS_33,
+  STORY_TITLE_33,
+  STORY_PHRASES_33,
+  STORY_ROWS_33,
+  STORY_ANALYSIS_HEAD_33,
+  PARAGRAPH_SENTENCES_33,
+  PARAGRAPH_RIGHT_SENTENCES_33,
+  PARAGRAPH_SPOTS_33,
+  SITUATIONS_33,
+  GOLDEN_SENTENCES_33,
+  GOLDEN_QUESTIONS_33,
+  PROGRESS_PRESENT_33,
+  PROGRESS_PAST_33,
+  WRITING_CRITERIA_33,
+  WRITING_MIN_SENTENCES_33,
+  WRITING_MAX_SENTENCES_33,
+  STORY_LEAD_33,
+  normalize33,
+  DUEL1_PAIRS_33,
+  CIRCLED_33,
+} from "./practice33";
 
-export const FOCUS33 =
-  "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white";
-
-/* ---------- التقرير الخام إلى شجرة الخطوات ---------- */
-export type GateDriver33 = {
-  complete: number;
-  total: number;
-  onDone: (done: boolean) => void;
+// ============================================================
+// مساحة عمل مشتركة بين الشرائح: تسجّل محاولات الطالب حتى تعمل البوابات
+// (كشف الحل بعد المحاولة) عبر الشرائح المختلفة دون تكرار المحتوى.
+// ============================================================
+type Workspace33Value = {
+  attempted: Record<string, boolean>;
+  responses: Record<string, string>;
+  mark: (id: string, response?: string) => void;
+  isDone: (id: string) => boolean;
+  doneCount: (ids: string[]) => number;
+  reset: () => void;
 };
 
-export function useGate33(total: number): GateDriver33 {
-  const [done, setDone] = useState(false);
-  const onDone = useCallback((d: boolean) => {
-    if (d) setDone(true);
-  }, []);
-  return useMemo<GateDriver33>(
-    () => ({ complete: done ? total : 0, total, onDone }),
-    [done, total, onDone]
+const WorkspaceContext33 = createContext<Workspace33Value>({
+  attempted: {},
+  responses: {},
+  mark: () => {},
+  isDone: () => false,
+  doneCount: () => 0,
+  reset: () => {},
+});
+
+export function Workspace33Provider({ children }: { children: ReactNode }) {
+  const [attempted, setAttempted] = useState<Record<string, boolean>>({});
+  const [responses, setResponses] = useState<Record<string, string>>({});
+  const value = useMemo<Workspace33Value>(
+    () => ({
+      attempted,
+      responses,
+      mark: (id, response) => {
+        setAttempted((current) => ({ ...current, [id]: true }));
+        if (response !== undefined) setResponses((current) => ({ ...current, [id]: response }));
+      },
+      isDone: (id) => Boolean(attempted[id]),
+      doneCount: (ids) => ids.filter((id) => attempted[id]).length,
+      reset: () => {
+        setAttempted({});
+        setResponses({});
+      },
+    }),
+    [attempted, responses],
   );
+  return <WorkspaceContext33.Provider value={value}>{children}</WorkspaceContext33.Provider>;
 }
 
-/* ---------- الخلفية العلمية ---------- */
-export function Lab33({ children, source }: { children: ReactNode; source?: string }) {
+export function useWorkspace33() {
+  return useContext(WorkspaceContext33);
+}
+
+// ============================================================
+// عناصر تفاعل صغيرة مشتركة
+// ============================================================
+export function Counter33({ done, total, label }: { done: number; total: number; label: string }) {
+  const pct = total === 0 ? 0 : Math.round((done / total) * 100);
   return (
-    <div className="rounded-3xl border border-amber-200 bg-gradient-to-b from-amber-50/80 via-white to-rose-50/50 p-4 sm:p-6">
-      {children}
-      {source ? (
-        <div className="mt-4 border-t border-amber-100 pt-2 text-[11px] leading-5 text-amber-700/80">
-          📜 المصدر: <Rich text={source} />
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
-export function Platform33({ children }: { children: ReactNode }) {
-  return (
-    <div className="mt-2 rounded-xl border border-dashed border-amber-300 bg-amber-50/60 px-3 py-2 text-[12px] leading-6 text-amber-900">
-      <span className="font-bold">🛠️ مثال تدريبي للمنصة — ليس من المصدر: </span>
-      {typeof children === "string" ? <Rich text={children} /> : children}
-    </div>
-  );
-}
-
-export function Verdict33({ tone, children }: { tone: "good" | "warn" | "note"; children: ReactNode }) {
-  const styles =
-    tone === "good"
-      ? "border-emerald-300 bg-emerald-50 text-emerald-900"
-      : tone === "warn"
-        ? "border-rose-300 bg-rose-50 text-rose-900"
-        : "border-amber-300 bg-amber-50 text-amber-900";
-  return <div className={`mt-2 rounded-xl border px-3 py-2 text-[13px] leading-6 ${styles}`}>{typeof children === "string" ? <Rich text={children} /> : children}</div>;
-}
-
-export function Progress33({ complete, total }: { complete: number; total: number }) {
-  const pct = total ? Math.round((complete / total) * 100) : 0;
-  return (
-    <div className="mb-3 flex items-center gap-2" aria-label="التقدم في التفاعل">
-      <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-amber-100">
-        <div className="h-full rounded-full bg-gradient-to-l from-amber-600 to-rose-500 transition-all" style={{ width: `${pct}%` }} />
+    <div className="rounded-2xl border border-slate-200 bg-white p-3" data-counter={label}>
+      <div className="flex items-center justify-between text-sm font-bold text-slate-600">
+        <Text33 text={label} />
+        <bdi dir="ltr">
+          {done} / {total}
+        </bdi>
       </div>
-      <span className="text-[11px] font-bold tabular-nums text-amber-800" aria-live="polite">
-        <Rich text={`أنجزت ${complete} من ${total}`} />
-      </span>
+      <div className="mt-2 h-2.5 w-full overflow-hidden rounded-full bg-slate-200" role="progressbar" aria-label={label} aria-valuemin={0} aria-valuemax={total} aria-valuenow={done}>
+        <div className="h-full rounded-full bg-gradient-to-l from-sky-500 via-amber-400 to-emerald-500 transition-all duration-500" style={{ width: `${pct}%` }} />
+      </div>
     </div>
   );
 }
 
-/* ---------- الغلاف: بوّابات الأزمنة ---------- */
-export function CoverGates33({
-  gates,
-  drv,
+function ChoiceChip({
+  active,
+  onClick,
+  children,
+  tone = "slate",
+  disabled,
+  ariaLabel,
 }: {
-  gates: { tense: string; formula: string; ar: string }[];
-  drv: GateDriver33;
+  active: boolean;
+  onClick: () => void;
+  children: ReactNode;
+  tone?: keyof typeof TONE33;
+  disabled?: boolean;
+  ariaLabel?: string;
 }) {
-  const [open, setOpen] = useState<boolean[]>(() => gates.map(() => false));
-  const count = open.filter(Boolean).length;
-  useEffect(() => {
-    if (count === gates.length) drv.onDone(true);
-  }, [count, gates.length, drv]);
   return (
-    <div className="grid gap-2 sm:grid-cols-2" dir="ltr">
-      {gates.map((g, i) => (
-        <button
-          key={g.tense}
-          type="button"
-          data-cover-gate={g.tense}
-          onClick={() => {
-            if (open[i]) return;
-            const next = [...open];
-            next[i] = true;
-            setOpen(next);
-          }}
-          className={`${FOCUS33} rounded-2xl border-2 p-3 text-left transition ${
-            open[i] ? "border-amber-500 bg-amber-50" : "border-amber-200 bg-white hover:border-amber-400"
-          }`}
-          aria-pressed={open[i]}
-        >
-          <div className="text-[13px] font-black text-amber-900">
-            <En>{g.tense}</En>
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-pressed={active}
+      aria-label={ariaLabel}
+      data-active={active ? "true" : undefined}
+      className={`rounded-xl border-2 px-3 py-2 text-sm font-bold transition disabled:opacity-40 ${FOCUS33} ${
+        active ? `${TONE33[tone].solid} text-white border-transparent` : "border-slate-200 bg-white text-slate-700 hover:border-slate-400"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
+function TensePicker({ value, onChange, disabled }: { value: TenseId33 | ""; onChange: (tense: TenseId33) => void; disabled?: boolean }) {
+  return (
+    <div className="flex flex-wrap gap-2" role="group" aria-label="اختر الزمن">
+      {TENSES_33.map((tense) => (
+        <ChoiceChip key={tense.id} active={value === tense.id} tone={tense.tone} disabled={disabled} onClick={() => onChange(tense.id)}>
+          <span aria-hidden="true">{tense.emoji}</span> <En33 className="text-xs font-extrabold">{tense.en}</En33>
+        </ChoiceChip>
+      ))}
+    </div>
+  );
+}
+
+function VerdictCard({ correct, children }: { correct: boolean; children: ReactNode }) {
+  return (
+    <div className={`rounded-2xl border-2 p-3 ${correct ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`} data-verdict={correct ? "correct" : "review"}>
+      <p className={`text-sm font-extrabold ${correct ? "text-emerald-900" : "text-rose-900"}`}>{correct ? "✓ إجابة صحيحة" : "✕ تحتاج مراجعة"}</p>
+      <div className="mt-1 text-sm font-semibold text-slate-700">{children}</div>
+    </div>
+  );
+}
+
+// ============================================================
+// بطاقة تدريب/محقّق مقترنة بالمحاولة: لا يظهر الحل قبل الضغط.
+// ============================================================
+type AttemptItem33 = {
+  fields: { key: string; label: string }[];
+  answer: string[];
+  accept?: string[][];
+  tense?: TenseId33 | null;
+  reason: string;
+  alternatives?: { answer: string; note: string }[];
+  provenance: "source" | "platform";
+  errorNote?: string;
+};
+
+function matchesAttempt33(item: AttemptItem33, responses: string[]): boolean {
+  return item.fields.every((field, i) => {
+    const value = normalize33(responses[i] ?? "");
+    if (!value) return false;
+    const pool = [item.answer[i], ...(item.accept?.[i] ?? [])].filter(Boolean).map((entry) => normalize33(entry as string));
+    return pool.includes(value);
+  });
+}
+
+function AttemptCard({ item, prompt, storeId, tag, mark }: { item: AttemptItem33; prompt: ReactNode; storeId: string; tag?: ReactNode; mark?: string }) {
+  const workspace = useWorkspace33();
+  const [values, setValues] = useState<Record<string, string>>({});
+  const [result, setResult] = useState<boolean | null>(null);
+  const filled = item.fields.every((f) => Boolean(values[f.key]?.trim()));
+  const done = workspace.isDone(storeId);
+
+  return (
+    <article className="rounded-3xl border border-slate-200 bg-white p-4" data-attempt={storeId} data-attempt-done={done ? "true" : undefined}>
+      <div className="space-y-1">{prompt}</div>
+      {tag && <div className="mt-2">{tag}</div>}
+
+      {!done && (
+        <>
+          <div className={`mt-3 grid gap-2 ${item.fields.length > 1 ? "md:grid-cols-2" : ""}`.trim()}>
+            {item.fields.map((f) => (
+              <label key={f.key} className="block text-sm font-bold text-slate-600">
+                <Text33 text={f.label} />
+                <textarea
+                  dir="auto"
+                  rows={2}
+                  value={values[f.key] ?? ""}
+                  onChange={(event) => setValues((current) => ({ ...current, [f.key]: event.target.value }))}
+                  className="font-en mt-1 w-full rounded-xl border-2 border-slate-200 bg-slate-50 px-3 py-2 text-base font-medium text-slate-800 outline-none transition focus:border-violet-400 focus:bg-white"
+                />
+              </label>
+            ))}
           </div>
-          {open[i] ? (
-            <div className="mt-1 space-y-0.5">
-              <div className="text-[12px] font-bold text-amber-700">
-                <En>{g.formula}</En>
-              </div>
-              <div className="text-[12px] text-amber-800" dir="rtl">
-                <Rich text={g.ar} />
-              </div>
-            </div>
-          ) : (
-            <div className="mt-1 text-[11px] text-amber-400" dir="rtl">
-              <Rich text="المس لفتح البوّابة…" />
+          <button
+            type="button"
+            disabled={!filled}
+            onClick={() => {
+              setResult(matchesAttempt33(item, item.fields.map((f) => values[f.key] ?? "")));
+              workspace.mark(storeId, item.fields.map((f) => values[f.key] ?? "").join(" / "));
+            }}
+            className={`mt-3 rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+          >
+            <Text33 text="قارن إجابتي بالحل" />
+          </button>
+          {!filled && (
+            <p className="mt-2 text-xs font-semibold text-slate-500">
+              <Text33 text="املأ كل الفراغات لتفعيل المقارنة." />
+            </p>
+          )}
+          {result !== null && <div className="mt-3">{result ? <VerdictCard correct>حلّك مطابق.</VerdictCard> : <VerdictCard correct={false}>راجع الحل أدناه.</VerdictCard>}</div>}
+        </>
+      )}
+
+      {done && (
+        <div className="mt-3 space-y-2" data-solution="true">
+          <div className="rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-3">
+            <p className="text-xs font-extrabold text-emerald-800">
+              <Text33 text="الحل" />
+            </p>
+            <p dir="auto" className="font-en mt-1 text-base font-bold text-emerald-900">
+              {mark && <span aria-hidden="true">{mark} </span>}
+              {item.answer.join(" / ")}
+            </p>
+            {item.tense && (
+              <p className="mt-2">
+                <Lens33 tense={item.tense} />
+              </p>
+            )}
+          </div>
+          <div className="rounded-2xl border border-slate-200 bg-white p-3">
+            <p className="text-xs font-extrabold text-violet-700">
+              <Text33 text="لماذا؟" /> {item.provenance === "platform" && <PlatformTag33 />}
+            </p>
+            <p className="mt-1 text-base leading-8 text-slate-700">
+              <Text33 text={item.reason} />
+            </p>
+          </div>
+          {item.errorNote && (
+            <div className="rounded-2xl border border-rose-200 bg-rose-50 p-3">
+              <p className="text-xs font-extrabold text-rose-800">
+                <Text33 text="تفسير الخطأ" />
+              </p>
+              <p className="mt-1 text-base leading-8 text-rose-900">
+                <Text33 text={item.errorNote} />
+              </p>
             </div>
           )}
-        </button>
-      ))}
-      <div className="col-span-full">
-        <Progress33 complete={count} total={gates.length} />
-      </div>
-    </div>
-  );
-}
-
-/* ---------- الأهداف ---------- */
-export function ObjectivesChecklist33({ items, drv }: { items: { n: string; text: string }[]; drv: GateDriver33 }) {
-  const [checked, setChecked] = useState<boolean[]>(() => items.map(() => false));
-  const count = checked.filter(Boolean).length;
-  useEffect(() => {
-    if (count === items.length) drv.onDone(true);
-  }, [count, items.length, drv]);
-  return (
-    <div>
-      <Progress33 complete={count} total={items.length} />
-      <ul className="space-y-2">
-        {items.map((it, i) => (
-          <li key={it.n}>
-            <button
-              type="button"
-              data-objective={it.n}
-              onClick={() => {
-                const next = [...checked];
-                next[i] = !next[i];
-                setChecked(next);
-              }}
-              className={`${FOCUS33} flex w-full items-start gap-2 rounded-xl border-2 px-3 py-2 text-right transition ${
-                checked[i] ? "border-amber-500 bg-amber-50" : "border-amber-200 bg-white hover:border-amber-400"
-              }`}
-              aria-pressed={checked[i]}
-            >
-              <span aria-hidden className={`mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 text-[11px] font-black ${checked[i] ? "border-amber-600 bg-amber-600 text-white" : "border-amber-300 text-transparent"}`}>
-                ✓
-              </span>
-              <span className="text-[13px] leading-6">
-                <span className="mr-1 font-black text-amber-700">{it.n}.</span>
-                <Rich text={it.text} />
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-/* ---------- s1: خريطة الأزمنة الأربعة ---------- */
-export function TenseMap33({ gates, drv }: { gates: TenseGate33[]; drv: GateDriver33 }) {
-  const [open, setOpen] = useState<boolean[]>(() => gates.map(() => false));
-  const count = open.filter(Boolean).length;
-  useEffect(() => {
-    if (count === gates.length) drv.onDone(true);
-  }, [count, gates.length, drv]);
-  return (
-    <div>
-      <Progress33 complete={count} total={gates.length} />
-      <div className="grid gap-2">
-        {gates.map((g, i) => (
-          <button
-            data-tense-gate={g.tense}
-            key={g.tense}
-            type="button"
-            onClick={() => {
-              if (open[i]) return;
-              const next = [...open];
-              next[i] = true;
-              setOpen(next);
-            }}
-            className={`${FOCUS33} w-full rounded-2xl border-2 p-3 text-right transition ${
-              open[i] ? "border-amber-500 bg-amber-50/70" : "border-amber-200 bg-white hover:border-amber-400"
-            }`}
-            aria-pressed={open[i]}
-          >
-            <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <span dir="rtl" className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-bold text-amber-800"><Rich text={g.arTense} /></span>
-              <span className="text-[13px] font-black text-amber-900" dir="ltr">
-                <En>{g.tense}</En>
-              </span>
+          {item.alternatives?.map((alt) => (
+            <div key={alt.answer} className="rounded-2xl border border-amber-200 bg-amber-50 p-3">
+              <p className="text-xs font-extrabold text-amber-900">
+                <Text33 text="بديل صحيح أيضًا:" /> <En33 className="text-xs">{alt.answer}</En33>
+              </p>
+              <p className="mt-1 text-sm leading-7 text-amber-900">
+                <Text33 text={alt.note} />
+              </p>
             </div>
-            {open[i] ? (
-              <div className="mt-2 space-y-1">
-                <div className="rounded-lg bg-white/80 px-2 py-1 text-[13px] font-bold text-emerald-900" dir="ltr">
-                  <En>{g.ex}</En>
-                </div>
-                <div className="text-[12px] leading-6 text-amber-900"><Rich text={g.exAr} /></div>
-                <div className="text-[12px] leading-6 text-amber-700">
-                  <span className="font-black">الزاوية: </span>
-                  <Rich text={g.angle} />
-                </div>
-              </div>
-            ) : (
-              <div className="mt-1 text-[11px] text-amber-400"><Rich text="المس لكشف المثال وزاوية النظر…" /></div>
-            )}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ---------- مطابقة: خيارات عربية (s2, s3, s14-part, s21, s24) ---------- */
-export function MatchRows33({ rows, drv }: { rows: MatchRow33[]; drv: GateDriver33 }) {
-  const [picks, setPicks] = useState<(number | null)[]>(() => rows.map(() => null));
-  const done = picks.map((p, i) => p === rows[i].pick);
-  const count = done.filter(Boolean).length;
-  useEffect(() => {
-    if (count === rows.length) drv.onDone(true);
-  }, [count, rows.length, drv]);
-  return (
-    <div className="space-y-3">
-      <Progress33 complete={count} total={rows.length} />
-      {rows.map((row, i) => (
-        <div key={i} data-row={i} className="rounded-2xl border border-amber-200 bg-white p-3">
-          <div className="mb-2 text-[13px] font-bold leading-6 text-amber-950" dir="auto">
-            <LatinRuns text={row.prompt} />
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            {row.options.map((opt, oi) => {
-              const chosen = picks[i] === oi;
-              const solved = done[i];
-              const isRight = solved && oi === row.pick;
-              const isWrongPicked = chosen && oi !== row.pick;
-              return (
-                <button
-                  key={oi}
-                  type="button"
-                  data-row={i} data-row-opt={oi}
-                  disabled={solved}
-                  onClick={() => {
-                    const next = [...picks];
-                    next[i] = oi;
-                    setPicks(next);
-                  }}
-                  className={`${FOCUS33} rounded-full border-2 px-3 py-1.5 text-[12px] font-bold transition ${
-                    isRight
-                      ? "border-emerald-500 bg-emerald-50 text-emerald-900"
-                      : isWrongPicked
-                        ? "border-rose-400 bg-rose-50 text-rose-700"
-                        : chosen
-                          ? "border-amber-500 bg-amber-50 text-amber-900"
-                          : "border-amber-200 bg-white text-amber-900 hover:border-amber-400"
-                  }`}
-                  aria-pressed={chosen}
-                >
-                  <span dir="auto">
-                    <LatinRuns text={opt} />
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-          {done[i] ? <Verdict33 tone="good">{row.why}</Verdict33> : null}
+          ))}
         </div>
-      ))}
-    </div>
+      )}
+    </article>
   );
 }
 
-/* ---------- اختيار الزمن من 4 أسماء (s4, s17) ---------- */
-export function TensePick33({
-  rows,
-  renderPrompt,
-  drv,
-}: {
-  rows: (TensePickRow33 | PhraseRow33)[];
-  renderPrompt?: (row: any, i: number) => ReactNode;
-  drv: GateDriver33;
-}) {
-  const [picks, setPicks] = useState<(number | null)[]>(() => rows.map(() => null));
-  const done = picks.map((p, i) => p === rows[i].pick);
-  const count = done.filter(Boolean).length;
-  useEffect(() => {
-    if (count === rows.length) drv.onDone(true);
-  }, [count, rows.length, drv]);
+// ============================================================
+// §1c — النموذج الذهني: أربع بطاقات تُقلَب
+// ============================================================
+export function ModelFlip33() {
+  const [open, setOpen] = useState<Record<string, boolean>>({});
+  const opened = MENTAL_MODEL_33.filter((row) => open[row.en]).length;
+  const revealAll = () => setOpen(Object.fromEntries(MENTAL_MODEL_33.map((row) => [row.en, true])));
   return (
-    <div className="space-y-3">
-      <Progress33 complete={count} total={rows.length} />
-      {rows.map((row, i) => (
-        <div key={i} className="rounded-2xl border border-amber-200 bg-white p-3">
-          <div className="mb-2 text-[13px] font-bold leading-6 text-amber-950">
-            {renderPrompt ? renderPrompt(row, i) : (
-              <span dir="auto">
-                <LatinRuns text={(row as any).prompt ?? (row as any).phrase} />
-              </span>
-            )}
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            {TENSE_OPTIONS_33.map((opt, oi) => {
-              const chosen = picks[i] === oi;
-              const solved = done[i];
-              const isRight = solved && oi === row.pick;
-              const isWrongPicked = chosen && oi !== row.pick;
-              return (
-                <button
-                  key={oi}
-                  type="button"
-                  data-row={i} data-row-opt={oi}
-                  disabled={solved}
-                  onClick={() => {
-                    const next = [...picks];
-                    next[i] = oi;
-                    setPicks(next);
-                  }}
-                  className={`${FOCUS33} rounded-full border-2 px-2.5 py-1 text-[11px] font-bold transition ${
-                    isRight
-                      ? "border-emerald-500 bg-emerald-50 text-emerald-900"
-                      : isWrongPicked
-                        ? "border-rose-400 bg-rose-50 text-rose-700"
-                        : chosen
-                          ? "border-amber-500 bg-amber-50 text-amber-900"
-                          : "border-amber-200 bg-white text-amber-900 hover:border-amber-400"
-                  }`}
-                  aria-pressed={chosen}
-                >
-                  <span dir="ltr">
-                    <LatinRuns text={opt} />
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-          {done[i] ? <Verdict33 tone="good">{row.why}</Verdict33> : null}
+    <div className="space-y-3" data-lab="model-flip">
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="min-w-[12rem] flex-1">
+          <Counter33 done={opened} total={MENTAL_MODEL_33.length} label="المعادلات المكشوفة" />
         </div>
-      ))}
-    </div>
-  );
-}
-
-/* ---------- الجملة السليمة من بين خيارات إنجليزية (s6, s8, s9, s10, s11, s19) ---------- */
-export function RightPick33({ rows, drv }: { rows: RightRow33[]; drv: GateDriver33 }) {
-  const [picks, setPicks] = useState<(number | null)[]>(() => rows.map(() => null));
-  const done = picks.map((p, i) => p === rows[i].correct);
-  const count = done.filter(Boolean).length;
-  useEffect(() => {
-    if (count === rows.length) drv.onDone(true);
-  }, [count, rows.length, drv]);
-  return (
-    <div className="space-y-3">
-      <Progress33 complete={count} total={rows.length} />
-      {rows.map((row, i) => (
-        <div key={i} className="rounded-2xl border border-amber-200 bg-white p-3">
-          <div className="mb-2 text-[12px] font-black text-amber-800">
-            <Rich text={row.label} />
-          </div>
-          <div className="grid gap-1.5">
-            {row.opts.map((opt, oi) => {
-              const chosen = picks[i] === oi;
-              const solved = done[i];
-              const isRight = solved && oi === row.correct;
-              const isWrongPicked = chosen && oi !== row.correct;
-              return (
-                <button
-                  key={oi}
-                  type="button"
-                  data-row={i} data-row-opt={oi}
-                  disabled={solved}
-                  onClick={() => {
-                    const next = [...picks];
-                    next[i] = oi;
-                    setPicks(next);
-                  }}
-                  className={`${FOCUS33} rounded-xl border-2 px-3 py-2 text-left text-[13px] font-bold leading-6 transition ${
-                    isRight
-                      ? "border-emerald-500 bg-emerald-50 text-emerald-900"
-                      : isWrongPicked
-                        ? "border-rose-400 bg-rose-50 text-rose-700"
-                        : chosen
-                          ? "border-amber-500 bg-amber-50 text-amber-900"
-                          : "border-amber-200 bg-white text-amber-900 hover:border-amber-400"
-                  }`}
-                  aria-pressed={chosen}
-                >
-                  <span dir="ltr" className="block">
-                    <LatinRuns text={opt} />
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-          {done[i] ? <Verdict33 tone="good">{row.why}</Verdict33> : null}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/* ---------- استكشاف الجداول الأربعة (s5 أولًا) ---------- */
-export function FormsExplorer33({ tables, drv }: { tables: FormTable33[]; drv: GateDriver33 }) {
-  const [active, setActive] = useState(0);
-  const [seen, setSeen] = useState<boolean[]>(() => tables.map((_, i) => i === 0));
-  const count = seen.filter(Boolean).length;
-  useEffect(() => {
-    if (count === tables.length) drv.onDone(true);
-  }, [count, tables.length, drv]);
-  const t = tables[active];
-  return (
-    <div className="rounded-2xl border border-amber-200 bg-white p-3">
-      <Progress33 complete={count} total={tables.length} />
-      <div className="mb-2 flex flex-wrap gap-1.5" role="tablist" aria-label="جداول الأزمنة الأربعة">
-        {tables.map((tb, i) => (
-          <button
-            key={tb.tense}
-            type="button"
-            role="tab"
-            data-form-tab={tb.tense}
-            aria-selected={active === i}
-            onClick={() => {
-              setActive(i);
-              if (!seen[i]) {
-                const next = [...seen];
-                next[i] = true;
-                setSeen(next);
-              }
-            }}
-            className={`${FOCUS33} rounded-full border-2 px-2.5 py-1 text-[11px] font-bold transition ${
-              active === i ? "border-amber-600 bg-amber-600 text-white" : seen[i] ? "border-emerald-400 bg-emerald-50 text-emerald-800" : "border-amber-200 bg-white text-amber-900 hover:border-amber-400"
-            }`}
-          >
-            <span dir="ltr">
-              <En>{tb.tense.replace("Present ", "P. ")}</En>
-            </span>
-            {seen[i] ? " ✓" : ""}
-          </button>
-        ))}
+        <button
+          type="button"
+          onClick={revealAll}
+          disabled={opened === MENTAL_MODEL_33.length}
+          className={`rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+        >
+          <Text33 text="اكشف المعادلات كلها" />
+        </button>
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[420px] border-collapse text-[12px]" dir="ltr">
-          <tbody>
-            {(
-              [
-                ["تأكيد (+)", t.aff],
-                ["نفي (−)", t.neg],
-                ["سؤال (?)", t.q],
-                ["جواب قصير", t.short],
-              ] as const
-            ).map(([lbl, val]) => (
-              <tr key={lbl} className="border-b border-amber-100 last:border-0">
-                <th scope="row" className="w-24 whitespace-nowrap px-2 py-2 text-right font-black text-amber-700" dir="rtl">
-                  <Rich text={lbl} />
-                </th>
-                <td className="px-2 py-2 text-left font-bold text-emerald-900">
-                  <En>{val}</En>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="mt-2 rounded-lg bg-amber-50 px-3 py-2 text-[12px] leading-6 text-amber-900">
-        <Rich text={t.note} />
-      </div>
-      <div className="mt-1 text-[11px] text-amber-500"><Rich text="استكشف الجداول الأربعة كلها لفتح القفل (العلامة ✓ تظهر فوق كل جدول رأيته)." /></div>
-    </div>
-  );
-}
-
-/* ---------- فرز الكلمات الدالة (s7) ---------- */
-export function SignalSort33({
-  buckets,
-  words,
-  drv,
-}: {
-  buckets: string[];
-  words: { en: string; bucket: number; why: string }[];
-  drv: GateDriver33;
-}) {
-  const [locks, setLocks] = useState<boolean[]>(() => words.map(() => false));
-  const [wrong, setWrong] = useState<(number | null)[]>(() => words.map(() => null));
-  const [picked, setPicked] = useState<number | null>(null);
-  const count = locks.filter(Boolean).length;
-  useEffect(() => {
-    if (count === words.length) drv.onDone(true);
-  }, [count, words.length, drv]);
-  return (
-    <div>
-      <Progress33 complete={count} total={words.length} />
-      <div className="mb-3 flex flex-wrap gap-1.5">
-        {words.map((w, wi) => {
-          if (locks[wi]) return null;
-          const active = picked === wi;
+      <div className="grid gap-3 md:grid-cols-2">
+        {MENTAL_MODEL_33.map((row) => {
+          const meta = tenseById33(row.tense);
           return (
             <button
-              key={wi}
               type="button"
-              data-signal-chip={wi}
-              onClick={() => setPicked(active ? null : wi)}
-              className={`${FOCUS33} rounded-full border-2 px-3 py-1.5 text-[12px] font-bold transition ${
-                active ? "border-amber-600 bg-amber-600 text-white" : "border-amber-300 bg-white text-amber-900 hover:border-amber-500"
-              }`}
-              aria-pressed={active}
+              key={row.en}
+              onClick={() => setOpen((current) => ({ ...current, [row.en]: !current[row.en] }))}
+              aria-expanded={Boolean(open[row.en])}
+              data-model-card={meta.id}
+              className={`rounded-3xl border-2 p-4 text-right transition ${FOCUS33} ${open[row.en] ? TONE33[meta.tone].soft : "border-slate-200 bg-white hover:border-slate-400"}`}
             >
-              <span dir="ltr">
-                <LatinRuns text={w.en} />
-              </span>
+              <En33 className="text-xl font-extrabold">{row.en}</En33>
+              <p className="mt-1 text-lg font-bold text-slate-800">
+                <Text33 text={open[row.en] ? `= ${row.ar}` : "= ……"} />
+              </p>
+              <p className="mt-2 text-xs font-bold opacity-70">
+                <Text33 text={open[row.en] ? meta.formula : "اقلب البطاقة لتكشف المعنى"} />
+              </p>
             </button>
           );
         })}
-        {picked === null && count < words.length ? (
-          <span className="px-1 py-1.5 text-[11px] text-amber-500"><Rich text="اختر كلمة دالة ثم المس دلو الزمن…" /></span>
-        ) : null}
       </div>
-      <div className="grid gap-2 sm:grid-cols-2">
-        {buckets.map((b, bi) => (
-          <button
-            key={bi}
-            type="button"
-            data-signal-bucket={bi}
-            onClick={() => {
-              if (picked === null || locks[picked]) return;
-              if (bi === words[picked].bucket) {
-                const lk = [...locks];
-                lk[picked] = true;
-                setLocks(lk);
-              } else {
-                const wr = [...wrong];
-                wr[picked] = bi;
-                setWrong(wr);
-              }
-              setPicked(null);
-            }}
-            className={`${FOCUS33} min-h-[72px] rounded-2xl border-2 border-dashed p-2 text-right transition ${
-              picked === null ? "border-amber-200 bg-amber-50/40" : "border-amber-500 bg-amber-50 hover:border-amber-600"
-            }`}
-          >
-            <div className="mb-1 text-[11px] font-black text-amber-800" dir="ltr">
-              <En>{b}</En>
-            </div>
-            <div className="flex flex-wrap gap-1" dir="ltr">
-              {words.map((w, wi) =>
-                locks[wi] && w.bucket === bi ? (
-                  <span key={wi} className="rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-bold text-emerald-900">
-                    {w.en}
-                  </span>
-                ) : !locks[wi] && wrong[wi] === bi ? (
-                  <span key={wi} className="rounded-full bg-rose-50 px-2 py-0.5 text-[11px] font-bold text-rose-600">
-                    {w.en} ✗
-                  </span>
-                ) : null
+    </div>
+  );
+}
+
+// ============================================================
+// §2b — طابق جملة work مع صيغتها
+// ============================================================
+export function FormMatch33() {
+  const [picked, setPicked] = useState<Record<string, TenseId33 | "">>({});
+  const [checked, setChecked] = useState(false);
+  const all = WORK_FORMS_33.every((row) => picked[row.en]);
+  const score = WORK_FORMS_33.filter((row) => picked[row.en] === row.tense).length;
+  return (
+    <div className="space-y-3" data-lab="form-match">
+      {WORK_FORMS_33.map((row) => (
+        <div key={row.en} className="rounded-2xl border border-slate-200 bg-white p-3">
+          <p dir="ltr" className="font-en text-xl font-extrabold text-slate-900">
+            {row.en}
+          </p>
+          <div className="mt-2">
+            <TensePicker
+              value={picked[row.en] ?? ""}
+              disabled={checked}
+              onChange={(tense) => setPicked((current) => ({ ...current, [row.en]: tense }))}
+            />
+          </div>
+          {checked && (
+            <p className={`mt-2 text-sm font-bold ${picked[row.en] === row.tense ? "text-emerald-700" : "text-rose-700"}`}>
+              <Text33 text={picked[row.en] === row.tense ? "✓ مطابقة صحيحة" : `✕ الزمن الصحيح: ${tenseById33(row.tense).en}`} />
+            </p>
+          )}
+        </div>
+      ))}
+      {!checked ? (
+        <button
+          type="button"
+          disabled={!all}
+          onClick={() => setChecked(true)}
+          className={`rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+        >
+          <Text33 text="تحقّق من المطابقة" />
+        </button>
+      ) : (
+        <Note33 emoji="🧱">
+          <Text33 text={`نتيجتك ${score} من ${WORK_FORMS_33.length}. الجمل الأربع صحيحة، لكنها لا تحمل المعنى نفسه.`} />
+        </Note33>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// §3c — فرز جمل نورا على زوايا النظر
+// ============================================================
+export function NoraSort33() {
+  const [picked, setPicked] = useState<Record<string, TenseId33 | "">>({});
+  const [checked, setChecked] = useState(false);
+  const all = NORA_ROWS_33.every((row) => picked[row.id]);
+  const score = NORA_ROWS_33.filter((row) => picked[row.id] === row.tense).length;
+  return (
+    <div className="space-y-3" data-lab="nora-sort">
+      {NORA_ROWS_33.map((row) => (
+        <div key={row.id} className="rounded-2xl border border-slate-200 bg-white p-3">
+          <p dir="ltr" className="font-en text-lg font-extrabold text-slate-900">
+            {row.en}
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-600">
+            <Text33 text={row.ar} />
+          </p>
+          <div className="mt-2">
+            <TensePicker value={picked[row.id] ?? ""} disabled={checked} onChange={(tense) => setPicked((current) => ({ ...current, [row.id]: tense }))} />
+          </div>
+          {checked && (
+            <div className="mt-2">
+              {picked[row.id] === row.tense ? (
+                <p className="text-sm font-bold text-emerald-700">
+                  <Text33 text={`✓ ${row.angle}`} />
+                </p>
+              ) : (
+                <p className="text-sm font-bold text-rose-700">
+                  <Text33 text={`✕ الزاوية الصحيحة: ${row.angle}`} />
+                </p>
               )}
             </div>
-          </button>
-        ))}
-      </div>
-      {count > 0 ? (
-        <div className="mt-2 space-y-1">
-          {words.map((w, wi) =>
-            locks[wi] ? (
-              <div key={wi} className="text-[11px] leading-5 text-amber-800">
-                <En>{w.en}</En> ← <Rich text={w.why} />
-              </div>
-            ) : null
           )}
         </div>
-      ) : null}
+      ))}
+      {!checked ? (
+        <button
+          type="button"
+          disabled={!all}
+          onClick={() => setChecked(true)}
+          className={`rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+        >
+          <Text33 text="تحقّق من الفرز" />
+        </button>
+      ) : (
+        <Note33 emoji="🔬">
+          <Text33 text={`نتيجتك ${score} من ${NORA_ROWS_33.length}. لم يتغيّر الفعل الأساسي، تغيّرت زاوية النظر فقط.`} />
+        </Note33>
+      )}
     </div>
   );
 }
 
-/* ---------- محقق اللمس (s12) ---------- */
-export function TapFix33({ rounds, drv }: { rounds: Detective33[]; drv: GateDriver33 }) {
-  const [stage, setStage] = useState(0);
-  const [tapped, setTapped] = useState<number | null>(null);
-  const [solved, setSolved] = useState(0);
-  useEffect(() => {
-    if (solved === rounds.length) drv.onDone(true);
-  }, [solved, rounds.length, drv]);
-  const cur = rounds[stage];
+// ============================================================
+// §4c — طابق السياق مع الجملة الإنجليزية
+// ============================================================
+export function ContextMatch33() {
+  const [picked, setPicked] = useState<Record<string, string>>({});
+  const [checked, setChecked] = useState(false);
+  const all = PROJECT_OPTIONS_33.every((row) => picked[row.en]);
+  const score = PROJECT_OPTIONS_33.filter((row) => picked[row.en] === row.tense).length;
   return (
-    <div>
-      <Progress33 complete={solved} total={rounds.length} />
-      <div data-tap-stage={stage} className="rounded-2xl border border-amber-200 bg-white p-3">
-        <div className="mb-2 text-[12px] font-black text-amber-800"><Rich text={`القضية ${cur.n} — المس الكلمة الخاطئة`} /></div>
-        <div className="flex flex-wrap gap-1.5" dir="ltr">
-          {solved > stage ? (
-            /* بعد الحل تُعرض الجملة المصححة الموثوقة (corrected) كاملة —
-               لا إعادة تركيب من الفهرس لأن الخطأ قد يمتد على كلمتين (been knowing…) */
-            <span className="rounded-lg border-2 border-emerald-500 bg-emerald-50 px-2 py-1.5 text-[13px] font-black text-emerald-900">
-              <LatinRuns text={cur.corrected} />
-            </span>
-          ) : (
-            cur.segments.map((seg, si) => {
-              const isTapped = tapped === si;
-              return (
-                <button
-                  key={si}
-                  type="button"
-                  data-tap-seg={si}
-                  onClick={() => setTapped(si)}
-                  className={`${FOCUS33} rounded-lg border-2 px-2 py-1.5 text-[13px] font-bold transition ${
-                    isTapped
-                      ? si === cur.bad
-                        ? "border-amber-500 bg-amber-100 text-amber-900"
-                        : "border-rose-400 bg-rose-50 text-rose-700"
-                      : "border-amber-200 bg-white text-amber-900 hover:border-amber-400"
-                  }`}
-                >
-                  <LatinRuns text={seg} />
-                </button>
-              );
-            })
+    <div className="space-y-3" data-lab="context-match">
+      {PROJECT_OPTIONS_33.map((row) => (
+        <div key={row.en} className="rounded-2xl border border-slate-200 bg-white p-3">
+          <p className="text-xs font-extrabold text-slate-500">
+            <Text33 text={row.before} />
+          </p>
+          <p dir="ltr" className="font-en mt-1 text-lg font-extrabold text-slate-900">
+            {row.en}
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-600">
+            <Text33 text={row.ar} />
+          </p>
+          <div className="mt-2">
+            <TensePicker value={(picked[row.en] as TenseId33) ?? ""} disabled={checked} onChange={(tense) => setPicked((current) => ({ ...current, [row.en]: tense }))} />
+          </div>
+          {checked && (
+            <p className={`mt-2 text-sm font-bold ${picked[row.en] === row.tense ? "text-emerald-700" : "text-rose-700"}`}>
+              <Text33 text={picked[row.en] === row.tense ? `✓ السياق الحاسم: ${row.context}` : `✕ السياق الحاسم: ${row.context}`} />
+            </p>
           )}
         </div>
-        {tapped !== null && solved === stage ? (
-          <div className="mt-3">
-            <div className="mb-1 text-[12px] font-black text-amber-800"><Rich text="اختر التصحيح:" /></div>
-            <div className="flex flex-wrap gap-1.5" dir="ltr">
-              {cur.fixOpts.map((opt) => (
-                <button
-                  key={opt}
-                  type="button"
-                  data-tap-fix={opt}
-                  onClick={() => {
-                    if (tapped === cur.bad && opt === cur.fix) {
-                      setSolved(stage + 1);
-                    }
-                  }}
-                  className={`${FOCUS33} rounded-full border-2 px-3 py-1.5 text-[12px] font-bold ${
-                    solved > stage && opt === cur.fix
-                      ? "border-emerald-500 bg-emerald-50 text-emerald-900"
-                      : "border-amber-300 bg-white text-amber-900 hover:border-amber-500"
-                  }`}
-                >
-                  <LatinRuns text={opt} />
-                </button>
-              ))}
+      ))}
+      {!checked ? (
+        <button
+          type="button"
+          disabled={!all}
+          onClick={() => setChecked(true)}
+          className={`rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+        >
+          <Text33 text="تحقّق من السياق" />
+        </button>
+      ) : (
+        <Note33 emoji="🧭">
+          <Text33 text={`نتيجتك ${score} من ${PROJECT_OPTIONS_33.length}. السياق هو الذي يحدد الزمن، لا شكل الجملة العربية.`} />
+        </Note33>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// §5d — الإجابات القصيرة
+// ============================================================
+export function ShortAnswers33() {
+  const [picked, setPicked] = useState<Record<string, string>>({});
+  const [checked, setChecked] = useState(false);
+  const all = SHORT_ANSWERS_33.every((row) => picked[row.id]);
+  const score = SHORT_ANSWERS_33.filter((row) => picked[row.id] === "yes").length;
+  return (
+    <div className="space-y-3" data-lab="short-answers">
+      <p className="text-sm font-bold text-slate-600">
+        <Text33 text="لكل سؤال اختر الإجابة القصيرة الصحيحة، ثم تحقّق لترى صيغتَي نعم ولا معًا." />
+      </p>
+      {SHORT_ANSWERS_33.map((row) => {
+        const meta = tenseById33(row.tense);
+        const open = checked || picked[row.id] === "yes";
+        return (
+          <div key={row.id} className={`rounded-2xl border-2 p-3 ${TONE33[meta.tone].soft}`}>
+            <p dir="ltr" className="font-en text-lg font-extrabold">
+              {row.question}
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <ChoiceChip active={picked[row.id] === "yes"} tone={meta.tone} disabled={checked} onClick={() => setPicked((c) => ({ ...c, [row.id]: "yes" }))}>
+                <En33 className="text-xs">{row.yes}</En33>
+              </ChoiceChip>
+              <ChoiceChip active={picked[row.id] === "no"} tone={meta.tone} disabled={checked} onClick={() => setPicked((c) => ({ ...c, [row.id]: "no" }))}>
+                <En33 className="text-xs">{row.no}</En33>
+              </ChoiceChip>
             </div>
-            {tapped !== cur.bad ? <Verdict33 tone="warn">ليست هذه الكلمة — ابحث عن الخطأ الحقيقي في الجملة.</Verdict33> : null}
-          </div>
-        ) : null}
-        {solved > stage ? (
-          <div>
-            <Verdict33 tone="good">
-              <LatinRuns text={cur.corrected} />
-              {" — "}
-              {cur.why}
-            </Verdict33>
-            {stage + 1 < rounds.length ? (
-              <button
-                type="button"
-                onClick={() => {
-                  setStage(stage + 1);
-                  setTapped(null);
-                }}
-                className={`${FOCUS33} mt-2 rounded-full border-2 border-amber-500 bg-amber-600 px-4 py-1.5 text-[12px] font-black text-white hover:bg-amber-700`}
-              >
-                القضية التالية ←
-              </button>
-            ) : null}
-          </div>
-        ) : null}
-      </div>
-    </div>
-  );
-}
-
-/* ---------- الفراغات المكتوبة (s13, s14) ---------- */
-export function normalizeTyped33(s: string) {
-  return s
-    .trim()
-    .toLowerCase()
-    .replace(/[.,!?؟]/g, "")
-    .replace(/\s+/g, " ");
-}
-
-export function TypedFill33({ rows, drv, idPrefix }: { rows: Typed33[]; drv: GateDriver33; idPrefix?: string }) {
-  const [vals, setVals] = useState<string[]>(() => rows.map(() => ""));
-  const [ok, setOk] = useState<boolean[]>(() => rows.map(() => false));
-  const [tried, setTried] = useState<boolean[]>(() => rows.map(() => false));
-  const count = ok.filter(Boolean).length;
-  useEffect(() => {
-    if (count === rows.length) drv.onDone(true);
-  }, [count, rows.length, drv]);
-  return (
-    <div className="space-y-3">
-      <Progress33 complete={count} total={rows.length} />
-      {rows.map((row, i) => (
-        <div key={i} className="rounded-2xl border border-amber-200 bg-white p-3">
-          <div className="mb-1 text-[11px] font-black text-amber-700"><Rich text={`الفراغ ${row.n} — الفعل: `} /><En>({row.word})</En></div>
-          <div className="flex flex-wrap items-center gap-1.5" dir="ltr">
-            <span className="text-[13px] font-bold text-amber-950">
-              <LatinRuns text={row.before} />
-            </span>
-            <input
-              id={idPrefix ? `${idPrefix}-typed-${i}` : undefined}
-              type="text"
-              value={vals[i]}
-              disabled={ok[i]}
-              onChange={(e) => {
-                const v = e.target.value;
-                setVals((prev) => {
-                  const next = [...prev];
-                  next[i] = v;
-                  return next;
-                });
-              }}
-              className={`${FOCUS33} w-40 rounded-lg border-2 px-2 py-1 text-[13px] font-bold text-amber-950 ${
-                ok[i] ? "border-emerald-500 bg-emerald-50" : tried[i] ? "border-rose-300 bg-rose-50" : "border-amber-300 bg-white"
-              }`}
-              aria-label={`الفراغ ${row.n}`}
-            />
-            <span className="text-[13px] font-bold text-amber-950">
-              <LatinRuns text={row.after} />
-            </span>
-            {!ok[i] ? (
-              <button
-                type="button"
-                onClick={() => {
-                  const good = row.accept.some((a) => normalizeTyped33(a) === normalizeTyped33(vals[i]));
-                  setTried((prev) => {
-                    const next = [...prev];
-                    next[i] = true;
-                    return next;
-                  });
-                  if (good) {
-                    setOk((prev) => {
-                      const next = [...prev];
-                      next[i] = true;
-                      return next;
-                    });
-                  }
-                }}
-                className={`${FOCUS33} rounded-full border-2 border-amber-500 bg-amber-600 px-3 py-1 text-[11px] font-black text-white hover:bg-amber-700`}
-              >
-                تحقّق
-              </button>
-            ) : (
-              <span aria-hidden className="text-emerald-600">✓</span>
+            {open && (
+              <p className="mt-2 text-sm font-semibold">
+                <Text33 text="الإجابتان القصيرتان:" /> <En33 className="text-sm">{row.yes}</En33> · <En33 className="text-sm">{row.no}</En33>
+              </p>
+            )}
+            {checked && (
+              <p className="mt-1 text-xs font-bold opacity-80">
+                <En33 className="text-xs">{row.remember}</En33>
+              </p>
             )}
           </div>
-          {ok[i] ? <Verdict33 tone="good">{row.why}</Verdict33> : tried[i] ? <Verdict33 tone="warn">ليست الصيغة المناسبة هنا — راجع الكلمة الدالة في الجملة وحاول مجددًا.</Verdict33> : null}
-        </div>
-      ))}
+        );
+      })}
+      {!checked && (
+        <button
+          type="button"
+          disabled={!all}
+          onClick={() => setChecked(true)}
+          className={`rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+        >
+          <Text33 text="اعرض الصيغتين لكل زمن" />
+        </button>
+      )}
+      {checked && (
+        <Note33 emoji="⚙️">
+          <Text33 text={`اخترتَ الإجابة الأولى في ${score} من ${SHORT_ANSWERS_33.length} أسئلة. الإجابة القصيرة تعيد الفعل المساعد نفسه الذي في السؤال.`} />
+        </Note33>
+      )}
     </div>
   );
 }
 
-/* ---------- أفعال الحالة (s11) ---------- */
-export function StativeGate33({ verbs, drv }: { verbs: { verb: string; ar: string }[]; drv: GateDriver33 }) {
-  const [known, setKnown] = useState<boolean[]>(() => verbs.map(() => false));
-  const count = known.filter(Boolean).length;
-  useEffect(() => {
-    if (count === verbs.length) drv.onDone(true);
-  }, [count, verbs.length, drv]);
+// ============================================================
+// §6a — أيهما مبنيّة بناءً سليمًا؟
+// ============================================================
+export function PickCorrect33() {
+  const [picked, setPicked] = useState<Record<string, "a" | "b" | "">>({});
+  const [checked, setChecked] = useState(false);
+  const all = AUX_PAIRS_33.every((row) => picked[row.id]);
+  const score = AUX_PAIRS_33.filter((row) => (picked[row.id] === "a") === !row.aWrong).length;
   return (
-    <div>
-      <Progress33 complete={count} total={verbs.length} />
-      <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3" dir="ltr">
-        {verbs.map((v, i) => (
-          <button
-            key={v.verb}
-            type="button"
-            data-gate={i}
-            onClick={() => {
-              if (known[i]) return;
-              const next = [...known];
-              next[i] = true;
-              setKnown(next);
-            }}
-            className={`${FOCUS33} rounded-xl border-2 px-2 py-2 text-left transition ${
-              known[i] ? "border-emerald-500 bg-emerald-50" : "border-amber-200 bg-white hover:border-amber-400"
-            }`}
-            aria-pressed={known[i]}
-          >
-            <div className="text-[13px] font-black text-amber-900">
-              <En>{v.verb}</En>
+    <div className="space-y-3" data-lab="pick-correct">
+      {AUX_PAIRS_33.map((row) => {
+        const rightIsA = !row.aWrong;
+        const correct = picked[row.id] === (rightIsA ? "a" : "b");
+        return (
+          <div key={row.id} className="rounded-2xl border border-slate-200 bg-white p-3">
+            <div className="grid gap-2 md:grid-cols-2">
+              {(["a", "b"] as const).map((side) => {
+                const text = side === "a" ? row.a : row.b;
+                const wrong = side === "a" ? row.aWrong : row.bWrong;
+                const active = picked[row.id] === side;
+                const reveal = checked;
+                return (
+                  <button
+                    type="button"
+                    key={side}
+                    disabled={checked}
+                    aria-pressed={active}
+                    onClick={() => setPicked((current) => ({ ...current, [row.id]: side }))}
+                    data-pick={`${row.id}-${side}`}
+                    className={`rounded-2xl border-2 px-3 py-2 text-right transition ${FOCUS33} ${
+                      reveal
+                        ? wrong
+                          ? "border-rose-300 bg-rose-50"
+                          : "border-emerald-300 bg-emerald-50"
+                        : active
+                          ? "border-violet-400 bg-violet-50"
+                          : "border-slate-200 bg-slate-50 hover:border-slate-400"
+                    }`}
+                  >
+                    <span dir="ltr" className={`font-en block text-base font-bold md:text-lg ${reveal && wrong ? "text-rose-900 line-through decoration-rose-300" : "text-slate-900"}`}>
+                      {text.replace(/[✅❌]/g, "").trim()}
+                    </span>
+                    {reveal && (
+                      <span className={`mt-1 block text-xs font-extrabold ${wrong ? "text-rose-700" : "text-emerald-700"}`}>{wrong ? "✕ بناء غير سليم" : "✓ بناء سليم"}</span>
+                    )}
+                  </button>
+                );
+              })}
             </div>
-            <div className="text-[11px] text-amber-800" dir="rtl">
-              <Rich text={v.ar} />
+            {checked && (
+              <p className={`mt-2 text-sm font-semibold ${correct ? "text-emerald-700" : "text-rose-700"}`}>
+                <Text33 text={row.why} />
+              </p>
+            )}
+          </div>
+        );
+      })}
+      {!checked ? (
+        <button
+          type="button"
+          disabled={!all}
+          onClick={() => setChecked(true)}
+          className={`rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+        >
+          <Text33 text="اكشف البناء السليم" />
+        </button>
+      ) : (
+        <Note33 emoji="🚨" tone="rose">
+          <Text33 text={`نتيجتك ${score} من ${AUX_PAIRS_33.length}. كل زمن يمتلك بنية خاصة به، فلا تجمع أجزاء زمنين في جملة واحدة.`} />
+        </Note33>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// §7b — فرز الكلمات الدالة على الأزمنة الأربعة
+// ============================================================
+export function SignalSort33() {
+  const [picked, setPicked] = useState<Record<string, TenseId33 | "">>({});
+  const [checked, setChecked] = useState(false);
+  const all = SIGNAL_WORDS_33.every((row) => picked[row.en]);
+  const score = SIGNAL_WORDS_33.filter((row) => picked[row.en] === row.tense).length;
+  return (
+    <div className="space-y-3" data-lab="signal-sort">
+      <p className="text-sm font-bold text-slate-600">
+        <Text33 text={`صنّف ${SIGNAL_WORDS_33.length} كلمة أو تعبيرًا على الزمن الذي ترتبط به عادةً.`} />
+      </p>
+      <div className="grid gap-2 md:grid-cols-2">
+        {SIGNAL_WORDS_33.map((row) => (
+          <div key={row.en} className="rounded-2xl border border-slate-200 bg-white p-3">
+            <p dir="ltr" className="font-en text-lg font-extrabold text-slate-900">
+              {row.en}
+            </p>
+            <div className="mt-2">
+              <TensePicker value={picked[row.en] ?? ""} disabled={checked} onChange={(tense) => setPicked((current) => ({ ...current, [row.en]: tense }))} />
             </div>
-            <div className="text-[10px] font-bold text-amber-500" dir="rtl">
-              <Rich text="فعل حالة — بلا مستمر ✓" />
-            </div>
-          </button>
+            {checked && (
+              <p className={`mt-2 text-xs font-bold ${picked[row.en] === row.tense ? "text-emerald-700" : "text-rose-700"}`}>
+                <Text33 text={picked[row.en] === row.tense ? "✓ تصنيف صحيح" : `✕ ترتبط عادةً بـ ${tenseById33(row.tense).en}`} />
+              </p>
+            )}
+          </div>
         ))}
       </div>
+      {SIGNAL_AMBIGUOUS_33.length > 0 && (
+        <Note33 emoji="⚖️">
+          <Text33 text={`الكلمة ${SIGNAL_AMBIGUOUS_33.join(" و")} مستثناة من الفرز لأنها واردة في الجدول مع زمنين مختلفين، وهذا دليل إضافي على أن الكلمة الدالة ليست قاعدة مطلقة.`} />
+        </Note33>
+      )}
+      {!checked ? (
+        <button
+          type="button"
+          disabled={!all}
+          onClick={() => setChecked(true)}
+          className={`rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+        >
+          <Text33 text="تحقّق من التصنيف" />
+        </button>
+      ) : (
+        <Note33 emoji="⏰">
+          <Text33 text={`نتيجتك ${score} من ${SIGNAL_WORDS_33.length}. لا تختَر الزمن من الكلمة الدالة وحدها.`} />
+        </Note33>
+      )}
     </div>
   );
 }
 
-/* ---------- اصطياد العبارات الفعلية في القصة (s16) ---------- */
-export function VerbHunt33({ story, total, drv }: { story: StorySeg33[]; total: number; drv: GateDriver33 }) {
-  const [hits, setHits] = useState<Set<number>>(() => new Set());
-  useEffect(() => {
-    if (hits.size === total) drv.onDone(true);
-  }, [hits.size, total, drv]);
+// ============================================================
+// §8c — تحدّي المواجهة الأولى
+// ============================================================
+export function DuelChoose33() {
+  const [picked, setPicked] = useState<string>("");
+  const [checked, setChecked] = useState(false);
+  const correct = DUEL1_CHALLENGE_33.options.find((option) => option.id === picked)?.correct ?? false;
   return (
-    <div>
-      <Progress33 complete={hits.size} total={total} />
-      <p className="rounded-2xl border border-amber-200 bg-white p-4 text-[14px] font-medium leading-8 text-amber-950" dir="ltr">
-        {story.map((seg, i) =>
-          seg.hit ? (
-            <button
-              key={i}
-              type="button"
-              data-poem-tap={seg.hit}
-              onClick={() => {
-                if (hits.has(seg.hit!)) return;
-                setHits((prev) => new Set(prev).add(seg.hit!));
-              }}
-              className={`${FOCUS33} mx-0.5 rounded-md px-1 transition ${
-                hits.has(seg.hit)
-                  ? "bg-emerald-200 font-black text-emerald-900"
-                  : "bg-amber-100/70 text-amber-950 underline decoration-dotted decoration-amber-400 underline-offset-4 hover:bg-amber-200"
-              }`}
-              aria-pressed={hits.has(seg.hit)}
-            >
-              {seg.t}
-            </button>
-          ) : (
-            <span key={i}>{seg.t} </span>
-          )
-        )}
-      </p>
-      <div className="mt-1 text-[11px] text-amber-600"><Rich text={`المس العبارات الفعلية الملوّنة (${total} عبارة) — العبارة المكتشفة تتحول إلى الأخضر.`} /></div>
-    </div>
-  );
-}
-
-/* ---------- إجابتان صحيحتان؟ (s15) ---------- */
-export function IqBest33({ rows, options, drv }: { rows: BestRow33[]; options: string[]; drv: GateDriver33 }) {
-  const [picks, setPicks] = useState<(number | null)[]>(() => rows.map(() => null));
-  const done = picks.map((p, i) => p === rows[i].pick);
-  const count = done.filter(Boolean).length;
-  useEffect(() => {
-    if (count === rows.length) drv.onDone(true);
-  }, [count, rows.length, drv]);
-  return (
-    <div className="space-y-3">
-      <Progress33 complete={count} total={rows.length} />
-      {rows.map((row, i) => (
-        <div key={i} className="rounded-2xl border border-amber-200 bg-white p-3">
-          <div className="mb-1 text-[12px] font-bold text-amber-900"><Rich text={`المعنى المطلوب: ${row.ar}`} /></div>
-          <div className="mb-2 grid gap-1" dir="ltr">
-            <div className="rounded-lg bg-amber-50 px-2 py-1 text-[13px] font-bold text-amber-950">
-              <En>{row.a}</En>
-            </div>
-            <div className="rounded-lg bg-amber-50 px-2 py-1 text-[13px] font-bold text-amber-950">
-              <En>{row.b}</En>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            {options.map((opt, oi) => {
-              const chosen = picks[i] === oi;
-              const solved = done[i];
-              const isRight = solved && oi === row.pick;
-              const isWrongPicked = chosen && oi !== row.pick;
-              return (
-                <button
-                  key={oi}
-                  type="button"
-                  data-row={i} data-row-opt={oi}
-                  disabled={solved}
-                  onClick={() => {
-                    const next = [...picks];
-                    next[i] = oi;
-                    setPicks(next);
-                  }}
-                  className={`${FOCUS33} rounded-full border-2 px-3 py-1.5 text-[12px] font-bold transition ${
-                    isRight
-                      ? "border-emerald-500 bg-emerald-50 text-emerald-900"
-                      : isWrongPicked
-                        ? "border-rose-400 bg-rose-50 text-rose-700"
-                        : chosen
-                          ? "border-amber-500 bg-amber-50 text-amber-900"
-                          : "border-amber-200 bg-white text-amber-900 hover:border-amber-400"
-                  }`}
-                  aria-pressed={chosen}
-                >
-                  <Rich text={opt} />
-                </button>
-              );
-            })}
-          </div>
-          {done[i] ? <Verdict33 tone="good">{row.why}</Verdict33> : null}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/* ---------- محقق الفقرة (s18) ---------- */
-export function ParaDetect33({
-  para,
-  rows,
-  corrected,
-  drv,
-}: {
-  para: string;
-  rows: { n: string; wrong: string; opts: string[]; fix: string; why: string }[];
-  corrected: string;
-  drv: GateDriver33;
-}) {
-  const [picks, setPicks] = useState<(number | null)[]>(() => rows.map(() => null));
-  const done = picks.map((p, i) => p !== null && rows[i].opts[p as number] === rows[i].fix);
-  const count = done.filter(Boolean).length;
-  const all = count === rows.length;
-  useEffect(() => {
-    if (all) drv.onDone(true);
-  }, [all, drv]);
-  return (
-    <div className="space-y-3">
-      <div className="rounded-2xl border border-amber-200 bg-amber-50/50 p-3">
-        <div className="mb-1 text-[11px] font-black text-amber-700"><Rich text="فقرة Emma كما وردت — العنوان يقول «عشرة أخطاء» والعدّ الدقيق أحد عشر موضعًا:" /></div>
-        <p className="text-[13px] leading-7 text-amber-950" dir="ltr">
-          <LatinRuns text={para} />
+    <div className="space-y-3" data-lab="duel-choose">
+      <div className="rounded-2xl border border-slate-200 bg-white p-3">
+        <p className="text-sm font-bold text-slate-600">
+          <Text33 text={DUEL1_CHALLENGE_33.lead} />
+        </p>
+        <p className="mt-1 text-base font-semibold text-slate-800">
+          <Text33 text={DUEL1_CHALLENGE_33.question} />
         </p>
       </div>
-      <Progress33 complete={count} total={rows.length} />
-      {rows.map((row, i) => (
-        <div key={i} className="rounded-2xl border border-amber-200 bg-white p-3">
-          <div className="mb-2 flex flex-wrap items-baseline gap-2">
-            <span className="text-[12px] font-black text-amber-800"><Rich text={`الموضع ${row.n}`} /></span>
-            <span className="rounded-lg bg-rose-50 px-2 py-0.5 text-[12px] font-bold text-rose-700 line-through" dir="ltr">
-              <LatinRuns text={row.wrong} />
+      <div className="grid gap-2 md:grid-cols-2">
+        {DUEL1_CHALLENGE_33.options.map((option) => (
+          <button
+            type="button"
+            key={option.id}
+            disabled={checked}
+            aria-pressed={picked === option.id}
+            onClick={() => setPicked(option.id)}
+            data-duel-option={option.id}
+            className={`rounded-2xl border-2 p-3 text-right transition ${FOCUS33} ${
+              checked
+                ? option.correct
+                  ? "border-emerald-300 bg-emerald-50"
+                  : "border-rose-300 bg-rose-50"
+                : picked === option.id
+                  ? "border-sky-400 bg-sky-50"
+                  : "border-slate-200 bg-white hover:border-slate-400"
+            }`}
+          >
+            <span className="grid h-8 w-8 place-items-center rounded-xl bg-slate-900 text-sm font-bold text-white">{option.id}</span>
+            <span dir="ltr" className="font-en mt-2 block text-lg font-extrabold text-slate-900">
+              {option.text}
             </span>
-          </div>
-          <div className="flex flex-wrap gap-1.5" dir="ltr">
-            {row.opts.map((opt, oi) => {
-              const chosen = picks[i] === oi;
-              const solved = done[i];
-              const isRight = solved && opt === row.fix;
-              const isWrongPicked = chosen && opt !== row.fix;
-              return (
-                <button
-                  key={oi}
-                  type="button"
-                  data-row={i} data-row-opt={oi}
-                  disabled={solved}
-                  onClick={() => {
-                    const next = [...picks];
-                    next[i] = oi;
-                    setPicks(next);
-                  }}
-                  className={`${FOCUS33} rounded-full border-2 px-3 py-1.5 text-[12px] font-bold transition ${
-                    isRight
-                      ? "border-emerald-500 bg-emerald-50 text-emerald-900"
-                      : isWrongPicked
-                        ? "border-rose-400 bg-rose-50 text-rose-700"
-                        : "border-amber-200 bg-white text-amber-900 hover:border-amber-400"
-                  }`}
-                  aria-pressed={chosen}
-                >
-                  <LatinRuns text={opt} />
-                </button>
-              );
-            })}
-          </div>
-          {done[i] ? <Verdict33 tone="good">{row.why}</Verdict33> : null}
+          </button>
+        ))}
+      </div>
+      {!checked ? (
+        <button
+          type="button"
+          disabled={!picked}
+          onClick={() => setChecked(true)}
+          className={`rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+        >
+          <Text33 text="تحقّق من الاختيار" />
+        </button>
+      ) : (
+        <div className="space-y-2">
+          <VerdictCard correct={correct}>
+            <Text33 text={`${DUEL1_CHALLENGE_33.answerLabel} ${DUEL1_CHALLENGE_33.answer}`} />
+          </VerdictCard>
+          <Note33 emoji="🔁" tone="sky">
+            <Text33 text={DUEL1_CHALLENGE_33.because} />
+          </Note33>
         </div>
-      ))}
-      {all ? (
-        <div className="rounded-2xl border-2 border-emerald-400 bg-emerald-50 p-4">
-          <div className="mb-1 text-[12px] font-black text-emerald-800"><Rich text="✓ الفقرة بعد التصحيح (كما في حل المصدر):" /></div>
-          <p className="text-[13px] font-bold leading-7 text-emerald-950" dir="ltr">
-            <LatinRuns text={corrected} />
-          </p>
-        </div>
-      ) : null}
+      )}
     </div>
   );
 }
 
-/* ---------- بطاقات قابلة للقلب (s20, s23) ---------- */
-export function FlipCards33({
-  cards,
-  renderFace,
-  renderBack,
-  drv,
-}: {
-  cards: any[];
-  renderFace: (c: any) => ReactNode;
-  renderBack: (c: any) => ReactNode;
-  drv: GateDriver33;
-}) {
-  const [flipped, setFlipped] = useState<boolean[]>(() => cards.map(() => false));
-  const [touched, setTouched] = useState<boolean[]>(() => cards.map(() => false));
-  const count = touched.filter(Boolean).length;
-  useEffect(() => {
-    if (count === cards.length) drv.onDone(true);
-  }, [count, cards.length, drv]);
+// ============================================================
+// §9b — طابق الجملة بالسؤال الذي تجيب عنه
+// ============================================================
+export function QuestionMatch33() {
+  const rows = [...QUESTION_MATCH_33, ...QUESTION_MATCH_EXTRA_33.map((row) => ({ ...row, question: "" }))];
+  const questions = QUESTION_MATCH_33.map((row) => row.question);
+  const [picked, setPicked] = useState<Record<string, string>>({});
+  const [checked, setChecked] = useState(false);
+  const answerable = QUESTION_MATCH_33;
+  const all = answerable.every((row) => picked[row.id]);
+  const score = answerable.filter((row) => picked[row.id] === row.question).length;
   return (
-    <div>
-      <Progress33 complete={count} total={cards.length} />
-      <div className="grid gap-2 sm:grid-cols-2">
-        {cards.map((c, i) => (
-          <button
-            key={i}
-            type="button"
-            data-flip-gate={c.level ?? String(i)}
-            onClick={() => {
-              const f = [...flipped];
-              f[i] = !f[i];
-              setFlipped(f);
-              if (!touched[i]) {
-                const t = [...touched];
-                t[i] = true;
-                setTouched(t);
-              }
-            }}
-            className={`${FOCUS33} min-h-[96px] rounded-2xl border-2 p-3 text-right transition ${
-              flipped[i] ? "border-amber-500 bg-amber-50" : "border-amber-200 bg-white hover:border-amber-400"
-            }`}
-            aria-pressed={flipped[i]}
-          >
-            {flipped[i] ? (
-              <div className="text-[12px] leading-6 text-amber-900">{renderBack(c)}</div>
+    <div className="space-y-3" data-lab="question-match">
+      {rows.map((row) => {
+        const meta = tenseById33(row.tense);
+        const target = QUESTION_MATCH_33.find((item) => item.id === row.id);
+        return (
+          <div key={row.id} className={`rounded-2xl border-2 p-3 ${TONE33[meta.tone].soft}`}>
+            <p dir="ltr" className="font-en text-lg font-extrabold">
+              {row.en}
+            </p>
+            <p className="mt-1 text-sm font-semibold opacity-80">
+              <Text33 text={row.ar} />
+            </p>
+            {target ? (
+              <div className="mt-2 space-y-2">
+                {questions.map((question) => (
+                  <label key={question} className="flex items-center gap-2 rounded-xl border border-white/70 bg-white/70 px-3 py-1.5 text-sm font-bold">
+                    <input
+                      type="radio"
+                      name={`qm-${row.id}`}
+                      checked={picked[row.id] === question}
+                      disabled={checked}
+                      onChange={() => setPicked((current) => ({ ...current, [row.id]: question }))}
+                    />
+                    <Text33 text={question} />
+                  </label>
+                ))}
+                {checked && (
+                  <p className={`text-sm font-bold ${picked[row.id] === target.question ? "text-emerald-800" : "text-rose-800"}`}>
+                    <Text33 text={picked[row.id] === target.question ? "✓ مطابقة صحيحة" : `✕ السؤال الصحيح: ${target.question}`} />
+                  </p>
+                )}
+              </div>
             ) : (
-              <div className="text-[13px] font-black text-amber-900">{renderFace(c)}</div>
+              <p className="mt-2 text-xs font-bold opacity-75">
+                <Lens33 tense={row.tense} />
+              </p>
+            )}
+          </div>
+        );
+      })}
+      {!checked ? (
+        <button
+          type="button"
+          disabled={!all}
+          onClick={() => setChecked(true)}
+          className={`rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+        >
+          <Text33 text="تحقّق من المطابقة" />
+        </button>
+      ) : (
+        <Note33 emoji="⚔️" tone="amber">
+          <Text33 text={`نتيجتك ${score} من ${answerable.length}. المضارع المستمر يجيب عن «ماذا تفعل الآن؟»، والمضارع التام المستمر يجيب عن «منذ متى؟».`} />
+        </Note33>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// §10b — عدسة التركيز: العدد أم المدة؟
+// ============================================================
+export function FocusLens33() {
+  const [picked, setPicked] = useState<Record<string, "count" | "duration" | "">>({});
+  const [checked, setChecked] = useState(false);
+  const [livedVerdict, setLivedVerdict] = useState("");
+  const all = FOCUS_ROWS_33.every((row) => picked[row.id]) && Boolean(livedVerdict);
+  const score = FOCUS_ROWS_33.filter((row) => picked[row.id] === row.lens).length;
+  return (
+    <div className="space-y-3" data-lab="focus-lens">
+      {FOCUS_ROWS_33.map((row) => {
+        const meta = tenseById33(row.tense);
+        return (
+          <div key={row.id} className={`rounded-2xl border-2 p-3 ${TONE33[meta.tone].soft}`}>
+            <p dir="ltr" className="font-en text-lg font-extrabold">
+              {row.en}
+            </p>
+            <p className="mt-1 text-sm font-semibold opacity-85">
+              <Text33 text={row.ar} />
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <ChoiceChip active={picked[row.id] === "count"} tone={meta.tone} disabled={checked} onClick={() => setPicked((c) => ({ ...c, [row.id]: "count" }))}>
+                <Text33 text="الإنجاز والعدد" />
+              </ChoiceChip>
+              <ChoiceChip active={picked[row.id] === "duration"} tone={meta.tone} disabled={checked} onClick={() => setPicked((c) => ({ ...c, [row.id]: "duration" }))}>
+                <Text33 text="النشاط والمدة" />
+              </ChoiceChip>
+            </div>
+            {checked && (
+              <p className={`mt-2 text-sm font-bold ${picked[row.id] === row.lens ? "text-emerald-800" : "text-rose-800"}`}>
+                <Text33 text={row.focus} />
+              </p>
+            )}
+          </div>
+        );
+      })}
+
+      <div className="rounded-3xl border-2 border-slate-200 bg-white p-4">
+        <p className="text-sm font-bold text-slate-700">
+          <Text33 text={FOCUS_LIVED_33.lead} />
+        </p>
+        <div className="mt-2 space-y-1">
+          <p dir="ltr" className="font-en text-lg font-extrabold text-slate-900">
+            {FOCUS_LIVED_33.a}
+          </p>
+          <p dir="ltr" className="font-en text-lg font-extrabold text-slate-900">
+            {FOCUS_LIVED_33.b}
+          </p>
+        </div>
+        <p className="mt-2 text-sm font-bold text-slate-600">
+          <Text33 text="احكم على الجملتين:" />
+        </p>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {[
+            { id: "both", label: "كلتاهما صحيحتان وقد تدلان على أن الشخص ما زال يعيش هنا" },
+            { id: "first", label: "الأولى فقط صحيحة" },
+            { id: "second", label: "الثانية فقط صحيحة" },
+          ].map((option) => (
+            <ChoiceChip key={option.id} active={livedVerdict === option.id} tone="emerald" disabled={checked} onClick={() => setLivedVerdict(option.id)}>
+              <Text33 text={option.label} />
+            </ChoiceChip>
+          ))}
+        </div>
+        {checked && (
+          <div className="mt-3 space-y-2">
+            <VerdictCard correct={livedVerdict === "both"}>
+              <Text33 text={FOCUS_LIVED_33.both} />
+            </VerdictCard>
+            <p className="text-sm font-semibold text-slate-700">
+              <Text33 text={FOCUS_LIVED_33.head} />
+            </p>
+            <p className="text-sm font-semibold text-slate-700">
+              <Text33 text={FOCUS_LIVED_33.aFocus} />
+            </p>
+            <p className="text-sm font-semibold text-slate-700">
+              <Text33 text={FOCUS_LIVED_33.bFocus} />
+            </p>
+          </div>
+        )}
+      </div>
+
+      {!checked ? (
+        <button
+          type="button"
+          disabled={!all}
+          onClick={() => setChecked(true)}
+          className={`rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+        >
+          <Text33 text="اكشف عدسة التركيز" />
+        </button>
+      ) : (
+        <Note33 emoji="🎯" tone="emerald">
+          <Text33 text={`نتيجتك ${score} من ${FOCUS_ROWS_33.length}. ${FOCUS_LIVED_33.conclusion}`} />
+        </Note33>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// §11a — بوابة أفعال الحالة
+// ============================================================
+export function StativeGate33() {
+  const [open, setOpen] = useState<Record<string, boolean>>({});
+  const opened = STATIVE_VERBS_33.filter((verb) => open[verb.en]).length;
+  return (
+    <div className="space-y-3" data-lab="stative-gate">
+      <Counter33 done={opened} total={STATIVE_VERBS_33.length} label="أفعال الحالة المفتوحة" />
+      <div className="grid gap-2 md:grid-cols-2">
+        {STATIVE_VERBS_33.map((verb) => (
+          <button
+            type="button"
+            key={verb.en}
+            onClick={() => setOpen((current) => ({ ...current, [verb.en]: !current[verb.en] }))}
+            aria-expanded={Boolean(open[verb.en])}
+            data-stative={verb.en}
+            className={`rounded-2xl border-2 p-3 text-right transition ${FOCUS33} ${open[verb.en] ? "border-violet-300 bg-violet-50" : "border-slate-200 bg-white hover:border-violet-300"}`}
+          >
+            <En33 className="text-xl font-extrabold text-violet-900">{verb.en}</En33>
+            <p className="mt-1 text-sm font-bold text-slate-700">
+              <Text33 text={`= ${verb.ar}`} />
+            </p>
+            {open[verb.en] && (
+              <p dir="ltr" className="font-en mt-1 text-xs font-bold text-rose-700">
+                ✕ {verb.en.replace(/e$/, "")}ing / been {verb.en.replace(/e$/, "")}ing
+              </p>
             )}
           </button>
         ))}
       </div>
-      <div className="mt-1 text-[11px] text-amber-500"><Rich text="المس كل بطاقة لقلبها — الزيارة الأولى لكل بطاقة تُحسب في التقدم." /></div>
     </div>
   );
 }
 
-/* ---------- مهمة الكتابة (s22) ---------- */
-export function WriteMission33({
-  checklist,
-  model,
-  min = 8,
-  drv,
-}: {
-  checklist: string[];
-  model: { en: string; ar: string }[];
-  min?: number;
-  drv: GateDriver33;
-}) {
-  const [checked, setChecked] = useState<boolean[]>(() => checklist.map(() => false));
-  const [text, setText] = useState("");
-  const sentences = (text.match(/[.!?]+/g) || []).length;
-  const checkCount = checked.filter(Boolean).length;
-  const ready = checkCount === checklist.length && sentences >= min;
-  useEffect(() => {
-    if (ready) drv.onDone(true);
-  }, [ready, drv]);
+// ============================================================
+// §11c — think: رأي أم عملية تفكير؟
+// ============================================================
+export function ThinkSplit33() {
+  const [mode, setMode] = useState<"opinion" | "process">("opinion");
   return (
-    <div className="space-y-3">
-      <Progress33 complete={checkCount + Math.min(sentences, min)} total={checklist.length + min} />
-      <div className="rounded-2xl border border-amber-200 bg-white p-3">
-        <div className="mb-1 text-[12px] font-black text-amber-800">قائمة تحقق الكاتب — علّم ما حقّقته في فقرتك:</div>
-        <ul className="space-y-1.5">
-          {checklist.map((c, i) => (
-            <li key={i}>
-              <button
-                type="button"
-                id={`wr-${i}`}
-                onClick={() => {
-                  const next = [...checked];
-                  next[i] = !next[i];
-                  setChecked(next);
-                }}
-                className={`${FOCUS33} flex w-full items-start gap-2 rounded-xl border px-3 py-1.5 text-right text-[12px] transition ${
-                  checked[i] ? "border-emerald-400 bg-emerald-50 text-emerald-900" : "border-amber-200 bg-white text-amber-900 hover:border-amber-400"
-                }`}
-                aria-pressed={checked[i]}
-              >
-                <span aria-hidden className={`mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 text-[10px] font-black ${checked[i] ? "border-emerald-600 bg-emerald-600 text-white" : "border-amber-300 text-transparent"}`}>✓</span>
-                <Rich text={c} />
-              </button>
-            </li>
-          ))}
-        </ul>
+    <div className="space-y-3" data-lab="think-split">
+      <div className="flex flex-wrap gap-2" role="group" aria-label="معنى الفعل think">
+        <ChoiceChip active={mode === "opinion"} tone="sky" onClick={() => setMode("opinion")}>
+          <Text33 text={THINK_SPLIT_33.opinion.label} />
+        </ChoiceChip>
+        <ChoiceChip active={mode === "process"} tone="amber" onClick={() => setMode("process")}>
+          <Text33 text={THINK_SPLIT_33.process.label} />
+        </ChoiceChip>
       </div>
-      <div className="rounded-2xl border border-amber-200 bg-white p-3">
-        <div className="mb-1 flex items-center justify-between gap-2">
-          <span dir="rtl" className="text-[12px] font-black text-amber-800">
-            فقرتك — <En>My Learning Journey</En>
-            <span className={`mr-2 rounded-full px-2 py-0.5 text-[11px] font-black tabular-nums ${sentences >= min ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"}`}>
-              الجمل: {sentences}/{min}
-            </span>
-          </span>
-        </div>
-        <textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          dir="ltr"
-          rows={6}
-          placeholder="My Learning Journey — write your 10 sentences…"
-          className={`${FOCUS33} w-full rounded-xl border-2 border-amber-300 bg-white px-3 py-2 text-[13px] leading-6 text-amber-950 placeholder:text-amber-300`}
-          aria-label="مساحة كتابة الفقرة"
-        />
-        <div className="mt-1 text-[11px] text-amber-500"><Rich text="اكتب عشر جمل بالإنجليزية على الأقل، ثم علّم البنود الستة المتحققة في فقرتك." /></div>
-      </div>
-      <div className="rounded-2xl border border-amber-200 bg-amber-50/60 p-3">
-        <div className="mb-1 text-[11px] font-black text-amber-700">مثال توجيهي (من إنشاء التمارين في المصدر) — لاحظ ترتيب الزوايا:</div>
-        <div className="grid gap-1" dir="ltr">
-          {model.map((m, i) => (
-            <div key={i} className="rounded-lg bg-white px-2 py-1 text-[12px] font-bold text-amber-950">
-              <En>{m.en}</En>
-              <span className="mr-2 text-[11px] font-normal text-amber-600" dir="rtl">
-                {" — "}
-                {m.ar}
-              </span>
+      <div className="grid gap-3 md:grid-cols-2">
+        {(["opinion", "process"] as const).map((key) => {
+          const row = THINK_SPLIT_33[key];
+          const meta = tenseById33(row.tense);
+          return (
+            <div key={key} className={`rounded-3xl border-2 p-4 transition ${mode === key ? TONE33[meta.tone].soft : "border-slate-200 bg-white opacity-80"}`} data-think={key} data-active={mode === key ? "true" : undefined}>
+              <p dir="ltr" className="font-en text-xl font-extrabold">
+                {row.en}
+              </p>
+              <p className="mt-1 text-base font-semibold">
+                <Text33 text={row.ar} />
+              </p>
+              <p className="mt-2 text-sm font-bold">
+                <Text33 text={row.label} />
+              </p>
+              <p className="mt-2">
+                <Lens33 tense={row.tense} />
+              </p>
             </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// §5 — لوحة البناء: الإثبات · النفي · السؤال · الإجابة القصيرة
+// ============================================================
+const FORM_BLOCKS_33 = [
+  { key: "positive", offset: 1, emoji: "➕", tone: "emerald" as const },
+  { key: "negative", offset: 3, emoji: "➖", tone: "rose" as const },
+  { key: "question", offset: 5, emoji: "❓", tone: "sky" as const },
+  { key: "short", offset: 7, emoji: "💬", tone: "violet" as const },
+];
+
+export function FormsPanel33({ tense, lines }: { tense: TenseId33; lines: string[] }) {
+  const meta = tenseById33(tense);
+  return (
+    <div className={`space-y-3 rounded-3xl border-2 p-4 ${TONE33[meta.tone].soft}`} data-forms={meta.id}>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p className="font-head text-lg font-bold">
+          <Text33 text={lines[0]} />
+        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <Lens33 tense={tense} />
+          <En33 className="text-base font-extrabold">{meta.formula}</En33>
+        </div>
+      </div>
+      <div className="grid gap-2 md:grid-cols-2">
+        {FORM_BLOCKS_33.map((block) => (
+          <div key={block.key} className="rounded-2xl border border-white/80 bg-white/80 p-3">
+            <p className="text-xs font-extrabold text-slate-500">
+              <span aria-hidden="true">{block.emoji} </span>
+              <Text33 text={lines[block.offset]} />
+            </p>
+            <p dir="ltr" className="font-en mt-1 text-lg font-extrabold text-slate-900">
+              {lines[block.offset + 1]}
+            </p>
+            {block.key === "short" && (
+              <p dir="ltr" className="font-en mt-1 text-base font-bold text-slate-700">
+                {lines[block.offset + 2]}
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="rounded-2xl border-2 border-white bg-white/70 p-3">
+        <p className="text-xs font-extrabold text-slate-500">
+          <Text33 text={lines[10]} />
+        </p>
+        <p className="mt-1 text-base font-bold text-slate-800">
+          <En33 className="text-base">{lines[11]}</En33>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// §8 — مواجهة زوجية: الوضع المستقر مقابل الوضع المؤقت
+// ============================================================
+export function DuelPairs33({ pair }: { pair: "first" | "second" }) {
+  const data = DUEL1_PAIRS_33[pair];
+  const cards = [
+    { ...data.stable, label: "الوضع المستقر" },
+    { ...data.temporary, label: "الوضع المؤقت" },
+  ];
+  return (
+    <div className="space-y-3" data-duel-pair={pair}>
+      <p className="text-base font-semibold text-slate-600">
+        <Text33 text={data.lead} />
+      </p>
+      <div className="grid gap-3 md:grid-cols-2">
+        {cards.map((card) => {
+          const meta = tenseById33(card.tense);
+          return (
+            <div key={card.label} className={`rounded-3xl border-2 p-4 ${TONE33[meta.tone].soft}`}>
+              <p className="text-xs font-extrabold opacity-70">
+                <Text33 text={card.label} />
+              </p>
+              <p dir="ltr" className="font-en mt-1 text-xl font-extrabold">
+                {card.en}
+              </p>
+              <p className="mt-1 text-base font-semibold">
+                <Text33 text={card.ar} />
+              </p>
+              <p className="mt-2 text-sm font-bold">
+                <Text33 text={card.why} />
+              </p>
+              <p className="mt-2">
+                <Lens33 tense={card.tense} />
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// §12 — المحقق الأول: ثماني جمل
+// ============================================================
+export function DetectiveSet33({ from, to, keyHead }: { from: number; to: number; keyHead?: string }) {
+  const items = DETECTIVE_33.filter((item) => item.number >= from && item.number <= to);
+  const workspace = useWorkspace33();
+  const done = workspace.doneCount(items.map((item) => item.id));
+  return (
+    <div className="space-y-3" data-lab="detective-1">
+      <Counter33 done={done} total={DETECTIVE_33.length} label="جمل المحقق المصحَّحة" />
+      {keyHead && done > 0 && (
+        <p className="font-head text-lg font-bold text-emerald-800">
+          <Text33 text={keyHead} />
+        </p>
+      )}
+      {items.map((item) => (
+        <AttemptCard
+          key={item.id}
+          storeId={item.id}
+          mark={CIRCLED_33[item.number - 1]}
+          item={{
+            fields: [{ key: "answer", label: "الجملة بعد التصحيح" }],
+            answer: [item.right],
+            tense: item.tense,
+            reason: item.note,
+            provenance: item.provenance,
+          }}
+          prompt={
+            <p dir="ltr" className="font-en text-lg font-extrabold text-rose-900">
+              {item.number}. {item.wrong}
+            </p>
+          }
+        />
+      ))}
+    </div>
+  );
+}
+
+// ============================================================
+// §13 / §14 — التدريبان
+// ============================================================
+export function PracticeSet33({ section, from, to }: { section: string; from: number; to: number }) {
+  const items = ALL_PRACTICE_33.filter((item) => item.section === section && item.number >= from && item.number <= to);
+  const workspace = useWorkspace33();
+  const done = workspace.doneCount(items.map((item) => item.id));
+  const total = ALL_PRACTICE_33.filter((item) => item.section === section).length;
+  return (
+    <div className="space-y-3" data-lab={`practice-${section}`}>
+      <Counter33 done={done} total={total} label="البنود المكتملة" />
+      {items.map((item) => (
+        <AttemptCard
+          key={item.id}
+          storeId={item.id}
+          item={item}
+          prompt={
+            <p dir="ltr" className="font-en text-lg font-bold leading-8 text-slate-900">
+              {item.number}. {item.prompt}
+            </p>
+          }
+          tag={item.provenance === "platform" ? <PlatformTag33 text="Key prepared for the platform" /> : undefined}
+        />
+      ))}
+    </div>
+  );
+}
+
+// ============================================================
+// §15 — إجابتان صحيحتان
+// ============================================================
+export function BothCorrect33() {
+  const [verdicts, setVerdicts] = useState<Record<string, "correct" | "wrong" | "">>({});
+  const [checked, setChecked] = useState(false);
+  const all = BOTH_CORRECT_33.options.every((option) => verdicts[option.id]);
+  return (
+    <div className="space-y-3" data-lab="both-correct">
+      <div className="rounded-2xl border border-slate-200 bg-white p-3">
+        {BOTH_CORRECT_33.lead.map((line) => (
+          <p key={line} className="text-sm font-semibold text-slate-600">
+            <Text33 text={line} />
+          </p>
+        ))}
+      </div>
+      <p dir="ltr" className="font-en rounded-2xl border border-slate-200 bg-slate-50 p-3 text-xl font-extrabold text-slate-900">
+        {BOTH_CORRECT_33.prompt}
+      </p>
+      <div className="grid gap-2 md:grid-cols-2">
+        {BOTH_CORRECT_33.options.map((option) => {
+          const meta = tenseById33(option.tense);
+          return (
+            <div key={option.id} className={`rounded-3xl border-2 p-3 ${TONE33[meta.tone].soft}`}>
+              <p className="text-xs font-extrabold opacity-70">{option.id}</p>
+              <p dir="ltr" className="font-en mt-1 text-lg font-extrabold">
+                {option.text}
+              </p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                <ChoiceChip active={verdicts[option.id] === "correct"} tone={meta.tone} disabled={checked} onClick={() => setVerdicts((c) => ({ ...c, [option.id]: "correct" }))}>
+                  <Text33 text="صحيحة" />
+                </ChoiceChip>
+                <ChoiceChip active={verdicts[option.id] === "wrong"} tone="rose" disabled={checked} onClick={() => setVerdicts((c) => ({ ...c, [option.id]: "wrong" }))}>
+                  <Text33 text="خاطئة" />
+                </ChoiceChip>
+              </div>
+              {checked && (
+                <div className="mt-2 space-y-1">
+                  <p className="text-sm font-extrabold text-emerald-800">
+                    <Text33 text="✓ صحيحة" />
+                  </p>
+                  <p dir="ltr" className="font-en text-sm font-bold">
+                    {BOTH_CORRECT_33.full[BOTH_CORRECT_33.options.indexOf(option)]}
+                  </p>
+                  <p className="text-sm font-semibold">
+                    <Text33 text={option.focus} />
+                  </p>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      {!checked ? (
+        <button
+          type="button"
+          disabled={!all}
+          onClick={() => setChecked(true)}
+          className={`rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+        >
+          <Text33 text="تحقّق من الحكمين" />
+        </button>
+      ) : (
+        <Note33 emoji="🧠" tone="violet">
+          <Text33 text={BOTH_CORRECT_33.verdict} />
+        </Note33>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// §16 — قارئ القصة وكشف العبارات الفعلية
+// ============================================================
+export function highlightPhrases33(paragraph: string): ReactNode[] {
+  const out: ReactNode[] = [];
+  let rest = paragraph;
+  let guard = 0;
+  while (rest.length > 0 && guard < 200) {
+    guard += 1;
+    let best = -1;
+    let bestPhrase = "";
+    for (const phrase of STORY_PHRASES_33) {
+      const at = rest.indexOf(phrase);
+      if (at >= 0 && (best < 0 || at < best)) {
+        best = at;
+        bestPhrase = phrase;
+      }
+    }
+    if (best < 0) {
+      out.push(rest);
+      break;
+    }
+    if (best > 0) out.push(rest.slice(0, best));
+    out.push(
+      <mark key={`${bestPhrase}-${best}-${guard}`} data-story-phrase={bestPhrase} className="rounded bg-amber-100 px-1 font-extrabold text-amber-900">
+        {bestPhrase}
+      </mark>,
+    );
+    rest = rest.slice(best + bestPhrase.length);
+  }
+  return out;
+}
+
+export function StoryReader33({ part, highlight }: { part: "story-a" | "story-b"; highlight: boolean }) {
+  const paragraphs = part === "story-a" ? STORY_PARAGRAPHS_33.slice(0, 3) : STORY_PARAGRAPHS_33.slice(3);
+  return (
+    <div className="space-y-3" data-reading={part}>
+      {part === "story-a" && (
+        <>
+          <p className="text-base font-semibold text-slate-600">
+            <Text33 text={STORY_LEAD_33} />
+          </p>
+          <p dir="ltr" className="font-head text-2xl font-extrabold text-slate-900">
+            {STORY_TITLE_33}
+          </p>
+        </>
+      )}
+      {paragraphs.map((paragraph) => (
+        <p key={paragraph} dir="ltr" lang="en" className="font-en rounded-2xl border border-slate-200 bg-white p-4 text-lg leading-9 text-slate-800">
+          {highlight ? highlightPhrases33(paragraph) : paragraph}
+        </p>
+      ))}
+    </div>
+  );
+}
+
+export function StoryHighlight33() {
+  const [on, setOn] = useState(false);
+  return (
+    <div className="space-y-3" data-lab="story-highlight">
+      <button
+        type="button"
+        onClick={() => setOn((v) => !v)}
+        aria-pressed={on}
+        className={`rounded-xl px-5 py-2.5 text-sm font-bold transition ${FOCUS33} ${on ? "bg-slate-200 text-slate-800" : "bg-slate-900 text-white hover:bg-slate-700"}`}
+      >
+        <Text33 text={on ? "إخفاء العبارات الفعلية" : `إظهار العبارات الفعلية (${STORY_PHRASES_33.length})`} />
+      </button>
+      <StoryReader33 part="story-b" highlight={on} />
+    </div>
+  );
+}
+
+// ============================================================
+// §17 — تحليل القصة
+// ============================================================
+export function AnalysisSet33({ from, to }: { from: number; to: number }) {
+  const rows = STORY_ROWS_33.filter((row) => row.number >= from && row.number <= to);
+  const showHead = from === 1;
+  const [picked, setPicked] = useState<Record<string, TenseId33 | "">>({});
+  const [checked, setChecked] = useState(false);
+  const all = rows.every((row) => picked[row.id]);
+  const score = rows.filter((row) => picked[row.id] === row.tense).length;
+  return (
+    <div className="space-y-3" data-lab="story-analysis">
+      {showHead && (
+        <div className="flex flex-wrap items-center gap-2 rounded-2xl bg-slate-900 px-3 py-2 text-xs font-bold text-white">
+          {STORY_ANALYSIS_HEAD_33.split(" | ").map((cell) => (
+            <span key={cell} className="rounded-lg bg-white/15 px-2 py-1">
+              <Text33 text={cell} />
+            </span>
           ))}
         </div>
-      </div>
-      {ready ? <Verdict33 tone="good">رائع! فقرتك جاهزة — تأكد أنها تتحرك بين الزوايا الأربع: عادة ← جارٍ الآن ← إنجاز ← امتداد.</Verdict33> : null}
-    </div>
-  );
-}
-
-/* ---------- رفوف العرض الثابتة ---------- */
-export function VariantsPanel33({ variants }: { variants: { ar: string; en: string }[] }) {
-  return (
-    <div className="mt-3 space-y-1.5">
-      {variants.map((v, i) => (
-        <div key={i} className="flex flex-wrap items-baseline gap-2 rounded-xl border border-amber-100 bg-white px-3 py-2">
-          <span className="text-[12px] font-bold text-amber-900"><Rich text={v.ar} /></span>
-          <span className="text-amber-400">←</span>
-          <span className="text-[13px] font-bold text-emerald-900" dir="ltr">
-            <En>{v.en}</En>
-          </span>
-        </div>
-      ))}
-      <div className="mt-1 rounded-lg bg-amber-50 px-3 py-2 text-[12px] leading-6 text-amber-900">
-        <Rich text="السياق هو الذي يحدد الزمن، وليس شكل الجملة العربية وحده." />
-      </div>
-    </div>
-  );
-}
-
-export function NotePanel33({ note }: { note: string }) {
-  return (
-    <div className="mt-3 rounded-2xl border border-amber-300 bg-amber-50 px-4 py-3 text-[13px] leading-7 text-amber-950">
-      <span className="font-black">📌 ملاحظة: </span>
-      <Rich text={note} />
-    </div>
-  );
-}
-
-export function CourseMap33({ map }: { map: { system: string; done: string[] }[] }) {
-  return (
-    <div className="space-y-2">
-      {map.map((sys, i) => (
-        <div key={i} className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-3">
-          <div className="mb-1.5 text-[13px] font-black text-emerald-900"><Rich text={sys.system} /></div>
-          <div className="flex flex-wrap gap-1.5" dir="ltr">
-            {sys.done.map((t) => (
-              <span key={t} className="rounded-full border border-emerald-300 bg-white px-2.5 py-1 text-[11px] font-bold text-emerald-900">
-                <LatinRuns text={t} /> ✓
-              </span>
-            ))}
+      )}
+      {rows.map((row) => {
+        const meta = tenseById33(row.tense);
+        return (
+          <div key={row.id} className="rounded-2xl border border-slate-200 bg-white p-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="grid h-8 w-8 place-items-center rounded-xl bg-slate-900 text-sm font-bold text-white">{row.number}</span>
+              <p dir="ltr" className="font-en text-lg font-extrabold text-slate-900">
+                {row.phrase}
+              </p>
+            </div>
+            <div className="mt-2">
+              <TensePicker value={picked[row.id] ?? ""} disabled={checked} onChange={(tense) => setPicked((current) => ({ ...current, [row.id]: tense }))} />
+            </div>
+            {checked && (
+              <div className={`mt-2 rounded-xl border-2 p-2 ${TONE33[meta.tone].soft}`}>
+                <p className={`text-sm font-bold ${picked[row.id] === row.tense ? "text-emerald-800" : "text-rose-800"}`}>
+                  <Text33 text={picked[row.id] === row.tense ? "✓ تحليل صحيح" : `✕ الزمن الصحيح: ${meta.en}`} />
+                </p>
+                <p className="mt-1 text-sm font-semibold">
+                  <Text33 text={`السبب: ${row.reason}`} />
+                </p>
+              </div>
+            )}
           </div>
-        </div>
+        );
+      })}
+      {!checked ? (
+        <button
+          type="button"
+          disabled={!all}
+          onClick={() => setChecked(true)}
+          className={`rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+        >
+          <Text33 text="تحقّق من التحليل" />
+        </button>
+      ) : (
+        <Note33 emoji="🔍">
+          <Text33 text={`نتيجتك ${score} من ${rows.length}. القصة الواحدة تجمع الأزمنة الأربعة بصورة طبيعية جدًا.`} />
+        </Note33>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// §18 — محقق الفقرة: أحد عشر موضعًا
+// ============================================================
+export function ParagraphDetective33({ stage }: { stage: "work" | "fixed" | "why-first" | "why-last" }) {
+  const workspace = useWorkspace33();
+  const ids = PARAGRAPH_SPOTS_33.map((spot) => spot.id);
+  const done = workspace.doneCount(ids);
+  const complete = done === PARAGRAPH_SPOTS_33.length;
+
+  if (stage === "fixed") {
+    return (
+      <div className="space-y-3" data-paragraph="fixed">
+        {!complete ? (
+          <Note33 emoji="🔐" tone="rose">
+            <Text33 text={`الفقرة المصححة مقفلة حتى تكمل مواضع الإصلاح (${done} من ${PARAGRAPH_SPOTS_33.length}). عد إلى الشريحة السابقة وأصلح كل موضع.`} />
+          </Note33>
+        ) : (
+          <>
+            <Counter33 done={done} total={PARAGRAPH_SPOTS_33.length} label="مواضع الإصلاح المكتملة" />
+            <div className="space-y-2 rounded-3xl border-2 border-emerald-200 bg-emerald-50 p-4">
+              {PARAGRAPH_RIGHT_SENTENCES_33.map((sentence) => (
+                <p key={sentence} dir="ltr" lang="en" className="font-en text-lg leading-9 text-emerald-900">
+                  {sentence}
+                </p>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    );
+  }
+
+  if (stage === "why-first" || stage === "why-last") {
+    const spots = stage === "why-first" ? PARAGRAPH_SPOTS_33.slice(0, 6) : PARAGRAPH_SPOTS_33.slice(6);
+    return (
+      <div className="space-y-2" data-paragraph={stage}>
+        {!complete ? (
+          <Note33 emoji="🔐" tone="rose">
+            <Text33 text={`التفسيرات مقفلة حتى تكمل مواضع الإصلاح (${done} من ${PARAGRAPH_SPOTS_33.length}).`} />
+          </Note33>
+        ) : (
+          spots.map((spot) => (
+            <div key={spot.id} className="rounded-2xl border border-slate-200 bg-white p-3">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="grid h-8 w-8 place-items-center rounded-xl bg-slate-900 text-sm font-bold text-white">{spot.number}</span>
+                {spot.tense && <Lens33 tense={spot.tense} />}
+              </div>
+              <p dir="ltr" className="font-en mt-2 text-base font-bold text-rose-900 line-through decoration-rose-300">
+                {spot.wrong}
+              </p>
+              <p dir="ltr" className="font-en mt-1 text-base font-extrabold text-emerald-900">
+                {spot.right}
+              </p>
+              <p className="mt-1 text-sm font-semibold text-slate-700">
+                <Text33 text={spot.reason} />
+              </p>
+            </div>
+          ))
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-3" data-paragraph="work">
+      <div className="space-y-2 rounded-3xl border-2 border-slate-200 bg-slate-50 p-4">
+        {PARAGRAPH_SENTENCES_33.map((sentence) => (
+          <p key={sentence} dir="ltr" lang="en" className="font-en text-lg leading-9 text-slate-800">
+            {sentence}
+          </p>
+        ))}
+      </div>
+      <Counter33 done={done} total={PARAGRAPH_SPOTS_33.length} label="مواضع الإصلاح المكتملة" />
+      {PARAGRAPH_SPOTS_33.map((spot) => (
+        <AttemptCard
+          key={spot.id}
+          storeId={spot.id}
+          item={{
+            fields: [{ key: "answer", label: "اكتب المقطع بعد تصحيحه" }],
+            answer: [spot.right],
+            accept: [[spot.right.replace(/\.$/, "")]],
+            tense: spot.tense,
+            reason: spot.reason,
+            provenance: "source",
+          }}
+          prompt={
+            <>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="grid h-8 w-8 place-items-center rounded-xl bg-slate-900 text-sm font-bold text-white">{spot.number}</span>
+                <span className="text-xs font-bold text-slate-500">
+                  <Text33 text="المقطع الخاطئ:" />
+                </span>
+              </div>
+              <p dir="ltr" className="font-en text-base font-bold text-rose-900">
+                {spot.wrong}
+              </p>
+            </>
+          }
+        />
       ))}
-      <div className="rounded-2xl border-2 border-dashed border-amber-400 bg-amber-50 p-3 text-[13px] font-black text-amber-900">
-        🚉 المحطة القادمة: الدرس 34 — <LatinRuns text="Future Simple WILL" />
+    </div>
+  );
+}
+
+// ============================================================
+// §19 — طابق الموقف مع الجملة
+// ============================================================
+export function SituationMatch33({ from = 1, to = 2 }: { from?: number; to?: number }) {
+  const first = SITUATIONS_33.filter((row) => row.number >= from && row.number <= to);
+  const [picked, setPicked] = useState<Record<string, string>>({});
+  const [checked, setChecked] = useState(false);
+  const all = first.every((row) => picked[row.id]);
+  const score = first.filter((row) => picked[row.id] === row.en).length;
+  const sentences = SITUATIONS_33.map((row) => row.en);
+  return (
+    <div className="space-y-3" data-lab="situation-match">
+      {first.map((row) => {
+        const meta = tenseById33(row.tense);
+        return (
+          <div key={row.id} className={`rounded-2xl border-2 p-3 ${TONE33[meta.tone].soft}`}>
+            <p className="text-xs font-extrabold opacity-70">
+              <Text33 text={row.head} />
+            </p>
+            <p className="mt-1 text-base font-semibold">
+              <Text33 text={row.context} />
+            </p>
+            <div className="mt-2 space-y-1">
+              {sentences.map((sentence) => (
+                <label key={sentence} className="flex items-center gap-2 rounded-xl border border-white/70 bg-white/70 px-3 py-1.5">
+                  <input
+                    type="radio"
+                    name={`sit-${row.id}`}
+                    checked={picked[row.id] === sentence}
+                    disabled={checked}
+                    onChange={() => setPicked((current) => ({ ...current, [row.id]: sentence }))}
+                  />
+                  <En33 className="text-sm font-bold">{sentence}</En33>
+                </label>
+              ))}
+            </div>
+            {checked && (
+              <p className={`mt-2 text-sm font-bold ${picked[row.id] === row.en ? "text-emerald-800" : "text-rose-800"}`}>
+                <Text33 text={`${picked[row.id] === row.en ? "✓" : "✕"} ${row.reason}`} />
+              </p>
+            )}
+          </div>
+        );
+      })}
+      {!checked ? (
+        <button
+          type="button"
+          disabled={!all}
+          onClick={() => setChecked(true)}
+          className={`rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+        >
+          <Text33 text="تحقّق من المطابقة" />
+        </button>
+      ) : (
+        <Note33 emoji="🚀" tone="violet">
+          <Text33 text={`نتيجتك ${score} من ${first.length}. اختر الزمن الأنسب، ثم فسّر السبب بنفسك قبل الانتقال.`} />
+        </Note33>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// §22 — محرّر مهمة الكتابة
+// ============================================================
+export function WritingEditor33() {
+  const [text, setText] = useState("");
+  const [ticked, setTicked] = useState<Record<number, boolean>>({});
+  const sentences = text
+    .split(/(?<=[.!?])\s+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const inRange = sentences.length >= WRITING_MIN_SENTENCES_33 && sentences.length <= WRITING_MAX_SENTENCES_33;
+  const tickedCount = WRITING_CRITERIA_33.filter((_, i) => ticked[i]).length;
+  return (
+    <div className="space-y-3" data-lab="writing-editor">
+      <div className="grid gap-2 md:grid-cols-2">
+        {WRITING_CRITERIA_33.map((criterion, i) => (
+          <label key={criterion} className={`flex items-start gap-2 rounded-2xl border-2 p-3 transition ${ticked[i] ? "border-emerald-300 bg-emerald-50" : "border-slate-200 bg-white"}`}>
+            <input type="checkbox" checked={Boolean(ticked[i])} onChange={() => setTicked((current) => ({ ...current, [i]: !current[i] }))} className="mt-1" />
+            <span className="text-sm font-semibold text-slate-700">
+              <Text33 text={criterion} />
+            </span>
+          </label>
+        ))}
+      </div>
+      <Counter33 done={tickedCount} total={WRITING_CRITERIA_33.length} label="الشروط المستوفاة" />
+      <label className="block text-sm font-bold text-slate-700">
+        <Text33 text="اكتب فقرتك هنا" />
+        <textarea
+          dir="ltr"
+          rows={8}
+          value={text}
+          onChange={(event) => setText(event.target.value)}
+          className="font-en mt-1 w-full rounded-2xl border-2 border-slate-200 bg-slate-50 p-3 text-base leading-8 text-slate-800 outline-none focus:border-violet-400 focus:bg-white"
+        />
+      </label>
+      <p className={`text-sm font-bold ${inRange ? "text-emerald-700" : "text-slate-600"}`}>
+        <Text33 text="عدد الجمل:" /> <bdi dir="ltr">{sentences.length}</bdi>
+        <Text33 text={inRange ? ` — ضمن المطلوب (${WRITING_MIN_SENTENCES_33}–${WRITING_MAX_SENTENCES_33}).` : ` — المطلوب ${WRITING_MIN_SENTENCES_33} إلى ${WRITING_MAX_SENTENCES_33} جملة.`} />
+      </p>
+    </div>
+  );
+}
+
+// ============================================================
+// §23a — أربع بطاقات تُقلَب
+// ============================================================
+export function GoldenFlip33() {
+  const [open, setOpen] = useState<Record<string, boolean>>({});
+  const opened = GOLDEN_SENTENCES_33.filter((row) => open[row.en]).length;
+  const revealAll = () => setOpen(Object.fromEntries(GOLDEN_SENTENCES_33.map((row) => [row.en, true])));
+  return (
+    <div className="space-y-3" data-lab="golden-flip">
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="min-w-[12rem] flex-1">
+          <Counter33 done={opened} total={GOLDEN_SENTENCES_33.length} label="البطاقات المكشوفة" />
+        </div>
+        <button
+          type="button"
+          onClick={revealAll}
+          disabled={opened === GOLDEN_SENTENCES_33.length}
+          className={`rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white transition enabled:hover:bg-slate-700 disabled:opacity-40 ${FOCUS33}`}
+        >
+          <Text33 text="اكشف المعاني كلها" />
+        </button>
+      </div>
+      <div className="grid gap-3 md:grid-cols-2">
+        {GOLDEN_SENTENCES_33.map((row) => {
+          const meta = tenseById33(row.tense);
+          return (
+            <button
+              type="button"
+              key={row.en}
+              onClick={() => setOpen((current) => ({ ...current, [row.en]: !current[row.en] }))}
+              aria-expanded={Boolean(open[row.en])}
+              data-golden-card={meta.id}
+              className={`rounded-3xl border-2 p-4 text-right transition ${FOCUS33} ${open[row.en] ? TONE33[meta.tone].soft : "border-slate-200 bg-white hover:border-slate-400"}`}
+            >
+              <span dir="ltr" className="font-en block text-xl font-extrabold text-slate-900">
+                <span aria-hidden="true">{CIRCLED_33[row.number - 1]} </span>
+                {row.en}
+              </span>
+              <span className="mt-2 block text-base font-bold">
+                <Text33 text={open[row.en] ? row.meaning : "……"} />
+              </span>
+              {open[row.en] && (
+                <span className="mt-2 block">
+                  <Lens33 tense={row.tense} />
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// §23c — القاعدة الذهبية: ماذا يريد المتحدث إبرازه؟
+// ============================================================
+export function GoldenRule33() {
+  const [picked, setPicked] = useState<number | null>(null);
+  return (
+    <div className="space-y-3" data-lab="golden-rule">
+      <div className="grid gap-2 md:grid-cols-2">
+        {GOLDEN_QUESTIONS_33.map((question, i) => {
+          const meta = TENSES_33[i];
+          return (
+            <button
+              type="button"
+              key={question}
+              onClick={() => setPicked(i)}
+              aria-pressed={picked === i}
+              data-golden-question={meta.id}
+              className={`rounded-2xl border-2 p-3 text-right transition ${FOCUS33} ${picked === i ? TONE33[meta.tone].soft : "border-slate-200 bg-white hover:border-slate-400"}`}
+            >
+              <Text33 text={question} />
+              {picked === i && (
+                <span className="mt-2 block">
+                  <Lens33 tense={meta.id} />
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+      {picked !== null && (
+        <Note33 emoji="🥇">
+          <Text33 text={`حين تريد إبراز «${GOLDEN_QUESTIONS_33[picked].replace(/[؟?]$/, "")}» فاستخدم ${TENSES_33[picked].en}. القاعدة الذهبية: اسأل أولًا عمّا يريد المتحدث إبرازه، لا عن الكلمة الدالة.`} />
+        </Note33>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// §24a — خريطة التقدم
+// ============================================================
+export function ProgressMap33() {
+  const [opened, setOpened] = useState<"present" | "past" | null>("present");
+  return (
+    <div className="space-y-3" data-lab="progress-map">
+      <div className="grid gap-3 md:grid-cols-2">
+        {[
+          { key: "present" as const, head: PROGRESS_PRESENT_33.head, items: PROGRESS_PRESENT_33.items, tone: "emerald" as const },
+          { key: "past" as const, head: PROGRESS_PAST_33.head, items: PROGRESS_PAST_33.items, tone: "sky" as const },
+        ].map((system) => (
+          <button
+            type="button"
+            key={system.key}
+            onClick={() => setOpened(system.key)}
+            aria-expanded={opened === system.key}
+            data-progress-system={system.key}
+            className={`rounded-3xl border-2 p-4 text-right transition ${FOCUS33} ${opened === system.key ? TONE33[system.tone].soft : "border-slate-200 bg-white hover:border-slate-400"}`}
+          >
+            <Text33 text={system.head} />
+            <span className={`mt-2 flex flex-wrap gap-2 ${opened === system.key ? "" : "opacity-70"}`} dir="ltr">
+              {system.items.map((item, i) => (
+                <span key={item} className="inline-flex items-center gap-2">
+                  {system.key === "past" && i > 0 && (
+                    <span aria-hidden="true" className="font-en text-sm font-bold opacity-50">
+                      /
+                    </span>
+                  )}
+                  <span className="rounded-xl border border-white/70 bg-white/70 px-2.5 py-1 font-en text-sm font-bold">{item}</span>
+                </span>
+              ))}
+            </span>
+          </button>
+        ))}
       </div>
     </div>
   );

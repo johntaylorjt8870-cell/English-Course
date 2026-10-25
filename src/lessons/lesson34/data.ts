@@ -80,7 +80,7 @@ export const SLIDES: Slide34Data[] = [
     lead: "will ليست حرف السين فقط — وظيفتها أوسع من ذلك.",
     tip: "ستة استخدامات: قرار، وعد، توقع، عرض، استعداد/رفض، وطلب مهذب.", source: ["s5"] },
 
-  { id: "s6", section: "USES", mascot: "⚡", title: "الاستخدام الأول: القرار اللحظي", step: "⑥ القرار",
+  { id: "s6", section: "USES", mascot: "⚡", title: "الاستخدام الأول: القرار اللحظي — Decisions Made at the Moment of Speaking", step: "⑥ القرار",
     lead: "حدث أو موقف جديد ← قرار الآن ← WILL.",
     tip: "أنت لم تخطط لذلك منذ الصباح — بل اتخذت القرار في لحظة سماع الجرس.", source: ["s6"] },
   { id: "s7", section: "USES", mascot: "🎭", title: "حوار تطبيقي: At Home", step: "⑦ الحوار",
@@ -101,7 +101,7 @@ export const SLIDES: Slide34Data[] = [
   { id: "s12", section: "USES", mascot: "⭐", title: "Shall I...?", step: "⑫ Shall",
     lead: "صيغة مفيدة لعرض القيام بشيء، خصوصًا في الإنجليزية البريطانية أو الأسلوب الأكثر رسمية.",
     tip: "لا تحتاج الآن إلى دراسة shall بصورة موسعة — لكن تعرّف عليها عندما تراها في حوار.", source: ["s12"] },
-  { id: "s13", section: "USES", mascot: "💪", title: "الاستخدام الخامس: الاستعداد والرفض", step: "⑬ الاستعداد",
+  { id: "s13", section: "USES", mascot: "💪", title: "الاستخدام الخامس: الاستعداد والرفض — Willingness and Refusal", step: "⑬ الاستعداد",
     lead: "won't لا تعني دائمًا مجرد «لن يحدث في المستقبل».",
     tip: "فقد تحمل معنى عدم الاستعداد أو عدم الاستجابة، حسب السياق.", source: ["s13"] },
 
@@ -402,7 +402,7 @@ export const IQ_FACT_ROW_S10: { prompt: string; options: string[]; pick: number;
   prompt: "أي الجملتين أنسب للتعبير عن توقع؟",
   options: ["A. People live on another planet one day.", "B. People will live on another planet one day."],
   pick: 1,
-  why: "لأننا نتحدث عن احتمال مستقبلي.",
+  why: "الإجابة: B. لأننا نتحدث عن احتمال مستقبلي.",
 };
 
 // ============================================================
@@ -670,12 +670,12 @@ export const DETECTIVE_S30: Detective34[] = [
 // ============================================================
 // s31 — IQ200: أربعة مواقف
 // ============================================================
-export type IqSituation34 = { n: string; ar: string; prompt: string; accept: string[]; model: string; reason: string };
+export type IqSituation34 = { n: string; ar: string; prompt: string; accept: string[]; model: string; reason: string; label?: string };
 export const IQ_SITUATIONS_S31: IqSituation34[] = [
-  { n: "الموقف الأول", ar: "صديقك أسقط كتبه على الأرض، وأنت تقرر مساعدته فورًا.", prompt: "You: Don't worry. I", accept: ["'ll help you pick them up", "will help you pick them up", "'ll help you", "will help you"], model: "I'll help you pick them up.", reason: "قرار لحظي وعرض مساعدة." },
-  { n: "الموقف الثاني", ar: "أختك قلقة لأنك قد تنسى إحضار كتابها.", prompt: "You: I promise I", accept: ["won't forget your book", "will not forget your book", "won't forget it", "will not forget it"], model: "I promise I won't forget your book.", reason: "وعد منفي." },
-  { n: "الموقف الثالث", ar: "يسألك صديقك عن رأيك في مستقبل الذكاء الاصطناعي.", prompt: "You: I think AI", accept: ["will become more important in education", "will become more important", "will change education", "will be more important in education"], model: "I think AI will become more important in education.", reason: "توقع أو اعتقاد بشأن المستقبل." },
-  { n: "الموقف الرابع", ar: "شخص يقول لك إنه لا يفهم التعليمات.", prompt: "You: I", accept: ["'ll explain them to you", "will explain them to you", "'ll explain it to you", "will explain it to you"], model: "I'll explain them to you.", reason: "عرض مساعدة." },
+  { n: "الموقف الأول", ar: "صديقك أسقط كتبه على الأرض، وأنت تقرر مساعدته فورًا.", prompt: "You: Don't worry. I", accept: ["'ll help you pick them up", "will help you pick them up", "'ll help you", "will help you"], label: "الحل:", model: "I'll help you pick them up.", reason: "قرار لحظي وعرض مساعدة." },
+  { n: "الموقف الثاني", ar: "أختك قلقة لأنك قد تنسى إحضار كتابها.", prompt: "You: I promise I", accept: ["won't forget your book", "will not forget your book", "won't forget it", "will not forget it"], label: "الحل:", model: "I promise I won't forget your book.", reason: "وعد منفي." },
+  { n: "الموقف الثالث", ar: "يسألك صديقك عن رأيك في مستقبل الذكاء الاصطناعي.", prompt: "You: I think AI", accept: ["will become more important in education", "will become more important", "will change education", "will be more important in education"], label: "إجابة ممكنة:", model: "I think AI will become more important in education.", reason: "توقع أو اعتقاد بشأن المستقبل." },
+  { n: "الموقف الرابع", ar: "شخص يقول لك إنه لا يفهم التعليمات.", prompt: "You: I", accept: ["'ll explain them to you", "will explain them to you", "'ll explain it to you", "will explain it to you"], label: "إجابة ممكنة:", model: "I'll explain them to you.", reason: "عرض مساعدة." },
 ];
 
 // ============================================================
@@ -700,14 +700,14 @@ export const STORY_S32: StorySeg34[] = [
 ];
 export const STORY_HITS_S32 = STORY_S32.filter((s) => s.hit).length;
 
-export const COMPREHENSION_S32: { n: string; q: string; options: string[]; answer: number; why: string }[] = [
-  { n: "①", q: "How old is Daniel?", options: ["He is thirteen years old.", "He is twelve years old.", "He is fourteen years old."], answer: 0, why: "Daniel is a thirteen-year-old student." },
-  { n: "②", q: "What does his teacher announce?", options: ["A school trip.", "A technology competition.", "A new classroom."], answer: 1, why: "his teacher enters the classroom and announces a technology competition." },
-  { n: "③", q: "When will the competition take place?", options: ["Next week.", "Next year.", "Next month."], answer: 2, why: "The competition will take place next month." },
-  { n: "④", q: "What does Daniel decide to do?", options: ["He decides to watch.", "He decides to participate.", "He decides to organize the event."], answer: 1, why: "Daniel: I'll participate!" },
-  { n: "⑤", q: "What will he build?", options: ["A small car.", "A robot.", "A small automatic lighting system."], answer: 2, why: "I'll build a small automatic lighting system." },
-  { n: "⑥", q: "What does the teacher offer to do?", options: ["To help him with the difficult parts.", "To write the report for him.", "To cancel the competition."], answer: 0, why: "I'll help you with the difficult parts." },
-  { n: "⑦", q: "What does Daniel promise?", options: ["He promises he will win first place.", "He promises he won't give up.", "He promises he will come early."], answer: 1, why: "I promise I won't give up." },
+export const COMPREHENSION_S32: { n: string; q: string; options: string[]; answer: number; why: string; key: string }[] = [
+  { n: "①", q: "How old is Daniel?", key: "He is thirteen years old.", options: ["He is thirteen years old.", "He is twelve years old.", "He is fourteen years old."], answer: 0, why: "Daniel is a thirteen-year-old student." },
+  { n: "②", q: "What does his teacher announce?", key: "A technology competition.", options: ["A school trip.", "A technology competition.", "A new classroom."], answer: 1, why: "his teacher enters the classroom and announces a technology competition." },
+  { n: "③", q: "When will the competition take place?", key: "Next month.", options: ["Next week.", "Next year.", "Next month."], answer: 2, why: "The competition will take place next month." },
+  { n: "④", q: "What does Daniel decide to do?", key: "He decides to participate.", options: ["He decides to watch.", "He decides to participate.", "He decides to organize the event."], answer: 1, why: "Daniel: I'll participate!" },
+  { n: "⑤", q: "What will he build?", key: "He will build a small automatic lighting system.", options: ["A small car.", "A robot.", "A small automatic lighting system."], answer: 2, why: "I'll build a small automatic lighting system." },
+  { n: "⑥", q: "What does the teacher offer to do?", key: "The teacher offers to help him with the difficult parts.", options: ["To help him with the difficult parts.", "To write the report for him.", "To cancel the competition."], answer: 0, why: "I'll help you with the difficult parts." },
+  { n: "⑦", q: "What does Daniel promise?", key: "He promises he won't give up.", options: ["He promises he will win first place.", "He promises he won't give up.", "He promises he will come early."], answer: 1, why: "I promise I won't give up." },
 ];
 
 export const STORY_ANALYSIS_S32: { en: string; ar: string }[] = [

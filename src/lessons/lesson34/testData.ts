@@ -25,6 +25,8 @@ export type TestLevel34 = {
   cls: string;
   range: string;
   blurb: string;
+  /** أسطر التمهيد كما وردت في المصدر تحت عنوان المستوى */
+  intro?: string[];
   questions: Q34[];
 };
 
@@ -33,6 +35,7 @@ export const TEST_LEVELS_34: TestLevel34[] = [
     id: "a",
     n: "المستوى الأول",
     name: "البناء الصحيح",
+  intro: ["اختر الإجابة المناسبة."],
     cls: "bg-teal-600",
     range: "الأسئلة 1–5",
     blurb: "اختر الإجابة المناسبة.",
@@ -131,6 +134,7 @@ export const TEST_LEVELS_34: TestLevel34[] = [
     id: "c",
     n: "المستوى الثالث",
     name: "حدد الاستخدام",
+  intro: ["حدد وظيفة will في كل جملة:", "قرار لحظي — وعد — توقع — عرض مساعدة — رفض أو عدم استعداد."],
     cls: "bg-emerald-600",
     range: "الأسئلة 11–15",
     blurb: "حدد وظيفة will في كل جملة.",
@@ -227,6 +231,7 @@ export const TEST_LEVELS_34: TestLevel34[] = [
     id: "e",
     n: "المستوى الخامس",
     name: "IQ200",
+  intro: ["اقرأ الموقف، ثم اكتب جملة مناسبة باستخدام will."],
     cls: "bg-violet-600",
     range: "الأسئلة 21–25",
     blurb: "اقرأ الموقف، ثم اكتب جملة مناسبة باستخدام will.",

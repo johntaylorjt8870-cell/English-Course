@@ -345,9 +345,79 @@ const mountStep = async (s) =>
       onGoTest: () => {}, onGoSolutions: () => {},
     }),
   );
+// ============================================================
+// 3c) Source-unit coverage — every ledger unit must reach the student UI.
+//     Mechanism: the DOM-driven completion walks (4–5) drive each slide to
+//     done, then the gate hook verifies the COMPLETED slide against the ledger
+//     (gated solutions included). Normalization tolerates documented
+//     formatting-only differences:
+//       • diacritics (the UI copy does not re-type tashkeel variants),
+//       • runtime bidi isolation marks (shared/bidi.tsx adds them around LTR runs),
+//       • enclosed list markers (① … ㉕) rendered as checklist/card counters,
+//       • underscore blanks rendered as visual fields,
+//       • ALL whitespace (the bidi engine serializes LTR runs without boundary
+//         spaces; CSS gap-2 restores them visually),
+//       • trailing punctuation (the Rich split can move it to its own run).
+//     Exact source lines the layout assembles from chunks are allowlisted in
+//     COMPOSITIONS_34 with their rendered chunks (each chunk asserted present).
+//     The s34 test items render in the Test Area — swept in section 6.
+// ============================================================
+const soft34 = (t) =>
+  String(t)
+    .replace(/[\u064B-\u0652\u0670]/g, "")
+    .replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069\u061c]/g, "")
+    .replace(/^[\u2460-\u24FF\u2160-\u218F\u3200-\u32FF]/, "")
+    .replace(/[_\s\u00a0]+/g, "")
+    .replace(/[.。؛;:،؟?]+$/g, "");
+const COMPOSITIONS_34 = {
+  cover: [
+    {
+      // hero assembles the source title line: kicker «الدرس 34» + h2 «Future Simple»
+      // + sub «المستقبل البسيط باستخدام WILL» (layout composition, all chunks asserted).
+      unit: "الدرس 34: Future Simple — المستقبل البسيط باستخدام WILL",
+      chunks: ["الدرس 34", "Future Simple", "المستقبل البسيط باستخدام WILL"],
+    },
+  ],
+};
+const SOURCE_UNIT_TOTAL_34 = L.SOURCE_SECTIONS_34.reduce((n, s) => n + s.units.length, 0);
+ok(SOURCE_UNIT_TOTAL_34 === 781, `coverage: ledger holds 781 source units (got ${SOURCE_UNIT_TOTAL_34})`);
+ok(L.SOURCE_SECTIONS_34.length === 40, "coverage: 40 source sections (cover + objectives + s1–s38)");
+const covered34 = new Set();
+const coverage34 = async (el, id) => {
+  if (covered34.has(id)) return;
+  covered34.add(id);
+  // tap-revealed translations (SentenceList34) are reachable UI — open them
+  for (const b of [...el.querySelectorAll('[data-sentence][aria-pressed="false"]')]) {
+    clickEl(b);
+    await tick(8);
+  }
+  await tick(10);
+  const t = soft34(textOf(el));
+  const sec = L.SOURCE_SECTIONS_34.find((s) => s.id === id);
+  const tail = sec.title.split(" — ").slice(1).join(" — ");
+  if (tail && id !== "cover") {
+    ok(t.includes(soft34(tail)), `coverage: ${id} — section title tail rendered (${JSON.stringify(tail)})`);
+  }
+  if (id === "s34") return; // unit sweep runs against the Test Area (section 6)
+  const missing = [];
+  for (const u of sec.units) {
+    if (t.includes(soft34(u))) continue;
+    const comp = (COMPOSITIONS_34[id] || []).find((c) => c.unit === u);
+    if (comp && comp.chunks.every((c) => t.includes(soft34(c)))) continue;
+    missing.push(u);
+  }
+  ok(
+    missing.length === 0,
+    `coverage: ${id} — ${sec.units.length - missing.length}/${sec.units.length} source units reach the completed student UI` +
+      (missing.length ? ` (missing: ${missing.map((u) => JSON.stringify(u.slice(0, 48))).join(", ")})` : ""),
+  );
+};
 const gateDone34 = async (el, id) => {
   for (let i = 0; i < 25; i++) {
-    if (q(el, `[data-gate-done="${id}"]`)) return true;
+    if (q(el, `[data-gate-done="${id}"]`)) {
+      await coverage34(el, id);
+      return true;
+    }
     await tick(20);
   }
   return false;
@@ -888,6 +958,17 @@ ok(!T.answerText34(TEST[17]).includes("won't  forget"), "test: spot item 18 key 
   const el = await mountNode(m.React.createElement(m.TestArea34, { onSubmitted: () => {}, onRestart: () => {} }));
   ok(!/✓ صحيح|✕ غير صحيح|النتيجة:/.test(textOf(el)), "test: no correctness or score before submit");
   ok(textOf(el).includes("أجبت: 0/25"), "test: fresh state shows 0/25 answered");
+  {
+    // source-unit coverage: the 51 s34 test units render in the Test Area
+    const ft = soft34(textOf(el));
+    const sec = L.SOURCE_SECTIONS_34.find((s) => s.id === "s34");
+    const missing = sec.units.filter((u) => !ft.includes(soft34(u)));
+    ok(
+      missing.length === 0,
+      `coverage: s34 — ${sec.units.length - missing.length}/${sec.units.length} source test units render in the Test Area` +
+        (missing.length ? ` (missing: ${missing.slice(0, 3).map((u) => JSON.stringify(u.slice(0, 48))).join(", ")}${missing.length > 3 ? " …" : ""})` : ""),
+    );
+  }
   const submit = btnWith(el, "إرسال الاختبار");
   ok(!!submit, "test: submit button present before submit");
   ok(submit.disabled === true, "test: submit disabled until all questions answered");

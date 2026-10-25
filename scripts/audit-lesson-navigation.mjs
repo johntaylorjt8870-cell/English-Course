@@ -240,15 +240,20 @@ async function main() {
   ok(visibleNumbers(nav).join(",") === "22,23,24,25,26,27,28,29,30,31", "hub: بعد درس 31 تظهر النافذة 22–31 تلقائيًا");
   ok(nav.querySelector('a[href="#/lesson/31"]').getAttribute("aria-current") === "true", "hub: الدرس 31 ظاهر ومميّز");
 
-  // Lesson 35 route and its dedicated Future Garden Studio shell
+  // Lesson 35 route uses the Lesson 1-aligned RTL shell contract, not a branded alternate shell.
   win.location.hash = "#/lesson/35";
   await tick(100);
   ok(!app.host.querySelector(NAV_SELECTOR), "hub: فتح الدرس 35 يغادر الصفحة الرئيسية عبر الراوتر");
+  const lesson35Shell = app.host.querySelector('[data-lesson="35"]');
   ok(
-    app.host.querySelector('[data-lesson="35"]') &&
-      app.host.textContent.includes("FUTURE GARDEN STUDIO") &&
-      !app.host.textContent.includes("Future Lab"),
-    "hub: مسار الدرس 35 يرسم Future Garden Studio shell المستقل",
+    lesson35Shell?.getAttribute("data-l35-shell") === "lesson-1" &&
+      lesson35Shell.getAttribute("dir") === "rtl" &&
+      lesson35Shell.classList.contains("style-b") &&
+      !!lesson35Shell.querySelector(".w-72") &&
+      !!lesson35Shell.querySelector("#l35-main") &&
+      !!lesson35Shell.querySelector('[data-step-nav="cover"]') &&
+      !app.host.textContent.includes("FUTURE GARDEN STUDIO"),
+    "hub: مسار الدرس 35 يعرض غلاف RTL، فهرس 18rem وتنقلًا متوافقًا مع عقد Lesson 1",
   );
   win.location.hash = "#/";
   await tick(100);

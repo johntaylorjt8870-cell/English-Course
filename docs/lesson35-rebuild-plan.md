@@ -14,7 +14,7 @@ Lesson 1's rail and floating controls are private implementation details inside 
 ## Verification run
 
 - `npm run audit:lesson35`: PASS, 387 assertions, including full section/unit coverage, practice/reveal answers, test keys, teacher gate, and navigation lock.
-- `npm run audit:lesson35-browser`: PASS, 59/59 checks at 1920×1080, 1280×800, 768×900, and 375×812. Checks include navigation, reveal/gating flows, contrast sampling, and test-answer chunk timing.
+- `npm run audit:lesson35-browser`: PASS, 60/60 checks at 1920×1080, 1280×800, 768×900, and 375×812. Checks include navigation, reveal/gating flows, contrast sampling, absence of the complete `testKey35` JS chunk before submission, and its fetch only after submit.
 - `npm run build`: PASS; Vite reports the existing large main-bundle warning (~5.97 MB minified).
 - Manual screenshot review compared Lesson 1 and Lesson 35 at the four required sizes. Reference captures are in `docs/lesson1-visual-reference/`; Lesson 35 captures and `verification.json` are in `docs/lesson35-rebuild-visual/`. The shell geometry/RTL rail placement follows the reference, but the screenshots do not establish pixel-identical content styling.
 - `npm run check:english-direction`: PASS, 1,701 direction assertions across 44 lessons plus 59 BIDI rendering assertions.

@@ -157,14 +157,16 @@ for (const viewport of [
 // Initial page and the pre-submit test flow must not request the 25-answer key chunk.
 const secret = TEST_35.find((question) => question.n === 21).answer;
 const hasSecretInLoadedJS = () => jsResponses.some((response) => response.body.includes(secret));
+const hasTestKeyChunkLoaded = () => jsResponses.some((response) => response.url.includes("/testKey35-"));
 ok(!hasSecretInLoadedJS(), "initial loaded JavaScript has no unique model answer for final-test Q21");
+ok(!hasTestKeyChunkLoaded(), "initial student JavaScript payload excludes the deferred final-test key chunk");
 await page.setViewportSize({ width: 1280, height: 800 });
 await page.goto("about:blank");
 await page.goto(base, { waitUntil: "networkidle" });
 await page.locator("[data-area-tab='solutions']").click();
 await page.waitForSelector('[data-solutions-locked="true"]', { timeout: 30000 });
 await page.waitForTimeout(100);
-ok(!hasSecretInLoadedJS(), "opening locked solutions does not load final-test answers");
+ok(!hasSecretInLoadedJS() && !hasTestKeyChunkLoaded(), "opening locked solutions does not load final-test answers or their deferred JS chunk");
 await page.locator("[data-area-tab='test']").click();
 await page.waitForSelector("[data-test-q='25']", { timeout: 30000 });
 const preState = await page.evaluate(() => ({
@@ -176,7 +178,7 @@ const preState = await page.evaluate(() => ({
 ok(preState.feedback === 0 && preState.submits === true, "test begins without feedback and submit stays disabled");
 ok(!preState.answerText, "final test model answer is absent from its initial rendered DOM");
 ok(!preState.sourceCitations, "student test UI contains no internal source labels or section references");
-ok(!hasSecretInLoadedJS(), "pre-submit JavaScript responses contain no unique final-test answer");
+ok(!hasSecretInLoadedJS() && !hasTestKeyChunkLoaded(), "pre-submit JavaScript responses contain neither a unique final-test answer nor the deferred key chunk");
 await shot("test-before-submit");
 for (const question of TEST_35) {
   const card = page.locator(`[data-test-q='${question.n}']`);
@@ -186,13 +188,14 @@ for (const question of TEST_35) {
 }
 ok(await page.locator("[data-test-submit]").isEnabled(), "all 25 responses enable submit");
 const keyBeforeSubmit = hasSecretInLoadedJS();
-const stillNoAnswers = await page.locator("[data-test-feedback]").count() === 0 && !keyBeforeSubmit;
+const keyChunkBeforeSubmit = hasTestKeyChunkLoaded();
+const stillNoAnswers = await page.locator("[data-test-feedback]").count() === 0 && !keyBeforeSubmit && !keyChunkBeforeSubmit;
 ok(stillNoAnswers, "all answered but unsubmitted state still hides answers and explanations");
 await page.locator("[data-test-submit]").click();
 await page.waitForFunction(() => (document.querySelector("[data-test-score]")?.textContent || "").includes("25 / 25"), { timeout: 30000 });
 await page.waitForTimeout(100);
 ok(await page.locator("[data-test-feedback]").count() === 25, "submission reveals explanation for each of the 25 questions");
-ok(hasSecretInLoadedJS(), "the deferred answer chunk is fetched only after submission");
+ok(hasSecretInLoadedJS() && hasTestKeyChunkLoaded(), "the deferred 25-answer key chunk is fetched only after submission");
 await shot("test-after-submit");
 
 await page.locator("[data-area-tab='solutions']").click();
@@ -227,7 +230,13 @@ const summary = {
   passed: checks - failures.length,
   failures,
   viewports: viewportRecords,
-  deferredKey: { secretAnswerSample: secret, fetchedBeforeSubmit: keyBeforeSubmit, fetchedAfterSubmit: hasSecretInLoadedJS() },
+  deferredKey: {
+    secretAnswerSample: secret,
+    fetchedBeforeSubmit: keyBeforeSubmit,
+    fetchedAfterSubmit: hasSecretInLoadedJS(),
+    keyChunkFetchedBeforeSubmit: keyChunkBeforeSubmit,
+    keyChunkFetchedAfterSubmit: hasTestKeyChunkLoaded(),
+  },
   consoleErrors: errors,
   screenshotsDirectory: OUT,
 };

@@ -1,7 +1,7 @@
 {
   "baseUrl": "http://127.0.0.1:4173/English-Course/#/lesson/35",
-  "checks": 59,
-  "passed": 59,
+  "checks": 60,
+  "passed": 60,
   "failures": [],
   "viewports": [
     {
@@ -332,7 +332,9 @@
   "deferredKey": {
     "secretAnswerSample": "I'm going to start learning German next month.",
     "fetchedBeforeSubmit": false,
-    "fetchedAfterSubmit": true
+    "fetchedAfterSubmit": true,
+    "keyChunkFetchedBeforeSubmit": false,
+    "keyChunkFetchedAfterSubmit": true
   },
   "consoleErrors": [],
   "screenshotsDirectory": "docs/lesson35-rebuild-visual"

@@ -1,7 +1,7 @@
 {
   "baseUrl": "http://127.0.0.1:4173/English-Course/#/lesson/36",
-  "checks": 88,
-  "passed": 88,
+  "checks": 94,
+  "passed": 94,
   "failures": [],
   "viewports": [
     {
@@ -401,11 +401,41 @@
       }
     }
   ],
-  "deferredKey": {
-    "secretSample": "I'm going to start a design course next month.",
-    "fetchedBeforeSubmit": false,
+  "answerKeyIsolation": {
+    "markerSource": "solutionsData36.ts · Q22 model answer (value deliberately not stored here)",
     "keyChunkPrefix": "solutionsData36-",
-    "fetchedAfterSubmit": true
+    "answerMarkerPresentBeforeSubmit": false,
+    "keyChunkRequestedBeforeSubmit": false,
+    "keyChunkRequestedAfterSubmit": true,
+    "answerMarkerPresentAfterSubmit": true,
+    "rawAnswerStoredInArtifact": false,
+    "teacherPasswordStoredInArtifact": false,
+    "stages": [
+      {
+        "stage": "initial-load-all-four-viewports",
+        "answerMarkerInLoadedJs": false,
+        "keyModuleMarkerInLoadedJs": false,
+        "keyChunkRequested": false
+      },
+      {
+        "stage": "after-locked-solutions-entry",
+        "answerMarkerInLoadedJs": false,
+        "keyModuleMarkerInLoadedJs": false,
+        "keyChunkRequested": false
+      },
+      {
+        "stage": "after-answering-without-submitting",
+        "answerMarkerInLoadedJs": false,
+        "keyModuleMarkerInLoadedJs": false,
+        "keyChunkRequested": false
+      },
+      {
+        "stage": "after-submission",
+        "answerMarkerInLoadedJs": true,
+        "keyModuleMarkerInLoadedJs": true,
+        "keyChunkRequested": true
+      }
+    ]
   },
   "consoleErrors": [],
   "screenshotsDirectory": "docs/lesson36-rebuild-visual"

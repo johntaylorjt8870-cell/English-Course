@@ -219,13 +219,34 @@ for (const viewport of [
   }
 }
 
-// ---- Answer-key separation: nothing sensitive arrives before submission.
-const secret = TEST_SOLUTIONS_36.find((solution) => solution.n === 22).answer;
-const keyMarkers = [secret, "teacher-authored"];
-const hasSecretInLoadedJS = () => jsResponses.some((response) => keyMarkers.some((marker) => response.body.includes(marker)));
-const hasKeyChunkLoaded = () => jsResponses.some((response) => response.url.includes("/solutionsData36-"));
-ok(!hasSecretInLoadedJS(), "initial JavaScript contains neither the Q22 model answer nor the key marker");
-ok(!hasKeyChunkLoaded(), "initial student payload excludes the deferred answer-key chunk");
+// ---- Answer-key isolation.
+// The real Q22 model answer is used purely as an in-memory sentinel: it never
+// reaches verification.json, which may store booleans and non-answer metadata only.
+const ANSWER_MARKER = TEST_SOLUTIONS_36.find((solution) => solution.n === 22)?.answer ?? "";
+const KEY_MODULE_MARKER = "teacher-authored";
+const TEACHER_PASSWORD = "somer173";
+if (!ANSWER_MARKER) throw new Error("Lesson 36 browser audit could not resolve its Q22 answer sentinel.");
+const loadedJs = () => jsResponses.map((response) => response.body).join("\n");
+const hasAnswerMarker = () => loadedJs().includes(ANSWER_MARKER);
+const hasKeyModuleMarker = () => loadedJs().includes(KEY_MODULE_MARKER);
+const hasKeyChunk = () => jsResponses.some((response) => response.url.includes("/solutionsData36-"));
+const isolationStages = [];
+/** Snapshot of the network state at one stage — booleans and a stage name only. */
+const recordIsolation = (stage) => {
+  const snapshot = {
+    stage,
+    answerMarkerInLoadedJs: hasAnswerMarker(),
+    keyModuleMarkerInLoadedJs: hasKeyModuleMarker(),
+    keyChunkRequested: hasKeyChunk(),
+  };
+  isolationStages.push(snapshot);
+  return snapshot;
+};
+
+const initialIsolation = recordIsolation("initial-load-all-four-viewports");
+ok(!initialIsolation.answerMarkerInLoadedJs, "the real Q22 model answer is absent from every JavaScript response loaded so far");
+ok(!initialIsolation.keyModuleMarkerInLoadedJs, "the answer-key module marker is absent from the initial application JavaScript");
+ok(!initialIsolation.keyChunkRequested, "initial student payload excludes the deferred answer-key chunk");
 
 await page.setViewportSize({ width: 1280, height: 800 });
 await page.goto("about:blank");
@@ -236,7 +257,8 @@ ok((await lockedTab.getAttribute("aria-disabled")) === "true", "the solutions en
 await lockedTab.click({ force: true });
 await page.waitForTimeout(150);
 ok(await page.locator("[data-area='l36-solutions']").count() === 0, "the locked solutions entry does not open the key");
-ok(!hasSecretInLoadedJS() && !hasKeyChunkLoaded(), "the locked entry loads no answer data");
+const lockedIsolation = recordIsolation("after-locked-solutions-entry");
+ok(!lockedIsolation.answerMarkerInLoadedJs && !lockedIsolation.keyModuleMarkerInLoadedJs && !lockedIsolation.keyChunkRequested, "the locked entry loads no answer data and no key chunk");
 
 await page.locator("[data-area-tab='test']").click();
 await page.waitForSelector("[data-test-question='25']", { timeout: 30000 });
@@ -266,14 +288,17 @@ for (const question of TEST_36) {
 }
 ok(await page.locator("[data-test-feedback]").count() === 0, "a fully answered but unsubmitted test still hides all corrections");
 ok(await page.locator("[role='progressbar']").getAttribute("aria-valuenow") === "25", "the progress indicator reaches 25 answered questions");
-ok(!hasSecretInLoadedJS() && !hasKeyChunkLoaded(), "answers typed but unsubmitted still load no key chunk");
+const typedIsolation = recordIsolation("after-answering-without-submitting");
+ok(!typedIsolation.answerMarkerInLoadedJs && !typedIsolation.keyModuleMarkerInLoadedJs && !typedIsolation.keyChunkRequested, "answers typed but unsubmitted still load no key chunk");
 await page.getByRole("button", { name: "إرسال الاختبار" }).click();
 await page.waitForSelector("[data-test-result]", { timeout: 30000 });
 await page.waitForTimeout(150);
 const resultText = await page.locator("[data-test-result]").innerText();
 ok(resultText.includes("15") && resultText.includes("الأسئلة الموضوعية"), "submitted result reports the objective score");
 ok(await page.locator("[data-test-feedback]").count() === 25, "submission reveals feedback for all 25 questions");
-ok(hasSecretInLoadedJS() && hasKeyChunkLoaded(), "the deferred key chunk is fetched only after submission");
+const submittedIsolation = recordIsolation("after-submission");
+ok(submittedIsolation.keyChunkRequested, "the deferred answer-key chunk is requested only after submission");
+ok(submittedIsolation.answerMarkerInLoadedJs && submittedIsolation.keyModuleMarkerInLoadedJs, "the submitted page actually fetched the real model answer, so the sentinel proves the chunk is the key");
 await shot("test-after-submit");
 
 await page.locator("[data-area-tab='solutions']").click();
@@ -333,26 +358,47 @@ const studentCopy = await page.evaluate(() => {
 ok(!/(?:^|\s)(?:§|\bSource section\b|\bSource file\b|\bمصدر\b|القسم\s*\d+|ledger36|deckA36|lesson36\/)/i.test(studentCopy), "no student-visible internal source labels, filenames or section markers");
 ok(errors.length === 0, `no browser or console errors (${errors.join(" | ")})`);
 
+// ---- Evidence artifact: booleans and non-answer metadata only.
+// The sentinel answer, any sample solution, and the teacher password are never
+// serialized; the assertions below re-read the written file to prove it.
+const beforeSubmitStages = isolationStages.filter((stage) => stage.stage !== "after-submission");
 const summary = {
   baseUrl: base,
   checks,
   passed: checks - failures.length,
   failures,
   viewports: viewportRecords,
-  deferredKey: {
-    secretSample: secret,
-    fetchedBeforeSubmit: false,
+  answerKeyIsolation: {
+    markerSource: "solutionsData36.ts · Q22 model answer (value deliberately not stored here)",
     keyChunkPrefix: "solutionsData36-",
-    fetchedAfterSubmit: hasSecretInLoadedJS(),
+    answerMarkerPresentBeforeSubmit: beforeSubmitStages.some((stage) => stage.answerMarkerInLoadedJs),
+    keyChunkRequestedBeforeSubmit: beforeSubmitStages.some((stage) => stage.keyChunkRequested),
+    keyChunkRequestedAfterSubmit: submittedIsolation.keyChunkRequested,
+    answerMarkerPresentAfterSubmit: submittedIsolation.answerMarkerInLoadedJs,
+    rawAnswerStoredInArtifact: false,
+    teacherPasswordStoredInArtifact: false,
+    stages: isolationStages,
   },
   consoleErrors: errors,
   screenshotsDirectory: OUT,
 };
-writeFileSync(`${OUT}/verification.json`, JSON.stringify(summary, null, 2));
+const artifactPath = `${OUT}/verification.json`;
+const serializeArtifact = () => JSON.stringify({ ...summary, checks, passed: checks - failures.length, failures }, null, 2);
+
+writeFileSync(artifactPath, serializeArtifact());
+const writtenArtifact = readFileSync(artifactPath, "utf8");
+ok(!writtenArtifact.includes(ANSWER_MARKER), "the generated verification.json does not contain the raw Q22 model answer used as the audit sentinel");
+ok(!writtenArtifact.includes(TEACHER_PASSWORD), "the generated verification.json does not contain the teacher password");
+ok(!writtenArtifact.includes(KEY_MODULE_MARKER), "the generated verification.json contains no answer-key module marker text");
+ok(!writtenArtifact.includes("secretSample") && !/\(solution\)|"answer"\s*:/.test(writtenArtifact), "the generated verification.json has no plaintext answer/sample field");
+// Refresh only the counters so the artifact reports the regression checks above.
+writeFileSync(artifactPath, serializeArtifact());
+
 await browser.close();
+const passed = checks - failures.length;
 if (failures.length) {
-  console.error(`Lesson 36 browser audit: ${summary.passed}/${checks} passed, ${failures.length} FAILED`);
+  console.error(`Lesson 36 browser audit: ${passed}/${checks} passed, ${failures.length} FAILED`);
   for (const failure of failures) console.error(` - ${failure}`);
   process.exit(1);
 }
-console.log(`Lesson 36 browser audit: ${summary.passed}/${checks} passed across 4 viewports, navigation, gated assessment, deferred key, teacher flow, and direction.`);
+console.log(`Lesson 36 browser audit: ${passed}/${checks} passed across 4 viewports, navigation, gated assessment, deferred key, teacher flow, and direction.`);

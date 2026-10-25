@@ -62,6 +62,7 @@ Screen readers: `fieldset`/`legend`, labelled inputs, `role="status"`/`aria-live
 - `SolutionsArea36`/`TeacherArea36` are `lazy()` routes; the solutions entry is `aria-disabled` until the test is submitted or the teacher password is entered.
 - The production build emits `solutionsData36-*.js` as its own chunk. The entry chunk and the test chunk contain no key markers. The browser audit asserts, over the real network responses, that the key chunk is **not** requested before submission and **is** requested after it.
 - Teacher password: `somer173` (`TEACHER_PASSWORD_36`), the project's existing teacher password.
+- **Evidence hygiene:** the Q22 model answer is used inside the audit only as an in-memory sentinel. `docs/lesson36-rebuild-visual/verification.json` stores booleans and non-answer metadata (which stage requested the key chunk, whether the sentinel appeared in loaded JavaScript) and never the answer text, a sample solution, the key module marker, or the teacher password. The audit re-reads the file it just wrote and fails if any of those values appear; a mutation test (temporarily adding the answer to the summary) makes exactly that assertion fail.
 
 ## 7. Test results (all commands run in this branch)
 
@@ -73,13 +74,13 @@ Screen readers: `fieldset`/`legend`, labelled inputs, `role="status"`/`aria-live
 | `npm run audit:lesson-navigation` | PASS — 176 checks, 0 failed |
 | `node scripts/audit-final-test.mjs` | 1,248 / 1,253; the same 5 Lesson 35 failures exist on `main` (see below) |
 | `node scripts/audit-final-test-coverage.mjs` | 630 / 633; the same 3 Lesson 35 failures exist on `main` |
-| `npm run audit:lesson36-browser` (new) | PASS — 88 / 88 across 1920×1080, 1280×800, 768×900, 375×812 |
+| `npm run audit:lesson36-browser` (new) | PASS — 94 / 94 across 1920×1080, 1280×800, 768×900, 375×812 |
 
 Note: `npm run audit:final-test` and `npm run audit:final-test-coverage` are not registered as npm scripts in this repository; the scripts were run directly. Their failures are byte-identical on a clean `main` worktree (`git worktree add /tmp/main-baseline main`), so they are baseline Lesson 35 failures, not regressions, and were not fixed here (out of scope).
 
 ## 8. Browser verification
 
-`scripts/audit-lesson36-browser.mjs` drives the built app in Chromium (`@sparticuz/chromium` + `playwright-core`, same setup as the Lesson 35 browser audit) and writes captures plus `verification.json` to `docs/lesson36-rebuild-visual/`.
+`scripts/audit-lesson36-browser.mjs` drives the built app in Chromium (`@sparticuz/chromium` + `playwright-core`, same setup as the Lesson 35 browser audit) and writes captures plus a sanitised `verification.json` to `docs/lesson36-rebuild-visual/`.
 
 Per viewport (1920×1080, 1280×800, 768×900, 375×812):
 - RTL shell, shared canvas colour `rgb(244, 246, 251)`, no horizontal overflow;

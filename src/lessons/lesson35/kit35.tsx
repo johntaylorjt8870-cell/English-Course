@@ -1,7 +1,7 @@
 import { useId, useState, type ReactNode } from "react";
 import { En, PlatformTag, Rich } from "../../shared/lessonKit";
 
-export const FOCUS_35 = "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#0f8f7d]/35";
+export const FOCUS_35 = "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-slate-300";
 
 /** Normalise learner typing before comparing it with an accepted answer. */
 export function normalize35(value: string) {
@@ -301,12 +301,12 @@ export function Input35({
           تحقق
         </button>
         <button type="button" className={`fg35-btn fg35-btn--ghost ${FOCUS_35}`} onClick={() => setChecked(true)}>
-          أظهر مفتاح المصدر
+          أظهر الإجابة
         </button>
       </div>
       {checked ? (
         <div className="fg35-feedback" data-ok={ok} role="status">
-          <b>{ok ? "✓ مطابق. " : "✕ راجع الصياغة. "}</b>
+          <b>الحلول — {ok ? "✓ مطابق. " : "✕ راجع الصياغة. "}</b>
           <span className="fg35-en" dir="ltr">{answer}</span>
           <div style={{ marginTop: 4 }}>{explanation}</div>
         </div>
@@ -361,7 +361,8 @@ export function OptionDrill35({
   explanation: string;
 }) {
   const [picked, setPicked] = useState<string | null>(null);
-  const ok = picked === answer;
+  const answerValue = answer.replace(/^[①-⑳]\s*/, "");
+  const ok = picked === answerValue;
   return (
     <div className="fg35-question" data-option-drill={n}>
       <div className="fg35-q__prompt">
@@ -374,7 +375,7 @@ export function OptionDrill35({
             key={option}
             type="button"
             className={`fg35-choice ${FOCUS_35}`}
-            data-state={picked === null ? undefined : option === answer ? "correct" : picked === option ? "wrong" : "picked"}
+            data-state={picked === null ? undefined : option === answerValue ? "correct" : picked === option ? "wrong" : "picked"}
             aria-pressed={picked === option}
             onClick={() => setPicked(option)}
           >
@@ -384,7 +385,8 @@ export function OptionDrill35({
       </div>
       {picked !== null ? (
         <div className="fg35-feedback" data-ok={ok} role="status">
-          <b>{ok ? "✓ صحيح. " : `✕ الصحيح: ${answer}. `}</b>
+          <b>الحلول — {ok ? "✓ صحيح. " : "✕ راجع الاختيار. "}</b>
+          <span className="fg35-en" dir="ltr">{answer}</span>
           <Rich text={explanation} />
         </div>
       ) : null}

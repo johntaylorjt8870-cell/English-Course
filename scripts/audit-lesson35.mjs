@@ -57,6 +57,8 @@ win.matchMedia = () => ({ matches: false, addEventListener() {}, removeEventList
 win.localStorage.setItem("englishwithsomer-site-unlocked", "unlocked");
 globalThis.IS_REACT_ACT_ENVIRONMENT = false;
 
+rmSync(outDir, { recursive: true, force: true });
+mkdirSync(outDir, { recursive: true });
 await esbuild.build({
   absWorkingDir: root,
   stdin: {
@@ -69,9 +71,10 @@ import { SOURCE_SECTIONS_35 } from ${JSON.stringify(join(root, "src/lessons/less
 import * as DATA from ${JSON.stringify(join(root, "src/lessons/lesson35/data.ts"))};
 import * as PRACTICE from ${JSON.stringify(join(root, "src/lessons/lesson35/practiceData.ts"))};
 import * as TEST from ${JSON.stringify(join(root, "src/lessons/lesson35/testData.ts"))};
+import * as TEST_KEY from ${JSON.stringify(join(root, "src/lessons/lesson35/testKey35.ts"))};
 import { FINAL_TESTS } from ${JSON.stringify(join(root, "src/shared/finalTestBank.ts"))};
 function mount(node) { const el = document.createElement("div"); document.body.appendChild(el); const root = createRoot(el); root.render(node); return { el, root }; }
-export { React, createRoot, App, Lesson35, SOURCE_SECTIONS_35, DATA, PRACTICE, TEST, FINAL_TESTS, mount };
+export { React, createRoot, App, Lesson35, SOURCE_SECTIONS_35, DATA, PRACTICE, TEST, TEST_KEY, FINAL_TESTS, mount };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -79,14 +82,18 @@ export { React, createRoot, App, Lesson35, SOURCE_SECTIONS_35, DATA, PRACTICE, T
   bundle: true,
   platform: "node",
   format: "esm",
-  outfile: outFile,
+  outdir: outDir,
+  entryNames: "audit-[hash]",
+  chunkNames: "chunks/[name]-[hash]",
+  splitting: true,
   jsx: "automatic",
   packages: "external",
   loader: { ".woff2": "empty" },
   logLevel: "silent",
 });
-const M = await import(pathToFileURL(outFile).href);
-rmSync(outFile, { force: true });
+const entryFile = readdirSync(outDir).filter((name) => /^audit-.*\.js$/.test(name)).sort().at(-1);
+if (!entryFile) throw new Error("Lesson 35 audit bundle entry was not generated");
+const M = await import(pathToFileURL(join(outDir, entryFile)).href);
 
 const { SOURCE_SECTIONS_35 } = M;
 const { SLIDES_35, SLIDE_COUNT_35, STAGES_35 } = M.DATA;
@@ -146,9 +153,13 @@ ok(M.TEST.TEST_35_COUNT === 25 && M.TEST.TEST_35.length === 25, "test has exactl
 ok(M.TEST.TEST_LEVEL_COUNT_35 === 5 && M.TEST.TEST_LEVELS_35.every((level) => level.questions.length === 5), "test has five levels of five questions");
 ok(M.TEST.TEST_35.every((question, index) => question.n === index + 1), "test questions are numbered 1–25 in order");
 ok(M.TEST.TEST_LEVELS_35.map((level) => level.title).join("|") === [2, 23, 29, 36, 43].map((index) => sourceFor("s34").units[index]).join("|"), "all five level titles match the supplied source");
-ok(M.TEST.TEST_35.every((question) => question.why && question.why.length > 20 && question.concept && question.trap), "every question has an explanation, concept and trap");
-ok(M.TEST.TEST_35.filter((question) => question.type === "write").every((question) => question.patterns.length >= 2 && question.modelAnswers.length >= 1), "production questions have model answers and structural checks");
-ok(M.TEST.TEST_SOLUTIONS_35.length === 25 && M.TEST.TEST_SOLUTIONS_35.every((solution) => solution.sourceStatus === "platform-derived"), "25 solutions are labelled platform-derived");
+ok(M.TEST_KEY.TEST_35.every((question) => question.why && question.why.length > 20 && question.concept && question.trap), "every question has an explanation, concept and trap");
+ok(M.TEST_KEY.TEST_35.filter((question) => question.type === "write").every((question) => question.patterns.length >= 2 && question.modelAnswers.length >= 1), "production questions have model answers and structural checks");
+ok(M.TEST_KEY.TEST_SOLUTIONS_35.length === 25 && M.TEST_KEY.TEST_SOLUTIONS_35.every((solution) => solution.sourceStatus === "platform-derived"), "25 solutions are labelled platform-derived");
+const studentTestSource = readFileSync(join(root, "src/lessons/lesson35/testData.ts"), "utf8");
+ok(!/correctText|modelAnswers|TEST_SOLUTIONS_35|\"answer\"\s*:/m.test(studentTestSource), "student question data contains no final-test answers, models, or solution objects");
+const lesson35Source = readFileSync(join(root, "src/lessons/lesson35/Lesson35.tsx"), "utf8");
+ok(lesson35Source.includes('lazy(() => import("./TestArea35"))') && lesson35Source.includes('lazy(() => import("./SolutionsArea35"))') && lesson35Source.includes('lazy(() => import("./TeacherArea35"))'), "assessment/teacher surfaces are route-deferred instead of preloaded in the Lesson 35 shell");
 const testAreaSrc = readFileSync(join(root, "src/lessons/lesson35/TestArea35.tsx"), "utf8");
 ok(!testAreaSrc.includes("SolutionsArea35") && !testAreaSrc.includes("TEST_SOLUTIONS_35"), "test area does not import the solutions data");
 const solutionsSrc = readFileSync(join(root, "src/lessons/lesson35/SolutionsArea35.tsx"), "utf8");
@@ -207,17 +218,18 @@ const DIALOG_SPEAKER = /^(?:نورا|آدم)\s*:\s*/;
 const studentCorpus = loose(allStudentText.join(" "));
 const skippedCoverage = new Set(["s34", "s35"]);
 let coveredUnits = 0;
-let longUnits = 0;
+let displayableUnits = 0;
 for (const section of SOURCE_SECTIONS_35) {
   if (skippedCoverage.has(section.id)) continue;
   for (const unit of section.units) {
-    if (unit.length < 18) continue;
-    longUnits++;
-    if (studentCorpus.includes(loose(unit.replace(DIALOG_SPEAKER, "")))) coveredUnits++;
+    const expectedUnit = loose(unit.replace(DIALOG_SPEAKER, ""));
+    if (!expectedUnit) continue; // punctuation-only layout artifacts are not instructional units
+    displayableUnits++;
+    if (studentCorpus.includes(expectedUnit)) coveredUnits++;
     else ok(false, `source ${section.id} unit is not rendered in the student lesson: ${unit.slice(0, 70)}`);
   }
 }
-ok(coveredUnits === longUnits, `every long student source unit is rendered (${coveredUnits}/${longUnits})`);
+ok(coveredUnits === displayableUnits, `every displayable student source unit is rendered (${coveredUnits}/${displayableUnits})`);
 
 // Revealed keys are checked against their dataset rather than the neutral render.
 ok(sourceFor("s28").revealUnits.length === 9 && sourceFor("s29").revealUnits.length === 9 && sourceFor("s30").revealUnits.length === 7, "source keys keep their complete supplied length");
@@ -247,6 +259,63 @@ setNative(detectiveCard.querySelector("input"), "She going to study tonight");
 await tick(10);
 ok(!detectiveCard.textContent.includes(sourceFor("s28").revealUnits[1]), "editing a checked answer re-hides the key");
 
+// Full interactive reveal coverage: every supplied exercise/reading key is
+// checked in the actual student component after its dedicated reveal action.
+const visitStep = async (id) => { goToStep(id); await tick(12); };
+for (const item of detective) {
+  await visitStep(item.n <= 4 ? "detective-1" : "detective-2");
+  const card = host.querySelector(`[data-step-id] [data-practice-item="${item.n}"]`);
+  setNative(card.querySelector("input"), item.answer);
+  click([...card.querySelectorAll("button")].find((button) => (button.textContent || "").includes("تحقق")));
+  await tick(5);
+  ok(loose(card.textContent).includes(loose(item.answer)), `student reveal: Detective ${item.n} displays its keyed correction`);
+  ok(loose(card.textContent).includes(loose("الحلول")), `student reveal: Detective ${item.n} includes the reveal heading`);
+}
+for (const item of auxiliary) {
+  await visitStep(item.n <= 4 ? "aux-1" : "aux-2");
+  const card = host.querySelector(`[data-step-id] [data-option-drill="${item.n}"]`);
+  const correctOption = item.answer.replace(/^[①-⑳]\s*/, "");
+  click([...card.querySelectorAll("button")].find((button) => loose(button.textContent) === loose(correctOption)));
+  await tick(10);
+  ok(loose(card.textContent).includes(loose(item.answer)), `student reveal: am/is/are item ${item.n} displays ${item.answer}`);
+  ok(loose(card.textContent).includes(loose("الحلول")), `student reveal: am/is/are item ${item.n} includes the solution heading`);
+}
+for (const item of transforms) {
+  await visitStep(item.n <= 3 ? "transform-1" : "transform-2");
+  const card = host.querySelector(`[data-step-id] [data-practice-item="${item.n}"]`);
+  setNative(card.querySelector("textarea"), item.answer);
+  click([...card.querySelectorAll("button")].find((button) => (button.textContent || "").includes("تحقق")));
+  await tick(5);
+  ok(loose(card.textContent).includes(loose(item.answer)), `student reveal: transformation ${item.n} displays its keyed form`);
+  ok(loose(card.textContent).includes(loose("الحلول")), `student reveal: transformation ${item.n} includes its source heading`);
+}
+for (const item of decisions) {
+  await visitStep(item.n <= 4 ? "scenarios-1" : "scenarios-2");
+  const card = host.querySelector(`[data-step-id] [data-scenario="${item.n}"]`);
+  const target = item.answer === "won't" ? "won't" : item.answer.includes("going to") ? "be going to" : "will";
+  click([...card.querySelectorAll("button")].find((button) => loose(button.textContent) === loose(target)));
+  await tick(5);
+  ok(loose(card.textContent).includes(loose(item.answer)), `student reveal: situation ${item.n} shows ${item.answer}`);
+  ok(loose(card.textContent).includes(loose(item.explanation)), `student reveal: situation ${item.n} shows its source rationale`);
+  ok(loose(card.textContent).includes(loose("الحلول المفصلة")), `student reveal: situation ${item.n} includes the detailed-solutions heading`);
+}
+for (const [index, answer] of M.PRACTICE.READING_ANSWERS_35.entries()) {
+  await visitStep(index < 4 ? "comprehension-1" : "comprehension-2");
+  const card = host.querySelector(`[data-step-id] [data-reading-q="${index + 1}"]`);
+  click([...card.querySelectorAll("button")].find((button) => (button.textContent || "").includes("أظهر الإجابة")));
+  await tick(5);
+  ok(loose(card.textContent).includes(loose(answer)), `student reveal: reading answer ${index + 1} is displayed after its reveal button`);
+  ok(loose(card.textContent).includes(loose("الحلول")), `student reveal: reading answer ${index + 1} includes the solutions heading`);
+}
+await visitStep("reading-analysis");
+const analysisCorpus = loose(host.querySelector('[data-step-id="reading-analysis"]')?.textContent || "");
+ok(analysisCorpus.includes(loose("التحليل النحوي")), "student display: reading grammar-analysis heading appears");
+for (const [index, line] of M.PRACTICE.READING_ANALYSIS_35.entries()) {
+  ok(analysisCorpus.includes(loose(line)), `student display: reading grammar analysis ${index + 1} is present`);
+}
+const revealUnitCount = ["s28", "s29", "s30", "s31", "s33"].reduce((total, id) => total + sourceFor(id).revealUnits.length, 0);
+ok(revealUnitCount === 56, `all supplied revealed-answer units are catalogued (${revealUnitCount}/56)`);
+
 // ---------------------------------------------------------------- 6) test state machine
 const tab = (area) => host.querySelector(`[data-area-tab="${area}"]`);
 ok(!!tab("test") && !!tab("solutions") && !!tab("teacher") && !!tab("lesson"), "the four area tabs exist");
@@ -255,19 +324,19 @@ ok(tabLabels[0].includes("منطقة الاختبار") && tabLabels[1].includes
 
 // Solutions are locked before submission.
 click(tab("solutions"));
-await tick(20);
+await tick(1000);
 ok((host.querySelector('[data-area="lesson35-solutions"]')?.textContent || "").includes("منطقة الحلول مقفلة"), "solutions stay locked before the test is submitted");
 ok(host.querySelectorAll("[data-solution]").length === 0, "no solution is rendered while locked");
 
 click(tab("test"));
-await tick(20);
+await tick(1000);
 const testRoot = () => host.querySelector('[data-area="lesson35-test"]');
 ok(testRoot()?.querySelectorAll("[data-test-q]").length === 25, "the test area renders 25 question cards");
 ok(testRoot()?.querySelector("[data-test-submit]")?.disabled === true, "submit is disabled before all answers exist");
 ok(testRoot()?.querySelectorAll("[data-test-feedback]").length === 0, "no per-question answer or explanation before submission");
 ok(host.querySelectorAll("[data-site-lock-button='true']").length === 1, "exactly one site-lock button after switching to the test tab");
 
-for (const question of M.TEST.TEST_35) {
+for (const question of M.TEST_KEY.TEST_35) {
   const card = testRoot().querySelector(`[data-test-q="${question.n}"]`);
   if (question.type === "single") click(card.querySelectorAll('[role="radio"]')[question.answer]);
   else if (question.type === "write") setNative(card.querySelector("textarea"), question.modelAnswers[0]);
@@ -293,7 +362,7 @@ ok((testRoot().textContent || "").includes("25 / 25"), "submitted score and feed
 
 // ---------------------------------------------------------------- 7) teacher area
 click(tab("teacher"));
-await tick(20);
+await tick(1000);
 const teacherRoot = () => host.querySelector('[data-area="lesson35-teacher"]');
 ok(!!teacherRoot()?.querySelector('input[type="password"]'), "teacher area starts behind a password gate");
 ok(teacherRoot()?.querySelectorAll("[data-teacher-solution]").length === 0, "teacher solutions are absent before unlock");

@@ -63,7 +63,7 @@ export default function StageC35({ id }: { id: string }) {
 function Negative35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="predict" eyebrow={<>🚫 من المصدر · §14</>} title="النفي — Negative Form">
+      <Card35 tone="predict" eyebrow={<>🚫 </>} title="النفي — Negative Form">
         <SourceLine35 text="Subject + am/is/are + not + going to + V1" emphasis />
         <div style={{ marginTop: 8 }}>
           <Formula35
@@ -82,7 +82,7 @@ function Negative35() {
         </p>
       </Card35>
 
-      <Card35 tone="mint" eyebrow={<>📄 من المصدر · §14</>} title="أربع جمل منفية">
+      <Card35 tone="mint" eyebrow={<>📄 </>} title="أربع جمل منفية">
         <div className="fg35-ex-grid">
           <Example35 en="I am not going to buy that jacket." ar="لا أنوي شراء تلك السترة." tone="predict" />
           <Example35 en="She is not going to participate." ar="هي لا تنوي المشاركة." tone="predict" />
@@ -97,7 +97,7 @@ function Negative35() {
 function NegativeShort35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="sun" eyebrow={<>✂️ من المصدر · §14</>} title="الاختصارات">
+      <Card35 tone="sun" eyebrow={<>✂️ </>} title="الاختصارات">
         <SourceGroup35
           lines={["الاختصارات:", "is not → isn't", "are not → aren't", "أما مع I فنقول عادة:", "I'm not going to..."]}
         />
@@ -125,7 +125,7 @@ function NegativeShort35() {
 function NegativeErrors35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="predict" eyebrow={<>🚨 من المصدر · §15</>} title="أخطاء شائعة في النفي">
+      <Card35 tone="predict" eyebrow={<>🚨 </>} title="أخطاء شائعة في النفي">
         <div className="fg35-ex-grid">
           <Example35 en="He doesn't going to travel." status="bad" />
           <Example35 en="He isn't going to travel." status="ok" />
@@ -153,7 +153,7 @@ function NegativeErrors35() {
 function YesNo35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="sky" eyebrow={<>❓ من المصدر · §16</>} title="نضع am/is/are قبل الفاعل">
+      <Card35 tone="sky" eyebrow={<>❓ </>} title="نضع am/is/are قبل الفاعل">
         <SourceGroup35
           lines={[
             "الجملة المثبتة:",
@@ -177,7 +177,7 @@ function YesNo35() {
         </div>
       </Card35>
 
-      <Card35 tone="mint" eyebrow={<>📄 من المصدر · §16</>} title="أربعة أسئلة">
+      <Card35 tone="mint" eyebrow={<>📄 </>} title="أربعة أسئلة">
         <div className="fg35-ex-grid">
           <Example35 en="Are you going to study tonight?" ar="هل تنوي الدراسة الليلة؟" tone="sky" />
           <Example35 en="Is he going to repair the bicycle?" ar="هل ينوي إصلاح الدراجة؟" tone="sky" />
@@ -192,7 +192,7 @@ function YesNo35() {
 function ShortAnswers35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="plain" eyebrow={<>💬 من المصدر · §17</>} title="أعد المساعد نفسه">
+      <Card35 tone="plain" eyebrow={<>💬 </>} title="أعد المساعد نفسه">
         <Table35
           ariaLabel="أسئلة وإجابات قصيرة"
           headers={["السؤال", "الإجابة القصيرة"]}
@@ -230,7 +230,7 @@ function ShortAnswers35() {
 function QuestionIntent35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="sky" eyebrow={<>🧩 من المصدر · §18</>} title="سؤالان، معنيان مختلفان">
+      <Card35 tone="sky" eyebrow={<>🧩 </>} title="سؤالان، معنيان مختلفان">
         <div className="fg35-duo">
           <div className="fg35-plan" style={{ borderColor: "#c6ddf7", background: "linear-gradient(160deg,#f7fbff,#eaf3ff)" }}>
             <div className="fg35-plan__title" style={{ color: "#1c4a86" }}>Will you…?</div>
@@ -282,7 +282,7 @@ function Wh35() {
   ] as const;
   return (
     <div className="fg35-body">
-      <Card35 tone="sky" eyebrow={<>🔎 من المصدر · §19</>} title="Wh-word + am/is/are + Subject + going to + V1?">
+      <Card35 tone="sky" eyebrow={<>🔎 </>} title="Wh-word + am/is/are + Subject + going to + V1?">
         <SourceLine35 text="Wh-word + am/is/are + Subject + going to + V1?" emphasis />
         <div className="fg35-ex-grid fg35-ex-grid--two" style={{ marginTop: 8 }}>
           {questions.map(([en, ar]) => (
@@ -309,7 +309,7 @@ function Wh35() {
 function Who35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="mint" eyebrow={<>🧠 من المصدر · §20</>} title="WHO في موقعين مختلفين">
+      <Card35 tone="mint" eyebrow={<>🧠 </>} title="WHO في موقعين مختلفين">
         <div className="fg35-duo">
           <div className="fg35-plan">
             <div className="fg35-plan__title">Who = الفاعل</div>
@@ -354,7 +354,7 @@ function Time35() {
   ] as const;
   return (
     <div className="fg35-body">
-      <Card35 tone="sun" eyebrow={<>⏰ من المصدر · §21</>} title="تسع تعبيرات زمنية شائعة">
+      <Card35 tone="sun" eyebrow={<>⏰ </>} title="تسع تعبيرات زمنية شائعة">
         <SourceLine35 text="يمكن استخدام be going to مع تعبيرات مثل:" />
         <div className="fg35-choices fg35-choices--inline" style={{ marginTop: 8 }}>
           {expressions.map(([en, ar]) => (
@@ -366,7 +366,7 @@ function Time35() {
         </div>
       </Card35>
 
-      <Card35 tone="mint" eyebrow={<>📄 من المصدر · §21</>} title="ثلاث جمل بأزمنة مختلفة">
+      <Card35 tone="mint" eyebrow={<>📄 </>} title="ثلاث جمل بأزمنة مختلفة">
         <div className="fg35-ex-grid">
           <Example35 en="We're going to start a new project next week." ar="سنبدأ مشروعًا جديدًا الأسبوع القادم." />
           <Example35 en="She's going to meet her cousin tomorrow." ar="ستنوي مقابلة قريبها غدًا." />
@@ -383,7 +383,7 @@ function Time35() {
 function GoingToBe35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="sky" eyebrow={<>🧠 من المصدر · §22</>} title="لوصف حالة مستقبلية: going to + be">
+      <Card35 tone="sky" eyebrow={<>🧠 </>} title="لوصف حالة مستقبلية: going to + be">
         <SourceGroup35 lines={["هذه نقطة يقع فيها كثير من الطلاب.", "عندما نريد وصف حالة مستقبلية، نستخدم:", "am/is/are + going to + be"]} />
         <div className="fg35-ex-grid fg35-ex-grid--two" style={{ marginTop: 8 }}>
           <Example35 en="I'm going to be a doctor." ar="أنوي أن أصبح طبيبًا." tone="sky" />
@@ -412,7 +412,7 @@ function GoingToBe35() {
 function There35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="plan" eyebrow={<>🔬 من المصدر · §23</>} title="وجود شيء في المستقبل">
+      <Card35 tone="plan" eyebrow={<>🔬 </>} title="وجود شيء في المستقبل">
         <SourceGroup35
           lines={[
             "تعلمنا سابقًا استخدام:",
@@ -427,7 +427,7 @@ function There35() {
         />
       </Card35>
 
-      <Card35 tone="mint" eyebrow={<>📄 من المصدر · §23</>} title="أمثلة: إثبات، نفي، وسؤال">
+      <Card35 tone="mint" eyebrow={<>📄 </>} title="أمثلة: إثبات، نفي، وسؤال">
         <div className="fg35-ex-grid">
           <Example35 en="There is going to be a meeting tomorrow." ar="سيكون هناك اجتماع غدًا." />
           <Example35 en="There are going to be several activities at the festival." ar="ستكون هناك عدة أنشطة في المهرجان." />
@@ -443,7 +443,7 @@ function There35() {
 function CompareTable35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="sun" eyebrow={<>⚔️ من المصدر · §24</>} title="المقارنة الأساسية">
+      <Card35 tone="sun" eyebrow={<>⚔️ </>} title="المقارنة الأساسية">
         <SourceLine35 text="لنضع الصيغتين جنبًا إلى جنب." />
         <Table35
           ariaLabel="مقارنة استخدامات will و be going to"
@@ -466,13 +466,13 @@ function CompareTable35() {
 function Bakery35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="predict" eyebrow={<>🎭 الموقف الأول · §25</>} title="قرار وُلد الآن">
+      <Card35 tone="predict" eyebrow={<>🎭 الموقف الأول · </>} title="قرار وُلد الآن">
         <SourceGroup35 lines={["أنت جالس مع عائلتك.", "فجأة يقول والدك:", "We don't have any bread.", "لا يوجد لدينا خبز.", "فترد فورًا:"]} />
         <Example35 en="I'll go to the bakery." ar="سأذهب إلى المخبز." tone="predict" />
         <SourceGroup35 lines={["لماذا will؟", "لأن القرار اتُّخذ الآن."]} />
       </Card35>
 
-      <Card35 tone="plan" eyebrow={<>🎭 الموقف الثاني · §25</>} title="نية سبقت الكلام">
+      <Card35 tone="plan" eyebrow={<>🎭 الموقف الثاني · </>} title="نية سبقت الكلام">
         <SourceGroup35 lines={["أنت قررت منذ الصباح الذهاب إلى المخبز، وأخبرت عائلتك بذلك.", "تقول:"]} />
         <Example35 en="I'm going to go to the bakery this evening." ar="أنوي الذهاب إلى المخبز هذا المساء." />
         <SourceGroup35 lines={["لماذا going to؟", "لأن النية موجودة مسبقًا.", "الفرق ليس في فعل go.", "الفرق في توقيت اتخاذ القرار والسياق."]} />
@@ -496,13 +496,13 @@ function Bakery35() {
 function OpinionEvidence35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="sky" eyebrow={<>🔮 الموقف الأول · §26</>} title="توقع أو اعتقاد">
+      <Card35 tone="sky" eyebrow={<>🔮 الموقف الأول · </>} title="توقع أو اعتقاد">
         <SourceGroup35 lines={["تتحدث عن مستقبل السيارات بعد عشرين عامًا.", "تقول:"]} />
         <Example35 en="I think most cars will be electric." ar="أعتقد أن معظم السيارات ستكون كهربائية." tone="sky" />
         <SourceLine35 text="هذا توقع أو اعتقاد." />
       </Card35>
 
-      <Card35 tone="predict" eyebrow={<>🔮 الموقف الثاني · §26</>} title="دليل مرئي الآن">
+      <Card35 tone="predict" eyebrow={<>🔮 الموقف الثاني · </>} title="دليل مرئي الآن">
         <SourceGroup35 lines={["ترى طفلًا يحمل كوبًا ممتلئًا، والكوب يميل بشدة.", "تقول:"]} />
         <Example35 en="He's going to spill the juice!" ar="سيسكب العصير!" tone="predict" />
         <SourceGroup35 lines={["لماذا؟", "لأنك تلاحظ دليلًا حاضرًا."]} />
@@ -524,7 +524,7 @@ function Movement35() {
   const [answers, setAnswers] = useState<Record<number, "movement" | "future">>({});
   return (
     <div className="fg35-body">
-      <Card35 tone="predict" eyebrow={<>🚨 من المصدر · §27</>} title="ليست كل جملة فيها going to مستقبلًا">
+      <Card35 tone="predict" eyebrow={<>🚨 </>} title="ليست كل جملة فيها going to مستقبلًا">
         <SourceGroup35
           lines={[
             "هذه من أهم النقاط المتقدمة في الدرس.",

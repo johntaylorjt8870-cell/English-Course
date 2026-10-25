@@ -1,19 +1,10 @@
 import { Rich } from "../../shared/lessonKit";
-import { SLIDES_35, SLIDE_COUNT_35, STAGES_35, sourceSection35, type Step35 } from "./data";
+import { SLIDES_35, SLIDE_COUNT_35, STAGES_35, type Step35 } from "./data";
 import StageA35 from "./stepsA35";
 import StageB35 from "./stepsB35";
 import StageC35 from "./stepsC35";
 import StageD35 from "./stepsD35";
 import StageE35 from "./stepsE35";
-
-function sourceRefLabel35(step: Step35) {
-  const labels = step.sources.map((id) => {
-    const section = sourceSection35(id);
-    if (!section) return id;
-    return section.num ? `§${section.num}` : "المقدمة";
-  });
-  return [...new Set(labels)].join(" · ");
-}
 
 export default function StepView35({
   slide,
@@ -38,9 +29,6 @@ export default function StepView35({
           </span>
           <span className="fg35-pill">
             <Rich text={`الخطوة ${index + 1} من ${SLIDE_COUNT_35}`} />
-          </span>
-          <span className="fg35-pill fg35-pill--source" data-source-ref={slide.sources.join(",")}>
-            <Rich text={`المصدر ${sourceRefLabel35(slide)}`} />
           </span>
         </div>
         <h2><Rich text={slide.title} /></h2>

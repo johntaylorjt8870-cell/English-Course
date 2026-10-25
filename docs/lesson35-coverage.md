@@ -1,4 +1,4 @@
-# Lesson 35 — Coverage Ledger · Future Garden Studio
+# Lesson 35 — Source Coverage Ledger
 
 **الدرس 35: BE GOING TO — الخطط والنوايا والتوقعات المستقبلية**
 `Future Plans, Intentions & Predictions` · 38 قسمًا مرقّمًا + الغلاف = **39 مدخلًا مصدريًا** · **61 خطوة قصيرة** · **5 مراحل** · **اختبار 25 سؤالًا**.

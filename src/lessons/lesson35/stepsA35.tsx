@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { En, Rich } from "../../shared/lessonKit";
+import { LESSON_LEVEL_35, LESSON_SUBTITLE_35, LESSON_TITLE_35 } from "./data";
 import {
   Bullets35,
   Card35,
@@ -73,7 +74,9 @@ function CoverStep35() {
   ];
   return (
     <div className="fg35-body">
-      <Card35 tone="mint" eyebrow={<>🌻 FUTURE GARDEN STUDIO · LESSON 35</>} title="ثلاثة أحواض في حديقة واحدة">
+      <Card35 tone="mint" eyebrow="الدرس 35" title={LESSON_TITLE_35}>
+        <p className="fg35-prose"><En>{LESSON_SUBTITLE_35}</En></p>
+        <p className="fg35-muted">{LESSON_LEVEL_35}</p>
         <div className="fg35-ex-grid" style={{ marginTop: 8 }}>
           {beds.map((bed) => (
             <div key={bed.title} className={bed.tone === "plan" ? "fg35-plan" : bed.tone === "predict" ? "fg35-predict" : "fg35-card"} style={{ padding: 11 }}>
@@ -97,7 +100,7 @@ function CoverStep35() {
         </p>
       </Card35>
 
-      <Card35 tone="sun" eyebrow={<>📄 من المصدر · المقدمة</>} title="ماذا يضيف هذا الدرس؟">
+      <Card35 tone="sun" eyebrow={<>📄 المقدمة</>} title="ماذا يضيف هذا الدرس؟">
         <SourceGroup35
           lines={[
             "واليوم سنضيف طريقة جديدة للتعبير عن المستقبل:",
@@ -160,7 +163,7 @@ function ObjectivesA35() {
   return (
     <div className="fg35-body">
       <Card35 tone="mint" eyebrow={<>🎯 الهدف 1–5</>} title="ما ستستطيع فعله بالصيغة نفسها">
-        <SourceGroup35 lines={["بنهاية الدرس ستكون قادرًا على:"]} label="نص المصدر · §1" />
+        <SourceGroup35 lines={["بنهاية الدرس ستكون قادرًا على:"]} />
         <Bullets35
           items={[
             "① فهم معنى be going to واستخداماته الأساسية.",
@@ -202,7 +205,7 @@ function ObjectivesB35() {
   return (
     <div className="fg35-body">
       <Card35 tone="plan" eyebrow={<>🎯 الهدف 6–10</>} title="من الصيغة إلى القرار اللغوي">
-        <SourceGroup35 lines={["بنهاية الدرس ستكون قادرًا على:"]} label="نص المصدر · §1" />
+        <SourceGroup35 lines={["بنهاية الدرس ستكون قادرًا على:"]} />
         <Bullets35
           items={[
             "⑥ التعبير عن النوايا والخطط الشخصية.",
@@ -235,7 +238,7 @@ function ObjectivesB35() {
 function MeaningStep35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="mint" eyebrow={<>🧠 من المصدر · §2</>} title="موقف تعلم البرمجة">
+      <Card35 tone="mint" eyebrow={<>🧠 </>} title="موقف تعلم البرمجة">
         <SourceGroup35
           lines={[
             "تخيل أنك قررت منذ عدة أيام أن تبدأ تعلم البرمجة.",
@@ -243,6 +246,7 @@ function MeaningStep35() {
             "يسألك صديقك:",
           ]}
         />
+        <SourceLine35 text="فتجيب:" />
         <div style={{ marginTop: 10 }}>
           <div className="fg35-turn">
             <span className="fg35-turn__who">Friend</span>
@@ -328,7 +332,7 @@ function IntentionStep35() {
 function StructureStep35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="mint" eyebrow={<>⭐ من المصدر · §3</>} title="القاعدة الأساسية">
+      <Card35 tone="mint" eyebrow={<>⭐ </>} title="القاعدة الأساسية">
         <SourceLine35 text="Subject + am/is/are + going to + V1" emphasis />
         <p className="fg35-prose"><b>أي:</b> الفاعل + am/is/are + going to + الفعل الأساسي.</p>
         <div style={{ marginTop: 9 }}>
@@ -346,6 +350,7 @@ function StructureStep35() {
 
       <Card35 tone="plan" eyebrow={<>🔬 تشريح جملة</>} title="I am going to study.">
         <Example35 en="I am going to study." ar="سأدرس / أنوي الدراسة." />
+        <SourceLine35 text="تحليل الجملة:" />
         <div className="fg35-stack" style={{ marginTop: 8 }}>
           {[
             ["I", "الفاعل"],
@@ -375,7 +380,7 @@ function AuxiliaryStep35() {
   const active = useMemo(() => subject, [subject]);
   return (
     <div className="fg35-body">
-      <Card35 tone="sky" eyebrow={<>🔬 من المصدر · §4</>} title="هذه القاعدة ليست جديدة">
+      <Card35 tone="sky" eyebrow={<>🔬 </>} title="هذه القاعدة ليست جديدة">
         <SourceLine35 text="هذه القاعدة ليست جديدة؛ تعلمناها في الدرس الثاني، وسنستخدمها الآن داخل تركيب جديد." />
         <Table35
           ariaLabel="اختيار am is are مع الفاعل"
@@ -430,7 +435,7 @@ function AuxiliaryExamples35() {
   ] as const;
   return (
     <div className="fg35-body">
-      <Card35 tone="mint" eyebrow={<>📄 من المصدر · §4</>} title="الفعل الأساسي بعد going to لا يتغير">
+      <Card35 tone="mint" eyebrow={<>📄 </>} title="الفعل الأساسي بعد going to لا يتغير">
         <SourceLine35 text="لاحظ أن الفعل الأساسي بعد going to لا يتغير مع الفاعل." emphasis />
         <div className="fg35-ex-grid fg35-ex-grid--two" style={{ marginTop: 8 }}>
           {lines.map(([en, ar]) => (
@@ -454,7 +459,7 @@ function V1Step35() {
   const wrong = ["going to studied", "going to writes", "going to eating", "going to bought"];
   return (
     <div className="fg35-body">
-      <Card35 tone="sun" eyebrow={<>🚨 القاعدة الذهبية الأولى · §5</>} title="بعد going to يأتي الفعل الأساسي V1">
+      <Card35 tone="sun" eyebrow={<>🚨 القاعدة الذهبية الأولى · </>} title="بعد going to يأتي الفعل الأساسي V1">
         <SourceLine35 text="بعد going to يأتي الفعل الأساسي V1." emphasis />
         <div className="fg35-duo" style={{ marginTop: 8 }}>
           <div className="fg35-plan">
@@ -465,6 +470,7 @@ function V1Step35() {
           </div>
           <div className="fg35-predict">
             <div className="fg35-predict__title">❌ صيغ غير صحيحة</div>
+            <SourceLine35 text="ولا نقول:" />
             <div className="fg35-stack">
               {wrong.map((line) => <span key={line} className="fg35-en" dir="ltr">{line}</span>)}
             </div>
@@ -472,7 +478,7 @@ function V1Step35() {
         </div>
       </Card35>
 
-      <Card35 tone="plain" eyebrow={<>📄 من المصدر · §5</>} title="لماذا bought خطأ؟">
+      <Card35 tone="plain" eyebrow={<>📄 </>} title="لماذا bought خطأ؟">
         <Example35 en="She is going to buy a new dictionary." status="ok" ar="تنوي شراء قاموس جديد." />
         <Example35 en="She is going to bought a new dictionary." status="bad" />
         <SourceLine35 text="لأن bought هي V2 وV3 من buy، بينما نحتاج V1." emphasis />

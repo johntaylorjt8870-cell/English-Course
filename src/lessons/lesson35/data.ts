@@ -3,7 +3,6 @@ import { SOURCE_SECTIONS_35 } from "./ledger35";
 export const LESSON_TITLE_35 = "الدرس 35: BE GOING TO — الخطط والنوايا والتوقعات المستقبلية";
 export const LESSON_SUBTITLE_35 = "Future Plans, Intentions & Predictions";
 export const LESSON_LEVEL_35 = "المستوى: تأسيسي متقدم — IQ200 🚀";
-export const STUDIO_NAME_35 = "FUTURE GARDEN STUDIO";
 export const STUDIO_AR_35 = "استوديو المستقبل";
 
 export type StageId35 = "A" | "B" | "C" | "D" | "E";

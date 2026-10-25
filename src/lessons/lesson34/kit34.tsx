@@ -98,7 +98,7 @@ export function Progress34({ complete, total }: { complete: number; total: numbe
     <div className="mb-3 flex items-center gap-2" aria-label="التقدم في التفاعل">
       <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-violet-100">
         <div
-          className="h-full rounded-full bg-gradient-to-l from-violet-600 via-fuchsia-500 to-amber-400 transition-all"
+          className="h-full rounded-full bg-gradient-to-l from-slate-900 via-violet-700 to-amber-500 transition-all"
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -835,7 +835,7 @@ export function TypedFill34({
   drv,
   idPrefix,
 }: {
-  rows: { n: string; before: string; after: string; accept: string[]; why: string; solution?: string }[];
+  rows: { n: string; before: string; after: string; accept: string[]; why: string; solution?: string; label?: string }[];
   drv: GateDriver34;
   idPrefix?: string;
 }) {
@@ -911,6 +911,11 @@ export function TypedFill34({
             <>
               {row.solution ? (
                 <div className="mt-1 rounded-lg bg-emerald-50 px-2 py-1 text-[13px] font-black text-emerald-900" dir="ltr">
+                  {row.label ? (
+                    <span className="mb-0.5 block text-[11px] font-black text-stone-600" dir="rtl">
+                      <Rich text={row.label} />
+                    </span>
+                  ) : null}
                   <LatinRuns text={row.solution} />
                 </div>
               ) : null}
@@ -936,6 +941,7 @@ export function TapFix34({
   const [stage, setStage] = useState(0);
   const [tapped, setTapped] = useState<number | null>(null);
   const [solved, setSolved] = useState(0);
+  const [log, setLog] = useState<string[]>([]);
   useEffect(() => {
     if (solved === rounds.length) drv.onDone(true);
   }, [solved, rounds.length, drv]);
@@ -989,6 +995,7 @@ export function TapFix34({
                   onClick={() => {
                     if (tapped === cur.bad && opt === cur.fix) {
                       setSolved(stage + 1);
+                      setLog((prev) => [...prev, `${cur.n} ${cur.corrected}`]);
                     }
                   }}
                   className={`${FOCUS34} rounded-full border-2 px-3 py-1.5 text-[12px] font-bold transition ${
@@ -1026,6 +1033,20 @@ export function TapFix34({
           </div>
         ) : null}
       </div>
+      {log.length > 0 ? (
+        <div className="mt-3 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-3">
+          <div className="mb-1 text-[12px] font-black text-emerald-900">
+            <Rich text="القضايا المصححة:" />
+          </div>
+          <ul className="space-y-1">
+            {log.map((line, i) => (
+              <li key={i} className="text-[13px] font-bold text-emerald-900" dir="ltr">
+                <LatinRuns text={line} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -1254,7 +1275,7 @@ export function IqSituations34({
   items,
   drv,
 }: {
-  items: { n: string; ar: string; prompt: string; accept: string[]; model: string; reason: string }[];
+  items: { n: string; ar: string; prompt: string; accept: string[]; model: string; reason: string; label?: string }[];
   drv: GateDriver34;
 }) {
   const [vals, setVals] = useState<string[]>(() => items.map(() => ""));
@@ -1344,10 +1365,13 @@ export function IqSituations34({
           ) : null}
           {revealed[i] ? (
             <div className="mt-2 space-y-1">
+              <div className="text-[11px] font-black text-stone-600">
+                <Rich text={it.label ?? "الحل:"} />
+              </div>
               <div className={`rounded-xl border px-3 py-2 text-[13px] font-black ${TONE34.good}`} dir="ltr">
                 <LatinRuns text={it.model} />
               </div>
-              <Verdict34 tone="good">{it.reason}</Verdict34>
+              <Verdict34 tone="good">{`السبب: ${it.reason}`}</Verdict34>
             </div>
           ) : null}
         </div>

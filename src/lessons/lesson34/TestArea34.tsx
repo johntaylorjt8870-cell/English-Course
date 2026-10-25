@@ -97,6 +97,10 @@ export default function TestArea34({
           <Rich text={TEST_34_TITLE} />
         </h2>
         <p>
+          <Rich text="الاختبار يتكون من 25 سؤالًا، موزعة على خمسة مستويات." />
+          <br />
+          <Rich text="حاول حله كاملًا قبل الانتقال إلى مفتاح التصحيح." />
+          <br />
           <Rich text={`${total} سؤالًا: بناء، إكمال، تحديد وظيفة، تصحيح أخطاء، ثم إنتاج حرّ. أجب عن الكل ثم أرسل مرة واحدة — لا تظهر أي إجابة قبل الإرسال.`} />
         </p>
         <div className="l34-testprogress" aria-label="تقدم الإجابة">
@@ -125,12 +129,17 @@ export default function TestArea34({
         return (
           <section key={level.id} className="l34-level" data-level={level.id} aria-label={`${level.n}: ${level.name}`}>
             <div className="l34-level__head">
-              <span className="l34-level__badge">{level.n}</span>
+              <span className="l34-level__badge">{level.n}:</span>
               <span className="l34-level__name">
                 <Rich text={level.name} />
               </span>
               <span className="l34-level__range">{level.range}</span>
             </div>
+            {level.intro?.map((line) => (
+              <p key={line} className="mt-1 text-[12px] font-bold leading-6 text-slate-600">
+                <Rich text={line} />
+              </p>
+            ))}
             {level.questions.map((q, localIndex) => {
               const index = start + localIndex;
               return (
@@ -300,7 +309,7 @@ function Question34({
                 onChange={() => onChange(optionIndex)}
               />
               <span dir="ltr">
-                <LatinRuns text={option} />
+                <LatinRuns text={`${String.fromCharCode(65 + optionIndex)}. ${option}`} />
               </span>
             </label>
           ))}

@@ -7,7 +7,7 @@
 // Then run:
 //   node scripts/audit-lesson34-browser.mjs
 //
-// What it verifies at 1440×900, 1280×800, 768×900 and 375×812:
+// What it verifies at 1920×1080, 1440×900, 1280×800, 768×900 and 375×812:
 //   • exactly one visible site-lock button, inside the shared step nav;
 //   • no overlap between the lock, Next/Previous, and the mobile map FAB;
 //   • no horizontal page overflow and an RTL shell;
@@ -111,6 +111,7 @@ const TEST_ANSWERS = {
 };
 
 for (const vp of [
+  { name: "1920x1080", width: 1920, height: 1080 },
   { name: "1440x900", width: 1440, height: 900 },
   { name: "1280x800", width: 1280, height: 800 },
   { name: "768x900", width: 768, height: 900 },
@@ -279,4 +280,4 @@ if (failures.length) {
   for (const failure of failures) console.error(" ✕ " + failure);
   process.exit(1);
 }
-console.log(`Lesson 34 browser audit: ${checks} checks passed, 0 failed (4 viewports, test/solutions/teacher flow).`);
+console.log(`Lesson 34 browser audit: ${checks} checks passed, 0 failed (${report.viewports.length} viewports, test/solutions/teacher flow).`);

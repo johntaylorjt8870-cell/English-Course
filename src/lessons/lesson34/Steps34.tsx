@@ -184,11 +184,14 @@ function StepCover34() {
             </h2>
             <div className="l34-cover__sub">
               المستقبل البسيط باستخدام <En className="font-bold">WILL</En> ·{" "}
-              <En className="font-bold">The Future Starts Here!</En> · 🔥{" "}
+              <En className="font-bold">The Future Starts Here! 🚀</En> ·{" "}
               <En className="font-bold">IQ200</En>
             </div>
             <div className="l34-cover__quote">
-              <Rich text="بعد أن أكملنا منظومتي الحاضر والماضي، وصلنا إلى مرحلة جديدة: التعبير عن المستقبل باللغة الإنجليزية. هدفنا ليس حفظ قاعدة واحدة فقط، بل فهم طريقة تفكير المتحدث الإنجليزي عندما يتخذ قرارًا، أو يقدم وعدًا، أو يتوقع حدوث شيء، أو يعرض المساعدة على شخص آخر." />
+              <Rich text="بعد أن أكملنا منظومتي الحاضر والماضي، وصلنا إلى مرحلة جديدة: التعبير عن المستقبل باللغة الإنجليزية." />
+              <div className="mt-1">
+                <Rich text="في هذا الدرس سنبدأ باستخدام WILL، ولكن هدفنا ليس حفظ قاعدة واحدة فقط، بل فهم طريقة تفكير المتحدث الإنجليزي عندما يتخذ قرارًا، أو يقدم وعدًا، أو يتوقع حدوث شيء، أو يعرض المساعدة على شخص آخر." />
+              </div>
             </div>
             <div className="l34-cover__quote l34-cover__quote--teal">
               <Rich text="سنحافظ على أسلوبنا التعليمي: شرح متدرج، أمثلة متنوعة، مقارنة دقيقة، اكتشاف الأخطاء، تدريبات تطبيقية، وتحديات IQ200." />
@@ -891,6 +894,7 @@ function StepS7() {
                   after: CHALLENGE_S7.after,
                   accept: CHALLENGE_S7.accept,
                   solution: CHALLENGE_S7.solution,
+                  label: "الحل:",
                   why: "لأن عمر اتخذ قرارات استجابةً للموقف الحالي — والقرار اللحظي يستخدم will.",
                 },
               ]}
@@ -1843,7 +1847,28 @@ function StepS28() {
       sid="s28"
       done={drv.complete >= drv.total}
       board={<SourceBoard34 id="s28" to={cut} />}
-      interaction={<Choice34 rows={MC_ROWS_S28} drv={drv} idPrefix="s28" />}
+      interaction={
+        <>
+          <Choice34 rows={MC_ROWS_S28} drv={drv} idPrefix="s28" />
+          {drv.complete >= drv.total ? (
+            <div className="mt-3 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-3">
+              <div className="mb-1 text-[12px] font-black text-emerald-900">
+                <Rich text="الإجابات:" />
+              </div>
+              <ul className="space-y-0.5">
+                {MC_ROWS_S28.map((row) => (
+                  <li key={row.n} className="text-[13px] font-bold text-emerald-900" dir="ltr">
+                    <LatinRuns text={`${row.n} ${String.fromCharCode(65 + row.answer)} — ${row.options[row.answer]}`} />
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-2 text-[13px] font-bold leading-6 text-emerald-900">
+                <Rich text="التفسير المشترك: بعد will أو won't نستخدم V1 دائمًا." />
+              </div>
+            </div>
+          ) : null}
+        </>
+      }
       platform="قسم المصدر يسرد إجابات التمرين وتفسيره المشترك بعد الأسئلة — تُكشف داخل التفاعل بعد اختيارك الصحيح فقط."
     />
   );
@@ -1935,7 +1960,7 @@ function ReadingQuiz34({
   rows,
   drv,
 }: {
-  rows: { n: string; q: string; options: string[]; answer: number; why: string }[];
+  rows: { n: string; q: string; options: string[]; answer: number; why: string; key: string }[];
   drv: GateDriver34;
 }) {
   const [picks, setPicks] = useState<(number | null)[]>(() => rows.map(() => null));
@@ -1947,6 +1972,20 @@ function ReadingQuiz34({
   return (
     <div className="space-y-2">
       <Progress34 complete={count} total={rows.length} />
+      {count === rows.length ? (
+        <div className="rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-3">
+          <div className="mb-1 text-[12px] font-black text-emerald-900">
+            <Rich text="الحلول" />
+          </div>
+          <ul className="space-y-0.5">
+            {rows.map((row) => (
+              <li key={row.n} className="text-[13px] font-bold text-emerald-900" dir="ltr">
+                <LatinRuns text={`${row.n} ${row.key}`} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
       {rows.map((row, i) => (
         <div key={row.n} data-row={i} className="rounded-2xl border border-stone-200 bg-white p-3">
           <div className="mb-2 text-[13px] font-bold leading-6 text-stone-800" dir="auto">

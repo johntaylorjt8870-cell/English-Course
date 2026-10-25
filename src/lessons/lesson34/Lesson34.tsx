@@ -17,6 +17,7 @@ import "./lesson34.css";
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { En, Rich } from "../../shared/lessonKit";
 import { LatinRuns } from "../../shared/bidi";
+import { Signature, SignatureGhost } from "../../shared/Signature";
 import LessonStepNav from "../../shared/LessonStepNav";
 import FinalTest from "../../shared/finalTest";
 import { FINAL_TESTS } from "../../shared/finalTestBank";
@@ -760,6 +761,8 @@ export default function Lesson34(_props: { onExit?: () => void }) {
   return (
     <div dir="rtl" className="l34-app" data-lesson="34" data-l34-shell="future-launchpad">
       <style>{READABILITY_CSS_34}</style>
+      <Signature />
+      <SignatureGhost />
       <div className="l34-frame">
         <header className="l34-topbar">
           <div className="l34-brand">

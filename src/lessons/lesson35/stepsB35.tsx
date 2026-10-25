@@ -56,7 +56,7 @@ export default function StageB35({ id }: { id: string }) {
 function Affirmative35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="plan" eyebrow={<>🏗️ من المصدر · §6</>} title="الجملة المثبتة — Affirmative">
+      <Card35 tone="plan" eyebrow={<>🏗️ </>} title="الجملة المثبتة — Affirmative">
         <SourceLine35 text="Subject + am/is/are + going to + V1 + Rest" emphasis />
         <div style={{ marginTop: 8 }}>
           <Formula35
@@ -75,7 +75,7 @@ function Affirmative35() {
         </PlatformInline35>
       </Card35>
 
-      <Card35 tone="mint" eyebrow={<>📄 من المصدر · §6</>} title="مثال كامل">
+      <Card35 tone="mint" eyebrow={<>📄 </>} title="مثال كامل">
         <Example35 en="I am going to organize my desk this evening." ar="سأنظم مكتبي هذا المساء." />
         <div className="fg35-meter" style={{ marginTop: 8 }}>
           <div className="fg35-meter__row"><span><En>I</En> · الفاعل</span><span className="fg35-meter__state">Subject</span></div>
@@ -92,7 +92,8 @@ function Affirmative35() {
 function AffirmativeExamples35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="mint" eyebrow={<>📄 من المصدر · §6</>} title="أربع جمل مثبتة أخرى">
+      <Card35 tone="mint" eyebrow={<>📄 </>} title="أربع جمل مثبتة أخرى">
+        <SourceLine35 text="أمثلة جديدة:" />
         <div className="fg35-ex-grid">
           <Example35 en="He is going to learn how to cook." ar="ينوي تعلم الطبخ." />
           <Example35 en="We are going to visit the science exhibition next Saturday." ar="ننوي زيارة المعرض العلمي السبت القادم." />
@@ -137,7 +138,7 @@ function Contractions35() {
   ] as const;
   return (
     <div className="fg35-body">
-      <Card35 tone="plan" eyebrow={<>🗣️ من المصدر · §7</>} title="ستة اختصارات">
+      <Card35 tone="plan" eyebrow={<>🗣️ </>} title="ستة اختصارات">
         <SourceLine35 text="يمكن اختصار am / is / are مع الفاعل." />
         <div className="fg35-ex-grid fg35-ex-grid--two" style={{ marginTop: 8 }}>
           {pairs.map(([full, short]) => (
@@ -148,7 +149,7 @@ function Contractions35() {
         </div>
       </Card35>
 
-      <Card35 tone="mint" eyebrow={<>📄 من المصدر · §7</>} title="أمثلة في المحادثة">
+      <Card35 tone="mint" eyebrow={<>📄 </>} title="أمثلة في المحادثة">
         <div className="fg35-ex-grid fg35-ex-grid--two">
           <Example35 en="I'm going to call my cousin." />
           <Example35 en="She's going to prepare dinner." />
@@ -178,7 +179,7 @@ function Contractions35() {
 function Gonna35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="predict" eyebrow={<>🔊 gonna · من المصدر · §7</>} title="كلمة تسمعها كثيرًا">
+      <Card35 tone="predict" eyebrow={<>🔊 gonna · </>} title="كلمة تسمعها كثيرًا">
         <SourceGroup35
           lines={[
             "ملاحظة لغوية:",
@@ -218,7 +219,7 @@ function Plans35() {
   ];
   return (
     <div className="fg35-body">
-      <Card35 tone="plan" eyebrow={<>🎯 الاستخدام الأول · §8</>} title="خطة اتُّخذ قرارها مسبقًا">
+      <Card35 tone="plan" eyebrow={<>🎯 الاستخدام الأول · </>} title="خطة اتُّخذ قرارها مسبقًا">
         <SourceGroup35
           lines={[
             "نستخدم be going to عندما نتحدث عن خطة مستقبلية اتخذنا قرارها مسبقًا.",
@@ -245,7 +246,7 @@ function Plans35() {
         <p className="fg35-muted" aria-live="polite">اضغط أي محطة لمراجعتها. الخطوة {step} من 3.</p>
       </Card35>
 
-      <Card35 tone="mint" eyebrow={<>📄 من المصدر · §8</>} title="ما تقوله ليلى">
+      <Card35 tone="mint" eyebrow={<>📄 </>} title="ما تقوله ليلى">
         <SourceLine35 text="تقول:" />
         <Example35 en="I'm going to join an art club next month." ar="سأنضم إلى نادي للرسم الشهر القادم." tone="predict" />
         <SourceGroup35
@@ -268,7 +269,8 @@ function Plans35() {
 function PlansMore35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="mint" eyebrow={<>📄 من المصدر · §8</>} title="أربع خطط أخرى">
+      <Card35 tone="mint" eyebrow={<>📄 </>} title="أربع خطط أخرى">
+        <SourceLine35 text="أمثلة أخرى:" />
         <div className="fg35-ex-grid">
           <Example35 en="We are going to renovate our kitchen." ar="نخطط لتجديد مطبخنا." />
           <Example35 en="He is going to take a driving course." ar="ينوي الالتحاق بدورة لتعلم القيادة." />
@@ -295,7 +297,7 @@ function PlansMore35() {
 function Guarantee35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="sun" eyebrow={<>🧠 من المصدر · §9</>} title="لا، ليست ضمانًا مطلقًا">
+      <Card35 tone="sun" eyebrow={<>🧠 </>} title="لا، ليست ضمانًا مطلقًا">
         <SourceGroup35
           lines={[
             "لا.",
@@ -331,7 +333,7 @@ function Guarantee35() {
 function Dialogue1_35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="sky" eyebrow={<>🎭 من المصدر · §10</>} title="Weekend Plans · الافتتاح">
+      <Card35 tone="sky" eyebrow={<>🎭 </>} title="Weekend Plans · الافتتاح">
         <SourceLine35 text="اقرأ الحوار:" />
         <Dialog35
           turns={[
@@ -360,7 +362,8 @@ function Dialogue1_35() {
 function Dialogue2_35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="sky" eyebrow={<>🎭 من المصدر · §10</>} title="Weekend Plans · النهاية">
+      <Card35 tone="sky" eyebrow={<>🎭 </>} title="Weekend Plans · النهاية">
+        <SourceLine35 text="الترجمة:" />
         <Dialog35
           turns={[
             { who: "Adam", en: "No, I'm not. I'm going to return on Saturday evening.", ar: "لا. سأعود مساء السبت." },
@@ -397,7 +400,7 @@ function DialogueAnalysis35() {
   ] as const;
   return (
     <div className="fg35-body">
-      <Card35 tone="plan" eyebrow={<>🧩 من المصدر · §10 · التحليل</>} title="كل جملة لها وظيفة">
+      <Card35 tone="plan" eyebrow={<>🧩  · التحليل</>} title="كل جملة لها وظيفة">
         <div className="fg35-stack">
           {rows.map(([en, ar]) => (
             <div className="fg35-meter__row" key={en} style={{ alignItems: "flex-start" }}>
@@ -430,7 +433,7 @@ function DialogueAnalysis35() {
 function EvidenceIntro35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="predict" eyebrow={<>⚡ الاستخدام الثاني · §11</>} title="Predictions Based on Present Evidence">
+      <Card35 tone="predict" eyebrow={<>⚡ الاستخدام الثاني · </>} title="Predictions Based on Present Evidence">
         <SourceGroup35
           lines={[
             "هذا الاستخدام مهم جدًا، وهو ما يجعل be going to أكثر من مجرد أداة للتعبير عن الخطط.",
@@ -486,7 +489,7 @@ function EvidenceCards35() {
   ];
   return (
     <div className="fg35-body">
-      <Card35 tone="predict" eyebrow={<>🔍 من المصدر · §12</>} title="أربعة أدلة الآن، وأربعة توقعات">
+      <Card35 tone="predict" eyebrow={<>🔍 </>} title="أربعة أدلة الآن، وأربعة توقعات">
         <div className="fg35-evidence">
           {cards.map((card, index) => (
             <div className="fg35-evidence__card" key={card.evidenceEn}>
@@ -507,7 +510,7 @@ function EvidenceCards35() {
 function EvidencePractice35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="mint" eyebrow={<>🧠 الفكرة المشتركة · §12</>} title="نلاحظ دليلًا الآن ← نتوقع نتيجة مستقبلية">
+      <Card35 tone="mint" eyebrow={<>🧠 الفكرة المشتركة · </>} title="نلاحظ دليلًا الآن ← نتوقع نتيجة مستقبلية">
         <SourceGroup35 lines={["الفكرة المشتركة:", "نلاحظ دليلًا الآن ← نتوقع نتيجة مستقبلية."]} offset={16} />
       </Card35>
 
@@ -539,7 +542,7 @@ function EvidencePractice35() {
 function WillNotWrong35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="sky" eyebrow={<>🧠 من المصدر · §13</>} title="لا، التوقع بـ WILL ليس خطأ">
+      <Card35 tone="sky" eyebrow={<>🧠 </>} title="لا، التوقع بـ WILL ليس خطأ">
         <SourceGroup35
           lines={[
             "لا.",

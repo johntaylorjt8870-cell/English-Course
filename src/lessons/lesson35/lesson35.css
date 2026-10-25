@@ -1,34 +1,26 @@
-/* ============================================================
-   Lesson 35 — FUTURE GARDEN STUDIO · استوديو المستقبل
-   Bright, contemporary identity (turquoise · mint · coral · sunny
-   yellow · clear blue). Every selector is scoped to .fg35-app so the
-   visual layer can never leak into another lesson.
-   ============================================================ */
+/* Lesson 35 teaching-content styles, scoped to the Lesson 35 root.
+   The outer shell, index, typography and navigation follow Lesson 1. */
 
 .fg35-app {
-  --fg-ink: #10352f;
-  --fg-ink-soft: #37564f;
-  --fg-muted: #5d7770;
-  --fg-line: #d8e7df;
-  --fg-cream: #fffdf6;
-  --fg-mint: #e8f8f0;
-  --fg-mint-2: #d3f2e5;
-  --fg-teal: #0f8f7d;
-  --fg-teal-dark: #0a6b5e;
-  --fg-teal-ink: #075247;
-  --fg-sky: #2f7fe0;
-  --fg-sky-soft: #e8f2ff;
-  --fg-coral: #e8604f;
-  --fg-coral-soft: #ffeee9;
-  --fg-sun: #f5b62b;
-  --fg-sun-soft: #fff6dc;
-  --fg-radius: 22px;
-  color: var(--fg-ink);
-  background:
-    radial-gradient(1100px 520px at 88% -8%, rgba(47, 127, 224, 0.10), transparent 62%),
-    radial-gradient(880px 520px at 4% 4%, rgba(15, 143, 125, 0.12), transparent 58%),
-    radial-gradient(900px 620px at 30% 110%, rgba(245, 182, 43, 0.12), transparent 60%),
-    linear-gradient(180deg, #fdfef9 0%, #f6fbf7 46%, #fffdf6 100%);
+  --fg-ink: #1e293b;
+  --fg-ink-soft: #475569;
+  --fg-muted: #64748b;
+  --fg-line: #e2e8f0;
+  --fg-cream: #ffffff;
+  --fg-mint: #f8fafc;
+  --fg-mint-2: #f1f5f9;
+  --fg-teal: #0f172a;
+  --fg-teal-dark: #334155;
+  --fg-teal-ink: #1e293b;
+  --fg-sky: #334155;
+  --fg-sky-soft: #f1f5f9;
+  --fg-coral: #be123c;
+  --fg-coral-soft: #fff1f2;
+  --fg-sun: #b45309;
+  --fg-sun-soft: #fffbeb;
+  --fg-radius: 1.75rem;
+  color: #1e293b;
+  background: #f4f6fb;
   min-height: 100vh;
 }
 
@@ -2008,8 +2000,8 @@
   gap: 4px;
   margin-top: 6px;
   padding: 8px 11px;
-  border-right: 3px solid #cfe0d8;
-  background: #fbfdfa;
+  border-right: 3px solid #e2e8f0;
+  background: #fff;
   border-radius: 10px;
 }
 
@@ -2029,3 +2021,111 @@
 
 .fg35-sourcegroup .fg35-source[data-ok="true"] { color: #0b5c49; }
 .fg35-sourcegroup .fg35-source[data-bad="true"] { color: #a03a2b; }
+
+
+/* Lesson 1 fidelity: retain Lesson 35's teaching behavior, but render its
+   instructional surfaces with the same neutral paper/card language as the
+   Lesson 1 slide frame (white, slate border, restrained shadow). */
+.fg35-app .fg35-stephead {
+  border: 2px solid rgb(15 23 42 / 5%);
+  border-radius: 1.75rem;
+  background: #fff;
+  padding: 1.25rem;
+  box-shadow: 0 14px 44px -20px rgb(15 23 42 / 18%);
+}
+
+.fg35-app .fg35-stephead h2 {
+  font-family: "Changa", "Rubik", "Tajawal", sans-serif;
+  color: #0f172a;
+  font-size: 1.5rem;
+  line-height: 1.35;
+}
+
+.fg35-app .fg35-card,
+.fg35-app .fg35-card[data-tone],
+.fg35-app .fg35-gate,
+.fg35-app .fg35-testhead,
+.fg35-app .fg35-testlevel,
+.fg35-app .fg35-score,
+.fg35-app .fg35-solution,
+.fg35-app .fg35-q,
+.fg35-app .fg35-question,
+.fg35-app .fg35-turn,
+.fg35-app .fg35-reading,
+.fg35-app .fg35-summary__cell,
+.fg35-app .fg35-evidence__card,
+.fg35-app .fg35-plan,
+.fg35-app .fg35-predict,
+.fg35-app .fg35-ex,
+.fg35-app .fg35-formula,
+.fg35-app .fg35-meter,
+.fg35-app .fg35-timeline__stop,
+.fg35-app .fg35-checklist,
+.fg35-app .fg35-platform,
+.fg35-app .fg35-reveal__body {
+  border-color: #e2e8f0;
+  background: #fff;
+  box-shadow: 0 10px 30px -18px rgb(15 23 42 / 20%);
+}
+
+.fg35-app .fg35-card[data-tone="mint"],
+.fg35-app .fg35-card[data-tone="plan"],
+.fg35-app .fg35-card[data-tone="predict"],
+.fg35-app .fg35-card[data-tone="sun"],
+.fg35-app .fg35-card[data-tone="sky"] {
+  border-color: #e2e8f0;
+  background: #fff;
+}
+
+.fg35-app .fg35-card__eyebrow,
+.fg35-app .fg35-muted,
+.fg35-app .fg35-source__label,
+.fg35-app .fg35-stephead__meta,
+.fg35-app .fg35-stephead__lead {
+  color: #475569;
+}
+
+.fg35-app .fg35-pill,
+.fg35-app .fg35-pill--stage,
+.fg35-app .fg35-pill--source,
+.fg35-app .fg35-tag,
+.fg35-app .fg35-evidence__tag,
+.fg35-app .fg35-meter__state {
+  border-color: #e2e8f0;
+  background: #f8fafc;
+  color: #334155;
+}
+
+.fg35-app .fg35-btn,
+.fg35-app .fg35-choice,
+.fg35-app .fg35-opt,
+.fg35-app .fg35-begin {
+  border-color: #0f172a;
+  background: #0f172a;
+  color: #fff;
+  box-shadow: 0 4px 12px -4px rgb(15 23 42 / 24%);
+}
+
+.fg35-app .fg35-btn--ghost {
+  border-color: #e2e8f0;
+  background: #f1f5f9;
+  color: #334155;
+  box-shadow: none;
+}
+
+.fg35-app .fg35-formula__part,
+.fg35-app .fg35-formula__part[data-role="subject"],
+.fg35-app .fg35-formula__part[data-role="aux"],
+.fg35-app .fg35-formula__part[data-role="going"],
+.fg35-app .fg35-formula__part[data-role="verb"],
+.fg35-app .fg35-formula__part[data-role="rest"] {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+  color: #1e293b;
+}
+
+.fg35-app .fg35-track__bar { background: #e2e8f0; }
+.fg35-app .fg35-track__bar > span { background: linear-gradient(to left, #10b981, #f97316, #0ea5e9); }
+.fg35-app .fg35-divider { border-color: #e2e8f0; }
+.fg35-app .fg35-input,
+.fg35-app .fg35-textarea { border-color: #cbd5e1; }

@@ -1,0 +1,284 @@
+{
+  "viewports": [
+    {
+      "viewport": "1920x1080",
+      "direction": "rtl",
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1080,
+        "top": 0,
+        "right": 1920,
+        "bottom": 1080,
+        "left": 0
+      },
+      "rail": {
+        "x": 1632,
+        "y": 49,
+        "width": 288,
+        "height": 1031,
+        "top": 49,
+        "right": 1920,
+        "bottom": 1080,
+        "left": 1632
+      },
+      "main": {
+        "x": 0,
+        "y": 93,
+        "width": 1632,
+        "height": 921,
+        "top": 93,
+        "right": 1632,
+        "bottom": 1014,
+        "left": 0
+      },
+      "content": {
+        "x": 368,
+        "y": 109,
+        "width": 896,
+        "height": 584,
+        "top": 109,
+        "right": 1264,
+        "bottom": 693,
+        "left": 368
+      },
+      "prev": {
+        "x": 876.40625,
+        "y": 1029,
+        "width": 92.046875,
+        "height": 36,
+        "top": 1029,
+        "right": 968.453125,
+        "bottom": 1065,
+        "left": 876.40625
+      },
+      "next": {
+        "x": 775,
+        "y": 1029,
+        "width": 88.40625,
+        "height": 36,
+        "top": 1029,
+        "right": 863.40625,
+        "bottom": 1065,
+        "left": 775
+      },
+      "lock": 1,
+      "scrollWidth": 1920,
+      "keyboardNavigation": "passed"
+    },
+    {
+      "viewport": "1280x800",
+      "direction": "rtl",
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800,
+        "top": 0,
+        "right": 1280,
+        "bottom": 800,
+        "left": 0
+      },
+      "rail": {
+        "x": 992,
+        "y": 49,
+        "width": 288,
+        "height": 751,
+        "top": 49,
+        "right": 1280,
+        "bottom": 800,
+        "left": 992
+      },
+      "main": {
+        "x": 0,
+        "y": 93,
+        "width": 992,
+        "height": 641,
+        "top": 93,
+        "right": 992,
+        "bottom": 734,
+        "left": 0
+      },
+      "content": {
+        "x": 48,
+        "y": 109,
+        "width": 896,
+        "height": 584,
+        "top": 109,
+        "right": 944,
+        "bottom": 693,
+        "left": 48
+      },
+      "prev": {
+        "x": 556.40625,
+        "y": 749,
+        "width": 92.046875,
+        "height": 36,
+        "top": 749,
+        "right": 648.453125,
+        "bottom": 785,
+        "left": 556.40625
+      },
+      "next": {
+        "x": 455,
+        "y": 749,
+        "width": 88.40625,
+        "height": 36,
+        "top": 749,
+        "right": 543.40625,
+        "bottom": 785,
+        "left": 455
+      },
+      "lock": 1,
+      "scrollWidth": 1280,
+      "keyboardNavigation": "passed"
+    },
+    {
+      "viewport": "768x900",
+      "direction": "rtl",
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 900,
+        "top": 0,
+        "right": 768,
+        "bottom": 900,
+        "left": 0
+      },
+      "rail": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "main": {
+        "x": 0,
+        "y": 101,
+        "width": 768,
+        "height": 733,
+        "top": 101,
+        "right": 768,
+        "bottom": 834,
+        "left": 0
+      },
+      "content": {
+        "x": 24,
+        "y": 117,
+        "width": 720,
+        "height": 584,
+        "top": 117,
+        "right": 744,
+        "bottom": 701,
+        "left": 24
+      },
+      "prev": {
+        "x": 444.40625,
+        "y": 849,
+        "width": 92.046875,
+        "height": 36,
+        "top": 849,
+        "right": 536.453125,
+        "bottom": 885,
+        "left": 444.40625
+      },
+      "next": {
+        "x": 343,
+        "y": 849,
+        "width": 88.40625,
+        "height": 36,
+        "top": 849,
+        "right": 431.40625,
+        "bottom": 885,
+        "left": 343
+      },
+      "lock": 1,
+      "scrollWidth": 768,
+      "mobileDrawerSelect": "passed"
+    },
+    {
+      "viewport": "375x812",
+      "direction": "rtl",
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 375,
+        "height": 812,
+        "top": 0,
+        "right": 375,
+        "bottom": 812,
+        "left": 0
+      },
+      "rail": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "main": {
+        "x": 0,
+        "y": 97,
+        "width": 375,
+        "height": 649,
+        "top": 97,
+        "right": 375,
+        "bottom": 746,
+        "left": 0
+      },
+      "content": {
+        "x": 12,
+        "y": 113,
+        "width": 351,
+        "height": 727,
+        "top": 113,
+        "right": 363,
+        "bottom": 840,
+        "left": 12
+      },
+      "prev": {
+        "x": 243.90625,
+        "y": 761,
+        "width": 84.046875,
+        "height": 36,
+        "top": 761,
+        "right": 327.953125,
+        "bottom": 797,
+        "left": 243.90625
+      },
+      "next": {
+        "x": 158.5,
+        "y": 761,
+        "width": 72.40625,
+        "height": 36,
+        "top": 761,
+        "right": 230.90625,
+        "bottom": 797,
+        "left": 158.5
+      },
+      "lock": 1,
+      "scrollWidth": 375,
+      "mobileDrawerSelect": "passed"
+    }
+  ],
+  "siteLock": "passed",
+  "pixelComparison": {
+    "referenceDirectory": "docs/lesson1-visual-reference",
+    "afterDirectory": "docs/lesson1-after-shell",
+    "metric": "ImageMagick compare -metric AE (count of differing pixels)",
+    "differentPixels": {
+      "1920x1080": 0,
+      "1280x800": 0,
+      "768x900": 0,
+      "375x812": 0
+    }
+  }
+}

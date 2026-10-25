@@ -44,7 +44,7 @@ export default function StageE35({ id, onGoTest, onGoSolutions }: { id: string; 
 function TestBridge35({ onGoTest, onGoSolutions }: { onGoTest: () => void; onGoSolutions: () => void }) {
   return (
     <div className="fg35-body">
-      <Card35 tone="sun" eyebrow={<>🏆 Future Plans Master Test · §34</>} title="25 سؤالًا في خمسة مستويات">
+      <Card35 tone="sun" eyebrow={<>🏆 Future Plans Master Test · </>} title="25 سؤالًا في خمسة مستويات">
         <SourceGroup35
           lines={["يتكون الاختبار من 25 سؤالًا، موزعة على خمسة مستويات.", "حاول الإجابة عن جميع الأسئلة قبل فتح الحلول."]}
         />
@@ -95,7 +95,7 @@ function TestBridge35({ onGoTest, onGoSolutions }: { onGoTest: () => void; onGoS
 function BossBrief35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="plan" eyebrow={<>🚀 Final Boss · §36</>} title="My Future Plans and Predictions">
+      <Card35 tone="plan" eyebrow={<>🚀 Final Boss · </>} title="My Future Plans and Predictions">
         <SourceGroup35
           lines={["عنوان المهمة:", "My Future Plans and Predictions", "اكتب فقرة من 12 إلى 15 جملة باللغة الإنجليزية.", "يجب أن تحتوي على:"]}
         />
@@ -181,7 +181,7 @@ function BossWriting35() {
         </PlatformNote35>
       </Card35>
 
-      <Card35 tone="sun" eyebrow={<>📄 من المصدر · النموذج الإرشادي</>} title="لا تنسخه — قارن به">
+      <Card35 tone="sun" eyebrow={<>📄 نموذج إرشادي قصير</>} title="لا تنسخه — قارن به">
         <div className="fg35-stack">
           {FINAL_BOSS_MODEL_35.map((line) => (
             <Example35 key={line} en={line} tone="sun" />
@@ -196,7 +196,7 @@ function BossWriting35() {
 function SummaryForms35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="mint" eyebrow={<>🧠 الملخص الذهبي · §37</>} title="BE GOING TO — الصيغ الأربع">
+      <Card35 tone="mint" eyebrow={<>🧠 الملخص الذهبي · </>} title="BE GOING TO — الصيغ الأربع">
         <div className="fg35-summary">
           <div className="fg35-summary__cell">
             <div className="fg35-summary__label">الصيغة المثبتة</div>
@@ -231,7 +231,7 @@ function SummaryForms35() {
 function SummaryUses35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="plan" eyebrow={<>🌱 أهم استخدامين · §37</>} title="خطة سابقة، أو دليل حاضر">
+      <Card35 tone="plan" eyebrow={<>🌱 أهم استخدامين · </>} title="خطة سابقة، أو دليل حاضر">
         <div className="fg35-duo">
           <div className="fg35-plan">
             <div className="fg35-plan__title">① خطة أو نية مستقبلية موجودة مسبقًا</div>
@@ -244,7 +244,7 @@ function SummaryUses35() {
         </div>
       </Card35>
 
-      <Card35 tone="sun" eyebrow={<>⚖️ المقارنة الذهبية · §37</>} title="أربع جمل تختصر الفرق">
+      <Card35 tone="sun" eyebrow={<>⚖️ المقارنة الذهبية · </>} title="أربع جمل تختصر الفرق">
         <div className="fg35-ex-grid fg35-ex-grid--two">
           <Example35 en="I'll answer the phone." ar="قرار لحظي." tone="sun" />
           <Example35 en="I'm going to buy a new phone next month." ar="خطة مسبقة." tone="mint" />
@@ -283,7 +283,7 @@ function Curriculum35() {
   ];
   return (
     <div className="fg35-body">
-      <Card35 tone="sky" eyebrow={<>🗺️ خريطة تقدم المنهج · §38</>} title="أكملنا حتى الآن">
+      <Card35 tone="sky" eyebrow={<>🗺️ خريطة تقدم المنهج · </>} title="أكملنا حتى الآن">
         <SourceLine35 text="أكملنا حتى الآن:" />
         <div className="fg35-map" style={{ marginTop: 8 }}>
           {columns.map((column) => (
@@ -317,7 +317,7 @@ function Curriculum35() {
 function Closing35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="plan" eyebrow={<>🚉 المحطة القادمة · §38</>} title="الدرس 36: WILL vs BE GOING TO">
+      <Card35 tone="plan" eyebrow={<>🚉 المحطة القادمة · </>} title="الدرس 36: WILL vs BE GOING TO">
         <SourceGroup35
           lines={[
             "المحطة القادمة:",
@@ -353,7 +353,7 @@ function Closing35() {
           ]}
         />
         <p className="fg35-muted" style={{ marginTop: 6 }}>
-          هذه اختيارات نموذجية، وليست حدودًا صارمة. راجع §13 و§24 و§32 قبل أن تعتمد عليها كقواعد مطلقة.
+          هذه اختيارات نموذجية، وليست حدودًا صارمة. راجع  و و قبل أن تعتمد عليها كقواعد مطلقة.
         </p>
       </Card35>
     </div>

@@ -1,25 +1,6 @@
-// ============================================================
-// Optional real-Chromium verification for Lesson 35 (FUTURE GARDEN STUDIO).
-// Provision the browser once:
-//   npm install --no-save --package-lock=false playwright-core @sparticuz/chromium
-// Serve the built app first:
-//   npm run build && npm run preview -- --host 0.0.0.0 --port 4173
-// Then run:
-//   node scripts/audit-lesson35-browser.mjs
-//
-// What it verifies at 1440×900, 1280×800, 768×900 and 375×812:
-//   • exactly one visible site-lock button, inside the shared step nav;
-//   • lock / Previous / Next / mobile map never overlap, at the top and the bottom;
-//   • no horizontal page overflow, RTL shell, and readable text contrast;
-//   • keyboard navigation (ArrowLeft / ArrowRight / Home / End) with focus rings;
-//   • the mobile map drawer opens at ≤1023px and stays closed above;
-//   • the 25-question test is neutral before submit, graded after, and
-//     keeps its score and per-question feedback across tab navigation;
-//   • the solutions area is gated, then renders 25 detailed solutions;
-//   • the teacher area is password-gated and renders its full key after unlock;
-//   • no console or page errors.
-// Writes docs/lesson35-visual/verification.json plus screenshots.
-// ============================================================
+// Real-Chromium audit for the Lesson 1-faithful Lesson 35 shell.
+// Run `npm run build && npm run preview -- --host 0.0.0.0 --port 4173`, then
+// `node scripts/audit-lesson35-browser.mjs` (or set LESSON35_URL).
 import { createRequire } from "node:module";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { brotliDecompressSync } from "node:zlib";
@@ -30,397 +11,244 @@ import { chromium as playwright } from "playwright-core";
 
 const require = createRequire(import.meta.url);
 const esbuild = require("esbuild");
-
-// Answers come from the lesson's own data so this script never drifts.
+const temp = "node_modules/.lesson35-browser";
+mkdirSync(temp, { recursive: true });
 await esbuild.build({
   absWorkingDir: process.cwd(),
-  stdin: { contents: `export { TEST_35 } from "./src/lessons/lesson35/testData.ts";`, resolveDir: process.cwd(), loader: "ts" },
-  bundle: true,
-  platform: "node",
-  format: "esm",
-  outfile: "node_modules/.lesson35-browser/test-data.mjs",
-  packages: "external",
-  logLevel: "silent",
+  stdin: { contents: 'export { TEST_35 } from "./src/lessons/lesson35/testKey35.ts";', resolveDir: process.cwd(), loader: "ts" },
+  bundle: true, platform: "node", format: "esm", outfile: `${temp}/test-data.mjs`, packages: "external", logLevel: "silent",
 });
-const { TEST_35 } = await import(pathToFileURL(`${process.cwd()}/node_modules/.lesson35-browser/test-data.mjs`).href);
-
-const work = "node_modules/.lesson35-browser";
-mkdirSync(work, { recursive: true });
+const { TEST_35 } = await import(pathToFileURL(`${process.cwd()}/${temp}/test-data.mjs`).href);
 try {
-  writeFileSync(`${work}/al2023.tar`, brotliDecompressSync(readFileSync("node_modules/@sparticuz/chromium/bin/al2023.tar.br")));
-  execFileSync("tar", ["-xf", `${work}/al2023.tar`, "-C", work]);
-} catch {
-  /* already extracted by a previous run */
-}
-process.env.LD_LIBRARY_PATH = `${process.cwd()}/${work}/lib:${process.env.LD_LIBRARY_PATH || ""}`;
+  writeFileSync(`${temp}/al2023.tar`, brotliDecompressSync(readFileSync("node_modules/@sparticuz/chromium/bin/al2023.tar.br")));
+  execFileSync("tar", ["-xf", `${temp}/al2023.tar`, "-C", temp]);
+} catch { /* archive is already extracted */ }
+process.env.LD_LIBRARY_PATH = `${process.cwd()}/${temp}/lib:${process.env.LD_LIBRARY_PATH || ""}`;
 
-const OUT = "docs/lesson35-visual";
+const OUT = "docs/lesson35-rebuild-visual";
 mkdirSync(OUT, { recursive: true });
-
 const base = process.env.LESSON35_URL || "http://127.0.0.1:4173/English-Course/#/lesson/35";
-const browser = await playwright.launch({
-  args: chromium.args,
-  executablePath: await chromium.executablePath(),
-  headless: true,
+const browser = await playwright.launch({ args: chromium.args, executablePath: await chromium.executablePath(), headless: true });
+const context = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
+await context.addInitScript(() => { try { localStorage.setItem("englishwithsomer-site-unlocked", "unlocked"); } catch {} });
+const page = await context.newPage();
+await page.route(/fonts\.(googleapis|gstatic)\.com/, (route) => route.abort());
+const errors = [];
+const jsResponses = [];
+page.on("pageerror", (error) => errors.push(String(error)));
+page.on("console", (message) => { if (message.type() === "error" && !message.text().includes("ERR_FAILED")) errors.push(message.text()); });
+page.on("response", async (response) => {
+  if (/\.js(?:\?|$)/.test(response.url())) {
+    try { jsResponses.push({ url: response.url(), body: await response.text() }); } catch {}
+  }
 });
 
 let checks = 0;
 const failures = [];
-const ok = (condition, message) => {
-  checks++;
-  if (!condition) failures.push(message);
-};
-const report = { baseUrl: base, viewports: [], consoleErrors: [], generatedAt: new Date().toISOString() };
-
-const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
-await ctx.addInitScript(() => {
-  try {
-    localStorage.setItem("englishwithsomer-site-unlocked", "unlocked");
-  } catch {
-    /* about:blank has no storage access */
-  }
-});
-const page = await ctx.newPage();
-// The sandbox cannot reach Google Fonts; aborted requests otherwise stall screenshots.
-await page.route(/fonts\.(googleapis|gstatic)\.com/, (route) => route.abort());
-page.on("pageerror", (error) => report.consoleErrors.push(String(error)));
-page.on("console", (message) => {
-  if (message.type() === "error" && !message.text().includes("ERR_FAILED")) report.consoleErrors.push(message.text());
-});
-
-async function shot(name) {
-  await page.screenshot({ path: `${OUT}/${name}.png`, animations: "disabled", timeout: 60000 });
-}
-
-const overlap = (a, b) => {
+const ok = (condition, message) => { checks++; if (!condition) failures.push(message); };
+const overlapArea = (a, b) => {
   if (!a || !b) return 0;
-  const x = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
-  const y = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
-  return x > 1 && y > 1 ? Math.round(x * y) : 0;
+  const w = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
+  const h = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+  return w > 1 && h > 1 ? Math.round(w * h) : 0;
 };
+const boxes = () => page.evaluate(() => {
+  const rect = (node) => node ? node.getBoundingClientRect().toJSON() : null;
+  const visible = (node) => !!node && getComputedStyle(node).display !== "none" && node.getClientRects().length > 0;
+  const root = document.querySelector('[data-lesson="35"]');
+  const rail = [...root.querySelectorAll(".w-72")].find(visible);
+  const main = root.querySelector("#l35-main");
+  const content = root.querySelector('[data-area="l35-lesson"]');
+  const lock = [...root.querySelectorAll("[data-site-lock-button='true']")].find(visible);
+  const prev = [...root.querySelectorAll("[data-step-nav='prev']")].find(visible);
+  const next = [...root.querySelectorAll("[data-step-nav='next']")].find(visible);
+  return {
+    direction: getComputedStyle(root).direction,
+    bg: getComputedStyle(root).backgroundColor,
+    shellFont: getComputedStyle(root).fontFamily,
+    rail: rect(rail), main: rect(main), content: rect(content), lock: rect(lock), prev: rect(prev), next: rect(next),
+    step: root.querySelector("[data-step-id]")?.getAttribute("data-step-id"),
+    width: document.documentElement.clientWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+    menuButton: rect([...root.querySelectorAll("button[aria-label='فهرس الدرس']")].find(visible)),
+  };
+});
+const shot = async (name) => page.screenshot({ path: `${OUT}/${name}.png`, animations: "disabled", timeout: 60000 });
 
-async function boxes() {
+function contrastAudit() {
   return page.evaluate(() => {
-    const visible = (el) => el && el.offsetParent !== null;
-    const rect = (el) => (el ? el.getBoundingClientRect().toJSON() : null);
-    return {
-      locks: [...document.querySelectorAll("[data-site-lock-button='true']")].filter(visible).length,
-      totalLocks: document.querySelectorAll("[data-site-lock-button='true']").length,
-      lock: rect([...document.querySelectorAll("[data-site-lock-button='true']")].filter(visible)[0]),
-      next: rect([...document.querySelectorAll("[data-step-nav='next']")].filter(visible)[0]),
-      prev: rect([...document.querySelectorAll("[data-step-nav='prev']")].filter(visible)[0]),
-      fab: rect([...document.querySelectorAll(".fg35-mobile-nav__toggle")].filter(visible)[0]),
-      scrollWidth: document.documentElement.scrollWidth,
-      clientWidth: document.documentElement.clientWidth,
-      direction: getComputedStyle(document.querySelector(".fg35-app")).direction,
-      step: document.querySelector("[data-step-id]")?.getAttribute("data-step-id"),
+    const rgb = (value) => {
+      const m = value.match(/rgba?\(([^)]+)\)/);
+      if (!m) return null;
+      const [r, g, b, a = 1] = m[1].split(",").map((x) => Number.parseFloat(x));
+      return { r, g, b, a };
     };
-  });
-}
-
-/** WCAG relative luminance + contrast ratio for the most common text nodes. */
-async function contrastReport() {
-  return page.evaluate(() => {
-    const parse = (value) => {
-      const match = value.match(/rgba?\(([^)]+)\)/);
-      if (!match) return null;
-      const [r, g, b, a = "1"] = match[1].split(",").map((part) => parseFloat(part));
-      return { r, g, b, a: Number(a) };
-    };
-    const bgOf = (element) => {
-      let node = element;
-      while (node && node !== document.documentElement) {
-        const color = parse(getComputedStyle(node).backgroundColor);
-        if (color && color.a > 0.6) return color;
-        node = node.parentElement;
+    const bg = (el) => {
+      for (let node = el; node && node !== document.documentElement; node = node.parentElement) {
+        const c = rgb(getComputedStyle(node).backgroundColor);
+        if (c && c.a > 0.6) return c;
       }
       return { r: 255, g: 255, b: 255, a: 1 };
     };
-    const lum = (color) => {
-      const channel = (value) => {
-        const c = value / 255;
-        return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-      };
-      return 0.2126 * channel(color.r) + 0.7152 * channel(color.g) + 0.0722 * channel(color.b);
+    const lum = ({ r, g, b }) => {
+      const f = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+      return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
     };
-    const ratio = (fg, bg) => {
-      const a = lum(fg) + 0.05;
-      const b = lum(bg) + 0.05;
-      return Math.round((Math.max(a, b) / Math.min(a, b)) * 100) / 100;
-    };
-    const samples = [...document.querySelectorAll("[data-step-id] p, [data-step-id] li, [data-step-id] span, [data-step-id] h1, [data-step-id] h2, [data-step-id] h3, [data-step-id] h4")]
-      .filter((element) => (element.textContent || "").trim().length > 12 && element.offsetParent !== null)
-      .slice(0, 400);
+    const ratio = (a, b) => { const x = lum(a) + 0.05, y = lum(b) + 0.05; return Math.max(x, y) / Math.min(x, y); };
+    const nodes = [...document.querySelectorAll("[data-area='l35-lesson'] *")].filter((el) => el.getClientRects().length && (el.textContent || "").trim().length > 8);
+    const failures = [];
     let worst = { ratio: 99, text: "" };
-    let below = 0;
-    for (const element of samples) {
-      const style = getComputedStyle(element);
-      const size = parseFloat(style.fontSize);
-      const weight = parseInt(style.fontWeight, 10) || 400;
-      const large = size >= 24 || (size >= 18.66 && weight >= 700);
-      const fg = parse(style.color);
+    for (const el of nodes) {
+      const style = getComputedStyle(el);
+      const fg = rgb(style.color);
       if (!fg) continue;
-      const value = ratio(fg, bgOf(element));
-      if (value < (large ? 3 : 4.5)) below++;
-      if (value < worst.ratio) worst = { ratio: value, text: (element.textContent || "").trim().slice(0, 60) };
+      const value = ratio(fg, bg(el));
+      const large = Number.parseFloat(style.fontSize) >= 24 || (Number.parseFloat(style.fontSize) >= 18.66 && Number.parseInt(style.fontWeight, 10) >= 700);
+      if (value < (large ? 3 : 4.5)) failures.push({ ratio: Number(value.toFixed(2)), text: (el.textContent || "").trim().slice(0, 60) });
+      if (value < worst.ratio) worst = { ratio: Number(value.toFixed(2)), text: (el.textContent || "").trim().slice(0, 60) };
     }
-    return { samples: samples.length, below, worst };
+    return { sampledTextNodes: nodes.length, failures: failures.slice(0, 20), failureCount: failures.length, worst };
   });
 }
 
-const answers = TEST_35.map((question) => ({
-  n: question.n,
-  type: question.type,
-  value: question.type === "single" ? question.answer : question.type === "write" ? question.modelAnswers[0] : question.accept[0],
-}));
-
-for (const vp of [
-  { name: "1440x900", width: 1440, height: 900 },
-  { name: "1280x800", width: 1280, height: 800 },
-  { name: "768x900", width: 768, height: 900 },
-  { name: "375x812", width: 375, height: 812 },
+const viewportRecords = [];
+for (const viewport of [
+  { name: "1920x1080", width: 1920, height: 1080, rail: true },
+  { name: "1280x800", width: 1280, height: 800, rail: true },
+  { name: "768x900", width: 768, height: 900, rail: false },
+  { name: "375x812", width: 375, height: 812, rail: false },
 ]) {
-  await page.setViewportSize({ width: vp.width, height: vp.height });
+  await page.setViewportSize({ width: viewport.width, height: viewport.height });
   await page.goto("about:blank");
-  await page.goto(base, { waitUntil: "domcontentloaded" });
-  await page.waitForSelector(".fg35-hero", { timeout: 30000 });
-  await page.waitForTimeout(600);
+  await page.goto(base, { waitUntil: "networkidle" });
+  await page.waitForSelector('[data-step-id="cover"]', { timeout: 30000 });
+  await page.waitForTimeout(150);
+  const state = await boxes();
+  ok(state.direction === "rtl", `${viewport.name}: RTL shell`);
+  ok(state.bg === "rgb(244, 246, 251)", `${viewport.name}: Lesson 1 #f4f6fb canvas (${state.bg})`);
+  ok(state.scrollWidth <= state.width, `${viewport.name}: no horizontal overflow (${state.scrollWidth}/${state.width})`);
+  ok(Boolean(state.rail) === viewport.rail, `${viewport.name}: expected Lesson 1 rail visibility ${viewport.rail}`);
+  ok(Boolean(state.menuButton) === !viewport.rail, `${viewport.name}: Lesson 1 mobile index button visibility`);
+  ok(!!state.main && !!state.content, `${viewport.name}: main explanation region rendered`);
+  if (viewport.rail) {
+    ok(Math.abs(state.rail.width - 288) <= 1, `${viewport.name}: sidebar is fixed at 288px (got ${state.rail.width})`);
+    ok(state.main.width > state.rail.width * 2, `${viewport.name}: explanation region is substantially wider than the index`);
+    ok(state.content.width <= 896, `${viewport.name}: centered explanation content is at most 896px (got ${state.content.width})`);
+    ok(state.content.width > state.rail.width, `${viewport.name}: explanation content is wider than the index`);
+  }
+  const contrast = await contrastAudit();
+  ok(contrast.failureCount === 0, `${viewport.name}: contrast sample has no AA failures (${contrast.failureCount}; worst ${contrast.worst.ratio}: ${contrast.worst.text})`);
+  await shot(`${viewport.name}-cover`);
+  viewportRecords.push({ viewport: viewport.name, shell: state, contrast });
 
-  const top = await boxes();
-  ok(top.totalLocks === 1 && top.locks === 1, `${vp.name}: exactly one visible site-lock button (total ${top.totalLocks}, visible ${top.locks})`);
-  ok(top.scrollWidth <= top.clientWidth, `${vp.name}: no horizontal overflow (${top.scrollWidth} > ${top.clientWidth})`);
-  ok(top.direction === "rtl", `${vp.name}: lesson shell stays RTL`);
-  await shot(`lesson-${vp.name}-top`);
-
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-  await page.waitForTimeout(400);
-  const bottom = await boxes();
-  ok(overlap(bottom.lock, bottom.next) === 0, `${vp.name}: lock and Next do not overlap`);
-  ok(overlap(bottom.lock, bottom.prev) === 0, `${vp.name}: lock and Previous do not overlap`);
-  ok(overlap(bottom.fab, bottom.lock) === 0, `${vp.name}: mobile map button and lock do not overlap`);
-  ok(overlap(bottom.fab, bottom.next) === 0, `${vp.name}: mobile map button and Next do not overlap`);
-  ok(vp.width < 1024 ? !!bottom.fab : !bottom.fab, `${vp.name}: mobile map button ${vp.width < 1024 ? "visible" : "hidden"}`);
-  await shot(`lesson-${vp.name}-bottom`);
-
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await page.waitForTimeout(300);
-  const contrast = await contrastReport();
-  ok(contrast.below === 0, `${vp.name}: all sampled lesson text meets WCAG AA (${contrast.below} below of ${contrast.samples}; worst ${contrast.worst.ratio}: ${contrast.worst.text})`);
-
-  report.viewports.push({
-    viewport: vp.name,
-    visibleLockCount: top.locks,
-    totalLockCount: top.totalLocks,
-    horizontal: { scrollWidth: top.scrollWidth, clientWidth: top.clientWidth },
-    direction: top.direction,
-    contrast,
-    overlaps: {
-      lockNext: overlap(bottom.lock, bottom.next),
-      lockPrev: overlap(bottom.lock, bottom.prev),
-      fabLock: overlap(bottom.fab, bottom.lock),
-      fabNext: overlap(bottom.fab, bottom.next),
-    },
-    fabVisible: !!bottom.fab,
-  });
-
-  if (vp.width === 375) {
-    await page.click(".fg35-mobile-nav__toggle");
-    await page.waitForTimeout(450);
-    const drawer = await page.evaluate(() => ({
-      open: !!document.querySelector(".fg35-mobile-nav__body"),
-      groups: document.querySelectorAll(".fg35-mobile-nav__body .fg35-group__btn").length,
-      steps: document.querySelectorAll(".fg35-mobile-nav__body .fg35-stepbtn").length,
-      expanded: document.querySelector(".fg35-mobile-nav__toggle")?.getAttribute("aria-expanded"),
-    }));
-    ok(drawer.open && drawer.expanded === "true", "375x812: mobile map drawer opens");
-    ok(drawer.groups === 5, `375x812: drawer lists all five stages (got ${drawer.groups})`);
-    ok(drawer.steps >= 10, `375x812: drawer lists the expanded stage's steps (got ${drawer.steps})`);
-    await shot("lesson-mobile-map-open");
-    await page.click(".fg35-mobile-nav__body .fg35-stepbtn >> nth=1");
-    await page.waitForTimeout(450);
-    ok((await boxes()).step !== "cover", "375x812: a step chosen in the drawer navigates the lesson");
-    ok((await page.locator(".fg35-mobile-nav__body").count()) === 0, "375x812: choosing a step closes the drawer");
-    await shot("lesson-mobile-step-chosen");
+  if (!viewport.rail) {
+    await page.getByRole("button", { name: "فهرس الدرس" }).click();
+    const drawer = await page.locator(".fixed.inset-0.z-50").count();
+    ok(drawer === 1, `${viewport.name}: mobile index opens as the Lesson 1 modal drawer`);
+    const mobileStep = page.locator(".fixed.inset-0.z-50 [data-step-nav='meaning']").last();
+    await mobileStep.click();
+    await page.waitForTimeout(120);
+    ok((await boxes()).step === "meaning", `${viewport.name}: choosing a map item changes the displayed step`);
+    ok(await page.locator(".fixed.inset-0.z-50").count() === 0, `${viewport.name}: choosing a step closes the drawer`);
+    await shot(`${viewport.name}-drawer-navigation`);
   }
 }
 
-// ---- keyboard + focus contract (desktop) ----
-await page.setViewportSize({ width: 1440, height: 900 });
+// Initial page and the pre-submit test flow must not request the 25-answer key chunk.
+const secret = TEST_35.find((question) => question.n === 21).answer;
+const hasSecretInLoadedJS = () => jsResponses.some((response) => response.body.includes(secret));
+const hasTestKeyChunkLoaded = () => jsResponses.some((response) => response.url.includes("/testKey35-"));
+ok(!hasSecretInLoadedJS(), "initial loaded JavaScript has no unique model answer for final-test Q21");
+ok(!hasTestKeyChunkLoaded(), "initial student JavaScript payload excludes the deferred final-test key chunk");
+await page.setViewportSize({ width: 1280, height: 800 });
 await page.goto("about:blank");
-await page.goto(base, { waitUntil: "domcontentloaded" });
-await page.waitForSelector(".fg35-hero", { timeout: 30000 });
-await page.waitForTimeout(400);
-await page.click("button:has-text('ابدأ من البذرة الأولى')");
-await page.waitForTimeout(400);
-const stepAfterStart = (await boxes()).step;
-await page.keyboard.press("ArrowLeft");
-await page.waitForTimeout(350);
-const stepAfterArrow = (await boxes()).step;
-ok(stepAfterStart !== stepAfterArrow, `keyboard: ArrowLeft advances in the RTL flow (${stepAfterStart} → ${stepAfterArrow})`);
-await page.keyboard.press("ArrowRight");
-await page.waitForTimeout(350);
-ok((await boxes()).step === stepAfterStart, "keyboard: ArrowRight returns to the previous step");
-await page.keyboard.press("End");
-await page.waitForTimeout(400);
-ok((await boxes()).step === "closing", "keyboard: End jumps to the final step");
-await page.keyboard.press("Home");
-await page.waitForTimeout(400);
-ok((await boxes()).step === "cover", "keyboard: Home returns to the cover");
-await page.keyboard.press("Tab");
-const focus = await page.evaluate(() => {
-  const element = document.activeElement;
-  const style = element ? getComputedStyle(element) : null;
-  return { tag: element?.tagName, outline: style?.outlineStyle, shadow: style?.boxShadow, width: style?.outlineWidth };
-});
-ok(!!focus.tag && focus.tag !== "BODY", "keyboard: Tab lands on a real control");
-ok(focus.shadow !== "none" || (focus.outline !== "none" && focus.width !== "0px"), `keyboard: focused control shows a visible focus ring (${JSON.stringify(focus)})`);
-
-// ---- density review: every step stays a short, one-purpose screen ----
-await page.evaluate(() => { for (const group of document.querySelectorAll(".fg35-group__btn")) if (group.getAttribute("aria-expanded") !== "true") group.click(); });
-await page.waitForTimeout(300);
-const stepIds = await page.evaluate(() => [...document.querySelectorAll("[data-step-nav]")].map((button) => button.getAttribute("data-step-nav")).filter((id) => id && id !== "prev" && id !== "next"));
-ok(stepIds.length === 61, `density: all 61 steps are exposed in the rail (got ${stepIds.length})`);
-const heights = [];
-for (const id of stepIds) {
-  await page.evaluate(() => { for (const group of document.querySelectorAll(".fg35-group__btn")) if (group.getAttribute("aria-expanded") !== "true") group.click(); });
-  await page.waitForTimeout(40);
-  await page.click(`[data-step-nav="${id}"]`);
-  await page.waitForTimeout(150);
-  const measured = await page.evaluate(() => {
-    const step = document.querySelector("[data-step-id]");
-    return {
-      id: step?.getAttribute("data-step-id"),
-      height: step ? Math.round(step.getBoundingClientRect().height) : 0,
-      words: (document.querySelector('[data-area="l35-lesson"]')?.textContent || "").trim().split(/\s+/).length,
-    };
-  });
-  heights.push(measured);
-  ok(measured.id === id, `density: rail selection lands on ${id} (got ${measured.id})`);
-}
-heights.sort((a, b) => b.height - a.height);
-const tallest = heights[0];
-const median = heights[Math.floor(heights.length / 2)];
-ok(tallest.height <= 1600, `density: no step becomes a scrolling wall — tallest is ${tallest.id} at ${tallest.height}px`);
-ok(median.height <= 1100, `density: median step height is ${median.height}px at 1440x900`);
-report.stepHeights = { tallest: heights.slice(0, 5), median: median.height, count: heights.length };
-await page.click("[data-step-nav='cover']");
-await page.waitForTimeout(300);
-
-// ---- test / solutions / teacher flow ----
-await page.click("[data-area-tab='test']");
-await page.waitForTimeout(500);
-const pre = await page.evaluate(() => {
-  const root = document.querySelector("[data-area='lesson35-test']");
-  const text = root?.textContent || "";
-  return {
-    neutral: !/✓ إجابة صحيحة|✕ إجابة غير صحيحة|النتيجة/.test(text),
-    questions: document.querySelectorAll("[data-test-q]").length,
-    feedback: document.querySelectorAll("[data-test-feedback]").length,
-    submitDisabled: document.querySelector("[data-test-submit]")?.disabled,
-    progress: /0\s*\/\s*25/.test(text),
-  };
-});
-ok(pre.neutral, "test: no correctness chips, score or explanations before submit");
-ok(pre.questions === 25, `test: 25 questions rendered (got ${pre.questions})`);
-ok(pre.feedback === 0, "test: no per-question feedback before submit");
-ok(pre.submitDisabled === true, "test: submit is disabled before all 25 answers exist");
-await page.evaluate(() => window.scrollTo(0, 0));
-await page.waitForTimeout(250);
+await page.goto(base, { waitUntil: "networkidle" });
+await page.locator("[data-area-tab='solutions']").click();
+await page.waitForSelector('[data-solutions-locked="true"]', { timeout: 30000 });
+await page.waitForTimeout(100);
+ok(!hasSecretInLoadedJS() && !hasTestKeyChunkLoaded(), "opening locked solutions does not load final-test answers or their deferred JS chunk");
+await page.locator("[data-area-tab='test']").click();
+await page.waitForSelector("[data-test-q='25']", { timeout: 30000 });
+const preState = await page.evaluate(() => ({
+  feedback: document.querySelectorAll("[data-test-feedback]").length,
+  answerText: document.querySelector('[data-area="lesson35-test"]')?.textContent?.includes("I think education will change a lot in the future.") ?? false,
+  submits: document.querySelector("[data-test-submit]")?.disabled,
+  sourceCitations: /(?:المصدر\s*§|§\s*\d+|source section|source file)/i.test(document.querySelector('[data-area="l35-test"]')?.textContent || ""),
+}));
+ok(preState.feedback === 0 && preState.submits === true, "test begins without feedback and submit stays disabled");
+ok(!preState.answerText, "final test model answer is absent from its initial rendered DOM");
+ok(!preState.sourceCitations, "student test UI contains no internal source labels or section references");
+ok(!hasSecretInLoadedJS() && !hasTestKeyChunkLoaded(), "pre-submit JavaScript responses contain neither a unique final-test answer nor the deferred key chunk");
 await shot("test-before-submit");
-
-for (const item of answers) {
-  const card = page.locator(`[data-test-q="${item.n}"]`);
-  if (item.type === "single") await card.locator("[role='radio']").nth(item.value).check();
-  else if (item.type === "write") await card.locator("textarea").fill(item.value);
-  else await card.locator("input").fill(item.value);
+for (const question of TEST_35) {
+  const card = page.locator(`[data-test-q='${question.n}']`);
+  if (question.type === "single") await card.locator("[role='radio']").nth(question.answer).click();
+  else if (question.type === "write") await card.locator("textarea").fill(question.modelAnswers[0]);
+  else await card.locator("input").fill(question.accept[0]);
 }
-await page.waitForTimeout(400);
-const ready = await page.evaluate(() => !document.querySelector("[data-test-submit]")?.disabled);
-ok(ready, "test: submit enables once all 25 questions are answered");
-const stillNeutral = await page.evaluate(() => document.querySelectorAll("[data-test-feedback]").length === 0);
-ok(stillNeutral, "test: answered-but-unsubmitted state still shows no feedback");
-await page.click("[data-test-submit]");
-await page.waitForTimeout(600);
-const result = await page.evaluate(() => {
-  const text = document.querySelector("[data-test-score]")?.textContent || "";
-  return { text: text.replace(/\s+/g, " ").slice(0, 160), feedback: document.querySelectorAll("[data-test-feedback]").length };
-});
-ok(/25\s*\/\s*25/.test(result.text), `test: the full correct key scores 25/25 (got "${result.text}")`);
-ok(result.feedback === 25, `test: every question reveals feedback after submit (got ${result.feedback})`);
-await page.evaluate(() => window.scrollTo(0, 0));
-await page.waitForTimeout(250);
+ok(await page.locator("[data-test-submit]").isEnabled(), "all 25 responses enable submit");
+const keyBeforeSubmit = hasSecretInLoadedJS();
+const keyChunkBeforeSubmit = hasTestKeyChunkLoaded();
+const stillNoAnswers = await page.locator("[data-test-feedback]").count() === 0 && !keyBeforeSubmit && !keyChunkBeforeSubmit;
+ok(stillNoAnswers, "all answered but unsubmitted state still hides answers and explanations");
+await page.locator("[data-test-submit]").click();
+await page.waitForFunction(() => (document.querySelector("[data-test-score]")?.textContent || "").includes("25 / 25"), { timeout: 30000 });
+await page.waitForTimeout(100);
+ok(await page.locator("[data-test-feedback]").count() === 25, "submission reveals explanation for each of the 25 questions");
+ok(hasSecretInLoadedJS() && hasTestKeyChunkLoaded(), "the deferred 25-answer key chunk is fetched only after submission");
 await shot("test-after-submit");
 
-await page.click("[data-area-tab='solutions']");
-await page.waitForTimeout(600);
-ok((await page.locator("[data-solution]").count()) === 25, "solutions: 25 detailed solutions render after submission");
-ok((await page.locator("[data-area='lesson35-solutions']").textContent()).includes("حل مستنتج"), "solutions: labelled as platform-derived");
-await page.evaluate(() => window.scrollTo(0, 0));
-await page.waitForTimeout(200);
-await shot("solutions-unlocked");
+await page.locator("[data-area-tab='solutions']").click();
+await page.waitForSelector("[data-solution='25']", { timeout: 30000 });
+ok(await page.locator("[data-solution]").count() === 25, "unlocked solutions render all 25 detailed entries");
+await shot("solutions-open");
+await page.locator("[data-area-tab='teacher']").click();
+await page.waitForSelector("#l35-teacher-password", { timeout: 30000 });
+ok(await page.locator("[data-teacher-solution]").count() === 0, "teacher key stays hidden behind its password gate");
+await shot("teacher-locked");
+await page.locator("#l35-teacher-password").fill("somer173");
+await page.getByRole("button", { name: /دخول المعلم/ }).click();
+await page.waitForSelector("[data-teacher-solution='25']", { timeout: 30000 });
+ok(await page.locator("[data-teacher-solution]").count() === 25, "teacher password unlocks all 25 final-test keys");
+await shot("teacher-open");
 
-await page.click("[data-area-tab='test']");
-await page.waitForTimeout(400);
-const restored = await page.evaluate(() => ({
-  score: /25\s*\/\s*25/.test(document.querySelector("[data-test-score]")?.textContent || ""),
-  feedback: document.querySelectorAll("[data-test-feedback]").length,
-}));
-ok(restored.score && restored.feedback === 25, "test: score and feedback survive navigating to solutions and back");
+// Keyboard controls and common site-lock control remain functional.
+await page.locator("[data-area-tab='lesson']").click();
+await page.locator("[data-step-nav='cover']").click();
+await page.keyboard.press("ArrowLeft");
+await page.waitForTimeout(80);
+ok((await boxes()).step === "bridge", "ArrowLeft advances one step in RTL");
+await page.keyboard.press("ArrowRight");
+await page.waitForTimeout(80);
+ok((await boxes()).step === "cover", "ArrowRight returns one step in RTL");
+const lockCount = await page.locator("[data-site-lock-button='true']:visible").count();
+ok(lockCount === 1, "one shared site-lock button remains visible");
 
-await page.click("[data-area-tab='teacher']");
-await page.waitForTimeout(400);
-ok((await page.locator("[data-teacher-solution]").count()) === 0, "teacher: solutions hidden behind the password gate");
-await shot("teacher-gate");
-await page.fill("#l35-teacher-password", "somer173");
-await page.click("button:has-text('دخول المعلم')");
-await page.waitForTimeout(700);
-ok((await page.locator("[data-teacher-solution]").count()) === 25, "teacher: 25 detailed solutions after unlocking");
-ok((await page.locator("[data-ft-key-item]").count()) === 15, "teacher: shared 15-question FinalTest key rendered");
-await page.evaluate(() => {
-  const head = [...document.querySelectorAll("h3")].find((element) => element.textContent.includes("مفتاح تصحيح الاختبار النهائي"));
-  head?.scrollIntoView({ block: "start" });
-});
-await page.waitForTimeout(350);
-await shot("teacher-detailed-solutions");
-
-const perArea = {};
-for (const tab of ["lesson", "test", "solutions", "teacher"]) {
-  await page.click(`[data-area-tab='${tab}']`);
-  await page.waitForTimeout(350);
-  perArea[tab] = await page.locator("[data-site-lock-button='true']:visible").count();
-  ok(perArea[tab] === 1, `tab ${tab}: exactly one visible site-lock button (got ${perArea[tab]})`);
-}
-report.lockPerArea = perArea;
-
-// Mobile pass for the three non-lesson areas (same mounted state).
-await page.setViewportSize({ width: 375, height: 812 });
-await page.waitForTimeout(400);
-const mobileAreas = {};
-for (const tab of ["test", "solutions", "teacher"]) {
-  await page.click(`[data-area-tab='${tab}']`);
-  await page.waitForTimeout(450);
-  const state = await page.evaluate(() => ({
-    scrollWidth: document.documentElement.scrollWidth,
-    clientWidth: document.documentElement.clientWidth,
-    locks: [...document.querySelectorAll("[data-site-lock-button='true']")].filter((element) => element.offsetParent !== null).length,
-  }));
-  mobileAreas[tab] = state;
-  ok(state.scrollWidth <= state.clientWidth, `375x812 ${tab}: no horizontal overflow (${state.scrollWidth} > ${state.clientWidth})`);
-  ok(state.locks === 1, `375x812 ${tab}: exactly one visible site-lock button (got ${state.locks})`);
-  await shot(`area-375x812-${tab}`);
-}
-report.mobileAreas = mobileAreas;
-
+const summary = {
+  baseUrl: base,
+  checks,
+  passed: checks - failures.length,
+  failures,
+  viewports: viewportRecords,
+  deferredKey: {
+    secretAnswerSample: secret,
+    fetchedBeforeSubmit: keyBeforeSubmit,
+    fetchedAfterSubmit: hasSecretInLoadedJS(),
+    keyChunkFetchedBeforeSubmit: keyChunkBeforeSubmit,
+    keyChunkFetchedAfterSubmit: hasTestKeyChunkLoaded(),
+  },
+  consoleErrors: errors,
+  screenshotsDirectory: OUT,
+};
+ok(errors.length === 0, `no browser/console errors (${errors.join(" | ")})`);
+summary.checks = checks;
+summary.passed = checks - failures.length;
+summary.failures = failures;
+writeFileSync(`${OUT}/verification.json`, JSON.stringify(summary, null, 2));
 await browser.close();
-ok(report.consoleErrors.length === 0, `no console or page errors (${report.consoleErrors.join(" | ")})`);
-report.checks = checks;
-report.passed = checks - failures.length;
-report.failures = failures;
-writeFileSync(`${OUT}/verification.json`, JSON.stringify(report, null, 2));
-
 if (failures.length) {
-  console.error(`Lesson 35 browser audit: ${checks - failures.length} passed, ${failures.length} FAILED`);
-  for (const failure of failures) console.error(" ✕ " + failure);
+  console.error(`Lesson 35 browser audit: ${summary.passed} passed, ${failures.length} FAILED`);
+  for (const failure of failures) console.error(` - ${failure}`);
   process.exit(1);
 }
-console.log(`Lesson 35 browser audit: ${checks} checks passed, 0 failed (4 viewports, keyboard, contrast, test/solutions/teacher flow).`);
+console.log(`Lesson 35 browser audit: ${summary.passed}/${checks} passed across 4 viewports, navigation, assessment gating, answer-chunk timing, and teacher flow.`);

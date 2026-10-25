@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Rich } from "../../shared/lessonKit";
 import { FOCUS_35 } from "./kit35";
-import { TEST_LEVELS_35, TEST_SOLUTIONS_35 } from "./testData";
+import { TEST_LEVELS_35 } from "./testData";
+import type * as AnswerKey35 from "./testKey35";
 
 export default function SolutionsArea35({
   unlocked,
@@ -13,6 +14,14 @@ export default function SolutionsArea35({
   onGoTeacher: () => void;
 }) {
   const [open, setOpen] = useState<Record<number, boolean>>({});
+  const [keyData, setKeyData] = useState<typeof AnswerKey35 | null>(null);
+
+  useEffect(() => {
+    if (!unlocked || keyData) return;
+    let active = true;
+    import("./testKey35").then((module) => { if (active) setKeyData(module); });
+    return () => { active = false; };
+  }, [keyData, unlocked]);
 
   if (!unlocked) {
     return (
@@ -37,19 +46,19 @@ export default function SolutionsArea35({
     <div className="fg35-body" data-area="lesson35-solutions">
       <header className="fg35-testhead">
         <div className="fg35-card__eyebrow">
-          <span className="fg35-pill fg35-pill--source">🔑 SOLUTIONS · §34</span>
+          <span className="fg35-pill fg35-pill--source">🔑 SOLUTIONS · </span>
           <span className="fg35-pill">25 حلًا</span>
           <span className="fg35-pill">5 مستويات</span>
         </div>
         <h2>الحلول التفصيلية — 25 سؤالًا</h2>
         <p className="fg35-prose">
-          المصدر §35 يذكر «الحلول التفصيلية» ولا يورد مفتاحًا فعليًا. كل إجابة وشرح أدناه <b>حل مستنتج من المنصة/المعلم</b> من قواعد الدرس §2–§32 وسياق السؤال، وليس نقلًا عن مفتاح رسمي.
+          هذا مفتاح كامل أعدّته المنصة/المعلم بالاستناد إلى قواعد الدرس وسياق الأسئلة؛ وقد تُقبل صيغ بديلة صحيحة، خصوصًا في مهام الإنتاج المفتوحة.
         </p>
         <div className="fg35-inputrow">
           <button
             type="button"
             className={`fg35-btn ${FOCUS_35}`}
-            onClick={() => setOpen(Object.fromEntries(TEST_SOLUTIONS_35.map((solution) => [solution.n, true])))}
+            onClick={() => setOpen(Object.fromEntries((keyData?.TEST_SOLUTIONS_35 ?? []).map((solution) => [solution.n, true])))}
           >
             اعرض كل الشروح
           </button>
@@ -59,6 +68,7 @@ export default function SolutionsArea35({
         </div>
       </header>
 
+      {!keyData ? <p className="fg35-muted" role="status">جارٍ إعداد الحلول التفصيلية…</p> : null}
       {TEST_LEVELS_35.map((level, levelIndex) => (
         <section className="fg35-card" key={level.id} data-tone="mint">
           <div className="fg35-card__eyebrow">
@@ -67,7 +77,7 @@ export default function SolutionsArea35({
           </div>
           <h3><Rich text={level.title} /></h3>
           <div className="fg35-stack" style={{ marginTop: 8 }}>
-            {TEST_SOLUTIONS_35.filter((solution) => level.questions.some((question) => question.n === solution.n)).map((solution) => {
+            {(keyData?.TEST_SOLUTIONS_35 ?? []).filter((solution) => level.questions.some((question) => question.n === solution.n)).map((solution) => {
               const expanded = open[solution.n] ?? false;
               return (
                 <article key={solution.n} className="fg35-solution" data-solution={solution.n}>

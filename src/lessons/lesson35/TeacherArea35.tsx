@@ -15,7 +15,8 @@ import {
   READING_QUESTIONS_35,
   TRANSFORMATION_ITEMS_35,
 } from "./practiceData";
-import { TEST_LEVELS_35, TEST_SOLUTIONS_35 } from "./testData";
+import { TEST_LEVELS_35 } from "./testData";
+import type * as AnswerKey35 from "./testKey35";
 
 /* Teacher area — password-gated, separate from the student lesson/test/solutions.
    The repository's established teacher password mechanism is reused unchanged. */
@@ -75,15 +76,18 @@ export default function TeacherArea35({
 }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [testKey, setTestKey] = useState<typeof AnswerKey35 | null>(null);
 
   if (!unlocked) {
     return (
       <form
         data-area="lesson35-teacher"
         className="fg35-gate"
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
           if (password === TEACHER_PASSWORD_35) {
+            const key = await import("./testKey35");
+            setTestKey(key);
             setPassword("");
             setError("");
             onUnlockChange(true);
@@ -248,7 +252,7 @@ export default function TeacherArea35({
           <div key={level.id} style={{ marginTop: 10 }}>
             <h4 className="fg35-strong" style={{ fontSize: "0.9rem" }}><Rich text={level.title} /></h4>
             <div className="fg35-stack">
-              {TEST_SOLUTIONS_35.filter((solution) => level.questions.some((question) => question.n === solution.n)).map((solution) => (
+              {(testKey?.TEST_SOLUTIONS_35 ?? []).filter((solution) => level.questions.some((question) => question.n === solution.n)).map((solution) => (
                 <article className="fg35-solution" key={solution.n} data-teacher-solution={solution.n}>
                   <div className="fg35-solution__head">
                     <span className="fg35-q__n">{solution.n}</span>

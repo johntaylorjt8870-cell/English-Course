@@ -68,7 +68,7 @@ function Detective35({ from, to, title }: { from: number; to: number; title: str
   const items = DETECTIVE_ITEMS_35.slice(from, to);
   return (
     <div className="fg35-body">
-      <Card35 tone="predict" eyebrow={<>🕵️ Grammar Detective · §28</>} title={`صحّح الأخطاء · ${title}`}>
+      <Card35 tone="predict" eyebrow={<>🕵️ Grammar Detective · </>} title={`صحّح الأخطاء · ${title}`}>
         <SourceLine35 text="صحح الأخطاء:" />
         <div className="fg35-stack" style={{ marginTop: 8 }}>
           {items.map((item) => (
@@ -76,7 +76,7 @@ function Detective35({ from, to, title }: { from: number; to: number; title: str
           ))}
         </div>
         <PlatformInline35>
-          اكتب الجملة كاملة بعد التصحيح. المفتاح الظاهر هو نص المصدر، والتعليل القصير من إعداد المنصة.
+          اكتب الجملة كاملة بعد التصحيح. بعد محاولتك، اكشف الإجابة ثم اقرأ التعليل النحوي.
         </PlatformInline35>
       </Card35>
     </div>
@@ -87,7 +87,7 @@ function Aux35({ from, to }: { from: number; to: number }) {
   const items = AUXILIARY_ITEMS_35.slice(from, to);
   return (
     <div className="fg35-body">
-      <Card35 tone="plan" eyebrow={<>✍️ اختر AM / IS / ARE · §29</>} title={`أكمل الجمل · البنود ${from + 1}–${to}`}>
+      <Card35 tone="plan" eyebrow={<>✍️ اختر AM / IS / ARE · </>} title={`أكمل الجمل · البنود ${from + 1}–${to}`}>
         <SourceLine35 text="أكمل:" />
         <div className="fg35-stack" style={{ marginTop: 8 }}>
           {items.map((item) => (
@@ -119,7 +119,7 @@ function Transform35({ from, to }: { from: number; to: number }) {
   const items = TRANSFORMATION_ITEMS_35.slice(from, to);
   return (
     <div className="fg35-body">
-      <Card35 tone="mint" eyebrow={<>🧩 أكمل باستخدام GOING TO · §30</>} title="حوّل الأفعال بين القوسين">
+      <Card35 tone="mint" eyebrow={<>🧩 أكمل باستخدام GOING TO · </>} title="حوّل الأفعال بين القوسين">
         <SourceLine35 text="حوّل الأفعال بين القوسين إلى صيغة المستقبل المناسبة." />
         <div className="fg35-stack" style={{ marginTop: 8 }}>
           {items.map((item) => (
@@ -140,7 +140,7 @@ function Transform35({ from, to }: { from: number; to: number }) {
           ))}
         </div>
         <PlatformInline35>
-          يمكنك كتابة الجزء الناقص فقط أو الجملة كاملة؛ كلاهما مقبول. المفتاح المعروض هو صياغة المصدر.
+          يمكنك كتابة الجزء الناقص فقط أو الجملة كاملة؛ كلاهما مقبول. بعد محاولتك، اكشف الصيغة ثم راجع سببها.
         </PlatformInline35>
       </Card35>
     </div>
@@ -151,7 +151,7 @@ function Scenarios35({ from, to }: { from: number; to: number }) {
   const items = DECISION_PRACTICE_ITEMS_35.slice(from, to);
   return (
     <div className="fg35-body">
-      <Card35 tone="sun" eyebrow={<>🔥 WILL أم GOING TO؟ · §31</>} title={`المواقف ${from + 1}–${to}`}>
+      <Card35 tone="sun" eyebrow={<>🔥 WILL أم GOING TO؟ · </>} title={`المواقف ${from + 1}–${to}`}>
         <SourceLine35 text="اختر الصيغة الأنسب بحسب الموقف." />
         <div className="fg35-stack" style={{ marginTop: 8 }}>
           {items.map((item) => (
@@ -193,7 +193,7 @@ function ScenarioItem35({ item }: { item: (typeof DECISION_PRACTICE_ITEMS_35)[nu
       </div>
       {picked ? (
         <div className="fg35-feedback" data-ok={ok} role="status">
-          <b>{ok ? "✓ صحيح. " : `✕ الأنسب هنا: ${target}. `}</b>
+          <b>الحلول المفصلة — {ok ? "✓ صحيح. " : `✕ الأنسب هنا: ${target}. `}</b>
           <span className="fg35-en" dir="ltr">{item.answer}</span> — <Rich text={item.explanation} />
           <div className="fg35-muted" style={{ marginTop: 3 }}>
             هذا هو الاختيار النموذجي في هذا الاختبار؛ وقد تختلف الصيغة في سياق آخر بحسب ما يريد المتحدث إبرازه.
@@ -207,7 +207,7 @@ function ScenarioItem35({ item }: { item: (typeof DECISION_PRACTICE_ITEMS_35)[nu
 function BothForms35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="sky" eyebrow={<>🧠 IQ200 · §32</>} title="ثلاث جمل صحيحة، وثلاثة منظورات">
+      <Card35 tone="sky" eyebrow={<>🧠 IQ200 · </>} title="ثلاث جمل صحيحة، وثلاثة منظورات">
         <SourceGroup35
           lines={[
             "اقرأ الجملة:",
@@ -255,7 +255,7 @@ function BothForms35() {
 function Reading1_35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="mint" eyebrow={<>📖 Reading Challenge · §33</>} title="A Big Plan for the School · الجزء الأول">
+      <Card35 tone="mint" eyebrow={<>📖 Reading Challenge · </>} title="A Big Plan for the School · الجزء الأول">
         <SourceLine35 text="اقرأ النص التالي بعناية." />
         <div className="fg35-reading">
           <h3 dir="ltr">A Big Plan for the School</h3>
@@ -279,7 +279,7 @@ function Reading1_35() {
 function Reading2_35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="predict" eyebrow={<>📖 Reading Challenge · §33</>} title="A Big Plan for the School · الجزء الثاني">
+      <Card35 tone="predict" eyebrow={<>📖 Reading Challenge · </>} title="A Big Plan for the School · الجزء الثاني">
         <div className="fg35-reading">
           <p dir="ltr">Daniel looks at the weather forecast and says:</p>
           <p dir="ltr">&quot;Look! A storm is approaching. It&apos;s going to rain heavily this afternoon.&quot;</p>
@@ -318,13 +318,13 @@ function ReadingQuestion35({ n, prompt, answer }: { n: number; prompt: string; a
       />
       <div className="fg35-inputrow">
         <button type="button" className={`fg35-btn fg35-btn--ghost ${FOCUS_35}`} onClick={() => setShown((current) => !current)} aria-expanded={shown}>
-          {shown ? "إخفاء مفتاح المصدر" : "أظهر مفتاح المصدر"}
+          {shown ? "إخفاء الإجابة" : "أظهر الإجابة"}
         </button>
         <span className="fg35-muted">قارن الفكرة، لا الحروف.</span>
       </div>
       {shown ? (
         <div className="fg35-feedback" data-ok="true" role="status">
-          <b>مفتاح المصدر: </b>
+          <b>الحلول — الإجابة: </b>
           <span className="fg35-en" dir="ltr">{answer}</span>
         </div>
       ) : null}
@@ -335,14 +335,15 @@ function ReadingQuestion35({ n, prompt, answer }: { n: number; prompt: string; a
 function ReadingAnalysis35() {
   return (
     <div className="fg35-body">
-      <Card35 tone="mint" eyebrow={<>🔬 التحليل النحوي من المصدر · §33</>} title="لماذا كل صيغة؟">
+      <Card35 tone="mint" eyebrow={<>🔬 التحليل النحوي </>} title="لماذا كل صيغة؟">
+        <SourceLine35 text="التحليل النحوي" />
         <div className="fg35-stack">
           {READING_ANALYSIS_35.map((line) => (
             <SourceLine35 key={line} text={line} />
           ))}
         </div>
         <PlatformInline35>
-          هذه خمسة أسطر تحليلية واردة في المصدر. اقرأها بعد محاولة الإجابة، لا قبلها.
+          اقرأ التحليل بعد محاولة الإجابة، لا قبلها.
         </PlatformInline35>
       </Card35>
     </div>
@@ -354,7 +355,7 @@ function Comprehension35({ from, to }: { from: number; to: number }) {
   const answers = READING_ANSWERS_35.slice(from, to);
   return (
     <div className="fg35-body">
-      <Card35 tone="plan" eyebrow={<>🧠 أسئلة الفهم · §33</>} title={`الأسئلة ${from + 1}–${to}`}>
+      <Card35 tone="plan" eyebrow={<>🧠 أسئلة الفهم · </>} title={`الأسئلة ${from + 1}–${to}`}>
         <div className="fg35-stack">
           {questions.map((prompt, index) => (
             <ReadingQuestion35 key={prompt} n={from + index + 1} prompt={prompt} answer={answers[index]} />

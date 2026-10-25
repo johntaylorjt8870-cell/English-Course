@@ -1,141 +1,140 @@
-export type TestSolution36 = {
-  n: number;
-  level: 1 | 2 | 3 | 4 | 5;
-  answer: string;
-  explanation: string;
-  alternatives?: string[];
-  judgment: "most-natural" | "grammatical-repair" | "contextual" | "open-model";
-  sourceStatus: "platform-authored-teacher-addition";
-};
+import type { TestSolution36 } from "./grading36";
+
+export type { TestSolution36 };
 
 /**
- * Platform-authored teacher addition. Supplied source §23 contains a heading
- * and “عرض الحلول التفصيلية”, but no actual key. Every answer below is written
- * to honor context, overlap, and acceptable alternatives; open answers are
- * models, not unique required strings.
+ * Detailed key for the 25-question Master Test.
+ *
+ * The supplied lesson's solutions section contains only a heading and the
+ * instruction to reveal the solutions; it does not contain an actual key.
+ * Every answer below is therefore teacher-authored for this platform, with the
+ * most suitable answer, the reasoning, and any grammatical alternative that a
+ * different context would justify.
  */
 export const TEST_SOLUTIONS_36: TestSolution36[] = [
   {
-    n: 1, level: 1, answer: "A. will", judgment: "most-natural", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "In the immediate response to “I'm thirsty,” WILL is the most natural offer/decision made at the moment of speaking.",
-    alternatives: ["B. am going to is grammatical in a context where getting water was already intended, but that prior plan is not supplied here. Do not describe BE GOING TO as grammatically impossible."],
+    n: 1, level: 1, answer: "A. will", judgment: "most-natural", sourceStatus: "teacher-authored", correctOption: 0, acceptableOptions: [1],
+    explanation: "الرد المباشر على «I'm thirsty» قرار أو عرض يُقدَّم في لحظة الكلام، وهنا تظهر WILL بصورة طبيعية.",
+    alternatives: ["«I'm going to get you some water» ليست خطأً نحويًا، لكنها توحي بخطة سابقة لا يذكرها الموقف."],
   },
   {
-    n: 2, level: 1, answer: "B. are going to", judgment: "most-natural", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "The tickets have already been bought, so the museum visit is presented as a prior plan.",
-    alternatives: ["A. will is grammatical as an announcement or prediction, but BE GOING TO most directly matches the stated prior arrangement."],
+    n: 2, level: 1, answer: "B. are going to", judgment: "most-natural", sourceStatus: "teacher-authored", correctOption: 1, acceptableOptions: [0],
+    explanation: "التذاكر مشتراة مسبقًا، فالمتحدث يقدّم ترتيبًا سابقًا؛ لذلك BE GOING TO هي الأنسب للسياق.",
+    alternatives: ["«We will visit the museum» صحيحة نحويًا كإعلان أو توقع، لكنها لا تبرز الترتيب السابق بالقوة نفسها."],
   },
   {
-    n: 3, level: 1, answer: "B. is going to", judgment: "most-natural", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "The speaker points to present clouds, so BE GOING TO is the typical choice when foregrounding visible evidence.",
-    alternatives: ["A. will can still be grammatical if the speaker chooses to express a belief or prediction; the evidence does not ban WILL."],
+    n: 3, level: 1, answer: "B. is going to", judgment: "most-natural", sourceStatus: "teacher-authored", correctOption: 1, acceptableOptions: [0],
+    explanation: "المتحدث يشير إلى غيوم يراها الآن؛ إبراز الدليل الحاضر يجعل BE GOING TO الاختيار النموذجي.",
+    alternatives: ["«It will rain» تبقى صحيحة إذا أراد المتحدث التعبير عن اعتقاد أو توقع عام؛ وجود الدليل لا يمنع WILL."],
   },
   {
-    n: 4, level: 1, answer: "A. won't", judgment: "contextual", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "WILL / WON'T is especially natural for an explicit promise made now: “I promise I won't forget your birthday.”",
-    alternatives: ["B. am not going to is also grammatical and can express a firm intention or reassurance. A is the conventional promise-focused answer, but accept B when the learner explains the intention emphasis."],
+    n: 4, level: 1, answer: "A. won't", judgment: "contextual", sourceStatus: "teacher-authored", correctOption: 0, acceptableOptions: [1],
+    explanation: "«I promise» يجعل الوعد في لحظة الكلام هو الوظيفة الأساسية، وهنا تظهر WON'T بصورة طبيعية جدًا.",
+    alternatives: ["«I'm not going to forget» صحيحة أيضًا وتعبّر عن نية مؤكدة أو طمأنة؛ تُقبل إذا وُضّح التركيز على النية."],
   },
   {
-    n: 5, level: 1, answer: "A. will", judgment: "most-natural", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "“I think” frames a general belief or prediction, for which WILL is a typical choice.",
-    alternatives: ["B. is going to can be used if a context supplies a prior expectation or evidence; no such context is given in this item."],
+    n: 5, level: 1, answer: "A. will", judgment: "most-natural", sourceStatus: "teacher-authored", correctOption: 0, acceptableOptions: [1],
+    explanation: "«I think» تقدّم رأيًا أو اعتقادًا عامًا، وهي صياغة نموذجية مع WILL.",
+    alternatives: ["«I think technology is going to change education» صحيحة أيضًا؛ قد تبرز توقعًا قائمًا على مؤشرات أو أسباب."],
   },
   {
-    n: 6, level: 2, answer: "are going to build", judgment: "most-natural", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "The decision was made last week, so BE GOING TO fits a plan formed before the speaking moment.",
-    alternatives: ["“We will build…” can be grammatical in another context, but it does not foreground the stated earlier decision as directly."],
+    n: 6, level: 2, answer: "are going to build", judgment: "most-natural", sourceStatus: "teacher-authored", accepts: ["are going to build"],
+    explanation: "«We decided last week» يثبت أن القرار سابق للكلام، فتناسبه BE GOING TO مع are + going to + V1.",
+    alternatives: ["«We will build…» ممكنة في سياق آخر، لكنها لا تبرز القرار السابق بالوضوح نفسه."],
   },
   {
-    n: 7, level: 2, answer: "I'll answer / I will answer", judgment: "most-natural", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "The ringing phone is a new situation; the speaker decides to answer now, so use WILL + V1.",
+    n: 7, level: 2, answer: "will answer / 'll answer", judgment: "most-natural", sourceStatus: "teacher-authored", accepts: ["will answer", "'ll answer"],
+    explanation: "رنين الهاتف موقف جديد، والقرار يُتخذ الآن؛ لذلك WILL + V1.",
   },
   {
-    n: 8, level: 2, answer: "is going to hit", judgment: "most-natural", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "The cyclist is visibly on course to hit the barrier; BE GOING TO naturally foregrounds this present evidence.",
-    alternatives: ["WILL can express a belief about the same event, but BE GOING TO is the most context-sensitive choice here."],
+    n: 8, level: 2, answer: "is going to hit", judgment: "most-natural", sourceStatus: "teacher-authored", accepts: ["is going to hit"],
+    explanation: "الدرّاج في مسار يصطدم بالحاجز أمام عينيك؛ BE GOING TO تبرز هذا الدليل الحاضر.",
+    alternatives: ["WILL يمكن أن تصف اعتقادًا بالنتيجة نفسها، لكن going to هي الأنسب هنا."],
   },
   {
-    n: 9, level: 2, answer: "will return / 'll return", judgment: "most-natural", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "The sentence explicitly introduces a promise. WILL is a natural form for the commitment; tomorrow only locates its timing.",
-    alternatives: ["A promise can also be phrased with a firm prior intention, but WILL is the target form most directly cued by “I promise”."],
+    n: 9, level: 2, answer: "will return / 'll return", judgment: "most-natural", sourceStatus: "teacher-authored", accepts: ["will return", "'ll return"],
+    explanation: "«I promise» يقدّم وعدًا في لحظة الكلام، وWILL هي الصيغة الطبيعية للوعد؛ tomorrow تحدد الوقت فقط.",
+    alternatives: ["يمكن التعبير عن وعد بنية مؤكدة، لكن WILL هي الصيغة التي يستدعيها «I promise» مباشرة."],
   },
   {
-    n: 10, level: 2, answer: "will perform / 'll perform", judgment: "most-natural", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "“I believe” presents the statement as the speaker's prediction or belief, a typical use of WILL.",
-    alternatives: ["BE GOING TO is possible if additional context foregrounds a prior expectation or evidence."],
+    n: 10, level: 2, answer: "will perform / 'll perform", judgment: "most-natural", sourceStatus: "teacher-authored", accepts: ["will perform", "'ll perform"],
+    explanation: "«I believe» تقدّم اعتقادًا أو توقعًا؛ لذلك WILL + V1.",
+    alternatives: ["BE GOING TO ممكنة إذا أضاف السياق توقعًا سابقًا أو دليلًا حاضرًا."],
   },
   {
-    n: 11, level: 3, answer: "She will travel.", judgment: "grammatical-repair", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "Do not combine WILL and GOING TO. Keep one future construction; after WILL use the base verb travel.",
+    n: 11, level: 3, answer: "She will travel.", judgment: "grammatical-repair", sourceStatus: "teacher-authored", accepts: ["She will travel.", "She is going to travel."],
+    explanation: "لا نجمع WILL وGOING TO في تركيب واحد. نختار بناءً مستقبليًا واحدًا: will + V1 أو is going to + V1.",
     alternatives: ["She is going to travel."],
   },
   {
-    n: 12, level: 3, answer: "They are going to study tonight.", judgment: "grammatical-repair", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "After GOING TO use the base form study, not studied. The subject They correctly takes are.",
+    n: 12, level: 3, answer: "They are going to study tonight.", judgment: "grammatical-repair", sourceStatus: "teacher-authored", accepts: ["They are going to study tonight."],
+    explanation: "بعد going to يأتي الفعل الأساسي study لا studied، والفاعل They يأخذ are.",
   },
   {
-    n: 13, level: 3, answer: "Is he going to join us?", judgment: "grammatical-repair", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "Form the BE GOING TO question by placing is before he; do not use does with this construction.",
-    alternatives: ["Will he join us? is a grammatical alternative question with a different emphasis, but Is he going to join us? repairs the supplied construction directly."],
+    n: 13, level: 3, answer: "Is he going to join us?", judgment: "grammatical-repair", sourceStatus: "teacher-authored", accepts: ["Is he going to join us?", "Will he join us?"],
+    explanation: "سؤال BE GOING TO يبدأ بـ is قبل الفاعل، ولا نستخدم does مع هذا البناء.",
+    alternatives: ["Will he join us? سؤال صحيح أيضًا، لكنه يعيد صياغة التركيب المسلَّم بصيغة WILL بدل إصلاح بنائه."],
   },
   {
-    n: 14, level: 3, answer: "I won't forget.", judgment: "grammatical-repair", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "WON'T is followed directly by the base form forget; do not add to.",
-    alternatives: ["I'm not going to forget. is also grammatical if the speaker wants to emphasize intention instead."],
+    n: 14, level: 3, answer: "I won't forget.", judgment: "grammatical-repair", sourceStatus: "teacher-authored", accepts: ["I won't forget.", "I will not forget.", "I'm not going to forget.", "I am not going to forget."],
+    explanation: "بعد won't يأتي الفعل الأساسي forget مباشرة، بلا to.",
+    alternatives: ["I'm not going to forget. صحيحة أيضًا إذا أبرز المتحدث النية."],
   },
   {
-    n: 15, level: 3, answer: "Will she help?", judgment: "grammatical-repair", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "Use one question construction at a time. WILL takes the subject followed by the base verb.",
-    alternatives: ["Is she going to help? is also grammatically correct and asks more directly about intention or a plan. Without more context, either corrected question can be valid."],
+    n: 15, level: 3, answer: "Will she help?", judgment: "grammatical-repair", sourceStatus: "teacher-authored", accepts: ["Will she help?", "Is she going to help?"],
+    explanation: "نستخدم بناء سؤال واحدًا: Will + subject + V1، أو Is she going to + V1.",
+    alternatives: ["Is she going to help? صحيحة نحويًا وتسأل عن النية أو الخطة مباشرة؛ دون سياق إضافي قد تكون كلتا الصياغتين مناسبة."],
   },
   {
-    n: 16, level: 4, answer: "Both sentences are grammatical. I'll buy a new laptop. commonly presents a spontaneous decision, promise, or announcement; I'm going to buy a new laptop. commonly presents an earlier intention or plan.", judgment: "contextual", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "The two sentences alone do not establish when the decision was made. Learners should describe typical emphasis, not claim that either sentence is always wrong or that the meaning must be different in every context.",
-    alternatives: ["Accept other accurate explanations that mention overlap, context, and speaker emphasis."],
+    n: 16, level: 4, answer: "الجملتان صحيحتان. I'll buy a new laptop. تعرض عادةً قرارًا لحظيًا أو وعدًا أو إعلانًا، وI'm going to buy a new laptop. تعرض عادةً نية أو خطة سابقة.", judgment: "contextual", sourceStatus: "teacher-authored",
+    explanation: "الجملتان وحدهما لا تحدّدان وقت اتخاذ القرار؛ على المتعلم أن يصف التركيز النموذجي لا أن يزعم أن إحداهما خطأ دائمًا.",
+    alternatives: ["تُقبل أي إجابة دقيقة تذكر التداخل والسياق وما يريد المتحدث إبرازه."],
   },
   {
-    n: 17, level: 4, answer: "Going to is natural because the child appears to be falling now; the visible situation is present evidence for the prediction.", judgment: "contextual", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "The exclamation Look! directs attention to a present clue. BE GOING TO foregrounds it. This is a typical choice, not a prohibition against WILL.",
-    alternatives: ["Accept a response that notes WILL could express a belief about the same outcome."],
+    n: 17, level: 4, answer: "لأن الطفل يبدو ساقطًا الآن؛ الوضع المرئي دليل حاضر يسند التوقع، وgoing to تبرزه.", judgment: "contextual", sourceStatus: "teacher-authored",
+    explanation: "«Look!» توجّه الانتباه إلى دليل حاضر، وBE GOING TO تبرزه. هذا اختيار نموذجي لا منع لـWILL.",
+    alternatives: ["تُقبل إجابة تذكر أن WILL يمكن أن تعبّر عن اعتقاد بالنتيجة نفسها."],
   },
   {
-    n: 18, level: 4, answer: "Yes. Both sentences are grammatical.", judgment: "contextual", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "WILL naturally presents a prediction or belief. GOING TO may foreground reasons or evidence for the expectation. The context does not require a large difference every time.",
-    alternatives: ["Full credit for any answer that accepts both and describes a possible, non-absolute difference in emphasis."],
+    n: 18, level: 4, answer: "نعم، الجملتان صحيحتان.", judgment: "contextual", sourceStatus: "teacher-authored",
+    explanation: "WILL تقدّم توقعًا أو اعتقادًا، وقد تبرز going to أسبابًا أو دليلًا للتوقع؛ والسياق ليس مضطرًا إلى فرق كبير في كل مرة.",
+    alternatives: ["درجة كاملة لأي إجابة تقبل الجملتين وتصف فرقًا محتملًا غير مطلق في التركيز."],
   },
   {
-    n: 19, level: 4, answer: "WILL is natural in promises because the speaker makes a commitment at the moment of speaking.", judgment: "contextual", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "WILL / WON'T often performs the promise or commitment itself. This is a natural use, not a rule that makes every GOING TO promise ungrammatical.",
-    alternatives: ["Accept mention of a present commitment, assurance, or the performative role of the promise."],
+    n: 19, level: 4, answer: "لأن WILL تناسب الوعد حين يقدّم المتحدث التزامًا في لحظة الكلام.", judgment: "contextual", sourceStatus: "teacher-authored",
+    explanation: "WILL / WON'T كثيرًا ما تصنع الوعد نفسه؛ وهذا استخدام طبيعي لا قاعدة تجعل كل وعد بـgoing to خطأ.",
+    alternatives: ["تُقبل الإشارة إلى الالتزام الحاضر أو الطمأنة أو دور الوعد نفسه."],
   },
   {
-    n: 20, level: 4, answer: "No. Tomorrow identifies when the event is expected; it does not by itself reveal whether the speaker made a prior plan, is deciding now, promising, or making a prediction.", judgment: "contextual", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "Both I'll visit my aunt tomorrow and I'm going to visit my aunt tomorrow are grammatical. The surrounding intention and emphasis guide the choice.",
-    alternatives: ["Accept examples using another listed time phrase if the learner makes the same distinction."],
+    n: 20, level: 4, answer: "لا. tomorrow تحدد متى يُتوقع الحدث، لكنها لا تكشف هل الخطاب خطة سابقة أم قرار لحظي أم وعد أم توقع.", judgment: "contextual", sourceStatus: "teacher-authored",
+    explanation: "I'll visit my aunt tomorrow وI'm going to visit my aunt tomorrow صحيحتان؛ النية والسياق هما ما يوجّه الاختيار.",
+    alternatives: ["تُقبل أمثلة بتعبير زمني آخر إذا أظهر المتعلم الفرق نفسه."],
   },
   {
-    n: 21, level: 5, answer: "I'll help you. / I will help you.", judgment: "open-model", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "A suitable sentence uses WILL for the decision to help made now. Any grammatical sentence that clearly responds to the friend's need is acceptable.",
-    alternatives: ["Example: My friend needs help, so I'll help him now. Do not require this exact wording."],
+    n: 21, level: 5, answer: "I'll help you. / I will help you.", judgment: "open-model", sourceStatus: "teacher-authored",
+    explanation: "الجملة المناسبة تستخدم WILL لقرار المساعدة المتخذ الآن. تُقبل أي جملة صحيحة تستجيب حاجة الصديق مباشرة.",
+    alternatives: ["My friend needs help, so I'll help him now. — لا تُشترط هذه الصياغة حرفيًا."],
   },
   {
-    n: 22, level: 5, answer: "I'm going to start a design course next month.", judgment: "open-model", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "The decision was made a week earlier, so BE GOING TO is a natural way to express the prior plan. The time phrase is not the reason for the choice.",
-    alternatives: ["Accept I'm going to begin… or another accurate V1 construction that preserves the decided-earlier meaning."],
+    n: 22, level: 5, answer: "I'm going to start a design course next month.", judgment: "open-model", sourceStatus: "teacher-authored",
+    explanation: "القرار اتُّخذ منذ أسبوع، فـBE GOING TO تصف الخطة السابقة. التعبير الزمني ليس سبب الاختيار.",
+    alternatives: ["تُقبل I'm going to begin… أو أي صياغة صحيحة تحفظ معنى القرار السابق."],
   },
   {
-    n: 23, level: 5, answer: "It's going to rain.", judgment: "open-model", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "Dark clouds and strong wind are present clues; BE GOING TO naturally foregrounds the evidence.",
-    alternatives: ["Accept a complete equivalent sentence such as Look at the clouds; it's going to rain. WILL can be acceptable if the learner explicitly frames it as a belief, not as the only required form."],
+    n: 23, level: 5, answer: "It's going to rain.", judgment: "open-model", sourceStatus: "teacher-authored",
+    explanation: "الغيوم السوداء والرياح القوية دليل حاضر، وBE GOING TO تبرزه بصورة طبيعية.",
+    alternatives: ["تُقبل جملة مكافئة مثل Look at the clouds; it's going to rain. كما تُقبل WILL إذا صرّح المتعلم أنها اعتقاد لا الصيغة الوحيدة."],
   },
   {
-    n: 24, level: 5, answer: "I promise I won't forget to bring your book.", judgment: "open-model", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "The response must be a promise not to forget to bring the book. WON'T is a natural negative promise.",
-    alternatives: ["Accept I promise I will not forget… and other accurate negative commitments. Accept I'm not going to forget… when it is clearly a sincere promise/intention; do not penalize harmless contraction choices."],
+    n: 24, level: 5, answer: "I promise I won't forget to bring your book.", judgment: "open-model", sourceStatus: "teacher-authored",
+    explanation: "المطلوب وعد بعدم النسيان، وWON'T صيغة طبيعية للوعد المنفي.",
+    alternatives: ["تُقبل I promise I will not forget… وI'm not going to forget… إذا كانت واضحة كوعد أو نية صادقة."],
   },
   {
-    n: 25, level: 5, answer: "I believe robots will become more widespread in the future.", judgment: "open-model", sourceStatus: "platform-authored-teacher-addition",
-    explanation: "The task asks for a belief about the future; WILL is a typical form for a general prediction.",
-    alternatives: ["Accept I think robots will be more common… and other clear, grammatical belief predictions. GOING TO can be valid if the learner supplies an evidence-based or prior-expectation context."],
+    n: 25, level: 5, answer: "I believe robots will become more widespread in the future.", judgment: "open-model", sourceStatus: "teacher-authored",
+    explanation: "المطلوب اعتقاد عن المستقبل، وWILL صيغة نموذجية للتوقع العام.",
+    alternatives: ["تُقبل I think robots will be more common… وأي توقع اعتقادي واضح. وBE GOING TO ممكنة إذا أضاف المتعلم سياق توقع سابق أو دليلًا."],
   },
 ];
+
+export const TEST_SOLUTION_COUNT_36 = TEST_SOLUTIONS_36.length;

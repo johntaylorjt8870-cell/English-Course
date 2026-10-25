@@ -1,9 +1,10 @@
-// Lesson 36 — source coverage, area separation, interactions, direction, contrast tokens, and route audit.
+// Lesson 36 — content, coverage, interaction, gating, direction and accessibility audit.
 // Run: npm run audit:lesson36
 import { createRequire } from "node:module";
-import { existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { findEditorialSourceLabels } from "./lib/student-copy-audit.mjs";
 
 const require = createRequire(import.meta.url);
 const esbuild = require("esbuild");
@@ -28,6 +29,7 @@ for (const key of [
   "SVGElement", "Text", "Comment", "DocumentFragment",
 ]) if (win[key] !== undefined) Object.defineProperty(globalThis, key, { value: win[key], configurable: true });
 win.scrollTo = () => {};
+win.HTMLElement.prototype.scrollTo = () => {};
 if (!win.Element.prototype.scrollIntoView) win.Element.prototype.scrollIntoView = () => {};
 win.localStorage.setItem("englishwithsomer-site-unlocked", "unlocked");
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
@@ -43,16 +45,17 @@ import App from ${JSON.stringify(join(root, "src/App.tsx"))};
 import Lesson36 from ${JSON.stringify(join(root, "src/lessons/lesson36/Lesson36.tsx"))};
 import StepView36 from ${JSON.stringify(join(root, "src/lessons/lesson36/Steps36.tsx"))};
 import TestArea36 from ${JSON.stringify(join(root, "src/lessons/lesson36/TestArea36.tsx"))};
-import TeacherArea36 from ${JSON.stringify(join(root, "src/lessons/lesson36/TeacherArea36.tsx"))};
 import SolutionsArea36 from ${JSON.stringify(join(root, "src/lessons/lesson36/SolutionsArea36.tsx"))};
+import TeacherArea36 from ${JSON.stringify(join(root, "src/lessons/lesson36/TeacherArea36.tsx"))};
 import TeacherGuide36 from ${JSON.stringify(join(root, "src/lessons/lesson36/TeacherGuide36.tsx"))};
 import * as LEDGER from ${JSON.stringify(join(root, "src/lessons/lesson36/ledger36.ts"))};
-import * as DATA from ${JSON.stringify(join(root, "src/lessons/lesson36/data.ts"))};
-import * as PRACTICE from ${JSON.stringify(join(root, "src/lessons/lesson36/practiceData36.ts"))};
+import * as DECK from ${JSON.stringify(join(root, "src/lessons/lesson36/deck36.ts"))};
+import * as CONTENT from ${JSON.stringify(join(root, "src/lessons/lesson36/content36.ts"))};
 import * as TEST from ${JSON.stringify(join(root, "src/lessons/lesson36/testData36.ts"))};
 import * as SOLUTIONS from ${JSON.stringify(join(root, "src/lessons/lesson36/solutionsData36.ts"))};
+import * as GRADING from ${JSON.stringify(join(root, "src/lessons/lesson36/grading36.ts"))};
 function mount(node) { const el = document.createElement("div"); document.body.appendChild(el); const root = createRoot(el); act(() => root.render(node)); return { el, root: { unmount() { act(() => root.unmount()); } } }; }
-export { React, act, createRoot, renderToString, App, Lesson36, StepView36, TestArea36, TeacherArea36, SolutionsArea36, TeacherGuide36, LEDGER, DATA, PRACTICE, TEST, SOLUTIONS, mount };
+export { React, act, createRoot, renderToString, App, Lesson36, StepView36, TestArea36, SolutionsArea36, TeacherArea36, TeacherGuide36, LEDGER, DECK, CONTENT, TEST, SOLUTIONS, GRADING, mount };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -66,403 +69,660 @@ export { React, act, createRoot, renderToString, App, Lesson36, StepView36, Test
   chunkNames: "chunks/[name]-[hash]",
   jsx: "automatic",
   packages: "external",
-  // Lesson 44 bundles its own local font subsets; jsdom never renders them.
   loader: { ".woff2": "empty" },
   logLevel: "silent",
 });
 const M = await import(pathToFileURL(outFile).href);
 
-const { SOURCE_SECTIONS_36, NUMBERED_SECTIONS_36, TABLE_HEADERS_36, TABLE_ROWS_36, sourceSection36 } = M.LEDGER;
-const { SLIDES_36, STEP_COUNT_36, NUMBERED_STEP_COUNT_36, CHAPTERS_36 } = M.DATA;
-const { TEST_LEVELS_36, TEST_36, TEST_COUNT_36, TEST_LEVEL_COUNT_36, TEST_INTRO_36 } = M.TEST;
+const { SOURCE_SECTIONS_36, NUMBERED_SECTIONS_36, TABLE_ROWS_36 } = M.LEDGER;
+const { SLIDES_36, STAGES_36, STEP_COUNT_36, deckCoverage36, revealCoverage36 } = M.DECK;
+const { refsOfSlide, textOf } = M.CONTENT;
+const { TEST_LEVELS_36, TEST_36, TEST_COUNT_36, TEST_LEVEL_COUNT_36 } = M.TEST;
 const { TEST_SOLUTIONS_36 } = M.SOLUTIONS;
-const { DETECTIVE_ITEMS_36, EXERCISE18_ITEMS_36, DIALOGUE19_ITEMS_36, READING_QUESTIONS_36, READING_ANSWERS_36, READING_ANALYSIS_36, WRITING_CRITERIA_36, WRITING_MODEL_36 } = M.PRACTICE;
+
 const tick = (ms = 25) => new Promise((resolve) => setTimeout(resolve, ms));
 const click = (element) => M.act(() => element?.dispatchEvent(new win.MouseEvent("click", { bubbles: true, cancelable: true })));
 const setNative = (element, value) => {
   if (!element) throw new Error("Expected input is missing.");
   M.act(() => {
-    const proto = element.tagName === "TEXTAREA" ? win.HTMLTextAreaElement.prototype : element.tagName === "SELECT" ? win.HTMLSelectElement.prototype : win.HTMLInputElement.prototype;
+    const proto = element.tagName === "TEXTAREA" ? win.HTMLTextAreaElement.prototype : win.HTMLInputElement.prototype;
     Object.getOwnPropertyDescriptor(proto, "value").set.call(element, value);
     element.dispatchEvent(new win.Event("input", { bubbles: true }));
     element.dispatchEvent(new win.Event("change", { bubbles: true }));
   });
 };
 const normalize = (value) => String(value ?? "").replace(/\s+/g, " ").trim();
-const textOf = (html) => {
+const textOfHtml = (html) => {
   const element = document.createElement("div");
   element.innerHTML = html;
   return normalize(element.textContent);
 };
-const mountStep = (id) => {
-  const slide = SLIDES_36.find((candidate) => candidate.id === id);
-  if (!slide) throw new Error(`No source step ${id}`);
-  return M.mount(M.React.createElement(M.StepView36, { slide, onGoTest() {}, onGoSolutions() {} }));
-};
-const source = (id) => {
-  const section = sourceSection36(id);
-  if (!section) throw new Error(`Missing source section ${id}`);
-  return section;
+const section = (id) => {
+  const found = SOURCE_SECTIONS_36.find((candidate) => candidate.id === id);
+  if (!found) throw new Error(`Missing section ${id}`);
+  return found;
 };
 const findButton = (scope, text) => [...scope.querySelectorAll("button")].find((button) => normalize(button.textContent).includes(text));
-const renderStep = (slide) => M.renderToString(M.React.createElement(M.StepView36, { slide, onGoTest() {}, onGoSolutions() {} }));
+const mountSlide = (id) => {
+  const slideIndex = SLIDES_36.findIndex((candidate) => candidate.id === id);
+  const slide = SLIDES_36[slideIndex];
+  if (!slide) throw new Error(`Missing slide ${id}`);
+  return M.mount(M.React.createElement(M.StepView36, { slide, index: slideIndex, onGoTest() {}, onGoSolutions() {} }));
+};
 
-// 1) Numbered source sections, introduction, source order, and navigation mapping.
-ok(SOURCE_SECTIONS_36.length === 27, `ledger contains the opening plus 26 numbered sections (got ${SOURCE_SECTIONS_36.length})`);
-ok(NUMBERED_SECTIONS_36.length === 26 && NUMBERED_SECTIONS_36.every((section, index) => section.num === index + 1 && section.id === `s${String(index + 1).padStart(2, "0")}`), "all 26 numbered source sections exist exactly once in original order");
-ok(STEP_COUNT_36 === 27 && NUMBERED_STEP_COUNT_36 === 26 && SLIDES_36[0].id === "cover", "native Student Area has opening + 26 numbered source steps");
-ok(SLIDES_36.map((slide) => slide.sourceId).join("|") === SOURCE_SECTIONS_36.map((section) => section.id).join("|"), "each source section maps one-to-one to a native step without reordering");
-ok(CHAPTERS_36.length === 8 && CHAPTERS_36.flatMap((chapter) => chapter.stepIds).join("|") === SOURCE_SECTIONS_36.map((section) => section.id).join("|"), "chapter navigation groups every source step once in order");
-ok(SOURCE_SECTIONS_36.every((section, index) => section.order === index && section.title.length > 0 && section.units.length > 0), "every source section has an ordered title and non-empty content units");
+// ============================================================
+// 1) Source ledger integrity
+// ============================================================
+ok(SOURCE_SECTIONS_36.length === 27, `ledger holds the opening plus 26 numbered sections (got ${SOURCE_SECTIONS_36.length})`);
+ok(NUMBERED_SECTIONS_36.length === 26 && NUMBERED_SECTIONS_36.every((entry, index) => entry.num === index + 1 && entry.id === `s${String(index + 1).padStart(2, "0")}`), "all 26 numbered source sections are present once, in order");
+ok(SOURCE_SECTIONS_36.every((entry, index) => entry.order === index && entry.title.length > 0 && entry.units.length > 0), "every section has a title, content and its source order");
+ok(SOURCE_SECTIONS_36.reduce((total, entry) => total + entry.units.length, 0) > 450, "the verbatim ledger keeps the complete lesson body (450+ units)");
+ok(section("s01").units.slice(1).every((line, index) => line.startsWith("①②③④⑤⑥⑦⑧⑨⑩"[index])), "all ten objectives keep their original markers");
+ok(section("s17").units.length === 11 && section("s17").revealUnits.length === 22, "Grammar Detective keeps ten errors and its full 22-line key");
+ok(section("s18").revealUnits.length === 9 && section("s19").revealUnits.length === 11 && section("s21").revealUnits.length === 17, "guided practice, dialogue and reading keep their complete supplied keys");
+ok(TABLE_ROWS_36.length === 8 && section("s03").tableRows.length === 8, "the comparison map keeps exactly eight repaired rows");
+ok(section("s21").units.filter((line) => line.includes("?")).length >= 8, "reading passage and its seven questions are intact");
+ok(section("s24").units[1].includes("12 إلى 15") && section("s24").units.slice(3, 11).length === 8, "writing task keeps 12–15 sentences and eight requirements");
+ok(section("s26").units.some((line) => line.includes("الدرس 37")) && section("s26").units.some((line) => line.includes("At 8:00 tomorrow, I will be studying.")), "curriculum map keeps the Lesson 37 preview and its example");
 
-// 2) Exact source excerpts and the repaired §3 table contract.
-const expectedOpening = [
+// ============================================================
+// 2) Deck coverage — every unit exactly once, in source order
+// ============================================================
+const coverage = deckCoverage36();
+const exceptions = { section: "s22", from: 2 };
+for (const row of coverage) {
+  const expectedMissing = row.section === exceptions.section ? row.missing.every((index) => index >= exceptions.from) : row.missing.length === 0;
+  ok(expectedMissing, `${row.section}: every source line has a rendering location (missing: ${row.missing.join(",") || "none"})`);
+  ok(row.duplicates.length === 0, `${row.section}: no source line is rendered twice by accident (${row.duplicates.join(",") || "none"})`);
+  ok(!row.outOfOrder, `${row.section}: rendered source lines keep their original order`);
+  if (row.section !== exceptions.section) ok(row.covered.length === row.expected, `${row.section}: ${row.covered.length}/${row.expected} source lines covered`);
+}
+ok(STEP_COUNT_36 === 36, `the student deck has 36 slides, including the six intentional section splits (got ${STEP_COUNT_36})`);
+ok(STAGES_36.length === 10 && STAGES_36.flatMap((stage) => stage.stepIds).length === 36, "ten navigation stages cover the 36 slides exactly once");
+ok(SLIDES_36.every((slide, index) => index === 0 || SLIDES_36[index - 1].id !== slide.id), "slide ids are unique");
+for (const row of revealCoverage36()) {
+  ok(row.missing.length === 0, `${row.section}: all ${row.expected} answer/analysis lines are exposed after an attempt (missing: ${row.missing.join(",") || "none"})`);
+}
+ok(SLIDES_36.filter((slide) => ["s02a", "s02b", "s04a", "s04b", "s05a", "s05b", "s06a", "s06b", "s09a", "s09b", "s11a", "s11b", "s14a", "s14b", "s21a", "s21b", "s25a", "s25b"].includes(slide.id)).length === 18, "dense sections were split into focused slides instead of being shortened");
+
+// ============================================================
+// 3) Verbatim spot checks
+// ============================================================
+const allInitialHtml = SLIDES_36.map((slide) => {
+  const index = SLIDES_36.indexOf(slide);
+  return M.renderToString(M.React.createElement(M.StepView36, { slide, index, onGoTest() {}, onGoSolutions() {} }));
+});
+const initialText = normalize(allInitialHtml.map(textOfHtml).join(" "));
+const must = [
   "Mastering Future Decisions & Predictions",
   "إتقان التعبير عن المستقبل — المقارنة الشاملة والتطبيق العملي 🚀",
-  "المستوى: تأسيسي متقدم — IQ200",
-  "في الدرس 34 تعلمنا Future Simple باستخدام WILL، وفي الدرس 35 تعلمنا BE GOING TO.",
-];
-ok(expectedOpening.every((line, index) => source("cover").units[index] === line), "cover preserves title/subtitle/level and the Lesson 34–35 bridge verbatim");
-ok(source("s01").units.slice(1).length === 10 && source("s01").units.slice(1).every((line, index) => line.startsWith(`${["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩"][index]}`)), "§1 contains all ten individually numbered objectives");
-ok(source("s02").units.includes("I will buy a new computer.") && source("s02").units.includes("I'm going to buy a new computer.") && source("s02").units.includes("Then I'll buy a new computer.") && source("s02").units.includes("I'm going to buy a new computer next month."), "§2 preserves both computer forms, both contexts, and both context sentences");
-ok(TABLE_HEADERS_36.join("|") === "الموقف|الصيغة النموذجية" && TABLE_ROWS_36.length === 8 && source("s03").tableRows.length === 8, "§3 repaired comparison table has the exact two headers and eight source rows");
-ok(TABLE_ROWS_36.every((row, index) => row[0] === ["قرار اتُّخذ في لحظة الكلام", "خطة أو نية موجودة مسبقًا", "وعد", "عرض مساعدة لحظي", "توقع مبني على رأي أو اعتقاد", "توقع نبرز فيه دليلًا حاضرًا", "سؤال عن استعداد شخص للقيام بشيء", "سؤال عن خطة أو نية شخص"][index]), "§3 table retains every original category in order");
-ok(TABLE_ROWS_36.map((row) => row[1]).join("|") === "WILL|BE GOING TO|WILL|WILL|WILL|BE GOING TO|WILL|BE GOING TO", "§3 table retains the exact intended forms");
-ok(["tomorrow", "tonight", "next week", "next month", "next year", "soon", "later"].every((term) => source("s10").units.some((line) => line.includes(term))), "§10 preserves all seven supplied time expressions");
-ok(source("s11").units.includes("Subject + will + V1") && source("s11").units.includes("Subject + am/is/are + going to + V1") && source("s11").units.includes("Will + Subject + V1?"), "§11 exact positive and question formulas remain source units");
-
-const expectedReading = [
-  "The Robotics Competition",
+  "I will buy a new computer.",
+  "Then I'll buy a new computer.",
+  "I'm going to buy a new computer next month.",
+  "I'll get a flashlight.",
+  "We've decided to create a school newspaper. We're going to publish the first issue next month.",
+  "I'll cook something for you.",
+  "I'm going to cook a special dinner for my family.",
+  "Watch out! The glass is going to fall!",
+  "Look at those clouds! It's going to rain.",
+  "I promise I'll return your calculator tomorrow.",
+  "Will you help me?",
+  "Are you going to help me?",
+  "I'll visit my aunt tomorrow.",
+  "I'm going to visit my aunt tomorrow.",
+  "Subject + will + V1",
+  "Subject + am/is/are + going to + V1",
+  "What will you do?",
+  "What are you going to do?",
+  "I think the exam will be difficult.",
+  "Do you think we will finish the presentation on time?",
+  "We already prepared a backup plan. We're going to use my laptop.",
+  "I think she will enjoy the course.",
+  "I'll travel with you!",
+  "She will going to study tomorrow.",
+  "① A: I can't open this jar.",
   "Maya and Daniel are preparing for a national robotics competition.",
-  "They decided two months ago to build a robot that can collect plastic waste from public parks.",
-  "Maya says:",
-  "\"We're going to finish the main structure this weekend. Then we're going to test the sensors.\"",
-  "Daniel looks at the robot.",
-  "\"Oh no! One of the wheels is loose.\"",
-  "Maya replies:",
-  "\"I'll fix it.\"",
-  "Daniel examines the battery.",
-  "\"Look at the battery indicator! It's almost empty. The robot is going to stop working.\"",
-  "Maya says:",
-  "\"You're right. I'll connect the charger.\"",
-  "Their teacher enters the laboratory.",
-  "\"Do you think your robot will win the competition?\"",
-  "Daniel smiles.",
-  "\"I think it will perform very well, but we still need more practice.\"",
-  "The teacher says:",
-  "\"I'm sure you'll learn a lot from this experience.\"",
+  "① What are Maya and Daniel preparing for?",
+  "The Robotics Competition",
+  "الاختبار مكوّن من 25 سؤالًا موزعة على خمسة مستويات.",
+  "① ثلاث جمل باستخدام be going to للتعبير عن خطط مسبقة.",
+  "Next month, I'm going to start a new learning project.",
+  "القاعدة الذهبية الكبرى",
+  "الدرس 37: Future Continuous — المستقبل المستمر",
+  "At 8:00 tomorrow, I will be studying.",
 ];
-ok(M.PRACTICE.READING_PASSAGE_36.slice(1).join("\n") === expectedReading.join("\n"), "§21 complete Robotics Competition passage and punctuation match the supplied source exactly");
-ok(READING_QUESTIONS_36.length === 7 && READING_ANSWERS_36.length === 7 && READING_ANALYSIS_36.length === 8, "§21 has seven comprehension questions, seven answers, and eight grammar-analysis items");
-ok(DETECTIVE_ITEMS_36.length === 10 && DETECTIVE_ITEMS_36.every((item, index) => item.n === index + 1 && item.prompt === source("s17").units[index + 1] && item.answers.length > 0), "§17 all ten original errors have a prompt and at least one accepted correction");
-ok(EXERCISE18_ITEMS_36.length === 8 && EXERCISE18_ITEMS_36.every((item, index) => item.n === index + 1 && item.answer && item.explanation), "§18 all eight guided questions have a source answer and explanation");
-ok(DIALOGUE19_ITEMS_36.length === 4 && DIALOGUE19_ITEMS_36.every((item, index) => item.n === index + 1 && item.answer && item.explanation), "§19 all four dialogue blanks have answers and explanations");
-ok(WRITING_CRITERIA_36.length === 8 && WRITING_MODEL_36.length === 4 && source("s24").units[1].includes("12 إلى 15"), "§24 preserves the 12–15 sentence task, eight criteria, and four model lines");
-ok(source("s25").units.includes("Subject + will + V1") && source("s25").units.includes("Subject + am/is/are + going to + V1") && source("s25").units.at(-1).includes("الفرق بين حفظ القاعدة"), "§25 golden summary contains both formulas and its concluding learning principle");
-ok(source("s26").units.some((line) => line.includes("Present Perfect Continuous")) && source("s26").units.some((line) => line.includes("Past Perfect Continuous")) && source("s26").units.includes("⑨ Future Simple — WILL: مكتمل.") && source("s26").units.includes("الدرس 37: Future Continuous — المستقبل المستمر") && source("s26").units.includes("At 8:00 tomorrow, I will be studying.") && source("s26").units.at(-1).includes("المستوى التالي"), "§26 preserves the curriculum systems, completion status, exact Lesson 37 preview, and transition");
+for (const line of must) ok(initialText.includes(normalize(line)), `rendered deck contains the supplied line: ${line.slice(0, 60)}`);
+ok(TABLE_ROWS_36.every(([situation, form]) => initialText.includes(normalize(situation)) && initialText.includes(form)), "all eight comparison rows render in the map");
+ok(SLIDES_36.every((slide, index) => allInitialHtml[index].includes(`data-step-id="${slide.id}"`)), "every slide renders a traceable step id");
+ok(allInitialHtml.every((html) => html.includes("الخطوة")), "every slide shows its position inside the lesson");
 
-// 3) Exactly 25 source test items; the question-type/level boundaries are unchanged.
-ok(TEST_COUNT_36 === 25 && TEST_36.length === 25, `formal Test Area contains exactly 25 questions (got ${TEST_COUNT_36})`);
-ok(TEST_LEVEL_COUNT_36 === 5 && TEST_LEVELS_36.length === 5 && TEST_LEVELS_36.every((level) => level.questions.length === 5), "formal test has five original levels with five questions apiece");
-ok(TEST_LEVELS_36.map((level) => `${level.questions[0].n}-${level.questions.at(-1).n}`).join("|") === "1-5|6-10|11-15|16-20|21-25", "formal test keeps exact source level boundaries");
-ok(TEST_LEVELS_36[0].questions.every((question) => question.type === "multiple-choice") && TEST_LEVELS_36[1].questions.every((question) => question.type === "fill") && TEST_LEVELS_36[2].questions.every((question) => question.type === "repair") && TEST_LEVELS_36[3].questions.every((question) => question.type === "explain") && TEST_LEVELS_36[4].questions.every((question) => question.type === "open"), "formal test preserves MC, fill, repair, contextual explanation, and open-ended types");
-ok(TEST_LEVELS_36[0].questions.every((question) => question.options?.length === 2) && TEST_LEVELS_36[4].questions.every((question) => !question.options), "Level 1 retains its choices; Level 5 remains open-response, not multiple choice");
-ok(TEST_INTRO_36.length === 2 && TEST_36.every((question, index) => question.n === index + 1 && question.promptLines.length > 0), "formal test instruction/source prompt mapping is complete and ordered");
-ok(TEST_SOLUTIONS_36.length === 25 && TEST_SOLUTIONS_36.every((solution, index) => solution.n === index + 1 && solution.sourceStatus === "platform-authored-teacher-addition"), "25 detailed solutions exist and are explicitly platform-authored, not source answers");
-ok(TEST_SOLUTIONS_36.filter((solution) => solution.n >= 21).every((solution) => solution.judgment === "open-model" && solution.alternatives?.length), "all five open-ended test solutions provide models and acceptable alternatives");
-ok(TEST_SOLUTIONS_36.filter((solution) => [1, 2, 3, 4, 5, 8, 9, 10, 13, 14, 15, 16, 17, 18, 19, 20].includes(solution.n)).every((solution) => solution.explanation.length > 30), "context-sensitive solutions include substantive reasoning and note overlap/alternatives");
-
-// 4) Every source step renders; student/test/solutions/teacher remain distinct.
-const initialStepHtml = new Map();
-for (const slide of SLIDES_36) {
-  const html = renderStep(slide);
-  initialStepHtml.set(slide.id, html);
-  ok(html.includes(`data-step-id="${slide.id}"`) && html.includes(`data-source-id="${slide.id}"`), `${slide.id}: renders as a native, traceable step`);
-  if (slide.id !== "s22") ok(html.includes(`data-source-section="${slide.id}"`), `${slide.id}: its source section is identifiable in Student Area`);
-}
-const testPreHtml = M.renderToString(M.React.createElement(M.TestArea36, { onSubmitted() {}, onGoSolutions() {} }));
-ok((testPreHtml.match(/data-test-question="\d+"/g) || []).length === 25, "pre-submit Test Area renders 25, and only 25, numbered question panels");
-ok((testPreHtml.match(/data-source-unit="s22-unit-\d+"/g) || []).length === source("s22").units.length, "every source unit in §22 is traced to the Test Area output");
-ok(!testPreHtml.includes("data-solution=") && !testPreHtml.includes("data-test-feedback="), "before submit there is no solution panel or correctness feedback in the Test Area");
-ok(!readFileSync(join(root, "src/lessons/lesson36/TestArea36.tsx"), "utf8").includes("solutionsData36"), "formal test component does not import the formal answer key");
-ok(readFileSync(join(root, "src/lessons/lesson36/Lesson36.tsx"), "utf8").includes("testSubmitted || teacherUnlocked") && readFileSync(join(root, "src/lessons/lesson36/Lesson36.tsx"), "utf8").includes("lazy(() => import(\"./SolutionsArea36\"))"), "Solutions Area is dynamically loaded only after submission or teacher unlock");
-ok(readFileSync(join(root, "src/lessons/lesson36/TeacherArea36.tsx"), "utf8").includes("lazy(() => import(\"./TeacherGuide36\"))"), "teacher answer/coverage chunk is deferred until teacher unlock");
-
-// §3 is a real accessible table; English forms are isolated LTR.
-const tableHtml = initialStepHtml.get("s03");
-ok((tableHtml.match(/<tr/g) || []).length === 9 && (tableHtml.match(/scope="col"/g) || []).length === 2 && (tableHtml.match(/scope="row"/g) || []).length === 8, "§3 renders an accessible table with two column headers and eight row headers");
-ok(tableHtml.includes("dir=\"ltr\"") && tableHtml.includes("WILL") && tableHtml.includes("BE GOING TO"), "§3 table isolates the English forms LTR");
-const formulasHtml = initialStepHtml.get("s11");
-ok(formulasHtml.includes("Subject + will + V1") && formulasHtml.includes("Subject + am/is/are + going to + V1") && formulasHtml.includes("dir=\"ltr\""), "§11 formulas render in English LTR order");
-
-// 5) Try the context-first labs; answer lines appear only after each activity attempt.
-const contextIds = ["s02", "s04", "s05", "s07", "s14", "s15", "s16"];
-const postInteractionTexts = new Map();
-for (const id of contextIds) {
-  const { el, root: reactRoot } = mountStep(id);
+// ============================================================
+// 4) Interactions
+// ============================================================
+const postHtml = [];
+{
+  const { el, root: reactRoot } = mountSlide("s05a");
   await tick();
-  const activityCard = [...el.querySelectorAll("section")].find((node) => node.textContent.includes("نشاط تفاعلي من إعداد المنصة"));
-  ok(!!activityCard, `${id}: context activity is rendered and labeled as platform interaction`);
-  const fieldsets = [...activityCard.querySelectorAll("fieldset")];
-  for (const fieldset of fieldsets) {
-    const radio = fieldset.querySelector('input[type="radio"]');
-    click(radio);
-    await tick(5);
-    click(findButton(fieldset, "تحقق من اختياري"));
-    await tick(5);
+  const cards = [...el.querySelectorAll("[data-lab-item]")];
+  ok(cards.length === 2, "decision lab renders both cook situations");
+  click([...cards[0].querySelectorAll('input[type="radio"]')][0]);
+  await tick(5);
+  click(findButton(cards[0], "تحقق من وصفي"));
+  await tick(5);
+  ok(normalize(cards[0].textContent).includes("قرار لحظي"), "decision lab explains the spontaneous cook decision after the attempt");
+  click([...cards[1].querySelectorAll('input[type="radio"]')][1]);
+  await tick(5);
+  click(findButton(cards[1], "تحقق من وصفي"));
+  await tick(5);
+  ok(normalize(cards[1].textContent).includes("خطة مسبقة"), "decision lab explains the prior cook plan after the attempt");
+  postHtml.push(el.innerHTML);
+  reactRoot.unmount();
+  el.remove();
+}
+{
+  const { el, root: reactRoot } = mountSlide("s16");
+  await tick();
+  const cards = [...el.querySelectorAll("[data-lab-item]")];
+  ok(cards.length === 4, "travel laboratory renders four situations");
+  const buttons = [...cards[0].querySelectorAll("button")];
+  ok(buttons.length >= 1 && buttons[0].disabled, "a context item cannot be checked before choosing a form");
+  click([...cards[0].querySelectorAll('input[type="radio"]')][0]);
+  await tick(5);
+  ok(findButton(cards[0], "تحقق من اختياري").disabled, "the reason field is required before checking");
+  setNative(cards[0].querySelector("textarea"), "The decision is made at the moment of speaking.");
+  await tick(5);
+  click(findButton(cards[0], "تحقق من اختياري"));
+  await tick(5);
+  ok(normalize(cards[0].textContent).includes("اختيار مناسب للسياق"), "context laboratory confirms a suitable choice and shows the source explanation");
+  postHtml.push(el.innerHTML);
+  reactRoot.unmount();
+  el.remove();
+}
+{
+  const { el, root: reactRoot } = mountSlide("s07");
+  await tick();
+  const check = el.querySelector("[data-lab-item]")?.closest("section") ?? el;
+  click(el.querySelector('input[type="radio"][value="no"]'));
+  await tick(5);
+  click(findButton(check, "تحقق من فهمي"));
+  await tick(5);
+  ok(normalize(el.textContent).includes("الدليل يرجّح، ولا يمنع"), "prediction lens states that present evidence does not ban WILL");
+  ok(el.querySelectorAll('[aria-pressed]').length >= 2, "prediction lens exposes two comparable lenses");
+  postHtml.push(el.innerHTML);
+  reactRoot.unmount();
+  el.remove();
+}
+{
+  const { el, root: reactRoot } = mountSlide("s17");
+  await tick();
+  const items = [...el.querySelectorAll("[data-lab-item]")];
+  ok(items.length === 10, "Grammar Detective renders all ten sentences");
+  ok(!normalize(el.textContent).includes("She will study tomorrow."), "the detective key is hidden before an attempt");
+  for (const item of items) {
+    setNative(item.querySelector("input"), "My correction");
+    await tick(3);
+    click(findButton(item, "اعرض التصحيح المقبول"));
+    await tick(3);
   }
   const text = normalize(el.textContent);
-  postInteractionTexts.set(id, text);
-  ok(fieldsets.length === M.PRACTICE.CONTEXT_LABS_36[id].length && text.includes("اختيار مناسب للسياق") || fieldsets.length === M.PRACTICE.CONTEXT_LABS_36[id].length && text.includes("أقل ملاءمة"), `${id}: each context prompt can be answered and receives post-attempt feedback`);
-  const hiddenIndexes = {
-    s02: [3, 5, 6, 7, 8, 12, 13, 14, 18, 19, 20, 21, 22],
-    s04: [4, 5, 10, 12, 18, 19, 20, 22, 23],
-    s05: [3, 5, 9, 11, 15, 18, 19],
-    s07: [0, 1, 5, 9, 10, 11, 12, 13, 14, 15],
-    s14: [21, 22, 23, 24, 25, 26],
-    s15: [4, 5, 6, 7, 12, 13, 14, 15, 16, 17, 18],
-    s16: [3, 4, 7, 8, 11, 12, 15, 16],
-  }[id];
-  ok(hiddenIndexes.every((index) => text.includes(source(id).units[index])), `${id}: source lines withheld before the attempt appear after the activity`);
+  ok(section("s17").revealUnits.every((line) => text.includes(normalize(line))), "all ten corrections, alternatives and the glass nuance appear after the attempts");
+  ok(text.includes("تصحيحك يطابق الحل") || text.includes("قارن صياغتك"), "the detective gives non-colour feedback on the learner's own wording");
+  postHtml.push(el.innerHTML);
+  reactRoot.unmount();
+  el.remove();
+}
+{
+  const { el, root: reactRoot } = mountSlide("s18");
+  await tick();
+  const items = [...el.querySelectorAll("[data-lab-item]")];
+  ok(items.length === 8, "guided choice practice renders eight contexts");
+  for (const item of items) {
+    click(item.querySelector('input[type="radio"]'));
+    await tick(3);
+    click(findButton(item, "تحقق من الاختيار"));
+    await tick(3);
+  }
+  ok(section("s18").revealUnits.every((line) => normalize(el.textContent).includes(normalize(line))), "all eight practice answers and explanations appear after the attempts");
+  postHtml.push(el.innerHTML);
+  reactRoot.unmount();
+  el.remove();
+}
+{
+  const { el, root: reactRoot } = mountSlide("s19");
+  await tick();
+  const fields = [...el.querySelectorAll("[data-lab-item] input")];
+  ok(fields.length === 4, "the Sara/Adam dialogue exposes four answer fields");
+  fields.forEach((field, index) => setNative(field, ["I'm going to visit", "I'll remind", "will give", "will add"][index]));
+  await tick(5);
+  for (const item of el.querySelectorAll("[data-lab-item]")) {
+    click(findButton(item, "تحقق من"));
+    await tick(3);
+  }
+  const text = normalize(el.textContent);
+  ok(section("s19").revealUnits.every((line) => text.includes(normalize(line))), "all four dialogue answers and their explanations appear after checking");
+  ok(text.includes("إجابتك مطابقة للحل"), "the dialogue marks exact matches with text, not colour alone");
+  postHtml.push(el.innerHTML);
+  reactRoot.unmount();
+  el.remove();
+}
+{
+  const { el, root: reactRoot } = mountSlide("s20");
+  await tick();
+  const fields = [...el.querySelectorAll("textarea")];
+  ok(fields.length === 2, "the context-writing lab provides two writing areas");
+  ok(!normalize(el.textContent).includes("A: Nobody has prepared dinner yet."), "the source models wait until the learner writes");
+  fields.forEach((field, index) => setNative(field, index === 0 ? "A: Nobody prepared dinner. B: I'll prepare dinner." : "A: What are your plans? B: I'm going to prepare dinner."));
+  await tick(5);
+  click(findButton(el, "اعرض المثالين الأصليين"));
+  await tick(5);
+  ok(normalize(el.textContent).includes("A: Nobody has prepared dinner yet.") && normalize(el.textContent).includes("A: What are your plans for this evening?"), "both original model contexts appear after the attempt");
+  postHtml.push(el.innerHTML);
+  reactRoot.unmount();
+  el.remove();
+}
+{
+  const { el, root: reactRoot } = mountSlide("s21a");
+  await tick();
+  ok(el.querySelectorAll("[dir='ltr']").length >= 10, "the robotics passage renders its English lines as LTR islands");
+  const toggle = el.querySelector('input[type="checkbox"]');
+  click(toggle);
+  await tick(5);
+  ok(el.querySelectorAll("mark").length >= 5, "the optional future-form highlight works without hiding the passage");
+  postHtml.push(el.innerHTML);
+  reactRoot.unmount();
+  el.remove();
+}
+{
+  const { el, root: reactRoot } = mountSlide("s21b");
+  await tick();
+  const fields = [...el.querySelectorAll("textarea")];
+  ok(fields.length === 7, "all seven reading questions accept an answer");
+  ok(!normalize(el.textContent).includes("A national robotics competition."), "reading answers are hidden before the attempt");
+  fields.forEach((field) => setNative(field, "Student answer"));
+  await tick(5);
+  click(findButton(el, "اعرض الإجابات والتحليل"));
+  await tick(5);
+  const text = normalize(el.textContent);
+  ok(section("s21").revealUnits.every((line) => text.includes(normalize(line))), "the seven answers and eight grammar analyses appear after the attempt");
+  postHtml.push(el.innerHTML);
+  reactRoot.unmount();
+  el.remove();
+}
+{
+  const { el, root: reactRoot } = mountSlide("s24");
+  await tick();
+  const area = el.querySelector("textarea");
+  ok(el.querySelectorAll('input[type="checkbox"]').length === 8, "the writing mission lists the eight requirements as a self-review checklist");
+  setNative(area, Array.from({ length: 12 }, (_, index) => `Sentence number ${index + 1}.`).join(" "));
+  await tick(5);
+  const text = normalize(el.textContent);
+  ok(text.includes("12") && text.includes("المطلوب 12–15"), "the writing counter reports the 12–15 sentence target");
+  ok(text.includes("Next month, I'm going to start a new learning project."), "the model opening stays visible for comparison");
+  ok(text.includes("لا يصدر النظام حكمًا آليًا"), "writing feedback is explicitly non-judging");
+  postHtml.push(el.innerHTML);
   reactRoot.unmount();
   el.remove();
 }
 
-// 6) Error repair, eight guided items, Sara/Adam blanks, reading, and writing workspace.
-{
-  const { el, root: reactRoot } = mountStep("s17");
+// Every remaining lab is opened generically (pick an option, type an answer,
+// reveal the supplied explanation) so that gated prose and keys are checked in
+// their real post-attempt state rather than only in the initial render.
+const unlockedHtml = [];
+for (const slide of SLIDES_36) {
+  if (!slide.blocks.some((block) => block.kind === "lab")) continue;
+  const { el, root: reactRoot } = mountSlide(slide.id);
   await tick();
-  ok(!normalize(el.textContent).includes(source("s17").revealUnits[1]), "Grammar Detective source key is hidden before an attempt");
-  for (const item of DETECTIVE_ITEMS_36) {
-    const card = el.querySelector(`[data-practice-item="detective-${item.n}"]`);
-    const field = card.querySelector("input[type=text]");
-    setNative(field, "My correction");
-    click(findButton(card, "اعرض التصحيح المقبول"));
-    await tick(3);
+  for (let pass = 0; pass < 4; pass++) {
+    for (const item of el.querySelectorAll("[data-lab-item]")) {
+      const radio = item.querySelector('input[type="radio"]:not(:disabled)');
+      if (radio) click(radio);
+      const box = item.querySelector('input[type="checkbox"]:not(:disabled)');
+      if (box && !box.checked) click(box);
+      for (const field of item.querySelectorAll('input[type="text"], textarea')) {
+        if (!field.disabled && !field.value) setNative(field, "Student answer");
+      }
+    }
+    await tick(8);
+    for (const button of [...el.querySelectorAll("button")]) {
+      if (button.disabled) continue;
+      const label = normalize(button.textContent);
+      if (/تحقق|اعرض|اكشف|أظهر/.test(label)) click(button);
+    }
+    await tick(10);
   }
-  ok(el.querySelectorAll("[data-practice-item^='detective-']").length === 10, "Grammar Detective renders all ten repair items");
-  const detectiveText = normalize(el.textContent);
-  ok(source("s17").revealUnits.every((line) => detectiveText.includes(line)), "after attempts, all ten correction answers, alternatives, and glass explanation appear");
-  reactRoot.unmount(); el.remove();
-}
-{
-  const { el, root: reactRoot } = mountStep("s18");
-  await tick();
-  ok(!normalize(el.textContent).includes(source("s18").revealUnits[1]), "eight-item practice key is hidden before attempts");
-  for (const item of EXERCISE18_ITEMS_36) {
-    const card = el.querySelector(`[data-practice-item="choose-${item.n}"]`);
-    click(card.querySelector('input[type="radio"]'));
-    await tick(3);
-    click(findButton(card, "تحقق من الاختيار"));
-    await tick(3);
-  }
-  ok(el.querySelectorAll("[data-practice-item^='choose-']").length === 8, "choose-the-form practice has exactly eight contexts");
-  ok(source("s18").revealUnits.every((line) => normalize(el.textContent).includes(line)), "after attempts, all eight source answers and explanations are available");
-  reactRoot.unmount(); el.remove();
-}
-{
-  const { el, root: reactRoot } = mountStep("s19");
-  await tick();
-  ok(!normalize(el.textContent).includes(source("s19").revealUnits[1]), "Sara/Adam answer key is hidden before the four responses");
-  const fields = [...el.querySelectorAll("[data-step-id='s19'] input[type=text]")];
-  fields.forEach((field, index) => setNative(field, ["I'm going to visit", "I'll remind", "will give", "will add"][index]));
-  await tick(5);
-  click(findButton(el, "عرض مفتاح الإجابة والتفسيرات"));
-  await tick(5);
-  ok(fields.length === 4 && source("s19").revealUnits.every((line) => normalize(el.textContent).includes(line)), "all four dialogue blanks unlock the complete answer key and evidence/WILL explanation");
-  reactRoot.unmount(); el.remove();
-}
-{
-  const { el, root: reactRoot } = mountStep("s21");
-  await tick();
-  ok(!normalize(el.textContent).includes(source("s21").revealUnits[1]), "reading answers are hidden before comprehension attempt");
-  ok(el.querySelectorAll("[data-source-section='s21'] [data-source-unit^='s21-unit-']").length >= source("s21").units.length, "complete passage and all seven question source units render");
-  const fields = [...el.querySelectorAll("textarea")];
-  fields.forEach((field) => setNative(field, "Student response"));
-  await tick(5);
-  click(findButton(el, "عرض إجابات الفهم والتحليل النحوي"));
-  await tick(5);
-  ok(fields.length === 7 && source("s21").revealUnits.every((line) => normalize(el.textContent).includes(line)), "after seven responses, all seven reading answers and eight grammar analyses appear");
-  const highlight = el.querySelector('input[type="checkbox"]');
-  click(highlight);
-  await tick(5);
-  ok(!!el.querySelector("mark"), "optional future-form reading highlight is operable and does not hide the passage");
-  reactRoot.unmount(); el.remove();
-}
-{
-  const { el, root: reactRoot } = mountStep("s20");
-  await tick();
-  const fields = [...el.querySelectorAll("textarea")];
-  fields.forEach((field, index) => setNative(field, index === 0 ? "A: Nobody prepared dinner. B: I'll prepare dinner." : "A: What is your plan? B: I'm going to prepare dinner."));
-  await tick(5);
-  click(findButton(el, "عرض النموذج الأصلي بعد المحاولة"));
-  await tick(5);
-  ok(fields.length === 2 && source("s20").units.slice(3, 6).every((line) => normalize(el.textContent).includes(line)) && source("s20").units.slice(9, 12).every((line) => normalize(el.textContent).includes(line)), "context-writing workspace reveals both original model contexts only after the learner writes");
-  reactRoot.unmount(); el.remove();
-}
-{
-  const { el, root: reactRoot } = mountStep("s24");
-  await tick();
-  const writing = el.querySelector('textarea[lang="en"]');
-  setNative(writing, Array.from({ length: 12 }, (_, index) => `Sentence ${index + 1}.`).join(" "));
-  await tick(5);
-  ok(normalize(el.textContent).includes("12 / المطلوب 12–15") && el.querySelectorAll('input[type="checkbox"]').length === 8, "writing workspace counts sentences and provides the original eight-item self-review checklist");
-  ok(normalize(el.textContent).includes("لا يصدر النظام حكمًا آليًا"), "writing workspace does not claim objective automatic grading");
-  reactRoot.unmount(); el.remove();
+  unlockedHtml.push(el.innerHTML);
+  reactRoot.unmount();
+  el.remove();
 }
 
-// 7) Formal test: neutral before submit, exactly 25, no feedback; separate key after submit.
-{
-  let submitted = false;
-  const { el, root: reactRoot } = M.mount(M.React.createElement(M.TestArea36, { onSubmitted() { submitted = true; }, onGoSolutions() {} }));
-  await tick();
-  const testRoot = el.querySelector('[data-area="lesson36-test"]');
-  ok(testRoot.querySelectorAll("[data-test-question]").length === 25 && testRoot.querySelectorAll("fieldset[data-test-question]").length === 25, "formal assessment renders exactly 25 fieldset questions");
-  ok(testRoot.querySelectorAll("[data-test-feedback]").length === 0 && !testRoot.querySelector("[data-solution]"), "no correctness/score feedback or answer panel is visible before submission");
-  const inputs = [...testRoot.querySelectorAll("[data-test-question]")];
-  for (const card of inputs) {
-    const radio = card.querySelector('input[type="radio"]');
-    if (radio) click(radio);
-    else {
-      const field = card.querySelector("input[type=text], textarea");
-      setNative(field, "Student response for question " + card.getAttribute("data-test-question"));
-    }
+const postText = normalize(postHtml.map(textOfHtml).join(" "));
+const unlockedText = normalize(unlockedHtml.map(textOfHtml).join(" "));
+const everything = `${initialText} ${postText} ${unlockedText}`;
+/** A line with an inline blank is rendered as prompt + live input + rest. */
+const segmentsOf = (line) => normalize(line).split("______").map((part) => part.trim()).filter(Boolean);
+const renderedInOrder = (haystack, segments) => {
+  let cursor = 0;
+  for (const segment of segments) {
+    const at = haystack.indexOf(segment, cursor);
+    if (at < 0) return false;
+    cursor = at + segment.length;
   }
-  await tick(10);
-  const submit = findButton(testRoot, "إرسال الاختبار");
-  ok(inputs.length === 25 && submit && !submit.disabled, "all 25 answers enable submission without revealing any result");
-  ok(testRoot.querySelectorAll("[data-test-feedback]").length === 0, "fully answered but unsubmitted test remains neutral");
+  return true;
+};
+for (const entry of SOURCE_SECTIONS_36) {
+  for (const line of entry.units) {
+    const expected = normalize(line);
+    if (entry.id === "s22" && entry.units.indexOf(line) >= 2) continue;
+    if (everything.includes(expected)) { assertions++; continue; }
+    if (expected.includes("______") && renderedInOrder(everything, segmentsOf(line))) { assertions++; continue; }
+    failures.push(`unrendered teaching line in ${entry.id}: ${line.slice(0, 80)}`);
+    assertions++;
+  }
+}
+for (const entry of SOURCE_SECTIONS_36) {
+  for (const line of entry.revealUnits ?? []) {
+    const expected = normalize(line);
+    if (everything.includes(expected)) { assertions++; continue; }
+    if (expected.includes("______") && renderedInOrder(everything, segmentsOf(line))) { assertions++; continue; }
+    failures.push(`unrendered key line in ${entry.id}: ${line.slice(0, 80)}`);
+    assertions++;
+  }
+}
+
+// ============================================================
+// 5) Formal test — 25 questions, no feedback before submit, grading after
+// ============================================================
+ok(TEST_COUNT_36 === 25 && TEST_36.length === 25, `the formal test has exactly 25 questions (got ${TEST_COUNT_36})`);
+ok(TEST_LEVEL_COUNT_36 === 5 && TEST_LEVELS_36.every((level) => level.questions.length === 5), "the formal test keeps five levels of five questions");
+ok(TEST_LEVELS_36.map((level) => `${level.questions[0].n}-${level.questions.at(-1).n}`).join("|") === "1-5|6-10|11-15|16-20|21-25", "the formal test keeps the original level boundaries");
+ok(TEST_LEVELS_36[0].questions.every((question) => question.options?.length === 2) && TEST_LEVELS_36[4].questions.every((question) => !question.options), "Level 1 keeps its two choices and Level 5 stays open");
+ok(TEST_SOLUTIONS_36.length === 25 && TEST_SOLUTIONS_36.every((solution, index) => solution.n === index + 1), "25 detailed solutions exist in order");
+ok(TEST_SOLUTIONS_36.filter((solution) => solution.level === 1).every((solution) => typeof solution.correctOption === "number" && solution.acceptableOptions?.length), "every multiple-choice item records its best answer and its acceptable alternative");
+ok(TEST_SOLUTIONS_36.filter((solution) => solution.level === 2 || solution.level === 3).every((solution) => solution.accepts?.length), "every typed item records accepted forms");
+ok(TEST_SOLUTIONS_36.filter((solution) => solution.level >= 4).every((solution) => solution.alternatives?.length), "every meaning/open item records a model and acceptable alternatives");
+
+const testPreHtml = M.renderToString(M.React.createElement(M.TestArea36, { onSubmitted() {}, onGoSolutions() {} }));
+ok((testPreHtml.match(/data-test-question="\d+"/g) || []).length === 25, "the pre-submit test renders exactly 25 question panels");
+ok(!testPreHtml.includes("data-test-feedback") && !testPreHtml.includes("data-solution="), "no correctness, explanation or key is present before submission");
+ok(!testPreHtml.includes("نتيجتك"), "no score is present before submission");
+ok((testPreHtml.match(/data-option-state|data-chosen/g) || []).length === 0, "choices are not pre-marked before submission");
+{
+  const { el, root: reactRoot } = M.mount(M.React.createElement(M.TestArea36, { onSubmitted() {}, onGoSolutions() {} }));
+  await tick();
+  const cards = [...el.querySelectorAll("[data-test-question]")];
+  ok(cards.length === 25, "the mounted test exposes 25 questions");
+  const firstInputs = cards.slice(0, 3).map((card) => card.querySelector('input[type="radio"]') ?? card.querySelector("input, textarea"));
+  firstInputs.forEach((input) => (input.type === "radio" ? click(input) : setNative(input, "partial")));
+  await tick(5);
+  const submit = findButton(el, "إرسال الاختبار");
+  ok(submit?.disabled, "an incomplete test cannot be submitted");
+  ok(normalize(el.textContent).includes("لم يُسلَّم الاختبار") && normalize(el.textContent).includes("22"), "the blocked submit explains how many questions remain");
   click(submit);
   await tick(10);
-  ok(submitted && testRoot.querySelectorAll("[data-test-feedback]").length === 0 && !testRoot.querySelector("[data-solution]"), "submission records completion but still gives no immediate correctness/score feedback");
-  ok(testRoot.textContent.includes("لا يوجد تصحيح فوري"), "post-submit test state points to separate solutions rather than embedding a key");
-  reactRoot.unmount(); el.remove();
+  ok(el.querySelectorAll("[data-test-feedback]").length === 0, "clicking the blocked submit reveals nothing");
+  const review = findButton(el, "مراجعة إجاباتي");
+  click(review);
+  await tick(5);
+  ok(review.getAttribute("aria-expanded") === "true" && el.querySelectorAll("nav, ul button").length > 0, "the review panel opens and lists the questions");
+  reactRoot.unmount();
+  el.remove();
 }
+let submittedFlag = false;
+{
+  const { el, root: reactRoot } = M.mount(M.React.createElement(M.TestArea36, { onSubmitted() { submittedFlag = true; }, onGoSolutions() {} }));
+  await tick();
+  const cards = [...el.querySelectorAll("[data-test-question]")];
+  const answers = {
+    1: 1, 2: 1, 3: 1, 4: 0, 5: 0,
+    6: "are going to build", 7: "will answer", 8: "is going to hit", 9: "'ll return", 10: "will perform",
+    11: "She will travel.", 12: "They are going to study tonight.", 13: "Is he going to join us?", 14: "I won't forget.", 15: "Will she help?",
+    19: "A promise is made at the moment of speaking.",
+    21: "I'll help you now.",
+  };
+  for (const card of cards) {
+    const n = Number(card.getAttribute("data-test-question"));
+    if (!(n in answers)) continue;
+    const radio = card.querySelectorAll('input[type="radio"]')[answers[n]];
+    if (radio) click(radio);
+    else setNative(card.querySelector("input, textarea"), String(answers[n]));
+    await tick(2);
+  }
+  const submit = findButton(el, "إرسال الاختبار");
+  ok(submit?.disabled, "missing answers still block submission");
+  for (const card of cards) {
+    const n = Number(card.getAttribute("data-test-question"));
+    if (n in answers) continue;
+    const input = card.querySelector("input, textarea");
+    if (input.type === "radio") click(card.querySelectorAll('input[type="radio"]')[0]);
+    else setNative(input, "Open response for review.");
+    await tick(2);
+  }
+  await tick(10);
+  ok(!findButton(el, "إرسال الاختبار")?.disabled, "all 25 answers enable submission");
+  ok(el.querySelectorAll("[data-test-feedback]").length === 0, "a fully answered but unsubmitted test still shows no corrections");
+  click(findButton(el, "إرسال الاختبار"));
+  await M.act(async () => { await tick(150); });
+  ok(submittedFlag, "submission notifies the shell so the solutions unlock");
+  const result = el.querySelector("[data-test-result]");
+  ok(!!result, "the submitted test shows a result panel");
+  ok(!!result && normalize(result.textContent).includes("14.5") && normalize(result.textContent).includes("الأسئلة الموضوعية"), "the result reports 14.5 / 15 when one item uses the acceptable alternative");
+  ok(el.querySelectorAll("[data-test-feedback]").length === 25, "every question receives post-submit feedback with its explanation");
+  ok(el.querySelectorAll('[data-test-feedback="open"]').length === 10, "the ten meaning/open questions are labelled for model comparison instead of automatic correction");
+  const accept = el.querySelectorAll('[data-test-feedback="acceptable"]');
+  ok(accept.length >= 1, "grammatical alternatives are marked acceptable rather than simply wrong");
+  {
+    const perfect = {};
+    for (const solution of TEST_SOLUTIONS_36) {
+      if (solution.level === 1) perfect[solution.n] = String(solution.correctOption);
+      else if (solution.level === 2 || solution.level === 3) perfect[solution.n] = solution.accepts?.[0] ?? "";
+      else perfect[solution.n] = "Model answer for review.";
+    }
+    const graded = M.GRADING.gradeTest36(perfect, TEST_SOLUTIONS_36);
+    ok(graded.score === 15 && graded.maxScore === 15 && graded.review.length === 0, "a fully matching answer set scores the full 15 objective points");
+  }
+  ok(normalize(el.textContent).includes("بدائل مقبولة") || normalize(el.textContent).includes("البدائل"), "accepted alternatives are documented in the feedback");
+  const retry = findButton(el, "إعادة المحاولة");
+  click(retry);
+  await tick(10);
+  ok(!el.querySelector("[data-test-result]") && el.querySelectorAll("[data-test-feedback]").length === 0, "retry clears the result and all feedback");
+  ok(normalize(el.textContent).includes("0/25") || normalize(el.textContent).includes("25 سؤالًا متبقيًا"), "retry resets the answered counter");
+  reactRoot.unmount();
+  el.remove();
+}
+
+// ============================================================
+// 6) Shell, areas, navigation and gates
+// ============================================================
 {
   const locked = M.renderToString(M.React.createElement(M.SolutionsArea36, { unlocked: false, onGoTest() {}, onGoTeacher() {} }));
-  ok(locked.includes("data-solutions-locked") && !locked.includes("data-solution="), "Solutions Area remains blank/locked without submission or teacher access");
+  ok(locked.includes("data-solutions-locked") && !locked.includes("data-solution="), "solutions stay locked and answer-free before submission or teacher access");
+
   const { el, root: reactRoot } = M.mount(M.React.createElement(M.SolutionsArea36, { unlocked: true, onGoTest() {}, onGoTeacher() {} }));
   await tick();
-  const allSolutionNumbers = new Set();
-  for (const tab of el.querySelectorAll('nav[aria-label="مستويات حلول اختبار الدرس 36"] button')) {
+  const numbers = new Set();
+  for (const tab of el.querySelectorAll("nav[aria-label='مستويات الحلول'] button")) {
     click(tab);
     await tick(3);
-    for (const card of el.querySelectorAll("[data-solution]")) allSolutionNumbers.add(Number(card.getAttribute("data-solution")));
+    for (const card of el.querySelectorAll("[data-solution]")) numbers.add(Number(card.getAttribute("data-solution")));
   }
-  ok(allSolutionNumbers.size === 25 && [...allSolutionNumbers].sort((a, b) => a - b).every((n, index) => n === index + 1), "after unlock, Solutions Area exposes all 25 detailed solutions across its five level tabs");
-  ok(el.textContent.includes("إضافات تعليمية من إعداد المنصة") && el.textContent.includes("بدائل مقبولة"), "Solutions Area labels teacher-authored content and contextual alternatives");
-  reactRoot.unmount(); el.remove();
+  ok(numbers.size === 25, "the unlocked solutions area exposes all 25 detailed solutions");
+  ok(normalize(el.textContent).includes("بدائل مقبولة"), "solutions document acceptable alternatives");
+  reactRoot.unmount();
+  el.remove();
 }
-
-// 8) Teacher gate, navigable areas, and complete source-to-step documentary ledger.
 {
   const lockedTeacher = M.renderToString(M.React.createElement(M.TeacherArea36, { unlocked: false, onUnlockChange() {}, onGoSolutions() {} }));
-  ok(lockedTeacher.includes('type="password"') && !lockedTeacher.includes("data-teacher-solution"), "Teacher Area starts gated and does not render formal answer explanations");
+  ok(lockedTeacher.includes('type="password"') && !lockedTeacher.includes("data-teacher-solution"), "the teacher area starts gated and renders no answer key");
+
+  const { el: guide, root: guideRoot } = M.mount(M.React.createElement(M.TeacherGuide36, { onGoSolutions() {}, onLock() {} }));
+  await tick();
+  click(findButton(guide, "خريطة التغطية"));
+  await tick();
+  ok(guide.querySelectorAll("[data-coverage-section]").length === 27, "the teacher coverage map lists the opening and all 26 numbered sections");
+  click(findButton(guide, "حلول الاختبار"));
+  await tick();
+  ok(guide.querySelectorAll("[data-teacher-solution]").length === 25, "the teacher guide holds all 25 test solutions");
+  click(findButton(guide, "مفاتيح التدريب والقراءة"));
+  await tick();
+  ok(normalize(guide.textContent).includes("توقع منفي") && normalize(guide.textContent).includes("التحليل النحوي"), "the teacher keys include the negative prediction note and reading analysis");
+  guideRoot.unmount();
+  guide.remove();
+}
+{
   const { el: shell, root: shellRoot } = M.mount(M.React.createElement(M.Lesson36, { onExit() {} }));
   await tick();
-  ok(!!shell.querySelector('[data-lesson="36"] [data-area="lesson36-student"]'), "integrated Lesson 36 shell starts in the Student Area");
-  const mobileToggle = findButton(shell, "محتويات الدرس");
-  const mobilePanel = shell.querySelector("#lesson36-mobile-nav");
-  ok(mobileToggle?.getAttribute("aria-expanded") === "false" && mobileToggle?.getAttribute("aria-controls") === "lesson36-mobile-nav" && mobilePanel?.hidden, "mobile navigation exposes a controlled, initially collapsed panel");
-  click(mobileToggle);
+  const root = shell.querySelector('[data-lesson="36"]');
+  ok(!!root && root.getAttribute("data-l35-shell") === "lesson-1", "Lesson 36 renders through the real Lesson 1 shell");
+  ok(!!shell.querySelector("aside") && !!shell.querySelector("#l36-main"), "the shell provides the rail and the scrollable main region");
+  ok(shell.querySelectorAll("[data-step-nav]").length >= 4, "the shell provides its own step navigation instead of a local replica");
+  ok(normalize(shell.textContent).includes("WILL vs BE GOING TO") && normalize(shell.textContent).includes("Mastering Future Decisions"), "the shell header carries the lesson identity");
+  ok(shell.querySelector('[data-area="l36-lesson"]') && shell.querySelector("[data-step-id='cover']"), "the student area starts on the opening slide");
+
+  click(shell.querySelector("[data-step-nav='next']"));
   await tick();
-  ok(mobileToggle?.getAttribute("aria-expanded") === "true" && mobilePanel && !mobilePanel.hidden, "mobile navigation opens through a touch/keyboard button");
-  click(mobileToggle);
+  ok(!!shell.querySelector("[data-step-id='s01']"), "the shell next button advances the lesson");
+  click(shell.querySelector("[data-step-nav='prev']"));
   await tick();
-  ok(mobileToggle?.getAttribute("aria-expanded") === "false" && mobilePanel?.hidden, "mobile navigation closes and updates aria-expanded");
-  const leftKey = new win.KeyboardEvent("keydown", { key: "ArrowLeft", bubbles: true, cancelable: true });
-  M.act(() => document.body.dispatchEvent(leftKey));
+  ok(!!shell.querySelector("[data-step-id='cover']"), "the shell previous button returns");
+  M.act(() => document.body.dispatchEvent(new win.KeyboardEvent("keydown", { key: "ArrowLeft", bubbles: true })));
   await tick();
-  ok(!!shell.querySelector('[data-area="lesson36-student"] [data-step-id="s01"]'), "Student Area supports keyboard next-step navigation");
-  M.act(() => document.body.dispatchEvent(new win.KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true })));
+  ok(!!shell.querySelector("[data-step-id='s01']"), "ArrowLeft moves forward in RTL");
+  M.act(() => document.body.dispatchEvent(new win.KeyboardEvent("keydown", { key: "End", bubbles: true })));
   await tick();
-  ok(!!shell.querySelector('[data-area="lesson36-student"] [data-step-id="cover"]'), "Student Area keyboard navigation returns to the opening step");
-  const solutionTab = findButton(shell, "منطقة الحلول");
-  ok(solutionTab?.disabled, "Solutions Area stays locked before test submission or teacher unlock");
-  click(findButton(shell, "منطقة الاختبار"));
+  ok(!!shell.querySelector("[data-step-id='s26']"), "End jumps to the final slide");
+  M.act(() => document.body.dispatchEvent(new win.KeyboardEvent("keydown", { key: "Home", bubbles: true })));
   await tick();
-  const shellTest = shell.querySelector('[data-area="lesson36-test"]');
-  const shellQuestions = [...shellTest.querySelectorAll("[data-test-question]")];
-  for (const card of shellQuestions) {
-    const radio = card.querySelector('input[type="radio"]');
-    if (radio) click(radio);
-    else setNative(card.querySelector("input[type=text], textarea"), `response ${card.getAttribute("data-test-question")}`);
-  }
+  ok(!!shell.querySelector("[data-step-id='cover']"), "Home returns to the opening slide");
+
+  const solutionsTab = shell.querySelector("[data-area-tab='solutions']");
+  ok(solutionsTab?.getAttribute("aria-disabled") === "true" && !shell.querySelector("[data-solutions-locked]"), "the solutions tab is gated before submission");
+  click(solutionsTab);
+  await tick();
+  ok(!!shell.querySelector("[data-step-id='cover']"), "clicking the locked tab does not open the key");
+
+  const menuButton = shell.querySelector("button[aria-label='فهرس الدرس']");
+  ok(!!menuButton, "the mobile drawer trigger comes from the shared shell");
+  click(menuButton);
+  await tick();
+  ok(!!shell.querySelector(".fixed.inset-0.z-50") && shell.querySelectorAll("[data-step-nav]").length >= 4, "the shared mobile drawer opens with the same rail");
+  M.act(() => (shell.querySelector("button[aria-label='فهرس الدرس']") ?? shell).dispatchEvent(new win.KeyboardEvent("keydown", { key: "Escape", bubbles: true })));
   await tick(10);
-  click(findButton(shellTest, "إرسال الاختبار"));
-  await tick(10);
-  ok(shellQuestions.length === 25 && !findButton(shell, "منطقة الحلول")?.disabled, "submitting the integrated 25-question test unlocks Solutions Area");
-  click(findButton(shell, "منطقة الحلول"));
+  ok(!shell.querySelector(".fixed.inset-0.z-50"), "Escape closes the mobile drawer");
+
+  click(shell.querySelector("[data-area-tab='test']"));
   await M.act(async () => { await tick(80); });
-  ok(shell.querySelectorAll('[data-area="lesson36-solutions"] [data-solution]').length === 5, "integrated Solutions Area lazy-loads the first gated level after submission");
-  click(findButton(shell, "منطقة المعلم"));
-  await tick();
-  const teacherForm = shell.querySelector('form[data-area="lesson36-teacher"]');
-  const passwordField = teacherForm?.querySelector('input[type="password"]');
-  setNative(passwordField, "wrong-password");
+  const shellTest = shell.querySelector("[data-area='l36-test']");
+  ok(!!shellTest && shellTest.querySelectorAll("[data-test-question]").length === 25, "the test area opens inside the shell with 25 questions");
+  ok(!shell.querySelector("[data-step-id]"), "the test area replaces the step content instead of stacking on it");
+
+  click(shell.querySelector("[data-area-tab='teacher']"));
+  await M.act(async () => { await tick(80); });
+  const teacherForm = shell.querySelector("form[data-area='l36-teacher']");
+  const password = teacherForm?.querySelector('input[type="password"]');
+  setNative(password, "wrong-password");
   await tick(5);
   M.act(() => teacherForm.dispatchEvent(new win.Event("submit", { bubbles: true, cancelable: true })));
   await tick(5);
-  ok(!!teacherForm.querySelector('[role="alert"]'), "Teacher Area reports an accessible error for an incorrect password");
-  setNative(passwordField, "somer173");
+  ok(!!teacherForm.querySelector('[role="alert"]'), "a wrong teacher password produces an accessible error");
+  setNative(password, "somer173");
   await tick(5);
   M.act(() => teacherForm.dispatchEvent(new win.Event("submit", { bubbles: true, cancelable: true })));
-  await M.act(async () => { await tick(100); });
-  ok(!!shell.querySelector('[data-area="lesson36-teacher"] nav[aria-label="أقسام دليل المعلم"]'), "valid teacher unlock loads the separate, navigable Teacher Area");
-  shellRoot.unmount(); shell.remove();
-  const { el: guideRoot, root: guideReactRoot } = M.mount(M.React.createElement(M.TeacherGuide36, { onGoSolutions() {}, onLock() {} }));
-  await tick();
-  click(findButton(guideRoot, "خريطة التغطية"));
-  await tick();
-  ok(guideRoot.querySelectorAll("[data-coverage-section]").length === 26, "teacher coverage tab is structured across all 26 numbered sections");
-  click(findButton(guideRoot, "حلول الاختبار"));
-  await tick();
-  ok(guideRoot.querySelectorAll("[data-teacher-solution]").length === 25, "teacher guide contains 25 detailed, separately labeled test answers");
-  click(findButton(guideRoot, "مفاتيح التدريب والقراءة"));
-  await tick();
-  ok(guideRoot.textContent.includes("توقع منفي") && guideRoot.textContent.includes("التحليل النحوي"), "teacher guidance includes guided/dialogue explanations and reading analysis");
-  guideReactRoot.unmount(); guideRoot.remove();
-  const appText = readFileSync(join(root, "src/App.tsx"), "utf8");
-  ok(appText.includes('import Lesson36 from "./lessons/lesson36/Lesson36"') && appText.includes('href: "#/lesson/36"') && appText.includes("route === 36"), "App.tsx registers Lesson 36 as a hub card and first-class route");
-  const docs = readFileSync(join(root, "docs/lesson36-coverage.md"), "utf8");
-  ok((docs.match(/^\| §\d+/gm) || []).length === 26, "coverage ledger documents all 26 numbered source sections");
-  ok(docs.includes("Table reconstruction contract") && docs.includes("Test and answer provenance contract"), "coverage ledger records malformed-table repair and missing-source-key provenance");
+  await M.act(async () => { await tick(120); });
+  ok(!!shell.querySelector("[data-area='l36-teacher-guide']"), "the teacher password loads the navigable teacher guide");
+  ok(shell.querySelector("[data-area-tab='solutions']").getAttribute("aria-disabled") !== "true", "teacher access unlocks the solutions area");
+
+  click(shell.querySelector("[data-area-tab='solutions']"));
+  await M.act(async () => { await tick(120); });
+  ok(!!shell.querySelector("[data-area='l36-solutions']") && shell.querySelectorAll("[data-solution]").length === 5, "the unlocked solutions area lazy-loads the first level inside the shell");
+  shellRoot.unmount();
+  shell.remove();
 }
 
-// 9) English-direction conventions and high-contrast color pairs used by Lesson 36.
-const directionSources = [
-  readFileSync(join(root, "src/lessons/lesson36/kit36.tsx"), "utf8"),
-  readFileSync(join(root, "src/lessons/lesson36/TestArea36.tsx"), "utf8"),
-  readFileSync(join(root, "src/lessons/lesson36/Steps36.tsx"), "utf8"),
-  readFileSync(join(root, "src/lessons/lesson36/Lesson36.tsx"), "utf8"),
-].join("\n");
-ok(directionSources.includes("dir={pureEnglish ? \"ltr\" : \"auto\"}") && directionSources.includes("dir=\"ltr\"") && directionSources.includes("font-en"), "Lesson 36 isolates pure English/formulas LTR and keeps mixed runs direction-aware");
-ok(!/unicode-bidi\s*:\s*[^;]*override|direction\s*:\s*rtl\s*!important/i.test(directionSources), "Lesson 36 does not add blanket BIDI override rules");
-function channel(hex) { const value = parseInt(hex, 16) / 255; return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4; }
-function luminance(hex) { const clean = hex.replace("#", ""); return 0.2126 * channel(clean.slice(0, 2)) + 0.7152 * channel(clean.slice(2, 4)) + 0.0722 * channel(clean.slice(4, 6)); }
-function contrast(fg, bg) { const values = [luminance(fg), luminance(bg)].sort((a, b) => b - a); return (values[0] + 0.05) / (values[1] + 0.05); }
-const contrastPairs = [
-  ["#24343b", "#ffffff", "main text on white"], ["#24343b", "#fffdf8", "main text on warm surface"],
-  ["#24343b", "#f5f3ed", "main text on lesson background"], ["#24343b", "#fbfaf6", "main text on nested surface"],
-  ["#24343b", "#eef4f0", "main text on selected surface"], ["#24343b", "#edf5ee", "main text on feedback surface"],
-  ["#43575a", "#ffffff", "secondary text on white"], ["#43575a", "#fffdf8", "secondary text on warm surface"],
-  ["#43575a", "#f3f5f2", "secondary text on neutral surface"], ["#43575a", "#fbfaf6", "secondary text on warm card"],
-  ["#53676a", "#ffffff", "muted text on white"], ["#53676a", "#f7faf8", "muted text on pale green"],
-  ["#17354a", "#ffffff", "navy text on white"], ["#17354a", "#fffdf8", "navy text on warm white"],
-  ["#28533b", "#edf5ee", "success text on feedback surface"], ["#76531e", "#fbf6eb", "amber text on callout"],
-  ["#18333b", "#fbfdfc", "English text on reading surface"], ["#8d3832", "#ffffff", "teacher validation error on white"],
-  ["#ffffff", "#17354a", "white on navy header"], ["#ffffff", "#245f62", "white on primary button"],
-  ["#f0ddb6", "#17354a", "pale accent on navy header"], ["#596965", "#f5f5f2", "disabled button text"], ["#596965", "#ece9e1", "disabled primary-button text"],
-  ["#17354a", "#ffffff", "focus ring on white"], ["#24343b", "#f4e8c3", "highlighted reading text"],
-];
-const contrastFailures = contrastPairs.filter(([fg, bg]) => contrast(fg, bg) < 4.5);
-ok(contrastFailures.length === 0, `audited text/background palette pairs meet WCAG AA 4.5:1 (${contrastFailures.map(([fg, bg, label]) => `${label} ${contrast(fg, bg).toFixed(2)}:1`).join(", ")})`);
-ok(contrast("#17354a", "#ffffff") >= 3 && contrast("#17354a", "#fffdf8") >= 3, "focus indicator contrast is at least 3:1 against both light surfaces");
+// ============================================================
+// 7) Student-facing copy, direction and accessibility
+// ============================================================
+{
+  const labels = [];
+  for (const html of allInitialHtml) {
+    const host = document.createElement("div");
+    host.innerHTML = html;
+    labels.push(...findEditorialSourceLabels(host.textContent ?? ""));
+  }
+  ok(labels.length === 0, `student deck has no editorial source labels (${labels.slice(0, 3).map((entry) => entry.text).join(" | ")})`);
+  const postHost = document.createElement("div");
+  postHost.innerHTML = postText;
+  ok(findEditorialSourceLabels(postHost.textContent ?? "").length === 0, "post-interaction student copy has no editorial source labels");
 
-// 10) Source-to-area assertions and output summary.
+  const testHost = document.createElement("div");
+  testHost.innerHTML = testPreHtml;
+  ok(findEditorialSourceLabels(testHost.textContent ?? "").length === 0, "the test surface avoids editorial source labels");
+
+  const solutionsHost = document.createElement("div");
+  const { el: unlockedSolutions, root: unlockedRoot } = M.mount(M.React.createElement(M.SolutionsArea36, { unlocked: true, onGoTest() {}, onGoTeacher() {} }));
+  await tick();
+  ok(findEditorialSourceLabels(unlockedSolutions.textContent ?? "").length === 0, "the unlocked solutions surface avoids editorial source labels");
+  unlockedRoot.unmount();
+  unlockedSolutions.remove();
+  solutionsHost.remove();
+}
+{
+  const glassHtml = allInitialHtml[SLIDES_36.findIndex((slide) => slide.id === "s07")];
+  ok(/dir="ltr"[^>]*lang="en"|lang="en"[^>]*dir="ltr"/.test(glassHtml), "English sentences render inside explicit dir=ltr lang=en islands");
+  const dialogueHtml = allInitialHtml[SLIDES_36.findIndex((slide) => slide.id === "s14a")];
+  ok(dialogueHtml.includes('dir="ltr"') && dialogueHtml.includes('lang="en"'), "the Lina/Omar dialogue is direction-isolated");
+  ok(!/unicode-bidi\s*:\s*[^;]*override|direction\s*:\s*rtl\s*!important/i.test(allInitialHtml.join("")), "no blanket bidi override is injected by the lesson");
+  const headings = allInitialHtml.filter((html) => html.includes("<h2"));
+  ok(allInitialHtml[0].includes("<h1") && headings.length === SLIDES_36.length - 1, "the cover carries the lesson h1 and every other slide carries a level-2 heading");
+  const inputs = testPreHtml.match(/<input/g) ?? [];
+  ok(inputs.length >= 5, "the test exposes native inputs for keyboard users");
+}
+
+// ============================================================
+// 8) Answer-key separation (source and production bundle)
+// ============================================================
+const testSource = readFileSync(join(root, "src/lessons/lesson36/TestArea36.tsx"), "utf8");
 const lessonSource = readFileSync(join(root, "src/lessons/lesson36/Lesson36.tsx"), "utf8");
-ok(lessonSource.includes('data-area="lesson36-student"') && lessonSource.includes("<TestArea36") && lessonSource.includes("SolutionsArea36") && lessonSource.includes("<TeacherArea36"), "Student, Test, Solutions, and Teacher areas are wired as distinct shell surfaces");
-ok(existsSync(join(root, "src/lessons/lesson36/ledger36.ts")) && existsSync(join(root, "src/lessons/lesson36/solutionsData36.ts")) && existsSync(join(root, "scripts/audit-lesson36.mjs")), "Lesson 36 source ledger, separate solution data, and audit script exist");
+ok(!/import\s+[^;]*solutionsData36/.test(testSource), "the test component does not statically import the answer key");
+ok(testSource.includes('import("./solutionsData36")') && testSource.includes('import("./grading36")'), "the key is loaded dynamically only when the learner submits");
+ok(lessonSource.includes('lazy(() => import("./SolutionsArea36"))') && lessonSource.includes('lazy(() => import("./TeacherArea36"))'), "solutions and teacher areas are code-split");
+ok(lessonSource.includes("testSubmitted || teacherUnlocked"), "solutions unlock only after submission or teacher access");
+ok(!lessonSource.includes("<FinalTest"), "the formal Master Test is the only assessment surface, without a duplicate quiz widget");
+
+const dist = join(root, "dist", "assets");
+if (existsSync(dist)) {
+  const files = readdirSync(dist).filter((file) => file.endsWith(".js"));
+  const entryFiles = files.filter((file) => file.startsWith("index-"));
+  ok(entryFiles.length >= 1, "the production build exposes an entry bundle");
+  const entry = entryFiles.map((file) => readFileSync(join(dist, file), "utf8")).join("\n");
+  const keyMarkers = ["teacher-authored", "I'm going to start a design course next month", "نتيجتك في الأسئلة الموضوعية"];
+  ok(keyMarkers.every((marker) => !entry.includes(marker)), "the initial student bundle does not contain the answer key or grading copy");
+  const keyChunks = files.filter((file) => /solutionsData36/.test(file));
+  ok(keyChunks.length >= 1, "the answer key ships as its own lazily-loaded chunk");
+  if (keyChunks.length) {
+    const keyBundle = keyChunks.map((file) => readFileSync(join(dist, file), "utf8")).join("\n");
+    ok(keyBundle.includes("انظر إلى الغيوم") || keyBundle.includes("الإجابة النموذجية") || keyBundle.includes("teacher-authored"), "the separate key chunk really contains the key");
+  }
+} else {
+  failures.push("dist/ is missing: run npm run build before the audit");
+  assertions++;
+}
+
+// ============================================================
+// 9) Docs and routing
+// ============================================================
+{
+  const app = readFileSync(join(root, "src/App.tsx"), "utf8");
+  ok(app.includes('import Lesson36 from "./lessons/lesson36/Lesson36"') && app.includes('href: "#/lesson/36"') && app.includes("route === 36"), "the app registers Lesson 36 as a first-class route and hub card");
+  const docsPath = join(root, "docs/lesson36-coverage.md");
+  ok(existsSync(docsPath), "the coverage document exists");
+  if (existsSync(docsPath)) {
+    const docs = readFileSync(docsPath, "utf8");
+    ok((docs.match(/^\| §\d+/gm) || []).length === 26, "the coverage document still lists all 26 numbered sections");
+    ok(docs.includes("Table reconstruction contract") && docs.includes("Test and answer provenance contract"), "the coverage document records the table repair and the missing source key");
+    ok(docs.includes("Lesson1Shell"), "the coverage document records that the shared Lesson 1 shell is used");
+  }
+  ok(!existsSync(join(root, "src/lessons/lesson36/practiceData36.ts")), "the superseded practice-data module was removed after its content moved into the typed deck");
+}
 
 rmSync(outDir, { recursive: true, force: true });
 
@@ -471,4 +731,4 @@ if (failures.length) {
   for (const failure of failures) console.error(`  - ${failure}`);
   process.exit(1);
 }
-console.log(`✓ Lesson 36 audit passed: ${assertions} assertions; 26 numbered source sections + opening; 25 questions in five levels; 25 separate solutions; guided practice/reading/writing interactions; source/route/direction/contrast contracts.`);
+console.log(`✓ Lesson 36 audit passed: ${assertions} assertions. 27 source sections, 36 slides, 10 stages, 25-question test with post-submit grading, gated key, shared Lesson 1 shell, no student-facing source labels.`);

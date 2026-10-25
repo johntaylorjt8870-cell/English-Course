@@ -1,257 +1,192 @@
-import { useMemo, useState } from "react";
-import { CHAPTERS_36 } from "./data";
+import { useState } from "react";
+import { ActionButton36, Callout36, Card36, FOCUS_36, MixedText36 } from "./kit36";
+import { deckCoverage36, revealCoverage36, SLIDES_36, STAGES_36, STEP_COUNT_36 } from "./deck36";
 import { SOURCE_SECTIONS_36 } from "./ledger36";
 import { TEST_SOLUTIONS_36 } from "./solutionsData36";
-import { DETECTIVE_ITEMS_36, DIALOGUE19_ITEMS_36, EXERCISE18_ITEMS_36, READING_ANALYSIS_36, READING_ANSWERS_36, READING_QUESTIONS_36, WRITING_CRITERIA_36, WRITING_MODEL_36 } from "./practiceData36";
-import { TEST_LEVELS_36 } from "./testData36";
-import { ActionButton36, Card36, FOCUS_36, PlatformNote36, SourceLine36 } from "./kit36";
-import { Rich } from "../../shared/lessonKit";
 
-const TABS = [
-  { id: "plan", label: "خطة التدريس" },
+type Tab36 = "overview" | "coverage" | "test" | "keys" | "notes";
+
+const TABS: { id: Tab36; label: string }[] = [
+  { id: "overview", label: "نظرة عامة" },
   { id: "coverage", label: "خريطة التغطية" },
-  { id: "practice", label: "مفاتيح التدريب والقراءة" },
   { id: "test", label: "حلول الاختبار" },
-  { id: "writing", label: "دعم الكتابة والتصحيح" },
-] as const;
-type Tab36 = (typeof TABS)[number]["id"];
+  { id: "keys", label: "مفاتيح التدريب والقراءة" },
+  { id: "notes", label: "ملاحظات الدقة" },
+];
 
-const DESTINATION_36: Record<string, string> = {
-  cover: "Student step 1 · opening",
-  s01: "Student step 2 · objectives",
-  s02: "Student step 3 · computer context comparison",
-  s03: "Student step 4 · accessible comparison table",
-  s04: "Student step 5 · spontaneous decision / prior plan",
-  s05: "Student step 6 · cook and study context lab",
-  s06: "Student step 7 · prediction / evidence lab",
-  s07: "Student step 8 · evidence does not ban WILL",
-  s08: "Student step 9 · promises and offers",
-  s09: "Student step 10 · WILL YOU / ARE YOU GOING TO",
-  s10: "Student step 11 · time expressions",
-  s11: "Student step 12 · structure review",
-  s12: "Student step 13 · Wh questions",
-  s13: "Student step 14 · WILL BE / GOING TO BE",
-  s14: "Student step 15 · complete bilingual dialogue and six analyses",
-  s15: "Student step 16 · overlap and emphasis",
-  s16: "Student step 17 · four travel contexts",
-  s17: "Student step 18 · ten-item Grammar Detective",
-  s18: "Student step 19 · eight-item choose-the-form practice",
-  s19: "Student step 20 · Sara/Adam dialogue completion",
-  s20: "Student step 21 · context-writing challenge",
-  s21: "Student step 22 · full Robotics reading + comprehension and analysis key after attempt",
-  s22: "Student step 23 → separate Test Area · 25 questions in five levels",
-  s23: "Student step 24 → separately gated Solutions Area",
-  s24: "Student step 25 · writing workspace and source model",
-  s25: "Student step 26 · golden summary",
-  s26: "Student step 27 · curriculum map and Lesson 37 preview",
-};
-
-const COMMON_ERRORS_36 = [
-  { head: "خلط تركيبين مستقبليين", note: "لا تجمع will وgoing to في بناء واحد. اختر إطارًا واحدًا: Subject + will + V1 أو Subject + am/is/are + going to + V1." },
-  { head: "تصريف الفعل بعد will", note: "بعد will / won't يأتي V1: He will go، لا He will goes؛ وWe won't cancel، بلا to." },
-  { head: "صيغة be بعد going to", note: "بعد going to يأتي V1: going to be، لا going to is / am." },
-  { head: "بناء السؤال", note: "WILL: Will + subject + V1?؛ GOING TO: Am/Is/Are + subject + going to + V1? لا نستخدم do/does في هذا البناء." },
-  { head: "اختيار الزمن من كلمة وقت", note: "tomorrow وnext week تحددان زمن الحدث، لا نية المتحدث ولا نوع التوقع وحدهما." },
-  { head: "الدليل ليس حظرًا نحويًا", note: "يمكن أن يختار المتحدث WILL مع وجود دليل إذا أراد إبراز رأيه أو اعتقاده؛ BE GOING TO اختيار نموذجي عند إبراز الدليل، لا قانون حصري." },
-  { head: "البدائل السياقية", note: "في سؤال يسمح بأكثر من قراءة، صنّف البديل: خطأ بنيوي، أو صحيح لكنه أقل طبيعية للسياق، أو صحيح بتركيز مختلف. لا تخصم لمجرد أن صيغة أخرى أكثر نموذجية." },
+const KEY_SECTIONS = [
+  { id: "s17", label: "Grammar Detective" },
+  { id: "s18", label: "اختر الصيغة الأنسب" },
+  { id: "s19", label: "أكمل الحوار" },
+  { id: "s21", label: "Reading Challenge" },
 ];
 
 export default function TeacherGuide36({ onGoSolutions, onLock }: { onGoSolutions: () => void; onLock: () => void }) {
-  const [tab, setTab] = useState<Tab36>("plan");
-  const mapped = useMemo(() => SOURCE_SECTIONS_36.filter((section) => section.num != null), []);
-  return (
-    <div data-area="lesson36-teacher" className="space-y-4">
-      <header className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-[#e2e8f0] bg-white p-4">
-        <div>
-          <p className="text-xs font-black uppercase tracking-[.12em] text-[#64748b]">Teacher Area · Lesson 36</p>
-          <h1 className="text-xl font-black text-[#0d9488]">دليل المعلم — WILL vs BE GOING TO</h1>
-          <p className="mt-1 text-sm text-[#475569]">خمسة أقسام منظمة؛ المفاتيح الرسمية إضافات معلم منفصلة عن نص المصدر.</p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <ActionButton36 variant="secondary" onClick={onGoSolutions}>فتح منطقة الحلول</ActionButton36>
-          <ActionButton36 variant="secondary" onClick={onLock}>قفل منطقة المعلم</ActionButton36>
-        </div>
-      </header>
+  const [tab, setTab] = useState<Tab36>("overview");
+  const coverage = deckCoverage36();
+  const reveal = revealCoverage36();
+  const numbered = coverage.filter((row) => row.numeric != null);
+  const slidesOf = (id: string) => SLIDES_36.filter((slide) => slide.sections.includes(id)).map((slide) => slide.title);
 
-      <nav aria-label="أقسام دليل المعلم" className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
+  return (
+    <div data-area="l36-teacher-guide" className="space-y-4">
+      <Card36 eyebrow="دليل المعلم" title="الدرس 36 — WILL vs BE GOING TO">
+        <p className="text-sm leading-7 text-slate-700">
+          تجربة الدرس مبنية على غلاف الدرس الأول نفسه: شريط جانبي، شريط تقدم، أزرار تنقل عائمة، ودرج فهرس على الهاتف. المحتوى التعليمي كامل بترتيبه الأصلي:
+          <span className="font-bold"> {STEP_COUNT_36} خطوة</span> موزعة على <span className="font-bold">{STAGES_36.length} مراحل</span>، مع أربعة أنواع من المساحات: خطوات الطالب، الاختبار، الحلول، والمعلم.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <ActionButton36 variant="secondary" onClick={onGoSolutions}>الحلول التفصيلية</ActionButton36>
+          <ActionButton36 variant="ghost" onClick={onLock}>قفل منطقة المعلم</ActionButton36>
+        </div>
+      </Card36>
+
+      <nav aria-label="أقسام دليل المعلم" className="flex flex-wrap gap-2">
         {TABS.map((item) => (
-          <button key={item.id} type="button" aria-pressed={tab === item.id} onClick={() => setTab(item.id)} className={`${FOCUS_36} min-h-12 rounded-xl border px-3 py-2 text-sm font-black transition-colors motion-reduce:transition-none ${tab === item.id ? "border-[#0d9488] bg-[#0d9488] text-white" : "border-[#cfd8d2] bg-white text-[#334155] hover:bg-[#ccfbf1]"}`}>
+          <button
+            key={item.id}
+            type="button"
+            aria-pressed={tab === item.id}
+            onClick={() => setTab(item.id)}
+            className={`${FOCUS_36} min-h-11 rounded-xl border px-3 py-2 text-sm font-bold transition ${tab === item.id ? "border-slate-900 bg-slate-900 text-white" : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"}`}
+          >
             {item.label}
           </button>
         ))}
       </nav>
 
-      {tab === "plan" ? <TeachingPlan36 /> : null}
-      {tab === "coverage" ? <Coverage36 sections={mapped} /> : null}
-      {tab === "practice" ? <PracticeKeys36 /> : null}
-      {tab === "test" ? <TeacherTestSolutions36 /> : null}
-      {tab === "writing" ? <WritingSupport36 /> : null}
-    </div>
-  );
-}
+      {tab === "overview" ? (
+        <Card36 title="كيف يتحقق الدرس من الفهم؟">
+          <ul className="list-disc space-y-1.5 ps-5 text-sm leading-7 text-slate-700">
+            <li>كل مثال إنجليزي معزول LTR، والعربية تبقى RTL بلا انقلاب في الجمل المختلطة.</li>
+            <li>مختبر القرار (cook / study) يطلب وصف الاستخدام قبل كشف التفسير.</li>
+            <li>مختبر المواقف (travel) يطلب الصيغة وسبب الاختيار معًا.</li>
+            <li>عدسة التوقع تقارن الرأي العام بالدليل الحاضر، وتؤكد أن الدليل لا يمنع WILL.</li>
+            <li>Grammar Detective: عشر جمل، وتصحيح مقبول واحد على الأقل لكل جملة، مع بدائل موثّقة.</li>
+            <li>الاختبار: 25 سؤالًا، لا نتيجة قبل التسليم، وتصحيح موضوعي للأسئلة 1–15 ونماذج للأسئلة 16–25.</li>
+            <li>مهمة الكتابة: عداد جمل 12–15، وثمانية متطلبات، ونموذج افتتاحي ظاهر للمقارنة.</li>
+          </ul>
+          <p className="mt-2 text-sm leading-7 text-slate-700">
+            ملاحظة تصميمية: أُبقيت كل الجمل والأمثلة بترتيبها؛ وما أُضيف هو تنظيم العرض والتفاعل فقط، لا محتوى بديل.
+          </p>
+        </Card36>
+      ) : null}
 
-function TeachingPlan36() {
-  return (
-    <div className="space-y-4">
-      <Card36 eyebrow="Platform-authored teacher addition" title="مسار تدريس مقترح">
-        <ol className="list-decimal space-y-2 ps-5 text-base leading-7 text-[#334155]">
-          <li><strong>ابدأ بالمعنى:</strong> قارن قراري الحاسوب في §2 قبل مراجعة الصيغ. اطلب من المتعلمين تحديد متى نشأت النية.</li>
-          <li><strong>انقل التفكير إلى الموقف:</strong> استخدم المصباح والكراسي والطبخ والدراسة في §§4–5، ولا تجعل الأفعال مفاتيح آلية لاختيار البناء.</li>
-          <li><strong>افصل التوقع عن الدليل:</strong> في §§6–7 اطلب وصف الدليل الحالي أولًا، ثم وضّح أن WILL لا تصبح خطأ بسببه.</li>
-          <li><strong>وسّع وظائف WILL:</strong> اربط الوعود والعروض والاستعداد في §§8–9، ثم اختبر أثر الوقت في §10.</li>
-          <li><strong>حلّل شكل الجملة:</strong> راجع §§11–13 بعد أن يفهم المتعلم المعنى، مع قراءة الصيغ الإنجليزية LTR.</li>
-          <li><strong>حلّل الحوار ثم وسّع السياق:</strong> استخدم §§14–16، واسمح بالتداخل عندما لا يفرض السياق معنى واحدًا.</li>
-          <li><strong>درّب ثم اختبر:</strong> نفّذ نشاطات §§17–21 قبل فتح Master Test في منطقة مستقلة؛ لا تعرض مفاتيح الاختبار قبل التسليم/فتح المعلم.</li>
-          <li><strong>اختم بالإنتاج:</strong> استخدم §24 checklist للتأمل الذاتي، ثم اربط §25 بالتمهيد الدقيق للدرس 37 في §26.</li>
-        </ol>
-      </Card36>
-      <Card36 eyebrow="Teaching priorities" title="أسئلة تشخيصية متكررة">
-        <ul className="list-disc space-y-2 ps-5 text-base leading-7 text-[#334155]">
-          <li>متى اتُخذ القرار؟</li>
-          <li>هل يعرض المتحدث خطة سابقة، أو وعدًا/عرضًا لحظيًا؟</li>
-          <li>هل يقدّم اعتقادًا عامًا، أم يختار إبراز دليل حاضر؟</li>
-          <li>إذا كانت الصيغتان ممكنتين، ما التركيز الذي يريد المتحدث إبرازه؟</li>
-          <li>هل توجد كلمة زمنية فقط، أم سياق يكشف سبب اختيار الصيغة؟</li>
-        </ul>
-      </Card36>
-      <Card36 eyebrow="Common error repair · platform-authored" title="أخطاء متوقعة وكيفية معالجتها">
-        <div className="grid gap-3 md:grid-cols-2">
-          {COMMON_ERRORS_36.map((item) => <article key={item.head} className="rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] p-3"><h3 className="font-black text-[#0d9488]">{item.head}</h3><p className="mt-1 text-sm leading-6 text-[#334155]">{item.note}</p></article>)}
+      {tab === "coverage" ? (
+        <Card36 title={`خريطة التغطية — ${numbered.length} وحدة مرقّمة`}>
+          <div className="space-y-2">
+            {numbered.map((row) => (
+              <article key={row.section} data-coverage-section={row.section} className="rounded-2xl border border-slate-200 bg-white p-3">
+                <header className="flex flex-wrap items-center gap-2">
+                  <span dir="ltr" className="font-en rounded-lg bg-slate-900 px-2 py-0.5 text-xs font-bold text-white tabular-nums">
+                    {String(row.numeric).padStart(2, "0")}
+                  </span>
+                  <h3 className="min-w-0 flex-1 text-sm font-bold text-slate-900">
+                    <MixedText36 text={row.title} />
+                  </h3>
+                  <span className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${row.missing.length === 0 && row.duplicates.length === 0 && !row.outOfOrder ? "bg-emerald-100 text-emerald-900" : "bg-rose-100 text-rose-900"}`}>
+                    {row.missing.length === 0 && row.duplicates.length === 0 && !row.outOfOrder ? "مغطى كاملًا" : "يحتاج مراجعة"}
+                  </span>
+                </header>
+                <p className="mt-1 text-xs leading-6 text-slate-600">
+                  الأسطر: <span dir="ltr" className="font-en tabular-nums">{row.covered.length}/{row.expected}</span> · الخطوات: {slidesOf(row.section).join(" · ") || "—"}
+                </p>
+              </article>
+            ))}
+            {coverage.filter((row) => row.numeric == null).map((row) => (
+              <article key={row.section} data-coverage-section={row.section} className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
+                <h3 className="text-sm font-bold text-slate-900">المقدمة الافتتاحية</h3>
+                <p className="mt-1 text-xs text-slate-600">
+                  الأسطر: <span dir="ltr" className="font-en">{row.covered.length}/{row.expected}</span> · الخطوات: {slidesOf(row.section).join(" · ")}
+                </p>
+              </article>
+            ))}
+          </div>
+          <div className="mt-3 rounded-2xl border border-slate-200 bg-slate-50 p-3 text-xs leading-6 text-slate-600">
+            أسطر مفاتيح التدريبات والقراءة المغطاة: {reveal.map((row) => `${row.section}: ${row.expected - row.missing.length}/${row.expected}`).join(" · ")}. تُعرض هذه المفاتيح بعد محاولة المتعلم داخل الأنشطة.
+          </div>
+        </Card36>
+      ) : null}
+
+      {tab === "test" ? (
+        <Card36 title="حلول الاختبار النهائي — 25 سؤالًا">
+          <div className="space-y-2">
+            {TEST_SOLUTIONS_36.map((solution) => (
+              <article key={solution.n} data-teacher-solution={solution.n} className="rounded-2xl border border-slate-200 bg-white p-3">
+                <header className="flex flex-wrap items-center justify-between gap-2">
+                  <h3 className="text-sm font-bold text-slate-900">
+                    السؤال <span dir="ltr" className="font-en">{solution.n}</span>
+                  </h3>
+                  <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-bold text-slate-600">
+                    {solution.judgment === "open-model" ? "نموذج مفتوح" : solution.judgment === "grammatical-repair" ? "إصلاح نحوي" : solution.judgment === "contextual" ? "فهم معنى" : "الأنسب للسياق"}
+                  </span>
+                </header>
+                <p className="mt-1 text-sm leading-7 text-slate-800">
+                  <span className="font-bold">الإجابة: </span>
+                  <span dir="auto"><MixedText36 text={solution.answer} /></span>
+                </p>
+                <p className="text-xs leading-6 text-slate-600">
+                  <span className="font-bold">التفسير: </span>
+                  <span dir="auto"><MixedText36 text={solution.explanation} /></span>
+                </p>
+                {solution.alternatives?.length ? (
+                  <ul className="mt-1 list-disc space-y-0.5 ps-5 text-xs leading-6 text-slate-600">
+                    {solution.alternatives.map((line) => (
+                      <li key={line} dir="auto"><MixedText36 text={line} /></li>
+                    ))}
+                  </ul>
+                ) : null}
+              </article>
+            ))}
+          </div>
+        </Card36>
+      ) : null}
+
+      {tab === "keys" ? (
+        <div className="space-y-3">
+          {KEY_SECTIONS.map((entry) => {
+            const section = SOURCE_SECTIONS_36.find((candidate) => candidate.id === entry.id);
+            if (!section?.revealUnits) return null;
+            return (
+              <Card36 key={entry.id} title={entry.label}>
+                <ol className="space-y-1">
+                  {section.revealUnits.map((line, index) => (
+                    <li key={`${entry.id}-${index}`} className="text-sm leading-7 text-slate-700">
+                      <MixedText36 text={line} />
+                    </li>
+                  ))}
+                </ol>
+              </Card36>
+            );
+          })}
+          <Card36 title="تحليل قراءة الروبوت">
+            <ol className="space-y-1">
+              {(SOURCE_SECTIONS_36.find((section) => section.id === "s21")?.revealUnits ?? []).slice(9).map((line, index) => (
+                <li key={`analysis-${index}`} className="text-sm leading-7 text-slate-700">
+                  <MixedText36 text={line} />
+                </li>
+              ))}
+            </ol>
+          </Card36>
         </div>
-      </Card36>
+      ) : null}
+
+      {tab === "notes" ? (
+        <div className="space-y-3">
+          <Callout36 tone="warn" title="إعادة بناء الجدول">
+            جدول الوحدة الثالثة وصل مفكوك الأعمدة في النص الأصلي. أُعيد بناؤه كجدول دلالي بالعناوين الثمانية الأصلية نفسها دون إضافة صفوف.
+          </Callout36>
+          <Callout36 tone="note" title="مفتاح الاختبار">
+            القسم 23 يذكر عنوان الحلول وعبارة كشفها فقط، ولا يتضمن مفتاحًا فعليًا. الحلول الخمسة والعشرون في هذا الدليل مكتوبة للمنصة، ومصنّفة بحسب الحكم: الأنسب للسياق، أو إصلاح نحوي، أو سؤال معنى، أو نموذج مفتوح.
+          </Callout36>
+          <Callout36 tone="neutral" title="الترميز في العنوان الإنجليزي">
+            ورد العنوان الإنجليزي بصيغة `&amp;` في النص المورّد؛ يُعرض في الواجهة بعلامة `&` الطبيعية، مع بقاء النص كما هو في السجل.
+          </Callout36>
+          <Callout36 tone="success" title="الدقة التعليمية">
+            الدرس يعرض التداخل بين الصيغتين، ويقبل البديل الصحيح نحويًا حين يسمح السياق. الأسئلة المفتوحة (16–25) لا تُصحَّح آليًا، ويُعرض لكل منها نموذج وتفسير.
+          </Callout36>
+        </div>
+      ) : null}
     </div>
   );
-}
-
-function Coverage36({ sections }: { sections: typeof SOURCE_SECTIONS_36 }) {
-  return (
-    <div data-coverage-section-count={sections.length} className="space-y-4">
-      <Card36 eyebrow="Source coverage · section by section" title="خريطة تغطية الأقسام الـ26">
-        <p className="text-sm leading-6 text-[#475569]">كل عنوان أدناه يطابق رقم المصدر، ويربطه بخطوة المتعلم وبمنطقة التمرين/الاختبار. افتح أي صف للاطلاع على وحدات المصدر كاملة، بما فيها مفاتيح التمارين الأصلية.</p>
-        <PlatformNote36>المحتوى المعروض هنا هو سجل تغطية للمعلم. مفاتيح الاختبار الرسمية ليست من المصدر؛ راجع تبويب «حلول الاختبار» للإضافات المعلمة.</PlatformNote36>
-        <ol className="space-y-2">
-          {sections.map((section) => (
-            <li key={section.id} data-coverage-section={section.num}>
-              <details className="rounded-2xl border border-[#e2e8f0] bg-white">
-                <summary className={`${FOCUS_36} cursor-pointer list-inside px-3 py-3 text-sm font-black text-[#0d9488]`}>
-                  §{section.num} · <Rich text={section.title} />
-                  <span className="mt-1 block text-xs font-bold text-[#64748b]">{DESTINATION_36[section.id]}</span>
-                </summary>
-                <div className="space-y-1 border-t border-[#e2e8f0] bg-[#f8fafc] p-3">
-                  {section.tableRows ? (
-                    <ul className="list-disc space-y-1 ps-5 text-sm text-[#334155]">{section.tableRows.map(([situation, form]) => <li key={situation}><Rich text={`${situation} — ${form}`} /></li>)}</ul>
-                  ) : null}
-                  {section.units.map((line, index) => <SourceLine36 key={index} sectionId={section.id} index={index} text={line} />)}
-                  {section.revealUnits?.length ? <div className="mt-2 rounded-xl border border-[#5eead4] bg-[#ccfbf1] p-2"><p className="text-xs font-black text-[#0f766e]">مفتاح تدريب أصلي / وحدات كشف من المصدر</p>{section.revealUnits.map((line, index) => <SourceLine36 key={index} sectionId={section.id} index={index} kind="reveal" text={line} />)}</div> : null}
-                </div>
-              </details>
-            </li>
-          ))}
-        </ol>
-      </Card36>
-      <Card36 eyebrow="Source-shape audit notes" title="ملاحظات وفاء المصدر">
-        <ul className="list-disc space-y-2 ps-5 text-sm leading-6 text-[#334155]">
-          <li>§3 أعيد بناؤه في جدول دلالي ذي رؤوس وصفوف واضحة، مع صفوف المصدر الثمانية دون إضافة معنى.</li>
-          <li>§22 موجود في Test Area مرة واحدة بوصفه اختبارًا رسميًا من 25 سؤالًا وخمسة مستويات.</li>
-          <li>§23 يورد العنوان وعبارة كشف الحلول فقط؛ كل حل رسمي في التطبيق موسوم بأنه إضافة تعليمية.</li>
-          <li>§21 القراءة وأسئلتها وإجاباتها وتحليلها متتبعة إلى وحدات المصدر في الخطوة نفسها.</li>
-          <li>أسئلة Q21–Q25 مفتوحة؛ الحلول النموذجية لا تمثل إجابة وحيدة، ويُقبل البديل النحوي المدعوم بالسياق.</li>
-        </ul>
-      </Card36>
-    </div>
-  );
-}
-
-function PracticeKeys36() {
-  const s17 = sourceSectionForTeacher("s17");
-  const s18 = sourceSectionForTeacher("s18");
-  const s19 = sourceSectionForTeacher("s19");
-  const reading = sourceSectionForTeacher("s21");
-  return (
-    <div className="space-y-4">
-      <Card36 eyebrow="§17 · supplied answer key" title="Grammar Detective — الإجابات العشر">
-        <p className="text-sm leading-6 text-[#475569]">الإجابات المدرجة في نص الدرس المورّد. الشروح التوسعية أدناه إضافة تعليمية من المعلم.</p>
-        <div className="space-y-2">{DETECTIVE_ITEMS_36.map((item) => <div key={item.n} className="rounded-xl border border-[#e2e8f0] bg-white p-3"><p className="text-sm font-bold text-[#64748b]">{item.n}. <Rich text={item.prompt} /></p><p className="mt-1 text-base font-black text-[#0d9488]">{item.answers.map((answer, index) => <span key={answer}><span dir="ltr" className="font-en">{answer}</span>{index < item.answers.length - 1 ? " / " : ""}</span>)}</p><p className="mt-1 text-sm leading-6 text-[#334155]"><span className="font-black">تعليل معلم:</span> {item.feedback}</p></div>)}</div>
-        <p className="text-sm leading-6 text-[#334155]">في مثال الكوب، الإجابة المعتادة تعليميًا هي <span dir="ltr" className="font-en">Look! The glass is going to fall.</span>، لكن المصدر يصرح بأن <span dir="ltr" className="font-en">Look! The glass will fall.</span> ممكنة نحويًا؛ لا تصحّحها بوصفها خطأ.</p>
-        {s17.revealUnits?.length ? <details className="rounded-xl border border-[#e2e8f0] bg-[#f8fafc] p-3"><summary className={`${FOCUS_36} cursor-pointer font-black text-[#0d9488]`}>إظهار المفتاح الأصلي كاملًا</summary>{s17.revealUnits.map((line, index) => <SourceLine36 key={index} sectionId="s17" index={index} kind="reveal" text={line} />)}</details> : null}
-      </Card36>
-
-      <Card36 eyebrow="§18 · supplied key and explanations" title="اختر الصيغة الأنسب — الإجابات الثماني">
-        {EXERCISE18_ITEMS_36.map((item) => <p key={item.n} className="rounded-xl border border-[#e2e8f0] bg-white p-3 text-sm leading-6 text-[#334155]"><strong className="text-[#0d9488]">{item.n}. {item.answer}</strong> — {item.explanation}</p>)}
-        {s18.revealUnits?.map((line, index) => <SourceLine36 key={index} sectionId="s18" index={index} kind="reveal" text={line} />)}
-      </Card36>
-
-      <Card36 eyebrow="§19 · supplied key and explanations" title="حوار Sara وAdam">
-        <div className="space-y-2">{DIALOGUE19_ITEMS_36.map((item) => <div key={item.n} className="rounded-xl border border-[#e2e8f0] bg-white p-3"><p className="font-black text-[#0d9488]">الفراغ {item.n}: <span dir="ltr" className="font-en">{item.answer}</span></p><p className="text-sm leading-6 text-[#334155]">{item.explanation}</p></div>)}</div>
-        <p className="mt-2 text-sm leading-6 text-[#334155]">وجود جدول الاختبارات دليل سياقي، لكنه لا يمنع استعمال <span dir="ltr" className="font-en">will</span> عندما تعبّر الجملة عن اعتقاد المتحدث، كما يؤكد المصدر.</p>
-        {s19.revealUnits?.map((line, index) => <SourceLine36 key={index} sectionId="s19" index={index} kind="reveal" text={line} />)}
-      </Card36>
-
-      <Card36 eyebrow="§21 · supplied reading key" title="إجابات القراءة وتحليلها النحوي">
-        <p className="text-xs font-black text-[#64748b]">أسئلة المصدر ({READING_QUESTIONS_36.length}) والإجابات ({READING_ANSWERS_36.length})</p>
-        <ol className="list-decimal space-y-2 ps-5">{READING_QUESTIONS_36.map((question, index) => <li key={question} className="text-sm leading-6 text-[#334155]"><Rich text={question} /><p className="font-bold text-[#0d9488]"><Rich text={READING_ANSWERS_36[index]} /></p></li>)}</ol>
-        <h3 className="mt-3 font-black text-[#0d9488]">التحليل النحوي ({READING_ANALYSIS_36.length} بنود)</h3>
-        <ol className="list-decimal space-y-1 ps-5 text-sm leading-6 text-[#334155]">{READING_ANALYSIS_36.map((line) => <li key={line} dir="auto"><Rich text={line} /></li>)}</ol>
-        {reading.revealUnits?.map((line, index) => <SourceLine36 key={index} sectionId="s21" index={index} kind="reveal" text={line} />)}
-      </Card36>
-    </div>
-  );
-}
-
-function TeacherTestSolutions36() {
-  return (
-    <div data-teacher-test-solutions="25" className="space-y-4">
-      <Card36 eyebrow="§22 questions · §23 key" title="حلول الاختبار الرسمي — 25 سؤالًا">
-        <PlatformNote36>كل الإجابات والشروح في هذا التبويب إضافات معلّمة أعدّتها المنصة؛ لا يقدّم المصدر مفتاحًا فعليًا في §23. البدائل المقبولة موضحة صراحةً.</PlatformNote36>
-        <p className="text-sm leading-6 text-[#475569]">تظل الأسئلة 16–25 تفسيرية/مفتوحة. استخدم نماذج الإجابة ومعايير قبول المعنى؛ لا تحوّلها إلى اختيار من متعدد أو إجابة واحدة جامدة.</p>
-      </Card36>
-      {TEST_LEVELS_36.map((level, index) => {
-        const solutions = TEST_SOLUTIONS_36.filter((solution) => solution.n >= level.questions[0].n && solution.n <= level.questions.at(-1)!.n);
-        return (
-          <details key={level.id} className="rounded-2xl border border-[#e2e8f0] bg-white" open={index === 0}>
-            <summary className={`${FOCUS_36} cursor-pointer px-4 py-3 font-black text-[#0d9488]`}>
-              {level.title} · Q{level.questions[0].n}–{level.questions.at(-1)!.n}
-            </summary>
-            <div className="space-y-3 border-t border-[#e2e8f0] p-3">
-              {solutions.map((solution) => <article key={solution.n} data-teacher-solution={solution.n} className="rounded-xl border border-[#e2e8f0] bg-[#f8fafc] p-3">
-                <h3 className="font-black text-[#0d9488]">Question {solution.n} — {solution.judgment}</h3>
-                <p className="mt-1 text-sm leading-6 text-[#334155]"><strong>نموذج/مفتاح:</strong> <Rich text={solution.answer} /></p>
-                <p className="mt-1 text-sm leading-6 text-[#334155]"><strong>التفسير:</strong> {solution.explanation}</p>
-                {solution.alternatives?.length ? <ul className="mt-1 list-disc space-y-1 ps-5 text-sm leading-6 text-[#334155]">{solution.alternatives.map((line) => <li key={line}>{line}</li>)}</ul> : null}
-                <p className="mt-2 text-xs font-bold text-[#76531e]">Platform-authored teacher addition · reference: Lesson 36 §22 / §23</p>
-              </article>)}
-            </div>
-          </details>
-        );
-      })}
-    </div>
-  );
-}
-
-function WritingSupport36() {
-  return (
-    <div className="space-y-4">
-      <Card36 eyebrow="§24 · source task" title="My Future Decisions and Plans">
-        <p className="text-sm leading-6 text-[#475569]">المتطلبات الثمانية ونموذج الافتتاح محفوظة في Student Area §24. يعرض هذا القسم روبركًا اختياريًا من إعداد المعلم، ولا يستبدل أي شرط مصدري.</p>
-        <ol className="list-decimal space-y-1 ps-5 text-sm leading-6 text-[#334155]">{WRITING_CRITERIA_36.map((criterion) => <li key={criterion}><Rich text={criterion} /></li>)}</ol>
-        <div className="rounded-xl border border-[#e2e8f0] bg-[#f8fafc] p-3"><h3 className="font-black text-[#0d9488]">نموذج الافتتاح الأصلي</h3>{WRITING_MODEL_36.map((line) => <p key={line} dir="auto" className="mt-1 text-sm leading-6 text-[#334155]"><Rich text={line} /></p>)}</div>
-      </Card36>
-      <Card36 eyebrow="Optional scoring guide · platform-authored" title="مؤشرات تصحيح تكويني مقترحة">
-        <ul className="list-disc space-y-2 ps-5 text-sm leading-6 text-[#334155]">
-          <li>استيفاء العدد المطلوب: 12–15 جملة، مع تماسك الفقرة وتسلسل أفكارها.</li>
-          <li>عدّ الجمل التي تطابق أنواع الاستخدام المطلوبة، لا الكلمات المفتاحية وحدها.</li>
-          <li>التحقق من بنية المساعد وV1 والنفي والأسئلة، مع عدم فرض صياغة نموذجية واحدة.</li>
-          <li>في توقع الدليل، يُقبل أي وصف واضح للدليل الحالي والاستنتاج المستقبلي.</li>
-          <li>تُقبل التعبيرات الزمنية المختلفة إذا أدت معناها؛ لا تُربط علامة الزمن تلقائيًا بصيغة واحدة.</li>
-          <li>لا تُقيّم الفقرة آليًا بوصفها صحيحة/خاطئة؛ استخدم القائمة كأداة مراجعة ومناقشة مع الطالب.</li>
-        </ul>
-      </Card36>
-    </div>
-  );
-}
-
-function sourceSectionForTeacher(id: string) {
-  const found = SOURCE_SECTIONS_36.find((section) => section.id === id);
-  if (!found) throw new Error(`Teacher guide missing source section ${id}`);
-  return found;
 }

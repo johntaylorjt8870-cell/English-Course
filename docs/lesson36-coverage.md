@@ -12,6 +12,14 @@
 - Native student sequence: `cover`, then `s01`–`s26` in source order. Sections 22 and 23 keep their assessment/solutions content in the separate Test and Solutions Areas; their student steps are navigable launch/transition steps. The original 25 questions live once in the Test Area, not in a second practice copy.
 - Formal test answer explanations are platform-authored teacher additions: source section 23 contains only its heading and `عرض الحلول التفصيلية`, not a supplied key.
 
+## Shell, layout, and direction contract
+
+- The lesson renders inside the real shared `src/shared/Lesson1Shell.tsx` (`rootDataShell="lesson-1"`), exactly like the other numbered lessons. There is no local shell, rail, drawer, or prev/next implementation under `lesson36/`.
+- `Lesson1Shell` also supplies the progress header, the mobile drawer and its trigger, the floating step navigation, and the site-lock slot; the lesson only passes step groups, labels, counters, and handlers.
+- No lesson-specific CSS file, palette, or font is introduced. All surfaces use the shared Tailwind tokens and the shared `Signature`/`SignatureGhost` artwork.
+- English inside Arabic prose is isolated with the shared direction utilities: whole English lines go through the shared `En` component, and mixed lines wrap every Latin run in an LTR island (`dir="ltr" lang="en"`, `unicode-bidi: isolate`) while keeping every source character — including the spaces around the run — unchanged.
+- Headings keep the supplied `&` (`Mastering Future Decisions & Predictions`); the HTML entity from the prompt is never shown literally.
+
 ## Pre-implementation source audit notes
 
 1. Section 3's source table is malformed in the supplied Markdown/plain-text layout. Reconstruct it as a semantic HTML table, preserving the two exact headers and all eight intended category/form pairs below; do not infer additional rows.
@@ -75,4 +83,4 @@ Render this accessible table in the source order shown. No additional rows are p
 
 ## Planned audit contract
 
-`scripts/audit-lesson36.mjs` exercises the source ledger, exact counts and representative source strings, all section-to-step mappings, reconstructed table rows, guided answer counts, reading counts, the five test boundaries and 25 detailed solutions, separation/gating of Student/Test/Solutions/Teacher, writing criteria/model, route/navigation registration, keyboard navigation, form submission, and English-direction/contrast contracts. It renders and exercises the relevant interactions rather than treating headings alone as proof of coverage; the current audit passes 162 assertions.
+`scripts/audit-lesson36.mjs` exercises the source ledger, exact counts and representative source strings, all section-to-step mappings, reconstructed table rows, guided answer counts, reading counts, the five test boundaries and 25 detailed solutions, separation/gating of Student/Test/Solutions/Teacher, writing criteria/model, route/navigation registration, keyboard navigation, form submission, and English-direction/contrast contracts. It renders and exercises the relevant interactions rather than treating headings alone as proof of coverage: every lab is opened (an option is chosen, an answer is typed, the supplied explanation is revealed) and the rendered text is compared with the ledger line by line. Inline-blank dialogue lines are checked as prompt segments around their live input. The current audit reports 795 assertions.

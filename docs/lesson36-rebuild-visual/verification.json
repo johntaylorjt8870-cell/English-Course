@@ -1,0 +1,442 @@
+{
+  "baseUrl": "http://127.0.0.1:4173/English-Course/#/lesson/36",
+  "checks": 94,
+  "passed": 94,
+  "failures": [],
+  "viewports": [
+    {
+      "viewport": "1920x1080",
+      "shell": {
+        "direction": "rtl",
+        "bg": "rgb(244, 246, 251)",
+        "shellFont": "Rubik, Tajawal, sans-serif",
+        "rail": {
+          "x": 1632,
+          "y": 49,
+          "width": 288,
+          "height": 1031,
+          "top": 49,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 1632
+        },
+        "main": {
+          "x": 0,
+          "y": 93,
+          "width": 1632,
+          "height": 921,
+          "top": 93,
+          "right": 1632,
+          "bottom": 1014,
+          "left": 0
+        },
+        "content": {
+          "x": 368,
+          "y": 109,
+          "width": 896,
+          "height": 717,
+          "top": 109,
+          "right": 1264,
+          "bottom": 826,
+          "left": 368
+        },
+        "lock": {
+          "x": 656.5625,
+          "y": 1027,
+          "width": 99.4375,
+          "height": 40,
+          "top": 1027,
+          "right": 756,
+          "bottom": 1067,
+          "left": 656.5625
+        },
+        "prev": {
+          "x": 876.40625,
+          "y": 1029,
+          "width": 92.046875,
+          "height": 36,
+          "top": 1029,
+          "right": 968.453125,
+          "bottom": 1065,
+          "left": 876.40625
+        },
+        "next": {
+          "x": 775,
+          "y": 1029,
+          "width": 88.40625,
+          "height": 36,
+          "top": 1029,
+          "right": 863.40625,
+          "bottom": 1065,
+          "left": 775
+        },
+        "pill": {
+          "x": 0,
+          "y": 1014,
+          "width": 1632,
+          "height": 66,
+          "top": 1014,
+          "right": 1632,
+          "bottom": 1080,
+          "left": 0
+        },
+        "step": "cover",
+        "width": 1920,
+        "scrollWidth": 1920,
+        "menuButton": null,
+        "clipped": []
+      },
+      "contrast": {
+        "sampledTextNodes": 45,
+        "failureCount": 0,
+        "failures": [],
+        "worst": {
+          "ratio": 7.58,
+          "text": "الخطوة 1 من 36"
+        }
+      },
+      "focus": {
+        "found": true,
+        "focusVisible": true,
+        "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(255, 255, 255) 0px 0px 0px 2px, oklch(0.208 0.042 265.755) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "outline": "none",
+        "tag": "BUTTON"
+      }
+    },
+    {
+      "viewport": "1280x800",
+      "shell": {
+        "direction": "rtl",
+        "bg": "rgb(244, 246, 251)",
+        "shellFont": "Rubik, Tajawal, sans-serif",
+        "rail": {
+          "x": 992,
+          "y": 49,
+          "width": 288,
+          "height": 751,
+          "top": 49,
+          "right": 1280,
+          "bottom": 800,
+          "left": 992
+        },
+        "main": {
+          "x": 0,
+          "y": 93,
+          "width": 992,
+          "height": 641,
+          "top": 93,
+          "right": 992,
+          "bottom": 734,
+          "left": 0
+        },
+        "content": {
+          "x": 48,
+          "y": 109,
+          "width": 896,
+          "height": 717,
+          "top": 109,
+          "right": 944,
+          "bottom": 826,
+          "left": 48
+        },
+        "lock": {
+          "x": 336.5625,
+          "y": 747,
+          "width": 99.4375,
+          "height": 40,
+          "top": 747,
+          "right": 436,
+          "bottom": 787,
+          "left": 336.5625
+        },
+        "prev": {
+          "x": 556.40625,
+          "y": 749,
+          "width": 92.046875,
+          "height": 36,
+          "top": 749,
+          "right": 648.453125,
+          "bottom": 785,
+          "left": 556.40625
+        },
+        "next": {
+          "x": 455,
+          "y": 749,
+          "width": 88.40625,
+          "height": 36,
+          "top": 749,
+          "right": 543.40625,
+          "bottom": 785,
+          "left": 455
+        },
+        "pill": {
+          "x": 0,
+          "y": 734,
+          "width": 992,
+          "height": 66,
+          "top": 734,
+          "right": 992,
+          "bottom": 800,
+          "left": 0
+        },
+        "step": "cover",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "menuButton": null,
+        "clipped": []
+      },
+      "contrast": {
+        "sampledTextNodes": 45,
+        "failureCount": 0,
+        "failures": [],
+        "worst": {
+          "ratio": 7.58,
+          "text": "الخطوة 1 من 36"
+        }
+      },
+      "focus": {
+        "found": true,
+        "focusVisible": true,
+        "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(255, 255, 255) 0px 0px 0px 2px, oklch(0.208 0.042 265.755) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "outline": "none",
+        "tag": "BUTTON"
+      }
+    },
+    {
+      "viewport": "768x900",
+      "shell": {
+        "direction": "rtl",
+        "bg": "rgb(244, 246, 251)",
+        "shellFont": "Rubik, Tajawal, sans-serif",
+        "rail": null,
+        "main": {
+          "x": 0,
+          "y": 101,
+          "width": 768,
+          "height": 733,
+          "top": 101,
+          "right": 768,
+          "bottom": 834,
+          "left": 0
+        },
+        "content": {
+          "x": 24,
+          "y": 117,
+          "width": 720,
+          "height": 717,
+          "top": 117,
+          "right": 744,
+          "bottom": 834,
+          "left": 24
+        },
+        "lock": {
+          "x": 224.5625,
+          "y": 847,
+          "width": 99.4375,
+          "height": 40,
+          "top": 847,
+          "right": 324,
+          "bottom": 887,
+          "left": 224.5625
+        },
+        "prev": {
+          "x": 444.40625,
+          "y": 849,
+          "width": 92.046875,
+          "height": 36,
+          "top": 849,
+          "right": 536.453125,
+          "bottom": 885,
+          "left": 444.40625
+        },
+        "next": {
+          "x": 343,
+          "y": 849,
+          "width": 88.40625,
+          "height": 36,
+          "top": 849,
+          "right": 431.40625,
+          "bottom": 885,
+          "left": 343
+        },
+        "pill": {
+          "x": 0,
+          "y": 834,
+          "width": 768,
+          "height": 66,
+          "top": 834,
+          "right": 768,
+          "bottom": 900,
+          "left": 0
+        },
+        "step": "cover",
+        "width": 768,
+        "scrollWidth": 768,
+        "menuButton": {
+          "x": 712,
+          "y": 61,
+          "width": 40,
+          "height": 40,
+          "top": 61,
+          "right": 752,
+          "bottom": 101,
+          "left": 712
+        },
+        "clipped": []
+      },
+      "contrast": {
+        "sampledTextNodes": 45,
+        "failureCount": 0,
+        "failures": [],
+        "worst": {
+          "ratio": 7.58,
+          "text": "الخطوة 1 من 36"
+        }
+      },
+      "focus": {
+        "found": true,
+        "focusVisible": true,
+        "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(255, 255, 255) 0px 0px 0px 2px, oklch(0.208 0.042 265.755) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "outline": "none",
+        "tag": "BUTTON"
+      }
+    },
+    {
+      "viewport": "375x812",
+      "shell": {
+        "direction": "rtl",
+        "bg": "rgb(244, 246, 251)",
+        "shellFont": "Rubik, Tajawal, sans-serif",
+        "rail": null,
+        "main": {
+          "x": 0,
+          "y": 97,
+          "width": 375,
+          "height": 649,
+          "top": 97,
+          "right": 375,
+          "bottom": 746,
+          "left": 0
+        },
+        "content": {
+          "x": 12,
+          "y": 113,
+          "width": 351,
+          "height": 960.25,
+          "top": 113,
+          "right": 363,
+          "bottom": 1073.25,
+          "left": 12
+        },
+        "lock": {
+          "x": 40.0625,
+          "y": 759,
+          "width": 99.4375,
+          "height": 40,
+          "top": 759,
+          "right": 139.5,
+          "bottom": 799,
+          "left": 40.0625
+        },
+        "prev": {
+          "x": 243.90625,
+          "y": 761,
+          "width": 84.046875,
+          "height": 36,
+          "top": 761,
+          "right": 327.953125,
+          "bottom": 797,
+          "left": 243.90625
+        },
+        "next": {
+          "x": 158.5,
+          "y": 761,
+          "width": 72.40625,
+          "height": 36,
+          "top": 761,
+          "right": 230.90625,
+          "bottom": 797,
+          "left": 158.5
+        },
+        "pill": {
+          "x": 0,
+          "y": 746,
+          "width": 375,
+          "height": 66,
+          "top": 746,
+          "right": 375,
+          "bottom": 812,
+          "left": 0
+        },
+        "step": "cover",
+        "width": 375,
+        "scrollWidth": 375,
+        "menuButton": {
+          "x": 319,
+          "y": 57,
+          "width": 40,
+          "height": 40,
+          "top": 57,
+          "right": 359,
+          "bottom": 97,
+          "left": 319
+        },
+        "clipped": []
+      },
+      "contrast": {
+        "sampledTextNodes": 45,
+        "failureCount": 0,
+        "failures": [],
+        "worst": {
+          "ratio": 7.58,
+          "text": "الخطوة 1 من 36"
+        }
+      },
+      "focus": {
+        "found": true,
+        "focusVisible": true,
+        "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(255, 255, 255) 0px 0px 0px 2px, oklch(0.208 0.042 265.755) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "outline": "none",
+        "tag": "BUTTON"
+      }
+    }
+  ],
+  "answerKeyIsolation": {
+    "markerSource": "solutionsData36.ts · Q22 model answer (value deliberately not stored here)",
+    "keyChunkPrefix": "solutionsData36-",
+    "answerMarkerPresentBeforeSubmit": false,
+    "keyChunkRequestedBeforeSubmit": false,
+    "keyChunkRequestedAfterSubmit": true,
+    "answerMarkerPresentAfterSubmit": true,
+    "rawAnswerStoredInArtifact": false,
+    "teacherPasswordStoredInArtifact": false,
+    "stages": [
+      {
+        "stage": "initial-load-all-four-viewports",
+        "answerMarkerInLoadedJs": false,
+        "keyModuleMarkerInLoadedJs": false,
+        "keyChunkRequested": false
+      },
+      {
+        "stage": "after-locked-solutions-entry",
+        "answerMarkerInLoadedJs": false,
+        "keyModuleMarkerInLoadedJs": false,
+        "keyChunkRequested": false
+      },
+      {
+        "stage": "after-answering-without-submitting",
+        "answerMarkerInLoadedJs": false,
+        "keyModuleMarkerInLoadedJs": false,
+        "keyChunkRequested": false
+      },
+      {
+        "stage": "after-submission",
+        "answerMarkerInLoadedJs": true,
+        "keyModuleMarkerInLoadedJs": true,
+        "keyChunkRequested": true
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "screenshotsDirectory": "docs/lesson36-rebuild-visual"
+}

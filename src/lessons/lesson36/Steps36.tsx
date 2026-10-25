@@ -1,338 +1,392 @@
-import { useState } from "react";
-import { Rich } from "../../shared/lessonKit";
-import type { Slide36 } from "./data";
-import { SOURCE_SECTIONS_36, sourceSection36 } from "./ledger36";
-import {
-  CONTEXT_LABS_36,
-  DETECTIVE_ITEMS_36,
-  DIALOGUE19_BLANK_UNIT_INDEXES_36,
-  DIALOGUE19_ITEMS_36,
-  EXERCISE18_ITEMS_36,
-  READING_QUESTION_UNIT_INDEXES_36,
-  READING_QUESTIONS_36,
-  WRITING_CRITERIA_36,
-  type ContextQuestion36,
-} from "./practiceData36";
+// ============================================================
+// Lesson 36 — slide renderer
+// ============================================================
+
 import {
   ActionButton36,
+  Callout36,
   Card36,
-  EnglishFormula36,
-  FOCUS_36,
-  PlatformNote36,
-  SourceCard36,
-  SourceLine36,
+  Chip36,
+  CompareTable36,
+  Cue36,
+  Dialogue36,
+  En36,
+  ExampleCard36,
+  FormBadge36,
+  Formulas36,
+  MixedText36,
+  Prose36,
+  SourceText36,
+  StepHead36,
+  Translations36,
 } from "./kit36";
+import { textOf, type Block, type Ref, type Slide36 } from "./content36";
+import { LESSON_TITLE_36, STEP_COUNT_36, stageOf36 } from "./deck36";
+import {
+  ChooseLab36,
+  ContextLab36,
+  ContextWritingLab36,
+  DecisionLab36,
+  DetectiveLab36,
+  DialogueFillLab36,
+  LensLab36,
+  Passage36,
+  ReadingLab36,
+  WritingLab36,
+} from "./labs36";
 
-const HIDDEN_CONTEXT_LINES_36: Record<string, number[]> = {
-  s02: [3, 5, 6, 7, 8, 12, 13, 14, 18, 19, 20, 21, 22],
-  s04: [4, 5, 10, 12, 18, 19, 20, 22, 23],
-  s05: [3, 5, 9, 11, 15, 18, 19],
-  s07: [0, 1, 5, 9, 10, 11, 12, 13, 14, 15],
-  s14: [21, 22, 23, 24, 25, 26],
-  s15: [4, 5, 6, 7, 12, 13, 14, 15, 16, 17, 18],
-  s16: [3, 4, 7, 8, 11, 12, 15, 16],
-};
-
-export default function StepView36({ slide, onGoTest, onGoSolutions }: { slide: Slide36; onGoTest: () => void; onGoSolutions: () => void }) {
-  const [revealed, setRevealed] = useState(false);
-  const section = slide.source;
-
-  if (slide.id === "s22") {
-    return (
-      <div data-step-id={slide.id} data-source-id={slide.sourceId} data-source-section={slide.sourceId} className="space-y-4">
-        <SourceCard36 section={section} skipIndexes={Array.from({ length: Math.max(0, section.units.length - 2) }, (_, index) => index + 2)} />
-        <Card36 eyebrow="Separate Formal Test Area" title="ابدأ الاختبار الرسمي">
-          <p>يتكوّن الاختبار من <span className="font-black">25 سؤالًا</span> في خمسة مستويات أصلية. تُعرض الأسئلة مرة واحدة في منطقة الاختبار المنفصلة، ولا يظهر تصحيح أو مفتاح إجابة قبل التسليم.</p>
-          <ActionButton36 onClick={onGoTest}>فتح Test Area</ActionButton36>
-        </Card36>
-      </div>
-    );
-  }
-
-  if (slide.id === "s21") {
-    return <ReadingStep36 section={section} revealed={revealed} onReveal={() => setRevealed(true)} />;
-  }
-
-  if (slide.id === "s17") {
-    return (
-      <div data-step-id={slide.id} data-source-id={slide.sourceId} data-source-section={slide.sourceId} className="space-y-4">
-        <SourceCard36 section={section} skipIndexes={Array.from({ length: 10 }, (_, index) => index + 1)} showReveal={revealed} />
-        <GrammarDetective36 onComplete={() => setRevealed(true)} />
-      </div>
-    );
-  }
-
-  if (slide.id === "s18") {
-    return (
-      <div data-step-id={slide.id} data-source-id={slide.sourceId} data-source-section={slide.sourceId} className="space-y-4">
-        <SourceCard36 section={section} skipIndexes={Array.from({ length: 10 }, (_, index) => index + 1)} showReveal={revealed} />
-        <ChooseFormPractice36 onComplete={() => setRevealed(true)} />
-      </div>
-    );
-  }
-
-  if (slide.id === "s19") {
-    return (
-      <div data-step-id={slide.id} data-source-id={slide.sourceId} data-source-section={slide.sourceId} className="space-y-4">
-        <SourceCard36 section={section} showReveal={revealed} />
-        <DialogueCompletion36 revealed={revealed} onReveal={() => setRevealed(true)} />
-      </div>
-    );
-  }
-
-  if (slide.id === "s20") {
-    return (
-      <div data-step-id={slide.id} data-source-id={slide.sourceId} data-source-section={slide.sourceId} className="space-y-4">
-        <SourceCard36 section={section} hideIndexes={[3, 4, 5, 9, 10, 11]} revealHidden={revealed} />
-        <ContextWriting36 revealed={revealed} onReveal={() => setRevealed(true)} />
-      </div>
-    );
-  }
-
-  if (slide.id === "s23") {
-    return (
-      <div data-step-id={slide.id} data-source-id={slide.sourceId} data-source-section={slide.sourceId} className="space-y-4">
-        <SourceCard36 section={section} />
-        <PlatformNote36>يذكر المصدر عنوان الحلول وعبارة كشفها، لكنه لا يتضمن مفتاحًا فعليًا. يكتب المعلم/المنصة الحلول التفصيلية في منطقة Solutions مستقلة ومقفلة حتى تسليم الاختبار أو دخول المعلم.</PlatformNote36>
-        <ActionButton36 onClick={onGoSolutions}>فتح Solutions Area</ActionButton36>
-      </div>
-    );
-  }
-
-  if (slide.id === "s24") {
-    return (
-      <div data-step-id={slide.id} data-source-id={slide.sourceId} data-source-section={slide.sourceId} className="space-y-4">
-        <SourceCard36 section={section} />
-        <WritingWorkspace36 />
-      </div>
-    );
-  }
-
-  const contextQuestions = CONTEXT_LABS_36[slide.id];
-  const hiddenLines = HIDDEN_CONTEXT_LINES_36[slide.id] ?? [];
+export default function StepView36({
+  slide,
+  index,
+  onGoTest,
+  onGoSolutions,
+}: {
+  slide: Slide36;
+  index: number;
+  onGoTest: () => void;
+  onGoSolutions: () => void;
+}) {
+  const stage = stageOf36(slide.id);
   return (
-    <div data-step-id={slide.id} data-source-id={slide.sourceId} data-source-section={slide.sourceId} className="space-y-4">
-      <SourceCard36 section={section} hideIndexes={hiddenLines} revealHidden={revealed} />
-      {contextQuestions ? <ContextPractice36 sectionId={slide.id} questions={contextQuestions} onComplete={() => setRevealed(true)} /> : null}
-      {slide.id === "s03" ? <TableReflection36 /> : null}
+    <div data-step-id={slide.id} data-step-index={index + 1} className="space-y-4">
+      <StepHead36
+        stage={{ icon: stage.icon, label: stage.label }}
+        step={index + 1}
+        total={STEP_COUNT_36}
+        title={slide.id === "cover" ? undefined : slide.title}
+        subtitle={slide.id === "cover" ? undefined : slide.subtitle}
+      />
+      {slide.blocks.map((block, blockIndex) => (
+        <div key={`${slide.id}-${blockIndex}`} className="pop" style={{ animationDelay: `${Math.min(blockIndex, 5) * 40}ms` }}>
+          <BlockView block={block} onGoTest={onGoTest} onGoSolutions={onGoSolutions} />
+        </div>
+      ))}
     </div>
   );
 }
 
-function ContextPractice36({ sectionId, questions, onComplete }: { sectionId: string; questions: ContextQuestion36[]; onComplete: () => void }) {
-  const [selected, setSelected] = useState<Record<string, string>>({});
-  const [checked, setChecked] = useState<Record<string, boolean>>({});
-  const check = (question: ContextQuestion36) => {
-    const isNew = !checked[question.id];
-    setChecked((current) => ({ ...current, [question.id]: true }));
-    if (isNew && Object.keys(checked).length + 1 >= questions.length) onComplete();
-  };
-  return (
-    <Card36 eyebrow="تفاعل مبني على أمثلة المصدر" title="مختبر السياق — أجب قبل كشف الأمثلة">
-      <PlatformNote36>نشاط تفاعلي من إعداد المنصة يستند إلى أمثلة هذا القسم. اختَر على أساس الموقف والمعنى، لا على أساس الفعل أو كلمة زمنية منفردة.</PlatformNote36>
-      <div className="space-y-3">
-        {questions.map((question, index) => {
-          const attempted = !!checked[question.id];
-          const accepted = question.accepted.includes(selected[question.id]);
-          return (
-            <fieldset key={question.id} className="rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] p-3 sm:p-4">
-              <legend className="sr-only">النشاط {index + 1}</legend>
-              <p className="font-bold leading-7 text-[#334155]"><Rich text={question.prompt} /></p>
-              <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                {question.choices.map((choice) => (
-                  <label key={choice.value} className={`flex min-h-11 cursor-pointer items-start gap-3 rounded-xl border p-3 text-sm font-bold leading-6 text-[#334155] ${selected[question.id] === choice.value ? "border-[#0d9488] bg-[#ccfbf1]" : "border-[#e2e8f0] bg-white hover:bg-[#f8fafc]"}`}>
-                    <input type="radio" name={`${sectionId}-${question.id}`} value={choice.value} checked={selected[question.id] === choice.value} disabled={attempted} onChange={(event) => { const value = event.currentTarget.value; setSelected((current) => ({ ...current, [question.id]: value })); }} className={`${FOCUS_36} mt-1 h-4 w-4 accent-[#0d9488]`} />
-                    <span><Rich text={choice.label} /></span>
-                  </label>
-                ))}
-              </div>
-              {!attempted ? <ActionButton36 className="mt-3" disabled={!selected[question.id]} onClick={() => check(question)}>تحقق من اختياري</ActionButton36> : (
-                <div role="status" aria-live="polite" className={`mt-3 rounded-xl border p-3 text-sm leading-6 ${accepted ? "border-[#5eead4] bg-[#ccfbf1] text-[#0f766e]" : "border-[#e2e8f0] bg-white text-[#475569]"}`}>
-                  <strong>{accepted ? "اختيار مناسب للسياق." : "راجع ما يبرزه السياق؛ هذا الاختيار أقل ملاءمة هنا، ولا يعني أن الصيغة مستحيلة في كل استعمال."}</strong>
-                  <p className="mt-1">{question.feedback}</p>
-                  {question.nuance ? <p className="mt-1 font-semibold">{question.nuance}</p> : null}
-                </div>
-              )}
-            </fieldset>
-          );
-        })}
-      </div>
-      {Object.keys(checked).length === questions.length ? <p className="text-sm font-bold text-[#0f766e]">اكتملت المحاولة؛ ظهرت أمثلة المصدر التي كانت مؤجلة إلى ما بعد الاختيار.</p> : null}
-    </Card36>
-  );
-}
-
-function TableReflection36() {
-  const [choice, setChoice] = useState("");
-  const [checked, setChecked] = useState(false);
-  return (
-    <Card36 eyebrow="Check your reasoning · platform-created" title="ما وظيفة الجدول؟">
-      <p>كيف ينبغي أن تقرأ الصفوف أعلاه؟</p>
-      <fieldset className="space-y-2">
-        <legend className="sr-only">دور جدول المقارنة</legend>
-        {[
-          ["guide", "اختيارات تعليمية نموذجية تساعد على تفسير السياق، وليست حدودًا تمنع التداخل."],
-          ["law", "قانون حتمي؛ كل صف يمنع الصيغة الأخرى في أي موقف."],
-        ].map(([value, label]) => <label key={value} className="flex cursor-pointer items-start gap-3 rounded-xl border border-[#e2e8f0] bg-[#f8fafc] p-3 text-sm leading-6 text-[#334155]"><input type="radio" name="l36-table-reflection" value={value} checked={choice === value} onChange={(event) => setChoice(event.currentTarget.value)} className={`${FOCUS_36} mt-1 h-4 w-4 accent-[#0d9488]`} /><span>{label}</span></label>)}
-      </fieldset>
-      {!checked ? <ActionButton36 disabled={!choice} onClick={() => setChecked(true)}>تحقق من الفهم</ActionButton36> : <p role="status" className="rounded-xl border border-[#5eead4] bg-[#ccfbf1] p-3 text-sm font-bold leading-6 text-[#0f766e]">الصفوف تعرض الاستخدامات النموذجية فقط؛ انظر إلى التنبيه الموجود أسفل الجدول عند وجود تداخل.</p>}
-    </Card36>
-  );
-}
-
-function GrammarDetective36({ onComplete }: { onComplete: () => void }) {
-  const [draft, setDraft] = useState<Record<number, string>>({});
-  const [checked, setChecked] = useState<Record<number, boolean>>({});
-  const checkItem = (number: number) => {
-    const isNew = !checked[number];
-    setChecked((current) => ({ ...current, [number]: true }));
-    if (isNew && Object.keys(checked).length + 1 === DETECTIVE_ITEMS_36.length) onComplete();
-  };
-  return (
-    <Card36 eyebrow="§17 · error-repair workshop" title="Grammar Detective — حاول قبل الكشف">
-      <p className="text-sm leading-6 text-[#475569]">اكتب تصحيحًا مقبولًا لكل جملة. لا يُحكم على اختيار WILL مقابل GOING TO بأنه خطأ إذا كان البناء صحيحًا والمعنى ممكنًا.</p>
-      <div className="space-y-3">
-        {DETECTIVE_ITEMS_36.map((item, index) => (
-          <section key={item.n} className="rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] p-3" data-practice-item={`detective-${item.n}`}>
-            <SourceLine36 sectionId="s17" index={item.n} text={item.prompt} />
-            <label className="mt-2 block"><span className="mb-1 block text-sm font-bold text-[#475569]">تصحيحك</span><input type="text" dir="auto" value={draft[item.n] ?? ""} disabled={!!checked[item.n]} onChange={(event) => { const value = event.currentTarget.value; setDraft((current) => ({ ...current, [item.n]: value })); }} className={`${FOCUS_36} w-full rounded-xl border border-[#cbd5e1] bg-white px-3 py-2.5 text-base text-[#334155]`} /></label>
-            {!checked[item.n] ? <ActionButton36 className="mt-2" disabled={!draft[item.n]?.trim()} onClick={() => checkItem(item.n)}>اعرض التصحيح المقبول</ActionButton36> : (
-              <div role="status" className="mt-2 rounded-xl border border-[#5eead4] bg-[#ccfbf1] p-3 text-sm leading-6 text-[#0f766e]">
-                <p className="font-black">إجابة / إجابات المصدر:</p>
-                {item.answers.map((answer) => <p key={answer} dir="ltr" className="font-en font-bold">{answer}</p>)}
-                <p className="mt-1">{item.feedback}</p>
-              </div>
-            )}
-          </section>
-        ))}
-      </div>
-      <p className="text-sm text-[#475569]" aria-live="polite">حاولت {Object.keys(checked).length} من {DETECTIVE_ITEMS_36.length}.</p>
-      {Object.keys(checked).length === DETECTIVE_ITEMS_36.length ? <p className="font-bold text-[#0f766e]">اكتملت المحاولة، ويمكن الآن مراجعة المفتاح الأصلي كاملًا أسفل البنود.</p> : null}
-    </Card36>
-  );
-}
-
-function ChooseFormPractice36({ onComplete }: { onComplete: () => void }) {
-  const [selected, setSelected] = useState<Record<number, string>>({});
-  const [checked, setChecked] = useState<Record<number, boolean>>({});
-  const completeItem = (number: number) => {
-    if (!checked[number] && Object.keys(checked).length + 1 === EXERCISE18_ITEMS_36.length) onComplete();
-    setChecked((current) => ({ ...current, [number]: true }));
-  };
-  return (
-    <Card36 eyebrow="§18 · source exercise" title="اختر WILL أو BE GOING TO بحسب الموقف">
-      <p className="text-sm leading-6 text-[#475569]">حدّد الصيغة لكل سياق، ثم اطلب التفسير. اختيارات المصدر النموذجية لا تحوّل البدائل الممكنة في سياقات أخرى إلى أخطاء نحوية.</p>
-      <div className="space-y-3">
-        {EXERCISE18_ITEMS_36.map((item) => {
-          const question = sourceSection36("s18")!;
-          const attempted = !!checked[item.n];
-          const expectedForm = item.answer === "will" ? "will" : "going";
-          const good = selected[item.n] === expectedForm;
-          return (
-            <fieldset key={item.n} className="rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] p-3" data-practice-item={`choose-${item.n}`}>
-              <legend className="sr-only">السؤال {item.n}</legend>
-              <div id={`l36-ex18-${item.n}`} className="space-y-1">
-                {item.sourceUnitIndexes.map((sourceIndex) => <SourceLine36 key={sourceIndex} sectionId="s18" index={sourceIndex} text={question.units[sourceIndex]} />)}
-              </div>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {[{ value: "will", label: "WILL" }, { value: "going", label: "BE GOING TO" }].map((choice) => <label key={choice.value} className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 text-sm font-black ${selected[item.n] === choice.value ? "border-[#0d9488] bg-[#ccfbf1] text-[#115e59]" : "border-[#e2e8f0] bg-white text-[#334155]"}`}><input type="radio" name={`l36-ex18-${item.n}`} value={choice.value} checked={selected[item.n] === choice.value} disabled={attempted} onChange={() => setSelected((current) => ({ ...current, [item.n]: choice.value }))} className={`${FOCUS_36} h-4 w-4 accent-[#0d9488]`} /><span dir="ltr" className="font-en">{choice.label}</span></label>)}
-              </div>
-              {!attempted ? <ActionButton36 className="mt-2" disabled={!selected[item.n]} onClick={() => completeItem(item.n)}>تحقق من الاختيار</ActionButton36> : (
-                <div role="status" className={`mt-2 rounded-xl border p-3 text-sm leading-6 ${good ? "border-[#5eead4] bg-[#ccfbf1] text-[#0f766e]" : "border-[#e2e8f0] bg-white text-[#475569]"}`}>
-                  <strong>{good ? "الاختيار النموذجي مناسب." : "راجع السياق؛ الاختيار الآخر هو الأنسب في هذا المثال."}</strong>
-                  <p>مفتاح المصدر: <span dir="ltr" className="font-en font-black">{item.answer}</span> — {item.explanation}</p>
-                </div>
-              )}
-            </fieldset>
-          );
-        })}
-      </div>
-      {Object.keys(checked).length === EXERCISE18_ITEMS_36.length ? <p className="font-bold text-[#0f766e]">ظهرت جميع الإجابات الأصلية؛ افتح مفتاح المصدر الكامل أعلاه/أسفل التمرين للمراجعة.</p> : null}
-    </Card36>
-  );
-}
-
-function DialogueCompletion36({ revealed, onReveal }: { revealed: boolean; onReveal: () => void }) {
-  const [answers, setAnswers] = useState<Record<number, string>>({});
-  const allAnswered = DIALOGUE19_ITEMS_36.every((item) => answers[item.n]?.trim());
-  return (
-    <Card36 eyebrow="§19 · dialogue practice" title="املأ الفراغات، ثم اعرض الحلول">
-      <p className="text-sm leading-6 text-[#475569]">الحوار الكامل ظاهر في المصدر أعلاه؛ أدخل الصيغ الأربع من دون تغيير الحوار، ثم اكشف المفتاح بعد المحاولة.</p>
-      <div className="space-y-2">
-        {DIALOGUE19_ITEMS_36.map((item, index) => (
-          <label key={item.n} aria-labelledby={`source-s19-unit-${DIALOGUE19_BLANK_UNIT_INDEXES_36[index]}`} className="flex flex-wrap items-center gap-2 rounded-xl border border-[#e2e8f0] bg-[#f8fafc] p-3">
-            <span className="min-w-20 font-black text-[#115e59]">الفراغ {item.n}</span>
-            <input type="text" dir="ltr" lang="en" value={answers[item.n] ?? ""} onChange={(event) => { const value = event.currentTarget.value; setAnswers((current) => ({ ...current, [item.n]: value })); }} className={`${FOCUS_36} min-w-[12rem] flex-1 rounded-lg border border-[#cbd5e1] bg-white px-3 py-2 text-base text-[#334155]`} />
-          </label>
-        ))}
-      </div>
-      {!revealed ? <ActionButton36 disabled={!allAnswered} onClick={onReveal}>عرض مفتاح الإجابة والتفسيرات</ActionButton36> : <p role="status" className="rounded-xl border border-[#5eead4] bg-[#ccfbf1] p-3 text-sm font-bold leading-6 text-[#0f766e]">ظهر مفتاح المصدر كاملًا في بطاقة الحوار أعلاه.</p>}
-      {!allAnswered ? <p className="text-sm font-bold text-[#64748b]">أكمل الفراغات الأربعة قبل عرض المفتاح.</p> : null}
-    </Card36>
-  );
-}
-
-function ContextWriting36({ revealed, onReveal }: { revealed: boolean; onReveal: () => void }) {
-  const [spontaneous, setSpontaneous] = useState("");
-  const [plan, setPlan] = useState("");
-  const canReveal = spontaneous.trim().length > 0 && plan.trim().length > 0;
-  return (
-    <Card36 eyebrow="§20 · open-ended context construction" title="اكتب موقفين، لا تحفظ صيغة واحدة">
-      <PlatformNote36>هذه مهمة إنتاج مفتوحة؛ لا تُحكم آليًا بصواب/خطأ. اكتب سياقين يجعل كل صيغة طبيعية، ثم قارن بالمثالين الأصليين.</PlatformNote36>
-      <label className="block"><span className="mb-1 block font-bold text-[#334155]">سياق يجعل <EnglishFormula36>I'll prepare dinner.</EnglishFormula36> طبيعيًا</span><textarea dir="auto" rows={3} value={spontaneous} onChange={(event) => setSpontaneous(event.currentTarget.value)} className={`${FOCUS_36} w-full rounded-xl border border-[#cbd5e1] bg-white p-3 text-base leading-7 text-[#334155]`} /></label>
-      <label className="block"><span className="mb-1 block font-bold text-[#334155]">سياق مختلف يجعل <EnglishFormula36>I'm going to prepare dinner.</EnglishFormula36> طبيعيًا</span><textarea dir="auto" rows={3} value={plan} onChange={(event) => setPlan(event.currentTarget.value)} className={`${FOCUS_36} w-full rounded-xl border border-[#cbd5e1] bg-white p-3 text-base leading-7 text-[#334155]`} /></label>
-      {!revealed ? <ActionButton36 disabled={!canReveal} onClick={onReveal}>عرض النموذج الأصلي بعد المحاولة</ActionButton36> : <p className="text-sm font-bold text-[#0f766e]">قارن إجابتك بالنموذج: هل يوضح السياق الأول قرارًا لحظيًا، والثاني خطة موجودة مسبقًا؟ قد تختلف التفاصيل مع بقاء المعنى مناسبًا.</p>}
-    </Card36>
-  );
-}
-
-function ReadingStep36({ section, revealed, onReveal }: { section: (typeof SOURCE_SECTIONS_36)[number]; revealed: boolean; onReveal: () => void }) {
-  const [highlight, setHighlight] = useState(false);
-  const [answers, setAnswers] = useState<Record<number, string>>({});
-  const allAnswered = READING_QUESTIONS_36.every((_, index) => answers[index]?.trim());
-  return (
-    <div data-step-id="s21" data-source-id="s21" data-source-section="s21" className="space-y-4">
-      <Card36 eyebrow="Reading tools · optional" title="اقرأ أولًا، ثم حلل">
-        <label className="inline-flex cursor-pointer items-center gap-3 rounded-xl border border-[#e2e8f0] bg-[#f8fafc] px-3 py-2 text-sm font-bold text-[#334155]">
-          <input type="checkbox" checked={highlight} onChange={(event) => setHighlight(event.currentTarget.checked)} className={`${FOCUS_36} h-4 w-4 accent-[#0d9488]`} />
-          <span>تمييز صيغ المستقبل في النص (اختياري)</span>
-        </label>
-        <p className="text-sm leading-6 text-[#475569]">التمييز بصري فقط؛ النص كاملًا يبقى ظاهرًا وقابلًا للقراءة.</p>
-      </Card36>
-      <SourceCard36 section={section} showReveal={revealed} highlightFuture={highlight} />
-      <Card36 eyebrow="Comprehension · answer before reveal" title="اكتب إجابات الفهم السبعة">
-        <p className="text-sm leading-6 text-[#475569]">الأسئلة معروضة في النص أعلاه. استخدم ارتباط التسمية للوصول إلى السؤال، ثم أدخل إجابتك؛ لا يوجد تصحيح آلي لإجابات متنوعة الصياغة.</p>
-        <div className="space-y-3">
-          {READING_QUESTIONS_36.map((question, index) => (
-            <label key={question} aria-labelledby={`source-s21-unit-${READING_QUESTION_UNIT_INDEXES_36[index]}`} className="block rounded-xl border border-[#e2e8f0] bg-[#f8fafc] p-3">
-              <span className="mb-1 block text-sm font-bold text-[#334155]">إجابة السؤال {index + 1}</span>
-              <textarea rows={2} dir="auto" value={answers[index] ?? ""} onChange={(event) => { const value = event.currentTarget.value; setAnswers((current) => ({ ...current, [index]: value })); }} className={`${FOCUS_36} w-full resize-y rounded-lg border border-[#cbd5e1] bg-white p-2.5 text-base leading-7 text-[#334155]`} />
-            </label>
+function BlockView({ block, onGoTest, onGoSolutions }: { block: Block; onGoTest: () => void; onGoSolutions: () => void }) {
+  switch (block.kind) {
+    case "hero":
+      return <Hero36 title={block.title} subtitle={block.subtitle} level={block.level} />;
+    case "prose":
+      return <Prose36 lines={block.lines} />;
+    case "subhead":
+      return <Subhead36 line={block.line} />;
+    case "cue":
+      return <Cue36 line={block.line} />;
+    case "objectives":
+      return <Objectives36 lead={block.lead} items={block.items} />;
+    case "examples":
+      return (
+        <div className="grid gap-2">
+          {block.items.map((item) => (
+            <ExampleCard36 key={`${item.en.s}-${item.en.i}`} en={item.en} ar={item.ar} />
           ))}
         </div>
-        {!revealed ? <ActionButton36 disabled={!allAnswered} onClick={onReveal}>عرض إجابات الفهم والتحليل النحوي</ActionButton36> : <p role="status" className="rounded-xl border border-[#5eead4] bg-[#ccfbf1] p-3 text-sm font-bold leading-6 text-[#0f766e]">الإجابات السبعة والتحليلات النحوية الثمانية ظاهرة في مفتاح المصدر أعلى النص.</p>}
-        {!allAnswered ? <p className="text-sm font-bold text-[#64748b]">أكمل إجاباتك السبعة قبل فتح المفتاح.</p> : null}
-      </Card36>
+      );
+    case "situations":
+      return (
+        <div className="grid gap-3">
+          {block.items.map((item) => (
+            <Card36 key={`${item.label.s}-${item.label.i}`} tone="warm" title={<SourceText36 value={item.label} />}>
+              <p className="text-slate-700">
+                <SourceText36 value={item.context} />
+              </p>
+              {item.cue ? (
+                <p className="mt-2 text-xs font-bold text-slate-500">
+                  <SourceText36 value={item.cue} />
+                </p>
+              ) : null}
+              <p className="mt-1 rounded-xl bg-slate-900 px-3 py-2 text-base font-bold text-white sm:text-lg">
+                <SourceText36 value={item.en} />
+              </p>
+              {item.ar ? (
+                <p className="mt-1 text-sm text-slate-500">
+                  <SourceText36 value={item.ar} />
+                </p>
+              ) : null}
+              {item.note ? (
+                <p className="mt-2 text-sm font-bold text-emerald-800">
+                  <SourceText36 value={item.note} />
+                </p>
+              ) : null}
+            </Card36>
+          ))}
+        </div>
+      );
+    case "dialogue":
+      return <Dialogue36 lines={block.lines} />;
+    case "translations":
+      return <Translations36 heading={block.heading} lines={block.lines} />;
+    case "formulas":
+      return <Formulas36 cards={block.cards} />;
+    case "table":
+      return <CompareTable36 caption={block.caption} rows={block.rows} />;
+    case "callout":
+      return (
+        <Callout36 tone={block.tone} title={block.title}>
+          <div className="space-y-1">
+            {block.lines.map((line) => (
+              <p key={`${line.s}-${line.i}`}>
+                <SourceText36 value={line} />
+              </p>
+            ))}
+          </div>
+        </Callout36>
+      );
+    case "checklist":
+      return <Checklist36 items={block.items} />;
+    case "chips":
+      return (
+        <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200 bg-white p-3">
+          {block.items.map((item, index) => (
+            <Chip36 key={`${item.s}-${item.i}`} tone={index % 3 === 0 ? "will" : index % 3 === 1 ? "going" : "slate"}>
+              <En36 className="text-sm">{textOf(item)}</En36>
+            </Chip36>
+          ))}
+        </div>
+      );
+    case "verdicts":
+      return (
+        <div className="grid gap-2 sm:grid-cols-2">
+          {block.items.map((item) => (
+            <div key={`${item.line.s}-${item.line.i}`} className={`flex items-start gap-3 rounded-2xl border p-3 ${item.ok ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`}>
+              <span className={`mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full text-xs font-bold text-white ${item.ok ? "bg-emerald-600" : "bg-rose-600"}`} aria-hidden>
+                {item.ok ? "✓" : "✕"}
+              </span>
+              <div className="min-w-0">
+                <p className="text-[11px] font-black uppercase tracking-wide text-slate-500">{item.ok ? "صحيحة" : "خطأ"}</p>
+                <p className={`text-base font-bold ${item.ok ? "text-emerald-950" : "text-rose-950"}`}>
+                  <SourceText36 value={item.line} />
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    case "analysis":
+      return <Analysis36 heading={block.heading} items={block.items} />;
+    case "map":
+      return <Map36 groups={block.groups} />;
+    case "passage":
+      return <Passage36 title={block.title} lines={block.lines} />;
+    case "summary":
+      return <Summary36 block={block} />;
+    case "launch":
+      return (
+        <Card36 tone={block.tone === "test" ? "will" : block.tone === "solutions" ? "evidence" : "warm"} title={block.title}>
+          <p className="text-slate-700">{block.body}</p>
+          <ActionButton36 className="mt-2" onClick={block.tone === "test" ? onGoTest : onGoSolutions}>
+            {block.sourceLabel ? <SourceText36 value={block.sourceLabel} /> : block.actionLabel}
+          </ActionButton36>
+        </Card36>
+      );
+    case "lab":
+      switch (block.lab.kind) {
+        case "context":
+          return <ContextLab36 id={block.lab.id} prompt={block.lab.prompt} items={block.lab.items} requireReason={block.lab.requireReason} />;
+        case "decision":
+          return <DecisionLab36 id={block.lab.id} prompt={block.lab.prompt} items={block.lab.items} />;
+        case "lens":
+          return <LensLab36 id={block.lab.id} evidence={block.lab.evidence} general={block.lab.general} check={block.lab.check} />;
+        case "detective":
+          return <DetectiveLab36 id={block.lab.id} heading={block.lab.heading} items={block.lab.items} />;
+        case "choose":
+          return <ChooseLab36 id={block.lab.id} heading={block.lab.heading} items={block.lab.items} />;
+        case "dialogueFill":
+          return <DialogueFillLab36 id={block.lab.id} intro={block.lab.intro} heading={block.lab.heading} lines={block.lab.lines} blanks={block.lab.blanks} />;
+        case "contextWriting":
+          return <ContextWritingLab36 id={block.lab.id} models={block.lab.models} />;
+        case "reading":
+          return (
+            <ReadingLab36
+              id={block.lab.id}
+              questions={block.lab.questions}
+              answers={block.lab.answers}
+              answerLines={block.lab.answerLines}
+              analysisHeading={block.lab.analysisHeading}
+              analysis={block.lab.analysis}
+            />
+          );
+        case "writing":
+          return (
+            <WritingLab36
+              title={block.lab.title}
+              task={block.lab.task}
+              intro={block.lab.intro}
+              criteria={block.lab.criteria}
+              modelHeading={block.lab.modelHeading}
+              modelLines={block.lab.modelLines}
+              closing={block.lab.closing}
+            />
+          );
+      }
+  }
+}
+
+function Hero36({ title, subtitle, level }: { title: Ref; subtitle: Ref; level: Ref }) {
+  return (
+    <section className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_10px_40px_-15px_rgba(30,27,75,0.15)] sm:p-9">
+      <div className="pointer-events-none absolute -left-12 -top-12 h-48 w-48 rounded-full bg-sky-100 blur-3xl" aria-hidden />
+      <div className="pointer-events-none absolute -bottom-12 -right-12 h-48 w-48 rounded-full bg-orange-100 blur-3xl" aria-hidden />
+      <div className="relative">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full bg-slate-900 px-3 py-1 text-xs font-bold text-white">الدرس <span dir="ltr" className="font-en">36</span></span>
+          <span className="rounded-full bg-sky-100 px-3 py-1 text-xs font-bold text-sky-900">
+            <SourceText36 value={level} />
+          </span>
+        </div>
+        <h1 className="font-head mt-3 text-3xl font-bold leading-tight text-slate-900 sm:text-5xl">
+          <En36 className="font-head !inline text-left">{LESSON_TITLE_36}</En36>
+        </h1>
+        <p className="mt-2 text-lg font-bold text-slate-700 sm:text-xl">
+          <SourceText36 value={title} />
+        </p>
+        <p className="mt-2 text-base leading-8 text-slate-600">
+          <SourceText36 value={subtitle} />
+        </p>
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-3 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-3">
+          <FormBadge36 form="will" />
+          <span className="text-sm font-black text-slate-400">vs</span>
+          <FormBadge36 form="going" />
+        </div>
+        <p className="mt-4 text-center text-xs font-bold text-slate-600">للتنقل: الأسهم ← → أو مفتاح المسافة</p>
+      </div>
+    </section>
+  );
+}
+
+function Subhead36({ line }: { line: Ref }) {
+  return (
+    <h3 className="font-head flex items-center gap-2 border-r-4 border-slate-900 pr-3 text-lg font-bold text-slate-900 sm:text-xl">
+      <SourceText36 value={line} />
+    </h3>
+  );
+}
+
+function Objectives36({ lead, items }: { lead: Ref; items: Ref[] }) {
+  return (
+    <Card36 title={<SourceText36 value={lead} />} eyebrow="ما ستتقنه في هذا الدرس">
+      <ol className="grid gap-2 sm:grid-cols-2">
+        {items.map((item, index) => (
+          <li key={`${item.s}-${item.i}`} className="flex items-start gap-2.5 rounded-2xl border border-slate-200 bg-white p-3 text-sm leading-7 text-slate-700 shadow-sm">
+            <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-lg bg-emerald-600 text-[11px] font-bold text-white" aria-hidden>
+              {index + 1}
+            </span>
+            <span className="min-w-0">
+              <SourceText36 value={item} />
+            </span>
+          </li>
+        ))}
+      </ol>
+    </Card36>
+  );
+}
+
+function Checklist36({ items }: { items: Ref[] }) {
+  return (
+    <ul className="grid gap-2 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:grid-cols-2">
+      {items.map((item) => (
+        <li key={`${item.s}-${item.i}`} className="flex items-start gap-2 text-sm leading-7 text-slate-700">
+          <span className="mt-1.5 grid h-4 w-4 shrink-0 place-items-center rounded-full bg-slate-900 text-[9px] font-bold text-white" aria-hidden>
+            ✓
+          </span>
+          <span>
+            <SourceText36 value={item} />
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Analysis36({ heading, items }: { heading: Ref; items: { en: Ref; ar?: Ref }[] }) {
+  return (
+    <Card36 eyebrow="تحليل الاستخدام" title={<SourceText36 value={heading} />}>
+      <ul className="grid gap-2">
+        {items.map((item) => {
+          const raw = textOf(item.en);
+          const [quote, ...rest] = raw.split("→");
+          const explanation = rest.join("→").trim();
+          return (
+            <li key={`${item.en.s}-${item.en.i}`} className="flex flex-wrap items-start gap-2 rounded-2xl border border-slate-200 bg-white p-3">
+              <span className="rounded-lg bg-slate-900 px-2 py-1 text-sm font-bold text-white">
+                <En36 className="text-left">{quote.trim()}</En36>
+              </span>
+              {explanation ? (
+                <>
+                  {" "}
+                  <span aria-hidden className="pt-1 text-sm font-black text-slate-400">→</span>
+                  {" "}
+                  <span className="min-w-0 flex-1 text-sm leading-7 text-slate-700">
+                    <MixedText36 text={explanation} />
+                  </span>
+                </>
+              ) : null}
+            </li>
+          );
+        })}
+      </ul>
+    </Card36>
+  );
+}
+
+function Map36({ groups }: { groups: { heading: Ref; items: Ref[]; tone: "present" | "past" | "future" }[] }) {
+  const tone = {
+    present: ["border-sky-200 bg-sky-50", "text-sky-900"],
+    past: ["border-amber-200 bg-amber-50", "text-amber-900"],
+    future: ["border-emerald-200 bg-emerald-50", "text-emerald-900"],
+  } as const;
+  return (
+    <div className="grid gap-3 sm:grid-cols-3">
+      {groups.map((group) => (
+        <section key={`${group.heading.s}-${group.heading.i}`} className={`rounded-2xl border p-4 ${tone[group.tone][0]}`}>
+          <h3 className={`text-sm font-black ${tone[group.tone][1]}`}>
+            <SourceText36 value={group.heading} />
+          </h3>
+          <ul className="mt-2 space-y-1.5">
+            {group.items.map((item) => (
+              <li key={`${item.s}-${item.i}`} className="text-sm leading-7 text-slate-700">
+                <SourceText36 value={item} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
     </div>
   );
 }
 
-function WritingWorkspace36() {
-  const [draft, setDraft] = useState("");
-  const [checked, setChecked] = useState<Record<number, boolean>>({});
-  const sentenceCount = draft.trim() ? draft.split(/[.!?]+/).filter((part) => part.trim().length > 0).length : 0;
+function Summary36({ block }: { block: Extract<Block, { kind: "summary" }> }) {
   return (
-    <Card36 eyebrow="Writing workspace · self-review only" title="مساحة كتابة My Future Decisions and Plans">
-      <PlatformNote36>اكتب 12–15 جملة باللغة الإنجليزية. العداد وقائمة المراجعة مساعدتان فقط؛ لا يصدر النظام حكمًا آليًا على صحة فقرتك أو على إجابة مفتوحة.</PlatformNote36>
-      <label className="block"><span className="mb-1 block font-bold text-[#334155]">مسودتك باللغة الإنجليزية</span><textarea lang="en" dir="ltr" rows={12} value={draft} onChange={(event) => setDraft(event.currentTarget.value)} className={`${FOCUS_36} w-full resize-y rounded-2xl border border-[#cbd5e1] bg-white p-4 text-left text-base leading-7 text-[#1e293b]`} placeholder="Write your paragraph here…" /></label>
-      <p aria-live="polite" className="rounded-xl bg-[#f1f5f9] px-3 py-2 text-sm font-bold text-[#475569]">عدد الجمل التقريبي: <span dir="ltr" className="font-en tabular-nums">{sentenceCount}</span> / المطلوب 12–15</p>
-      <fieldset className="rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] p-3">
-        <legend className="px-1 text-sm font-black text-[#115e59]">قائمة مراجعة ذاتية — الشروط الثمانية الأصلية</legend>
-        <div className="grid gap-2 sm:grid-cols-2">
-          {WRITING_CRITERIA_36.map((criterion, index) => <label key={criterion} className="flex items-start gap-2 rounded-xl border border-[#e0e3dc] bg-white p-3 text-sm leading-6 text-[#334155]"><input type="checkbox" checked={!!checked[index]} onChange={(event) => { const checked = event.currentTarget.checked; setChecked((current) => ({ ...current, [index]: checked })); }} className={`${FOCUS_36} mt-1 h-4 w-4 shrink-0 accent-[#0d9488]`} /><span><Rich text={criterion} /></span></label>)}
-        </div>
-        <p className="mt-2 text-xs font-bold text-[#64748b]" aria-live="polite">علّمت {Object.values(checked).filter(Boolean).length} من 8 — راجع كل بند بنفسك.</p>
-      </fieldset>
+    <Card36 tone={block.form === "will" ? "will" : "going"} title={<SourceText36 value={block.title} />} eyebrow="الملخص الذهبي">
+      <p className="text-xs font-black text-slate-500">
+        <SourceText36 value={block.formulaLabel} />
+      </p>
+      <p className="mt-1 overflow-x-auto rounded-xl bg-slate-900 px-3 py-2 text-sm font-bold text-white">
+        <En36 className="text-left tracking-wide">{textOf(block.formula)}</En36>
+      </p>
+      <p className="mt-3 text-xs font-black text-slate-500">
+        <SourceText36 value={block.usesLabel} />
+      </p>
+      <ul className="mt-1 grid gap-1 sm:grid-cols-2">
+        {block.uses.map((ref) => (
+          <li key={`${ref.s}-${ref.i}`} className="rounded-xl bg-white px-2.5 py-1.5 text-sm text-slate-700">
+            <SourceText36 value={ref} />
+          </li>
+        ))}
+      </ul>
+      <p className="mt-3 text-xs font-black text-slate-500">
+        <SourceText36 value={block.exampleLabel} />
+      </p>
+      <div className="mt-1 space-y-1">
+        {block.examples.map((ref) => (
+          <p key={`${ref.s}-${ref.i}`} className="text-base font-bold text-slate-900">
+            <SourceText36 value={ref} />
+          </p>
+        ))}
+      </div>
     </Card36>
   );
 }

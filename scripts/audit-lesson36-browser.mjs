@@ -208,12 +208,14 @@ for (const viewport of [
 
   if (!viewport.rail) {
     await page.getByRole("button", { name: "فهرس الدرس" }).click();
+    await page.waitForTimeout(120);
     ok(await page.locator(".fixed.inset-0.z-50").count() === 1, `${viewport.name}: mobile index opens as the shared drawer`);
+    await shot(`${viewport.name}-drawer-open`);
     await page.locator(".fixed.inset-0.z-50 [data-step-nav='s12']").last().click();
     await page.waitForTimeout(120);
     ok((await boxes()).step === "s12", `${viewport.name}: choosing a drawer item changes the displayed step`);
     ok(await page.locator(".fixed.inset-0.z-50").count() === 0, `${viewport.name}: choosing a step closes the drawer`);
-    await shot(`${viewport.name}-drawer`);
+    await shot(`${viewport.name}-drawer-navigation`);
   }
 }
 

@@ -1,163 +1,183 @@
-import { sourceSection40 } from "./ledger40";
-import { Callout40, Chip40, EnBidi, MixedBidi, SourceLedgerBlock40, normalizeEnglishInput40 } from "./kit40";
-import { SOLUTIONS_40, SOLUTIONS_PROVENANCE_NOTE_40 } from "./solutionsData40";
+import { EnLine40, Rich40, isPureEnglishUnit40, matchesAcceptedAnswer40 } from "./kit40";
+import { sourceSection40 as fullSourceSection40 } from "./ledger40";
+import { SOLUTIONS_40 } from "./solutionsData40";
 
-// ============================================================
-// Lesson 40 — منطقة الحلول التفصيلية المستقلة (SolutionsArea40)
-//
-// لا يُركَّب هذا المكوّن في شجرة DOM إلا بعد تسليم الاختبار أو تفعيل وضع المعلم.
-// يعرض النص الكامل للقسم المصدري §26 حرفيًا، متبوعًا بـ 25 بطاقة تحليل مفصّلة.
-// ============================================================
+export interface SolutionsArea40Props {
+  submittedAnswers?: Readonly<Record<string, string>>;
+  unlockedBy?: "submission" | "teacher";
+  onBackToTest?: () => void;
+  onBackToLesson?: () => void;
+}
 
 export function SolutionsArea40({
-  answers,
+  submittedAnswers = {},
+  unlockedBy = "submission",
   onBackToTest,
-  onBackToStudent,
-}: {
-  answers: Record<string, string>;
-  onBackToTest: () => void;
-  onBackToStudent: () => void;
-}) {
-  const s26 = sourceSection40("s26");
-  const machineScored = SOLUTIONS_40.filter((solution) => solution.level !== 4);
-  const matchedCount = machineScored.filter((solution) => {
-    const student = normalizeEnglishInput40(answers[solution.id] ?? "");
-    return student.length > 0 && solution.acceptedNormalized.some((accepted) => normalizeEnglishInput40(accepted) === student);
+  onBackToLesson,
+}: SolutionsArea40Props) {
+  const s26 = fullSourceSection40("s26")!;
+  const autoItems = SOLUTIONS_40.filter((item) => item.gradingMode === "auto");
+  const reviewItems = SOLUTIONS_40.filter((item) => item.gradingMode === "review");
+  const autoMatchedCount = autoItems.filter((item) => {
+    const ans = (submittedAnswers[item.id] ?? "").trim();
+    return Boolean(ans) && matchesAcceptedAnswer40(ans, item.acceptedNormalized);
   }).length;
-  const conceptualCount = SOLUTIONS_40.filter((solution) => solution.level === 4).length;
+  const reviewAnsweredCount = reviewItems.filter((item) =>
+    Boolean((submittedAnswers[item.id] ?? "").trim())
+  ).length;
 
   return (
     <section
       id="lesson40-solutions"
-      dir="rtl"
-      aria-label="الحلول التفصيلية للاختبار النهائي — الدرس 40"
-      className="space-y-6"
+      className="tcc-exam-shell"
+      data-source-section="s26"
+      aria-label="الحلول التفصيلية للاختبار النهائي"
     >
-      <div className="rounded-3xl border border-[#8fb69a] bg-[#edf5ee] p-6 sm:p-8 shadow-sm space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <Chip40 label="منطقة الحلول مفتوحة بعد التسليم ✅" tone="emerald" />
-          <Chip40 label="25 بطاقة حل مفصّلة (①–㉕)" tone="teal" />
+      <header className="tcc-head">
+        <div className="tcc-spectrum-bar" aria-hidden="true" />
+        <div className="tcc-head-top">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="tcc-station-tag">
+              {unlockedBy === "teacher" ? "مفتوحة عبر وضع المعلم" : "مفتوحة بعد تسليم الاختبار"}
+            </span>
+            <span dir="ltr" className="tcc-coord font-en">
+              SOLUTIONS // 25 ITEMS
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {onBackToTest ? (
+              <button type="button" className="tcc-btn-secondary" onClick={onBackToTest}>
+                العودة إلى الاختبار
+              </button>
+            ) : null}
+            {onBackToLesson ? (
+              <button type="button" className="tcc-btn-secondary" onClick={onBackToLesson}>
+                العودة إلى خطوات الدرس
+              </button>
+            ) : null}
+          </div>
         </div>
-        <h2 className="text-xl sm:text-2xl font-extrabold text-[#17354a]">
-          <MixedBidi>مفتاح التصحيح الكامل والحلول التفصيلية — الدرس 40</MixedBidi>
-        </h2>
-        <p className="text-sm font-semibold text-[#24343b] leading-[1.85]">
-          <MixedBidi>{SOLUTIONS_PROVENANCE_NOTE_40}</MixedBidi>
+
+        <h1 className="tcc-title">
+          <Rich40 text="الحلول التفصيلية والشرح الكامل للأسئلة الخمسة والعشرين" />
+        </h1>
+        <p className="tcc-purpose">
+          قارن إجاباتك المسلمة بالإجابة النموذجية والسبب الموجز والشرح الموسع والبدائل السياقية المقبولة.
         </p>
-        <div className="flex flex-wrap gap-3">
-          <button
-            type="button"
-            onClick={onBackToTest}
-            className="rounded-xl bg-[#17354a] px-4 py-2 text-xs sm:text-sm font-extrabold text-[#ffffff] hover:bg-[#245f62] cursor-pointer"
-          >
-            العودة إلى ورقة الاختبار
-          </button>
-          <button
-            type="button"
-            onClick={onBackToStudent}
-            className="rounded-xl border border-[#245f62] bg-[#ffffff] px-4 py-2 text-xs sm:text-sm font-extrabold text-[#245f62] cursor-pointer"
-          >
-            العودة إلى خطوات الدرس
-          </button>
+
+        <div data-score-summary="40" className="mt-4 tcc-card border-emerald-700">
+          <div className="text-sm font-black text-slate-950">
+            الأسئلة الموضوعية المطابقة آليًا: {autoMatchedCount} / {autoItems.length}
+          </div>
+          <p className="mt-1 mb-0 text-xs font-bold text-slate-800">
+            أسئلة فهم المعنى المفتوحة (المستوى الرابع: {reviewAnsweredCount} / {reviewItems.length} مجابة) تُراجع دلاليًا مع المعلم ولا تُرفض آليًا عند اختلاف الصياغة.
+          </p>
         </div>
-      </div>
+      </header>
 
-      <div data-score-summary className="rounded-2xl border border-[#a9c8e5] bg-[#eef6ff] p-5 space-y-2">
-        <div className="flex flex-wrap items-baseline justify-between gap-2"><strong className="text-[#123d69]">المطابقة الآلية المحدودة</strong><span className="text-lg font-black text-[#075fe4]">{matchedCount} / {machineScored.length}</span></div>
-        <p className="text-sm font-semibold text-[#244865]">هذه مطابقة للإجابات القياسية والبدائل المسجلة في الأسئلة الموضوعية فقط، وليست حكمًا نهائيًا على كل صياغة إنجليزية سليمة. الأسئلة المفاهيمية الخمسة تحتاج مراجعة بشرية وفق سلم المعلم؛ والإجابة غير المطابقة تُحال للمراجعة ولا تُرفض آليًا.</p>
-        <p className="text-xs font-extrabold text-[#6947b8]">{conceptualCount} أسئلة مفاهيمية من أصل 25 · تقييم المعلم/المقارنة الذاتية</p>
-      </div>
-
-      {/* النص المصدري الكامل للقسم §26 حرفيًا */}
-      <SourceLedgerBlock40 section={s26} />
-
-      <Callout40
-        tone="amber"
-        title="ملاحظة التصحيح والمقارنة الذاتية (خصوصًا للمستوى الرابع ⑯–⑳)"
-        badge="إرشاد تقييمي"
-      >
-        <p>
-          <MixedBidi>
-            في المستويات الأول والثاني والثالث والخامس يقارن النظام إجابتك بالصيغ القياسية والبدائل السياقية المعتمدة. أما في المستوى الرابع (⑯–⑳: افهم المعنى) فتُعرض إجابتك جنبًا إلى جنب مع التعليل المصدري والشرح التفصيلي للمقارنة الذاتية ومراجعة المعلم، دون ادعاء تصحيح دلالي آلي للجمل الحرة.
-          </MixedBidi>
-        </p>
-      </Callout40>
-
-      {/* بطاقات الحلول التفصيلية الـ25 */}
-      <div className="space-y-4">
-        {SOLUTIONS_40.map((sol) => {
-          const studentRaw = answers[sol.id]?.trim() ?? "";
-          const studentNorm = normalizeEnglishInput40(studentRaw);
-          const isExactMatch =
-            studentRaw.length > 0 &&
-            sol.acceptedNormalized.some((acc) => normalizeEnglishInput40(acc) === studentNorm);
-
-          return (
-            <div
-              key={sol.id}
-              data-solution-item={sol.number}
-              className="rounded-2xl border border-[#c8c3b4] bg-[#fffdf8] p-5 shadow-sm space-y-3"
-            >
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#e4dfd2] pb-2.5">
-                <span className="text-sm font-extrabold text-[#17354a]">
-                  <MixedBidi>{`حل السؤال ${sol.number} (${sol.marker}) — المستوى ${sol.level}`}</MixedBidi>
-                </span>
-                <Chip40
-                  label={
-                    !studentRaw
-                      ? "لم تُسجَّل إجابة"
-                      : sol.level === 4
-                        ? "مقارنة ذاتية بالمعنى"
-                        : isExactMatch
-                          ? "مطابق للمفتاح ✅"
-                          : "مطابقة غير مؤكدة — راجع البدائل والسياق"
-                  }
-                  tone={!studentRaw ? "neutral" : isExactMatch ? "emerald" : "amber"}
-                />
+      <section className="tcc-brief" aria-label="ملخص الحلول المعتمدة">
+        <div className="tcc-brief-head">
+          <span className="tcc-brief-label">◈ ملخص مفاتيح الحلول المعتمدة</span>
+        </div>
+        <div className="tcc-units">
+          {s26.units.map((line, idx) => {
+            const key = `s26-unit-${idx}`;
+            return isPureEnglishUnit40(line) ? (
+              <div key={key} data-source-unit={key}>
+                <EnLine40 tone="right">{line}</EnLine40>
               </div>
+            ) : (
+              <p key={key} data-source-unit={key} className="tcc-unit-ar">
+                <Rich40 text={line} />
+              </p>
+            );
+          })}
+        </div>
+      </section>
 
-              <div
-                dir="ltr"
-                lang="en"
-                style={{ direction: "ltr", unicodeBidi: "isolate", textAlign: "left" }}
-                className="rounded-xl border border-[#c7d3cb] bg-[#f7f8f5] px-3.5 py-2.5 font-mono text-sm font-bold text-[#17354a]"
+      <section className="tcc-brief flex flex-col gap-4" aria-label="بطاقات التحليل التفصيلي">
+        <div className="tcc-brief-head">
+          <span className="tcc-brief-label">
+            ◈ التحليل التفصيلي ومقارنة إجابتك لكل سؤال (1–25)
+          </span>
+        </div>
+
+        <div className="flex flex-col gap-3.5">
+          {SOLUTIONS_40.map((item) => {
+            const studentAns = (submittedAnswers[item.id] ?? "").trim();
+            const autoMatch =
+              item.gradingMode === "auto" &&
+              Boolean(studentAns) &&
+              matchesAcceptedAnswer40(studentAns, item.acceptedNormalized);
+
+            return (
+              <article
+                key={item.id}
+                data-solution-item={item.id}
+                data-solution-number={item.number}
+                className="tcc-card flex flex-col gap-2"
               >
-                <EnBidi>{sol.prompt}</EnBidi>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div className="rounded-xl border border-[#d5d0c3] bg-[#fdfcf8] p-3.5 space-y-1">
-                  <div className="text-xs font-extrabold text-[#43575a]">إجابتك المسجّلة:</div>
-                  <p className="text-sm font-bold text-[#17354a]">
-                    <MixedBidi>{studentRaw || "— (لم تُكتَب إجابة)"}</MixedBidi>
-                  </p>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span dir="ltr" className="tcc-coord font-en">
+                    Q{item.number} {item.marker} · LEVEL {item.level}
+                  </span>
+                  <span
+                    className={`rounded-full px-3 py-0.5 text-xs font-extrabold ${
+                      item.gradingMode === "review"
+                        ? "bg-blue-950 text-white"
+                        : autoMatch
+                          ? "bg-emerald-900 text-white"
+                          : studentAns
+                            ? "bg-amber-900 text-white"
+                            : "bg-slate-700 text-white"
+                    }`}
+                  >
+                    {item.gradingMode === "review"
+                      ? studentAns
+                        ? "سؤال معنوي للمقارنة الدلالية"
+                        : "سؤال معنوي غير مُجاب"
+                      : autoMatch
+                        ? "إجابتك مطابقة ✓"
+                        : studentAns
+                          ? "راجع الفرق مع النموذج"
+                          : "لم تُجب عنه"}
+                  </span>
                 </div>
 
-                <div className="rounded-xl border border-[#8fb69a] bg-[#edf5ee] p-3.5 space-y-1">
-                  <div className="text-xs font-extrabold text-[#28533b]">الإجابة النموذجية في المصدر (§26):</div>
-                  <p className="text-sm font-extrabold text-[#28533b]">
-                    <MixedBidi>{sol.sourceAnswer}</MixedBidi>
-                  </p>
+                <div className="text-sm font-black text-slate-900">
+                  <Rich40 text={item.prompt} />
                 </div>
-              </div>
 
-              <p className="text-sm font-bold text-[#24343b]">
-                <MixedBidi>{sol.sourceReason}</MixedBidi>
-              </p>
+                <div className="rounded-lg border border-slate-300 bg-white p-2.5 text-xs font-bold text-slate-900">
+                  <span>إجابتك المسجلة: </span>
+                  {studentAns ? (
+                    <Rich40 text={studentAns} />
+                  ) : (
+                    <span className="text-slate-600">— لم تُسجَّل إجابة —</span>
+                  )}
+                </div>
 
-              <p className="text-xs sm:text-sm font-semibold text-[#43575a] leading-[1.85]">
-                <MixedBidi>{`شرح تفصيلي (إضافة منصة): ${sol.platformExplanation}`}</MixedBidi>
-              </p>
-
-              {sol.acceptableAlternatives ? (
-                <p className="rounded-xl border border-[#d4b475] bg-[#fbf6eb] px-3.5 py-2 text-xs font-bold text-[#76531e]">
-                  <MixedBidi>{`البدائل المقبولة سياقيًا: ${sol.acceptableAlternatives}`}</MixedBidi>
-                </p>
-              ) : null}
-            </div>
-          );
-        })}
-      </div>
+                <div className="tcc-feedback is-ok">
+                  <div className="font-black">
+                    <Rich40 text={`الإجابة النموذجية: ${item.sourceAnswer}`} />
+                  </div>
+                  <div className="mt-1">
+                    <Rich40 text={item.sourceReason} />
+                  </div>
+                  <div className="mt-1.5 border-t border-emerald-800/20 pt-1.5 text-xs">
+                    <Rich40 text={item.platformExplanation} />
+                  </div>
+                  {item.acceptableAlternatives ? (
+                    <div className="mt-1 text-xs font-extrabold">
+                      <Rich40 text={`البدائل المقبولة: ${item.acceptableAlternatives}`} />
+                    </div>
+                  ) : null}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
     </section>
   );
 }

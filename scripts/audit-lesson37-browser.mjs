@@ -53,6 +53,16 @@ const { TEST_37, TEST_COUNT_37, TEST_SOLUTIONS_37, STEP_COUNT_37 } = await impor
   pathToFileURL(`${process.cwd()}/${work}/test-data.mjs`).href
 );
 
+// مؤشران مستقلّان: الإجابة النموذجية لسؤال 24 (لا ترد في متن الدرس إطلاقًا)،
+// وشرح السؤال 22 (نص طويل فريد). إجابة Q22 القصيرة ترد في أمثلة الدرس، فلا تصلح مؤشرًا.
+const ANSWER_SENTINEL = TEST_SOLUTIONS_37.find((solution) => solution.n === 24);
+const EXPLANATION_SENTINEL = TEST_SOLUTIONS_37.find((solution) => solution.n === 22);
+const ANSWER_MARKER = ANSWER_SENTINEL?.answer ?? "";
+const EXPLANATION_MARKER = EXPLANATION_SENTINEL?.explanation ?? "";
+const KEY_MODULE_MARKER = "ANSWER_SPECS_37";
+const TEACHER_PASSWORD = "somer173";
+if (ANSWER_MARKER.length < 8 || EXPLANATION_MARKER.length < 30) throw new Error("Lesson 37 browser audit could not resolve its answer sentinels.");
+
 try {
   writeFileSync(`${work}/al2023.tar`, brotliDecompressSync(readFileSync("node_modules/@sparticuz/chromium/bin/al2023.tar.br")));
   execFileSync("tar", ["-xf", `${work}/al2023.tar`, "-C", work]);
@@ -99,7 +109,51 @@ page.on("response", async (response) => {
   }
 });
 
-const shot = (name, fullPage = false) => page.screenshot({ path: `${OUT}/${name}.png`, fullPage, animations: "disabled", timeout: 60000 });
+/**
+ * لقطة شاشة محروسة: قبل التصوير نقرأ النص الظاهر داخل الإطار فقط، ونفشل إن ظهرت
+ * إجابة نموذجية أو شرح سؤال — فلا تُحفظ لقطة تحمل مفتاح الإجابات في المستودع.
+ */
+const visibleTextInViewport = () =>
+  page.evaluate(() => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    return [...document.body.querySelectorAll("*")]
+      .filter((element) => element.children.length === 0)
+      .filter((element) => {
+        const rect = element.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return false;
+        if (rect.bottom < 0 || rect.top > height) return false;
+        if (rect.right < 0 || rect.left > width) return false;
+        const style = getComputedStyle(element);
+        return style.visibility !== "hidden" && style.display !== "none" && Number(style.opacity) > 0.05;
+      })
+      .map((element) => element.textContent ?? "")
+      .join(" \u0001 ");
+  });
+
+/**
+ * لقطة عنصر: تُستخدم لمناطق ما بعد التسليم، حيث يكفي أن نوثّق نتيجة الاختبار أو
+ * لوحة مستويات الحلول دون تصوير إجابات نموذجية داخل المستودع.
+ */
+const shotElement = async (name, selector) => {
+  const handle = page.locator(selector).first();
+  const text = (await handle.innerText()).replace(/\s+/g, " ");
+  ok(
+    !text.includes(ANSWER_MARKER) && !text.includes(EXPLANATION_MARKER),
+    `${name}: the captured region shows no answer text (sentinel check before capture)`,
+  );
+  ok(!/الإجابة النموذجية|السبب:|acceptedAnswers/i.test(text), `${name}: no per-question answer reveal is captured`);
+  return handle.screenshot({ path: `${OUT}/${name}.png`, animations: "disabled", timeout: 60000 });
+};
+
+const shot = async (name, fullPage = false) => {
+  const visible = await visibleTextInViewport();
+  ok(
+    !visible.includes(ANSWER_MARKER) && !visible.includes(EXPLANATION_MARKER),
+    `${name}: the frame contains no committed answer text (sentinel check before capture)`,
+  );
+  return page.screenshot({ path: `${OUT}/${name}.png`, fullPage, animations: "disabled", timeout: 60000 });
+};
 const overlap = (a, b) => {
   if (!a || !b) return 0;
   const x = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
@@ -247,9 +301,8 @@ for (const vp of VIEWPORTS) {
   await shot(`${vp.name}-cover`);
 
   // لقطات لخطوات تمثيلية: الغلاف + مختبر الصيغة + مختبر الغموض النحوي + القراءة
-  const gallery = vp.width >= 1280 ? ["s03b", "s30", "s32"] : ["s03b"];
-  for (const stepId of gallery) {
-    // نستخدم الدرج دائمًا: قائمة الشريط الجانبي تُمرَّر رأسيًا وقد تكون الخطوة خارج العرض.
+  const goToStep = async (stepId) => {
+    // الدرج على الهاتف، والشريط الجانبي على الشاشات الكبيرة (مع تمرير للخطوة المطلوبة).
     const drawerButton = page.getByRole("button", { name: "فهرس الدرس" });
     if (await drawerButton.isVisible()) {
       await drawerButton.click();
@@ -257,7 +310,6 @@ for (const vp of VIEWPORTS) {
     }
     const drawerStep = page.locator(`.fixed.inset-0.z-50 [data-step-nav='${stepId}']`).last();
     if ((await drawerStep.count()) === 0) {
-      // على الشاشات الكبيرة يكون الشريط ظاهرًا بلا درج: نمرّر إليه ثم نضغطه.
       await page.locator(`aside [data-step-nav='${stepId}']`).first().scrollIntoViewIfNeeded();
       await page.locator(`aside [data-step-nav='${stepId}']`).first().click();
     } else {
@@ -266,6 +318,25 @@ for (const vp of VIEWPORTS) {
     }
     await page.waitForSelector(`[data-step-id='${stepId}']`, { timeout: 15000 });
     await page.waitForTimeout(250);
+  };
+
+  const gallery = vp.width >= 1280 ? ["s03b", "s30", "s32"] : ["s03b"];
+  for (const stepId of gallery) {
+    await goToStep(stepId);
+    if (stepId === "s30") {
+      // المختبر الفعلي (لا العنوان فقط) موجود داخل الخطوة، بجملتين وخمسة حقول تصحيح.
+      const detective = await page.evaluate(() => {
+        const labs = [...document.querySelectorAll("[data-lab]")].map((node) => node.getAttribute("data-lab"));
+        return {
+          hook: document.querySelectorAll("[data-lab='detective30']").length,
+          items: document.querySelectorAll("[data-practice-item^='detective30-']").length,
+          inputs: document.querySelectorAll("[data-lab='detective30'] input[type='text']").length,
+          unique: new Set(labs).size === labs.length,
+        };
+      });
+      ok(detective.hook === 1 && detective.items === 5 && detective.inputs === 5, `${vp.name}: the Grammar Detective lab renders its 5 correction fields (${JSON.stringify(detective)})`);
+      ok(detective.unique, `${vp.name}: data-lab hooks are unique in the rendered step`);
+    }
     await shot(`${vp.name}-step-${stepId}`);
     if (vp.width === 1280) {
       // لقطة أسفل الخطوة: نمرّر الحاوية الداخلية إلى نهايتها لتصوير المختبر كاملًا.
@@ -286,6 +357,9 @@ for (const vp of VIEWPORTS) {
     }
   }
 
+  // نعود إلى الغلاف قبل قياس التباين، وإلا قِسنا خطوة أخرى بالخطأ.
+  await goToStep("cover");
+  ok((await page.locator("[data-step-id='cover']").count()) === 1, `${vp.name}: back on the cover before the contrast sample`);
   const contrast = await contrastReport();
   ok(contrast.below === 0, `${vp.name}: computed WCAG AA contrast on the cover (${contrast.below} below of ${contrast.samples}; worst ${contrast.worst.ratio})`);
 
@@ -384,13 +458,6 @@ for (const vp of VIEWPORTS) {
 
 /* ---------------------------------------------- 3) عزل مفتاح الإجابة */
 // القيمة الحقيقية للـ sentinel لا تُكتب في أي ملف ناتج: نستخدمها في الذاكرة فقط.
-const SENTINEL = TEST_SOLUTIONS_37.find((solution) => solution.n === 22);
-// إجابة Q22 نفسها وردت في أمثلة الدرس، فالمؤشر الموثوق هو شرحها الكامل (نص طويل فريد).
-const ANSWER_MARKER = SENTINEL?.explanation ?? "";
-const EXPLANATION_MARKER = SENTINEL?.explanation ?? "";
-const KEY_MODULE_MARKER = "ANSWER_SPECS_37";
-const TEACHER_PASSWORD = "somer173";
-if (!ANSWER_MARKER || !EXPLANATION_MARKER) throw new Error("Lesson 37 browser audit could not resolve its Q22 answer sentinel.");
 
 const loadedJs = () => jsResponses.map((response) => response.body).join("\n");
 const keyChunkLoaded = () => jsResponses.some((response) => /solutionsData37-[^/]*\.js/.test(response.url));
@@ -413,6 +480,10 @@ const isolationStages = [];
   const initial = snapshot("initial-lesson-load");
   isolationStages.push(initial);
   ok(!initial.answerMarkerInLoadedJs && !initial.explanationMarkerInLoadedJs, "the real model answer and its explanation are absent from every JavaScript response loaded so far");
+  // ضبط موجب: المؤشر يجب أن يكون غائبًا عن الصفحة نفسها أيضًا، وإلا لكان فحص الغياب أعمى.
+  const initialDomText = await page.evaluate(() => document.body.innerText);
+  ok(!initialDomText.includes(ANSWER_MARKER), "the answer sentinel is genuinely absent from the rendered initial page (a blind sentinel would make the check meaningless)");
+  ok(!initialDomText.includes(EXPLANATION_MARKER), "the explanation sentinel is genuinely absent from the rendered initial page");
   ok(!initial.keyModuleMarkerInLoadedJs && !initial.keyChunkRequested, "the initial student payload excludes the deferred answer-key chunk");
 
   const lockedTab = await page.locator("[data-area-tab='solutions']").first().textContent();
@@ -480,7 +551,9 @@ const isolationStages = [];
   isolationStages.push(submitted);
   ok(submitted.keyChunkRequested, "the deferred answer-key chunk is requested only after submission");
   ok(submitted.answerMarkerInLoadedJs && submitted.keyModuleMarkerInLoadedJs, "the submitted page actually fetched the real model answer, so the sentinel proves the chunk is the key");
-  await shot("1440x900-test-graded");
+  ok(submitted.explanationMarkerInLoadedJs, "positive control: the explanation sentinel does appear once the key chunk is fetched (so pre-submit absence is meaningful)");
+  // توثيق النتيجة فقط: بطاقة الدرجة والسياسة، لا بطاقات الإجابات النموذجية.
+  await shotElement("1440x900-test-graded", "[data-test-score]");
 
   /* ---- إعادة الاختبار ---- */
   await page.getByRole("button", { name: "إعادة الاختبار" }).click();
@@ -520,7 +593,24 @@ const isolationStages = [];
     ok(numbers.length === 5, `solutions level ${level + 1} shows its five answers (got ${numbers.length})`);
   }
   ok(seen.size === 25, `all 25 detailed answers are reachable through the five level tabs (got ${seen.size})`);
-  await shot("1440x900-solutions");
+  // توثيق رأس منطقة الحلول ومستوياتها الخمسة، دون كشف إجابات أي مستوى.
+  const solutionsHeader = page.locator("[data-solutions-header='true']").first();
+  const solutionsTabs = page.locator("nav[aria-label='مستويات حلول اختبار الدرس 37']").first();
+  const headerBox = await solutionsHeader.boundingBox();
+  const tabsBox = await solutionsTabs.boundingBox();
+  const clipTop = Math.min(headerBox?.y ?? 0, tabsBox?.y ?? 0);
+  const clipBottom = (tabsBox?.y ?? 0) + (tabsBox?.height ?? 0);
+  const capturedHeader = ((await solutionsHeader.innerText()) + " " + (await solutionsTabs.innerText())).replace(/\s+/g, " ");
+  ok(
+    !capturedHeader.includes(ANSWER_MARKER) && !capturedHeader.includes(EXPLANATION_MARKER),
+    "1440x900-solutions: the header + level tabs region carries no answer text",
+  );
+  await page.screenshot({
+    path: `${OUT}/1440x900-solutions.png`,
+    clip: { x: headerBox?.x ?? 0, y: clipTop, width: headerBox?.width ?? 1000, height: Math.max(0, clipBottom - clipTop) },
+    animations: "disabled",
+    timeout: 60000,
+  });
 
   /* ---- منطقة المعلم ---- */
   await openArea("teacher");
@@ -578,7 +668,7 @@ await browser.close();
 /* ---------------------------------------------- 5) الناتج: قيم منطقية فقط */
 ok(report.consoleErrors.length === 0, `no console or page errors (${report.consoleErrors.slice(0, 3).join(" | ")})`);
 report.answerKeyIsolation = {
-  markerSource: "solutionsData37.ts · Q22 model answer (value deliberately not stored here)",
+  markerSource: "solutionsData37.ts · Q24 model answer + Q22 explanation (values deliberately not stored here)",
   keyChunkPrefix: "solutionsData37-",
   stages: isolationStages,
 };

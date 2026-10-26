@@ -62,8 +62,8 @@ Not touched: `src/App.tsx` (route `#/lesson/37` and its registration were alread
 | Gate | Result |
 | --- | --- |
 | `npm run build` | ✓ |
-| `npm run audit:lesson37` | ✓ 328 assertions |
-| `npm run audit:lesson37-browser` | ✓ 578/578 across 1920×1080 · 1280×800 · 768×900 · 375×812 |
+| `npm run audit:lesson37` | ✓ 388 assertions |
+| `npm run audit:lesson37-browser` | ✓ 614/614 across 1920×1080 · 1280×800 · 768×900 · 375×812 (614 includes the guarded-screenshot sentinel checks) |
 | `ONLY=37 node scripts/audit-bidi-mixed.mjs` | ✓ 0 violations |
 | `npm run check:english-direction` | ✓ 59/59 |
 | `npm run audit:lesson-navigation` | ✓ 176 passed / 0 failed |

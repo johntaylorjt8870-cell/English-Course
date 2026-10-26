@@ -1,6 +1,6 @@
 {
   "baseUrl": "http://127.0.0.1:4173/English-Course/#/lesson/37",
-  "generatedAt": "2026-10-25T23:29:55.623Z",
+  "generatedAt": "2026-10-26T00:01:13.403Z",
   "viewports": [
     {
       "viewport": "1920x1080",
@@ -59,7 +59,7 @@
         "ledgerLabels": false
       },
       "contrast": {
-        "samples": 90,
+        "samples": 94,
         "below": 0,
         "worst": {
           "ratio": 4.76,
@@ -77,7 +77,7 @@
         },
         {
           "id": "s36",
-          "height": 2178,
+          "height": 2173,
           "scrollWidth": 1920,
           "clientWidth": 1920,
           "ledger": false
@@ -91,14 +91,14 @@
         },
         {
           "id": "s19",
-          "height": 2147,
+          "height": 2153,
           "scrollWidth": 1920,
           "clientWidth": 1920,
           "ledger": false
         },
         {
           "id": "s08",
-          "height": 2055,
+          "height": 2061,
           "scrollWidth": 1920,
           "clientWidth": 1920,
           "ledger": false
@@ -162,7 +162,7 @@
         "ledgerLabels": false
       },
       "contrast": {
-        "samples": 90,
+        "samples": 94,
         "below": 0,
         "worst": {
           "ratio": 4.76,
@@ -187,7 +187,7 @@
         },
         {
           "id": "s37b",
-          "height": 2168,
+          "height": 2173,
           "scrollWidth": 1280,
           "clientWidth": 1280,
           "ledger": false
@@ -201,7 +201,7 @@
         },
         {
           "id": "s08",
-          "height": 2061,
+          "height": 2049,
           "scrollWidth": 1280,
           "clientWidth": 1280,
           "ledger": false
@@ -265,18 +265,18 @@
         "ledgerLabels": false
       },
       "contrast": {
-        "samples": 33,
+        "samples": 68,
         "below": 0,
         "worst": {
           "ratio": 5.93,
-          "text": "🔭FUTURE HORIZON"
+          "text": "Lesson 37 · Future Continuous"
         },
         "offenders": []
       },
       "tallest": [
         {
           "id": "s36",
-          "height": 2302,
+          "height": 2309,
           "scrollWidth": 768,
           "clientWidth": 768,
           "ledger": false
@@ -297,14 +297,14 @@
         },
         {
           "id": "s19",
-          "height": 2140,
+          "height": 2147,
           "scrollWidth": 768,
           "clientWidth": 768,
           "ledger": false
         },
         {
           "id": "s08",
-          "height": 2107,
+          "height": 2114,
           "scrollWidth": 768,
           "clientWidth": 768,
           "ledger": false
@@ -368,11 +368,11 @@
         "ledgerLabels": false
       },
       "contrast": {
-        "samples": 31,
+        "samples": 66,
         "below": 0,
         "worst": {
           "ratio": 5.93,
-          "text": "🔭FUTURE HORIZON"
+          "text": "Lesson 37 · Future Continuous"
         },
         "offenders": []
       },
@@ -386,28 +386,28 @@
         },
         {
           "id": "s36",
-          "height": 3071,
-          "scrollWidth": 375,
-          "clientWidth": 375,
-          "ledger": false
-        },
-        {
-          "id": "s08",
-          "height": 2974,
+          "height": 3080,
           "scrollWidth": 375,
           "clientWidth": 375,
           "ledger": false
         },
         {
           "id": "s11",
-          "height": 2962,
+          "height": 2971,
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "ledger": false
+        },
+        {
+          "id": "s08",
+          "height": 2965,
           "scrollWidth": 375,
           "clientWidth": 375,
           "ledger": false
         },
         {
           "id": "s32",
-          "height": 2905,
+          "height": 2896,
           "scrollWidth": 375,
           "clientWidth": 375,
           "ledger": false
@@ -428,7 +428,7 @@
         },
         {
           "id": "s36",
-          "height": 2178,
+          "height": 2173,
           "scrollWidth": 1920,
           "clientWidth": 1920,
           "ledger": false
@@ -442,14 +442,14 @@
         },
         {
           "id": "s19",
-          "height": 2147,
+          "height": 2153,
           "scrollWidth": 1920,
           "clientWidth": 1920,
           "ledger": false
         },
         {
           "id": "s08",
-          "height": 2055,
+          "height": 2061,
           "scrollWidth": 1920,
           "clientWidth": 1920,
           "ledger": false
@@ -475,7 +475,7 @@
         },
         {
           "id": "s37b",
-          "height": 2168,
+          "height": 2173,
           "scrollWidth": 1280,
           "clientWidth": 1280,
           "ledger": false
@@ -489,7 +489,7 @@
         },
         {
           "id": "s08",
-          "height": 2061,
+          "height": 2049,
           "scrollWidth": 1280,
           "clientWidth": 1280,
           "ledger": false
@@ -501,7 +501,7 @@
       "tallest": [
         {
           "id": "s36",
-          "height": 2302,
+          "height": 2309,
           "scrollWidth": 768,
           "clientWidth": 768,
           "ledger": false
@@ -522,14 +522,14 @@
         },
         {
           "id": "s19",
-          "height": 2140,
+          "height": 2147,
           "scrollWidth": 768,
           "clientWidth": 768,
           "ledger": false
         },
         {
           "id": "s08",
-          "height": 2107,
+          "height": 2114,
           "scrollWidth": 768,
           "clientWidth": 768,
           "ledger": false
@@ -548,28 +548,28 @@
         },
         {
           "id": "s36",
-          "height": 3071,
-          "scrollWidth": 375,
-          "clientWidth": 375,
-          "ledger": false
-        },
-        {
-          "id": "s08",
-          "height": 2974,
+          "height": 3080,
           "scrollWidth": 375,
           "clientWidth": 375,
           "ledger": false
         },
         {
           "id": "s11",
-          "height": 2962,
+          "height": 2971,
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "ledger": false
+        },
+        {
+          "id": "s08",
+          "height": 2965,
           "scrollWidth": 375,
           "clientWidth": 375,
           "ledger": false
         },
         {
           "id": "s32",
-          "height": 2905,
+          "height": 2896,
           "scrollWidth": 375,
           "clientWidth": 375,
           "ledger": false
@@ -579,7 +579,7 @@
   ],
   "consoleErrors": [],
   "answerKeyIsolation": {
-    "markerSource": "solutionsData37.ts · Q22 model answer (value deliberately not stored here)",
+    "markerSource": "solutionsData37.ts · Q24 model answer + Q22 explanation (values deliberately not stored here)",
     "keyChunkPrefix": "solutionsData37-",
     "stages": [
       {
@@ -614,6 +614,6 @@
   },
   "stepCount": 58,
   "testCount": 25,
-  "checks": 578,
+  "checks": 614,
   "failures": []
 }

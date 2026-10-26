@@ -282,6 +282,9 @@ for (const slide of SLIDES_37) {
   if (labStepIds37.has(slide.id)) {
     ok(html.includes("data-lab="), `${slide.id}: its interactive laboratory is mounted (a stale step id would drop it silently)`);
   }
+  // hooks `data-lab` فريدة داخل الخطوة الواحدة، فلا يعتمد أي تأكيد على أول تطابق عشوائي.
+  const labHooks = [...html.matchAll(/data-lab="([^"]+)"/g)].map((match) => match[1]);
+  ok(new Set(labHooks).size === labHooks.length, `${slide.id}: its data-lab hooks are unique inside the step (${labHooks.join(", ") || "none"})`);
 }
 const allStepsHtml = [...initialHtml.values()].join("\n");
 const corpus = normalize(allStepsHtml.replace(/<[^>]+>/g, " "));
@@ -641,9 +644,20 @@ ok(contrastFailures.length === 0, `the lesson palette meets WCAG AA 4.5:1 (${con
   ok(!/أقسام المصدر|خطوات الطالب|coverage|ledger/i.test(studentSurface), "no bookkeeping phrases ('source sections', 'student steps', coverage) are shown to the learner");
   ok(!/النص الأصلي|نص المصدر الحرفي|اضغط للعرض/.test(studentSurface), "no literal-source reveal control exists on the student side");
 
-  // لا تسريب إجابات في المسار الأولي
-  const leakedExplanations = TEST_SOLUTIONS_37.filter((solution) => normalize(studentSurface).includes(normalize(solution.explanation)));
-  ok(leakedExplanations.length === 0, `no test answer explanation reaches the student steps or the pre-submit test (${leakedExplanations.length} leaked)`);
+  // لا تسريب إجابات في المسار الأولي — بكاشف واحد ومضبوط موجبًا حتى لا يكون أعمى.
+  const explanationsIn = (surface) =>
+    TEST_SOLUTIONS_37.filter((solution) => normalize(surface).includes(normalize(solution.explanation))).map((solution) => solution.n);
+  const leakedExplanations = explanationsIn(studentSurface);
+  ok(leakedExplanations.length === 0, `no test answer explanation reaches the student steps or the pre-submit test (${leakedExplanations.join(", ") || "none"} leaked)`);
+  // مؤشران للتسريب: إجابة Q24 النموذجية (لا ترد في متن الدرس) وشرح Q22 الطويل الفريد.
+  // إجابة Q22 القصيرة نفسها ترد في أمثلة الدرس، فلا تصلح مؤشرًا.
+  const modelAnswersInLesson = TEST_SOLUTIONS_37.filter((solution) => normalize(studentSurface).includes(normalize(solution.answer))).map((solution) => solution.n);
+  ok(!modelAnswersInLesson.includes(24), `the Q24 model answer stays out of the lesson text, so it can act as a leak sentinel (present: ${modelAnswersInLesson.join(", ")})`);
+  const positiveControl = explanationsIn(`${studentSurface}${TEST_SOLUTIONS_37[3].explanation}`);
+  ok(
+    positiveControl.length === 1 && positiveControl[0] === 4,
+    `positive control: the very same detector flags a deliberately injected answer explanation (got ${JSON.stringify(positiveControl)})`,
+  );
   ok(!/ANSWER_SPECS_37|SOLUTION_NOTES_37/.test(studentSurface), "the rendered student surface never contains key identifiers");
 
   // كل مختبر تفاعلي مذكور في الخطوات

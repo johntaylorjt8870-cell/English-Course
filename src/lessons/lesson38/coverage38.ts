@@ -36,7 +36,7 @@ export const COVERAGE_38: CoverageRow38[] = [
     elements: "العنوان · By Tomorrow, I Will Have Finished! · إتقان التعبير عن الإنجاز قبل نقطة مستقبلية — IQ200 🚀 · جسر Future Continuous · At 8:00 tomorrow, I will be studying. · By 8:00 tomorrow, I will have finished studying. · تعريف Future Perfect",
     location: coverageLocation38("cover"),
     transfer: "verbatim",
-    platformAddition: "غلاف بصري بهوية Deadline Lab وبطاقات تذكّر بجسر الدرس 37 دون استبدال نص المصدر.",
+    platformAddition: "غلاف بصري بهوية مرصد الإنجاز المستقبلي وبطاقات تذكّر بجسر الدرس 37 دون استبدال نص المصدر.",
   },
   {
     num: 1, id: "s01", title: "🎯 1. أهداف الدرس",
@@ -298,6 +298,13 @@ export const COVERAGE_38: CoverageRow38[] = [
     location: coverageLocation38("s36"),
     transfer: "verbatim",
     platformAddition: "مختبر وصل كل استخدام وصيغة بمثاله الأصلي.",
+  },
+  {
+    num: null, id: "roadmap", title: "🗺️ عناوين الدروس العشرة القادمة (39–48)",
+    elements: "جدول الدروس 39–48 · سبب التسلسل (can / might / must / should / would rather) · جسر الدرس 39 Future Perfect Continuous مع جملتي By 8:00",
+    location: coverageLocation38("roadmap"),
+    transfer: "table-rebuilt",
+    platformAddition: "خريطة مستقبلية تفاعلية في ختام الدرس: المحطات العشر وسبب ترتيبها، دون تحويلها إلى درس جديد داخل الدرس 38.",
   },
 ];
 

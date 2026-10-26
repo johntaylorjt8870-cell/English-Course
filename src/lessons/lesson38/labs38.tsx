@@ -42,7 +42,7 @@ import {
 
 function EnglishLine38({ children }: { children: ReactNode }) {
   return (
-    <p dir="ltr" className="font-en rounded-xl border border-[#f3d2d9] bg-[#fffaf7] px-3 py-2 text-left text-[#3f1233]">
+    <p dir="ltr" className="font-en rounded-xl border border-[#d9cbb0] bg-[#fffdf6] px-3 py-2 text-left text-[#122033]">
       {children}
     </p>
   );
@@ -66,8 +66,8 @@ function ChoiceList38({
       {item.choices.map((choice) => (
         <label
           key={choice.value}
-          className={`flex min-h-11 cursor-pointer items-start gap-3 rounded-xl border p-3 text-sm font-bold leading-6 text-[#2b1633] ${
-            value === choice.value ? "border-[#9f1239] bg-[#fff1f2]" : "border-[#f0d9d2] bg-white hover:bg-[#f7f8f5]"
+          className={`flex min-h-11 cursor-pointer items-start gap-3 rounded-xl border p-3 text-sm font-bold leading-6 text-[#1a2433] ${
+            value === choice.value ? "border-[#1b3a5c] bg-[#e8eef5]" : "border-[#d4c4a0] bg-white hover:bg-[#f7f8f5]"
           }`}
         >
           <input
@@ -77,7 +77,7 @@ function ChoiceList38({
             checked={value === choice.value}
             disabled={disabled}
             onChange={(event) => onSelect(event.currentTarget.value)}
-            className={`${FOCUS_38} mt-1 h-4 w-4 accent-[#9f1239]`}
+            className={`${FOCUS_38} mt-1 h-4 w-4 accent-[#1b3a5c]`}
           />
           {/*
             التصحيح يُعرض في كتلة مستقلة: عندما يلي الفترة الإنجليزية كلمة «الصحيح»
@@ -129,20 +129,20 @@ export function ChoiceLab38({
   };
 
   return (
-    <section data-lab={id} className="rounded-3xl border border-[#f0d9d2] bg-[#fffbf7] p-4 shadow-sm sm:p-5">
-      <p className="text-xs font-black uppercase tracking-[.12em] text-[#7a5767]">
+    <section data-lab={id} className="rounded-3xl border border-[#d4c4a0] bg-[#fffdf6] p-4 shadow-sm sm:p-5">
+      <p className="text-xs font-black uppercase tracking-[.12em] text-[#4a5568]">
         <Rich text={eyebrow} />
       </p>
-      <h2 className="mt-1 text-lg font-black leading-snug text-[#2b1633]">{title}</h2>
+      <h2 className="mt-1 text-lg font-black leading-snug text-[#1a2433]">{title}</h2>
       {note ? <div className="mt-3">{note}</div> : null}
       <div className="mt-3 space-y-3">
         {items.map((item, index) => {
           const isChecked = !!checked[item.id];
           const accepted = item.accepted.includes(selected[item.id] ?? "");
           return (
-            <fieldset key={item.id} data-lab-item={`${id}-${item.id}`} className="rounded-2xl border border-[#f0d9d2] bg-white p-3 sm:p-4">
+            <fieldset key={item.id} data-lab-item={`${id}-${item.id}`} className="rounded-2xl border border-[#d4c4a0] bg-white p-3 sm:p-4">
               <legend className="sr-only">النشاط {index + 1}</legend>
-              <p className="font-bold leading-7 text-[#2b1633]">
+              <p className="font-bold leading-7 text-[#1a2433]">
                 <Rich text={item.prompt} />
               </p>
               {item.lines?.length ? (
@@ -182,7 +182,7 @@ export function ChoiceLab38({
           );
         })}
       </div>
-      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#6b4a5e]">
+      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#3d4a5c]">
         حاولت <span className="font-en tabular-nums">{attempted}</span> من <span className="font-en tabular-nums">{items.length}</span>.
       </p>
       {complete ? <p className="text-sm font-black text-[#1c6b3c]">اكتملت المحاولة في هذا المختبر.</p> : null}
@@ -195,15 +195,15 @@ export function ObjectivesChecklist38({ objectives }: { objectives: readonly str
   const [checked, setChecked] = useState<Record<number, boolean>>({});
   const done = objectives.filter((_, index) => checked[index]).length;
   return (
-    <div className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
-      <p className="text-sm font-black text-[#3f1233]">علّم الأهداف التي تراها واضحة الآن (مراجعة ذاتية):</p>
+    <div className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
+      <p className="text-sm font-black text-[#122033]">علّم الأهداف التي تراها واضحة الآن (مراجعة ذاتية):</p>
       {/*
         عمود واحد حتى أعرض الشاشات: في العمودين الضيّقين ينقسم اسم إنجليزي
         طويل مثل «Future Perfect» بين سطرين فيظهر مبعثرًا داخل الجملة العربية.
       */}
       <div className="mt-2 grid gap-2 2xl:grid-cols-2">
         {objectives.map((objective, index) => (
-          <label key={objective} className="flex items-start gap-2 rounded-xl border border-[#f2ded8] bg-[#fffbf7] p-2.5 text-sm leading-6 text-[#2b1633]">
+          <label key={objective} className="flex items-start gap-2 rounded-xl border border-[#f2ded8] bg-[#fffdf6] p-2.5 text-sm leading-6 text-[#1a2433]">
             <input
               type="checkbox"
               checked={!!checked[index]}
@@ -211,7 +211,7 @@ export function ObjectivesChecklist38({ objectives }: { objectives: readonly str
                 const value = event.currentTarget.checked;
                 setChecked((current) => ({ ...current, [index]: value }));
               }}
-              className={`${FOCUS_38} mt-1 h-4 w-4 shrink-0 accent-[#9f1239]`}
+              className={`${FOCUS_38} mt-1 h-4 w-4 shrink-0 accent-[#1b3a5c]`}
             />
             <span>
               <Rich text={objective} />
@@ -219,7 +219,7 @@ export function ObjectivesChecklist38({ objectives }: { objectives: readonly str
           </label>
         ))}
       </div>
-      <p aria-live="polite" className="mt-2 text-xs font-bold text-[#7a5767]">
+      <p aria-live="polite" className="mt-2 text-xs font-bold text-[#4a5568]">
         علّمت <span className="font-en tabular-nums">{done}</span> من <span className="font-en tabular-nums">{objectives.length}</span> هدفًا.
       </p>
     </div>
@@ -234,9 +234,9 @@ export function DeadlineTimelineLab38({ onComplete }: { onComplete?: () => void 
   const correct = answered === "friday";
 
   return (
-    <section data-lab="timeline" className="rounded-3xl border border-[#f0d9d2] bg-[#fffbf7] p-4 shadow-sm sm:p-5">
-      <p className="text-xs font-black uppercase tracking-[.12em] text-[#7a5767]">§2 · interactive timeline</p>
-      <h2 className="mt-1 text-lg font-black leading-snug text-[#2b1633]">انظر إلى المشروع من نقطة أبعد</h2>
+    <section data-lab="timeline" className="rounded-3xl border border-[#d4c4a0] bg-[#fffdf6] p-4 shadow-sm sm:p-5">
+      <p className="text-xs font-black uppercase tracking-[.12em] text-[#4a5568]">مختبر الخط الزمني</p>
+      <h2 className="mt-1 text-lg font-black leading-snug text-[#1a2433]">انظر إلى المشروع من نقطة أبعد</h2>
       <PlatformNote38>
         خطة المصدر: اليوم الاثنين، إنهاء المشروع الأربعاء، ونقطة المرجع الجمعة. حرّك المؤشر على الأيام الثلاثة، ثم أجب.
       </PlatformNote38>
@@ -249,40 +249,40 @@ export function DeadlineTimelineLab38({ onComplete }: { onComplete?: () => void 
             aria-pressed={momentId === candidate.id}
             onClick={() => setMomentId(candidate.id)}
             className={`${FOCUS_38} min-h-14 rounded-2xl border px-3 py-2 text-right transition-colors motion-reduce:transition-none ${
-              momentId === candidate.id ? "border-[#9f1239] bg-[#fff1f2]" : "border-[#f0d9d2] bg-white hover:bg-[#f7f8f5]"
+              momentId === candidate.id ? "border-[#1b3a5c] bg-[#e8eef5]" : "border-[#d4c4a0] bg-white hover:bg-[#f7f8f5]"
             }`}
           >
-            <span dir="ltr" className="font-en block text-base font-black tabular-nums text-[#3f1233]">
+            <span dir="ltr" className="font-en block text-base font-black tabular-nums text-[#122033]">
               {candidate.clock}
             </span>
-            <span className="mt-0.5 block text-sm font-bold text-[#2b1633]">{candidate.label}</span>
+            <span className="mt-0.5 block text-sm font-bold text-[#1a2433]">{candidate.label}</span>
           </button>
         ))}
       </div>
-      <div className="mt-3 h-3 overflow-hidden rounded-full border border-[#f0d9d2] bg-[#fdf2ed]">
+      <div className="mt-3 h-3 overflow-hidden rounded-full border border-[#d4c4a0] bg-[#f7f2e4]">
         <div
-          className="h-full bg-[#9f1239] transition-[width] motion-reduce:transition-none"
+          className="h-full bg-[#1b3a5c] transition-[width] motion-reduce:transition-none"
           style={{ width: momentId === "monday" ? "10%" : momentId === "wednesday" ? "50%" : momentId === "friday" ? "90%" : "0%" }}
         />
       </div>
       {moment ? (
         <div className="mt-3 space-y-2" data-timeline-readout={moment.id}>
           <EnglishLine38>{moment.sentence}</EnglishLine38>
-          <p className="text-sm leading-6 text-[#2b1633]">
+          <p className="text-sm leading-6 text-[#1a2433]">
             <Rich text={moment.arabic} />
           </p>
-          <p className="rounded-xl bg-[#fdf2ed] px-3 py-2 text-sm font-bold leading-6 text-[#6b4a5e]">
+          <p className="rounded-xl bg-[#f7f2e4] px-3 py-2 text-sm font-bold leading-6 text-[#3d4a5c]">
             <Rich text={moment.note} />
           </p>
         </div>
       ) : (
-        <p className="mt-3 rounded-xl border border-dashed border-[#e7c8cc] bg-[#fff8f3] px-3 py-2 text-sm font-bold text-[#7a5767]">
+        <p className="mt-3 rounded-xl border border-dashed border-[#d4c4a0] bg-[#f7f2e4] px-3 py-2 text-sm font-bold text-[#4a5568]">
           اختر يومًا من الأيام الثلاثة لعرض ما يحدث فيه.
         </p>
       )}
-      <fieldset className="mt-4 rounded-2xl border border-[#f0d9d2] bg-white p-3">
-        <legend className="px-1 text-sm font-black text-[#3f1233]">سؤال خط الإنجاز</legend>
-        <p className="font-bold leading-7 text-[#2b1633]">
+      <fieldset className="mt-4 rounded-2xl border border-[#d4c4a0] bg-white p-3">
+        <legend className="px-1 text-sm font-black text-[#122033]">سؤال خط الإنجاز</legend>
+        <p className="font-bold leading-7 text-[#1a2433]">
           <Rich text="أي يوم هو نقطة المرجع المستقبلية في جملة I will have finished it by Friday. ؟" />
         </p>
         <div className="mt-2 flex flex-wrap gap-2">
@@ -290,7 +290,7 @@ export function DeadlineTimelineLab38({ onComplete }: { onComplete?: () => void 
             <label
               key={candidate.id}
               className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 text-sm font-black ${
-                answered === candidate.id ? "border-[#9f1239] bg-[#fff1f2]" : "border-[#f0d9d2] bg-white"
+                answered === candidate.id ? "border-[#1b3a5c] bg-[#e8eef5]" : "border-[#d4c4a0] bg-white"
               }`}
             >
               <input
@@ -300,7 +300,7 @@ export function DeadlineTimelineLab38({ onComplete }: { onComplete?: () => void 
                 checked={answered === candidate.id}
                 disabled={checked}
                 onChange={() => setAnswered(candidate.id)}
-                className={`${FOCUS_38} h-4 w-4 accent-[#9f1239]`}
+                className={`${FOCUS_38} h-4 w-4 accent-[#1b3a5c]`}
               />
               <span dir="ltr" className="font-en tabular-nums">
                 {candidate.clock}
@@ -351,10 +351,10 @@ export function FormulaOrderLab38() {
   const check = () => setResult(picked.join("|") === expected.join("|") ? "ok" : "review");
   const built = picked.map((id) => FORMULA_PIECES_38.find((piece) => piece.id === id)?.text ?? "").join(" + ");
   return (
-    <section data-lab="formula" className="rounded-3xl border border-[#f0d9d2] bg-[#fffbf7] p-4 shadow-sm sm:p-5">
-      <p className="text-xs font-black uppercase tracking-[.12em] text-[#7a5767]">§3 · formula builder</p>
-      <h2 className="mt-1 text-lg font-black leading-snug text-[#2b1633]">ابنِ الصيغة بترتيبها الصحيح</h2>
-      <p className="mt-2 text-sm leading-6 text-[#6b4a5e]">
+    <section data-lab="formula" className="rounded-3xl border border-[#d4c4a0] bg-[#fffdf6] p-4 shadow-sm sm:p-5">
+      <p className="text-xs font-black uppercase tracking-[.12em] text-[#4a5568]">ورشة بناء الصيغة</p>
+      <h2 className="mt-1 text-lg font-black leading-snug text-[#1a2433]">ابنِ الصيغة بترتيبها الصحيح</h2>
+      <p className="mt-2 text-sm leading-6 text-[#3d4a5c]">
         اضغط العناصر بالترتيب الذي تُبنى به الجملة، ثم تحقّق. الترتيب هنا هو نفس ترتيب الجملة الإنجليزية.
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
@@ -366,13 +366,13 @@ export function FormulaOrderLab38() {
             aria-pressed={picked.includes(piece.id)}
             onClick={() => toggle(piece.id)}
             className={`${FOCUS_38} min-h-11 rounded-xl border px-3 py-2 text-sm font-black transition-colors motion-reduce:transition-none ${
-              picked.includes(piece.id) ? "border-[#9f1239] bg-[#fff1f2] text-[#3f1233]" : "border-[#f0d9d2] bg-white text-[#2b1633] hover:bg-[#f7f8f5]"
+              picked.includes(piece.id) ? "border-[#1b3a5c] bg-[#e8eef5] text-[#122033]" : "border-[#d4c4a0] bg-white text-[#1a2433] hover:bg-[#f7f8f5]"
             }`}
           >
             <span dir="ltr" className="font-en">
               {piece.text}
             </span>
-            <span className="mt-0.5 block text-[11px] font-bold text-[#7a5767]">{piece.label}</span>
+            <span className="mt-0.5 block text-[11px] font-bold text-[#4a5568]">{piece.label}</span>
           </button>
         ))}
       </div>
@@ -380,7 +380,7 @@ export function FormulaOrderLab38() {
         <ActionButton38 disabled={picked.length === 0} onClick={check}>
           تحقق من الترتيب
         </ActionButton38>
-        <p dir="ltr" className="font-en rounded-xl border border-[#f3d2d9] bg-white px-3 py-2 text-left text-[#3f1233]">
+        <p dir="ltr" className="font-en rounded-xl border border-[#d9cbb0] bg-white px-3 py-2 text-left text-[#122033]">
           {built || "—"}
         </p>
       </div>
@@ -416,10 +416,10 @@ export function PartsLab38() {
     setChecked(false);
   };
   return (
-    <section data-lab="parts" className="rounded-3xl border border-[#f0d9d2] bg-[#fffbf7] p-4 shadow-sm sm:p-5">
-      <p className="text-xs font-black uppercase tracking-[.12em] text-[#7a5767]">§4 · sentence dissection</p>
-      <h2 className="mt-1 text-lg font-black leading-snug text-[#2b1633]">حلّل الجملة: She will have completed the experiment by noon.</h2>
-      <p className="mt-2 text-sm leading-6 text-[#6b4a5e]">
+    <section data-lab="parts" className="rounded-3xl border border-[#d4c4a0] bg-[#fffdf6] p-4 shadow-sm sm:p-5">
+      <p className="text-xs font-black uppercase tracking-[.12em] text-[#4a5568]">تشريح الجملة</p>
+      <h2 className="mt-1 text-lg font-black leading-snug text-[#1a2433]">حلّل الجملة: She will have completed the experiment by noon.</h2>
+      <p className="mt-2 text-sm leading-6 text-[#3d4a5c]">
         اضغط أجزاء الجملة بالترتيب لتعيين دور كل جزء. الترتيب هو ترتيب الجملة الإنجليزية من اليسار إلى اليمين.
       </p>
       <div data-parts-strip className="mt-3 flex flex-wrap gap-2">
@@ -434,7 +434,7 @@ export function PartsLab38() {
               aria-pressed={assigned}
               onClick={() => tap(part.id)}
               className={`${FOCUS_38} min-h-12 rounded-2xl border px-3 py-2 text-base font-black transition-colors motion-reduce:transition-none ${
-                assigned ? "border-[#9f1239] bg-[#fff1f2] text-[#3f1233]" : "border-[#f0d9d2] bg-white text-[#2b1633] hover:bg-[#f7f8f5]"
+                assigned ? "border-[#1b3a5c] bg-[#e8eef5] text-[#122033]" : "border-[#d4c4a0] bg-white text-[#1a2433] hover:bg-[#f7f8f5]"
               }`}
             >
               <span dir="ltr" className="font-en">
@@ -472,15 +472,15 @@ export function PartsLab38() {
               ))}
             </ul>
           </Feedback38>
-          <fieldset className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
-            <legend className="px-1 text-sm font-black text-[#3f1233]">لماذا have وليس has؟</legend>
+          <fieldset className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
+            <legend className="px-1 text-sm font-black text-[#122033]">لماذا have وليس has؟</legend>
             <div className="mt-2 flex flex-wrap gap-2">
               {[
                 { value: "have", label: "She will have finished." },
                 { value: "has", label: "She will has finished." },
               ].map((option) => (
-                <label key={option.value} className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 ${preferHas === option.value ? "border-[#9f1239] bg-[#fff1f2]" : "border-[#f0d9d2] bg-white"}`}>
-                  <input type="radio" name="have-or-has" value={option.value} checked={preferHas === option.value} onChange={() => setPreferHas(option.value)} className={`${FOCUS_38} h-4 w-4 accent-[#9f1239]`} />
+                <label key={option.value} className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 ${preferHas === option.value ? "border-[#1b3a5c] bg-[#e8eef5]" : "border-[#d4c4a0] bg-white"}`}>
+                  <input type="radio" name="have-or-has" value={option.value} checked={preferHas === option.value} onChange={() => setPreferHas(option.value)} className={`${FOCUS_38} h-4 w-4 accent-[#1b3a5c]`} />
                   <span dir="ltr" className="font-en text-sm font-bold">
                     {option.label}
                   </span>
@@ -555,9 +555,9 @@ export function ConjugationLab38({ onComplete }: { onComplete?: () => void }) {
   const current = PRONOUNS_38.find((candidate) => candidate.id === pronoun)!;
   return (
     <section data-lab="conjugation" className="space-y-4">
-      <div className="rounded-3xl border border-[#f0d9d2] bg-[#fffbf7] p-4 shadow-sm sm:p-5">
-        <p className="text-xs font-black uppercase tracking-[.12em] text-[#7a5767]">§5 · conjugation console</p>
-        <h2 className="mt-1 text-lg font-black leading-snug text-[#2b1633]">الصيغة نفسها مع كل الضمائر</h2>
+      <div className="rounded-3xl border border-[#d4c4a0] bg-[#fffdf6] p-4 shadow-sm sm:p-5">
+        <p className="text-xs font-black uppercase tracking-[.12em] text-[#4a5568]">لوحة التصريف</p>
+        <h2 className="mt-1 text-lg font-black leading-snug text-[#1a2433]">الصيغة نفسها مع كل الضمائر</h2>
         <div className="mt-3 flex flex-wrap gap-2">
           {PRONOUNS_38.map((candidate) => (
             <button
@@ -567,7 +567,7 @@ export function ConjugationLab38({ onComplete }: { onComplete?: () => void }) {
               aria-pressed={pronoun === candidate.id}
               onClick={() => setPronoun(candidate.id)}
               className={`${FOCUS_38} min-h-11 min-w-14 rounded-xl border px-3 py-2 text-sm font-black transition-colors motion-reduce:transition-none ${
-                pronoun === candidate.id ? "border-[#9f1239] bg-[#9f1239] text-white" : "border-[#f0d9d2] bg-white text-[#2b1633] hover:bg-[#f7f8f5]"
+                pronoun === candidate.id ? "border-[#1b3a5c] bg-[#1b3a5c] text-white" : "border-[#d4c4a0] bg-white text-[#1a2433] hover:bg-[#f7f8f5]"
               }`}
             >
               <span dir="ltr" className="font-en">
@@ -576,18 +576,18 @@ export function ConjugationLab38({ onComplete }: { onComplete?: () => void }) {
             </button>
           ))}
         </div>
-        <div className="mt-3 rounded-2xl border border-[#f3d2d9] bg-[#fffaf7] p-3">
-          <p dir="ltr" className="font-en text-left text-lg font-black text-[#3f1233]">
+        <div className="mt-3 rounded-2xl border border-[#d9cbb0] bg-[#fffdf6] p-3">
+          <p dir="ltr" className="font-en text-left text-lg font-black text-[#122033]">
             {current.sentence}
           </p>
-          <p className="mt-1 text-sm font-bold text-[#7a5767]">
+          <p className="mt-1 text-sm font-bold text-[#4a5568]">
             <Rich text="نفس الصيغة تمامًا: will have + V3 — لا has بعد will." />
           </p>
         </div>
       </div>
       <ChoiceLab38
         id="conjugation-traps"
-        eyebrow="§5 · تحقق من الفهم"
+        eyebrow="تحقق من الفهم"
         title="ثلاث نقاط يخطئ فيها الطلاب"
         items={CONJUGATION_TRAPS_38}
         onComplete={onComplete}
@@ -653,9 +653,9 @@ export function BuildLab38({
   const attemptedAll = items.every((item) => checked[item.id]);
 
   return (
-    <section data-lab={id} className="rounded-3xl border border-[#f0d9d2] bg-[#fffbf7] p-4 shadow-sm sm:p-5">
-      <p className="text-xs font-black uppercase tracking-[.12em] text-[#7a5767]">{eyebrow}</p>
-      <h2 className="mt-1 text-lg font-black leading-snug text-[#2b1633]">{title}</h2>
+    <section data-lab={id} className="rounded-3xl border border-[#d4c4a0] bg-[#fffdf6] p-4 shadow-sm sm:p-5">
+      <p className="text-xs font-black uppercase tracking-[.12em] text-[#4a5568]">{eyebrow}</p>
+      <h2 className="mt-1 text-lg font-black leading-snug text-[#1a2433]">{title}</h2>
       {note ? <div className="mt-3">{note}</div> : null}
       <div className="mt-3 space-y-3">
         {items.map((item) => {
@@ -663,24 +663,24 @@ export function BuildLab38({
           const report = elementCheck38(input[item.id] ?? "", item.kind);
           const allOk = report.every((entry) => entry.ok);
           return (
-            <fieldset key={item.id} data-build-item={`${id}-${item.n}`} className="rounded-2xl border border-[#f0d9d2] bg-white p-3 sm:p-4">
+            <fieldset key={item.id} data-build-item={`${id}-${item.n}`} className="rounded-2xl border border-[#d4c4a0] bg-white p-3 sm:p-4">
               <legend className="sr-only">البند {item.n}</legend>
               {isPureEnglishBase(item.base) ? (
-                <p dir="ltr" className="font-en text-left text-[#3f1233]">
+                <p dir="ltr" className="font-en text-left text-[#122033]">
                   {item.base}
                 </p>
               ) : (
-                <p dir="rtl" className="text-right font-bold text-[#2b1633]">
+                <p dir="rtl" className="text-right font-bold text-[#1a2433]">
                   <Rich text={item.base} />
                 </p>
               )}
               {item.arabic ? (
-                <p className="mt-1 text-sm leading-6 text-[#6b4a5e]">
+                <p className="mt-1 text-sm leading-6 text-[#3d4a5c]">
                   <Rich text={item.arabic} />
                 </p>
               ) : null}
               <label className="mt-2 block">
-                <span className="mb-1 block text-sm font-bold text-[#6b4a5e]">
+                <span className="mb-1 block text-sm font-bold text-[#3d4a5c]">
                   {item.kind === "negative" ? "اكتب صيغة النفي" : item.kind === "wh" ? "اكتب سؤال Wh" : "اكتب السؤال"}
                 </span>
                 <input
@@ -692,7 +692,7 @@ export function BuildLab38({
                     const value = event.currentTarget.value;
                     setInput((current) => ({ ...current, [item.id]: value }));
                   }}
-                  className={`${FOCUS_38} w-full rounded-xl border border-[#dfc2c8] bg-white px-3 py-2.5 text-base text-[#2b1633]`}
+                  className={`${FOCUS_38} w-full rounded-xl border border-[#d4c4a0] bg-white px-3 py-2.5 text-base text-[#1a2433]`}
                   aria-label={`إجابة البند ${item.n}`}
                 />
               </label>
@@ -730,7 +730,7 @@ export function BuildLab38({
                       </p>
                     </div>
                   ) : (
-                    <p dir="ltr" className="font-en rounded-xl border border-dashed border-[#e7c8cc] bg-[#fff8f3] px-3 py-2 text-left text-sm font-bold text-[#7a5767]">
+                    <p dir="ltr" className="font-en rounded-xl border border-dashed border-[#d4c4a0] bg-[#f7f2e4] px-3 py-2 text-left text-sm font-bold text-[#4a5568]">
                       {item.expected}
                     </p>
                   )}
@@ -740,7 +740,7 @@ export function BuildLab38({
           );
         })}
       </div>
-      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#6b4a5e]">
+      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#3d4a5c]">
         حاولت <span className="font-en tabular-nums">{Object.values(checked).filter(Boolean).length}</span> من{" "}
         <span className="font-en tabular-nums">{items.length}</span> بندًا.
       </p>
@@ -764,7 +764,7 @@ export function NegativeBuildLab38({ onComplete }: { onComplete?: () => void }) 
   return (
     <BuildLab38
       id="negative-build"
-      eyebrow="§14 · negative builder"
+      eyebrow="ورشة النفي"
       title="حوّل كل جملة إلى النفي"
       note={
         <PlatformNote38>
@@ -790,7 +790,7 @@ export function YesNoBuildLab38({ onComplete }: { onComplete?: () => void }) {
   return (
     <BuildLab38
       id="yesno-build"
-      eyebrow="§16 · question builder"
+      eyebrow="ورشة السؤال"
       title="كوّن سؤال نعم/لا من كل جملة"
       note={
         <PlatformNote38>
@@ -816,7 +816,7 @@ export function WhBuildLab38({ onComplete }: { onComplete?: () => void }) {
   return (
     <BuildLab38
       id="wh-build"
-      eyebrow="§18 · Wh question builder"
+      eyebrow="ورشة أسئلة Wh"
       title="ابنِ سؤال Wh من المعنى العربي"
       note={
         <PlatformNote38>
@@ -849,30 +849,30 @@ function DialogueLab({
   const [checked, setChecked] = useState(false);
   const opened = Object.values(open).filter(Boolean).length;
   return (
-    <section data-lab={id} className="rounded-3xl border border-[#f0d9d2] bg-[#fffbf7] p-4 shadow-sm sm:p-5">
-      <p className="text-xs font-black uppercase tracking-[.12em] text-[#7a5767]">{eyebrow}</p>
-      <h2 className="mt-1 text-lg font-black leading-snug text-[#2b1633]">{title}</h2>
+    <section data-lab={id} className="rounded-3xl border border-[#d4c4a0] bg-[#fffdf6] p-4 shadow-sm sm:p-5">
+      <p className="text-xs font-black uppercase tracking-[.12em] text-[#4a5568]">{eyebrow}</p>
+      <h2 className="mt-1 text-lg font-black leading-snug text-[#1a2433]">{title}</h2>
       <div className="mt-3 space-y-2">
         {lines.map((line, index) => {
           const isOpen = !!open[line.id];
           return (
-            <article key={line.id} data-dialogue-line={line.id} className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
+            <article key={line.id} data-dialogue-line={line.id} className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
               <button
                 type="button"
                 aria-expanded={isOpen}
                 onClick={() => setOpen((current) => ({ ...current, [line.id]: true }))}
                 className={`${FOCUS_38} flex min-h-11 w-full flex-wrap items-center justify-between gap-2 rounded-xl px-1 text-right`}
               >
-                <span dir="ltr" className="font-en text-left text-[#3f1233]">
-                  <span className="font-black text-[#9f1239]">{line.speaker}: </span>
+                <span dir="ltr" className="font-en text-left text-[#122033]">
+                  <span className="font-black text-[#1b3a5c]">{line.speaker}: </span>
                   {line.en}
                 </span>
-                <span className="shrink-0 rounded-full bg-[#fdf2ed] px-2.5 py-1 text-xs font-black text-[#7a5767]">
+                <span className="shrink-0 rounded-full bg-[#f7f2e4] px-2.5 py-1 text-xs font-black text-[#4a5568]">
                   {isOpen ? "التحليل ظاهر" : `تحليل السطر ${index + 1}`}
                 </span>
               </button>
               {isOpen ? (
-                <div className="mt-2 space-y-1 border-t border-[#f6e3de] pt-2 text-sm leading-6 text-[#2b1633]">
+                <div className="mt-2 space-y-1 border-t border-[#ebe3d0] pt-2 text-sm leading-6 text-[#1a2433]">
                   <p dir="rtl">
                     <Rich text={line.ar} />
                   </p>
@@ -885,16 +885,16 @@ function DialogueLab({
           );
         })}
       </div>
-      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#6b4a5e]">
+      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#3d4a5c]">
         فتحت <span className="font-en tabular-nums">{opened}</span> من <span className="font-en tabular-nums">{lines.length}</span> سطرًا.
       </p>
-      <fieldset className="mt-3 rounded-2xl border border-[#f0d9d2] bg-white p-3">
-        <legend className="px-1 text-sm font-black text-[#3f1233]">سؤال فهم الحوار</legend>
-        <p className="font-bold leading-7 text-[#2b1633]">{question.prompt}</p>
+      <fieldset className="mt-3 rounded-2xl border border-[#d4c4a0] bg-white p-3">
+        <legend className="px-1 text-sm font-black text-[#122033]">سؤال فهم الحوار</legend>
+        <p className="font-bold leading-7 text-[#1a2433]">{question.prompt}</p>
         <div className="mt-2 grid gap-2 sm:grid-cols-2">
           {question.options.map((option) => (
-            <label key={option.value} className={`flex min-h-11 cursor-pointer items-start gap-2 rounded-xl border p-3 text-sm font-bold ${answer === option.value ? "border-[#9f1239] bg-[#fff1f2]" : "border-[#f0d9d2] bg-white"}`}>
-              <input type="radio" name={`${id}-q`} value={option.value} checked={answer === option.value} disabled={checked} onChange={() => setAnswer(option.value)} className={`${FOCUS_38} mt-1 h-4 w-4 accent-[#9f1239]`} />
+            <label key={option.value} className={`flex min-h-11 cursor-pointer items-start gap-2 rounded-xl border p-3 text-sm font-bold ${answer === option.value ? "border-[#1b3a5c] bg-[#e8eef5]" : "border-[#d4c4a0] bg-white"}`}>
+              <input type="radio" name={`${id}-q`} value={option.value} checked={answer === option.value} disabled={checked} onChange={() => setAnswer(option.value)} className={`${FOCUS_38} mt-1 h-4 w-4 accent-[#1b3a5c]`} />
               <span dir="ltr" className="font-en text-left">
                 {option.label}
               </span>
@@ -928,7 +928,7 @@ export function DialogueLab38({ onComplete }: { onComplete?: () => void }) {
   return (
     <DialogueLab
       id="dialogue"
-      eyebrow="§13 · The School Exhibition"
+      eyebrow="حوار The School Exhibition"
       title="افتح كل سطر لترى تحليله"
       lines={DIALOGUE_LINES_38}
       question={{
@@ -949,7 +949,7 @@ export function Dialogue2Lab38({ onComplete }: { onComplete?: () => void }) {
   return (
     <DialogueLab
       id="dialogue2"
-      eyebrow="§26 · Planning a Big Event"
+      eyebrow="حوار Planning a Big Event"
       title="افتح كل سطر لترى تحليله"
       lines={DIALOGUE2_LINES_38}
       question={{
@@ -972,9 +972,9 @@ export function V3Lab38({ onComplete }: { onComplete?: () => void }) {
   const attempted = V3_ITEMS_38.filter((item) => checked[item.base]).length;
   const correctCount = V3_ITEMS_38.filter((item) => checked[item.base] && (values[item.base] ?? "").trim().toLowerCase() === item.answer).length;
   return (
-    <section data-lab="v3" className="rounded-3xl border border-[#f0d9d2] bg-[#fffbf7] p-4 shadow-sm sm:p-5">
-      <p className="text-xs font-black uppercase tracking-[.12em] text-[#7a5767]">§19 · V3 workshop</p>
-      <h2 className="mt-1 text-lg font-black leading-snug text-[#2b1633]">اكتب التصريف الثالث لكل فعل</h2>
+    <section data-lab="v3" className="rounded-3xl border border-[#d4c4a0] bg-[#fffdf6] p-4 shadow-sm sm:p-5">
+      <p className="text-xs font-black uppercase tracking-[.12em] text-[#4a5568]">ورشة التصريف الثالث</p>
+      <h2 className="mt-1 text-lg font-black leading-snug text-[#1a2433]">اكتب التصريف الثالث لكل فعل</h2>
       <PlatformNote38>
         <Rich text="الأفعال الخمسة المنتظمة والعشرة الشاذة مأخوذة من جدولي المصدر. لا تستخدم التصريف الأول V1 ولا التصريف الثاني V2 بعد will have." />
       </PlatformNote38>
@@ -983,12 +983,12 @@ export function V3Lab38({ onComplete }: { onComplete?: () => void }) {
           const isChecked = !!checked[item.base];
           const ok = (values[item.base] ?? "").trim().toLowerCase() === item.answer;
           return (
-            <div key={item.base} data-v3-item={item.base} className="min-w-0 rounded-2xl border border-[#f0d9d2] bg-white p-3">
+            <div key={item.base} data-v3-item={item.base} className="min-w-0 rounded-2xl border border-[#d4c4a0] bg-white p-3">
               <div className="flex flex-wrap items-center gap-2">
-                <span dir="ltr" className={`font-en text-base font-black ${ok && isChecked ? "text-[#1c6b3c]" : "text-[#3f1233]"}`}>
+                <span dir="ltr" className={`font-en text-base font-black ${ok && isChecked ? "text-[#1c6b3c]" : "text-[#122033]"}`}>
                   {item.base}
                 </span>
-                <span aria-hidden className="font-en text-[#7a5767]">→</span>
+                <span aria-hidden className="font-en text-[#4a5568]">→</span>
                 <input
                   type="text"
                   dir="ltr"
@@ -1000,7 +1000,7 @@ export function V3Lab38({ onComplete }: { onComplete?: () => void }) {
                     setValues((current) => ({ ...current, [item.base]: value }));
                   }}
                   aria-label={`التصريف الثالث للفعل ${item.base}`}
-                  className={`${FOCUS_38} min-w-0 flex-1 rounded-lg border border-[#dfc2c8] bg-white px-3 py-2 text-base text-[#2b1633]`}
+                  className={`${FOCUS_38} min-w-0 flex-1 rounded-lg border border-[#d4c4a0] bg-white px-3 py-2 text-base text-[#1a2433]`}
                 />
                 {!isChecked ? (
                   <ActionButton38
@@ -1027,7 +1027,7 @@ export function V3Lab38({ onComplete }: { onComplete?: () => void }) {
           );
         })}
       </div>
-      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#6b4a5e]">
+      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#3d4a5c]">
         حاولت <span className="font-en tabular-nums">{attempted}</span> من <span className="font-en tabular-nums">{V3_ITEMS_38.length}</span>،
         وصحيح منها <span className="font-en tabular-nums">{correctCount}</span>.
       </p>
@@ -1041,25 +1041,25 @@ export function Exercise27Lab38({ onComplete }: { onComplete?: () => void }) {
   const attempted = EXERCISE27_ITEMS_38.filter((item) => checked[item.n]).length;
   const score = EXERCISE27_ITEMS_38.filter((item) => checked[item.n] && selected[item.n] === item.answer).length;
   return (
-    <section data-lab="exercise27" className="rounded-3xl border border-[#f0d9d2] bg-[#fffbf7] p-4 shadow-sm sm:p-5">
-      <p className="text-xs font-black uppercase tracking-[.12em] text-[#7a5767]">§27 · guided practice</p>
-      <h2 className="mt-1 text-lg font-black leading-snug text-[#2b1633]">اختر الصيغة الصحيحة (ستة أسئلة)</h2>
+    <section data-lab="exercise27" className="rounded-3xl border border-[#d4c4a0] bg-[#fffdf6] p-4 shadow-sm sm:p-5">
+      <p className="text-xs font-black uppercase tracking-[.12em] text-[#4a5568]">التدريب الأول</p>
+      <h2 className="mt-1 text-lg font-black leading-snug text-[#1a2433]">اختر الصيغة الصحيحة (ستة أسئلة)</h2>
       <div className="mt-3 space-y-3">
         {EXERCISE27_ITEMS_38.map((item) => {
           const isChecked = !!checked[item.n];
           const ok = selected[item.n] === item.answer;
           return (
-            <fieldset key={item.n} data-practice-item={`exercise27-${item.n}`} className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
+            <fieldset key={item.n} data-practice-item={`exercise27-${item.n}`} className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
               <legend className="sr-only">السؤال {item.n}</legend>
-              <p dir="ltr" className="font-en text-left text-[#3f1233]">
+              <p dir="ltr" className="font-en text-left text-[#122033]">
                 {item.prompt}
               </p>
               <div className="mt-2 flex flex-wrap gap-2">
                 {item.options.map((option) => {
                   const value = option.split(".")[0].trim();
                   return (
-                    <label key={option} className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 text-sm font-bold ${selected[item.n] === value ? "border-[#9f1239] bg-[#fff1f2]" : "border-[#f0d9d2] bg-white"}`}>
-                      <input type="radio" name={`exercise27-${item.n}`} value={value} checked={selected[item.n] === value} disabled={isChecked} onChange={() => setSelected((current) => ({ ...current, [item.n]: value }))} className={`${FOCUS_38} h-4 w-4 accent-[#9f1239]`} />
+                    <label key={option} className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 text-sm font-bold ${selected[item.n] === value ? "border-[#1b3a5c] bg-[#e8eef5]" : "border-[#d4c4a0] bg-white"}`}>
+                      <input type="radio" name={`exercise27-${item.n}`} value={value} checked={selected[item.n] === value} disabled={isChecked} onChange={() => setSelected((current) => ({ ...current, [item.n]: value }))} className={`${FOCUS_38} h-4 w-4 accent-[#1b3a5c]`} />
                       <span dir="ltr" className="font-en">
                         {option}
                       </span>
@@ -1090,7 +1090,7 @@ export function Exercise27Lab38({ onComplete }: { onComplete?: () => void }) {
           );
         })}
       </div>
-      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#6b4a5e]">
+      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#3d4a5c]">
         حاولت <span className="font-en tabular-nums">{attempted}</span> من <span className="font-en tabular-nums">{EXERCISE27_ITEMS_38.length}</span>،
         ومطابق للمفتاح <span className="font-en tabular-nums">{score}</span>.
       </p>
@@ -1103,18 +1103,18 @@ export function Fill28Lab38({ onComplete }: { onComplete?: () => void }) {
   const [checked, setChecked] = useState<Record<number, boolean>>({});
   const attempted = FILL28_ITEMS_38.filter((item) => checked[item.n]).length;
   return (
-    <section data-lab="fill28" className="rounded-3xl border border-[#f0d9d2] bg-[#fffbf7] p-4 shadow-sm sm:p-5">
-      <p className="text-xs font-black uppercase tracking-[.12em] text-[#7a5767]">§28 · completion drill</p>
-      <h2 className="mt-1 text-lg font-black leading-snug text-[#2b1633]">أكمل باستخدام Future Perfect</h2>
+    <section data-lab="fill28" className="rounded-3xl border border-[#d4c4a0] bg-[#fffdf6] p-4 shadow-sm sm:p-5">
+      <p className="text-xs font-black uppercase tracking-[.12em] text-[#4a5568]">التدريب الثاني</p>
+      <h2 className="mt-1 text-lg font-black leading-snug text-[#1a2433]">أكمل باستخدام Future Perfect</h2>
       <div className="mt-3 space-y-3">
         {FILL28_ITEMS_38.map((item) => {
           const isChecked = !!checked[item.n];
           const typed = (values[item.n] ?? "").trim().toLowerCase().replace(/will not/g, "won't");
           const ok = typed === item.answer.toLowerCase();
           return (
-            <fieldset key={item.n} data-practice-item={`fill28-${item.n}`} className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
+            <fieldset key={item.n} data-practice-item={`fill28-${item.n}`} className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
               <legend className="sr-only">البند {item.n}</legend>
-              <p dir="ltr" className="font-en text-left text-[#3f1233]">
+              <p dir="ltr" className="font-en text-left text-[#122033]">
                 {item.prompt}
               </p>
               <input
@@ -1127,7 +1127,7 @@ export function Fill28Lab38({ onComplete }: { onComplete?: () => void }) {
                   const value = event.currentTarget.value;
                   setValues((current) => ({ ...current, [item.n]: value }));
                 }}
-                className={`${FOCUS_38} mt-2 w-full rounded-xl border border-[#dfc2c8] bg-white px-3 py-2.5 text-base text-[#2b1633]`}
+                className={`${FOCUS_38} mt-2 w-full rounded-xl border border-[#d4c4a0] bg-white px-3 py-2.5 text-base text-[#1a2433]`}
                 aria-label={`إكمال البند ${item.n}`}
               />
               {!isChecked ? (
@@ -1153,7 +1153,7 @@ export function Fill28Lab38({ onComplete }: { onComplete?: () => void }) {
           );
         })}
       </div>
-      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#6b4a5e]">
+      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#3d4a5c]">
         حاولت <span className="font-en tabular-nums">{attempted}</span> من <span className="font-en tabular-nums">{FILL28_ITEMS_38.length}</span>.
       </p>
     </section>
@@ -1174,15 +1174,15 @@ export function Tense29Lab38({
   const attempted = items.filter((item) => checked[item.n]).length;
   const score = items.filter((item) => checked[item.n] && selected[item.n] === item.answer).length;
   return (
-    <section data-lab="tense29" className="rounded-3xl border border-[#f0d9d2] bg-[#fffbf7] p-4 shadow-sm sm:p-5">
-      <p className="text-xs font-black uppercase tracking-[.12em] text-[#7a5767]">§29 · tense choice</p>
-      <h2 className="mt-1 text-lg font-black leading-snug text-[#2b1633]">اختر الزمن المستقبلي المناسب</h2>
+    <section data-lab="tense29" className="rounded-3xl border border-[#d4c4a0] bg-[#fffdf6] p-4 shadow-sm sm:p-5">
+      <p className="text-xs font-black uppercase tracking-[.12em] text-[#4a5568]">اختيار الزمن المستقبلي</p>
+      <h2 className="mt-1 text-lg font-black leading-snug text-[#1a2433]">اختر الزمن المستقبلي المناسب</h2>
       <div className="mt-3 space-y-3">
         {items.map((item) => {
           const isChecked = !!checked[item.n];
           const ok = selected[item.n] === item.answer;
           return (
-            <fieldset key={item.n} data-practice-item={`tense29-${item.n}`} className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
+            <fieldset key={item.n} data-practice-item={`tense29-${item.n}`} className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
               <legend className="sr-only">الموقف {item.n}</legend>
               <EnglishLine38>{item.prompt}</EnglishLine38>
               <div className="mt-2 flex flex-wrap gap-2">
@@ -1191,8 +1191,8 @@ export function Tense29Lab38({
                   { value: "future-continuous", label: "Future Continuous" },
                   { value: "future-perfect", label: "Future Perfect" },
                 ].map((choice) => (
-                  <label key={choice.value} className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 text-sm font-bold ${selected[item.n] === choice.value ? "border-[#9f1239] bg-[#fff1f2]" : "border-[#f0d9d2] bg-white"}`}>
-                    <input type="radio" name={`tense29-${item.n}`} value={choice.value} checked={selected[item.n] === choice.value} disabled={isChecked} onChange={() => setSelected((current) => ({ ...current, [item.n]: choice.value }))} className={`${FOCUS_38} h-4 w-4 accent-[#9f1239]`} />
+                  <label key={choice.value} className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 text-sm font-bold ${selected[item.n] === choice.value ? "border-[#1b3a5c] bg-[#e8eef5]" : "border-[#d4c4a0] bg-white"}`}>
+                    <input type="radio" name={`tense29-${item.n}`} value={choice.value} checked={selected[item.n] === choice.value} disabled={isChecked} onChange={() => setSelected((current) => ({ ...current, [item.n]: choice.value }))} className={`${FOCUS_38} h-4 w-4 accent-[#1b3a5c]`} />
                     <span dir="ltr" className="font-en">
                       {choice.label}
                     </span>
@@ -1225,7 +1225,7 @@ export function Tense29Lab38({
           );
         })}
       </div>
-      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#6b4a5e]">
+      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#3d4a5c]">
         حاولت <span className="font-en tabular-nums">{attempted}</span> من <span className="font-en tabular-nums">{TENSE29_ITEMS_38.length}</span>،
         ومطابق للمفتاح <span className="font-en tabular-nums">{score}</span>.
       </p>
@@ -1249,9 +1249,9 @@ export function Detective30Lab38({
   const [checked, setChecked] = useState<Record<number, boolean>>({});
   const attempted = items.filter((item) => checked[item.n]).length;
   return (
-    <section data-lab="detective30" className="rounded-3xl border border-[#f0d9d2] bg-[#fffbf7] p-4 shadow-sm sm:p-5">
-      <p className="text-xs font-black uppercase tracking-[.12em] text-[#7a5767]">§30 · error workshop</p>
-      <h2 className="mt-1 text-lg font-black leading-snug text-[#2b1633]">
+    <section data-lab="detective30" className="rounded-3xl border border-[#d4c4a0] bg-[#fffdf6] p-4 shadow-sm sm:p-5">
+      <p className="text-xs font-black uppercase tracking-[.12em] text-[#4a5568]">مختبر اكتشاف الأخطاء</p>
+      <h2 className="mt-1 text-lg font-black leading-snug text-[#1a2433]">
         <Rich text="Grammar Detective — اكتب التصحيح" />
       </h2>
       <PlatformNote38>
@@ -1261,12 +1261,12 @@ export function Detective30Lab38({
         {items.map((item) => {
           const isChecked = !!checked[item.n];
           return (
-            <section key={item.n} data-practice-item={`detective30-${item.n}`} className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
+            <section key={item.n} data-practice-item={`detective30-${item.n}`} className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
               <p dir="ltr" className="font-en text-left text-[#a41c36]">
                 {`${item.n}. ${item.prompt}`}
               </p>
               <label className="mt-2 block">
-                <span className="mb-1 block text-sm font-bold text-[#6b4a5e]">تصحيحك</span>
+                <span className="mb-1 block text-sm font-bold text-[#3d4a5c]">تصحيحك</span>
                 <input
                   type="text"
                   dir="auto"
@@ -1276,7 +1276,7 @@ export function Detective30Lab38({
                     const value = event.currentTarget.value;
                     setDraft((current) => ({ ...current, [item.n]: value }));
                   }}
-                  className={`${FOCUS_38} w-full rounded-xl border border-[#dfc2c8] bg-white px-3 py-2.5 text-base text-[#2b1633]`}
+                  className={`${FOCUS_38} w-full rounded-xl border border-[#d4c4a0] bg-white px-3 py-2.5 text-base text-[#1a2433]`}
                   aria-label={`تصحيح الجملة ${item.n}`}
                 />
               </label>
@@ -1306,7 +1306,7 @@ export function Detective30Lab38({
           );
         })}
       </div>
-      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#6b4a5e]">
+      <p aria-live="polite" className="mt-3 text-sm font-bold text-[#3d4a5c]">
         حاولت <span className="font-en tabular-nums">{attempted}</span> من <span className="font-en tabular-nums">{DETECTIVE30_ITEMS_38.length}</span>.
       </p>
     </section>
@@ -1329,17 +1329,17 @@ export function ReadingLab38({
   const answered = READING32_QUESTIONS_38.filter((_, index) => (answers[index] ?? "").trim().length > 0).length;
   const canReveal = answered === READING32_QUESTIONS_38.length;
   return (
-    <section data-lab="reading32" className="rounded-3xl border border-[#f0d9d2] bg-[#fffbf7] p-4 shadow-sm sm:p-5">
-      <p className="text-xs font-black uppercase tracking-[.12em] text-[#7a5767]">§32 · comprehension</p>
-      <h2 className="mt-1 text-lg font-black leading-snug text-[#2b1633]">أجب عن أسئلة الفهم السبعة</h2>
+    <section data-lab="reading32" className="rounded-3xl border border-[#d4c4a0] bg-[#fffdf6] p-4 shadow-sm sm:p-5">
+      <p className="text-xs font-black uppercase tracking-[.12em] text-[#4a5568]">أسئلة الفهم</p>
+      <h2 className="mt-1 text-lg font-black leading-snug text-[#1a2433]">أجب عن أسئلة الفهم السبعة</h2>
       {showHighlight ? (
         <>
-          <label className="mt-3 inline-flex cursor-pointer items-center gap-3 rounded-xl border border-[#f0d9d2] bg-white px-3 py-2 text-sm font-bold text-[#2b1633]">
-            <input type="checkbox" checked={highlight} onChange={onToggleHighlight} className={`${FOCUS_38} h-4 w-4 accent-[#9f1239]`} />
+          <label className="mt-3 inline-flex cursor-pointer items-center gap-3 rounded-xl border border-[#d4c4a0] bg-white px-3 py-2 text-sm font-bold text-[#1a2433]">
+            <input type="checkbox" checked={highlight} onChange={onToggleHighlight} className={`${FOCUS_38} h-4 w-4 accent-[#1b3a5c]`} />
             <span>تمييز صيغ المستقبل في النص أعلاه (بصري فقط — لا يخفي النص)</span>
           </label>
           {highlight ? (
-            <p className="mt-2 text-xs font-bold text-[#7a5767]" role="status">
+            <p className="mt-2 text-xs font-bold text-[#4a5568]" role="status">
               التمييز مُطبَّق على نص المصدر في البطاقة أعلاه.
             </p>
           ) : null}
@@ -1347,8 +1347,8 @@ export function ReadingLab38({
       ) : null}
       <div className="mt-3 space-y-2">
         {READING32_QUESTIONS_38.map((question, index) => (
-          <label key={question} className="block rounded-2xl border border-[#f0d9d2] bg-white p-3">
-            <span dir="ltr" className="font-en mb-1 block text-left font-bold text-[#3f1233]">
+          <label key={question} className="block rounded-2xl border border-[#d4c4a0] bg-white p-3">
+            <span dir="ltr" className="font-en mb-1 block text-left font-bold text-[#122033]">
               {question}
             </span>
             <textarea
@@ -1361,7 +1361,7 @@ export function ReadingLab38({
                 const value = event.currentTarget.value;
                 setAnswers((current) => ({ ...current, [index]: value }));
               }}
-              className={`${FOCUS_38} w-full resize-y rounded-lg border border-[#dfc2c8] bg-white p-2.5 text-left text-base leading-7 text-[#2b1633]`}
+              className={`${FOCUS_38} w-full resize-y rounded-lg border border-[#d4c4a0] bg-white p-2.5 text-left text-base leading-7 text-[#1a2433]`}
               aria-label={`إجابة السؤال ${index + 1}`}
             />
           </label>
@@ -1383,16 +1383,16 @@ export function ReadingLab38({
             ظهرت إجابات المصدر السبعة أسفل بطاقة القسم، مع تحليل الصيغ.
           </p>
         )}
-        <p aria-live="polite" className="text-sm font-bold text-[#6b4a5e]">
+        <p aria-live="polite" className="text-sm font-bold text-[#3d4a5c]">
           كتبت <span className="font-en tabular-nums">{answered}</span> من <span className="font-en tabular-nums">{READING32_QUESTIONS_38.length}</span> إجابة.
         </p>
       </div>
       {revealed ? (
         <div className="mt-3 space-y-2">
-          <h3 className="text-sm font-black text-[#3f1233]">تحليل صيغ المستقبل في النص — إضافة من المنصة</h3>
+          <h3 className="text-sm font-black text-[#122033]">تحليل صيغ المستقبل في النص — إضافة من المنصة</h3>
           {READING32_ANALYSIS_38.map((entry) => (
-            <div key={entry.line} className="rounded-xl border border-[#f0d9d2] bg-[#fff8f3] p-3 text-sm leading-6 text-[#2b1633]">
-              <p dir="ltr" className="font-en text-left text-[#3f1233]">
+            <div key={entry.line} className="rounded-xl border border-[#d4c4a0] bg-[#f7f2e4] p-3 text-sm leading-6 text-[#1a2433]">
+              <p dir="ltr" className="font-en text-left text-[#122033]">
                 {entry.line}
               </p>
               <p className="mt-1">
@@ -1418,16 +1418,16 @@ export function WritingLab38() {
   const marked = WRITING35_CRITERIA_38.filter((_, index) => checked[index]).length;
   const hasEnough = sentenceCount >= 12;
   return (
-    <section data-lab="writing35" className="rounded-3xl border border-[#f0d9d2] bg-[#fffbf7] p-4 shadow-sm sm:p-5">
-      <p className="text-xs font-black uppercase tracking-[.12em] text-[#7a5767]">§35 · Writing Mission</p>
-      <h2 className="mt-1 text-lg font-black leading-snug text-[#2b1633]">
+    <section data-lab="writing35" className="rounded-3xl border border-[#d4c4a0] bg-[#fffdf6] p-4 shadow-sm sm:p-5">
+      <p className="text-xs font-black uppercase tracking-[.12em] text-[#4a5568]">مهمة الكتابة</p>
+      <h2 className="mt-1 text-lg font-black leading-snug text-[#1a2433]">
         <Rich text="My Achievements by the End of Next Year — فقرة من 12 إلى 15 جملة" />
       </h2>
       <PlatformNote38>
         اكتب فقرتك بالإنجليزية، ثم راجع بنود المصدر الثمانية بنفسك. لا يصدر النظام حكمًا آليًا على جودة الفقرة أو صحة تراكيبها؛ والعداد مساعد فقط.
       </PlatformNote38>
       <label className="mt-3 block">
-        <span className="mb-1 block font-bold text-[#2b1633]">مسودتك باللغة الإنجليزية</span>
+        <span className="mb-1 block font-bold text-[#1a2433]">مسودتك باللغة الإنجليزية</span>
         <textarea
           rows={12}
           dir="ltr"
@@ -1435,17 +1435,17 @@ export function WritingLab38() {
           value={draft}
           onChange={(event) => setDraft(event.currentTarget.value)}
           placeholder="Write your paragraph here…"
-          className={`${FOCUS_38} w-full resize-y rounded-2xl border border-[#dfc2c8] bg-white p-4 text-left text-base leading-7 text-[#3f1233]`}
+          className={`${FOCUS_38} w-full resize-y rounded-2xl border border-[#d4c4a0] bg-white p-4 text-left text-base leading-7 text-[#122033]`}
         />
       </label>
-      <p aria-live="polite" className="mt-2 rounded-xl bg-[#fdf2ed] px-3 py-2 text-sm font-bold text-[#6b4a5e]">
+      <p aria-live="polite" className="mt-2 rounded-xl bg-[#f7f2e4] px-3 py-2 text-sm font-bold text-[#3d4a5c]">
         عدد الجمل التقريبي: <span dir="ltr" className="font-en tabular-nums">{sentenceCount}</span> / المطلوب 12–15
       </p>
-      <fieldset className="mt-3 rounded-2xl border border-[#f0d9d2] bg-white p-3">
-        <legend className="px-1 text-sm font-black text-[#3f1233]">قائمة مراجعة ذاتية — الشروط الثمانية الأصلية</legend>
+      <fieldset className="mt-3 rounded-2xl border border-[#d4c4a0] bg-white p-3">
+        <legend className="px-1 text-sm font-black text-[#122033]">قائمة مراجعة ذاتية — الشروط الثمانية الأصلية</legend>
         <div className="grid gap-2 sm:grid-cols-2">
           {WRITING35_CRITERIA_38.map((criterion, index) => (
-            <label key={criterion} className="flex items-start gap-2 rounded-xl border border-[#f2ded8] bg-[#fffbf7] p-3 text-sm leading-6 text-[#2b1633]">
+            <label key={criterion} className="flex items-start gap-2 rounded-xl border border-[#f2ded8] bg-[#fffdf6] p-3 text-sm leading-6 text-[#1a2433]">
               <input
                 type="checkbox"
                 checked={!!checked[index]}
@@ -1453,7 +1453,7 @@ export function WritingLab38() {
                   const value = event.currentTarget.checked;
                   setChecked((current) => ({ ...current, [index]: value }));
                 }}
-                className={`${FOCUS_38} mt-1 h-4 w-4 shrink-0 accent-[#9f1239]`}
+                className={`${FOCUS_38} mt-1 h-4 w-4 shrink-0 accent-[#1b3a5c]`}
               />
               <span>
                 <Rich text={criterion} />
@@ -1461,7 +1461,7 @@ export function WritingLab38() {
             </label>
           ))}
         </div>
-        <p aria-live="polite" className="mt-2 text-xs font-bold text-[#7a5767]">
+        <p aria-live="polite" className="mt-2 text-xs font-bold text-[#4a5568]">
           علّمت <span className="font-en tabular-nums">{marked}</span> من 8 — راجع كل بند بنفسك.
         </p>
       </fieldset>
@@ -1475,7 +1475,7 @@ export function WritingLab38() {
             إخفاء النموذج
           </ActionButton38>
         )}
-        {!hasEnough ? <p className="text-sm font-bold text-[#7a5767]">اكتب 12 جملة على الأقل لإظهار النموذج.</p> : null}
+        {!hasEnough ? <p className="text-sm font-bold text-[#4a5568]">اكتب 12 جملة على الأقل لإظهار النموذج.</p> : null}
       </div>
       {modelOpen ? (
         <div className="mt-3 space-y-2 rounded-2xl border border-[#b8ddc5] bg-[#f0faf2] p-3">
@@ -1490,16 +1490,16 @@ export function WritingLab38() {
 }
 
 export function FirstUseLab38() {
-  return <ChoiceLab38 id="first-use" eyebrow="§6 · الاستخدام الأول" title="إنجاز مكتمل بحلول وقت مستقبلي" items={FIRST_USE_ITEMS_38} />;
+  return <ChoiceLab38 id="first-use" eyebrow="الاستخدام الأول" title="إنجاز مكتمل بحلول وقت مستقبلي" items={FIRST_USE_ITEMS_38} />;
 }
 export function ByMeaningLab38() {
-  return <ChoiceLab38 id="by-meaning" eyebrow="§7 · كلمة by" title="ماذا تعني by هنا؟" items={BY_MEANING_ITEMS_38} />;
+  return <ChoiceLab38 id="by-meaning" eyebrow="كلمة by" title="ماذا تعني by هنا؟" items={BY_MEANING_ITEMS_38} />;
 }
 export function AtByLab38() {
   return (
     <ChoiceLab38
       id="at-by"
-      eyebrow="§8 · AT vs BY"
+      eyebrow="AT vs BY"
       title="مختبر المعنى"
       items={AT_BY_ITEMS_38}
       note={<PlatformNote38>هذه مقارنة تعليمية شائعة، والمعنى هو الأساس دائمًا.</PlatformNote38>}
@@ -1507,49 +1507,49 @@ export function AtByLab38() {
   );
 }
 export function TimeExpressionLab38() {
-  return <ChoiceLab38 id="time-expression" eyebrow="§9 · time expressions" title="تعبيرات شائعة مع Future Perfect" items={TIME_EXPRESSION_ITEMS_38} />;
+  return <ChoiceLab38 id="time-expression" eyebrow="تعبيرات زمنية" title="تعبيرات شائعة مع Future Perfect" items={TIME_EXPRESSION_ITEMS_38} />;
 }
 export function TwoEventsLab38() {
-  return <ChoiceLab38 id="two-events" eyebrow="§10 · حدثان" title="إنجاز قبل حدث مستقبلي آخر" items={TWO_EVENTS_ITEMS_38} />;
+  return <ChoiceLab38 id="two-events" eyebrow="حدثان" title="إنجاز قبل حدث مستقبلي آخر" items={TWO_EVENTS_ITEMS_38} />;
 }
 export function ByTheTimeLab38() {
-  return <ChoiceLab38 id="by-the-time" eyebrow="§11 · by the time" title="Present Simple بعد by the time" items={BY_THE_TIME_ITEMS_38} />;
+  return <ChoiceLab38 id="by-the-time" eyebrow="by the time" title="Present Simple بعد by the time" items={BY_THE_TIME_ITEMS_38} />;
 }
 export function ByBeforeLab38() {
-  return <ChoiceLab38 id="by-before" eyebrow="§12 · by وbefore" title="الفرق بين الموعدين" items={BY_BEFORE_ITEMS_38} />;
+  return <ChoiceLab38 id="by-before" eyebrow="by وbefore" title="الفرق بين الموعدين" items={BY_BEFORE_ITEMS_38} />;
 }
 export function NegationMeaningLab38() {
-  return <ChoiceLab38 id="negation-meaning" eyebrow="§15 · معنى النفي" title="النفي مرتبط بالنقطة المستقبلية" items={NEGATION_MEANING_ITEMS_38} />;
+  return <ChoiceLab38 id="negation-meaning" eyebrow="معنى النفي" title="النفي مرتبط بالنقطة المستقبلية" items={NEGATION_MEANING_ITEMS_38} />;
 }
 export function ShortAnswerLab38() {
-  return <ChoiceLab38 id="short-answers" eyebrow="§17 · short answers" title="الإجابات القصيرة" items={SHORT_ANSWER_ITEMS_38} />;
+  return <ChoiceLab38 id="short-answers" eyebrow="الإجابات القصيرة" title="الإجابات القصيرة" items={SHORT_ANSWER_ITEMS_38} />;
 }
 export function FsVsFpLab38() {
-  return <ChoiceLab38 id="fs-vs-fp" eyebrow="§20 · Future Simple vs Future Perfect" title="اختر بحسب التركيز" items={FS_VS_FP_ITEMS_38} />;
+  return <ChoiceLab38 id="fs-vs-fp" eyebrow="Future Simple vs Future Perfect" title="اختر بحسب التركيز" items={FS_VS_FP_ITEMS_38} />;
 }
 export function FcVsFpLab38() {
-  return <ChoiceLab38 id="fc-vs-fp" eyebrow="§21 · Future Continuous vs Future Perfect" title="جاري أم مكتمل؟" items={FC_VS_FP_ITEMS_38} />;
+  return <ChoiceLab38 id="fc-vs-fp" eyebrow="Future Continuous vs Future Perfect" title="جاري أم مكتمل؟" items={FC_VS_FP_ITEMS_38} />;
 }
 export function ThreeFuturesLab38() {
-  return <ChoiceLab38 id="three-futures" eyebrow="§22 · الأزمنة الثلاثة" title="الفعل write من ثلاث زوايا" items={THREE_FUTURE_ITEMS_38} />;
+  return <ChoiceLab38 id="three-futures" eyebrow="الأزمنة الثلاثة" title="الفعل write من ثلاث زوايا" items={THREE_FUTURE_ITEMS_38} />;
 }
 export function SameEventLab38() {
-  return <ChoiceLab38 id="same-event" eyebrow="§23 · مختبر الزمن" title="الحدث نفسه بثلاث زوايا" items={SAME_EVENT_ITEMS_38} />;
+  return <ChoiceLab38 id="same-event" eyebrow="مختبر الزمن" title="الحدث نفسه بثلاث زوايا" items={SAME_EVENT_ITEMS_38} />;
 }
 export function PerfectMapLab38() {
-  return <ChoiceLab38 id="perfect-map" eyebrow="§24 · الأزمنة التامة" title="حدّد النقطة المرجعية" items={PERFECT_MAP_ITEMS_38} />;
+  return <ChoiceLab38 id="perfect-map" eyebrow="الأزمنة التامة" title="حدّد النقطة المرجعية" items={PERFECT_MAP_ITEMS_38} />;
 }
 export function ErrorLab38() {
-  return <ChoiceLab38 id="errors" eyebrow="§25 · أخطاء شائعة" title="شخّص الخطأ في كل صيغة" items={ERROR_ITEMS_38} />;
+  return <ChoiceLab38 id="errors" eyebrow="أخطاء شائعة" title="شخّص الخطأ في كل صيغة" items={ERROR_ITEMS_38} />;
 }
 export function Iq31Lab38() {
-  return <ChoiceLab38 id="iq31" eyebrow="§31 · IQ200" title="هل الزمنان صحيحان؟" items={IQ31_ITEMS_38} />;
+  return <ChoiceLab38 id="iq31" eyebrow="IQ200" title="هل الزمنان صحيحان؟" items={IQ31_ITEMS_38} />;
 }
 export function V3PairsLab38() {
   return (
     <ChoiceLab38
       id="v3-pairs"
-      eyebrow="§19ب · أزواج المصدر"
+      eyebrow="أزواج التصريف"
       title="ثلاثة أفعال شاذة: أي صيغة تسمعها في الجملة الصحيحة؟"
       items={V3_PAIRS_38}
       note={<Rich text="الخطأ الشائع هو استخدام V2 بعد have: wrote وwent. الفعل الصحيح دائمًا V3." />}
@@ -1561,7 +1561,7 @@ export function WritingModelLab38() {
   return (
     <ChoiceLab38
       id="writing-model"
-      eyebrow="§35ب · النموذج"
+      eyebrow="النموذج الإرشادي"
       title="افحص النموذج: هل تجد فيه الشروط الثمانية؟"
       items={WRITING_MODEL_CHECK_38}
       note={<Rich text="لا تنسخ النموذج؛ استخدمه كدليل على توزيع الأزمنة داخل فقرة واحدة." />}
@@ -1570,19 +1570,19 @@ export function WritingModelLab38() {
 }
 
 export function SummaryMatchLab38() {
-  return <ChoiceLab38 id="summary-match" eyebrow="§36 · الملخص الذهبي" title="صِل كل استخدام بمثاله من المصدر" items={SUMMARY_MATCH_38} />;
+  return <ChoiceLab38 id="summary-match" eyebrow="الملخص الذهبي" title="صِل كل استخدام بمثاله من المصدر" items={SUMMARY_MATCH_38} />;
 }
 
 export function CoverBridge38() {
   return (
-    <DeadlineFrame38 title="Deadline Lab · الدرس 38" caption="ننظر إلى نقطة مستقبلية ونرى حدثًا سيكون قد اكتمل بحلولها.">
-      <h1 className="text-xl font-black leading-snug text-[#3f1233] sm:text-2xl">
+    <DeadlineFrame38 title="مرصد الإنجاز المستقبلي · الدرس 38" caption="ننظر إلى نقطة مستقبلية ونرى حدثًا سيكون قد اكتمل بحلولها.">
+      <h1 className="text-xl font-black leading-snug text-[#122033] sm:text-2xl">
         <Rich text="الدرس 38: Future Perfect — المستقبل التام" />
       </h1>
-      <p dir="ltr" className="font-en mt-1 text-left text-lg font-black text-[#3f1233]">
+      <p dir="ltr" className="font-en mt-1 text-left text-lg font-black text-[#122033]">
         By Tomorrow, I Will Have Finished!
       </p>
-      <p className="mt-1 text-sm font-bold text-[#6b4a5e]">إتقان التعبير عن الإنجاز قبل نقطة مستقبلية — IQ200 🚀</p>
+      <p className="mt-1 text-sm font-bold text-[#3d4a5c]">إتقان التعبير عن الإنجاز قبل نقطة مستقبلية — IQ200 🚀</p>
     </DeadlineFrame38>
   );
 }

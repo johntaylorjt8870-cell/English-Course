@@ -118,3 +118,15 @@ Dialogue provenance is tracked on **two** axes, because the two dialogues differ
 | Registration | §14 | `App.tsx`, `package.json`, global direction/navigation/final-test audits, both docs |
 
 **Not verified:** real-browser visual rendering. This environment has no browser; build success, HTTP 200, and jsdom rendering are **not** visual verification, and no screenshots were produced or fabricated. Mobile/desktop layout is checked programmatically (overflow, wrap, tap-target sizes), not visually.
+
+---
+
+## Addendum — after the rebuild
+
+The rebuild keeps the ledger unchanged and does not alter any finding in this intake audit. Current state:
+
+- Ledger: `src/lessons/lesson39/ledger39.ts`, 40 records (opening + §1–§39), **651 units**, 5 reconstructed tables, 37 key lines. Fingerprint pinned in `scripts/audit-lesson39.mjs`.
+- Implementation: **75 steps / 16 stations** — see [lesson39-coverage.md](lesson39-coverage.md) and the machine-readable [lesson39-step-coverage.json](lesson39-step-coverage.json).
+- §36 remains a stub in the source, so all 25 keys/explanations are platform-authored and labelled as such in the Solutions area.
+- Routing: `#/lesson/39` already existed in `src/App.tsx`; only card 39's stats/gradient were refreshed. No shared-shell or router change was needed.
+- Verification results and remaining pre-existing failures: [lesson39-rebuild-report.md](lesson39-rebuild-report.md) §6.

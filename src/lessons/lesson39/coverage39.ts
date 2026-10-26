@@ -420,7 +420,7 @@ export const COVERAGE_39 = inventory.map((row) => ({
   platformAddition:
     row.id === "s35" || row.id === "s36"
       ? "حلول مفصّلة من إعداد المعلم تُحمّل بعد التسليم / دخول المعلم."
-      : "خطوات قصيرة؛ أنشطة اختيار وبناء وحساب وتصحيح؛ ربط كل سطر في stepManifest39.ts.",
+      : "خطوات قصيرة؛ أدوات مرصد للاختيار والبناء والحساب والتصحيح؛ ربط كل سطر في data.ts.",
 }));
 export const COVERAGE_SECTION_COUNT_39 = COVERAGE_39.filter(
   (r) => r.num != null,

@@ -1,6 +1,8 @@
 [
   {
-    "id": "cover-1",
+    "id": "gate-1",
+    "step": 1,
+    "station": "gate",
     "source": "cover",
     "units": [
       0,
@@ -9,17 +11,21 @@
       3,
       4,
       5,
-      6
+      6,
+      7,
+      8
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "gate"
   },
   {
-    "id": "cover-2",
+    "id": "gate-2",
+    "step": 2,
+    "station": "gate",
     "source": "cover",
     "units": [
-      7,
-      8,
       9,
       10,
       11,
@@ -27,23 +33,19 @@
       13,
       14,
       15,
-      16
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "cover-3",
-    "source": "cover",
-    "units": [
+      16,
       17,
       18
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "aspect"
   },
   {
     "id": "s01-1",
+    "step": 3,
+    "station": "gate",
     "source": "s01",
     "units": [
       0,
@@ -51,15 +53,7 @@
       2,
       3,
       4,
-      5
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s01-2",
-    "source": "s01",
-    "units": [
+      5,
       6,
       7,
       8,
@@ -67,10 +61,14 @@
       10
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "briefing"
   },
   {
     "id": "s02-1",
+    "step": 4,
+    "station": "axis",
     "source": "s02",
     "units": [
       0,
@@ -84,53 +82,69 @@
       8
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "timeline"
   },
   {
     "id": "s02-2",
+    "step": 5,
+    "station": "axis",
     "source": "s02",
     "units": [
       9,
       10,
       11,
       12,
-      13,
+      13
+    ],
+    "reveal": [],
+    "table": true,
+    "extraTable": false,
+    "instrument": "none"
+  },
+  {
+    "id": "s02-3",
+    "step": 6,
+    "station": "axis",
+    "source": "s02",
+    "units": [
       14,
       15,
       16
     ],
     "reveal": [],
-    "table": true
+    "table": false,
+    "extraTable": false,
+    "instrument": "duration"
   },
   {
     "id": "s03-1",
+    "step": 7,
+    "station": "axis",
     "source": "s03",
     "units": [
       0,
       1,
       2,
-      3
+      3,
+      4
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "formula"
   },
   {
     "id": "s03-2",
+    "step": 8,
+    "station": "axis",
     "source": "s03",
     "units": [
-      4,
       5,
       6,
       7,
-      8
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s03-3",
-    "source": "s03",
-    "units": [
+      8,
       9,
       10,
       11,
@@ -139,10 +153,14 @@
       14
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "none"
   },
   {
-    "id": "s03-4",
+    "id": "s03-3",
+    "step": 9,
+    "station": "axis",
     "source": "s03",
     "units": [
       15,
@@ -151,10 +169,14 @@
       18
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "duration"
   },
   {
     "id": "s04-1",
+    "step": 10,
+    "station": "calibrate",
     "source": "s04",
     "units": [
       0,
@@ -165,17 +187,21 @@
       5,
       6,
       7,
-      8
+      8,
+      9,
+      10
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "anatomy"
   },
   {
     "id": "s04-2",
+    "step": 11,
+    "station": "calibrate",
     "source": "s04",
     "units": [
-      9,
-      10,
       11,
       12,
       13,
@@ -184,10 +210,14 @@
       16
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
   },
   {
     "id": "s05-1",
+    "step": 12,
+    "station": "calibrate",
     "source": "s05",
     "units": [
       0,
@@ -196,10 +226,14 @@
       3
     ],
     "reveal": [],
-    "table": true
+    "table": true,
+    "extraTable": false,
+    "instrument": "pronouns"
   },
   {
     "id": "s06-1",
+    "step": 13,
+    "station": "span",
     "source": "s06",
     "units": [
       0,
@@ -211,10 +245,14 @@
       6
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
   },
   {
     "id": "s06-2",
+    "step": 14,
+    "station": "span",
     "source": "s06",
     "units": [
       7,
@@ -222,16 +260,32 @@
       9,
       10,
       11,
-      12,
+      12
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
+  },
+  {
+    "id": "s06-3",
+    "step": 15,
+    "station": "span",
+    "source": "s06",
+    "units": [
       13,
       14,
       15
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "none"
   },
   {
     "id": "s07-1",
+    "step": 16,
+    "station": "span",
     "source": "s07",
     "units": [
       0,
@@ -240,385 +294,22 @@
       3,
       4,
       5,
-      6
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s07-2",
-    "source": "s07",
-    "units": [
+      6,
       7,
       8,
       9,
       10
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
   },
   {
     "id": "s08-1",
+    "step": 17,
+    "station": "meters",
     "source": "s08",
-    "units": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s08-2",
-    "source": "s08",
-    "units": [
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s09-1",
-    "source": "s09",
-    "units": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s09-2",
-    "source": "s09",
-    "units": [
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s10-1",
-    "source": "s10",
-    "units": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s10-2",
-    "source": "s10",
-    "units": [
-      6,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13
-    ],
-    "reveal": [],
-    "table": true
-  },
-  {
-    "id": "s11-1",
-    "source": "s11",
-    "units": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s11-2",
-    "source": "s11",
-    "units": [
-      7,
-      8,
-      9,
-      10,
-      11,
-      12
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s11-3",
-    "source": "s11",
-    "units": [
-      13,
-      14,
-      15,
-      16,
-      17,
-      18,
-      19
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s12-1",
-    "source": "s12",
-    "units": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s12-2",
-    "source": "s12",
-    "units": [
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s13-1",
-    "source": "s13",
-    "units": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s13-2",
-    "source": "s13",
-    "units": [
-      7,
-      8,
-      9,
-      10,
-      11,
-      12
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s14-1",
-    "source": "s14",
-    "units": [
-      0,
-      1,
-      2,
-      3
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s14-2",
-    "source": "s14",
-    "units": [
-      4,
-      5,
-      6,
-      7,
-      8,
-      9
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s15-1",
-    "source": "s15",
-    "units": [
-      0,
-      1,
-      10,
-      2,
-      11,
-      3,
-      12,
-      4,
-      13
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s15-2",
-    "source": "s15",
-    "units": [
-      5,
-      14,
-      6,
-      15,
-      9
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s15-3",
-    "source": "s15",
-    "units": [
-      7,
-      16,
-      8,
-      17
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s15-4",
-    "source": "s15",
-    "units": [
-      18,
-      19,
-      20,
-      21,
-      22
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s16-1",
-    "source": "s16",
-    "units": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s16-2",
-    "source": "s16",
-    "units": [
-      9,
-      10,
-      11,
-      12,
-      13,
-      14,
-      15,
-      16
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s16-3",
-    "source": "s16",
-    "units": [
-      17
-    ],
-    "reveal": [],
-    "table": true
-  },
-  {
-    "id": "s17-1",
-    "source": "s17",
-    "units": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s17-2",
-    "source": "s17",
-    "units": [
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s17-3",
-    "source": "s17",
-    "units": [
-      14,
-      15,
-      16,
-      17,
-      18
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s18-1",
-    "source": "s18",
     "units": [
       0,
       1,
@@ -630,11 +321,15 @@
       7
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "none"
   },
   {
-    "id": "s18-2",
-    "source": "s18",
+    "id": "s08-2",
+    "step": 18,
+    "station": "meters",
+    "source": "s08",
     "units": [
       8,
       9,
@@ -644,27 +339,73 @@
       13
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
   },
   {
-    "id": "s19-1",
-    "source": "s19",
+    "id": "s09-1",
+    "step": 19,
+    "station": "meters",
+    "source": "s09",
     "units": [
       0,
       1,
       2,
       3,
       4,
-      5
+      5,
+      6,
+      7
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "none"
   },
   {
-    "id": "s19-2",
-    "source": "s19",
+    "id": "s09-2",
+    "step": 20,
+    "station": "meters",
+    "source": "s09",
     "units": [
-      6,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
+  },
+  {
+    "id": "s10-1",
+    "step": 21,
+    "station": "meters",
+    "source": "s10",
+    "units": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "none"
+  },
+  {
+    "id": "s10-2",
+    "step": 22,
+    "station": "meters",
+    "source": "s10",
+    "units": [
       7,
       8,
       9,
@@ -673,10 +414,399 @@
       12
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
+  },
+  {
+    "id": "s10-3",
+    "step": 23,
+    "station": "meters",
+    "source": "s10",
+    "units": [
+      13
+    ],
+    "reveal": [],
+    "table": true,
+    "extraTable": false,
+    "instrument": "sorter"
+  },
+  {
+    "id": "s11-1",
+    "step": 24,
+    "station": "meters",
+    "source": "s11",
+    "units": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "duration"
+  },
+  {
+    "id": "s11-2",
+    "step": 25,
+    "station": "meters",
+    "source": "s11",
+    "units": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "duration"
+  },
+  {
+    "id": "s11-3",
+    "step": 26,
+    "station": "meters",
+    "source": "s11",
+    "units": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "duration"
+  },
+  {
+    "id": "s12-1",
+    "step": 27,
+    "station": "beacon",
+    "source": "s12",
+    "units": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
+  },
+  {
+    "id": "s12-2",
+    "step": 28,
+    "station": "beacon",
+    "source": "s12",
+    "units": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
+  },
+  {
+    "id": "s13-1",
+    "step": 29,
+    "station": "beacon",
+    "source": "s13",
+    "units": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "aspect"
+  },
+  {
+    "id": "s13-2",
+    "step": 30,
+    "station": "beacon",
+    "source": "s13",
+    "units": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
+  },
+  {
+    "id": "s14-1",
+    "step": 31,
+    "station": "beacon",
+    "source": "s14",
+    "units": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
+  },
+  {
+    "id": "s15-1",
+    "step": 32,
+    "station": "signal",
+    "source": "s15",
+    "units": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "dialogue"
+  },
+  {
+    "id": "s15-2",
+    "step": 33,
+    "station": "signal",
+    "source": "s15",
+    "units": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "none"
+  },
+  {
+    "id": "s15-3",
+    "step": 34,
+    "station": "signal",
+    "source": "s15",
+    "units": [
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
+  },
+  {
+    "id": "s16-1",
+    "step": 35,
+    "station": "contrast",
+    "source": "s16",
+    "units": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "aspect"
+  },
+  {
+    "id": "s16-2",
+    "step": 36,
+    "station": "contrast",
+    "source": "s16",
+    "units": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "aspect"
+  },
+  {
+    "id": "s16-3",
+    "step": 37,
+    "station": "contrast",
+    "source": "s16",
+    "units": [
+      17
+    ],
+    "reveal": [],
+    "table": true,
+    "extraTable": false,
+    "instrument": "choice"
+  },
+  {
+    "id": "s17-1",
+    "step": 38,
+    "station": "contrast",
+    "source": "s17",
+    "units": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "aspect"
+  },
+  {
+    "id": "s17-2",
+    "step": 39,
+    "station": "contrast",
+    "source": "s17",
+    "units": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
+  },
+  {
+    "id": "s18-1",
+    "step": 40,
+    "station": "contrast",
+    "source": "s18",
+    "units": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
+  },
+  {
+    "id": "s19-1",
+    "step": 41,
+    "station": "polarity",
+    "source": "s19",
+    "units": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "none"
+  },
+  {
+    "id": "s19-2",
+    "step": 42,
+    "station": "polarity",
+    "source": "s19",
+    "units": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "build"
   },
   {
     "id": "s20-1",
+    "step": 43,
+    "station": "polarity",
     "source": "s20",
     "units": [
       0,
@@ -687,10 +817,14 @@
       5
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
   },
   {
     "id": "s21-1",
+    "step": 44,
+    "station": "query",
     "source": "s21",
     "units": [
       0,
@@ -698,10 +832,14 @@
       2
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "none"
   },
   {
     "id": "s21-2",
+    "step": 45,
+    "station": "query",
     "source": "s21",
     "units": [
       3,
@@ -712,10 +850,14 @@
       8
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "build"
   },
   {
     "id": "s22-1",
+    "step": 46,
+    "station": "query",
     "source": "s22",
     "units": [
       0,
@@ -728,10 +870,14 @@
       7
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
   },
   {
     "id": "s23-1",
+    "step": 47,
+    "station": "query",
     "source": "s23",
     "units": [
       0,
@@ -742,28 +888,24 @@
       5,
       6,
       7,
-      8
+      8,
+      9
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "none"
   },
   {
     "id": "s23-2",
+    "step": 48,
+    "station": "query",
     "source": "s23",
     "units": [
-      9,
       10,
       11,
       12,
-      13
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s23-3",
-    "source": "s23",
-    "units": [
+      13,
       14,
       15,
       16,
@@ -771,10 +913,14 @@
       18
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "build"
   },
   {
     "id": "s24-1",
+    "step": 49,
+    "station": "query",
     "source": "s24",
     "units": [
       0,
@@ -788,10 +934,14 @@
       8
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
   },
   {
     "id": "s25-1",
+    "step": 50,
+    "station": "harmonics",
     "source": "s25",
     "units": [
       0,
@@ -801,15 +951,7 @@
       4,
       5,
       6,
-      7
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s25-2",
-    "source": "s25",
-    "units": [
+      7,
       8,
       9,
       10,
@@ -818,10 +960,14 @@
       13
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "ladder"
   },
   {
-    "id": "s25-3",
+    "id": "s25-2",
+    "step": 51,
+    "station": "harmonics",
     "source": "s25",
     "units": [
       14,
@@ -831,11 +977,59 @@
       18
     ],
     "reveal": [],
-    "table": true
+    "table": true,
+    "extraTable": false,
+    "instrument": "choice"
   },
   {
     "id": "s26-1",
+    "step": 52,
+    "station": "harmonics",
     "source": "s26",
+    "units": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "stative"
+  },
+  {
+    "id": "s26-2",
+    "step": 53,
+    "station": "harmonics",
+    "source": "s26",
+    "units": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
+  },
+  {
+    "id": "s27-1",
+    "step": 54,
+    "station": "harmonics",
+    "source": "s27",
     "units": [
       0,
       1,
@@ -847,11 +1041,15 @@
       7
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
   },
   {
-    "id": "s26-2",
-    "source": "s26",
+    "id": "s27-2",
+    "step": 55,
+    "station": "harmonics",
+    "source": "s27",
     "units": [
       8,
       9,
@@ -861,12 +1059,42 @@
       13
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
   },
   {
-    "id": "s26-3",
-    "source": "s26",
+    "id": "s28-1",
+    "step": 56,
+    "station": "harmonics",
+    "source": "s28",
     "units": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "dialogue"
+  },
+  {
+    "id": "s28-2",
+    "step": 57,
+    "station": "harmonics",
+    "source": "s28",
+    "units": [
+      10,
+      11,
+      12,
+      13,
       14,
       15,
       16,
@@ -875,172 +1103,48 @@
       19
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
   },
   {
-    "id": "s27-1",
-    "source": "s27",
-    "units": [
-      0,
-      1,
-      2,
-      3
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s27-2",
-    "source": "s27",
-    "units": [
-      4,
-      5,
-      6,
-      7,
-      8,
-      9
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s27-3",
-    "source": "s27",
-    "units": [
-      10,
-      11,
-      12,
-      13
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s28-1",
-    "source": "s28",
+    "id": "s29-1",
+    "step": 58,
+    "station": "drills",
+    "source": "s29",
     "units": [
       0,
       1,
       2,
       3,
-      4
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s28-2",
-    "source": "s28",
-    "units": [
-      5,
-      6,
-      7,
-      8,
-      9
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s28-3",
-    "source": "s28",
-    "units": [
-      10,
-      11,
-      12,
-      13,
-      14
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s28-4",
-    "source": "s28",
-    "units": [
-      15,
-      16,
-      17,
-      18,
-      19
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s29-1",
-    "source": "s29",
-    "units": [
-      0,
-      1,
-      2,
-      3
-    ],
-    "reveal": [
-      0
-    ],
-    "table": false
-  },
-  {
-    "id": "s29-2",
-    "source": "s29",
-    "units": [
       4,
       5,
       6,
-      7
-    ],
-    "reveal": [
-      1
-    ],
-    "table": false
-  },
-  {
-    "id": "s29-3",
-    "source": "s29",
-    "units": [
+      7,
       8,
       9,
       10,
       11
     ],
-    "reveal": [
-      2
-    ],
-    "table": false
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "practice"
   },
   {
-    "id": "s29-4",
+    "id": "s29-2",
+    "step": 59,
+    "station": "drills",
     "source": "s29",
     "units": [
       12,
       13,
       14,
-      15
-    ],
-    "reveal": [
-      3
-    ],
-    "table": false
-  },
-  {
-    "id": "s29-5",
-    "source": "s29",
-    "units": [
+      15,
       16,
       17,
       18,
-      19
-    ],
-    "reveal": [
-      4
-    ],
-    "table": false
-  },
-  {
-    "id": "s29-6",
-    "source": "s29",
-    "units": [
+      19,
       20,
       21,
       22,
@@ -1048,283 +1152,22 @@
       24
     ],
     "reveal": [
+      0,
+      1,
+      2,
+      3,
+      4,
       5
     ],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "practice"
   },
   {
     "id": "s30-1",
+    "step": 60,
+    "station": "drills",
     "source": "s30",
-    "units": [
-      0,
-      1
-    ],
-    "reveal": [
-      0
-    ],
-    "table": false
-  },
-  {
-    "id": "s30-2",
-    "source": "s30",
-    "units": [
-      2
-    ],
-    "reveal": [
-      1
-    ],
-    "table": false
-  },
-  {
-    "id": "s30-3",
-    "source": "s30",
-    "units": [
-      3
-    ],
-    "reveal": [
-      2
-    ],
-    "table": false
-  },
-  {
-    "id": "s30-4",
-    "source": "s30",
-    "units": [
-      4
-    ],
-    "reveal": [
-      3
-    ],
-    "table": false
-  },
-  {
-    "id": "s30-5",
-    "source": "s30",
-    "units": [
-      5
-    ],
-    "reveal": [
-      4
-    ],
-    "table": false
-  },
-  {
-    "id": "s30-6",
-    "source": "s30",
-    "units": [
-      6,
-      7
-    ],
-    "reveal": [
-      5
-    ],
-    "table": false
-  },
-  {
-    "id": "s31-1",
-    "source": "s31",
-    "units": [
-      0,
-      1
-    ],
-    "reveal": [
-      0
-    ],
-    "table": false
-  },
-  {
-    "id": "s31-2",
-    "source": "s31",
-    "units": [
-      2
-    ],
-    "reveal": [
-      1
-    ],
-    "table": false
-  },
-  {
-    "id": "s31-3",
-    "source": "s31",
-    "units": [
-      3
-    ],
-    "reveal": [
-      2
-    ],
-    "table": false
-  },
-  {
-    "id": "s31-4",
-    "source": "s31",
-    "units": [
-      4
-    ],
-    "reveal": [
-      3
-    ],
-    "table": false
-  },
-  {
-    "id": "s31-5",
-    "source": "s31",
-    "units": [
-      5
-    ],
-    "reveal": [
-      4
-    ],
-    "table": false
-  },
-  {
-    "id": "s31-6",
-    "source": "s31",
-    "units": [
-      6
-    ],
-    "reveal": [
-      5
-    ],
-    "table": false
-  },
-  {
-    "id": "s31-7",
-    "source": "s31",
-    "units": [
-      7
-    ],
-    "reveal": [
-      6
-    ],
-    "table": false
-  },
-  {
-    "id": "s31-8",
-    "source": "s31",
-    "units": [
-      8,
-      9
-    ],
-    "reveal": [
-      7
-    ],
-    "table": false
-  },
-  {
-    "id": "s32-1",
-    "source": "s32",
-    "units": [
-      0,
-      1
-    ],
-    "reveal": [
-      0
-    ],
-    "table": false
-  },
-  {
-    "id": "s32-2",
-    "source": "s32",
-    "units": [
-      2
-    ],
-    "reveal": [
-      1
-    ],
-    "table": false
-  },
-  {
-    "id": "s32-3",
-    "source": "s32",
-    "units": [
-      3
-    ],
-    "reveal": [
-      2
-    ],
-    "table": false
-  },
-  {
-    "id": "s32-4",
-    "source": "s32",
-    "units": [
-      4
-    ],
-    "reveal": [
-      3
-    ],
-    "table": false
-  },
-  {
-    "id": "s32-5",
-    "source": "s32",
-    "units": [
-      5
-    ],
-    "reveal": [
-      4
-    ],
-    "table": false
-  },
-  {
-    "id": "s32-6",
-    "source": "s32",
-    "units": [
-      6
-    ],
-    "reveal": [
-      5
-    ],
-    "table": false
-  },
-  {
-    "id": "s32-7",
-    "source": "s32",
-    "units": [
-      7
-    ],
-    "reveal": [
-      6
-    ],
-    "table": false
-  },
-  {
-    "id": "s32-8",
-    "source": "s32",
-    "units": [
-      8
-    ],
-    "reveal": [
-      7
-    ],
-    "table": false
-  },
-  {
-    "id": "s32-9",
-    "source": "s32",
-    "units": [
-      9
-    ],
-    "reveal": [
-      8
-    ],
-    "table": false
-  },
-  {
-    "id": "s32-10",
-    "source": "s32",
-    "units": [
-      10,
-      11
-    ],
-    "reveal": [
-      9
-    ],
-    "table": false
-  },
-  {
-    "id": "s33-1",
-    "source": "s33",
     "units": [
       0,
       1,
@@ -1335,25 +1178,102 @@
       6,
       7
     ],
-    "reveal": [],
-    "table": false
+    "reveal": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "table": false,
+    "extraTable": false,
+    "instrument": "practice"
   },
   {
-    "id": "s33-2",
-    "source": "s33",
+    "id": "s31-1",
+    "step": 61,
+    "station": "drills",
+    "source": "s31",
     "units": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "reveal": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "table": false,
+    "extraTable": false,
+    "instrument": "practice"
+  },
+  {
+    "id": "s32-1",
+    "step": 62,
+    "station": "drills",
+    "source": "s32",
+    "units": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
       8,
       9,
       10,
       11
     ],
-    "reveal": [],
-    "table": false
+    "reveal": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "table": false,
+    "extraTable": false,
+    "instrument": "practice"
   },
   {
-    "id": "s33-3",
+    "id": "s33-1",
+    "step": 63,
+    "station": "drills",
     "source": "s33",
     "units": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
       12,
       13,
       14,
@@ -1361,10 +1281,14 @@
       16
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
   },
   {
     "id": "s34-1",
+    "step": 64,
+    "station": "readout",
     "source": "s34",
     "units": [
       0,
@@ -1374,15 +1298,7 @@
       4,
       5,
       6,
-      7
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s34-2",
-    "source": "s34",
-    "units": [
+      7,
       8,
       9,
       10,
@@ -1393,28 +1309,20 @@
       15
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "reading"
   },
   {
-    "id": "s34-3",
+    "id": "s34-2",
+    "step": 65,
+    "station": "readout",
     "source": "s34",
     "units": [
       16,
       17,
       18,
-      19
-    ],
-    "reveal": [
-      0,
-      1,
-      2
-    ],
-    "table": false
-  },
-  {
-    "id": "s34-4",
-    "source": "s34",
-    "units": [
+      19,
       20,
       21,
       22,
@@ -1422,25 +1330,49 @@
       24
     ],
     "reveal": [
+      0,
+      1,
+      2,
       3,
       4,
       5,
       6
     ],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "reading"
   },
   {
     "id": "s35-1",
+    "step": 66,
+    "station": "exam",
     "source": "s35",
     "units": [
       0,
       1
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "none"
+  },
+  {
+    "id": "s35-2",
+    "step": 67,
+    "station": "exam",
+    "source": "s35",
+    "units": [
+      2
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "none"
   },
   {
     "id": "s36-1",
+    "step": 68,
+    "station": "exam",
     "source": "s36",
     "units": [
       0,
@@ -1448,10 +1380,14 @@
       2
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "teacher-gate"
   },
   {
     "id": "s37-1",
+    "step": 69,
+    "station": "log",
     "source": "s37",
     "units": [
       0,
@@ -1467,10 +1403,14 @@
       10
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "writing"
   },
   {
     "id": "s37-2",
+    "step": 70,
+    "station": "log",
     "source": "s37",
     "units": [
       11,
@@ -1482,10 +1422,14 @@
       17
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "writing"
   },
   {
     "id": "s38-1",
+    "step": 71,
+    "station": "log",
     "source": "s38",
     "units": [
       0,
@@ -1496,46 +1440,46 @@
       5,
       6,
       7,
-      8
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s38-2",
-    "source": "s38",
-    "units": [
+      8,
       9,
       10,
       11,
       12,
-      13,
-      14,
-      15
+      13
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "none"
   },
   {
-    "id": "s38-3",
+    "id": "s38-2",
+    "step": 72,
+    "station": "log",
     "source": "s38",
     "units": [
+      14,
+      15,
       16,
       17,
       18,
-      19,
+      19
+    ],
+    "reveal": [],
+    "table": false,
+    "extraTable": false,
+    "instrument": "none"
+  },
+  {
+    "id": "s38-3",
+    "step": 73,
+    "station": "log",
+    "source": "s38",
+    "units": [
       20,
       21,
       22,
-      23
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s38-4",
-    "source": "s38",
-    "units": [
+      23,
       24,
       25,
       26,
@@ -1546,10 +1490,14 @@
       31
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "choice"
   },
   {
     "id": "s39-1",
+    "step": 74,
+    "station": "orbit",
     "source": "s39",
     "units": [
       0,
@@ -1558,15 +1506,7 @@
       3,
       4,
       5,
-      6
-    ],
-    "reveal": [],
-    "table": false
-  },
-  {
-    "id": "s39-2",
-    "source": "s39",
-    "units": [
+      6,
       7,
       8,
       9,
@@ -1576,10 +1516,14 @@
       13
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "curriculum"
   },
   {
-    "id": "s39-3",
+    "id": "s39-2",
+    "step": 75,
+    "station": "orbit",
     "source": "s39",
     "units": [
       14,
@@ -1589,6 +1533,8 @@
       18
     ],
     "reveal": [],
-    "table": false
+    "table": false,
+    "extraTable": false,
+    "instrument": "none"
   }
 ]

@@ -456,9 +456,9 @@ const CARDS: Card[] = [
     title: "الدرس 39: Future Perfect Continuous — المستقبل التام المستمر",
     en: "How Long Will You Have Been Learning?",
     emoji: "⏳",
-    stats: "39 قسمًا مرقّمًا · 40 خطوة · for وsince وby the time · اختبار 25 سؤالًا · IQ200",
+    stats: "39 قسمًا مرقّمًا · 75 خطوة · مرصد الزمن المستقبلي · for وsince وby the time · اختبار 25 سؤالًا · IQ200",
     href: "#/lesson/39",
-    grad: "from-[#17354a] to-[#245f62]",
+    grad: "from-[#0b1428] to-[#35d3b4]",
   },
   {
     n: 40,

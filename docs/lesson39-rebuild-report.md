@@ -1,69 +1,124 @@
-# Lesson 39 rebuild — implementation and verification
+# Lesson 39 rebuild — implementation and verification report
 
-## Read-only audit / scope
+**Branch:** `arena/23897842-english-course` · **Base:** `main` @ `f98bc311fc4e7b1600c987eee79489f0cd4acefb` · **PR:** opened against `main`, not merged.
+**Scope:** Lesson 39 only (`src/lessons/lesson39/**`, `src/App.tsx` card 39, `scripts/audit-lesson39*.mjs`, `docs/lesson39-*`, one `package.json` script).
 
-- Base/current main at audit: `10d8939a880e1d9f57dbef07e83e7d6b85e47318`.
-- Working branch: `arena/eeda3134-english-course`; initial working tree clean.
-- Read README, LESSON_WORKFLOW, existing direction documentation, Lesson 39 source audit/coverage and implementation, Lesson 38 implementation/assessment key and audit infrastructure. No AGENTS.md was found under the workspace/repository search.
-- Checked `git fetch origin main`, recent local history, `gh pr list --state all --limit 12` and open PRs. #71 (Lesson 38) is merged; no Lesson 39–40 PR was open. Unrelated open PRs #69 and #41 were not altered.
-- Lesson 39 was already registered at `#/lesson/39`; Lesson 40 is also already registered. App/router and shared code needed **no changes**.
-- Changed only Lesson 39 files, its audits, and its documentation/evidence. No earlier lessons, global styles, package manifests or lockfile changed.
+## 1. What was rebuilt
 
-## Implementation
+The previous Lesson 39 ("Time Grid") is replaced end-to-end by **مرصد الزمن المستقبلي / The Future Time Observatory**:
+night-blue, teal and violet with gold accents, an instrument panel per step, a 16-station rail, and a
+completely different interaction model from Lesson 38's achievement finish line.
 
-**Time Grid** is a violet/cyan measuring workspace with compact brand header, chapter rail, direct step selector, keyboard previous/next, semantic color legend, rule tiles, paired bilingual dialogue turns, a clock timeline and focused tasks. It is not Lesson 38's Finish Line Studio.
+| File | Role |
+|---|---|
+| `data.ts` | 75 step specifications, 16 stations, station membership, subtitle constants, derived exports (`SLIDES_39`, `STEP_COUNT_39`, `STATIONS_39`) |
+| `ledger39.ts` | **Unchanged** verbatim source (40 records: opening + §1…§39, 651 units, 5 tables, 37 key lines) |
+| `kit39.tsx` | Local design-system primitives: `Instrument39`, `ActionButton39`, `Feedback39`, `Formula39`, `SourceLine39`, `Table39`, `RevealPanel39`, `ChoiceText39`, `PlatformNote39` |
+| `labs39.tsx` | All interactive instruments (timeline, calculator, formula builder, anatomy bench, pronoun matrix, `for`/`since` sorter, builders, dialogue deck, FP/FPC comparator, stative deck, practice decks, reading, writing, ladder, curriculum) |
+| `Steps39.tsx` | One step = one goal; header, source block, instrument, answer gate |
+| `Lesson39.tsx` | Shell wiring only (no rail, nav or lock re-implementation) |
+| `TestArea39.tsx` | 25-question test: one question at a time, level tabs, submission gate |
+| `testData39.ts` / `testKey39.ts` / `solutionsData39.ts` | Question bank / grading / keys — three separate modules |
+| `TeacherArea39.tsx`, `TeacherGuide39.tsx` | Password gate (`somer173`, the repository's existing teacher password) + guide |
+| `coverage39.ts` | Section→step coverage rows surfaced in the teacher console |
+| `lesson39.css` | All `obs-` styles; nothing global |
+| `src/App.tsx` | Card 39 stats + gradient only |
 
-116 learning steps (40 previously). This deliberately exceeds 70–85: 30 original grammar exercise questions have independent attempt/answer steps; explanations, reading segments and bilingual exchanges are separated. It preserves all source text instead of compressing or deleting it. See the atomic ledger in [coverage](lesson39-coverage.md) and [JSON](lesson39-step-coverage.json).
+Deleted: `stepManifest39.ts` (the old hand-maintained manifest, superseded by `data.ts`).
 
-Interactions include formula ordering/removal/reset, grammar-role selection, duration calculation, for/since and aspect choices, affirmative/negative/question construction checks, correction/answer comparison after an attempt, and a session-saved writing workspace. Builder checks are structural checks, not claims to understand arbitrary English. Writing's sentence count is approximate, with no automated claim of grammatical completeness.
+## 2. Content preservation
 
-Final test remains exactly 25 questions, five levels of five. It now shows one question at a time, saves answers while moving through the test/areas during the visit, and enables submission only after 25 nonblank responses. Feedback is loaded only after submission. Every question then has a model answer, explanation and applicable alternatives. Non-matching conceptual responses are marked **human review**, not incorrectly rejected by brittle keyword heuristics. Exact model conceptual responses can be recognized automatically. The displayed number is an auto-accepted count, not a definitive human grade.
+- The source ledger is byte-frozen; the audit fails if it changes.
+- Every ledger unit is claimed by exactly one step (or by the Test area for §35), cross-checked as an index
+  multiset per section — not by section title.
+- Source key lines (§29–§32, §34) render only after an attempt on that step, behind an explicit answer gate.
+- No section was summarised away, and no "show the whole source" button exists
+  (`scripts/audit-source-reveal.mjs` bans `<details>`/`<summary>` in student files, and the banned literal
+  phrase does not appear anywhere in Lesson 39 code).
+- Additions are labelled: platform explanations carry `إضافة تعليمية من المنصة`; the 25 test keys are marked
+  platform-authored because the source's §36 is a stub.
 
-Teacher area uses the existing repository password gate, and contains all 25 detailed solutions. The old placeholder in the supplied source is not presented as a complete key. Teacher-added Q7/Q23 accuracy corrections are documented in coverage.
+## 3. Answer isolation design
 
-## Answer isolation and limitations
+1. `testData39.ts` holds questions/options only — no answer fields (audit asserts the exact key set of every
+   question object).
+2. `testKey39.ts` is imported **dynamically inside the submit handler**; nothing else imports it.
+3. `solutionsData39.ts` is imported only by `SolutionsArea39`, which is a lazy chunk mounted after submission
+   or after teacher unlock.
+4. The test chunk (`TestArea39`) is itself lazy; the audit walks its static import edges and fails if
+   `testKey39`, `solutionsData39`, `TeacherGuide39` or `SolutionsArea39` appear.
+5. Pre-submit DOM assertions: no explanation text, no full-sentence answer, no `data-answer-key-for`,
+   no `data-question-feedback`, no `data-grade-summary`.
+6. **Leak proof (run, then reverted):** injecting `import { TEST_SOLUTIONS_39 } from "./solutionsData39"` into
+   `TestArea39.tsx` plus a pre-submit render of the answer failed the audit with
+   `solutionsData39 must stay out of the test chunk`; a second injection that embedded a real explanation
+   string in the question header failed with `no explanation text may appear in the pre-submit test DOM`.
+   Both injections were reverted and the audit re-run green (see results below).
+7. Submission is one-shot: the button disappears and all inputs freeze, so a second submit cannot double-count.
+8. Browser evidence: the network log shows `testKey39-*.js` and `solutionsData39-*.js` are requested only
+   after the submission click, never during the 75 learning steps.
 
-- `testData39.ts` contains only questions/options, no key.
-- `testKey39.ts` and `solutionsData39.ts` are excluded from the initial static student graph; import of the key occurs inside the submission handler. Type-only imports do not ship the key.
-- Solutions and teacher guide are lazy imports, mounted only after submission/unlock. Audit inspects the module graph and initial DOM; Chromium observes network requests during all learning steps and all 25 unanswered/answered-but-unsubmitted questions.
-- No official score, correctness flags, or final explanations appear before submission.
-- Like Lesson 38, this is a **static client application**, not a server authorization boundary. A technically determined person can fetch public lazy chunks or inspect the existing client-side password gate. True teacher-only secret storage would require an authenticated backend, outside this narrowly scoped rebuild. No CSS hiding is used to protect official answers.
-- Source practice intentionally repeats two test items; isolation cannot prevent a learner from knowing answers already taught by the source.
-- Test responses reset on reload; they persist across area/question navigation in the mounted lesson. Writing is sessionStorage-saved. Neither feature is a remote gradebook.
+## 4. Visual identity
 
-## Commands and real results
+- Local tokens only (`--obs-*`), scoped under `.obs39`; no global theme, no shared-shell edits.
+- Night-blue/teal/violet surfaces, gold accent for "achievement", cyan for "duration", CSS timeline with
+  glowing nodes, duration counters, and an "achievement vs duration" comparator.
+- Motion respects `prefers-reduced-motion`; every interactive element has a visible
+  `focus-visible` ring; the theme is dark-only by design and all text was measured against its real background.
+- Accessibility: text contrast measured in real Chromium (≥ 4.5:1 for body, ≥ 3:1 for large text) on the
+  header, rail, main content of sampled steps, test area, solutions area and teacher console.
+
+## 5. Lock and navigation
+
+The lesson does not re-implement navigation: it hands `onPrev/onNext` to `Lesson1Shell`, so the shared
+lock pill and the step navigation stay in the same host. The browser audit measures the real bounding boxes
+of the lock button, Previous and Next at 1920×1080, 1280×800, 768×900 and 375×812 — overlap area is `0` in
+every case, on the landing slide and on all 75 steps.
+
+## 6. Commands and real results
+
+Commands are the repository's real scripts; nothing is invented.
 
 | Command | Result |
 |---|---|
-| `npm ci --silent` | Passed |
-| `npm run build` | Passed; existing >500kB chunk warning remains |
-| `npm run audit:lesson39` | Passed: byte-identical source; all atoms/tables/37 source keys mapped; 116 steps; 25 questions in 5×5; 25 complete teacher keys; neutral pre-submit DOM; static graph isolation |
-| `npm run check:english-direction` | Passed; 59/59 BIDI rendering assertions |
-| `node scripts/audit-render-direction.mjs` | Passed; 1,466 assertions |
-| `npm run audit:lesson-navigation` | Passed; 176 assertions |
-| `npx tsc --noEmit --jsx react-jsx --moduleResolution bundler --module esnext --target es2022 --allowSyntheticDefaultImports --skipLibCheck src/lessons/lesson39/Lesson39.tsx` | Passed; Lesson 39 dependency graph |
-| `node scripts/audit-lesson39-browser.mjs` | Passed; 1,274 checks, 0 failures, 0 page exceptions |
-| `node scripts/audit-bidi-mixed.mjs` | **Failed repository-wide**: 3 strict findings, all in unchanged Lesson 38 navigation (`BY`, regular `V3`, irregular `V3` labels). Lesson 39 has zero strict findings. Existing unrelated React warnings also appear for older lessons. No unrelated fix attempted. |
+| `npm ci` | pass |
+| `npm run build` | **PASS** — built in ~9 s; the pre-existing `>500 kB` chunk warning remains |
+| `node scripts/audit-lesson39.mjs` (`npm run audit:lesson39`) | **PASS** — 75 steps, 16 stations, 40 source records, every unit/table/key line mapped once, 25 questions in 5×5, 25 keys, 25/25 model score, 0/25 nonsense (5 human-review), alternatives accepted, pre-submit DOM answer-free, answer modules outside the initial **and** test chunk graphs |
+| `node scripts/audit-lesson39-browser.mjs` (`npm run audit:lesson39-browser`) | **PASS** — 615 checks, 4 viewports, 75 steps crawled, 0 page errors |
+| `npm run check:english-direction` | **PASS** — 59/59 assertions |
+| `node scripts/audit-render-direction.mjs` | **PASS** — 1466 assertions |
+| `ONLY=39 node scripts/audit-bidi-mixed.mjs` | **PASS** — 0 strict, 0 alts for Lesson 39 |
+| `node scripts/audit-bidi-mixed.mjs` (all lessons) | **FAIL** — 4 strict, all pre-existing in **Lesson 38** (`. BY` / `. V3` headings, `At أم By` rail item). Lesson 39 contributes 0. |
+| `node scripts/audit-lesson-navigation.mjs` | **PASS** — 176/176, no console errors, no overflow at 1024/768/375 |
+| `node scripts/audit-navigation-lock-overlap.mjs` | **105/106** — the single failure is Lesson 36 (`tab button "منطقة الطالب" must exist`), pre-existing and out of scope |
+| `node scripts/audit-final-test.mjs` | **1248/1253** — 5 failures, all Lesson 35 |
+| `node scripts/audit-final-test-coverage.mjs` | **630/633** — 3 failures, all Lesson 35 |
+| `node scripts/audit-source-reveal.mjs` | **62/63** — the failure is `src/lessons/lesson38/Steps38.tsx` (`<details>/<summary>`), pre-existing |
 
-Scoring checks inside `audit:lesson39`: all 25 models accepted; deliberately nonsensical responses yield zero accepted answers and five review-required concepts; American travelling/traveling and expanded negatives accepted; valid Future Perfect alternative accepted. Browser completes all 25 questions and checks all 25 post-submit feedback panels. Teacher guide has 25 solution articles; all five Solutions levels reveal five explanations each.
+Old failures were **not** fixed, and not hidden: they are listed above with their owning lesson.
 
-Browser tooling was installed with `npm install --no-save --package-lock=false playwright-core @sparticuz/chromium`; no dependency changes were committed. Reproduce with that command, build, `npm run preview -- --host 0.0.0.0 --port 4173`, then the browser audit. Early harness runs exposed a Playwright numeric option-label ambiguity and single-process Chromium context lifecycle issue; those were corrected and the full final run was rerun successfully. No failed attempt is being counted as a pass.
+## 7. Visual evidence
 
-## Actual Chromium desktop audit
+`docs/lesson39-visual/` (regenerated by the browser audit, verified answer-free before submission):
 
-Every one of 116 steps was rendered, measured and screenshotted at both sizes: **232 initial-step screenshots**. The script also activates all practice choices, source-answer reveals and the formula builder, measures expanded heights, tests all 25 test questions before/after submit, rejects an invalid teacher password, unlocks the teacher guide, and opens all five solution levels. Raw screenshots are generated under `.arena/lesson39-screens` (not committed); representative evidence and the complete measurement/check report are under `docs/lesson39-visual`.
+- `{1920x1080,1280x800,768x900,375x812}-lesson-landing.png`
+- `…-interactive-timeline.png` (start → future measurement point)
+- `…-comparison-fp-fpc.png` (Future Perfect vs Future Perfect Continuous)
+- `…-long-content-slide.png` (dialogue step with an expanded turn)
+- `…-test-before-submit.png` (no score, no feedback, no key)
+- `…-solutions-locked.png` (locked solutions before submission)
+- `…-results-after-submit.png` (score + per-question feedback after the audit's own submission)
+- `375x812-lock-and-nav.png`, `768x900-lock-and-nav.png` (lock pill + navigation on small screens)
+- `verification.json` — 615 checks, 0 failures, per-viewport overflow and lock/nav overlap = 0
 
-| Viewport | Initial median | Initial p90 | Initial max | Expanded practice max |
-|---|---:|---:|---:|---:|
-| 1280×800 | 614.34px | 846.53px | 977.56px | 1025.67px |
-| 1920×1080 | 626.34px | 856.53px | 986.56px | 1034.67px |
+## 8. Risks and limits
 
-Tallest initial steps: `s33-1`, `s26-1`, `s24-1`; at 1280 next is `s15-1`, at 1920 next is `s17-2`. Full top-eight lists are in verification.json. No initial or expanded practice step exceeds the preferred 1200px bound. No horizontal page overflow was detected. Source text is 17px; compact source labels are 15px. RTL shell and LTR isolated elements were checked on every step.
-
-The first visual pass flagged `s02-2` above 1200px. It was repaired with a horizontal source timeline, removal of a redundant repeated calculation, shorter source-label treatment, and meaningful splits of continuation/stative/advanced comparison sections. No text was removed or made tiny. The original source timeline's NOW label has no specified clock time; the future reference and starting point are explicitly distinguished.
-
-Manual image review was **representative, not all 232 screenshots**: 1280 formula builder, advanced comparison/tallest step, timeline before and after repair, test feedback before/after removing its overlapping sticky submission footer; 1920 Long Study Day paired dialogue and stative-verbs step. Final measurement run has no >1200px flagged learning steps. Native desktop rendering only; no mobile/manual device or cross-browser claim. Google font hosts are outside this sandbox's allowed egress, so evidence may use local fallback fonts.
-
-## Merge guidance
-
-Recommend owner review of the representative screenshots, source ledger, conceptual grading/review policy, and the inherited static-site security limitation before manual merge. The wider BIDI audit remains red only for Lesson 38; do not imply the entire repository suite is green. No merge or branch deletion was performed.
+- This is a **static client application**: lazy chunks and the client-side teacher password are not a server
+  authorisation boundary. Anyone who deliberately inspects the network can fetch a lazy chunk. The audit
+  proves the app never loads or renders answers before submission; it cannot make a static bundle secret.
+- The numeric result counts *matching* answers and flags conceptual answers as **human review**; it is not a
+  definitive grade.
+- Test answers live in React state for the visit: a page reload starts a fresh attempt. The writing draft uses
+  `sessionStorage` (`l39-writing`).
+- The Lesson 38 BIDI findings, Lesson 35 final-test findings and the Lesson 36 tab finding remain open and are
+  out of this PR's scope by instruction.

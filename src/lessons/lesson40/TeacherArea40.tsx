@@ -1,135 +1,139 @@
-import { Suspense, lazy, useState, type FormEvent } from "react";
-import { Chip40, MixedBidi } from "./kit40";
-
-// ============================================================
-// Lesson 40 — منطقة المعلم المستقلة (TeacherArea40)
-//
-// تستخدم آلية الوصول المعتمدة في المنصة للدروس الحديثة (37–39)،
-// ولا تحمّل دليل المعلم (TeacherGuide40) إلا بعد تفعيل وضع المعلم.
-// ============================================================
+import { Suspense, lazy, useState } from "react";
+import { Rich40 } from "./kit40";
 
 export const TEACHER_PASSWORD_40 = "somer173";
 
-const LazyTeacherGuide40 = lazy(() => import("./TeacherGuide40"));
+const TeacherGuide40 = lazy(() => import("./TeacherGuide40"));
+
+export interface TeacherArea40Props {
+  unlocked: boolean;
+  onUnlock: () => void;
+  onLock: () => void;
+  onOpenSolutions?: () => void;
+  onBackToLesson?: () => void;
+}
 
 export function TeacherArea40({
   unlocked,
   onUnlock,
   onLock,
-  onJumpToStep,
-  onOpenTest,
   onOpenSolutions,
-  onBackToStudent,
-}: {
-  unlocked: boolean;
-  onUnlock: () => void;
-  onLock: () => void;
-  onJumpToStep: (index: number) => void;
-  onOpenTest: () => void;
-  onOpenSolutions: () => void;
-  onBackToStudent: () => void;
-}) {
-  const [passwordInput, setPasswordInput] = useState("");
+  onBackToLesson,
+}: TeacherArea40Props) {
+  const [code, setCode] = useState("");
   const [error, setError] = useState("");
 
-  function handleSubmit(e: FormEvent) {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (passwordInput.trim() === TEACHER_PASSWORD_40) {
+    if (code.trim() === TEACHER_PASSWORD_40) {
       setError("");
-      setPasswordInput("");
+      setCode("");
       onUnlock();
     } else {
-      setError("الرمز غير صحيح. يُرجى إدخال رمز المعلم المعتمد في المنصة.");
+      setError("رمز الدخول غير صحيح. أدخل رمز المعلم المعتمد لفتح الدليل التدريسي.");
     }
-  }
+  };
 
   return (
     <section
       id="lesson40-teacher"
-      dir="rtl"
-      aria-label="مساحة المعلم — الدرس 40"
-      className="space-y-6"
+      className="tcc-exam-shell"
+      aria-label="مساحة المعلم للدرس 40"
     >
-      {!unlocked ? (
-        <div className="rounded-3xl border border-[#d4b475] bg-[#fffdf8] p-6 sm:p-8 shadow-sm space-y-5">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <Chip40 label="مساحة المعلم محمية 🔒" tone="amber" />
-            <button
-              type="button"
-              onClick={onBackToStudent}
-              className="rounded-xl border border-[#245f62] bg-[#ffffff] px-4 py-2 text-xs font-extrabold text-[#245f62] cursor-pointer"
-            >
-              العودة إلى خطوات الدرس
-            </button>
+      <header className="tcc-head">
+        <div className="tcc-spectrum-bar" aria-hidden="true" />
+        <div className="tcc-head-top">
+          <div className="tcc-badges">
+            <span dir="ltr" className="tcc-coord font-en">
+              TEACHER CONSOLE // L40
+            </span>
+            <span className="tcc-station-tag">
+              {unlocked ? "وضع المعلم مفعّل" : "محمي ببوابة المعلم"}
+            </span>
           </div>
+          <div className="flex flex-wrap gap-2">
+            {unlocked ? (
+              <>
+                {onOpenSolutions ? (
+                  <button
+                    type="button"
+                    className="tcc-btn-primary"
+                    onClick={onOpenSolutions}
+                  >
+                    استعراض صفحة الحلول التفصيلية
+                  </button>
+                ) : null}
+                <button type="button" className="tcc-btn-secondary" onClick={onLock}>
+                  قفل مساحة المعلم
+                </button>
+              </>
+            ) : null}
+            {onBackToLesson ? (
+              <button
+                type="button"
+                className="tcc-btn-secondary"
+                onClick={onBackToLesson}
+              >
+                العودة إلى خطوات الدرس
+              </button>
+            ) : null}
+          </div>
+        </div>
 
-          <h2 className="text-xl sm:text-2xl font-extrabold text-[#17354a]">
-            <MixedBidi>🔐 بوابة مساحة المعلم — الدرس 40 (Future Tenses Master Review)</MixedBidi>
+        <h1 className="tcc-title">
+          <Rich40 text="مساحة المعلم — دليل التدريس وسلالم التقدير ومفاتيح الحلول" />
+        </h1>
+        <p className="tcc-purpose">
+          بوابة تنظيمية على مستوى الواجهة العميلة تفصل تجربة الطالب عن دليل المعلم وسلالم التصحيح البشري وسجل التغطية.
+        </p>
+      </header>
+
+      {!unlocked ? (
+        <section className="tcc-brief max-w-xl">
+          <h2 className="m-0 text-base font-black text-slate-950">
+            أدخل رمز المعلم لفتح الدليل التدريسي
           </h2>
-
-          <p className="text-sm font-semibold text-[#24343b] leading-[1.85]">
-            <MixedBidi>
-              تحتوي هذه المساحة على دليل التدريس ذي المراحل الست، ومفاتيح الحلول الكاملة لتدريبات الدرس والاختبار النهائي (§26)، وسلم تصحيح مهمة الكتابة (§27)، وسجل التغطية المصدري الكامل. أدخل رمز المعلم المعتمد في المنصة لفتحها.
-            </MixedBidi>
+          <p className="mt-2 mb-4 text-sm font-bold text-slate-700">
+            يُحمَّل دليل المعلم بصورة مؤجلة بعد التحقق من الرمز لعزل مفاتيح الإجابة عن تجربة التعلم والاختبار.
           </p>
-
-          <form onSubmit={handleSubmit} className="flex flex-wrap items-center gap-3">
-            <label htmlFor="teacher40-password" className="sr-only">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <label htmlFor="teacher40-password" className="text-xs font-extrabold text-slate-800">
               رمز المعلم
             </label>
             <input
               id="teacher40-password"
               type="password"
               dir="ltr"
-              value={passwordInput}
-              onChange={(e) => setPasswordInput(e.target.value)}
-              placeholder="أدخل رمز المعلم..."
-              className="min-w-[240px] rounded-xl border border-[#b9c8c0] bg-[#ffffff] px-4 py-2.5 font-mono text-sm font-bold text-[#17354a]"
+              autoComplete="off"
+              placeholder="Enter teacher code..."
+              className="tcc-input font-en"
+              value={code}
+              onChange={(e) => {
+                setCode(e.target.value);
+                if (error) setError("");
+              }}
             />
-            <button
-              type="submit"
-              className="rounded-xl bg-[#17354a] px-5 py-2.5 text-sm font-extrabold text-[#ffffff] hover:bg-[#245f62] cursor-pointer"
-            >
-              فتح مساحة المعلم
-            </button>
+            {error ? <div className="tcc-feedback is-err">{error}</div> : null}
+            <div>
+              <button type="submit" className="tcc-btn-primary">
+                فتح مساحة المعلم
+              </button>
+            </div>
           </form>
-
-          {error ? (
-            <p className="rounded-xl border border-[#cf7d73] bg-[#fbefed] px-4 py-2.5 text-xs sm:text-sm font-bold text-[#8d3832]">
-              <MixedBidi>{error}</MixedBidi>
-            </p>
-          ) : null}
-        </div>
+        </section>
       ) : (
-        <div className="space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-[#8fb69a] bg-[#edf5ee] px-4 py-3">
-            <span className="text-xs sm:text-sm font-extrabold text-[#28533b]">
-              وضع المعلم مفعّل — يمكنك استعراض الحلول الكاملة أو قفل المساحة قبل مشاركة الشاشة مع الطالب.
-            </span>
-            <button
-              type="button"
-              onClick={onLock}
-              className="rounded-xl border border-[#8d3832] bg-[#fffdf8] px-3.5 py-1.5 text-xs font-extrabold text-[#8d3832] cursor-pointer"
-            >
-              قفل مساحة المعلم 🔒
-            </button>
-          </div>
-
-          <Suspense
-            fallback={
-              <div className="rounded-2xl border border-[#c8c3b4] bg-[#fffdf8] p-6 text-sm font-extrabold text-[#17354a]">
-                جارٍ تحميل دليل المعلم الشامل...
-              </div>
-            }
-          >
-            <LazyTeacherGuide40
-              onJumpToStep={onJumpToStep}
-              onOpenTest={onOpenTest}
-              onOpenSolutions={onOpenSolutions}
-            />
-          </Suspense>
-        </div>
+        <Suspense
+          fallback={
+            <div className="tcc-brief text-sm font-bold text-slate-800">
+              جاري تحميل دليل المعلم وسجل التغطية...
+            </div>
+          }
+        >
+          <TeacherGuide40 />
+        </Suspense>
       )}
     </section>
   );
 }
+
+export default TeacherArea40;

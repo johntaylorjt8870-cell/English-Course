@@ -1,274 +1,101 @@
-import { Fragment, type ReactNode } from "react";
-import { En, Rich } from "../../shared/lessonKit";
-import type { SourceSection40 } from "./ledger40";
+import type { ReactNode } from "react";
+import { LatinRuns } from "../../shared/bidi";
+import type { StudentSourceSection40 } from "./studentLedger40";
 
-// ============================================================
-// Lesson 40 — أدوات العرض المشتركة (Editorial Master Review Lab)
-//
-// قواعد الإتاحة والتباين المعتمدة في هذا الملف:
-//   • جميع الألوان النصية المختارة تحقق نسبة تباين >= 4.5:1 على الأسطح الفاتحة.
-//   • لا يُستخدم أي صنف يعتمد على الشفافية المنخفضة للنص.
-//   • كل سطر إنجليزي مستقل يُعرض داخل كتلة LTR معزولة، وكل سطر مختلط يمر عبر Rich / LatinRuns.
-// ============================================================
-
-const HEADING_PREFIX_RE = /^(🎯|🧠|⭐|🔬|⚡|🎥|🏁|⏳|⚔️|🔍|🚨|🧩|⚙️|🎭|🌦️|🔥|✍️|🕵️|📖|🏆|🔐|🗺️|💡|📌|✅|❌|⚠️)/u;
-const NUMBERED_PREFIX_RE = /^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳㉑㉒㉓㉔㉕]/u;
-
-export function EnBidi({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <En className={className}>{children}</En>;
-}
-
-export function MixedBidi({ children }: { children: string }) {
-  return <Rich text={children} />;
-}
-
-export function pureEnglishLine40(line: string): boolean {
-  return !/[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/.test(line) && /[A-Za-z]/.test(line);
-}
-
-/** عرض سطر مصدري واحد مع عزل اتجاه النص (RTL/LTR) بدقة. */
-export function SourceLine40({
-  line,
-  index,
-  sectionId,
-  kind = "unit",
-}: {
-  line: string;
-  index?: number;
-  sectionId?: string;
-  kind?: "unit" | "reveal";
-}) {
-  const trimmed = line.trim();
-  const isPureEn = pureEnglishLine40(trimmed);
-  const isWrong = trimmed.includes("❌");
-  const isRight = trimmed.includes("✅");
-  const isHeading = HEADING_PREFIX_RE.test(trimmed) && index === 0 && kind === "unit";
-  const isNumbered = NUMBERED_PREFIX_RE.test(trimmed);
-  const unitAttr = sectionId && index != null ? `${sectionId}-${kind}-${index}` : undefined;
-
-  if (isHeading) {
-    return (
-      <h2
-        dir="rtl"
-        className="text-xl sm:text-2xl font-extrabold text-[#17354a] leading-[1.6] tracking-normal"
-        data-source-line={index}
-        data-source-unit={unitAttr}
-      >
-        <MixedBidi>{trimmed}</MixedBidi>
-      </h2>
-    );
-  }
-
-  if (isPureEn) {
-    const toneClass = isWrong
-      ? "border-[#cf7d73] bg-[#fbefed] text-[#8d3832]"
-      : isRight || kind === "reveal"
-        ? "border-[#7ea889] bg-[#edf5ee] text-[#28533b]"
-        : "border-[#c7d3cb] bg-[#f7f8f5] text-[#17354a]";
-    return (
-      <div
-        dir="ltr"
-        lang="en"
-        style={{ direction: "ltr", unicodeBidi: "isolate", textAlign: "left" }}
-        className={`rounded-xl border px-3.5 py-2.5 font-mono text-[15px] sm:text-base font-semibold leading-[1.7] ${toneClass}`}
-        data-source-line={index}
-        data-source-unit={unitAttr}
-      >
-        <EnBidi>{trimmed}</EnBidi>
-      </div>
-    );
-  }
-
-  const rtlClass = isWrong
-    ? "rounded-xl border border-[#cf7d73] bg-[#fbefed] px-3.5 py-2.5 text-[#8d3832] font-semibold"
-    : isRight || kind === "reveal"
-      ? "rounded-xl border border-[#7ea889] bg-[#edf5ee] px-3.5 py-2.5 text-[#28533b] font-semibold"
-      : isNumbered
-        ? "rounded-xl border border-[#d5d0c3] bg-[#fdfcf8] px-3.5 py-2.5 text-[#24343b] font-semibold"
-        : "text-[#24343b]";
-
+export function Rich40({ text, className = "" }: { text: string; className?: string }) {
   return (
-    <p
-      dir="rtl"
-      className={`text-base sm:text-[17px] leading-[1.9] ${rtlClass}`}
-      data-source-line={index}
-      data-source-unit={unitAttr}
-    >
-      <MixedBidi>{trimmed}</MixedBidi>
-    </p>
+    <span className={className || undefined}>
+      <LatinRuns text={text} />
+    </span>
   );
 }
 
-/** عرض نص قسم مصدري كامل بترتيبه الأصلي، مع الجداول المُعاد بناؤها ووحدات الكشف المشروط. */
-export function SourceLedgerBlock40({
-  section,
-  skipIndexes = [],
-  unitIndexes,
-  includeTable = true,
-  showReveal = false,
+export function EnLine40({
   children,
+  tone = "default",
+  className = "",
 }: {
-  section: SourceSection40;
-  skipIndexes?: readonly number[];
-  unitIndexes?: readonly number[];
-  includeTable?: boolean;
-  showReveal?: boolean;
-  children?: ReactNode;
-}) {
-  const skip = new Set<number>(skipIndexes);
-  const table = includeTable && section.tableRows && section.tableHeaders ? (
-    <Table40
-      caption={section.tableLabel ?? `جدول القسم ${section.num ?? ""}`}
-      headers={section.tableHeaders}
-      rows={section.tableRows}
-    />
-  ) : null;
-  const tableAfter = section.tableAfter ?? Number.MAX_SAFE_INTEGER;
-  const selectedIndexes = unitIndexes ?? section.units.map((_, index) => index);
-
-  return (
-    <section
-      dir="rtl"
-      data-source-section={section.id}
-      aria-label={section.title}
-      className="rounded-2xl border border-[#d5d0c3] bg-[#fffdf8] p-5 sm:p-7 shadow-sm space-y-4"
-    >
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#e4dfd2] pb-3">
-        <span className="inline-flex items-center gap-2 rounded-full border border-[#b9c8c0] bg-[#eef4f0] px-3 py-1 text-xs font-extrabold text-[#245f62]">
-          {section.num == null ? "مقدمة الدرس المورّدة" : `القسم المصدري ${section.num} من 29`}
-        </span>
-        <span className="text-xs font-bold text-[#43575a]">النص الأصلي محفوظ بترتيبه الكامل</span>
-      </div>
-
-      <h2 className="text-xl sm:text-2xl font-extrabold text-[#17354a] leading-[1.6]">
-        <MixedBidi>{section.title}</MixedBidi>
-      </h2>
-
-      <div className="space-y-3">
-        {tableAfter === -1 ? table : null}
-        {selectedIndexes.map((index) => {
-          if (skip.has(index)) return null;
-          const line = section.units[index];
-          if (line == null) return null;
-          return (
-            <Fragment key={`${section.id}-unit-${index}`}>
-              <SourceLine40 line={line} index={index} sectionId={section.id} kind="unit" />
-              {tableAfter === index ? table : null}
-            </Fragment>
-          );
-        })}
-        {table && tableAfter > section.units.length ? table : null}
-      </div>
-
-      {section.revealUnits && section.revealUnits.length > 0 ? (
-        <div data-answer-key-for={section.id} className="pt-2">
-          {showReveal ? (
-            <div className="rounded-2xl border border-[#8fb69a] bg-[#edf5ee] p-4 space-y-2.5">
-              <p className="text-xs sm:text-sm font-extrabold text-[#28533b]">
-                مفتاح المصدر — يظهر بعد المحاولة:
-              </p>
-              {section.revealUnits.map((line, idx) => (
-                <SourceLine40
-                  key={`${section.id}-reveal-${idx}`}
-                  line={line}
-                  index={idx}
-                  sectionId={section.id}
-                  kind="reveal"
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="rounded-xl border border-dashed border-[#b9c8c0] bg-[#f7f8f5] p-3 text-xs sm:text-sm font-bold text-[#17354a]">
-              <span>🛠️ الإجابات محفوظة حتى إتمام المحاولة</span>
-            </div>
-          )}
-        </div>
-      ) : null}
-
-      {children ? <div className="pt-3 border-t border-[#e4dfd2] space-y-4">{children}</div> : null}
-    </section>
-  );
-}
-
-export function Callout40({
-  tone = "teal",
-  title,
-  badge,
-  children,
-}: {
-  tone?: "teal" | "navy" | "amber" | "emerald" | "coral";
-  title: string;
-  badge?: string;
   children: ReactNode;
+  tone?: "default" | "wrong" | "right";
+  className?: string;
 }) {
-  const toneMap = {
-    teal: "border-[#9dbbb5] bg-[#eef4f0] text-[#17354a]",
-    navy: "border-[#aab8c4] bg-[#eef2f6] text-[#17354a]",
-    amber: "border-[#d4b475] bg-[#fbf6eb] text-[#76531e]",
-    emerald: "border-[#8fb69a] bg-[#edf5ee] text-[#28533b]",
-    coral: "border-[#cf7d73] bg-[#fbefed] text-[#8d3832]",
-  } as const;
-
+  const toneCls = tone === "wrong" ? "is-wrong" : tone === "right" ? "is-right" : "";
   return (
-    <aside dir="rtl" className={`rounded-2xl border p-4 sm:p-5 space-y-2.5 ${toneMap[tone]}`}>
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <h3 className="text-base sm:text-lg font-extrabold leading-snug">
-          <MixedBidi>{title}</MixedBidi>
-        </h3>
-        {badge ? (
-          <span className="rounded-full border border-current px-2.5 py-0.5 text-xs font-extrabold">{badge}</span>
-        ) : null}
-      </div>
-      <div className="text-sm sm:text-base text-[#24343b] leading-[1.85] space-y-2">{children}</div>
-    </aside>
+    <div dir="ltr" className={`tcc-en-box font-en ${toneCls} ${className}`.trim()}>
+      {children}
+    </div>
   );
 }
 
-export function Table40({
-  caption,
-  headers,
-  rows,
-  ltrColumns = [],
-}: {
-  caption: string;
-  headers: readonly string[];
-  rows: readonly (readonly string[])[];
-  ltrColumns?: readonly number[];
-}) {
-  const ltrSet = new Set(ltrColumns);
+export function isPureEnglishUnit40(line: string): boolean {
+  return /[A-Za-z]/.test(line) && !/[\u0600-\u06FF]/.test(line);
+}
+
+const HEADING_LINES_40 = new Set([
+  "اكتشاف مهم",
+  "الموقف الأول",
+  "الموقف الثاني",
+  "الموقف الثالث",
+  "الموقف الرابع",
+  "الموقف الخامس",
+  "أمثلة إضافية",
+  "أمثلة",
+  "تذكر",
+  "الجملة الأولى",
+  "الجملة الثانية",
+  "الجملة الثالثة",
+  "ملخص المقارنة",
+  "الخطأ الشائع",
+  "انتبه إلى الفرق",
+  "الترجمة والتحليل",
+  "اكتشاف IQ200",
+  "التحدي",
+  "الحل",
+  "الحلول",
+  "الحلول المفصلة",
+  "القاعدة المتقدمة",
+  "أسئلة الفهم",
+  "الدرس المستفاد",
+  "نموذج افتتاحي إرشادي",
+  "القاعدة الذهبية الكبرى",
+  "منظومة الحاضر",
+  "منظومة الماضي",
+  "منظومة المستقبل",
+  "المحطة القادمة",
+]);
+
+function renderSourceTable40(section: StudentSourceSection40) {
+  if (!section.tableHeaders || !section.tableRows) return null;
   return (
-    <div className="overflow-x-auto rounded-2xl border border-[#c8c3b4] bg-[#ffffff] shadow-sm">
-      <table className="w-full border-collapse text-right text-sm sm:text-base">
-        <caption className="border-b border-[#ded9cb] bg-[#f5f3ed] px-4 py-3 text-right text-sm font-extrabold text-[#17354a]">
-          <MixedBidi>{caption}</MixedBidi>
-        </caption>
+    <div
+      className="tcc-table-wrap"
+      data-source-table={section.id}
+      role="region"
+      aria-label={section.title}
+    >
+      <table className="tcc-table">
         <thead>
-          <tr className="border-b border-[#ded9cb] bg-[#eef4f0] text-[#17354a]">
-            {headers.map((header, idx) => (
-              <th key={idx} scope="col" className="px-4 py-3 font-extrabold">
-                <MixedBidi>{header}</MixedBidi>
+          <tr>
+            {section.tableHeaders.map((header, idx) => (
+              <th key={idx} scope="col">
+                <Rich40 text={header} />
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-[#e6e1d5]">
-          {rows.map((row, rIdx) => (
-            <tr key={rIdx} className={rIdx % 2 === 0 ? "bg-[#ffffff]" : "bg-[#fdfcf8]"}>
+        <tbody>
+          {section.tableRows.map((row, rIdx) => (
+            <tr key={rIdx}>
               {row.map((cell, cIdx) => {
-                const isLtr = ltrSet.has(cIdx) || pureEnglishLine40(cell);
+                const pureEn = isPureEnglishUnit40(cell);
                 return (
-                  <td key={cIdx} className="px-4 py-3 align-top text-[#24343b] leading-[1.75]">
-                    {isLtr ? (
-                      <div
-                        dir="ltr"
-                        lang="en"
-                        style={{ direction: "ltr", unicodeBidi: "isolate", textAlign: "left" }}
-                        className="font-mono font-semibold text-[#17354a]"
-                      >
-                        <EnBidi>{cell}</EnBidi>
+                  <td key={cIdx}>
+                    {pureEn ? (
+                      <div dir="ltr" className="font-en font-bold text-left">
+                        {cell}
                       </div>
                     ) : (
-                      <MixedBidi>{cell}</MixedBidi>
+                      <Rich40 text={cell} />
                     )}
                   </td>
                 );
@@ -281,88 +108,185 @@ export function Table40({
   );
 }
 
-export function Chip40({
-  label,
-  tone = "neutral",
+export function SourceBriefing40({
+  section,
+  unitIndexes,
+  includeTable = false,
+  headingLabel = "بطاقة الشرح والأمثلة",
 }: {
-  label: string;
-  tone?: "neutral" | "teal" | "amber" | "emerald" | "coral";
+  section: StudentSourceSection40;
+  unitIndexes: readonly number[];
+  includeTable?: boolean;
+  headingLabel?: string;
 }) {
-  const map = {
-    neutral: "border-[#c7c2b4] bg-[#f5f3ed] text-[#24343b]",
-    teal: "border-[#95b8b1] bg-[#eef4f0] text-[#245f62]",
-    amber: "border-[#d4b475] bg-[#fbf6eb] text-[#76531e]",
-    emerald: "border-[#8fb69a] bg-[#edf5ee] text-[#28533b]",
-    coral: "border-[#cf7d73] bg-[#fbefed] text-[#8d3832]",
-  } as const;
   return (
-    <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-extrabold ${map[tone]}`}>
-      <MixedBidi>{label}</MixedBidi>
-    </span>
-  );
-}
-
-/** لوحة كشف مشروط صريحة بأزرار وصول قياسية (دون details/summary). */
-export function RevealPanel40({
-  id,
-  label,
-  open,
-  canOpen,
-  lockedReason,
-  onToggle,
-  children,
-}: {
-  id: string;
-  label: string;
-  open: boolean;
-  canOpen: boolean;
-  lockedReason?: string;
-  onToggle: () => void;
-  children?: ReactNode;
-}) {
-  const panelId = `${id}-panel`;
-  return (
-    <div className="rounded-2xl border border-[#c8c3b4] bg-[#f5f3ed] p-4 space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="space-y-1">
-          <p className="text-sm font-extrabold text-[#17354a]">
-            <MixedBidi>{label}</MixedBidi>
-          </p>
-          {!canOpen && lockedReason ? (
-            <p className="text-xs font-bold text-[#76531e]">
-              <MixedBidi>{lockedReason}</MixedBidi>
-            </p>
-          ) : null}
-        </div>
-        <button
-          type="button"
-          disabled={!canOpen}
-          aria-expanded={open && canOpen}
-          aria-controls={panelId}
-          onClick={onToggle}
-          className={`rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition ${
-            canOpen
-              ? "bg-[#17354a] text-[#ffffff] hover:bg-[#245f62] cursor-pointer"
-              : "border border-[#c7c2b4] bg-[#e9e5da] text-[#596965] cursor-not-allowed"
-          }`}
-        >
-          {open && canOpen ? "إخفاء الحل المصدري" : "إظهار الحل المصدري بعد المحاولة"}
-        </button>
+    <section className="tcc-brief" data-source-section={section.id}>
+      <div className="tcc-brief-head">
+        <span className="tcc-brief-label">
+          <span aria-hidden="true">◈</span>
+          <Rich40 text={headingLabel} />
+        </span>
+        <span className="tcc-station-tag">
+          <Rich40 text={section.title} />
+        </span>
       </div>
-      {open && canOpen && children ? (
-        <div id={panelId} className="rounded-xl border border-[#d5d0c3] bg-[#fffdf8] p-4 space-y-2.5">
-          {children}
-        </div>
-      ) : null}
-    </div>
+
+      {includeTable && section.tableAfter === -1 ? renderSourceTable40(section) : null}
+
+      <div className="tcc-units">
+        {unitIndexes.map((idx) => {
+          const line = section.units[idx];
+          if (line === undefined) return null;
+          const unitKey = `${section.id}-unit-${idx}`;
+          const pureEn = isPureEnglishUnit40(line);
+          const isWrong = line.includes("❌");
+          const isRight = line.includes("✅");
+
+          return (
+            <div key={unitKey} data-source-unit={unitKey}>
+              {pureEn ? (
+                <EnLine40 tone={isWrong ? "wrong" : isRight ? "right" : "default"}>
+                  {line}
+                </EnLine40>
+              ) : HEADING_LINES_40.has(line.trim()) ? (
+                <h3 className="tcc-unit-heading">
+                  <Rich40 text={line} />
+                </h3>
+              ) : (
+                <p className="tcc-unit-ar">
+                  <Rich40 text={line} />
+                </p>
+              )}
+              {includeTable && section.tableAfter === idx ? renderSourceTable40(section) : null}
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 
-export function normalizeEnglishInput40(raw: string): string {
+export function PracticeRevealBox40({
+  section,
+  unlocked,
+  title = "الإجابات النموذجية للمراجعة الذاتية",
+}: {
+  section: StudentSourceSection40;
+  unlocked: boolean;
+  title?: string;
+}) {
+  if (!unlocked || !section.revealUnits?.length) return null;
+  return (
+    <section
+      className="tcc-reveal-card"
+      data-answer-key-for={section.id}
+      aria-live="polite"
+    >
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+        <h4 className="m-0 text-sm font-black text-emerald-950">
+          ✓ <Rich40 text={title} />
+        </h4>
+        <span className="rounded-full bg-emerald-900 px-2.5 py-0.5 text-xs font-extrabold text-white">
+          مفتوحة بعد المحاولة
+        </span>
+      </div>
+      <div className="flex flex-col gap-2">
+        {section.revealUnits.map((line, idx) => {
+          const key = `${section.id}-reveal-${idx}`;
+          return isPureEnglishUnit40(line) ? (
+            <div key={key} data-source-unit={key}>
+              <EnLine40 tone="right">{line}</EnLine40>
+            </div>
+          ) : (
+            <p
+              key={key}
+              data-source-unit={key}
+              className="m-0 text-sm font-bold leading-relaxed text-emerald-950"
+            >
+              <Rich40 text={line} />
+            </p>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+export function LabShell40({
+  title,
+  status,
+  note,
+  children,
+  labId,
+}: {
+  title: string;
+  status?: string;
+  note?: string;
+  children: ReactNode;
+  labId?: string;
+}) {
+  return (
+    <section className="tcc-lab" data-lab-id={labId}>
+      <div className="tcc-lab-bar">
+        <h3 className="tcc-lab-title">
+          <span aria-hidden="true">⌘</span>
+          <Rich40 text={title} />
+        </h3>
+        {status ? (
+          <span className="tcc-lab-status">
+            <Rich40 text={status} />
+          </span>
+        ) : null}
+      </div>
+      <div className="tcc-lab-body">
+        {note ? (
+          <p className="tcc-lab-note">
+            <Rich40 text={note} />
+          </p>
+        ) : null}
+        {children}
+      </div>
+    </section>
+  );
+}
+
+export function normalizeEnglishAnswer40(raw: string): string {
   return raw
     .trim()
-    .replace(/[’‘`]/g, "'")
+    .toLowerCase()
+    .replace(/[’`]/g, "'")
+    .replace(/\bi'm\b/g, "i am")
+    .replace(/\byou're\b/g, "you are")
+    .replace(/\bwe're\b/g, "we are")
+    .replace(/\bthey're\b/g, "they are")
+    .replace(/\bhe's\s+going\s+to\b/g, "he is going to")
+    .replace(/\bshe's\s+going\s+to\b/g, "she is going to")
+    .replace(/\bit's\s+going\s+to\b/g, "it is going to")
+    .replace(/\bthat's\s+going\s+to\b/g, "that is going to")
+    .replace(/\bi'll\b/g, "i will")
+    .replace(/\byou'll\b/g, "you will")
+    .replace(/\bhe'll\b/g, "he will")
+    .replace(/\bshe'll\b/g, "she will")
+    .replace(/\bit'll\b/g, "it will")
+    .replace(/\bwe'll\b/g, "we will")
+    .replace(/\bthey'll\b/g, "they will")
+    .replace(/\bwon't\b/g, "will not")
+    .replace(/\baren't\b/g, "are not")
+    .replace(/\bisn't\b/g, "is not")
+    .replace(/\bdoesn't\b/g, "does not")
+    .replace(/\bdon't\b/g, "do not")
+    .replace(/\btraveling\b/g, "travelling")
+    .replace(/\borganising\b/g, "organizing")
+    .replace(/[.!?]+$/g, "")
     .replace(/\s+/g, " ")
-    .replace(/[.?!]+$/g, "")
-    .toLowerCase();
+    .trim();
+}
+
+export function matchesAcceptedAnswer40(
+  input: string,
+  accepted: readonly string[]
+): boolean {
+  const norm = normalizeEnglishAnswer40(input);
+  if (!norm) return false;
+  return accepted.some((candidate) => normalizeEnglishAnswer40(candidate) === norm);
 }

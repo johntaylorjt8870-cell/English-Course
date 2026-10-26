@@ -1,358 +1,393 @@
-import { Suspense, lazy, useEffect, useState } from "react";
-import { Signature } from "../../shared/Signature";
-import { EnBidi, MixedBidi } from "./kit40";
-import { StepView40 } from "./Steps40";
-import { TeacherArea40 } from "./TeacherArea40";
-import { TestArea40 } from "./TestArea40";
 import {
-  CHAPTERS_40,
-  LESSON_ARABIC_SUBTITLE_40,
-  LESSON_LEVEL_40,
-  LESSON_SUBTITLE_40,
-  LESSON_TITLE_40,
-  SECTION_COUNT_40,
+  Suspense,
+  lazy,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import Lesson1Shell, { type Lesson1ShellGroup } from "../../shared/Lesson1Shell";
+import {
+  LESSON_40_META,
   SLIDES_40,
+  STATIONS_40,
+  STATION_BY_ID_40,
   STEP_COUNT_40,
 } from "./data";
+import { Rich40 } from "./kit40";
+import "./lesson40.css";
+import { StepView40 } from "./Steps40";
+import type { GradeSummary40 } from "./testKey40";
 
-export type AreaId40 = "student" | "test" | "solutions" | "teacher";
+const TestArea40 = lazy(() => import("./TestArea40"));
+const SolutionsArea40 = lazy(() => import("./SolutionsArea40"));
+const TeacherArea40 = lazy(() => import("./TeacherArea40"));
 
-const LazySolutionsArea40 = lazy(() => import("./SolutionsArea40"));
+export type Lesson40Area = "lesson" | "test" | "solutions" | "teacher";
+
+function SolutionsGate40({
+  onOpenTest,
+  onOpenTeacher,
+  onBackToLesson,
+}: {
+  onOpenTest: () => void;
+  onOpenTeacher: () => void;
+  onBackToLesson: () => void;
+}) {
+  return (
+    <section
+      className="tcc-brief max-w-2xl"
+      data-solutions-locked="true"
+      aria-label="منطقة الحلول مقفلة قبل التسليم"
+    >
+      <div className="tcc-badges mb-3">
+        <span dir="ltr" className="tcc-coord font-en">
+          SOLUTIONS // LOCKED
+        </span>
+        <span className="tcc-station-tag">محجوبة قبل تسليم الاختبار</span>
+      </div>
+      <h1 className="tcc-title">
+        الحلول التفصيلية تُفتح بعد تسليم الاختبار النهائي الشامل
+      </h1>
+      <p className="tcc-purpose">
+        للحفاظ على مصداقية التقييم الذاتي في الأسئلة الخمسة والعشرين، تبقى مفاتيح الإجابة والشروح التفصيلية محجوبة حتى تسلّم محاولتك كاملة في منطقة الاختبار، أو عبر دخول المعلم برمزه المعتمد.
+      </p>
+      <div className="mt-4 flex flex-wrap gap-2.5">
+        <button type="button" className="tcc-btn-primary" onClick={onOpenTest}>
+          الانتقال إلى منطقة الاختبار (25 سؤالًا)
+        </button>
+        <button type="button" className="tcc-btn-secondary" onClick={onOpenTeacher}>
+          دخول المعلم
+        </button>
+        <button type="button" className="tcc-btn-secondary" onClick={onBackToLesson}>
+          العودة إلى خطوات الدرس
+        </button>
+      </div>
+    </section>
+  );
+}
 
 export default function Lesson40({ onExit }: { onExit?: () => void }) {
-  const [area, setArea] = useState<AreaId40>("student");
-  const [stepIndex, setStepIndex] = useState<number>(0);
-  const [testAnswers, setTestAnswers] = useState<Record<string, string>>({});
-  const [testSubmitted, setTestSubmitted] = useState<boolean>(false);
-  const [teacherUnlocked, setTeacherUnlocked] = useState<boolean>(false);
+  const [step, setStep] = useState(0);
+  const [area, setArea] = useState<Lesson40Area>("lesson");
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const currentSlide = SLIDES_40[stepIndex] ?? SLIDES_40[0];
-  const currentChapter = CHAPTERS_40.find((c) => c.id === currentSlide.section) ?? CHAPTERS_40[0];
+  const [testSubmitted, setTestSubmitted] = useState(false);
+  const [submittedAnswers, setSubmittedAnswers] = useState<
+    Readonly<Record<string, string>>
+  >({});
+  const [gradeSummary, setGradeSummary] = useState<GradeSummary40 | null>(null);
+  const [teacherUnlocked, setTeacherUnlocked] = useState(false);
+
+  const mainRef = useRef<HTMLElement | null>(null);
   const solutionsUnlocked = testSubmitted || teacherUnlocked;
 
-  useEffect(() => {
-    if (typeof navigator !== "undefined" && /jsdom/i.test(navigator.userAgent || "")) return;
-    window.scrollTo?.({ top: 0, behavior: "smooth" });
-  }, [area, stepIndex]);
+  const scrollMainTop = useCallback(() => {
+    if (mainRef.current) {
+      mainRef.current.scrollTo({ top: 0, behavior: "auto" });
+    }
+  }, []);
+
+  const goTo = useCallback(
+    (idx: number) => {
+      const clamped = Math.max(0, Math.min(STEP_COUNT_40 - 1, idx));
+      setArea("lesson");
+      setStep(clamped);
+      setMenuOpen(false);
+      scrollMainTop();
+    },
+    [scrollMainTop]
+  );
+
+  const switchArea = useCallback(
+    (nextArea: Lesson40Area) => {
+      setArea(nextArea);
+      setMenuOpen(false);
+      scrollMainTop();
+    },
+    [scrollMainTop]
+  );
+
+  const prev = useCallback(() => {
+    setStep((s) => Math.max(0, s - 1));
+    scrollMainTop();
+  }, [scrollMainTop]);
+
+  const next = useCallback(() => {
+    setStep((s) => Math.min(STEP_COUNT_40 - 1, s + 1));
+    scrollMainTop();
+  }, [scrollMainTop]);
 
   useEffect(() => {
-    function handleKeyDown(e: KeyboardEvent) {
-      if (area !== "student") return;
-      if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
-      if (target?.closest?.("button, a, input, textarea, select, [contenteditable='true']")) {
+      const tag = target?.tagName;
+      const inField =
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT" ||
+        tag === "BUTTON" ||
+        Boolean(target?.isContentEditable);
+
+      if (e.key === "Escape") {
+        if (menuOpen) setMenuOpen(false);
+        else if (area !== "lesson") switchArea("lesson");
         return;
       }
-      if (e.key === "ArrowLeft") {
+
+      if (inField || area !== "lesson") return;
+
+      if (e.key === "ArrowLeft" || e.key === " ") {
         e.preventDefault();
-        setStepIndex((prev) => Math.min(STEP_COUNT_40 - 1, prev + 1));
+        next();
       } else if (e.key === "ArrowRight") {
         e.preventDefault();
-        setStepIndex((prev) => Math.max(0, prev - 1));
+        prev();
       } else if (e.key === "Home") {
         e.preventDefault();
-        setStepIndex(0);
+        goTo(0);
       } else if (e.key === "End") {
         e.preventDefault();
-        setStepIndex(STEP_COUNT_40 - 1);
+        goTo(STEP_COUNT_40 - 1);
       }
-    }
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [area]);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [area, goTo, menuOpen, next, prev, switchArea]);
 
-  function handleChangeAnswer(questionId: string, value: string) {
-    setTestAnswers((prev) => ({ ...prev, [questionId]: value }));
-  }
+  const groups: Lesson1ShellGroup[] = useMemo(
+    () =>
+      STATIONS_40.map((station) => ({
+        section: station.title,
+        items: SLIDES_40.map((s, idx) => ({ s, idx }))
+          .filter(({ s }) => s.station === station.id)
+          .map(({ s, idx }) => ({
+            index: idx,
+            navId: s.id,
+            title: <Rich40 text={s.rail} />,
+          })),
+      })).filter((g) => g.items.length > 0),
+    []
+  );
 
-  function handleSubmitTest() {
-    setTestSubmitted(true);
-    setArea("solutions");
-  }
+  const areaButtons: ReadonlyArray<{
+    id: Lesson40Area;
+    label: string;
+    badge: string;
+    locked?: boolean;
+  }> = [
+    { id: "lesson", label: "منطقة الطالب", badge: `${STEP_COUNT_40}` },
+    { id: "test", label: "منطقة الاختبار", badge: "25" },
+    {
+      id: "solutions",
+      label: "منطقة الحلول",
+      badge: solutionsUnlocked ? "✓" : "مقفل",
+      locked: !solutionsUnlocked,
+    },
+    {
+      id: "teacher",
+      label: "مساحة المعلم",
+      badge: teacherUnlocked ? "✓" : "دليل",
+    },
+  ];
 
-  function handleResetTest() {
-    setTestAnswers({});
-    setTestSubmitted(false);
-    setArea("test");
-  }
+  const renderAreaSwitcher = (ariaLabel: string, extraClass = "") => (
+    <div
+      className={`tcc-area-switcher ${extraClass}`.trim()}
+      role="group"
+      aria-label={ariaLabel}
+    >
+      {areaButtons.map((btn) => {
+        const active = area === btn.id;
+        return (
+          <button
+            key={btn.id}
+            type="button"
+            data-area-tab={btn.id}
+            disabled={btn.locked}
+            aria-pressed={active}
+            aria-disabled={btn.locked || undefined}
+            className={`tcc-area-btn ${active ? "is-active" : ""} ${
+              btn.locked ? "is-locked" : ""
+            }`.trim()}
+            onClick={() => {
+              if (!btn.locked) switchArea(btn.id);
+            }}
+          >
+            <span>{btn.label}</span>
+            <span className="tcc-area-pill" aria-hidden="true">
+              {btn.badge}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+
+  const railFooter = renderAreaSwitcher("مساحات الدرس 40", "mt-2.5");
+
+  const slide = SLIDES_40[step] ?? SLIDES_40[0]!;
+  const currentStation = STATION_BY_ID_40[slide.station];
+
+  const headerContent =
+    area === "lesson" ? (
+      <Rich40 text={`${currentStation.title} · ${slide.rail}`} />
+    ) : area === "test" ? (
+      <Rich40 text="الاختبار النهائي الشامل · 25 سؤالًا عبر 5 مستويات" />
+    ) : area === "solutions" ? (
+      <Rich40 text="منطقة الحلول التفصيلية" />
+    ) : (
+      <Rich40 text="مساحة المعلم · الدليل التدريسي وسجل التغطية" />
+    );
+
+  const progress =
+    area === "lesson" ? Math.round(((step + 1) / STEP_COUNT_40) * 100) : 100;
+
+  const counter =
+    area === "lesson"
+      ? `${step + 1} / ${STEP_COUNT_40}`
+      : area === "test"
+        ? "25 Q"
+        : area === "solutions"
+          ? "KEY"
+          : "TCHR";
 
   return (
-    <div dir="rtl" data-lesson="40" className="tc40 min-h-screen text-[#24343b] pb-16">
-      {/* الترويسة الرئيسية للدرس 40 */}
-      <header className="border-b border-[#d5d0c3] bg-[#fffdf8]">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-5 space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <a
-                href="#/"
-                onClick={() => onExit?.()}
-                className="rounded-xl border border-[#c7c2b4] bg-[#f5f3ed] px-3 py-1.5 text-xs font-extrabold text-[#17354a] hover:border-[#245f62]"
-              >
-                🏠 الرئيسية
-              </a>
-              <a
-                href="#/lesson/39"
-                className="rounded-xl border border-[#c7c2b4] bg-[#ffffff] px-3 py-1.5 text-xs font-extrabold text-[#245f62] hover:border-[#17354a]"
-              >
-                ← الدرس 39: Future Perfect Continuous
-              </a>
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full border border-[#95b8b1] bg-[#eef4f0] px-3 py-1 text-xs font-extrabold text-[#245f62]">
-                {`${SECTION_COUNT_40} قسمًا مرقّمًا + الغلاف`}
-              </span>
-              <span className="rounded-full border border-[#d4b475] bg-[#fbf6eb] px-3 py-1 text-xs font-extrabold text-[#76531e]">
-                {LESSON_LEVEL_40}
-              </span>
-            </div>
-          </div>
-
-          <div className="tc-brandline">
-            <span className="tc-brand-mark" aria-hidden="true">T//40</span>
-            <div className="space-y-1.5">
-            <div
-              dir="ltr"
-              lang="en"
-              style={{ direction: "ltr", unicodeBidi: "isolate", textAlign: "left" }}
-              className="font-mono text-sm sm:text-base font-extrabold text-[#245f62]"
-            >
-              <EnBidi>{`${LESSON_TITLE_40} · ${LESSON_SUBTITLE_40}`}</EnBidi>
-            </div>
-            <h1 className="text-xl sm:text-2xl font-extrabold text-[#17354a]">
-              <MixedBidi>{LESSON_ARABIC_SUBTITLE_40}</MixedBidi>
-            </h1>
-            </div>
-          </div>
-          <div className="tc-header-tracks" aria-label="خمسة مسارات لقراءة المستقبل">
-            <span className="will">WILL · DECISION</span><span className="going">GOING TO · PLAN</span><span className="continuous">CONTINUOUS · IN PROGRESS</span><span className="perfect">PERFECT · COMPLETE</span><span className="duration">PERFECT CONTINUOUS · DURATION</span>
-          </div>
-
-          {/* شريط المناطق الأربع المستقلة */}
-          <nav aria-label="مناطق الدرس 40" className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1">
-            <button
-              type="button"
-              aria-current={area === "student" ? "page" : undefined}
-              onClick={() => setArea("student")}
-              className={`rounded-2xl border px-4 py-3 text-right transition cursor-pointer ${
-                area === "student"
-                  ? "border-[#17354a] bg-[#17354a] text-[#ffffff]"
-                  : "border-[#c7c2b4] bg-[#ffffff] text-[#17354a] hover:border-[#245f62]"
-              }`}
-            >
-              <div className="text-xs font-extrabold">منطقة الطالب</div>
-              <div className="text-xs font-semibold">
-                {`الخطوة ${stepIndex + 1} من ${STEP_COUNT_40}`}
-              </div>
-            </button>
-
-            <button
-              type="button"
-              aria-current={area === "test" ? "page" : undefined}
-              onClick={() => setArea("test")}
-              className={`rounded-2xl border px-4 py-3 text-right transition cursor-pointer ${
-                area === "test"
-                  ? "border-[#17354a] bg-[#17354a] text-[#ffffff]"
-                  : "border-[#c7c2b4] bg-[#ffffff] text-[#17354a] hover:border-[#245f62]"
-              }`}
-            >
-              <div className="text-xs font-extrabold">منطقة الاختبار المستقلة</div>
-              <div className="text-xs font-semibold">
-                {testSubmitted ? "25 سؤالًا (تم التسليم ✅)" : "25 سؤالًا (5 مستويات × 5)"}
-              </div>
-            </button>
-
-            <button
-              type="button"
-              disabled={!solutionsUnlocked}
-              aria-current={area === "solutions" ? "page" : undefined}
-              onClick={() => {
-                if (solutionsUnlocked) setArea("solutions");
-              }}
-              className={`rounded-2xl border px-4 py-3 text-right transition ${
-                !solutionsUnlocked
-                  ? "border-[#c7c2b4] bg-[#e9e5da] text-[#596965] cursor-not-allowed"
-                  : area === "solutions"
-                    ? "border-[#28533b] bg-[#28533b] text-[#ffffff] cursor-pointer"
-                    : "border-[#8fb69a] bg-[#edf5ee] text-[#28533b] hover:border-[#28533b] cursor-pointer"
-              }`}
-            >
-              <div className="text-xs font-extrabold">
-                {solutionsUnlocked ? "منطقة الحلول التفصيلية ✅" : "منطقة الحلول 🔒"}
-              </div>
-              <div className="text-xs font-semibold">
-                {solutionsUnlocked ? "مفتوحة للمراجعة" : "تُفتح بعد تسليم الاختبار"}
-              </div>
-            </button>
-
-            <button
-              type="button"
-              aria-current={area === "teacher" ? "page" : undefined}
-              onClick={() => setArea("teacher")}
-              className={`rounded-2xl border px-4 py-3 text-right transition cursor-pointer ${
-                area === "teacher"
-                  ? "border-[#76531e] bg-[#76531e] text-[#ffffff]"
-                  : "border-[#d4b475] bg-[#fbf6eb] text-[#76531e] hover:border-[#76531e]"
-              }`}
-            >
-              <div className="text-xs font-extrabold">
-                {teacherUnlocked ? "مساحة المعلم 🔓" : "مساحة المعلم 🔐"}
-              </div>
-              <div className="text-xs font-semibold">دليل التدريس ومفاتيح الحلول</div>
-            </button>
-          </nav>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-6xl px-4 sm:px-6 py-6 space-y-6">
-        {area === "student" ? (
-          <div className="space-y-5">
-            {/* شريط فصول التنقل والخطوات */}
-            <div className="rounded-2xl border border-[#d5d0c3] bg-[#fffdf8] p-4 space-y-3 shadow-sm">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <span className="text-xs sm:text-sm font-extrabold text-[#17354a]">
-                  <MixedBidi>{`الفصل الحالي: ${currentChapter.label} (${currentChapter.en})`}</MixedBidi>
-                </span>
-                <span className="text-xs font-bold text-[#43575a]">
-                  {`الخطوة ${stepIndex + 1} من ${STEP_COUNT_40} — تنقّل سريع بالأسهم (← التالي · → السابق)`}
-                </span>
-              </div>
-
-              <div className="flex flex-wrap gap-1.5">
-                {CHAPTERS_40.map((ch) => {
-                  const firstSlideIdx = SLIDES_40.findIndex((s) => s.section === ch.id);
-                  const active = ch.id === currentChapter.id;
-                  return (
-                    <button
-                      key={ch.id}
-                      type="button"
-                      aria-pressed={active}
-                      onClick={() => {
-                        if (firstSlideIdx >= 0) setStepIndex(firstSlideIdx);
-                      }}
-                      className={`rounded-xl border px-3 py-1.5 text-xs font-extrabold transition cursor-pointer ${
-                        active
-                          ? "border-[#17354a] bg-[#17354a] text-[#ffffff]"
-                          : "border-[#c7c2b4] bg-[#f5f3ed] text-[#24343b] hover:border-[#245f62]"
-                      }`}
-                    >
-                      <MixedBidi>{ch.label}</MixedBidi>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="tc-direct-nav">
-                <label htmlFor="lesson40-step-select">انتقال مباشر إلى خطوة</label>
-                <select id="lesson40-step-select" value={stepIndex} onChange={(event) => setStepIndex(Number(event.target.value))}>
-                  {SLIDES_40.map((slide, index) => {
-                    const sectionLabel = slide.source.num == null ? "المقدمة" : `القسم ${slide.source.num}`;
-                    const pageLabel = slide.id.split("-").at(-1) ?? "1";
-                    return <option key={slide.id} value={index} data-step-id={slide.id}>{`الخطوة ${String(index + 1).padStart(2, "0")} — ${sectionLabel} — الصفحة ${pageLabel}`}</option>;
-                  })}
-                </select>
-                <progress value={stepIndex + 1} max={STEP_COUNT_40} aria-label={`تقدم الخطوات: ${stepIndex + 1} من ${STEP_COUNT_40}`} />
-              </div>
-            </div>
-
-            {/* محتوى الخطوة الحالية */}
-            <StepView40
-              stepIndex={stepIndex}
-              testSubmitted={testSubmitted}
-              teacherUnlocked={teacherUnlocked}
-              onOpenTest={() => setArea("test")}
-              onOpenSolutions={() => {
-                if (solutionsUnlocked) setArea("solutions");
-              }}
-              onOpenTeacher={() => setArea("teacher")}
+    <Lesson1Shell
+      railTitle={<Rich40 text="الدرس 40 · Future Tenses Master Review" />}
+      railSubtitle={
+        <div className="mt-2 tcc-rail-meta">
+          <span className="tcc-rail-kicker">
+            <Rich40 text={LESSON_40_META.themeAr} />
+          </span>
+          <span className="tcc-rail-ar">
+            <Rich40 text={LESSON_40_META.titleAr} />
+          </span>
+          <span className="tcc-rail-sub">
+            <Rich40
+              text={`${STEP_COUNT_40} خطوة تفاعلية · اختبار 25 سؤالًا · ${LESSON_40_META.levelAr}`}
             />
+          </span>
+        </div>
+      }
+      groups={groups}
+      activeIndex={area === "lesson" ? step : -1}
+      markActiveStep={area === "lesson"}
+      railAriaLabel="فهرس محطات الدرس 40"
+      railFooter={railFooter}
+      isMenuOpen={menuOpen}
+      onMenuOpenChange={setMenuOpen}
+      headerContent={headerContent}
+      progress={progress}
+      counter={counter}
+      counterDir="ltr"
+      contentKey={area === "lesson" ? slide.id : area}
+      contentArea={area}
+      onSelectStep={goTo}
+      onPrev={area === "lesson" ? prev : () => switchArea("lesson")}
+      onNext={next}
+      showNext={area === "lesson"}
+      prevDisabled={area === "lesson" ? step === 0 : false}
+      nextDisabled={step === STEP_COUNT_40 - 1}
+      prevLabel={area === "lesson" ? "→ السابق" : "→ العودة إلى خطوات الدرس"}
+      nextLabel="التالي ←"
+      navAriaLabel="التنقل في الدرس 40"
+      onExit={onExit}
+      mainRef={mainRef}
+      mainId="l40-main"
+      rootDir="rtl"
+      rootDataLesson={40}
+      rootDataShell="lesson-1"
+      rootClassName="tcc40 style-b font-body relative flex h-screen flex-col overflow-hidden"
+    >
+      <div className="mb-3 lg:hidden">
+        {renderAreaSwitcher("مساحات الدرس 40 على الشاشات الصغيرة")}
+      </div>
 
-            {/* أزرار التنقل السفلي بين الخطوات */}
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#d5d0c3] bg-[#fffdf8] p-4 shadow-sm">
-              <button
-                type="button"
-                disabled={stepIndex === 0}
-                onClick={() => setStepIndex((prev) => Math.max(0, prev - 1))}
-                className={`rounded-xl px-4 py-2.5 text-xs sm:text-sm font-extrabold transition ${
-                  stepIndex === 0
-                    ? "border border-[#c7c2b4] bg-[#e9e5da] text-[#596965] cursor-not-allowed"
-                    : "border border-[#17354a] bg-[#ffffff] text-[#17354a] hover:bg-[#eef4f0] cursor-pointer"
-                }`}
-              >
-                → الخطوة السابقة
-              </button>
+      {area === "lesson" ? (
+        <StepView40
+          slide={slide}
+          stepIndex={step}
+          onSelectStep={goTo}
+          onOpenTest={() => switchArea("test")}
+          onOpenSolutions={() => switchArea("solutions")}
+          onOpenTeacher={() => switchArea("teacher")}
+          testSubmitted={testSubmitted}
+          teacherUnlocked={teacherUnlocked}
+        />
+      ) : null}
 
-              <span className="text-xs sm:text-sm font-extrabold text-[#17354a]">
-                <MixedBidi>{`${stepIndex + 1} / ${STEP_COUNT_40} — ${currentSlide.title}`}</MixedBidi>
-              </span>
-
-              {stepIndex < STEP_COUNT_40 - 1 ? (
-                <button
-                  type="button"
-                  onClick={() => setStepIndex((prev) => Math.min(STEP_COUNT_40 - 1, prev + 1))}
-                  className="rounded-xl bg-[#17354a] px-5 py-2.5 text-xs sm:text-sm font-extrabold text-[#ffffff] hover:bg-[#245f62] cursor-pointer"
-                >
-                  الخطوة التالية ←
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setArea("test")}
-                  className="rounded-xl bg-[#245f62] px-5 py-2.5 text-xs sm:text-sm font-extrabold text-[#ffffff] hover:bg-[#17354a] cursor-pointer"
-                >
-                  انتقل إلى الاختبار النهائي الشامل (25 سؤالًا) ←
-                </button>
-              )}
+      {area === "test" ? (
+        <Suspense
+          fallback={
+            <div className="tcc-brief text-sm font-bold text-slate-800">
+              جاري تجهيز الاختبار النهائي الشامل...
             </div>
-          </div>
-        ) : null}
-
-        {area === "test" ? (
+          }
+        >
           <TestArea40
-            answers={testAnswers}
-            onChangeAnswer={handleChangeAnswer}
             submitted={testSubmitted}
-            onSubmit={handleSubmitTest}
-            onReset={handleResetTest}
-            onOpenSolutions={() => {
-              if (solutionsUnlocked) setArea("solutions");
+            submittedAnswers={submittedAnswers}
+            gradeSummary={gradeSummary}
+            onSubmitted={(frozen, summary) => {
+              setSubmittedAnswers(frozen);
+              setGradeSummary(summary);
+              setTestSubmitted(true);
             }}
-            onBackToStudent={() => setArea("student")}
+            onResetAttempt={() => {
+              setSubmittedAnswers({});
+              setGradeSummary(null);
+              setTestSubmitted(false);
+            }}
+            onOpenSolutions={() => switchArea("solutions")}
+            onBackToLesson={() => switchArea("lesson")}
           />
-        ) : null}
+        </Suspense>
+      ) : null}
 
-        {area === "solutions" && solutionsUnlocked ? (
+      {area === "solutions" ? (
+        solutionsUnlocked ? (
           <Suspense
             fallback={
-              <div className="rounded-2xl border border-[#c8c3b4] bg-[#fffdf8] p-6 text-sm font-extrabold text-[#17354a]">
-                جارٍ تحميل الحلول التفصيلية...
+              <div className="tcc-brief text-sm font-bold text-slate-800">
+                جاري فتح الحلول التفصيلية...
               </div>
             }
           >
-            <LazySolutionsArea40
-              answers={testAnswers}
-              onBackToTest={() => setArea("test")}
-              onBackToStudent={() => setArea("student")}
+            <SolutionsArea40
+              submittedAnswers={submittedAnswers}
+              unlockedBy={testSubmitted ? "submission" : "teacher"}
+              onBackToTest={() => switchArea("test")}
+              onBackToLesson={() => switchArea("lesson")}
             />
           </Suspense>
-        ) : null}
+        ) : (
+          <SolutionsGate40
+            onOpenTest={() => switchArea("test")}
+            onOpenTeacher={() => switchArea("teacher")}
+            onBackToLesson={() => switchArea("lesson")}
+          />
+        )
+      ) : null}
 
-        {area === "teacher" ? (
+      {area === "teacher" ? (
+        <Suspense
+          fallback={
+            <div className="tcc-brief text-sm font-bold text-slate-800">
+              جاري تحميل بوابة المعلم...
+            </div>
+          }
+        >
           <TeacherArea40
             unlocked={teacherUnlocked}
             onUnlock={() => setTeacherUnlocked(true)}
             onLock={() => setTeacherUnlocked(false)}
-            onJumpToStep={(idx) => {
-              setStepIndex(idx);
-              setArea("student");
-            }}
-            onOpenTest={() => setArea("test")}
-            onOpenSolutions={() => setArea("solutions")}
-            onBackToStudent={() => setArea("student")}
+            onOpenSolutions={() => switchArea("solutions")}
+            onBackToLesson={() => switchArea("lesson")}
           />
-        ) : null}
-
-        <Signature />
-      </main>
-    </div>
+        </Suspense>
+      ) : null}
+    </Lesson1Shell>
   );
 }

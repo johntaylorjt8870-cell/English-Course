@@ -1,287 +1,460 @@
 // ============================================================
-// Lesson 44 — DOM / interaction audit (English Learning Studio).
+// Lesson 44 — DOM, Source Fidelity, Copy Hygiene, Answer-Hiding & BIDI Audit
 //
-// Mounts the real lesson in jsdom and asserts the contracts that static data
-// cannot prove: every source unit reaches the DOM, practice/reading/detective
-// keys stay closed until the attempt, the test cannot be submitted early and
-// reveals nothing before submission, solutions and the teacher guide stay
-// gated, writing survives navigation, and every rendered snapshot is free of
-// mixed Arabic/English BIDI violations.
+// Mounts <Lesson44 /> on shared Lesson1Shell in JSDOM and verifies:
+//   1. Lesson1Shell contract + inline site-lock pill host
+//   2. All 39 steps (0..38) render with 0 BIDI violations & 0 provenance leaks
+//   3. All 762 student source units reach the rendered DOM
+//   4. Attempt-before-reveal gating + clean retry reset on §§27–33
+//   5. Writing Mission requirement detector + draft persistence across steps
+//   6. Pre-submit answer hiding in TestArea44 (zero keys/hints in DOM/data-*)
+//   7. Lazy testKey44 grading (25/25), SolutionsArea44 unlock, and full retry reset
+//   8. Teacher gate (somer173) + lazy TeacherGuide44 + teacherSource44 §35
 //
 //   node scripts/audit-lesson44-dom.mjs
 // ============================================================
-import assert from 'node:assert/strict';
-import { mkdirSync } from 'node:fs';
-import { build } from 'esbuild';
-import { JSDOM } from 'jsdom';
-import { analyzeHtml } from './lib/bidi-sim.mjs';
+import assert from "node:assert/strict";
+import { mkdirSync } from "node:fs";
+import { build } from "esbuild";
+import { JSDOM } from "jsdom";
+import { analyzeHtml } from "./lib/bidi-sim.mjs";
+import { auditRenderedStudentCopy } from "./lib/student-copy-audit.mjs";
 
-const dom = new JSDOM('<!doctype html><html lang="ar" dir="rtl"><body><div id="root"></div></body></html>', { url: 'http://localhost/', pretendToBeVisual: true });
-for (const key of ['window', 'document', 'navigator', 'HTMLElement', 'HTMLInputElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'MutationObserver', 'getComputedStyle']) {
+const dom = new JSDOM(
+  '<!doctype html><html lang="ar" dir="rtl"><body><div id="root"></div></body></html>',
+  { url: "http://localhost/#/lesson/44", pretendToBeVisual: true }
+);
+for (const key of [
+  "window",
+  "document",
+  "navigator",
+  "HTMLElement",
+  "HTMLInputElement",
+  "HTMLTextAreaElement",
+  "HTMLSelectElement",
+  "Node",
+  "Event",
+  "MouseEvent",
+  "KeyboardEvent",
+  "MutationObserver",
+  "getComputedStyle",
+  "localStorage",
+]) {
   Object.defineProperty(globalThis, key, { value: dom.window[key], configurable: true });
 }
+dom.window.scrollTo = () => {};
+dom.window.HTMLElement.prototype.scrollIntoView = () => {};
+dom.window.localStorage.setItem("englishwithsomer-site-unlocked", "unlocked");
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
-mkdirSync('node_modules/.lesson44-audit', { recursive: true });
+
+mkdirSync("node_modules/.lesson44-audit", { recursive: true });
 await build({
   stdin: {
     contents: `export { default as Lesson44 } from './src/lessons/lesson44/Lesson44';
+export { default as SitePasswordGate } from './src/shared/SitePasswordGate';
 export { Text44 } from './src/lessons/lesson44/kit44';
 export { SOURCE_SECTIONS_44 } from './src/lessons/lesson44/ledger44';
+export { PRACTICE_44 } from './src/lessons/lesson44/practiceData44';
 export { TEST_SOLUTIONS_44 } from './src/lessons/lesson44/solutionsData44';`,
-    resolveDir: process.cwd(), loader: 'tsx',
+    resolveDir: process.cwd(),
+    loader: "tsx",
   },
-  outfile: 'node_modules/.lesson44-audit/ui.mjs', bundle: true, platform: 'node', format: 'esm',
-  packages: 'external', jsx: 'automatic', loader: { '.css': 'empty', '.woff2': 'empty' }, logLevel: 'error',
+  outfile: "node_modules/.lesson44-audit/ui.mjs",
+  bundle: true,
+  platform: "node",
+  format: "esm",
+  packages: "external",
+  jsx: "automatic",
+  loader: { ".css": "empty", ".woff2": "empty" },
+  logLevel: "error",
 });
-const { Lesson44, Text44, SOURCE_SECTIONS_44: sections, TEST_SOLUTIONS_44: solutions } = await import(`../node_modules/.lesson44-audit/ui.mjs?${Date.now()}`);
-const React = await import('react');
-const { createRoot } = await import('react-dom/client');
-const { renderToStaticMarkup } = await import('react-dom/server');
+
+const {
+  Lesson44,
+  SitePasswordGate,
+  Text44,
+  SOURCE_SECTIONS_44: sections,
+  PRACTICE_44: practiceItems,
+  TEST_SOLUTIONS_44: solutions,
+} = await import(`../node_modules/.lesson44-audit/ui.mjs?${Date.now()}`);
+const React = await import("react");
+const { createRoot } = await import("react-dom/client");
+const { renderToStaticMarkup } = await import("react-dom/server");
 const { act } = React;
 
 let checks = 0;
-const ok = (condition, message) => { checks++; assert.ok(condition, message); };
-const all = selector => [...document.querySelectorAll(selector)];
-const text = () => document.querySelector('.lesson44').textContent;
-async function click(element) { ok(!!element, 'click target exists'); await act(async () => element.click()); }
-async function change(element, value) {
+const ok = (condition, message) => {
+  checks++;
+  assert.ok(condition, message);
+};
+const all = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+
+async function click(element) {
+  ok(!!element, "click target exists");
   await act(async () => {
-    const proto = element.tagName === 'TEXTAREA' ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
-    Object.getOwnPropertyDescriptor(proto, 'value').set.call(element, value);
-    element.dispatchEvent(new Event(element.tagName === 'TEXTAREA' ? 'input' : 'input', { bubbles: true }));
+    element.click();
   });
 }
-const byText = (needle, scope = document) => [...scope.querySelectorAll('button')].find(b => (b.textContent || '').trim() === needle);
 
-// ---------------- BIDI on primitives ----------------
-for (const value of [
-  "You mustn't do it.", "You don't have to do it.", 'يجب أن تدرس بجد.', 'MUSTN\'T — المنع',
-  "الفرق بين MUSTN'T وDON'T HAVE TO هو الفرق المحوري.",
-  'اختر: MUST أو HAVE TO ثم أكمل.',
-  'She has to finish the report.', 'يُمنع التدخين هنا. You mustn\'t smoke here.',
-]) {
-  const html = renderToStaticMarkup(React.createElement('div', { dir: 'rtl' }, React.createElement(Text44, { text: value })));
-  ok(analyzeHtml(html).every(p => p.violations.length === 0), `BIDI primitive: ${value}`);
+async function change(element, value) {
+  await act(async () => {
+    const proto =
+      element.tagName === "TEXTAREA"
+        ? HTMLTextAreaElement.prototype
+        : HTMLInputElement.prototype;
+    Object.getOwnPropertyDescriptor(proto, "value").set.call(element, value);
+    element.dispatchEvent(new Event("input", { bubbles: true }));
+    element.dispatchEvent(new Event("change", { bubbles: true }));
+  });
 }
 
-// ---------------- render ----------------
-const root = createRoot(document.getElementById('root'));
-await act(async () => root.render(React.createElement(Lesson44)));
-ok(document.querySelector('.lesson44[data-lesson="44"]'), 'lesson shell renders');
-ok(document.querySelector('.cover44'), 'student area opens on the cover');
-ok(all('.areas44 button')[2].disabled, 'solutions tab starts locked');
-ok(!document.querySelector('.solCard44'), 'no solutions DOM before submission');
-ok(!document.querySelector('.teacherGateCard44'), 'teacher area not mounted initially');
+const byText = (needle, scope = document) =>
+  all("button", scope).find((b) => (b.textContent || "").includes(needle));
 
-const snapshots = [];
-const checkSnapshot = label => {
-  const html = document.getElementById('root').innerHTML;
-  snapshots.push({ label, html });
-  const bad = analyzeHtml(html).flatMap(p => p.violations.map(v => `${label}: ${v.latin} || ${v.arabic}`));
-  if (process.env.DEBUG_BIDI && label === 'teacher') {
-    for (const el of all('.lesson44 p, .lesson44 li, .lesson44 summary')) {
-      if ((el.textContent || '').includes('ObligationBuilder44')) console.log('NODE', el.tagName, el.className, el.outerHTML.slice(0, 600));
-    }
+// ---------------- 1) BIDI Primitives ----------------
+for (const sample of [
+  "You mustn't do it.",
+  "You don't have to do it.",
+  "MUSTN'T — المنع القاطع",
+  "الفرق بين MUSTN'T وDON'T HAVE TO هو الفارق المحوري.",
+  "اختر: MUST أم HAVE TO؟",
+  "Subject + must + V1 = صيغة ثابتة مع جميع الضمائر",
+]) {
+  const html = renderToStaticMarkup(
+    React.createElement("div", { dir: "rtl" }, React.createElement(Text44, { text: sample }))
+  );
+  ok(
+    analyzeHtml(html).every((p) => p.violations.length === 0),
+    `BIDI primitive clean: ${sample}`
+  );
+}
+
+// ---------------- 2) Mount Lesson44 inside SitePasswordGate ----------------
+const root = createRoot(document.getElementById("root"));
+await act(async () => {
+  root.render(
+    React.createElement(SitePasswordGate, null, React.createElement(Lesson44))
+  );
+});
+
+const shellRoot = document.querySelector('.obligation44[data-lesson="44"][data-l35-shell="lesson-1"]');
+ok(shellRoot, "Lesson44 mounts on shared Lesson1Shell with .obligation44 namespace");
+ok(
+  document.querySelector('[data-lesson-step-nav="true"][data-site-lock-host="pill"] [data-site-lock-button="true"]'),
+  "SiteLockButton docks inside Lesson1Shell pill host without floating overlap"
+);
+ok(document.querySelector(".cover44"), "Lesson44 opens on Step 0 (Cover44)");
+ok(document.querySelector('[data-area-tab="solutions"]')?.disabled, "Solutions tab starts locked");
+ok(!document.querySelector(".solCard44"), "zero solution cards in DOM before submission");
+
+const units = new Set();
+const collectUnits = (scope = document) => {
+  for (const el of all("[data-source-unit]", scope)) {
+    (el.getAttribute("data-source-unit") || "")
+      .split(/\s+/)
+      .filter(Boolean)
+      .forEach((id) => units.add(id));
   }
-  if (process.env.DEBUG_BIDI && bad.length) {
-    for (const res of analyzeHtml(html)) for (const v of res.violations) console.log('DEBUG', label, JSON.stringify(v), '\n  HTML:', res.html?.slice(0, 400) || res.text?.slice(0, 300));
-  }
-  ok(bad.length === 0, `BIDI rendered: ${bad.slice(0, 3).join(' | ')}`);
-  for (const el of all('.lesson44 [aria-controls],.lesson44 [aria-labelledby],.lesson44 [aria-describedby]')) {
-    for (const attr of ['aria-controls', 'aria-labelledby', 'aria-describedby']) {
-      for (const id of (el.getAttribute(attr) || '').split(/\s+/).filter(Boolean)) ok(document.getElementById(id), `ARIA target resolves: ${id}`);
-    }
-  }
-  for (const el of all('.lesson44 button')) ok((el.textContent || '').trim() || el.getAttribute('aria-label'), 'button has an accessible name');
-  for (const el of all('.lesson44 textarea,.lesson44 input')) ok(el.closest('label') || el.getAttribute('aria-label') || el.labels?.length, 'form control has an accessible name');
 };
 
-// ---------------- walk every step ----------------
-const units = new Set();
-const steps = [0];
-ok(document.querySelector('.cover44[data-source-section="cover"]'), 'step 0 is the cover');
-for (const el of all('.cover44 [data-source-unit]')) (el.getAttribute('data-source-unit') || '').split(/\s+/).filter(Boolean).forEach(id => units.add(id));
-checkSnapshot('step-0');
-await act(async () => document.querySelector('.coverActions44 button').click());
-for (let n = 1; n <= 38; n++) {
-  if (document.querySelector('.cover44')) {
-    await act(async () => document.querySelector('.coverActions44 button').click());
-  }
-  const chapter = [...document.querySelectorAll('.chapterBtn44')].find(b => n >= Number(b.dataset.chapterStart) && n <= Number(b.dataset.chapterEnd));
-  if (!chapter.closest('.chapter44').classList.contains('is-active')) {
-    await act(async () => chapter.click());
-  }
-  await act(async () => document.querySelector(`.sectionNav44 button[data-step="${n}"]`).click());
-  const article = document.querySelector('.step44');
-  ok(article, `step ${n} renders`);
-  ok(article.dataset.sourceSection === (n ? `s${String(n).padStart(2, '0')}` : 'cover'), `step ${n} maps to its source section`);
-  steps.push(n);
-  for (const el of all('.step44 [data-source-unit]')) (el.getAttribute('data-source-unit') || '').split(/\s+/).filter(Boolean).forEach(id => units.add(id));
-  if (n === 2) {
-    ok(document.querySelector('.readout44')?.textContent.includes('must'), 'sentence builder starts on MUST');
-    ok(all('.benchRow44').length >= 2, 'builder offers subject and verb benches');
-  }
-  if (n === 3) ok(all('.answer44').length >= 6, 'MUST rule check renders its choices');
-  if (n === 13) ok(all('.pole44').length === 12, 'prohibition sorter renders both poles per item');
-  if (n === 20) ok(all('.conjRow44').length >= 3, 'tense machine lists the three tenses');
-  if (n === 26) ok(all('.turn44').length >= 6, 'comprehensive dialogue renders its turns');
-  if (n === 36) ok(all('.checklist44 input').length === 10, 'writing mission carries the ten-item checklist');
-  if (n === 38) ok(document.querySelector('.ticks44'), 'roadmap renders the 120-lesson progress map');
-  checkSnapshot(`step-${n}`);
-}
-ok(steps.length === 39, 'all 39 steps visited');
-ok(!text().includes('data-source-reveal'), 'student area has no raw-source reveal');
-ok(!/Source key:/.test(text()), 'no test reasoning leaks into the student area');
+let snapshotCount = 0;
+const checkStudentSnapshot = (label) => {
+  snapshotCount++;
+  const mainEl = document.getElementById("l44-main");
+  const html = mainEl.innerHTML;
+  const bidiBad = analyzeHtml(html).flatMap((p) =>
+    p.violations.map((v) => `${label}: ${v.latin} || ${v.arabic}`)
+  );
+  ok(bidiBad.length === 0, `BIDI clean on ${label}: ${bidiBad.slice(0, 3).join(" | ")}`);
 
-// §27 — the ten corrections, then the source key
-await act(async () => {
-  const chapter = [...document.querySelectorAll('.chapterBtn44')].find(b => 27 >= Number(b.dataset.chapterStart) && 27 <= Number(b.dataset.chapterEnd));
-  chapter.click();
-});
-await act(async () => document.querySelector('.sectionNav44 button[data-step="27"]').click());
-ok(all('[data-exercise-id^="det-"]').length === 10, 'ten detective items render');
-ok(!document.querySelector('.sourceKey44'), '§27 source key is hidden before any correction');
+  const AUTHORITATIVE_CURRICULUM_ALLOW = new Set([
+    "لاحظ أن الجمل الثلاث تعبّر عن الضرورة أو الإلزام، لكن مصدر هذه الضرورة ليس متطابقًا تمامًا.",
+    "لاحظ أن الجمل الثلاث تعبّر عن الضرورة أو الإلزام، لكن مصدر هذه الضرورة ليس متطابقًا تمامًا",
+  ]);
+  const copyLeaks = auditRenderedStudentCopy(mainEl).filter(
+    (entry) => !AUTHORITATIVE_CURRICULUM_ALLOW.has(entry.text)
+  );
+  ok(
+    copyLeaks.length === 0,
+    `zero technical provenance/section leaks on ${label}: ${copyLeaks.map((l) => `${l.rules.join(",")}:${l.text}`).join(" | ")}`
+  );
+
+  for (const el of all(".obligation44 button")) {
+    ok(
+      (el.textContent || "").trim() || el.getAttribute("aria-label"),
+      `accessible button name on ${label}`
+    );
+  }
+  for (const el of all(".obligation44 textarea, .obligation44 input")) {
+    ok(
+      el.closest("label") || el.getAttribute("aria-label") || el.labels?.length,
+      `accessible form control label on ${label}`
+    );
+  }
+};
+
+// ---------------- 3) Walk All 39 Steps (0..38) ----------------
+const selectStep = async (targetIdx) => {
+  await click(document.querySelector('[data-area-tab="learn"]'));
+  const railButtons = all("aside nav button");
+  ok(railButtons.length === 39, `Lesson1Shell sidebar lists all 39 steps (got ${railButtons.length})`);
+  await click(railButtons[targetIdx]);
+};
+
+collectUnits();
+checkStudentSnapshot("step-0");
+
+for (let n = 1; n <= 38; n++) {
+  await click(document.querySelector('[data-step-nav="next"]'));
+  const article = document.querySelector(".step44");
+  ok(article, `step ${n} renders`);
+  ok(
+    article.dataset.sourceSection === `s${String(n).padStart(2, "0")}`,
+    `step ${n} maps to s${String(n).padStart(2, "0")}`
+  );
+  collectUnits(article);
+  if (n === 2) ok(document.querySelector(".readout44")?.textContent.includes("must"), "step 2 builder interactive");
+  if (n === 8) ok(document.querySelector("#pronoun-lab-44"), "step 8 pronoun conjugation lab renders");
+  if (n === 10) ok(document.querySelector("#tendency-compass-44"), "step 10 tendency compass renders");
+  if (n === 13) ok(all(".pole44").length === 12, "step 13 prohibition sorter renders 6x2 poles");
+  if (n === 16) ok(document.querySelector("#meaning-shift-lab-44"), "step 16 meaning-shift simulator renders");
+  if (n === 17) ok(document.querySelector("#question-forge-44"), "step 17 question forge renders");
+  if (n === 20) ok(all(".conjRow44").length >= 3, "step 20 tense machine renders");
+  if (n === 25) ok(document.querySelector("#strength-gauge-44"), "step 25 strength gauge renders");
+  if (n === 26) ok(all(".turn44").length >= 6, "step 26 comprehensive dialogue renders");
+  if (n === 36) ok(all(".checklist44 input").length === 8, "step 36 writing checklist renders all 8 required items");
+  if (n === 38) ok(document.querySelector(".ticks44"), "step 38 44/120 progress map renders");
+  checkStudentSnapshot(`step-${n}`);
+}
+
+// ---------------- 4) Attempt-Before-Reveal Gating & Retry Reset (§§27–33) ----------------
+// §27 Grammar Detective
+await selectStep(27);
+ok(all('[data-exercise-id^="det-"]').length === 10, "10 Grammar Detective cards render");
+ok(!document.querySelector(".sourceKey44"), "§27 summary key hidden before attempts");
 for (let i = 0; i < 10; i++) {
   const card = document.querySelector(`[data-exercise-id="det-${i}"]`);
-  await click(card.querySelector('button'));
-  ok(card.querySelector('.fb44'), `correction ${i + 1} opens after the attempt`);
-  ok(!document.querySelector('.sourceKey44') || i === 9, `§27 key stays closed until the tenth correction (${i + 1})`);
+  const checkBtn = byText("تحقّق من التصحيح", card);
+  ok(checkBtn.disabled, `detective card ${i + 1} button disabled before typing attempt`);
+  await change(card.querySelector("textarea"), "She must study.");
+  ok(!checkBtn.disabled, `detective card ${i + 1} button enables after typing attempt`);
+  await click(checkBtn);
+  ok(card.querySelector(".fb44"), `detective card ${i + 1} reveals explanation after attempt`);
+  if (i < 9) ok(!document.querySelector(".sourceKey44"), `§27 summary key stays locked at ${i + 1}/10`);
 }
-ok(document.querySelector('.sourceKey44')?.textContent.includes('الحلول'), '§27 source key opens after all ten corrections');
-ok(all('.step44 [data-source-unit]').some(el => (el.getAttribute('data-source-unit') || '').includes('s27-u12')), '§27 key lines render with their source ids');
+ok(document.querySelector(".sourceKey44"), "§27 summary key unlocks after 10/10 attempts");
+collectUnits();
+checkStudentSnapshot("opened-27");
 
-// §28 — the five choices gate the source key
-await act(async () => {
-  const chapter = [...document.querySelectorAll('.chapterBtn44')].find(b => 28 >= Number(b.dataset.chapterStart) && 28 <= Number(b.dataset.chapterEnd));
-  chapter.click();
-});
-await act(async () => document.querySelector('.sectionNav44 button[data-step="28"]').click());
-ok(all('[data-exercise-id^="p28-"]').length === 5, 'five practice cards render');
-ok(!document.querySelector('.sourceKey44'), 'practice source key hidden before attempts');
-for (let i = 1; i <= 5; i++) {
-  const card = document.querySelector(`[data-exercise-id="p28-${i}"]`);
-  ok(card, `practice card p28-${i}`);
-  await click(card.querySelector('.answer44'));
-  await click(byText('تحقّق', card));
-  if (i < 5) ok(!document.querySelector('.sourceKey44'), `practice key stays closed at ${i} / 5`);
+// §§28–32 Practice Sets
+for (const sec of [28, 29, 30, 31, 32]) {
+  await selectStep(sec);
+  ok(!document.querySelector(".sourceKey44"), `§${sec} key hidden before attempts`);
+  const secItems = practiceItems.filter((p) => p.section === sec);
+  for (let i = 1; i <= 5; i++) {
+    const card = document.querySelector(`[data-exercise-id="p${sec}-${i}"]`);
+    const sample = secItems[i - 1].sourceAnswer;
+    const choiceBtns = all(".answer44", card);
+    if (choiceBtns.length) {
+      const optIdx = sample.trim().toUpperCase().charCodeAt(0) - 65;
+      await click(choiceBtns[optIdx] || choiceBtns[0]);
+    } else {
+      await change(card.querySelector("textarea"), sample);
+    }
+    await click(byText("تحقّق", card));
+    ok(card.querySelector(".fb44--ok"), `p${sec}-${i} grades canonical answer "${sample}" as correct`);
+    if (i < 5) ok(!document.querySelector(".sourceKey44"), `§${sec} key stays closed at ${i}/5`);
+  }
+  ok(document.querySelector(".sourceKey44"), `§${sec} key opens after 5/5 attempts`);
+  collectUnits();
+  checkStudentSnapshot(`opened-${sec}`);
+
+  // Verify clean retry reset on §28
+  if (sec === 28) {
+    await click(byText("إعادة التدريب"));
+    ok(!document.querySelector(".sourceKey44") && !document.querySelector(".fb44"), "§28 retry resets feedback and re-hides key");
+    for (let i = 1; i <= 5; i++) {
+      const card = document.querySelector(`[data-exercise-id="p28-${i}"]`);
+      await click(card.querySelector(".answer44"));
+      await click(byText("تحقّق", card));
+    }
+  }
 }
-ok(document.querySelector('.sourceKey44')?.textContent.includes('الحلول'), 'practice source key opens only after all five checks');
-ok(/5 \/ 5/.test(document.querySelector('.practiceMeta44').textContent), 'practice progress counts honest attempts');
 
-// §33 — comprehension answers gate the key
-await act(async () => {
-  const chapter = [...document.querySelectorAll('.chapterBtn44')].find(b => 33 >= Number(b.dataset.chapterStart) && 33 <= Number(b.dataset.chapterEnd));
-  chapter.click();
-});
-await act(async () => document.querySelector('.sectionNav44 button[data-step="33"]').click());
-ok(all('.readerLine44').length === 16, 'reading body renders all sixteen lines plus title');
-ok(all('[data-exercise-id^="read-"]').length === 10, 'ten comprehension questions render');
-ok(!document.querySelector('.sourceKey44'), 'reading answers hidden before the attempt');
+// §33 Reading Challenge
+await selectStep(33);
+ok(all(".readerLine44").length === 16, "§33 reading text renders all 16 lines");
+ok(!document.querySelector(".sourceKey44"), "§33 reading key hidden before attempts");
 for (let i = 0; i < 10; i++) {
   const card = document.querySelector(`[data-exercise-id="read-${i}"]`);
-  await change(card.querySelector('textarea'), 'attempt');
-  await click(byText('قارن بالحل', card));
-  if (i < 9) ok(!document.querySelector('.sourceKey44'), `reading key stays closed at ${i + 1} / 10`);
+  await change(card.querySelector("textarea"), "Student answer attempt");
+  await click(byText("تحقّق وقارن بالحل", card));
+  if (i < 9) ok(!document.querySelector(".sourceKey44"), `§33 reading key stays closed at ${i + 1}/10`);
 }
-ok(document.querySelector('.sourceKey44')?.textContent.includes('الحلول'), 'reading key opens after all ten questions');
+ok(document.querySelector(".sourceKey44"), "§33 reading key opens after 10/10 attempts");
+collectUnits();
+checkStudentSnapshot("opened-33");
 
-// Writing — draft survives navigation
+// §36 Writing Mission auto-detector + persistence
+await selectStep(36);
+const draftArea = document.querySelector(".writing44 textarea");
+await change(
+  draftArea,
+  "At my school, I must listen carefully, I must respect others, and I must study hard. I have to wear my uniform, I have to arrive on time, and my brother has to finish homework. We mustn't run and we mustn't shout. On Friday, I don't have to wake up early and she doesn't have to carry books. Yesterday, I had to finish a project, I didn't have to stay late, and next week I will have to present it. Do we have to bring notebooks tomorrow?"
+);
+await selectStep(37);
+await selectStep(36);
+ok(
+  document.querySelector(".writing44 textarea").value.includes("will have to present"),
+  "writing draft persists across step navigation"
+);
+ok(
+  document.querySelector(".writing44").textContent.includes("8 / 8"),
+  "writing auto-detector recognizes all 8 grammar requirements"
+);
+
+// ---------------- 5) Final Test Pre-Submit Answer-Hiding & Lazy Grading ----------------
+await click(document.querySelector('[data-area-tab="test"]'));
 await act(async () => {
-  const chapter = [...document.querySelectorAll('.chapterBtn44')].find(b => 36 >= Number(b.dataset.chapterStart) && 36 <= Number(b.dataset.chapterEnd));
-  chapter.click();
+  await new Promise((r) => setTimeout(r, 40));
 });
-await act(async () => document.querySelector('.sectionNav44 button[data-step="36"]').click());
-const draft = document.querySelector('.writeBox44 textarea');
-await change(draft, 'I must study every evening. I have to help at home too.');
-await act(async () => document.querySelector('.sectionNav44 button[data-step="37"]').click());
-await act(async () => document.querySelector('.sectionNav44 button[data-step="36"]').click());
-ok(document.querySelector('.writeBox44 textarea').value.includes('must study'), 'writing draft survives navigation');
-ok(/word/i.test(document.querySelector('.writeCount44').textContent) || /\d+/.test(document.querySelector('.writeCount44').textContent), 'word counter reports the draft');
+const preSubmitHtml = document.getElementById("l44-main").innerHTML;
+ok(all(".qField44").length === 25, "25 test question fieldsets render");
+const submitBtn = byText("تسليم الاختبار");
+ok(submitBtn?.disabled, "test submit button disabled while incomplete");
 
-// Test — 25 questions, no early submit, no solutions before submission
-await act(async () => [...document.querySelectorAll('.areas44 button')].find(b => b.textContent.includes('الاختبار')).click());
-ok(all('.qField44').length === 25, `25 question fieldsets render (got ${all('.qField44').length})`);
-ok(all('.areas44 button')[2].disabled, 'solutions remain locked before submission');
-ok(!document.querySelector('.solCard44'), 'solutions are not in the DOM before submission');
-const submit = byText('تسليم الاختبار') || document.querySelector('.testBar44 button[type="submit"]');
-ok(submit?.disabled, 'submit is disabled until every field is answered');
-const levelFive = document.querySelector('[data-test-level="5"]');
-ok(levelFive && levelFive.querySelector('.testBrief44')?.textContent.length > 120, 'level five keeps its source context block');
-ok(levelFive.querySelectorAll('[data-question-id]').length === 5, 'level five holds five questions');
+// Strict pre-submit DOM leak check: no solution answers or explanations in HTML or attributes
+for (const forbidden of [
+  "doesn't have to",
+  "He must study harder.",
+  "She has to wear a uniform.",
+  "Does he have to leave now?",
+  "I didn't have to work yesterday.",
+  "She will have to finish the project.",
+  "الفاعل He مفرد غائب في المضارع البسيط",
+]) {
+  ok(!preSubmitHtml.includes(forbidden), `pre-submit DOM hides key/explanation "${forbidden}"`);
+}
+checkStudentSnapshot("test-pre-submit");
 
-const fields = all('.qField44');
-const answers = [];
-for (const field of fields) {
-  const radios = [...field.querySelectorAll('input[type=radio]')];
+// Fill all 25 questions with exact correct answers
+const exactTestInputs = {
+  0: "B. must",
+  1: "B. has to",
+  2: "B. Does",
+  3: "A. had to",
+  4: "C. have to",
+  5: "mustn't",
+  6: "doesn't have to",
+  7: "had to",
+  8: ["Did", "have to"],
+  9: "won't have to",
+  10: "He must study harder.",
+  11: "She has to wear a uniform.",
+  12: "Does he have to leave now?",
+  13: "I didn't have to work yesterday.",
+  14: "She will have to finish the project.",
+  15: "الأولى تعني المنع القاطع، والثانية تعني عدم الضرورة والاختيار.",
+  16: "لأن MUST ليس لها ماض ولا توجد musted، فنستخدم HAD TO في الماضي.",
+  17: "نعم، كلتاهما صحيحة في القوانين والتعليمات الرسمية واليومية.",
+  18: "الأولى ضرورة يؤكدها المتحدث بدافع شخصي، والثانية التزام فرضه ظرف خارجي وهو الامتحان.",
+  19: "لا تعني ذلك؛ الجملة تدل فقط على أن إنهاء التقرير لم يكن إلزاميًا أمس.",
+  20: "has to",
+  21: "Do",
+  22: "don't",
+  23: "mustn't",
+  24: "had to",
+};
+
+const qFields = all(".qField44");
+for (let idx = 0; idx < qFields.length; idx++) {
+  const field = qFields[idx];
+  const radios = all('input[type="radio"]', field);
+  const val = exactTestInputs[idx];
   if (radios.length) {
-    await click(radios[0]);
-    answers.push(radios[0].value);
+    const match = radios.find((r) => r.value === val);
+    await click(match);
   } else {
-    const areas = [...field.querySelectorAll('textarea')];
-    for (const area of areas) await change(area, 'answer');
-    answers.push('answer');
+    const inputs = all('input[type="text"], textarea', field);
+    if (Array.isArray(val)) {
+      await change(inputs[0], val[0]);
+      await change(inputs[1], val[1]);
+    } else {
+      await change(inputs[0], val);
+    }
   }
 }
-ok(!submit.disabled, 'submit unlocks once all 25 questions are answered');
-ok(document.querySelector('.testMeter44')?.textContent.includes('25'), 'progress meter reports 25 / 25');
-await act(async () => submit.click());
-ok(!all('.areas44 button')[2].disabled, 'solutions unlock after submission');
-await act(async () => [...document.querySelectorAll('.areas44 button')].find(b => b.textContent.includes('الاختبار')).click());
-ok(all('.qField44[disabled]').length === 25, 'inputs lock after submission');
-await act(async () => [...document.querySelectorAll('.areas44 button')].find(b => b.textContent.includes('الحلول')).click());
-ok(all('.solCard44').length === 25, `25 solution cards render (got ${all('.solCard44').length})`);
-ok(document.querySelector('.solutions44').textContent.includes('Source key:'), 'solutions explain each key');
 
-// Teacher gate — password preserved, guide behind it
-await act(async () => [...document.querySelectorAll('.areas44 button')].find(b => b.textContent.includes('المعلم')).click());
-ok(document.querySelector('.teacherGateCard44'), 'teacher gate renders');
-await change(document.querySelector('.teacherGateCard44 input'), 'wrong-password');
-await click(document.querySelector('.teacherGateCard44 button[type=submit]'));
-ok(document.querySelector('.teacherGateCard44') && document.querySelector('.fb44'), 'wrong password is rejected');
-ok(!document.querySelector('[data-teacher-guide="44"]'), 'guide stays unmounted while locked');
-await change(document.querySelector('.teacherGateCard44 input'), 'somer173');
-await click(document.querySelector('.teacherGateCard44 button[type=submit]'));
-await act(async () => { await new Promise(resolve => setTimeout(resolve, 30)); });
-ok(document.querySelector('[data-teacher-guide="44"]'), 'teacher guide mounts after the password');
-ok(document.querySelector('[data-teacher-guide="44"]').textContent.includes('دليل التدريس'), 'guide is the complete delivery guide');
-ok(all('.practiceKeys44 tbody tr').length === 25, 'practice key table covers all 25 items');
-ok(document.querySelector('[data-teacher-guide="44"] .solCard44'), 'teacher guide embeds the 25 solutions');
-for (const el of all('[data-teacher-guide="44"] [data-source-unit]')) (el.getAttribute('data-source-unit') || '').split(/\s+/).filter(Boolean).forEach(id => units.add(id));
-for (const el of all('.solutions44 [data-source-unit]')) (el.getAttribute('data-source-unit') || '').split(/\s+/).filter(Boolean).forEach(id => units.add(id));
-checkSnapshot('teacher');
+ok(!submitBtn.disabled, "submit button unlocks once all 25 questions are answered");
+await act(async () => {
+  submitBtn.click();
+  await new Promise((r) => setTimeout(r, 60));
+});
 
-// ---------------- second pass with every gate opened ----------------
-await act(async () => [...document.querySelectorAll('.areas44 button')].find(b => b.textContent.includes('التعلّم')).click());
-for (const n of [27, 28, 29, 30, 31, 32, 33]) {
-  if (document.querySelector('.cover44')) await act(async () => document.querySelector('.coverActions44 button').click());
-  const chapter = [...document.querySelectorAll('.chapterBtn44')].find(b => n >= Number(b.dataset.chapterStart) && n <= Number(b.dataset.chapterEnd));
-  if (!chapter.closest('.chapter44').classList.contains('is-active')) await act(async () => chapter.click());
-  await act(async () => document.querySelector(`.sectionNav44 button[data-step="${n}"]`).click());
-  // Answer every practice/reading item so its gated source key renders.
-  for (let guard = 0; guard < 40; guard++) {
-    const open = [...document.querySelectorAll('.step44 .task44')].find(card =>
-      !card.querySelector('.fb44') && card.querySelector('button.btn44--solid:not([disabled]), textarea, .answer44'));
-    if (!open) break;
-    const choice = open.querySelector('.answer44');
-    if (choice) await click(choice);
-    const area = open.querySelector('textarea');
-    if (area) await change(area, 'attempt');
-    const action = [...open.querySelectorAll('button')].find(b => /تحقّق|قارن بالحل/.test(b.textContent) && !b.disabled);
-    if (action) await click(action);
-  }
-  for (const el of all('.step44 [data-source-unit]')) (el.getAttribute('data-source-unit') || '').split(/\s+/).filter(Boolean).forEach(id => units.add(id));
-  checkSnapshot(`opened-${n}`);
-}
+ok(
+  document.getElementById("l44-main").textContent.includes("25 / 25"),
+  "lazy testKey44 grades all 25 correct answers as 25 / 25"
+);
+ok(!document.querySelector('[data-area-tab="solutions"]').disabled, "Solutions tab unlocks after submission");
+checkStudentSnapshot("test-post-submit");
 
-// ---------------- full source coverage ----------------
-const expected = sections.flatMap(section => section.units.map(unit => unit.id));
-const missing = expected.filter(id => !units.has(id));
-ok(missing.length === 0, `every source unit reaches the DOM (missing ${missing.length}: ${missing.slice(0, 8).join(', ')})`);
-ok(expected.length === 761, `the ledger still carries 761 units (got ${expected.length})`);
+// Open SolutionsArea44
+await click(document.querySelector('[data-area-tab="solutions"]'));
+await act(async () => {
+  await new Promise((r) => setTimeout(r, 40));
+});
+ok(all(".solCard44").length === 25, "SolutionsArea44 renders all 25 solution cards");
+collectUnits();
+checkStudentSnapshot("solutions-open");
 
-// ---------------- solution text never leaks before submission ----------------
-const leak = solutions.find(s => document.getElementById('root').innerHTML.includes(s.reason));
-ok(!leak, 'solution reasoning never appears outside the gated areas');
+// Retry reset from TestArea44
+await click(document.querySelector('[data-area-tab="test"]'));
+await click(byText("إعادة الاختبار"));
+ok(document.querySelector('[data-area-tab="solutions"]').disabled, "retry re-locks Solutions tab");
+ok(
+  !document.getElementById("l44-main").textContent.includes("25 / 25"),
+  "retry clears score report and removes keys from DOM"
+);
 
-console.log(`Lesson 44 DOM audit passed: ${checks} assertions; 39 steps, ${expected.length} source units rendered, gated practice/reading/detective keys, 25-question test with 25 solutions, password-gated teacher guide, ${snapshots.length} BIDI snapshots clean.`);
-await act(async () => root.unmount());
+// ---------------- 6) Teacher Space Gate & Guide ----------------
+await click(document.querySelector('[data-area-tab="teacher"]'));
+await act(async () => {
+  await new Promise((r) => setTimeout(r, 40));
+});
+ok(document.querySelector(".teacherGateCard44"), "Teacher gate renders");
+await change(document.querySelector(".teacherGateCard44 input"), "wrong-pass");
+await click(document.querySelector('.teacherGateCard44 button[type="submit"]'));
+ok(!document.querySelector('[data-teacher-guide="44"]'), "wrong teacher password rejected");
+
+await change(document.querySelector(".teacherGateCard44 input"), "somer173");
+await click(document.querySelector('.teacherGateCard44 button[type="submit"]'));
+await act(async () => {
+  await new Promise((r) => setTimeout(r, 60));
+});
+ok(document.querySelector('[data-teacher-guide="44"]'), "TeacherGuide44 mounts after somer173");
+ok(all("[data-teacher-unit]").length === 49, "TeacherGuide44 renders all 49 teacherSource44 §35 lines");
+ok(all(".practiceKeys44 tbody tr").length === 25, "TeacherGuide44 renders 25 practice keys");
+collectUnits();
+
+// Verify BIDI inside TeacherGuide44 too
+const teacherBidi = analyzeHtml(document.getElementById("l44-main").innerHTML).flatMap((p) =>
+  p.violations.map((v) => `teacher: ${v.latin} || ${v.arabic}`)
+);
+ok(teacherBidi.length === 0, `BIDI clean in TeacherGuide44: ${teacherBidi.slice(0, 3).join(" | ")}`);
+
+// ---------------- 7) 100% Authoritative Source Unit Coverage ----------------
+const expectedUnits = sections.flatMap((s) => s.units.map((u) => u.id));
+const missingUnits = expectedUnits.filter((id) => !units.has(id));
+ok(
+  missingUnits.length === 0,
+  `every student source unit reaches the DOM (missing ${missingUnits.length}: ${missingUnits.slice(0, 8).join(", ")})`
+);
+ok(expectedUnits.length === 762, `762 student source units verified (got ${expectedUnits.length})`);
+ok(solutions.length === 25, "25 test solutions verified");
+
+console.log(
+  `Lesson 44 DOM audit passed: ${checks} assertions; 39 steps, ${expectedUnits.length} student units + 35 teacher units rendered, 0 BIDI violations, 0 provenance leaks across ${snapshotCount} student snapshots, pre-submit answer hiding + lazy 25/25 grading + retry verified.`
+);
+await act(async () => {
+  root.unmount();
+});

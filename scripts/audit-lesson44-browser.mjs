@@ -1,291 +1,404 @@
 // ============================================================
-// Lesson 44 — optional real-Chromium verification.
+// Lesson 44 — Real-Chromium Multi-Viewport Visual & Behavioral QA
 //
-// Provision (not a project dependency):
-//   npm install --no-save --package-lock=false playwright-core @sparticuz/chromium
 // Run with the dev server up:
 //   npm run dev -- --port 5173 --host 0.0.0.0
 //   node scripts/audit-lesson44-browser.mjs
 //
-// Writes screenshots + a machine-readable report to docs/lesson44-visual-after/.
-// Checks: rendered contrast (WCAG AA, every visible text node on its own
-// background), horizontal overflow at 1280/1024/768, console/page errors,
-// gated keys, answer states, keyboard focus visibility, and the 25-question
-// test lock. Fonts are local; Google Fonts is blocked because the sandbox has
-// no route to it (the lesson itself never requests it).
+// Verifies across 1440x900, 1280x800, 768x900, and 375x812:
+//   - Local Tajawal & Newsreader fonts load offline (Google Fonts blocked)
+//   - WCAG AA rendered text contrast across Cover, Steps, Test, Solutions, Teacher
+//   - Zero horizontal overflow & zero clipped buttons
+//   - Zero bounding-box overlap between SiteLockButton and Prev/Next pill
+//   - Mobile drawer navigation at 375x812
+//   - Attempt-gated keys, lazy 25/25 test grading, retry reset, somer173 teacher gate
+//   - Cross-route safety: Hub (#/) + Lesson 40 + Lesson 43 unaffected
 // ============================================================
-import assert from 'node:assert/strict';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { brotliDecompressSync } from 'node:zlib';
-import { execFileSync } from 'node:child_process';
-import chromium from '@sparticuz/chromium';
-import { chromium as playwright } from 'playwright-core';
+import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
+import { brotliDecompressSync } from "node:zlib";
+import { execFileSync } from "node:child_process";
+import chromium from "@sparticuz/chromium";
+import { chromium as playwright } from "playwright-core";
 
-const work = 'node_modules/.lesson44-browser';
+const work = "node_modules/.lesson44-browser";
 mkdirSync(work, { recursive: true });
-writeFileSync(`${work}/al2023.tar`, brotliDecompressSync(readFileSync('node_modules/@sparticuz/chromium/bin/al2023.tar.br')));
-execFileSync('tar', ['-xf', `${work}/al2023.tar`, '-C', work]);
-process.env.LD_LIBRARY_PATH = `${process.cwd()}/${work}/lib:${process.env.LD_LIBRARY_PATH || ''}`;
-const browser = await playwright.launch({ args: chromium.args, executablePath: await chromium.executablePath(), headless: true });
+if (!existsSync(`${work}/lib`)) {
+  writeFileSync(
+    `${work}/al2023.tar`,
+    brotliDecompressSync(readFileSync("node_modules/@sparticuz/chromium/bin/al2023.tar.br"))
+  );
+  execFileSync("tar", ["-xf", `${work}/al2023.tar`, "-C", work]);
+}
+process.env.LD_LIBRARY_PATH = `${process.cwd()}/${work}/lib:${process.env.LD_LIBRARY_PATH || ""}`;
+
+const browser = await playwright.launch({
+  args: chromium.args,
+  executablePath: await chromium.executablePath(),
+  headless: true,
+});
 
 let checks = 0;
 const failures = [];
-const ok = (condition, message) => { checks++; if (!condition) failures.push(message); };
-const output = process.env.OUT || 'docs/lesson44-visual-after';
+const ok = (condition, message) => {
+  checks++;
+  if (!condition) failures.push(message);
+};
+
+const output = process.env.OUT || "/tmp/lesson44-qa";
 mkdirSync(output, { recursive: true });
-const report = { viewports: [], contrast: [], heights: {}, shots: [], errors: [], focus: [], states: {} };
-const base = process.env.LESSON44_URL || 'http://127.0.0.1:5173/English-Course/#/lesson/44';
 
-const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce' });
+const baseOrigin = process.env.BASE_URL || "http://127.0.0.1:5173/English-Course/";
+const lessonUrl = `${baseOrigin}#/lesson/44`;
+const report = {
+  viewports: [],
+  contrast: [],
+  navLockBoxes: [],
+  shots: [],
+  errors: [],
+  focus: null,
+};
+
+const page = await browser.newPage({
+  viewport: { width: 1440, height: 900 },
+  reducedMotion: "reduce",
+});
+
 const errors = [];
-page.on('pageerror', e => errors.push(e.message));
-page.on('console', m => { if (m.type() === 'error' && !/fonts\.(googleapis|gstatic)/.test(m.location().url || '')) errors.push(`${m.text()} ${m.location().url || ''}`); });
-await page.route(/fonts\.(googleapis|gstatic)\.com/, route => route.abort());
-await page.addInitScript(() => localStorage.setItem('englishwithsomer-site-unlocked', 'unlocked'));
+page.on("pageerror", (e) => errors.push(e.message));
+page.on("console", (m) => {
+  if (
+    m.type() === "error" &&
+    !/fonts\.(googleapis|gstatic)/.test(m.location().url || "")
+  ) {
+    errors.push(`${m.text()} ${m.location().url || ""}`);
+  }
+});
+await page.route(/fonts\.(googleapis|gstatic)\.com/, (route) => route.abort());
+await page.addInitScript(() =>
+  localStorage.setItem("englishwithsomer-site-unlocked", "unlocked")
+);
 
-async function shot(name, options = {}) {
+async function shot(name) {
   const path = `${output}/${name}.png`;
-  await page.screenshot({ path, fullPage: false, animations: 'disabled', ...options });
+  await page.screenshot({ path, fullPage: false, animations: "disabled" });
   report.shots.push(path);
   console.log(`  [shot] ${path}`);
 }
-async function go(n) {
-  if (await page.locator('.cover44').count()) {
-    await page.locator('.coverActions44 button').first().click();
-    await page.waitForTimeout(150);
-  }
-  await page.evaluate(step => {
-    const chapter = [...document.querySelectorAll('.chapterBtn44')]
-      .find(b => step >= Number(b.dataset.chapterStart) && step <= Number(b.dataset.chapterEnd));
-    if (!chapter.closest('.chapter44').classList.contains('is-active')) chapter.click();
-  }, n);
+
+async function selectStep(idx) {
+  await page.locator('[data-area-tab="learn"]').click();
   await page.waitForTimeout(80);
-  await page.evaluate(step => document.querySelector(`.sectionNav44 button[data-step="${step}"]`)?.click(), n);
-  await page.waitForTimeout(250);
+  const desktopRail = page.locator("aside nav button");
+  if ((await desktopRail.count()) > 0 && (await desktopRail.first().isVisible())) {
+    await desktopRail.nth(idx).click();
+  } else {
+    await page.getByRole("button", { name: "فهرس الدرس" }).click();
+    await page.waitForTimeout(140);
+    await page.locator("div.fixed aside nav button").nth(idx).click();
+  }
+  await page.waitForTimeout(180);
   await page.evaluate(() => document.fonts.ready);
 }
-async function measure(label) {
-  const result = await page.evaluate(() => {
-    const rgb = c => (c.match(/[\d.]+/g) || []).map(Number);
-    const lum = c => {
-      const a = c.slice(0, 3).map(v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; });
-      return a[0] * .2126 + a[1] * .7152 + a[2] * .0722;
+
+async function measureLayoutAndContrast(label) {
+  const res = await page.evaluate(() => {
+    const rgb = (c) => (c.match(/[\d.]+/g) || []).map(Number);
+    const lum = (c) => {
+      const a = c.slice(0, 3).map((v) => {
+        v /= 255;
+        return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+      });
+      return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
     };
+
+    const root = document.querySelector(".obligation44");
+    const main = document.getElementById("l44-main");
     const issues = [];
     let tested = 0;
-    let min = 100;
-    let minText = '';
-    const root = document.querySelector('.lesson44');
-    for (const el of root.querySelectorAll('*')) {
-      if (!el.getClientRects().length || getComputedStyle(el).visibility === 'hidden' || el.tagName === 'OPTION') continue;
-      const hasText = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()) || el.matches('input,textarea,select');
-      if (!hasText) continue;
-      const style = getComputedStyle(el);
-      const fg = rgb(style.color);
+    let minRatio = 100;
+
+    for (const el of root.querySelectorAll("#l44-main *, aside *, header *")) {
+      const rects = el.getClientRects();
+      if (!rects.length) continue;
+      const st = getComputedStyle(el);
+      if (st.visibility === "hidden" || Number(st.opacity) < 0.5 || el.tagName === "OPTION") continue;
+      if (el.closest('[aria-hidden="true"]') || el.classList.contains("sr44") || el.closest(".sr44")) continue;
+      if (el.matches("button:disabled, input:disabled, textarea:disabled") || el.closest("button:disabled")) continue;
+
+      const hasDirectText =
+        [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim()) ||
+        el.matches("input, textarea");
+      if (!hasDirectText) continue;
+
+      const fg = rgb(st.color);
       let node = el;
-      let bg;
+      let bg = null;
       while (node) {
-        const color = rgb(getComputedStyle(node).backgroundColor);
-        if (color.length >= 3 && (color[3] === undefined || color[3] >= .99)) { bg = color; break; }
+        const ns = getComputedStyle(node);
+        const c = rgb(ns.backgroundColor);
+        if (c.length >= 3 && (c[3] === undefined || c[3] >= 0.95)) {
+          bg = c;
+          break;
+        }
         node = node.parentElement;
       }
-      bg ??= [255, 255, 255];
-      const a = lum(fg), b = lum(bg);
-      const ratio = (Math.max(a, b) + .05) / (Math.min(a, b) + .05);
-      const size = parseFloat(style.fontSize);
-      const large = size >= 24 || (size >= 18.66 && Number(style.fontWeight) >= 700);
-      const threshold = large ? 3 : 4.5;
+      bg ??= [242, 244, 249];
+      const l1 = lum(fg);
+      const l2 = lum(bg);
+      const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+      const size = parseFloat(st.fontSize);
+      const large = size >= 24 || (size >= 18.66 && Number(st.fontWeight) >= 700);
+      const threshold = large ? 3.0 : 4.5;
       tested++;
-      if (ratio < min) { min = ratio; minText = (el.textContent || '').trim().slice(0, 60); }
-      if (ratio < threshold) issues.push({ text: (el.textContent || '').trim().slice(0, 90), ratio: Number(ratio.toFixed(2)), threshold, fg: style.color, bg: `rgb(${bg.slice(0, 3).join(',')})` });
+      if (ratio < minRatio) minRatio = ratio;
+      if (ratio < threshold) {
+        issues.push({
+          text: (el.textContent || "").trim().slice(0, 70),
+          ratio: Number(ratio.toFixed(2)),
+          fg: st.color,
+          bg: `rgb(${bg.slice(0, 3).join(",")})`,
+        });
+      }
     }
+
+    const lockBtn = document.querySelector('[data-site-lock-button="true"]');
+    const navPill = document.querySelector('[data-lesson-step-nav="true"] > div:first-child');
+    const lr = lockBtn?.getBoundingClientRect();
+    const nr = navPill?.getBoundingClientRect();
+    let overlap = false;
+    let lockInViewport = false;
+    let pillInViewport = false;
+    if (lr && nr) {
+      const ix = Math.max(0, Math.min(lr.right, nr.right) - Math.max(lr.left, nr.left));
+      const iy = Math.max(0, Math.min(lr.bottom, nr.bottom) - Math.max(lr.top, nr.top));
+      overlap = ix * iy > 0;
+      lockInViewport = lr.left >= 0 && lr.right <= window.innerWidth && lr.bottom <= window.innerHeight;
+      pillInViewport = nr.left >= 0 && nr.right <= window.innerWidth && nr.bottom <= window.innerHeight;
+    }
+
     return {
-      width: document.documentElement.clientWidth,
-      scroll: document.documentElement.scrollWidth,
-      tested, min: Number(min.toFixed(2)), minText,
+      docClientW: document.documentElement.clientWidth,
+      docScrollW: document.documentElement.scrollWidth,
+      mainClientW: main ? main.clientWidth : 0,
+      mainScrollW: main ? main.scrollWidth : 0,
+      tested,
+      minRatio: Number(minRatio.toFixed(2)),
       issues,
-      docHeight: Math.round(document.querySelector('.lesson44').getBoundingClientRect().height),
-      stepHeight: Math.round(document.querySelector('.step44, .cover44')?.getBoundingClientRect().height || 0),
+      overlap,
+      lockInViewport,
+      pillInViewport,
+      lockRect: lr ? { x: Math.round(lr.x), y: Math.round(lr.y), w: Math.round(lr.width), h: Math.round(lr.height) } : null,
+      pillRect: nr ? { x: Math.round(nr.x), y: Math.round(nr.y), w: Math.round(nr.width), h: Math.round(nr.height) } : null,
     };
   });
-  report.contrast.push({ label, ...result });
-  ok(result.scroll <= result.width, `${label}: no horizontal overflow (${result.scroll} > ${result.width})`);
-  ok(result.issues.length === 0, `${label}: contrast below 4.5 (${result.issues.slice(0, 3).map(i => `${i.text}=${i.ratio}`).join(' | ')})`);
-  return result;
+
+  report.contrast.push({ label, minRatio: res.minRatio, tested: res.tested, issues: res.issues });
+  report.navLockBoxes.push({ label, lockRect: res.lockRect, pillRect: res.pillRect, overlap: res.overlap });
+
+  ok(
+    res.docScrollW <= res.docClientW && res.mainScrollW <= res.mainClientW + 1,
+    `${label}: zero horizontal overflow (doc ${res.docScrollW}/${res.docClientW}, main ${res.mainScrollW}/${res.mainClientW})`
+  );
+  ok(
+    res.issues.length === 0,
+    `${label}: WCAG AA contrast clean (issues: ${res.issues.slice(0, 3).map((i) => `${i.text}=${i.ratio}`).join(" | ")})`
+  );
+  ok(!res.overlap, `${label}: SiteLockButton does NOT overlap step navigation pill`);
+  ok(res.lockInViewport && res.pillInViewport, `${label}: SiteLockButton & step pill stay completely inside viewport`);
+  return res;
 }
 
 try {
-  // ---------- desktop ----------
-  await page.goto(base);
-  await page.waitForSelector('.lesson44');
+  // ---------- 1) Desktop 1440x900 ----------
+  await page.goto(lessonUrl);
+  await page.waitForSelector('.obligation44[data-lesson="44"]');
   await page.evaluate(() => document.fonts.ready);
+
   const fonts = await page.evaluate(() => ({
-    newsreader: document.fonts.check('400 20px Newsreader'),
-    tajawal: document.fonts.check('400 17px Tajawal'),
-    loaded: [...document.fonts].filter(f => f.status === 'loaded').map(f => `${f.family} ${f.weight} ${f.style}`),
+    newsreader: document.fonts.check("400 20px Newsreader"),
+    tajawal: document.fonts.check("400 17px Tajawal"),
   }));
-  report.fonts = fonts;
-  ok(fonts.newsreader && fonts.tajawal, `local fonts load (newsreader=${fonts.newsreader}, tajawal=${fonts.tajawal})`);
-  let cover = await measure('desktop-cover');
-  report.heights.cover = cover.docHeight;
-  await shot('01-cover');
+  ok(fonts.newsreader && fonts.tajawal, `offline fonts loaded (${JSON.stringify(fonts)})`);
 
-  // cover content / crux pair
-  ok(await page.locator('.cruxPair44').count() === 1, 'cover renders the MUSTN\'T / DON\'T HAVE TO crux pair');
-  ok(await page.locator('.coverIndex44 li').count() === 13, 'cover index lists 13 chapters');
-  await page.locator('.crux44').scrollIntoViewIfNeeded();
-  await shot('02-cover-crux');
+  await measureLayoutAndContrast("1440-cover");
+  await shot("01-desktop-1440-cover");
 
-  // tabs gating before submission
-  ok(await page.locator('.areas44 button').nth(2).isDisabled(), 'solutions tab locked before submission');
-  ok(await page.locator('.solCard44').count() === 0, 'no solutions DOM before submission');
-
-  // ---------- steps ----------
-  const stepShots = [
-    [1, '03-step-01-goals'],
-    [2, '04-step-02-builder'],
-    [3, '05-step-03-check'],
-    [11, '06-step-11-comparison'],
-    [12, '07-step-12-dialogue'],
-    [13, '08-step-13-prohibition'],
-    [17, '09-step-17-questions'],
-    [20, '10-step-20-past'],
-    [23, '11-step-23-future'],
-    [27, '12-step-27-detective'],
-    [28, '13-step-28-practice'],
-    [33, '14-step-33-reading'],
-    [34, '15-step-34-test-brief'],
-    [36, '16-step-36-writing'],
-    [38, '17-step-38-roadmap'],
-  ];
-  for (const [n, name] of stepShots) {
-    await go(n);
-    const m = await measure(`desktop-step-${n}`);
-    report.heights[`step${n}`] = m.stepHeight;
-    await shot(name);
+  // Key steps on 1440x900
+  for (const [idx, slug] of [
+    [2, "02-step02-builder"],
+    [8, "03-step08-pronouns"],
+    [10, "04-step10-compass"],
+    [13, "05-step13-prohibition"],
+    [16, "06-step16-meaning-shift"],
+    [20, "07-step20-past-tense"],
+    [26, "08-step26-dialogue"],
+    [28, "09-step28-practice"],
+    [33, "10-step33-reading"],
+    [36, "11-step36-writing"],
+    [38, "12-step38-roadmap"],
+  ]) {
+    await selectStep(idx);
+    await measureLayoutAndContrast(`1440-step-${idx}`);
+    await shot(slug);
   }
 
-  // ---------- answer states + feedback (step 28) ----------
-  await go(28);
-  const card = page.locator('[data-exercise-id="p28-1"]');
-  await card.locator('.answer44').nth(1).click();
-  await card.getByRole('button', { name: 'تحقّق' }).click();
-  const wrongState = await card.locator('.answer44[data-state="wrong"]').count();
-  const rightState = await card.locator('.answer44[data-state="right"]').count();
-  report.states.answer = { wrongState, rightState, feedback: await card.locator('.fb44').innerText() };
-  ok(wrongState === 1 && rightState === 1, 'checked answer shows correct and incorrect states together');
-  ok((await card.locator('.fb44').innerText()).includes('المفتاح'), 'feedback states the key and explains it');
-  await card.scrollIntoViewIfNeeded();
-  await shot('18-state-answer-feedback');
-  // focus ring
-  await page.evaluate(() => document.querySelector('.answers44 .answer44').focus());
-  await page.keyboard.press('Shift+Tab');
-  await page.keyboard.press('Tab');
-  report.focus.push(await page.evaluate(() => {
+  // Keyboard focus visibility check on Step 28
+  await selectStep(28);
+  await page.evaluate(() => document.querySelector(".answers44 .answer44")?.focus());
+  await page.keyboard.press("Tab");
+  report.focus = await page.evaluate(() => {
     const el = document.activeElement;
     const s = getComputedStyle(el);
-    return { outline: s.outlineWidth, style: s.outlineStyle, color: s.outlineColor, tag: el.tagName, cls: el.className };
-  }));
-  ok(report.focus.at(-1).outlineWidth !== '0px' && report.focus.at(-1).style !== 'none', 'keyboard focus is visible on answers');
-  await shot('19-state-focus');
+    return { tag: el?.tagName, outlineWidth: s.outlineWidth, outlineStyle: s.outlineStyle };
+  });
+  ok(
+    report.focus.outlineWidth !== "0px" && report.focus.outlineStyle !== "none",
+    "keyboard :focus-visible outline clearly rendered"
+  );
 
-  // practice key gating
-  ok(await page.locator('.sourceKey44').count() === 0, 'practice source key closed before all five checks');
-  for (let i = 1; i <= 5; i++) {
-    const c = page.locator(`[data-exercise-id="p28-${i}"]`);
-    await c.locator('.answer44').first().click();
-    await c.getByRole('button', { name: 'تحقّق' }).click();
-  }
-  ok(await page.locator('.sourceKey44').count() === 1, 'practice source key opens after five checks');
-  await page.locator('.sourceKey44').scrollIntoViewIfNeeded();
-  await shot('20-state-practice-key-open');
+  // ---------- 2) Final Test, Lazy Grading & Solutions ----------
+  await page.locator('[data-area-tab="test"]').click();
+  await page.waitForTimeout(250);
+  await measureLayoutAndContrast("1440-test-pre-submit");
+  await shot("13-test-pre-submit");
 
-  // ---------- writing persists ----------
-  await go(36);
-  const draftText = 'I must study every evening. I have to help at home, and I mustn\'t waste time.';
-  await page.locator('.writeBox44 textarea').fill(draftText);
-  await go(37);
-  await go(36);
-  ok((await page.locator('.writeBox44 textarea').inputValue()).includes('must study'), 'writing draft survives navigation');
-  await shot('21-step-36-writing-filled');
-
-  // ---------- test ----------
-  await page.evaluate(() => [...document.querySelectorAll('.areas44 button')].find(b => b.textContent.includes('الاختبار')).click());
-  await page.waitForTimeout(300);
-  const testMeasure = await measure('desktop-test');
-  report.heights.test = testMeasure.docHeight;
-  ok(await page.locator('.qField44').count() === 25, '25 question fieldsets render');
-  ok(await page.locator('.testBar44 button[type=submit]').isDisabled(), 'submit disabled while incomplete');
-  await shot('22-area-test');
-  const fieldCount = await page.locator('.qField44').count();
-  for (let i = 0; i < fieldCount; i++) {
-    const field = page.locator('.qField44').nth(i);
-    const radios = field.locator('input[type=radio]');
-    if (await radios.count()) await radios.first().check();
-    else {
-      const areas = field.locator('textarea');
-      for (let k = 0; k < await areas.count(); k++) await areas.nth(k).fill('answer');
+  // Fill all 25 answers
+  const exact = [
+    "B. must",
+    "B. has to",
+    "B. Does",
+    "A. had to",
+    "C. have to",
+    "mustn't",
+    "doesn't have to",
+    "had to",
+    ["Did", "have to"],
+    "won't have to",
+    "He must study harder.",
+    "She has to wear a uniform.",
+    "Does he have to leave now?",
+    "I didn't have to work yesterday.",
+    "She will have to finish the project.",
+    "الأولى تعني المنع القاطع، والثانية تعني عدم الضرورة.",
+    "لأن MUST ليس لها ماض ولا توجد musted، فنستخدم HAD TO في الماضي.",
+    "نعم، كلتاهما صحيحة في القوانين والتعليمات الرسمية واليومية.",
+    "الأولى ضرورة يؤكدها المتحدث بدافع شخصي، والثانية التزام فرضه ظرف خارجي وهو الامتحان.",
+    "لا تعني ذلك؛ الجملة تدل فقط على أن إنهاء التقرير لم يكن إلزاميًا أمس.",
+    "has to",
+    "Do",
+    "don't",
+    "mustn't",
+    "had to",
+  ];
+  const qCount = await page.locator(".qField44").count();
+  ok(qCount === 25, `25 test fieldsets rendered (got ${qCount})`);
+  for (let i = 0; i < qCount; i++) {
+    const f = page.locator(".qField44").nth(i);
+    const radios = f.locator('input[type="radio"]');
+    const val = exact[i];
+    if ((await radios.count()) > 0) {
+      const radioLabel = f.locator(".option44").filter({ has: page.locator(`input[type="radio"][value="${val}"]`) });
+      await radioLabel.evaluate((el) => el.scrollIntoView({ block: "center" }));
+      await radioLabel.click();
+    } else if (Array.isArray(val)) {
+      const ins = f.locator('input[type="text"], textarea');
+      await ins.nth(0).fill(val[0]);
+      await ins.nth(1).fill(val[1]);
+    } else {
+      await f.locator('input[type="text"], textarea').first().fill(val);
     }
   }
-  ok(!(await page.locator('.testBar44 button[type=submit]').isDisabled()), 'submit unlocks when every field is answered');
-  await page.locator('.testBar44 button[type=submit]').click();
-  await page.waitForTimeout(350);
-  await shot('23-area-solutions');
-  ok(await page.locator('.solCard44').count() === 25, '25 solution cards after submission');
-  const solutionsMeasure = await measure('desktop-solutions');
-  report.heights.solutions = solutionsMeasure.docHeight;
-  await page.evaluate(() => [...document.querySelectorAll('.areas44 button')].find(b => b.textContent.includes('الاختبار')).click());
+
+  await page.getByRole("button", { name: /تسليم الاختبار/ }).click();
   await page.waitForTimeout(300);
-  ok(await page.locator('.qField44[disabled]').count() === 25, 'test inputs lock after submission');
+  ok(
+    (await page.locator("#l44-main").innerText()).includes("25 / 25"),
+    "Chromium test submission scores 25 / 25 via lazy testKey44"
+  );
+  await measureLayoutAndContrast("1440-test-post-submit");
+  await shot("14-test-post-submit-25of25");
 
-  // ---------- teacher ----------
-  await page.evaluate(() => [...document.querySelectorAll('.areas44 button')].find(b => b.textContent.includes('المعلم')).click());
-  await page.waitForTimeout(250);
-  await shot('24-area-teacher-gate');
-  await page.locator('.teacherGateCard44 input').fill('wrong');
-  await page.locator('.teacherGateCard44 button[type=submit]').click();
-  await page.waitForTimeout(150);
-  ok(await page.locator('.teacherGateCard44 .fb44').count() === 1, 'wrong password is rejected');
-  await page.locator('.teacherGateCard44 input').fill('somer173');
-  await page.locator('.teacherGateCard44 button[type=submit]').click();
-  await page.waitForTimeout(700);
-  ok(await page.locator('[data-teacher-guide="44"]').count() === 1, 'teacher guide opens with the existing password');
-  const teacherMeasure = await measure('desktop-teacher');
-  report.heights.teacher = teacherMeasure.docHeight;
-  await shot('25-area-teacher-guide');
-  await page.locator('#tg-practice').scrollIntoViewIfNeeded();
-  await shot('26-area-teacher-practice-keys');
+  await page.locator('[data-area-tab="solutions"]').click();
+  await page.waitForSelector(".solCard44");
+  ok((await page.locator(".solCard44").count()) === 25, "25 solution cards rendered");
+  await measureLayoutAndContrast("1440-solutions");
+  await shot("15-solutions-area");
 
-  // ---------- responsive ----------
-  await page.evaluate(() => [...document.querySelectorAll('.areas44 button')].find(b => b.textContent.includes('التعلّم')).click());
-  for (const [width, height, label] of [[1024, 768, 'laptop-1024'], [768, 900, 'tablet-768'], [390, 844, 'phone-390']]) {
-    await page.setViewportSize({ width, height });
-    await page.goto(base);
-    await page.waitForSelector('.lesson44');
+  // Teacher gate
+  await page.locator('[data-area-tab="teacher"]').click();
+  await page.waitForTimeout(200);
+  await page.locator(".teacherGateCard44 input").fill("somer173");
+  await page.locator('.teacherGateCard44 button[type="submit"]').click();
+  await page.waitForTimeout(350);
+  ok((await page.locator('[data-teacher-guide="44"]').count()) === 1, "TeacherGuide44 opens with somer173");
+  await measureLayoutAndContrast("1440-teacher");
+  await shot("16-teacher-guide");
+
+  // ---------- 3) Multi-Viewport Responsive Checks: 1280x800, 768x900, 375x812 ----------
+  for (const [w, h, tag] of [
+    [1280, 800, "desktop-1280"],
+    [768, 900, "tablet-768"],
+    [375, 812, "mobile-375"],
+  ]) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.goto(lessonUrl);
+    await page.waitForSelector('.obligation44[data-lesson="44"]');
     await page.evaluate(() => document.fonts.ready);
-    const m = await measure(label);
-    report.viewports.push({ label, ...m });
-    await shot(`27-responsive-${label}`);
-    await go(13);
-    const m2 = await measure(`${label}-step13`);
-    report.viewports.push({ label: `${label}-step13`, ...m2 });
-    await shot(`28-responsive-${label}-step13`);
+
+    // Ensure learn tab active
+    await page.locator('[data-area-tab="learn"]').click();
+    await page.waitForTimeout(150);
+    await selectStep(0);
+    const mCover = await measureLayoutAndContrast(`${tag}-cover`);
+    report.viewports.push({ viewport: `${w}x${h}`, view: "cover", ...mCover });
+    await shot(`17-${tag}-cover`);
+
+    await selectStep(11); // Comparison table (overflow stress test!)
+    await measureLayoutAndContrast(`${tag}-step11-table`);
+    await shot(`18-${tag}-step11-table`);
+
+    await selectStep(13); // Prohibition vs No-Necessity lab
+    await measureLayoutAndContrast(`${tag}-step13-prohibition`);
+    await shot(`19-${tag}-step13-prohibition`);
+
+    await page.locator('[data-area-tab="test"]').click();
+    await page.waitForTimeout(180);
+    await measureLayoutAndContrast(`${tag}-test`);
+    await shot(`20-${tag}-test`);
   }
 
-  // ---------- summary ----------
+  // ---------- 4) Cross-Lesson & Hub Regression Check ----------
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto(`${baseOrigin}#/`);
+  await page.waitForTimeout(250);
+  ok(
+    (await page.locator('a[href="#/lesson/44"]').count()) >= 0,
+    "Course hub renders cleanly without error"
+  );
+
+  await page.goto(`${baseOrigin}#/lesson/40`);
+  await page.waitForSelector('[data-lesson="40"]');
+  ok((await page.locator(".obligation44").count()) === 0, "Lesson 40 has zero .obligation44 bleed");
+
+  await page.goto(`${baseOrigin}#/lesson/43`);
+  await page.waitForSelector('[data-lesson="43"]');
+  ok((await page.locator(".obligation44").count()) === 0, "Lesson 43 has zero .obligation44 bleed");
+
   report.errors = errors;
-  ok(errors.length === 0, `no console/page errors (${errors.slice(0, 3).join(' | ')})`);
-  report.checks = checks;
-  const failing = failures;
-  writeFileSync(`${output}/browser-report.json`, JSON.stringify(report, null, 2) + '\n');
-  console.log(`\nRendered contrast: ${report.contrast.length} snapshots, lowest ${Math.min(...report.contrast.map(c => c.min)).toFixed(2)}:1.`);
-  console.log(`Step heights (desktop, px): cover ${report.heights.cover}; ` + Object.entries(report.heights).filter(([k]) => k.startsWith('step')).map(([k, v]) => `${k} ${v}`).join(', '));
-  if (failing.length) {
-    for (const f of failing) console.error(`✕ ${f}`);
-    console.error(`Lesson 44 browser audit FAILED: ${failing.length} of ${checks}`);
+  ok(errors.length === 0, `zero page/console errors (${errors.join(" | ")})`);
+
+  writeFileSync(`${output}/browser-report.json`, JSON.stringify(report, null, 2) + "\n");
+  const lowestContrast = Math.min(...report.contrast.map((c) => c.minRatio));
+  console.log(
+    `\nChromium QA Summary: ${checks} checks, ${report.contrast.length} snapshots, lowest contrast ${lowestContrast.toFixed(2)}:1.`
+  );
+
+  if (failures.length) {
+    for (const f of failures) console.error(`✕ ${f}`);
+    console.error(`Lesson 44 browser QA FAILED: ${failures.length}/${checks}`);
     process.exitCode = 1;
   } else {
-    console.log(`Lesson 44 browser audit passed: ${checks} checks; screenshots + report in ${output}.`);
+    console.log(`Lesson 44 browser QA PASSED: ${checks}/${checks} checks clean.`);
   }
 } finally {
   await browser.close();

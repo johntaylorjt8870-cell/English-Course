@@ -176,7 +176,9 @@ const lesson37DedicatedAssessment =
   lesson37TestData.includes("TEST_LEVEL_COUNT_37 = TEST_LEVELS_37.length") &&
   lesson37TestArea.includes("TEST_LEVELS_37") &&
   lesson37TestArea.includes("TEST_COUNT_37") &&
-  !lesson37TestArea.includes("solutionsData37");
+  // الدرس 37 يفتح المفتاح بتحميل مؤجل واحد فقط بعد التسليم، لا باستيراد ثابت.
+  (lesson37TestArea.match(/solutionsData37/g) || []).length === 1 &&
+  !/from\s+"\.\/solutionsData37"/.test(lesson37TestArea);
 ok(lesson37DedicatedAssessment, "الدرس 37: اختبار Master Test مستقلّ (25 سؤالًا/5 مستويات) ومفصول عن محرّك FinalTest وعن ملفّ الحلول");
 const lesson38TestData = readFileSync(join(root, "src/lessons/lesson38/testData38.ts"), "utf8");
 const lesson38TestArea = readFileSync(join(root, "src/lessons/lesson38/TestArea38.tsx"), "utf8");

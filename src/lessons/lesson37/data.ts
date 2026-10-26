@@ -13,6 +13,9 @@ export type ChapterId37 =
   | "assessment"
   | "closure";
 
+/** مناطق الدرس الأربع — تُفتح من شريط التنقل المشترك، لا من شريط خاص. */
+export type Area37 = "lesson" | "test" | "solutions" | "teacher";
+
 export type SlidePart37 = "full" | "a" | "b";
 
 export type Slide37 = {
@@ -22,6 +25,8 @@ export type Slide37 = {
   sourceOrder: number;
   section: ChapterId37;
   title: string;
+  /** عنوان مختصر يُعرض في قائمة الخطوات */
+  rail: string;
   subtitle: string;
   step: number;
   source: SourceSection37;
@@ -30,6 +35,8 @@ export type Slide37 = {
 export type Chapter37 = {
   id: ChapterId37;
   title: string;
+  icon: string;
+  en: string;
   rangeLabel: string;
   stepIds: string[];
 };
@@ -52,7 +59,10 @@ type StepSpec37 = {
   id: string;
   sourceId: string;
   part: SlidePart37;
+  /** العنوان الكامل داخل الشريحة */
   title?: string;
+  /** عنوان قصير لفهرس التنقل — لا يجوز أن يُقتطع عنوان طويل داخل الشريط */
+  rail: string;
   subtitle: string;
 };
 
@@ -64,18 +74,21 @@ type StepSpec37 = {
 const STEP_SPECS_37: StepSpec37[] = [
   {
     id: "cover",
+    rail: "المدخل",
     sourceId: "cover",
     part: "full",
     subtitle: "مشهد المرصد الافتتاحي وربط أزمنة المستقبل الأربعة",
   },
   {
     id: "s01",
+    rail: "الأهداف",
     sourceId: "s01",
     part: "full",
     subtitle: "الأهداف العشرة للدرس وقائمة المراجعة الذاتية",
   },
   {
     id: "s02",
+    rail: "الفكرة الأساسية",
     sourceId: "s02",
     part: "a",
     title: "🧠 2أ. الفكرة الأساسية: تخيل نفسك داخل المستقبل والخط الزمني",
@@ -83,6 +96,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s02b",
+    rail: "مختبر اللحظة",
     sourceId: "s02",
     part: "b",
     title: "🧠 2ب. مختبر اللحظة المستقبلية: ضع الكاميرا على الساعة 7:00",
@@ -90,6 +104,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s03",
+    rail: "القاعدة الأساسية",
     sourceId: "s03",
     part: "a",
     title: "⭐ 3أ. القاعدة الأساسية: Subject + will + be + V-ing",
@@ -97,6 +112,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s03b",
+    rail: "ورشة الصيغة",
     sourceId: "s03",
     part: "b",
     title: "⭐ 3ب. ورشة بناء الصيغة: رتّب أجزاء الجملة",
@@ -104,6 +120,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s04",
+    rail: "تحليل التركيب",
     sourceId: "s04",
     part: "a",
     title: "🔬 4أ. تحليل التركيب خطوة بخطوة ولماذا be وليس is",
@@ -111,6 +128,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s04b",
+    rail: "مختبر التشريح",
     sourceId: "s04",
     part: "b",
     title: "🔬 4ب. مختبر التشريح النحوي: وظيفة كل عنصر في الجملة",
@@ -118,12 +136,14 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s05",
+    rail: "التصريف",
     sourceId: "s05",
     part: "full",
     subtitle: "جدول الضمائر السبعة (I, You, He, She, It, We, They) ومختبر ثبات الصيغة",
   },
   {
     id: "s06",
+    rail: "الاستخدام الأول",
     sourceId: "s06",
     part: "a",
     title: "🧠 6أ. الاستخدام الأول: نشاط سيكون جاريًا في لحظة مستقبلية محددة",
@@ -131,6 +151,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s06b",
+    rail: "مختبر اللحظة",
     sourceId: "s06",
     part: "b",
     title: "🧠 6ب. مختبر اللحظة المستقبلية المحددة",
@@ -138,18 +159,21 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s07",
+    rail: "الكاميرا",
     sourceId: "s07",
     part: "full",
     subtitle: "مقارنة الكاميرا في الماضي والحاضر والمستقبل مقابل لقطة الصورة",
   },
   {
     id: "s08",
+    rail: "التعبيرات الزمنية",
     sourceId: "s08",
     part: "full",
     subtitle: "التعبيرات الزمنية السبعة الشائعة مع Future Continuous",
   },
   {
     id: "s09",
+    rail: "Simple vs Continuous",
     sourceId: "s09",
     part: "a",
     title: "🔥 9أ. المقارنة الأولى: Future Simple مقابل Future Continuous",
@@ -157,6 +181,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s09b",
+    rail: "مختبر المقارنة",
     sourceId: "s09",
     part: "b",
     title: "🔥 9ب. مختبر المقارنة بين Future Simple وFuture Continuous",
@@ -164,18 +189,21 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s10",
+    rail: "مختبر المعنى",
     sourceId: "s10",
     part: "full",
     subtitle: "نفس الفعل (travel) في ثلاثة أزمنة مستقبلية من ثلاث زوايا نظر",
   },
   {
     id: "s11",
+    rail: "حدثان متزامنان",
     sourceId: "s11",
     part: "full",
     subtitle: "نشاط طويل مستمر (Future Continuous) يتقاطع معه حدث أقصر (Present Simple)",
   },
   {
     id: "s12",
+    rail: "قاعدة when",
     sourceId: "s12",
     part: "a",
     title: "🚨 12أ. قاعدة when الزمنية والفرق مع السؤال المباشر",
@@ -183,6 +211,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s12b",
+    rail: "مختبر when",
     sourceId: "s12",
     part: "b",
     title: "🚨 12ب. مختبر when: جملة زمنية أم سؤال مباشر؟",
@@ -190,12 +219,14 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s13",
+    rail: "while",
     sourceId: "s13",
     part: "full",
     subtitle: "الربط بين نشاطين مستقبليين متزامنين باستخدام while",
   },
   {
     id: "s14",
+    rail: "الحوار",
     sourceId: "s14",
     part: "a",
     title: "🎭 14أ. حوار تطبيقي: Tomorrow's Schedule والترجمة الكاملة",
@@ -203,6 +234,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s14b",
+    rail: "تحليل الحوار",
     sourceId: "s14",
     part: "b",
     title: "🎭 14ب. التحليل النحوي لحوار Tomorrow's Schedule ومختبر الفهم",
@@ -210,24 +242,28 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s15",
+    rail: "مجريات متوقعة",
     sourceId: "s15",
     part: "full",
     subtitle: "الحديث عن مجريات مستقبلية متوقعة أو جزء طبيعي من برنامج قادم",
   },
   {
     id: "s16",
+    rail: "السؤال المهذب",
     sourceId: "s16",
     part: "full",
     subtitle: "السؤال اللطيف وغير الضاغط عن خطط الآخرين باستخدام Will you be + V-ing?",
   },
   {
     id: "s17",
+    rail: "Will you be",
     sourceId: "s17",
     part: "full",
     subtitle: "المقارنة الدقيقة بين الطلب المباشر (Will you...?) والسؤال المهذب عن الخطة (Will you be + V-ing?)",
   },
   {
     id: "s18",
+    rail: "النفي",
     sourceId: "s18",
     part: "a",
     title: "🚫 18أ. صيغة النفي وقاعدتها",
@@ -235,6 +271,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s18b",
+    rail: "ورشة النفي",
     sourceId: "s18",
     part: "b",
     title: "🚫 18ب. ورشة بناء النفي",
@@ -242,12 +279,14 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s19",
+    rail: "أخطاء النفي",
     sourceId: "s19",
     part: "full",
     subtitle: "الأخطاء الأربعة الشائعة في النفي ومختبر تشخيص الخطأ",
   },
   {
     id: "s20",
+    rail: "سؤال نعم/لا",
     sourceId: "s20",
     part: "a",
     title: "❓ 20أ. تكوين سؤال نعم/لا",
@@ -255,6 +294,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s20b",
+    rail: "ورشة السؤال",
     sourceId: "s20",
     part: "b",
     title: "❓ 20ب. ورشة بناء الأسئلة",
@@ -262,12 +302,14 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s21",
+    rail: "الإجابات القصيرة",
     sourceId: "s21",
     part: "full",
     subtitle: "الإجابات القصيرة (Yes, I will. / No, I won't.) دون تكرار be + V-ing",
   },
   {
     id: "s22",
+    rail: "أسئلة Wh",
     sourceId: "s22",
     part: "a",
     title: "🔍 22أ. أسئلة Wh وصيغتها",
@@ -275,6 +317,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s22b",
+    rail: "ورشة Wh",
     sourceId: "s22",
     part: "b",
     title: "🔍 22ب. ورشة بناء أسئلة Wh",
@@ -282,12 +325,14 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s23",
+    rail: "Who",
     sourceId: "s23",
     part: "full",
     subtitle: "الفرق التركيبي بين Who كفاعل (Who will be leading...?) وWho كمفعول به (Who will you be meeting?)",
   },
   {
     id: "s24",
+    rail: "قواعد -ing",
     sourceId: "s24",
     part: "a",
     title: "✍️ 24أ. قواعد إضافة ING الأربع مع الأمثلة",
@@ -295,6 +340,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s24b",
+    rail: "ورشة -ing",
     sourceId: "s24",
     part: "b",
     title: "✍️ 24ب. ورشة تطبيق قواعد ING التفاعلية (16 فعلًا)",
@@ -302,6 +348,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s25",
+    rail: "أفعال الحالة",
     sourceId: "s25",
     part: "a",
     title: "⚠️ 25أ. أفعال الحالة: القاعدة والأمثلة",
@@ -309,6 +356,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s25b",
+    rail: "استثناء الحالة",
     sourceId: "s25",
     part: "b",
     title: "⚠️ 25ب. الاستثناء ومختبر أفعال الحالة",
@@ -316,6 +364,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s26",
+    rail: "المستمرة الثلاثة",
     sourceId: "s26",
     part: "a",
     title: "🔥 26أ. الأزمنة المستمرة الثلاثة",
@@ -323,6 +372,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s26b",
+    rail: "خريطة الأزمنة",
     sourceId: "s26",
     part: "b",
     title: "🔥 26ب. الخريطة الذهنية ومختبر النقطة المرجعية",
@@ -330,18 +380,21 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s27",
+    rail: "المواجهة الثلاثية",
     sourceId: "s27",
     part: "full",
     subtitle: "المواجهة الثلاثية بين Future Simple وBE GOING TO وFuture Continuous",
   },
   {
     id: "s28",
+    rail: "تدريب تأسيسي",
     sourceId: "s28",
     part: "full",
     subtitle: "6 أسئلة اختيار من متعدد لتثبيت الصيغة ومفتاح الحلول بعد المحاولة",
   },
   {
     id: "s29",
+    rail: "التحويلات",
     sourceId: "s29",
     part: "a",
     title: "✍️ 29أ. تدريب التحويلات: المثال والأسئلة",
@@ -349,6 +402,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s29b",
+    rail: "ورشة التحويل",
     sourceId: "s29",
     part: "b",
     title: "✍️ 29ب. ورشة النفي والسؤال",
@@ -356,6 +410,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s30",
+    rail: "Grammar Detective",
     sourceId: "s30",
     part: "a",
     title: "🕵️ 30أ. اكتشف الأخطاء (الجمل ①–⑤)",
@@ -363,6 +418,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s30b",
+    rail: "Detective ②",
     sourceId: "s30",
     part: "b",
     title: "🕵️ 30ب. أكمل التصحيح (الجمل ⑥–⑩ والحلول)",
@@ -370,6 +426,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s31",
+    rail: "IQ200 ①",
     sourceId: "s31",
     part: "a",
     title: "🚀 31أ. تحدي الزمن: المواقف الأربعة الأولى",
@@ -377,6 +434,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s31b",
+    rail: "IQ200 ②",
     sourceId: "s31",
     part: "b",
     title: "🚀 31ب. تحدي الزمن: المواقف ⑤–⑧",
@@ -384,6 +442,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s32",
+    rail: "القراءة",
     sourceId: "s32",
     part: "a",
     title: "📖 32أ. اقرأ القصة وحلّل صيغ المستقبل",
@@ -391,6 +450,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s32b",
+    rail: "أسئلة الفهم",
     sourceId: "s32",
     part: "b",
     title: "📖 32ب. أسئلة الفهم الثمانية وحلولها",
@@ -398,30 +458,35 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s33",
+    rail: "تحدي متقدم",
     sourceId: "s33",
     part: "full",
     subtitle: "لماذا قد تصحّ الجملتان؟ ومتى نستخدم Future Continuous دون ساعة محددة؟",
   },
   {
     id: "s34",
+    rail: "الاختبار النهائي",
     sourceId: "s34",
     part: "full",
     subtitle: "بوابة الاختبار النهائي المستقل (25 سؤالًا عبر 5 مستويات تدريجية)",
   },
   {
     id: "s35",
+    rail: "الحلول والمعلم",
     sourceId: "s35",
     part: "full",
     subtitle: "بوابة الحلول التفصيلية ومساحة المعلم المحمية",
   },
   {
     id: "s36",
+    rail: "مهمة الكتابة",
     sourceId: "s36",
     part: "full",
     subtitle: "كتابة فقرة من 12–15 جملة وفق المعايير الثمانية مع النموذج الكامل",
   },
   {
     id: "s37",
+    rail: "الملخص الذهبي",
     sourceId: "s37",
     part: "a",
     title: "🧠 37أ. الملخص الذهبي: الصيغ الأربع وأمثلتها",
@@ -429,6 +494,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s37b",
+    rail: "القاعدة الذهبية",
     sourceId: "s37",
     part: "b",
     title: "🧠 37ب. أهم الاستخدامات والقاعدة الذهبية",
@@ -436,6 +502,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s38",
+    rail: "خريطة المنهج",
     sourceId: "s38",
     part: "a",
     title: "🗺️ 38أ. خريطة تقدم المنهج: ماذا أكملنا؟",
@@ -443,6 +510,7 @@ const STEP_SPECS_37: StepSpec37[] = [
   },
   {
     id: "s38b",
+    rail: "الدرس القادم",
     sourceId: "s38",
     part: "b",
     title: "🗺️ 38ب. المحطة القادمة: Future Perfect",
@@ -460,6 +528,7 @@ export const SLIDES_37: Slide37[] = STEP_SPECS_37.map((spec, index) => {
     sourceOrder: source.order,
     section: chapterFor37(source.id),
     title: spec.title ?? source.title,
+    rail: spec.rail,
     subtitle: spec.subtitle,
     step: index + 1,
     source,
@@ -473,18 +542,18 @@ function stepIdsForChapter37(chapterId: ChapterId37): string[] {
   return SLIDES_37.filter((slide) => slide.section === chapterId).map((slide) => slide.id);
 }
 
-const CHAPTER_META_37: { id: ChapterId37; title: string }[] = [
-  { id: "intro", title: "المدخل والفكرة الأساسية" },
-  { id: "form", title: "القاعدة والتركيب والتصريف" },
-  { id: "meaning", title: "اللحظة المحددة والكاميرا والمقارنة" },
-  { id: "clauses", title: "الربط الزمني والحوار" },
-  { id: "polite", title: "المجريات المتوقعة والسؤال المهذب" },
-  { id: "neg-questions", title: "النفي والأسئلة والإجابات القصيرة وWho" },
-  { id: "verbs", title: "التهجئة وأفعال الحالة" },
-  { id: "compare", title: "المقارنات الكبرى للأزمنة" },
-  { id: "practice", title: "التدريبات والقراءة والتحديات" },
-  { id: "assessment", title: "بوابة الاختبار والحلول" },
-  { id: "closure", title: "الإنتاج اللغوي والملخص وخريطة المنهج" },
+const CHAPTER_META_37: { id: ChapterId37; title: string; icon: string; en: string }[] = [
+  { id: "intro", title: "المدخل والفكرة الأساسية", icon: "🔭", en: "Opening & the central idea" },
+  { id: "form", title: "القاعدة والتركيب والتصريف", icon: "🧩", en: "Form, breakdown & conjugation" },
+  { id: "meaning", title: "اللحظة المحددة والكاميرا والمقارنة", icon: "🎥", en: "The future moment & the camera" },
+  { id: "clauses", title: "الربط الزمني والحوار", icon: "🕒", en: "when, while & the dialogue" },
+  { id: "polite", title: "المجريات المتوقعة والسؤال المهذب", icon: "🤝", en: "Routines & polite questions" },
+  { id: "neg-questions", title: "النفي والأسئلة والإجابات القصيرة", icon: "❓", en: "Negatives, questions & Who" },
+  { id: "verbs", title: "التهجئة وأفعال الحالة", icon: "✍️", en: "-ing spelling & state verbs" },
+  { id: "compare", title: "المقارنات الكبرى للأزمنة", icon: "⚖️", en: "The three continuous tenses" },
+  { id: "practice", title: "التدريبات والقراءة والتحديات", icon: "🕵️", en: "Practice, detective & reading" },
+  { id: "assessment", title: "بوابة الاختبار والحلول", icon: "🏆", en: "Master test & solutions" },
+  { id: "closure", title: "الإنتاج اللغوي والملخص وخريطة المنهج", icon: "🗺️", en: "Writing, summary & curriculum map" },
 ];
 
 export const CHAPTERS_37: Chapter37[] = CHAPTER_META_37.map((chapter) => {
@@ -497,6 +566,43 @@ export const CHAPTERS_37: Chapter37[] = CHAPTER_META_37.map((chapter) => {
     rangeLabel: first === last ? `الخطوة ${first}` : `الخطوات ${first}–${last}`,
   };
 });
+
+/** الفصل الذي تنتمي إليه خطوة معيّنة — يُستخدم في عنوان الشريط والرأس. */
+export function chapterOf37(sectionId: ChapterId37): Chapter37 {
+  const chapter = CHAPTERS_37.find((candidate) => candidate.id === sectionId);
+  if (!chapter) throw new Error(`Lesson 37 has no chapter ${sectionId}`);
+  return chapter;
+}
+
+/** وسم نصي قصير يصف نوع بطاقة المصدر (شرح/أمثلة/حوار/تدريب…) بلا ترقيم داخلي. */
+export const SECTION_KIND_37: Record<ChapterId37, string> = {
+  intro: "مدخل",
+  form: "قاعدة",
+  meaning: "معنى وتطبيق",
+  clauses: "ربط زمني",
+  polite: "استخدام",
+  "neg-questions": "صيغة",
+  verbs: "تهجئة",
+  compare: "مقارنة",
+  practice: "تدريب",
+  assessment: "تقييم",
+  closure: "مراجعة",
+};
+
+/** «مرصد الأفق» يحتاج طقسًا بصريًا لكل فصل — لون وحدود تُمرَّر إلى الرأس. */
+export const CHAPTER_TONE_37: Record<ChapterId37, string> = {
+  intro: "border-[#38bdf8] bg-[#e0f2fe] text-[#0c4a6e]",
+  form: "border-[#2dd4bf] bg-[#ccfbf1] text-[#115e59]",
+  meaning: "border-[#818cf8] bg-[#e0e7ff] text-[#312e81]",
+  clauses: "border-[#fb923c] bg-[#ffedd5] text-[#9a3412]",
+  polite: "border-[#fbbf24] bg-[#fef3c7] text-[#92400e]",
+  "neg-questions": "border-[#fb7185] bg-[#ffe4e6] text-[#9f1239]",
+  verbs: "border-[#c084fc] bg-[#f3e8ff] text-[#5b21b6]",
+  compare: "border-[#38bdf8] bg-[#e0f2fe] text-[#0c4a6e]",
+  practice: "border-[#2dd4bf] bg-[#ccfbf1] text-[#115e59]",
+  assessment: "border-[#fbbf24] bg-[#fef3c7] text-[#92400e]",
+  closure: "border-[#818cf8] bg-[#e0e7ff] text-[#312e81]",
+};
 
 export const LESSON_TITLE_37 = "الدرس السابع والثلاثون: Future Continuous — المستقبل المستمر";
 export const LESSON_SUBTITLE_37 = "What Will You Be Doing Tomorrow?";

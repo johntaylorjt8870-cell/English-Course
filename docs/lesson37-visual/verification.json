@@ -1,167 +1,619 @@
 {
   "baseUrl": "http://127.0.0.1:4173/English-Course/#/lesson/37",
-  "generatedAt": "2026-10-20T13:34:30.377Z",
+  "generatedAt": "2026-10-26T00:01:13.403Z",
   "viewports": [
     {
-      "viewport": "1440x900",
-      "locks": 1,
-      "horizontal": {
-        "scrollWidth": 1440,
-        "clientWidth": 1440
+      "viewport": "1920x1080",
+      "top": {
+        "totalLocks": 1,
+        "locks": 1,
+        "lockInsideNav": true,
+        "lock": {
+          "x": 656.5625,
+          "y": 1027,
+          "width": 99.4375,
+          "height": 40,
+          "top": 1027,
+          "right": 756,
+          "bottom": 1067,
+          "left": 656.5625
+        },
+        "next": {
+          "x": 775,
+          "y": 1029,
+          "width": 88.40625,
+          "height": 36,
+          "top": 1029,
+          "right": 863.40625,
+          "bottom": 1065,
+          "left": 775
+        },
+        "prev": {
+          "x": 876.40625,
+          "y": 1029,
+          "width": 92.046875,
+          "height": 36,
+          "top": 1029,
+          "right": 968.453125,
+          "bottom": 1065,
+          "left": 876.40625
+        },
+        "nav": {
+          "x": 0,
+          "y": 1014,
+          "width": 1632,
+          "height": 66,
+          "top": 1014,
+          "right": 1632,
+          "bottom": 1080,
+          "left": 0
+        },
+        "navFixed": false,
+        "scrollWidth": 1920,
+        "clientWidth": 1920,
+        "direction": "rtl",
+        "step": "cover",
+        "stepHeight": 1649,
+        "hasRail": true,
+        "counter": "1 / 58",
+        "ledgerLabels": false
       },
-      "direction": "rtl",
       "contrast": {
-        "samples": 137,
+        "samples": 94,
         "below": 0,
         "worst": {
-          "ratio": 5.47,
-          "text": "الدرس 37: Future Continuous — المستقبل المستمر"
-        }
+          "ratio": 4.76,
+          "text": "مرصد الأفق المستقبلي · 58 خطوة قصيرة · 25 سؤالًا"
+        },
+        "offenders": []
       },
-      "overlaps": {
-        "lockNext": 0,
-        "lockPrev": 0
-      }
+      "tallest": [
+        {
+          "id": "s27",
+          "height": 2185,
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "ledger": false
+        },
+        {
+          "id": "s36",
+          "height": 2173,
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "ledger": false
+        },
+        {
+          "id": "s37b",
+          "height": 2168,
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "ledger": false
+        },
+        {
+          "id": "s19",
+          "height": 2153,
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "ledger": false
+        },
+        {
+          "id": "s08",
+          "height": 2061,
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "ledger": false
+        }
+      ]
     },
     {
       "viewport": "1280x800",
-      "locks": 1,
-      "horizontal": {
+      "top": {
+        "totalLocks": 1,
+        "locks": 1,
+        "lockInsideNav": true,
+        "lock": {
+          "x": 336.5625,
+          "y": 747,
+          "width": 99.4375,
+          "height": 40,
+          "top": 747,
+          "right": 436,
+          "bottom": 787,
+          "left": 336.5625
+        },
+        "next": {
+          "x": 455,
+          "y": 749,
+          "width": 88.40625,
+          "height": 36,
+          "top": 749,
+          "right": 543.40625,
+          "bottom": 785,
+          "left": 455
+        },
+        "prev": {
+          "x": 556.40625,
+          "y": 749,
+          "width": 92.046875,
+          "height": 36,
+          "top": 749,
+          "right": 648.453125,
+          "bottom": 785,
+          "left": 556.40625
+        },
+        "nav": {
+          "x": 0,
+          "y": 734,
+          "width": 992,
+          "height": 66,
+          "top": 734,
+          "right": 992,
+          "bottom": 800,
+          "left": 0
+        },
+        "navFixed": false,
         "scrollWidth": 1280,
-        "clientWidth": 1280
+        "clientWidth": 1280,
+        "direction": "rtl",
+        "step": "cover",
+        "stepHeight": 1649,
+        "hasRail": true,
+        "counter": "1 / 58",
+        "ledgerLabels": false
       },
-      "direction": "rtl",
       "contrast": {
-        "samples": 137,
+        "samples": 94,
         "below": 0,
         "worst": {
-          "ratio": 5.47,
-          "text": "الدرس 37: Future Continuous — المستقبل المستمر"
-        }
+          "ratio": 4.76,
+          "text": "مرصد الأفق المستقبلي · 58 خطوة قصيرة · 25 سؤالًا"
+        },
+        "offenders": []
       },
-      "overlaps": {
-        "lockNext": 0,
-        "lockPrev": 0
-      }
+      "tallest": [
+        {
+          "id": "s27",
+          "height": 2185,
+          "scrollWidth": 1280,
+          "clientWidth": 1280,
+          "ledger": false
+        },
+        {
+          "id": "s36",
+          "height": 2173,
+          "scrollWidth": 1280,
+          "clientWidth": 1280,
+          "ledger": false
+        },
+        {
+          "id": "s37b",
+          "height": 2173,
+          "scrollWidth": 1280,
+          "clientWidth": 1280,
+          "ledger": false
+        },
+        {
+          "id": "s19",
+          "height": 2147,
+          "scrollWidth": 1280,
+          "clientWidth": 1280,
+          "ledger": false
+        },
+        {
+          "id": "s08",
+          "height": 2049,
+          "scrollWidth": 1280,
+          "clientWidth": 1280,
+          "ledger": false
+        }
+      ]
     },
     {
       "viewport": "768x900",
-      "locks": 1,
-      "horizontal": {
+      "top": {
+        "totalLocks": 1,
+        "locks": 1,
+        "lockInsideNav": true,
+        "lock": {
+          "x": 224.5625,
+          "y": 847,
+          "width": 99.4375,
+          "height": 40,
+          "top": 847,
+          "right": 324,
+          "bottom": 887,
+          "left": 224.5625
+        },
+        "next": {
+          "x": 343,
+          "y": 849,
+          "width": 88.40625,
+          "height": 36,
+          "top": 849,
+          "right": 431.40625,
+          "bottom": 885,
+          "left": 343
+        },
+        "prev": {
+          "x": 444.40625,
+          "y": 849,
+          "width": 92.046875,
+          "height": 36,
+          "top": 849,
+          "right": 536.453125,
+          "bottom": 885,
+          "left": 444.40625
+        },
+        "nav": {
+          "x": 0,
+          "y": 834,
+          "width": 768,
+          "height": 66,
+          "top": 834,
+          "right": 768,
+          "bottom": 900,
+          "left": 0
+        },
+        "navFixed": false,
         "scrollWidth": 768,
-        "clientWidth": 768
+        "clientWidth": 768,
+        "direction": "rtl",
+        "step": "cover",
+        "stepHeight": 1720,
+        "hasRail": false,
+        "counter": "1 / 58",
+        "ledgerLabels": false
       },
-      "direction": "rtl",
       "contrast": {
-        "samples": 79,
+        "samples": 68,
         "below": 0,
         "worst": {
-          "ratio": 5.5,
-          "text": "Bright Time Observatory · Advanced Foundation · IQ200"
-        }
+          "ratio": 5.93,
+          "text": "Lesson 37 · Future Continuous"
+        },
+        "offenders": []
       },
-      "overlaps": {
-        "lockNext": 0,
-        "lockPrev": 0
-      }
+      "tallest": [
+        {
+          "id": "s36",
+          "height": 2309,
+          "scrollWidth": 768,
+          "clientWidth": 768,
+          "ledger": false
+        },
+        {
+          "id": "s27",
+          "height": 2258,
+          "scrollWidth": 768,
+          "clientWidth": 768,
+          "ledger": false
+        },
+        {
+          "id": "s37b",
+          "height": 2214,
+          "scrollWidth": 768,
+          "clientWidth": 768,
+          "ledger": false
+        },
+        {
+          "id": "s19",
+          "height": 2147,
+          "scrollWidth": 768,
+          "clientWidth": 768,
+          "ledger": false
+        },
+        {
+          "id": "s08",
+          "height": 2114,
+          "scrollWidth": 768,
+          "clientWidth": 768,
+          "ledger": false
+        }
+      ]
     },
     {
       "viewport": "375x812",
-      "locks": 1,
-      "horizontal": {
+      "top": {
+        "totalLocks": 1,
+        "locks": 1,
+        "lockInsideNav": true,
+        "lock": {
+          "x": 40.0625,
+          "y": 759,
+          "width": 99.4375,
+          "height": 40,
+          "top": 759,
+          "right": 139.5,
+          "bottom": 799,
+          "left": 40.0625
+        },
+        "next": {
+          "x": 158.5,
+          "y": 761,
+          "width": 72.40625,
+          "height": 36,
+          "top": 761,
+          "right": 230.90625,
+          "bottom": 797,
+          "left": 158.5
+        },
+        "prev": {
+          "x": 243.90625,
+          "y": 761,
+          "width": 84.046875,
+          "height": 36,
+          "top": 761,
+          "right": 327.953125,
+          "bottom": 797,
+          "left": 243.90625
+        },
+        "nav": {
+          "x": 0,
+          "y": 746,
+          "width": 375,
+          "height": 66,
+          "top": 746,
+          "right": 375,
+          "bottom": 812,
+          "left": 0
+        },
+        "navFixed": false,
         "scrollWidth": 375,
-        "clientWidth": 375
+        "clientWidth": 375,
+        "direction": "rtl",
+        "step": "cover",
+        "stepHeight": 2622,
+        "hasRail": false,
+        "counter": "1 / 58",
+        "ledgerLabels": false
       },
-      "direction": "rtl",
       "contrast": {
-        "samples": 79,
+        "samples": 66,
         "below": 0,
         "worst": {
-          "ratio": 5.5,
-          "text": "Bright Time Observatory · Advanced Foundation · IQ200"
-        }
+          "ratio": 5.93,
+          "text": "Lesson 37 · Future Continuous"
+        },
+        "offenders": []
       },
-      "overlaps": {
-        "lockNext": 0,
-        "lockPrev": 0
-      }
+      "tallest": [
+        {
+          "id": "s37b",
+          "height": 3170,
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "ledger": false
+        },
+        {
+          "id": "s36",
+          "height": 3080,
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "ledger": false
+        },
+        {
+          "id": "s11",
+          "height": 2971,
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "ledger": false
+        },
+        {
+          "id": "s08",
+          "height": 2965,
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "ledger": false
+        },
+        {
+          "id": "s32",
+          "height": 2896,
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "ledger": false
+        }
+      ]
     }
   ],
   "steps": [
     {
-      "viewport": "1440x900",
+      "viewport": "1920x1080",
       "tallest": [
         {
           "id": "s27",
-          "height": 2192,
-          "scrollWidth": 1440,
-          "clientWidth": 1440
+          "height": 2185,
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "ledger": false
         },
         {
           "id": "s36",
-          "height": 2177,
-          "scrollWidth": 1440,
-          "clientWidth": 1440
+          "height": 2173,
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "ledger": false
         },
         {
           "id": "s37b",
-          "height": 2175,
-          "scrollWidth": 1440,
-          "clientWidth": 1440
+          "height": 2168,
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "ledger": false
         },
         {
           "id": "s19",
-          "height": 2151,
-          "scrollWidth": 1440,
-          "clientWidth": 1440
+          "height": 2153,
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "ledger": false
         },
         {
           "id": "s08",
           "height": 2061,
-          "scrollWidth": 1440,
-          "clientWidth": 1440
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "ledger": false
         }
-      ],
-      "median": 1437
+      ]
     },
     {
       "viewport": "1280x800",
       "tallest": [
         {
           "id": "s27",
-          "height": 2192,
+          "height": 2185,
           "scrollWidth": 1280,
-          "clientWidth": 1280
+          "clientWidth": 1280,
+          "ledger": false
         },
         {
           "id": "s36",
-          "height": 2177,
+          "height": 2173,
           "scrollWidth": 1280,
-          "clientWidth": 1280
+          "clientWidth": 1280,
+          "ledger": false
         },
         {
           "id": "s37b",
-          "height": 2175,
+          "height": 2173,
           "scrollWidth": 1280,
-          "clientWidth": 1280
+          "clientWidth": 1280,
+          "ledger": false
         },
         {
           "id": "s19",
-          "height": 2151,
+          "height": 2147,
           "scrollWidth": 1280,
-          "clientWidth": 1280
+          "clientWidth": 1280,
+          "ledger": false
         },
         {
           "id": "s08",
-          "height": 2061,
+          "height": 2049,
           "scrollWidth": 1280,
-          "clientWidth": 1280
+          "clientWidth": 1280,
+          "ledger": false
         }
-      ],
-      "median": 1437
+      ]
+    },
+    {
+      "viewport": "768x900",
+      "tallest": [
+        {
+          "id": "s36",
+          "height": 2309,
+          "scrollWidth": 768,
+          "clientWidth": 768,
+          "ledger": false
+        },
+        {
+          "id": "s27",
+          "height": 2258,
+          "scrollWidth": 768,
+          "clientWidth": 768,
+          "ledger": false
+        },
+        {
+          "id": "s37b",
+          "height": 2214,
+          "scrollWidth": 768,
+          "clientWidth": 768,
+          "ledger": false
+        },
+        {
+          "id": "s19",
+          "height": 2147,
+          "scrollWidth": 768,
+          "clientWidth": 768,
+          "ledger": false
+        },
+        {
+          "id": "s08",
+          "height": 2114,
+          "scrollWidth": 768,
+          "clientWidth": 768,
+          "ledger": false
+        }
+      ]
+    },
+    {
+      "viewport": "375x812",
+      "tallest": [
+        {
+          "id": "s37b",
+          "height": 3170,
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "ledger": false
+        },
+        {
+          "id": "s36",
+          "height": 3080,
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "ledger": false
+        },
+        {
+          "id": "s11",
+          "height": 2971,
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "ledger": false
+        },
+        {
+          "id": "s08",
+          "height": 2965,
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "ledger": false
+        },
+        {
+          "id": "s32",
+          "height": 2896,
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "ledger": false
+        }
+      ]
     }
   ],
   "consoleErrors": [],
-  "checks": 170,
+  "answerKeyIsolation": {
+    "markerSource": "solutionsData37.ts · Q24 model answer + Q22 explanation (values deliberately not stored here)",
+    "keyChunkPrefix": "solutionsData37-",
+    "stages": [
+      {
+        "stage": "initial-lesson-load",
+        "answerMarkerInLoadedJs": false,
+        "explanationMarkerInLoadedJs": false,
+        "keyModuleMarkerInLoadedJs": false,
+        "keyChunkRequested": false
+      },
+      {
+        "stage": "locked-solutions",
+        "answerMarkerInLoadedJs": false,
+        "explanationMarkerInLoadedJs": false,
+        "keyModuleMarkerInLoadedJs": false,
+        "keyChunkRequested": false
+      },
+      {
+        "stage": "answered-not-submitted",
+        "answerMarkerInLoadedJs": false,
+        "explanationMarkerInLoadedJs": false,
+        "keyModuleMarkerInLoadedJs": true,
+        "keyChunkRequested": false
+      },
+      {
+        "stage": "after-submission",
+        "answerMarkerInLoadedJs": true,
+        "explanationMarkerInLoadedJs": true,
+        "keyModuleMarkerInLoadedJs": true,
+        "keyChunkRequested": true
+      }
+    ]
+  },
+  "stepCount": 58,
+  "testCount": 25,
+  "checks": 614,
   "failures": []
 }

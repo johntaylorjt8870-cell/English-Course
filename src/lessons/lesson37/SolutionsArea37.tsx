@@ -49,23 +49,25 @@ export default function SolutionsArea37({
 
   return (
     <div data-area="lesson37-solutions" data-solution-count={TEST_SOLUTIONS_37.length} className="space-y-3">
-      <Card37 eyebrow="Solutions Area · منفصلة عن الاختبار" title="مفتاح تصحيح الاختبار النهائي — الدرس 37">
-        {section ? (
-          <div className="space-y-1.5">
-            {section.units.map((text, index) => (
-              <SourceLine37 key={index} sectionId="s35" index={index} text={text} />
-            ))}
-          </div>
-        ) : null}
-        <PlatformNote37>
-          نص المصدر في القسم 35 يعرض عنوان مفتاح التصحيح وعبارة «عرض الحلول التفصيلية» فقط، ولا يحمل مفتاحًا فعليًا. الإجابات والتفسيرات
-          أدناه إضافات تعليمية من إعداد المنصة/المعلم، مكتوبة وفق أمثلة المصدر وقواعده (الأقسام 1–33)، وليست نصًا منقولًا من المصدر.
-        </PlatformNote37>
-        <p className="text-sm leading-7 text-[#1e293b]">
-          في الأسئلة السياقية نميّز بين الخطأ النحوي، والاختيار الممكن لكنه أقل ملاءمة في السياق، والبدائل الصحيحة التي تغيّر التركيز. إجابات
-          المستوى الرابع نماذج وليست صيغًا وحيدة.
-        </p>
-      </Card37>
+      <div data-solutions-header="true">
+        <Card37 eyebrow="Solutions Area · منفصلة عن الاختبار" title="مفتاح تصحيح الاختبار النهائي — الدرس 37">
+          {section ? (
+            <div className="space-y-1.5">
+              {section.units.map((text, index) => (
+                <SourceLine37 key={index} sectionId="s35" index={index} text={text} />
+              ))}
+            </div>
+          ) : null}
+          <PlatformNote37>
+            نص المصدر في القسم 35 يعرض عنوان مفتاح التصحيح وعبارة «عرض الحلول التفصيلية» فقط، ولا يحمل مفتاحًا فعليًا. الإجابات والتفسيرات
+            أدناه إضافات تعليمية من إعداد المنصة/المعلم، مكتوبة وفق أمثلة المصدر وقواعده (الأقسام 1–33)، وليست نصًا منقولًا من المصدر.
+          </PlatformNote37>
+          <p className="text-sm leading-7 text-[#1e293b]">
+            في الأسئلة السياقية نميّز بين الخطأ النحوي، والاختيار الممكن لكنه أقل ملاءمة في السياق، والبدائل الصحيحة التي تغيّر التركيز. إجابات
+            المستوى الرابع نماذج وليست صيغًا وحيدة.
+          </p>
+        </Card37>
+      </div>
 
       <nav aria-label="مستويات حلول اختبار الدرس 37" className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
         {LEVELS_37.map((item) => (
@@ -150,6 +152,12 @@ export default function SolutionsArea37({
                 {openCards[solution.n] ? (
                   <div id={`solution-37-details-${solution.n}`} data-solution-details={solution.n} className="space-y-2">
                     <p>
+                      <strong className="text-[#0c4a6e]">صيغ مقبولة: </strong>
+                      <span dir="auto">
+                        <Rich text={solution.acceptedSummary} />
+                      </span>
+                    </p>
+                    <p>
                       <strong className="text-[#0c4a6e]">التفسير: </strong>
                       <span dir="auto">
                         <Rich text={solution.explanation} />
@@ -166,6 +174,17 @@ export default function SolutionsArea37({
                           ))}
                         </ul>
                       </div>
+                    ) : null}
+                    {solution.example ? (
+                      <p dir="ltr" className="font-en rounded-lg border border-[#bae6fd] bg-white px-3 py-1.5 text-left font-semibold text-[#0f172a]">
+                        {solution.example}
+                      </p>
+                    ) : null}
+                    {solution.judgment === "open-model" ? (
+                      <p className="rounded-xl border border-[#fcd34d] bg-[#fef3c7] p-3 text-sm leading-6 text-[#92400e]">
+                        هذا السؤال مفتوح: الدرجة تُمنح للمعنى لا للصياغة. تُقبل أي إجابة تفرّق بين الحدث المستقبلي العام والنشاط الجاري عند لحظة محددة،
+                        وتُطلب مراجعة المعلم/الطالب للنموذج عند اختلاف التعبير.
+                      </p>
                     ) : null}
                   </div>
                 ) : null}

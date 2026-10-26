@@ -303,6 +303,7 @@ export function SourceCard37({
   highlightFuture = false,
   twoColumnExamples = false,
   headerTone = "sky",
+  icon = "🔭",
   extra,
 }: {
   section: SourceSection37;
@@ -318,6 +319,8 @@ export function SourceCard37({
   highlightFuture?: boolean;
   twoColumnExamples?: boolean;
   headerTone?: "sky" | "teal" | "electric" | "violet";
+  /** أيقونة الفصل — تحلّ محل شارة ترقيم المصدر الداخلية */
+  icon?: string;
   extra?: ReactNode;
 }) {
   const hidden = new Set(hideIndexes);
@@ -347,13 +350,20 @@ export function SourceCard37({
       data-source-section={section.id}
       className="overflow-hidden rounded-3xl border border-[#bae6fd] bg-white shadow-sm"
     >
-      <header className={`flex flex-wrap items-center justify-between gap-2 ${headerBg} px-4 py-3 text-white`}>
-        <h2 className="min-w-0 text-base font-black leading-7 sm:text-lg">
+      <header className={`${headerBg} px-4 py-3 text-white`}>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          {badgeOverride ? (
+            <span className="shrink-0 rounded-full bg-white px-2.5 py-0.5 text-[11px] font-black text-[#0f172a]">{badgeOverride}</span>
+          ) : (
+            <span className="sr-only">من المصدر</span>
+          )}
+          <span aria-hidden className="shrink-0 text-lg leading-none">
+            {icon}
+          </span>
+        </div>
+        <h2 className="mt-1 min-w-0 text-base font-black leading-7 sm:text-lg">
           <SourceTitle37 text={titleOverride ?? section.title} />
         </h2>
-        <span dir="ltr" className="font-en shrink-0 rounded-full bg-white px-3 py-1 text-xs font-black text-[#0f172a]">
-          {badgeOverride ?? (section.num == null ? "HORIZON 37" : `§${section.num}`)}
-        </span>
       </header>
       <div className={`p-3.5 sm:p-5 ${twoColumnExamples ? "grid gap-2 md:grid-cols-2" : "space-y-1.5"}`}>
         {tableAfter === -1 ? table : null}
@@ -453,6 +463,7 @@ export function ActionButton37({
   variant = "primary",
   className = "",
   type = "button",
+  testId,
 }: {
   children: ReactNode;
   onClick?: () => void;
@@ -460,6 +471,8 @@ export function ActionButton37({
   variant?: "primary" | "secondary" | "ghost";
   className?: string;
   type?: "button" | "submit";
+  /** معرّف اختبار غير مرئي للطالب — يستخدمه تدقيق المتصفح. */
+  testId?: string;
 }) {
   const color =
     variant === "primary"
@@ -472,6 +485,7 @@ export function ActionButton37({
       type={type}
       onClick={onClick}
       disabled={disabled}
+      data-test-submit={testId}
       className={`${FOCUS_37} inline-flex min-h-11 items-center justify-center rounded-xl border px-4 py-2.5 text-sm font-black transition-colors motion-reduce:transition-none disabled:cursor-not-allowed ${color} ${className}`}
     >
       {children}

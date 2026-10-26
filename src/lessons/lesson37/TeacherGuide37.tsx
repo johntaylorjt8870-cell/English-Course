@@ -321,7 +321,7 @@ export default function TeacherGuide37({ onGoSolutions, onLock }: { onGoSolution
       {tab === "solutions" ? (
         <section aria-label="حلول الاختبار النهائي" className="space-y-3">
           <PlatformNote37>
-            المصدر §35 لا يقدّم مفتاحًا؛ الحلول أدناه من إعداد المنصة/المعلم، وكل بطاقة تحمل: السؤال، الإجابة، البدائل المقبولة، وسبب الاختيار.
+            المصدر لا يقدّم مفتاحًا فعليًا؛ الحلول أدناه من إعداد المنصة/المعلم، وكل بطاقة تحمل: السؤال، الإجابة، الصيغ المقبولة، سبب الاختيار، وسياسة التصحيح.
           </PlatformNote37>
           <ol className="space-y-2">
             {TEST_SOLUTIONS_37.map((solution) => {
@@ -349,6 +349,17 @@ export default function TeacherGuide37({ onGoSolutions, onLock }: { onGoSolution
                     <span className="font-black text-[#0c4a6e]">السبب: </span>
                     <Rich text={solution.explanation} />
                   </p>
+                  <p className="mt-1 text-sm leading-6 text-[#334155]">
+                    <span className="font-black text-[#0c4a6e]">صيغ مقبولة: </span>
+                    <span dir="auto">
+                      <Rich text={solution.acceptedSummary} />
+                    </span>
+                  </p>
+                  {solution.example ? (
+                    <p dir="ltr" className="font-en mt-1 rounded bg-white px-2 py-1 text-left text-xs font-semibold text-[#0f172a]">
+                      {solution.example}
+                    </p>
+                  ) : null}
                   {solution.alternatives?.length ? (
                     <ul className="mt-1 list-disc space-y-0.5 ps-5 text-xs leading-6 text-[#334155]">
                       {solution.alternatives.map((line) => (

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Rich } from "../../shared/lessonKit";
-import { STEP_COUNT_37, type Slide37 } from "./data";
+import { En, Rich } from "../../shared/lessonKit";
+import { CHAPTER_TONE_37, SECTION_KIND_37, STEP_COUNT_37, chapterOf37, type Slide37 } from "./data";
 import { ActionButton37, FormulaRibbon37, PlatformNote37, SourceCard37, SourceLine37, SourceTitle37 } from "./kit37";
 import {
   AdvancedChallengeLab37,
@@ -53,58 +53,63 @@ import {
    كل خطوة: عنوان + مصدرها + نشاط/شرح واحد مركّز.
    ------------------------------------------------------------------ */
 
-const CHAPTER_TONE_37: Record<string, string> = {
-  intro: "bg-[#e0f2fe] text-[#0c4a6e] border-[#7dd3fc]",
-  form: "bg-[#ccfbf1] text-[#115e59] border-[#5eead4]",
-  meaning: "bg-[#dbeafe] text-[#1e40af] border-[#93c5fd]",
-  clauses: "bg-[#ffedd5] text-[#9a3412] border-[#fdba74]",
-  polite: "bg-[#fef3c7] text-[#92400e] border-[#fcd34d]",
-  "neg-questions": "bg-[#ffe4e6] text-[#9f1239] border-[#fda4af]",
-  verbs: "bg-[#f3e8ff] text-[#5b21b6] border-[#d8b4fe]",
-  compare: "bg-[#e0f2fe] text-[#0c4a6e] border-[#7dd3fc]",
-  practice: "bg-[#ccfbf1] text-[#115e59] border-[#5eead4]",
-  assessment: "bg-[#fef3c7] text-[#92400e] border-[#fcd34d]",
-  closure: "bg-[#dbeafe] text-[#1e40af] border-[#93c5fd]",
-};
+/**
+ * رأس الخطوة: شارة الفصل + موضع الخطوة + العنوان المصدرى.
+ * لا يظهر هنا أي ترقيم داخلي للمصدر ولا أسماء ملفات أو وسوم تدقيق:
+ * التتبّع محفوظ في سمات data-* غير المرئية فقط.
+ */
+/**
+ * سطر العنوان الفرعي: يُعزل كل مقطع لاتيني في `bdi dir="ltr"` ولا يُسمح بكسر
+ * المقاطع القصيرة (مثل `Subject → will → be → V-ing`) عند الشرطة أو السهم،
+ * لأن كسرها على الهاتف يجعل الصيغة تبدو خاطئة.
+ */
+const LATIN_RUN_37 = /[A-Za-z0-9][A-Za-z0-9\s\u00a0.,:;'’"()\/+\-\u2013\u2014\u2192→]*/g;
 
-const CHAPTER_LABEL_37: Record<string, string> = {
-  intro: "المدخل والفكرة",
-  form: "القاعدة والتركيب",
-  meaning: "المعنى واللحظة",
-  clauses: "الربط الزمني والحوار",
-  polite: "السؤال المهذب",
-  "neg-questions": "النفي والأسئلة",
-  verbs: "التهجئة وأفعال الحالة",
-  compare: "المقارنات",
-  practice: "التدريبات والقراءة",
-  assessment: "الاختبار والحلول",
-  closure: "الكتابة والملخص",
-};
+function Subtitle37({ text }: { text: string }) {
+  const parts: React.ReactNode[] = [];
+  let cursor = 0;
+  for (const match of text.matchAll(LATIN_RUN_37)) {
+    const start = match.index ?? 0;
+    if (start > cursor) parts.push(text.slice(cursor, start));
+    const run = match[0].replace(/[\s.,:;'’"()\/+\u2013\u2014]+$/, "");
+    parts.push(
+      <bdi key={`latin-${start}`} dir="ltr" className={run.length <= 34 ? "whitespace-nowrap" : undefined}>
+        {run}
+      </bdi>,
+    );
+    parts.push(match[0].slice(run.length));
+    cursor = start + match[0].length;
+  }
+  if (cursor < text.length) parts.push(text.slice(cursor));
+  return <>{parts}</>;
+}
 
 function StepHeader37({ slide }: { slide: Slide37 }) {
+  const chapter = chapterOf37(slide.section);
   const tone = CHAPTER_TONE_37[slide.section] ?? CHAPTER_TONE_37.intro;
   return (
-    <header className="rounded-2xl border border-[#bae6fd] bg-white px-3.5 py-3 shadow-sm">
+    <header className="fh37-stepper rounded-2xl border border-[#bae6fd] bg-white px-3.5 py-3 shadow-sm">
       <div className="flex flex-wrap items-center gap-2">
         <span className={`rounded-full border px-2.5 py-1 text-[11px] font-black ${tone}`}>
-          <Rich text={CHAPTER_LABEL_37[slide.section] ?? ""} />
+          <span aria-hidden className="mr-1">{chapter.icon}</span>
+          <Rich text={chapter.title} />
         </span>
         <span className="rounded-full border border-[#cbd5e1] bg-[#f8fbff] px-2.5 py-1 text-[11px] font-black text-[#0f172a]">
           <Rich text={`الخطوة ${slide.step} من ${STEP_COUNT_37}`} />
         </span>
         <span
-          dir="ltr"
           data-source-ref={slide.sourceId}
-          className="font-en rounded-full border border-[#7dd3fc] bg-white px-2.5 py-1 text-[11px] font-black text-[#0369a1]"
+          className="mr-auto flex items-center gap-1.5 rounded-full border border-[#7dd3fc] bg-white px-2.5 py-1 text-[11px] font-black text-[#0369a1]"
         >
-          {slide.source.num == null ? "COVER" : `§${slide.source.num}`}
+          <span aria-hidden>🔭</span>
+          <En className="text-[10px] tracking-[.12em]">FUTURE HORIZON</En>
         </span>
       </div>
       <h1 className="mt-2 text-lg font-black leading-8 text-[#0f172a] sm:text-xl">
         <SourceTitle37 text={slide.title} />
       </h1>
       <p className="mt-1 text-sm font-bold leading-6 text-[#334155]">
-        <Rich text={slide.subtitle} />
+        <Subtitle37 text={slide.subtitle} />
       </p>
     </header>
   );
@@ -114,13 +119,15 @@ function LabPanel37({
   eyebrow,
   title,
   children,
+  lab,
 }: {
   eyebrow: string;
   title: string;
   children: React.ReactNode;
+  lab?: string;
 }) {
   return (
-    <section className="rounded-3xl border border-[#bae6fd] bg-[#f8fbff] p-4 shadow-sm sm:p-5">
+    <section data-lab={lab ?? "panel"} className="rounded-3xl border border-[#bae6fd] bg-[#f8fbff] p-4 shadow-sm sm:p-5">
       <p className="text-xs font-black uppercase tracking-[.14em] text-[#0369a1]">{eyebrow}</p>
       <h2 className="mt-1 text-base font-black leading-7 text-[#0f172a] sm:text-lg">{title}</h2>
       <div className="mt-2">{children}</div>
@@ -165,6 +172,8 @@ export default function StepView37({
         <StepHeader37 slide={slide} />
         <SourceCard37
           section={source}
+          icon={chapterOf37(slide.section).icon}
+          badgeOverride={SECTION_KIND_37[slide.section]}
           onlyIndexes={range}
           showReveal={part === "b" && revealed}
           hideRevealPrompt={part === "a"}
@@ -181,8 +190,8 @@ export default function StepView37({
     return (
       <div data-step-id={slide.id} data-source-id={slide.sourceId} data-source-section={slide.sourceId} className="space-y-3">
         <StepHeader37 slide={slide} />
-        <SourceCard37 section={source} skipIndexes={Array.from({ length: 61 }, (_, index) => index + 3)} />
-        <LabPanel37 eyebrow="منطقة اختبار مستقلة · §34" title="ابدأ الاختبار الرسمي">
+        <SourceCard37 section={source} icon="🏆" badgeOverride="تقييم" skipIndexes={Array.from({ length: 61 }, (_, index) => index + 3)} />
+        <LabPanel37 eyebrow="الاختبار النهائي · خمسة مستويات" title="ابدأ الاختبار الرسمي">
           <p className="text-sm leading-7 text-[#1e293b]">
             الاختبار مكوّن من <span className="font-black">25 سؤالًا</span> موزعة على خمسة مستويات أصلية (5 × 5)، ولا يظهر فيه أي تصحيح أو
             مفتاح إجابة أو درجة قبل الإرسال النهائي.
@@ -202,9 +211,9 @@ export default function StepView37({
     return (
       <div data-step-id={slide.id} data-source-id={slide.sourceId} data-source-section={slide.sourceId} className="space-y-3">
         <StepHeader37 slide={slide} />
-        <SourceCard37 section={source} />
+        <SourceCard37 section={source} icon="🔐" badgeOverride="حلول" />
         <PlatformNote37>
-          <Rich text="هذا القسم في المصدر يذكر عنوان مفتاح التصحيح وعبارة «عرض الحلول التفصيلية» دون أن يتضمّن مفتاحًا فعليًا. لذلك كُتبت الحلول التفصيلية للأسئلة الـ25 في منطقة Solutions مستقلة (تُفتح بعد تسليم الاختبار أو بدخول المعلم)، وكل إجابة موسومة بأنها من إعداد المنصة/المعلم وليست نصًا مصدريًا، مع نماذج وبدائل مقبولة في الأسئلة المفتوحة." />
+          <Rich text="المصدر الأصلي يذكر عنوان مفتاح التصحيح دون أن يتضمّن مفتاحًا فعليًا، لذلك كُتبت الحلول التفصيلية للأسئلة الـ25 في مساحة مستقلة تُفتح بعد تسليم الاختبار أو بدخول المعلم. كل إجابة موسومة بأنها من إعداد المنصة/المعلم، ومعها سببها والبدائل المقبولة في الأسئلة المفتوحة." />
         </PlatformNote37>
         <ActionButton37 onClick={onGoSolutions}>فتح Solutions Area</ActionButton37>
       </div>
@@ -216,6 +225,8 @@ export default function StepView37({
       <StepHeader37 slide={slide} />
       <SourceCard37
         section={source}
+        icon={chapterOf37(slide.section).icon}
+        badgeOverride={SECTION_KIND_37[slide.section]}
         showReveal={revealed}
         skipIndexes={skipIndexesFor37(slide.sourceId, source.units)}
         highlightFuture={slide.id === "s32" ? highlight : false}
@@ -313,7 +324,7 @@ function PART_LAB_37(
       return <Transform29Lab37 half={1} />;
     case "s29b":
       return <Transform29Lab37 half={2} onComplete={reveal} />;
-    case "s30a":
+    case "s30":
       return <Detective30Lab37 items={DETECTIVE30_ITEMS_37.slice(0, 5)} />;
     case "s30b":
       return <Detective30Lab37 items={DETECTIVE30_ITEMS_37.slice(5)} onComplete={reveal} />;
@@ -321,9 +332,9 @@ function PART_LAB_37(
       return <IQ200Lab37 half={1} />;
     case "s31b":
       return <IQ200Lab37 half={2} onComplete={reveal} />;
-    case "s32a":
+    case "s32":
       return (
-        <LabPanel37 eyebrow="§32 · عدسة الصيغ" title="مرّر الضوء على صيغ المستقبل في النص">
+        <LabPanel37 lab="reading-analysis" eyebrow="عدسة الصيغ · قراءة" title="مرّر الضوء على صيغ المستقبل في النص">
           <label className="inline-flex cursor-pointer items-center gap-3 rounded-xl border border-[#bae6fd] bg-white px-3 py-2 text-sm font-bold text-[#1e293b]">
             <input
               type="checkbox"
@@ -387,7 +398,7 @@ function FULL_LAB_37(
       return (
         <ChoiceLab37
           id="polite-16"
-          eyebrow="§16 · أسئلة عن الخطط"
+          eyebrow="السؤال المهذب · عن الخطط"
           title="اختر الصيغة الأنسب للموقف"
           items={POLITE_ITEMS_37.slice(0, 2)}
           note={
@@ -401,7 +412,7 @@ function FULL_LAB_37(
       return (
         <ChoiceLab37
           id="polite-17"
-          eyebrow="§17 · Will you أم Will you be + V-ing"
+          eyebrow="سؤال الاستعداد مقابل سؤال البرنامج"
           title="افرق بين سؤال الاستعداد وسؤال البرنامج"
           items={POLITE_ITEMS_37.slice(2)}
           note={
@@ -434,7 +445,7 @@ function FULL_LAB_37(
       return <Transform29Lab37 onComplete={reveal} />;
     case "s25b":
       return <StateVerbLab37 />;
-    case "s30a":
+    case "s30":
       return <Detective30Lab37 items={DETECTIVE30_ITEMS_37.slice(0, 5)} />;
     case "s32":
       return <ReadingLab37 highlight={highlight} onToggleHighlight={() => setHighlight((current) => !current)} onComplete={reveal} />;
@@ -576,10 +587,12 @@ function CoverScene37({ slide }: { slide: Slide37 }) {
       </section>
 
       <section className="rounded-3xl border border-[#bae6fd] bg-white p-4 shadow-sm sm:p-5">
-        <p className="text-xs font-black uppercase tracking-[.14em] text-[#0369a1]">من المصدر · المقدمة</p>
-        <h2 className="mt-1 text-base font-black text-[#0f172a] sm:text-lg">
+        <h2 className="text-base font-black text-[#0f172a] sm:text-lg">
           <Rich text="أين وصلنا في رحلة المستقبل؟" />
         </h2>
+        <p className="mt-1 text-sm font-bold leading-6 text-[#334155]">
+          <Rich text="ثلاث محطات سابقة في منظومة المستقبل، ثم نبدأ اليوم المحطة الرابعة: نشاط يكون جاريًا في لحظة مستقبلية." />
+        </p>
         <div className="mt-2 grid gap-2 sm:grid-cols-3">
           {[
             { tag: "34", en: "WILL", ar: "القرارات اللحظية والوعود والتوقعات" },
@@ -605,10 +618,10 @@ function CoverScene37({ slide }: { slide: Slide37 }) {
         </div>
         <dl className="mt-3 grid gap-2 sm:grid-cols-4">
           {[
-            { k: "أقسام المصدر", v: "38 قسمًا + المقدمة" },
-            { k: "خطوات الطالب", v: `${STEP_COUNT_37} خطوة قصيرة` },
+            { k: "مدة الرحلة", v: `${STEP_COUNT_37} خطوة قصيرة` },
             { k: "الاختبار", v: "25 سؤالًا · 5 مستويات" },
-            { k: "المناطق", v: "طالب · اختبار · حلول · معلم" },
+            { k: "المختبرات", v: "خط زمني · كاميرا · بناء الصيغة" },
+            { k: "المخرج", v: "فقرة كتابية + ملخص ذهبي" },
           ].map((entry) => (
             <div key={entry.k} className="rounded-xl border border-[#bae6fd] bg-white px-3 py-2">
               <dt className="text-[11px] font-black text-[#0369a1]">{entry.k}</dt>

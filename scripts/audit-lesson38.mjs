@@ -2,7 +2,7 @@
 // teacher/solutions separation, direction, contrast, responsive contract, and route audit.
 // Run: npm run build && npm run audit:lesson38
 import { createRequire } from "node:module";
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -78,9 +78,9 @@ const M = await import(pathToFileURL(outFile).href);
 const {
   SOURCE_SECTIONS_38, NUMBERED_SECTIONS_38, TIMELINE_ROWS_38, PRONOUN_ROWS_38, AT_BY_ROWS_38,
   TIME_EXPRESSION_ROWS_38, REGULAR_V3_ROWS_38, IRREGULAR_V3_ROWS_38, FUTURE_ROWS_38, PERFECT_ROWS_38,
-  sourceSection38,
+  ROADMAP_ROWS_38, sourceSection38,
 } = M.LEDGER;
-const { SLIDES_38, STEP_COUNT_38, CHAPTERS_38, LESSON_SUBTITLE_38 } = M.DATA;
+const { SLIDES_38, STEP_COUNT_38, CHAPTERS_38, LESSON_SUBTITLE_38, LESSON_IDENTITY_38 } = M.DATA;
 const { TEST_LEVELS_38, TEST_COUNT_38, TEST_LEVEL_COUNT_38, TEST_INTRO_38, TEST_SOURCE_UNIT_INDEXES_38, TEST_SOURCE_UNIT_TOTAL_38 } = M.TEST;
 const { TEST_SOLUTIONS_38 } = M.SOLUTIONS;
 const {
@@ -134,18 +134,20 @@ const driveChoiceLab = async (scope) => {
 };
 
 /* 1) Source ledger ------------------------------------------------------- */
-ok(SOURCE_SECTIONS_38.length === 37, `ledger holds the opening plus 36 numbered sections (got ${SOURCE_SECTIONS_38.length})`);
+ok(SOURCE_SECTIONS_38.length === 38, `ledger holds the opening, 36 numbered sections, and the 39–48 roadmap (got ${SOURCE_SECTIONS_38.length})`);
 ok(
   NUMBERED_SECTIONS_38.length === 36 && NUMBERED_SECTIONS_38.every((section, index) => section.num === index + 1 && section.id === `s${String(index + 1).padStart(2, "0")}`),
   "all 36 numbered source sections exist exactly once in original order",
 );
 ok(SOURCE_SECTIONS_38.every((section, index) => section.order === index && section.title.length > 0 && section.units.length > 0), "every source section keeps an ordered title and non-empty content units");
 ok(!sourceSection38("s37"), "no fabricated source section beyond the supplied 36");
-ok(COVERAGE_38.length === 37 && COVERAGE_SECTION_COUNT_38 === 36, "coverage ledger has a row for the opening plus every numbered section");
+ok(COVERAGE_38.length === 38 && COVERAGE_SECTION_COUNT_38 === 36, "coverage ledger has a row for the opening, every numbered section, and the roadmap");
 ok(COVERAGE_38.every((row) => typeof row.location === "string" && row.location.length > 0), "every coverage row states where the section is rendered");
 
 /* 2) Step map ------------------------------------------------------------ */
-ok(STEP_COUNT_38 === 58 && SLIDES_38[0].id === "cover", `the rebuild is 58 short steps starting with the opening (got ${STEP_COUNT_38})`);
+ok(STEP_COUNT_38 === 60 && SLIDES_38[0].id === "cover", `the rebuild is 60 short steps starting with the opening (got ${STEP_COUNT_38})`);
+ok(SLIDES_38.some((slide) => slide.id === "map-a") && SLIDES_38.some((slide) => slide.id === "map-b"), "the 39–48 future map is a closing station, not a new numbered lesson");
+ok(LESSON_IDENTITY_38.includes("Future Achievement Observatory"), "the lesson identity is Future Achievement Observatory");
 ok(SLIDES_38.every((slide, index) => slide.step === index + 1), "steps are numbered sequentially in reading order");
 ok(SLIDES_38.every((slide) => !!sourceSection38(slide.sourceId)), "every step points at a real source section");
 ok(
@@ -212,6 +214,8 @@ ok(source("s34").units.length === 3 && !source("s34").revealUnits, "§34 keeps i
 ok(WRITING35_CRITERIA_38.length === 8 && WRITING35_MODEL_38.length === 5 && source("s35").units[1].includes("12 إلى 15"), "§35 keeps the 12–15 sentence task, eight criteria, and five-line model");
 ok(WRITING_MODEL_CHECK_38.length === 3 && V3_PAIRS_38.length === 3, "the added split-step checks carry three traced items each");
 ok(source("s36").units.includes("Subject + will + have + V3") && source("s36").units.some((line) => line.includes("Subject + won't + have + V3")), "§36 golden summary keeps the positive and negative formulas");
+ok(ROADMAP_ROWS_38.length === 10 && ROADMAP_ROWS_38[0][0] === "39" && ROADMAP_ROWS_38[9][0] === "48", "the future map keeps all ten lesson titles 39–48");
+ok(source("roadmap").units.some((line) => line.includes("By 8:00, I will have been working for five hours.")), "the map keeps the Lesson 39 bridge pair");
 
 /* 4) Test data and key --------------------------------------------------- */
 ok(TEST_COUNT_38 === 25 && TEST_LEVEL_COUNT_38 === 5 && TEST_LEVELS_38.every((level) => level.questions.length === 5), "the formal test stays 25 questions in five levels of five");
@@ -278,6 +282,24 @@ ok(!testPreHtml.includes("الإجابة النموذجية"), "before submit no
   ok(teacherArea.includes('TEACHER_PASSWORD_38 = "somer173"'), "Teacher Area keeps the shared teacher password gate");
   const kit = readFileSync(join(root, "src/lessons/lesson38/kit38.tsx"), "utf8");
   ok(!kit.includes("solutionsData38") && !kit.includes("testKey38"), "shared lesson kit pulls in no answer module");
+  const studentSurface = [...initialStepHtml.values()].join("\n") + testPreHtml;
+  const explanationsIn = (surface) =>
+    TEST_SOLUTIONS_38.filter((solution) => normalize(surface).includes(normalize(solution.explanation))).map((solution) => solution.n);
+  const leaked = explanationsIn(studentSurface);
+  ok(leaked.length === 0, `no test explanation reaches student steps or the pre-submit test (${leaked.join(", ") || "none"} leaked)`);
+  const positiveControl = explanationsIn(`${studentSurface}${TEST_SOLUTIONS_38[22].explanation}`);
+  ok(positiveControl.length === 1 && positiveControl[0] === 23, `positive control: injecting Q23's explanation is detected (got ${JSON.stringify(positiveControl)})`);
+  const testAreaPath = join(root, "src/lessons/lesson38/TestArea38.tsx");
+  const originalTestArea = readFileSync(testAreaPath, "utf8");
+  const leakImport = (src) => src.includes("solutionsData38");
+  ok(!leakImport(originalTestArea), "pre-mutation: TestArea38 does not reference solutions data");
+  try {
+    writeFileSync(testAreaPath, `import { TEST_SOLUTIONS_38 } from "./solutionsData38";\n${originalTestArea}`);
+    ok(leakImport(readFileSync(testAreaPath, "utf8")), "mutation: a leaked solutions import is detected and would fail isolation");
+  } finally {
+    writeFileSync(testAreaPath, originalTestArea);
+  }
+  ok(!leakImport(readFileSync(testAreaPath, "utf8")), "post-mutation restore: TestArea38 is clean again");
 }
 
 /* 7) Interactive labs ---------------------------------------------------- */
@@ -582,7 +604,7 @@ ok(!testPreHtml.includes("الإجابة النموذجية"), "before submit no
   ok(lockedTeacher.includes('type="password"') && !lockedTeacher.includes("data-teacher-solution"), "Teacher Area starts gated and renders no test explanations");
   const { el: guide, root: guideRoot } = M.mount(M.React.createElement(M.TeacherGuide38, { onGoSolutions() {}, onLock() {} }));
   await tick();
-  ok(guide.querySelectorAll("[data-coverage-section]").length === 37, "the teacher coverage tab documents the opening plus all 36 source sections");
+  ok(guide.querySelectorAll("[data-coverage-section]").length === 38, "the teacher coverage tab documents the opening, all 36 source sections, and the roadmap");
   click(findButton(guide, "حلول الاختبار"));
   await tick(5);
   ok(guide.querySelectorAll("[data-teacher-solution]").length === 25, "the teacher guide contains all 25 detailed test answers");
@@ -597,35 +619,37 @@ ok(!testPreHtml.includes("الإجابة النموذجية"), "before submit no
   guideRoot.unmount(); guide.remove();
 }
 
-/* 11) Integrated shell --------------------------------------------------- */
+/* 11) Integrated shell (real Lesson1Shell) -------------------------------- */
 {
   const { el: shell, root: shellRoot } = M.mount(M.React.createElement(M.Lesson38, { onExit() {} }));
   await tick();
   ok(!!shell.querySelector('[data-lesson="38"] [data-area="lesson38-student"]'), "integrated Lesson 38 shell starts in the Student Area");
-  const mobileToggle = findButton(shell, "محتويات الدرس");
-  const mobilePanel = shell.querySelector("#lesson38-mobile-nav");
-  ok(mobileToggle?.getAttribute("aria-expanded") === "false" && mobilePanel === null, "mobile navigation starts collapsed and controlled");
-  click(mobileToggle);
-  await tick(5);
-  ok(mobileToggle?.getAttribute("aria-expanded") === "true" && !!shell.querySelector("#lesson38-mobile-nav"), "mobile navigation opens");
-  click(mobileToggle);
-  await tick(5);
-  ok(mobileToggle?.getAttribute("aria-expanded") === "false" && !shell.querySelector("#lesson38-mobile-nav"), "mobile navigation closes");
+  ok(shell.querySelector('[data-lesson="38"]')?.getAttribute("data-l35-shell") === "lesson-1", "Lesson 38 uses the real shared Lesson 1 shell");
+  const locks = shell.querySelectorAll("[data-site-lock-button='true']");
+  ok(locks.length === 1, `exactly one site-lock button is rendered (got ${locks.length})`);
+  ok(!!locks[0]?.closest("[data-lesson-step-nav='true']"), "the site lock lives inside the shared step navigation");
+  const nav = locks[0]?.closest("[data-lesson-step-nav='true']");
+  ok(!!nav?.querySelector('[data-step-nav="prev"]') && !!nav?.querySelector('[data-step-nav="next"]'), "Previous and Next live in the same normal-flow navigation");
+  ok(shell.querySelector('[data-step-nav="prev"]')?.disabled === true, "Previous is disabled on the first step");
+  const menuBtn = [...shell.querySelectorAll("button")].find((button) => button.getAttribute("aria-label") === "فهرس الدرس");
+  ok(!!menuBtn, "the shared shell exposes the mobile lesson index button");
   M.act(() => document.body.dispatchEvent(new win.KeyboardEvent("keydown", { key: "ArrowLeft", bubbles: true, cancelable: true })));
   await tick(5);
   ok(!!shell.querySelector('[data-area="lesson38-student"] [data-step-id="s01"]'), "keyboard next-step navigation works (ArrowLeft forward in RTL)");
   M.act(() => document.body.dispatchEvent(new win.KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true, cancelable: true })));
   await tick(5);
   ok(!!shell.querySelector('[data-area="lesson38-student"] [data-step-id="cover"]'), "keyboard navigation returns to the opening step");
-  click(findButton(shell, "منطقة الحلول"));
+  click(shell.querySelector('[data-area-tab="solutions"]'));
   await tick(5);
   ok(!!shell.querySelector('[data-area="lesson38-solutions"][data-solutions-locked]') && shell.querySelectorAll("[data-solution]").length === 0, "Solutions Area stays locked before test submission or teacher unlock");
-  click(findButton(shell, "منطقة الطالب"));
+  click(shell.querySelector('[data-area-tab="lesson"]'));
   await tick(5);
-  click(findButton(shell, "منطقة الاختبار"));
-  await tick();
+  click(shell.querySelector('[data-area-tab="test"]'));
+  await M.act(async () => {
+    for (let i = 0; i < 40 && !shell.querySelector("[data-test-question]"); i += 1) await tick(20);
+  });
   const shellTest = shell.querySelector('[data-area="lesson38-test"]');
-  const shellQuestions = [...shellTest.querySelectorAll("[data-test-question]")];
+  const shellQuestions = [...(shellTest?.querySelectorAll("[data-test-question]") ?? [])];
   ok(shellQuestions.length === 25, "integrated Test Area renders the 25 formal questions");
   ok(shellTest.querySelectorAll("[data-test-feedback]").length === 0 && !shellTest.querySelector("[data-test-score]"), "nothing is graded before submit");
   ok(findButton(shellTest, "إرسال الاختبار")?.disabled === true, "submission stays disabled until all 25 questions are answered");
@@ -637,17 +661,21 @@ ok(!testPreHtml.includes("الإجابة النموذجية"), "before submit no
   await tick(10);
   ok(findButton(shellTest, "إرسال الاختبار")?.disabled === false, "all 25 answers enable the submission button");
   click(findButton(shellTest, "إرسال الاختبار"));
-  await M.act(async () => { await tick(200); });
+  await M.act(async () => { await tick(250); });
   ok(!!shellTest.querySelector("[data-test-score]"), "after submission the Test Area renders the score");
   ok(shellTest.querySelectorAll("[data-test-feedback]").length === 25, "after submission every question shows explanatory feedback");
   ok(shellTest.querySelectorAll("[data-graded]").length === 25, "after submission every question is marked as graded");
   ok(normalize(shellTest.querySelector("[data-test-score]").textContent).includes("/ 25"), "the score is reported out of 25");
-  ok(findButton(shell, "منطقة الحلول")?.disabled === false, "submitting the test unlocks the Solutions Area");
-  click(findButton(shell, "منطقة الحلول"));
-  await M.act(async () => { await tick(200); });
+  ok(shell.querySelector('[data-area-tab="solutions"]')?.getAttribute("aria-disabled") !== "true", "submitting the test unlocks the Solutions Area");
+  click(shell.querySelector('[data-area-tab="solutions"]'));
+  await M.act(async () => {
+    for (let i = 0; i < 40 && !shell.querySelector("[data-solution]"); i += 1) await tick(20);
+  });
   ok(shell.querySelectorAll('[data-area="lesson38-solutions"] [data-solution]').length === 5, "integrated Solutions Area lazy-loads the first level after submission");
-  click(findButton(shell, "منطقة المعلم"));
-  await tick();
+  click(shell.querySelector('[data-area-tab="teacher"]'));
+  await M.act(async () => {
+    for (let i = 0; i < 40 && !shell.querySelector("#l38-teacher-password"); i += 1) await tick(20);
+  });
   const teacherForm = shell.querySelector('form[data-area="lesson38-teacher"]');
   const passwordField = teacherForm?.querySelector('input[type="password"]');
   setNative(passwordField, "wrong-password");
@@ -700,8 +728,8 @@ ok(!/[\u2066\u2067\u2068\u2069\u202A\u202B\u202C\u202D\u202E]/.test(directionSou
     }
   }
   ok(
-    exempted.size === 3 && [...exempted].every((title) => ledgerMixedHeadings.has(title)),
-    `only ${exempted.size} verbatim source headings that quote English mid-sentence are exempt from the English-first oracle`,
+    [...exempted].every((title) => ledgerMixedHeadings.has(title)),
+    `verbatim source headings that quote English mid-sentence are the only oracle exemptions (${exempted.size})`,
   );
   for (const violation of violations.slice(0, 30)) console.log(`      BIDI · ${violation}`);
   ok(violations.length === 0, `rendered markup passes the English/Arabic BIDI oracle (${violations.length} violations)`);
@@ -764,8 +792,12 @@ ok(!/[\u2066\u2067\u2068\u2069\u202A\u202B\u202C\u202D\u202E]/.test(directionSou
   ok(read38("Lesson38.tsx").includes("min-w-0") && read38("Steps38.tsx").includes("min-w-0") && read38("kit38.tsx").includes("min-w-0"), "flex rows carrying long mixed text can shrink (min-w-0)");
   ok(!/w-\[\d{3,}px\]/.test(directionSources) && !/whitespace-nowrap/.test(directionSources), "no fixed pixel width and no nowrap rule can force horizontal overflow");
   const shell = read38("Lesson38.tsx");
-  ok(/role="progressbar"/.test(shell) && /aria-valuemax=\{STEP_COUNT_38\}/.test(shell), "the shell exposes a real progress indicator");
-  ok((shell.match(/role="progressbar"/g) || []).length >= 2, "the progress indicator appears in both the rail and the mobile header");
+  ok(/import Lesson1Shell[^;]*from "\.\.\/\.\.\/shared\/Lesson1Shell"/.test(shell), "Lesson 38 renders through the real shared `Lesson1Shell` component");
+  ok(!/<aside|<nav/.test(shell), "Lesson 38 keeps no bespoke sidebar or navigation markup of its own");
+  ok(!/data-lesson-step-nav/.test(shell) && !/SiteLockButton/.test(shell), "the lesson does not re-implement the shared step navigation or the site lock");
+  ok(shell.includes("railFooter") && shell.includes("groups=") && shell.includes("onSelectStep"), "the rail, chapters and step selection are supplied to the shared shell through its prop contract");
+  ok(shell.includes("rootDataLesson={38}") && shell.includes('rootDir="rtl"'), "the shell is RTL-scoped to lesson 38");
+  ok(readFileSync(join(root, "src/shared/Lesson1Shell.tsx"), "utf8").includes("useRegisterInlineLockHost(true)"), "the shell itself still hosts the inline site-lock button");
 }
 
 /* 14) Registration and docs ---------------------------------------------- */

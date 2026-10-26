@@ -7,8 +7,11 @@ export const LESSON_ARABIC_SUBTITLE_38 = "إتقان التعبير عن الإ�
 export const LESSON_LEVEL_38 = "تأسيسي متقدم — IQ200";
 export const SECTION_COUNT_38 = SOURCE_NUMBERED_COUNT_38;
 
-/** الهوية البصرية: Finish Line Studio — استوديو خط النهاية. */
-export const LESSON_IDENTITY_38 = "Finish Line Studio · استوديو خط النهاية";
+/** الهوية البصرية: Future Achievement Observatory — مرصد الإنجاز المستقبلي. */
+export const LESSON_IDENTITY_38 = "Future Achievement Observatory · مرصد الإنجاز المستقبلي";
+
+/** مناطق الدرس الأربع — تُفتح من شريط التنقل المشترك، لا من شريط خاص. */
+export type Area38 = "lesson" | "test" | "solutions" | "teacher";
 
 export type ChapterId38 = "arrive" | "frame" | "deadline" | "clause" | "control" | "compare" | "practice" | "read" | "wrap";
 
@@ -16,7 +19,8 @@ export type Chapter38 = {
   id: ChapterId38;
   title: string;
   en: string;
-  tone: "rose" | "amber" | "violet" | "teal" | "plum";
+  icon: string;
+  tone: "navy" | "brass" | "forest" | "indigo" | "paper";
   stepIds: string[];
 };
 
@@ -26,6 +30,8 @@ export type Step38 = {
   sourceOrder: number;
   section: ChapterId38;
   title: string;
+  /** عنوان مختصر يُعرض في قائمة الخطوات */
+  rail: string;
   subtitle: string;
   /** نطاق أسطر المصدر [from, to) — كل سطر مصدري يظهر مرة واحدة وفي مكانه. */
   range: [number, number];
@@ -53,9 +59,9 @@ type StepSpec38 = {
 };
 
 /**
- * خريطة خطوات الدرس — 53 خطوة قصيرة.
- * الأقسام الكثيفة (2، 3، 4، 6، 7، 10، 11، 12، 13، 14، 16، 18، 19، 25، 26، 32)
- * قُسّمت إلى خطوتين: شرح مركّز ثم تطبيق. لا يُحذف أي سطر من المصدر.
+ * خريطة خطوات الدرس — محطات قصيرة على خط زمني مستقبلي.
+ * الأقسام الكثيفة قُسّمت إلى خطوتين: شرح مركّز ثم تطبيق. لا يُحذف أي سطر من المصدر.
+ * الخارطة 39–48 محطة ختامية، وليست قسمًا مرقّمًا جديدًا داخل الدرس.
  */
 const STEP_SPECS_38: StepSpec38[] = [
   { id: "cover", sourceId: "cover", subtitle: "مدخل الدرس، جسر Lesson 37، ومقارنة At 8:00 / By 8:00", activity: "cover" },
@@ -141,18 +147,84 @@ const STEP_SPECS_38: StepSpec38[] = [
   { id: "s35b", sourceId: "s35", title: "✍️ 35ب. النموذج الإرشادي وتحليله", subtitle: "أربع جمل نموذجية + فحص الشروط داخل النموذج", range: [11, 18], activity: "writing-model" },
   { id: "s36a", sourceId: "s36", title: "🧠 36أ. الملخص الذهبي — الصيغ الأربع", subtitle: "الإثبات والنفي والسؤال والإجابة القصيرة", range: [0, 20], activity: "summary" },
   { id: "s36b", sourceId: "s36", title: "🧠 36ب. الاستخدامات والمقارنة الذهبية", subtitle: "استخدمان + ثلاثة أزمنة في بطاقة واحدة", range: [20, 36], activity: "summary-golden" },
+
+  { id: "map-a", sourceId: "roadmap", title: "🗺️ خارطة الدروس 39–48", subtitle: "عناوين المحطات العشر القادمة كما وردت في المصدر — خريطة مستقبلية لا درسًا جديدًا", range: [0, 2], showMainTable: true, activity: "roadmap-table" },
+  { id: "map-b", sourceId: "roadmap", title: "🗺️ لماذا هذا التسلسل؟ والمحطة القادمة", subtitle: "من الأزمنة إلى المعاني الإضافية، ثم Future Perfect Continuous", range: [2, 18], activity: "roadmap-why" },
 ];
 
-const CHAPTER_RULES_38: { id: ChapterId38; title: string; en: string; tone: Chapter38["tone"]; sourceIds: string[] }[] = [
-  { id: "arrive", title: "الوصول إلى خط النهاية", en: "ARRIVAL", tone: "rose", sourceIds: ["cover", "s01"] },
-  { id: "frame", title: "بناء الصيغة وتشريحها", en: "THE FORM", tone: "amber", sourceIds: ["s02", "s03", "s04", "s05"] },
-  { id: "deadline", title: "by والموعد النهائي", en: "DEADLINES", tone: "plum", sourceIds: ["s06", "s07", "s08", "s09"] },
-  { id: "clause", title: "حدثان وجملة زمنية", en: "TWO EVENTS", tone: "violet", sourceIds: ["s10", "s11", "s12", "s13"] },
-  { id: "control", title: "النفي والسؤال والإجابات", en: "CONTROL", tone: "rose", sourceIds: ["s14", "s15", "s16", "s17", "s18", "s19"] },
-  { id: "compare", title: "المقارنات والأخطاء", en: "COMPARE", tone: "amber", sourceIds: ["s20", "s21", "s22", "s23", "s24", "s25"] },
-  { id: "practice", title: "الحوار والتدريبات", en: "PRACTICE", tone: "teal", sourceIds: ["s26", "s27", "s28", "s29", "s30", "s31"] },
-  { id: "read", title: "القراءة والاختبار", en: "READ & TEST", tone: "violet", sourceIds: ["s32", "s33", "s34"] },
-  { id: "wrap", title: "الكتابة والملخص الذهبي", en: "WRAP UP", tone: "plum", sourceIds: ["s35", "s36"] },
+const RAIL_38: Record<string, string> = {
+  cover: "المدخل",
+  s01: "الأهداف",
+  s02a: "الفكرة الأساسية",
+  s02b: "مختبر الخط الزمني",
+  s03a: "القاعدة",
+  s03b: "ورشة الصيغة",
+  s04a: "تحليل التركيب",
+  s04b: "ثبات have",
+  s05: "التصريف",
+  s06a: "الاستخدام الأول",
+  s06b: "السؤال الذهبي",
+  s07a: "معنى by",
+  s07b: "At أم By",
+  s08: "مختبر At/By",
+  s09: "تعبيرات زمنية",
+  s10a: "حدثان",
+  s10b: "ترتيب الحدثين",
+  s11a: "by the time",
+  s11b: "أمثلة القاعدة",
+  s12a: "by وbefore",
+  s12b: "مختبر الموعد",
+  s13a: "حوار المعرض",
+  s13b: "تحليل الحوار",
+  s14a: "النفي",
+  s14b: "ورشة النفي",
+  s15: "معنى النفي",
+  s16a: "أسئلة Yes/No",
+  s16b: "ورشة السؤال",
+  s17: "إجابات قصيرة",
+  s18a: "أسئلة Wh",
+  s18b: "ورشة Wh",
+  s19a: "V3 منتظم",
+  s19b: "V3 شاذ",
+  s19c: "ورشة V3",
+  s20: "Simple vs Perfect",
+  s21: "Continuous vs Perfect",
+  s22: "الأزمنة الثلاثة",
+  s23: "ثلاث زوايا",
+  s24: "الأزمنة التامة",
+  s25a: "أخطاء 1–5",
+  s25b: "أخطاء 6–7",
+  s26a: "حوار المهرجان",
+  s26b: "تحليل الحوار 2",
+  s27: "تدريب 1",
+  s28: "تدريب 2",
+  s29a: "تدريب 3أ",
+  s29b: "تدريب 3ب",
+  s30a: "Detective 1–5",
+  s30b: "Detective 6–10",
+  s31: "IQ200",
+  s32a: "القراءة",
+  s32b: "أسئلة الفهم",
+  s33: "الاختبار",
+  s34: "الحلول",
+  s35a: "مهمة الكتابة",
+  s35b: "النموذج",
+  s36a: "الملخص",
+  s36b: "المقارنة الذهبية",
+  "map-a": "خارطة 39–48",
+  "map-b": "لماذا هذا التسلسل",
+};
+
+const CHAPTER_RULES_38: { id: ChapterId38; title: string; en: string; icon: string; tone: Chapter38["tone"]; sourceIds: string[] }[] = [
+  { id: "arrive", title: "افتتاح المرصد", en: "ARRIVAL", icon: "🔭", tone: "navy", sourceIds: ["cover", "s01"] },
+  { id: "frame", title: "بناء الصيغة وتشريحها", en: "THE FORM", icon: "🧩", tone: "brass", sourceIds: ["s02", "s03", "s04", "s05"] },
+  { id: "deadline", title: "by ومحطات الموعد", en: "STATIONS", icon: "📍", tone: "indigo", sourceIds: ["s06", "s07", "s08", "s09"] },
+  { id: "clause", title: "حدثان وجملة زمنية", en: "TWO EVENTS", icon: "⏳", tone: "forest", sourceIds: ["s10", "s11", "s12", "s13"] },
+  { id: "control", title: "النفي والسؤال والإجابات", en: "CONTROL", icon: "🛠️", tone: "navy", sourceIds: ["s14", "s15", "s16", "s17", "s18", "s19"] },
+  { id: "compare", title: "المقارنات والأخطاء", en: "COMPARE", icon: "⚖️", tone: "brass", sourceIds: ["s20", "s21", "s22", "s23", "s24", "s25"] },
+  { id: "practice", title: "الحوار والتدريبات", en: "PRACTICE", icon: "🧪", tone: "forest", sourceIds: ["s26", "s27", "s28", "s29", "s30", "s31"] },
+  { id: "read", title: "القراءة والاختبار", en: "READ & TEST", icon: "📖", tone: "indigo", sourceIds: ["s32", "s33", "s34"] },
+  { id: "wrap", title: "الكتابة والخريطة المستقبلية", en: "WRAP UP", icon: "✨", tone: "paper", sourceIds: ["s35", "s36", "roadmap"] },
 ];
 
 const CHAPTER_BY_SOURCE_38 = Object.fromEntries(
@@ -179,6 +251,7 @@ export const SLIDES_38: Step38[] = STEP_SPECS_38.map((spec, index) => {
     sourceOrder: source.order,
     section,
     title: spec.title ?? source.title,
+    rail: RAIL_38[spec.id] ?? spec.subtitle,
     subtitle: spec.subtitle,
     range,
     showMainTable: spec.showMainTable ?? false,
@@ -199,9 +272,16 @@ export const CHAPTERS_38: Chapter38[] = CHAPTER_RULES_38.map((rule) => ({
   id: rule.id,
   title: rule.title,
   en: rule.en,
+  icon: rule.icon,
   tone: rule.tone,
   stepIds: SLIDES_38.filter((slide) => slide.section === rule.id).map((slide) => slide.id),
 }));
+
+export function chapterOf38(id: ChapterId38): Chapter38 {
+  const chapter = CHAPTERS_38.find((candidate) => candidate.id === id);
+  if (!chapter) throw new Error(`Lesson 38 missing chapter ${id}`);
+  return chapter;
+}
 
 export const PARTS_BY_SOURCE_38 = SLIDES_38.reduce<Record<string, Step38[]>>((accumulator, slide) => {
   accumulator[slide.sourceId] = [...(accumulator[slide.sourceId] ?? []), slide];

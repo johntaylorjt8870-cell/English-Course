@@ -1,34 +1,34 @@
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import { En, PlatformTag, Rich } from "../../shared/lessonKit";
 import type { SourceSection38 } from "./ledger38";
 
 /* ============================================================
-   Lesson 38 — Finish Line Studio
-   نظام بصري مستقل: ورقة عاجية دافئة، وردي/عنبري/بنفسجي،
-   وخط نهاية بعلامات مرجعية. لا يشارك هوية Lesson 37.
+   Lesson 38 — Future Achievement Observatory
+   مرصد الإنجاز المستقبلي: ورق خرائط دافئ، كحلي ليلي، ونحاس الإنجاز.
+   لا يشارك هوية Lesson 37 (سماء فيروزية) ولا هوية خط النهاية السابقة.
    ============================================================ */
 
 export const FOCUS_38 =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9f1239] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fff8f3]";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1b3a5c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffdf6]";
 
 export const TENSE_38 = {
   simple: {
     en: "will + V1",
     label: "Future Simple",
-    chip: "border-[#f2c14e] bg-[#fff8e1] text-[#7c4a03]",
-    dot: "bg-[#e8a317]",
+    chip: "border-[#c9a227] bg-[#f4ead0] text-[#8a5a10]",
+    dot: "bg-[#c9a227]",
   },
   continuous: {
     en: "will be + V-ing",
     label: "Future Continuous",
-    chip: "border-[#c4b5fd] bg-[#f5f3ff] text-[#5b21b6]",
-    dot: "bg-[#7c3aed]",
+    chip: "border-[#c4b5fd] bg-[#ece8f8] text-[#3b2f6b]",
+    dot: "bg-[#3b2f6b]",
   },
   perfect: {
     en: "will have + V3",
     label: "Future Perfect",
-    chip: "border-[#fda4af] bg-[#fff1f2] text-[#9f1239]",
-    dot: "bg-[#e11d48]",
+    chip: "border-[#1b3a5c] bg-[#e8eef5] text-[#1b3a5c]",
+    dot: "bg-[#1b3a5c]",
   },
 } as const;
 
@@ -47,7 +47,7 @@ export function English38({ children, className = "" }: { children: ReactNode; c
 
 export function EnglishFormula38({ children }: { children: ReactNode }) {
   return (
-    <span dir="ltr" className="font-en inline-block rounded-lg border border-[#f3d2d9] bg-[#fffaf7] px-2 py-1 text-[#3f1233]">
+    <span dir="ltr" className="font-en inline-block rounded-lg border border-[#d4c4a0] bg-[#fffdf6] px-2 py-1 text-[#122033]">
       {children}
     </span>
   );
@@ -69,18 +69,21 @@ export function TenseChip38({ tense, className = "" }: { tense: TenseKey38; clas
   );
 }
 
-/** شريط خط النهاية — العلامة البصرية المتكررة في الدرس. */
-export function FinishLine38({ label = "FINISH", className = "" }: { label?: string; className?: string }) {
+/** شريط محطات الإنجاز — العلامة البصرية المتكررة في المرصد. */
+export function ObservatoryMark38({ label = "STATION", className = "" }: { label?: string; className?: string }) {
   return (
-    <div aria-hidden className={`fp38-finishline ${className}`}>
-      <span className="fp38-finishline__stripe" />
-      <span className="fp38-finishline__label" dir="ltr">
+    <div aria-hidden className={`fp38-finishline fao38-stations ${className}`}>
+      <span className="fp38-finishline__stripe fao38-stations__beam" />
+      <span className="fp38-finishline__label fao38-stations__label" dir="ltr">
         {label}
       </span>
-      <span className="fp38-finishline__stripe" />
+      <span className="fp38-finishline__stripe fao38-stations__beam" />
     </div>
   );
 }
+
+/** اسم مستقر للتوافق مع المختبرات والاختبار. */
+export const FinishLine38 = ObservatoryMark38;
 
 export function Card38({
   children,
@@ -98,8 +101,8 @@ export function Card38({
   return (
     <section id={id} className={`fp38-card ${className}`}>
       {eyebrow ? <p className="fp38-eyebrow">{eyebrow}</p> : null}
-      {title ? <h2 className="mt-1 text-lg font-black leading-snug text-[#3f1233] sm:text-xl">{title}</h2> : null}
-      <div className="mt-3 space-y-3 text-base leading-7 text-[#2b1633]">{children}</div>
+      {title ? <h2 className="mt-1 text-lg font-black leading-snug text-[#122033] sm:text-xl">{title}</h2> : null}
+      <div className="mt-3 space-y-3 text-base leading-7 text-[#1a2433]">{children}</div>
     </section>
   );
 }
@@ -120,7 +123,7 @@ export function LabCard38({
   return (
     <section data-lab={id} className="fp38-lab">
       <p className="fp38-eyebrow">{eyebrow}</p>
-      <h2 className="mt-1 text-lg font-black leading-snug text-[#3f1233]">{title}</h2>
+      <h2 className="mt-1 text-lg font-black leading-snug text-[#122033]">{title}</h2>
       {platformNote ? (
         <div className="mt-2">
           <PlatformNote38>{platformNote}</PlatformNote38>
@@ -142,35 +145,71 @@ export function PlatformNote38({ children }: { children: ReactNode }) {
   );
 }
 
-/** إطار «خط النهاية» — يبقى للتوافق مع مختبرات الدرس. */
+export type FormulaPart38 = {
+  role: "wh" | "subject" | "will" | "wont" | "have" | "v3" | "rest";
+  en: string;
+  ar: string;
+};
+
+/** شريط بصري لأجزاء Future Perfect داخل مرصد الإنجاز. */
+export function FormulaRibbon38({
+  parts,
+  caption,
+}: {
+  parts: readonly FormulaPart38[];
+  caption?: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-[#d4c4a0] bg-[#fffdf6] p-3">
+      {caption ? <p className="mb-2 text-xs font-black text-[#1b3a5c]">{caption}</p> : null}
+      <div dir="ltr" className="fao38-formula-bar font-en">
+        {parts.map((part, idx) => (
+          <Fragment key={`${part.en}-${idx}`}>
+            <span className={`fao38-token fao38-token--${part.role}`}>
+              <span className="text-sm font-black sm:text-base">{part.en}</span>
+              <span dir="rtl" className="fao38-token__sub font-sans">
+                {part.ar}
+              </span>
+            </span>
+            {idx < parts.length - 1 ? (
+              <span aria-hidden="true" className="font-black text-[#1b3a5c]">
+                +
+              </span>
+            ) : null}
+          </Fragment>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** إطار المرصد — يبقى للتوافق مع مختبرات الدرس. */
 export function DeadlineFrame38({
   title,
   caption,
   children,
-  tone = "rose",
+  tone = "navy",
 }: {
   title?: string;
   caption?: string;
   children: ReactNode;
-  tone?: "rose" | "amber";
+  tone?: "rose" | "amber" | "navy";
 }) {
+  const header =
+    tone === "amber" ? "bg-[#8a5a10]" : tone === "rose" ? "bg-[#9f1239]" : "bg-[#1b3a5c]";
   return (
-    <section className="overflow-hidden rounded-3xl border border-[#f0c9d2] bg-white shadow-[0_18px_50px_-32px_rgba(159,18,57,0.45)]">
-      <header
-        className={`flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 text-white ${
-          tone === "rose" ? "bg-[#9f1239]" : "bg-[#a16207]"
-        }`}
-      >
+    <section className="overflow-hidden rounded-3xl border border-[#d4c4a0] bg-white shadow-[0_18px_50px_-32px_rgba(15,39,68,0.45)]">
+      <header className={`flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 text-white ${header}`}>
         <p className="text-sm font-black">
-          <Rich text={title ?? "Finish Line Studio"} />
+          <Rich text={title ?? "مرصد الإنجاز المستقبلي"} />
         </p>
-        <span dir="ltr" className="font-en rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-black text-[#ffe9ae]">
-          BY → FUTURE
+        <span dir="ltr" className="font-en rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-black text-[#f4ead0]">
+          BY → COMPLETE
         </span>
       </header>
-      <div className="relative border-2 border-dashed border-[#f3d2d9] bg-[#fffaf7] p-3 sm:p-4">
+      <div className="relative border-2 border-dashed border-[#d4c4a0] bg-[#fffdf6] p-3 sm:p-4">
         {caption ? (
-          <p className="mb-2 text-sm font-bold leading-6 text-[#6b4a5e]">
+          <p className="mb-2 text-sm font-bold leading-6 text-[#3d4a5c]">
             <Rich text={caption} />
           </p>
         ) : null}
@@ -210,22 +249,22 @@ export function SourceLine38({
       dir={pureEnglish ? "ltr" : "auto"}
       className={`min-w-0 rounded-xl px-3 py-1 leading-6 ${
         pureEnglish
-          ? "border border-[#f3d2d9] bg-[#fffaf7] text-left font-en text-[#3f1233]"
+          ? "border border-[#d4c4a0] bg-[#fffdf6] text-left font-en text-[#122033]"
           : isCorrect
             ? "border border-[#b8ddc5] bg-[#f0faf2] font-bold text-[#1c6b3c]"
             : isWrong
-              ? "border border-[#f6c2c9] bg-[#fff1f2] font-bold text-[#a41c36]"
+              ? "border border-[#fda4af] bg-[#ffe4e6] font-bold text-[#9f1239]"
               : marker
-                ? "border-r-4 border-[#e8a317] bg-[#fff8e8] font-black text-[#3f1233]"
+                ? "border-r-4 border-[#c9a227] bg-[#f4ead0] font-black text-[#122033]"
                 : kind === "reveal"
                   ? "text-[#1c6b3c]"
-                  : "text-[#2b1633]"
+                  : "text-[#1a2433]"
       } ${className}`}
     >
       {pureEnglish ? (
         <span className="block">{highlightFuture ? highlightFutureForms38(text) : text}</span>
       ) : (
-        <Rich text={text} />
+        <Title38 text={text} />
       )}
     </div>
   );
@@ -242,10 +281,10 @@ export function highlightFutureForms38(text: string) {
     if (start > cursor) nodes.push(text.slice(cursor, start));
     const phrase = match[0];
     const tone = /have/.test(phrase)
-      ? "bg-[#ffe4e6] text-[#9f1239]"
+      ? "bg-[#e8eef5] text-[#1b3a5c]"
       : /be\s/.test(phrase)
-        ? "bg-[#ede9fe] text-[#5b21b6]"
-        : "bg-[#fef3c7] text-[#7c4a03]";
+        ? "bg-[#ece8f8] text-[#3b2f6b]"
+        : "bg-[#f4ead0] text-[#8a5a10]";
     nodes.push(
       <mark key={`${start}-${phrase}`} className={`rounded px-0.5 ${tone}`}>
         {phrase}
@@ -262,19 +301,21 @@ export function Table38({
   rows,
   label,
   idPrefix,
-  tone = "rose",
+  tone = "navy",
 }: {
   headers: readonly string[];
   rows: readonly (readonly string[])[];
   label: string;
   idPrefix: string;
-  tone?: "rose" | "amber";
+  tone?: "rose" | "amber" | "navy";
 }) {
+  const head =
+    tone === "amber" ? "bg-[#8a5a10] text-white" : tone === "rose" ? "bg-[#9f1239] text-white" : "bg-[#1b3a5c] text-white";
   return (
     <div className="fp38-tablewrap">
       <table dir="rtl" aria-label={label} className="w-full min-w-[20rem] border-collapse text-base">
         <thead>
-          <tr className={tone === "rose" ? "bg-[#9f1239] text-white" : "bg-[#a16207] text-white"}>
+          <tr className={head}>
             {headers.map((header, index) => (
               <th key={`${idPrefix}-head-${header}-${index}`} scope="col" data-source-unit={`${idPrefix}-head-${index}`} className="px-3 py-3 text-right font-black">
                 <Rich text={header} />
@@ -284,7 +325,7 @@ export function Table38({
         </thead>
         <tbody>
           {rows.map((row, rowIndex) => (
-            <tr key={`${idPrefix}-row-${rowIndex}`} className={rowIndex % 2 === 0 ? "bg-white" : "bg-[#fff7f2]"}>
+            <tr key={`${idPrefix}-row-${rowIndex}`} className={rowIndex % 2 === 0 ? "bg-white" : "bg-[#f7f2e4]"}>
               {row.map((cell, cellIndex) => {
                 const pure = isPureEnglish38(cell);
                 const value = pure ? (
@@ -295,11 +336,11 @@ export function Table38({
                   <Rich text={cell} />
                 );
                 return cellIndex === 0 ? (
-                  <th key={`${idPrefix}-${rowIndex}-${cellIndex}`} scope="row" data-source-unit={`${idPrefix}-${rowIndex}-${cellIndex}`} className="border-t border-[#f6e3de] px-3 py-3 text-right font-bold text-[#2b1633]">
+                  <th key={`${idPrefix}-${rowIndex}-${cellIndex}`} scope="row" data-source-unit={`${idPrefix}-${rowIndex}-${cellIndex}`} className="border-t border-[#ebe3d0] px-3 py-3 text-right font-bold text-[#1a2433]">
                     {value}
                   </th>
                 ) : (
-                  <td key={`${idPrefix}-${rowIndex}-${cellIndex}`} data-source-unit={`${idPrefix}-${rowIndex}-${cellIndex}`} className="border-t border-[#f6e3de] px-3 py-3 text-right font-black text-[#9f1239]">
+                  <td key={`${idPrefix}-${rowIndex}-${cellIndex}`} data-source-unit={`${idPrefix}-${rowIndex}-${cellIndex}`} className="border-t border-[#ebe3d0] px-3 py-3 text-right font-black text-[#1b3a5c]">
                     {value}
                   </td>
                 );
@@ -343,7 +384,7 @@ export function SourceCard38({
   const hidden = new Set(hideIndexes);
   const visible = section.units.slice(from, to).map((text, offset) => ({ text, index: from + offset }));
   const table = showTable && section.tableRows && section.tableHeaders
-    ? <Table38 headers={section.tableHeaders} rows={section.tableRows} label={section.tableLabel ?? `جدول القسم ${section.num ?? ""}`} idPrefix={section.id} />
+    ? <Table38 headers={section.tableHeaders} rows={section.tableRows} label={section.tableLabel ?? "جدول هذا القسم"} idPrefix={section.id} />
     : null;
   const extraTable = showExtraTable && section.extraTableRows && section.extraTableHeaders
     ? <Table38 headers={section.extraTableHeaders} rows={section.extraTableRows} label={section.extraTableLabel ?? "جدول إضافي"} idPrefix={`${section.id}-extra`} tone="amber" />
@@ -351,15 +392,10 @@ export function SourceCard38({
 
   return (
     <section data-source-section={section.id} data-source-range={`${from}-${to}`} className="fp38-source">
-      <header className="flex flex-wrap items-center justify-between gap-2 border-b border-[#f3d2d9] bg-[#fff7f2] px-4 py-3">
-        <h2 className="text-base font-black leading-7 text-[#3f1233] sm:text-lg">
+      <header className="border-b border-[#d4c4a0] bg-[#f7f2e4] px-4 py-3">
+        <h2 className="min-w-0 text-base font-black leading-7 text-[#122033] sm:text-lg">
           <Title38 text={section.title} />
         </h2>
-        <span dir="ltr" className="font-en shrink-0 rounded-full border border-[#f3c7d1] bg-white px-3 py-1 text-xs font-black text-[#9f1239]">
-          {section.num == null ? "OPENING" : `§${section.num}`}
-          <span className="mx-1 text-[#c98a9d]">·</span>
-          {from + 1}–{to}
-        </span>
       </header>
       <div className={`space-y-1.5 ${compact ? "p-3" : "p-3 sm:p-5"}`}>
         {tablePosition === "before" ? table : null}
@@ -412,7 +448,7 @@ export function Title38({ text, className = "" }: { text: string; className?: st
 /** علامة أن المفتاح محفوظ — تُستخدم حين لا تكتمل محاولة الخطوة بعد. */
 export function SealedKey38({ children = "مفتاح هذه الخطوة يظهر بعد إكمال محاولتك." }: { children?: ReactNode }) {
   return (
-    <p className="mt-3 rounded-xl border border-dashed border-[#e7c8cc] bg-[#fff8f3] p-3 text-sm font-bold text-[#7a5767]">
+    <p className="mt-3 rounded-xl border border-dashed border-[#d4c4a0] bg-[#f7f2e4] p-3 text-sm font-bold text-[#3d4a5c]">
       <PlatformTag text="الإجابات محفوظة حتى المحاولة" />
       <span className="mt-1 block">{children}</span>
     </p>
@@ -436,10 +472,10 @@ export function ActionButton38({
 }) {
   const color =
     variant === "primary"
-      ? "border-[#9f1239] bg-[#9f1239] text-white hover:bg-[#881337] disabled:border-[#ecd6d5] disabled:bg-[#f6e9e5] disabled:text-[#8a6a72]"
+      ? "border-[#1b3a5c] bg-[#1b3a5c] text-white hover:bg-[#152e4a] disabled:border-[#e6dcc4] disabled:bg-[#efe8d6] disabled:text-[#5c6570]"
       : variant === "secondary"
-        ? "border-[#e9b9c6] bg-white text-[#9f1239] hover:bg-[#fff1f2] disabled:border-[#f0e1dc] disabled:bg-[#fff8f3] disabled:text-[#8a6a72]"
-        : "border-transparent bg-[#fdf2ed] text-[#3f1233] hover:bg-[#f9e4dc] disabled:text-[#8a6a72]";
+        ? "border-[#c9b88a] bg-white text-[#1b3a5c] hover:bg-[#e8eef5] disabled:border-[#e6dcc4] disabled:bg-[#f7f2e4] disabled:text-[#5c6570]"
+        : "border-transparent bg-[#f7f2e4] text-[#122033] hover:bg-[#efe6d0] disabled:text-[#5c6570]";
   return (
     <button
       type={type}
@@ -466,7 +502,7 @@ export function Feedback38({
       ? "border-[#b8ddc5] bg-[#f0faf2] text-[#1c6b3c]"
       : state === "review"
         ? "border-[#f2d49a] bg-[#fff8e8] text-[#7c4a03]"
-        : "border-[#f3d2d9] bg-[#fff8f3] text-[#2b1633]";
+        : "border-[#d4c4a0] bg-[#f7f2e4] text-[#1a2433]";
   return (
     <div role="status" aria-live="polite" className={`rounded-xl border p-3 text-sm leading-6 ${palette}`}>
       <strong className="block font-black">{title}</strong>
@@ -491,7 +527,7 @@ export function TimelineRail38({
         const isActive = active === point.id;
         const Tag = onSelect ? "button" : "div";
         return (
-          <div key={point.id} role="listitem" className="relative flex-1">
+          <div key={point.id} role="listitem" className="relative min-w-0 flex-1">
             {index < points.length - 1 ? <span aria-hidden className="fp38-rail__line" /> : null}
             <Tag
               {...(onSelect ? { type: "button" as const, onClick: () => onSelect(point.id), "aria-pressed": isActive } : {})}
@@ -499,10 +535,10 @@ export function TimelineRail38({
               className={`fp38-rail__point ${isActive ? "fp38-rail__point--active" : ""} ${onSelect ? FOCUS_38 : ""}`}
             >
               <span aria-hidden className="fp38-rail__dot" />
-              <span dir="ltr" className="font-en mt-1 block text-xs font-black tracking-[.12em] text-[#9f1239]">
+              <span dir="ltr" className="font-en mt-1 block text-xs font-black tracking-[.12em] text-[#1b3a5c]">
                 {point.label}
               </span>
-              <span className="mt-0.5 block text-xs font-bold leading-5 text-[#6b4a5e]">{point.sub}</span>
+              <span className="mt-0.5 block text-xs font-bold leading-5 text-[#3d4a5c]">{point.sub}</span>
             </Tag>
           </div>
         );

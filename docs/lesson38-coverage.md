@@ -9,7 +9,8 @@
 - Level: **تأسيسي متقدم — IQ200**.
 - Source of truth: the complete Lesson 38 text supplied in the implementation request.
 - The supplied material has an unnumbered opening that bridges Lesson 37 (Future Continuous) and then **36 numbered source sections**. Sections keep their numbers 1–36 and receive IDs `s01`–`s36`; the opening is the separate `cover` step.
-- Native student sequence: `cover`, then the 36 source sections **in source order**, split into **58 short steps**. No section is dropped and no step is a duplicate: dense sections are split into an explanatory half and a practice half (`s02` → `s02a`/`s02b`, `s30` → `s30a`/`s30b`, …). Chapters group them: ARRIVAL (cover, s01), THE FORM (s02–s05), DEADLINES (s06–s09), TWO EVENTS (s10–s13), CONTROL (s14–s19), COMPARE (s20–s25), PRACTICE (s26–s31), READ & TEST (s32–s34), WRAP UP (s35–s36).
+- Visual identity: **Future Achievement Observatory / مرصد الإنجاز المستقبلي**. The lesson renders through the shared `Lesson1Shell`.
+- Native student sequence: `cover`, then the 36 source sections **in source order**, split into **60 short steps** (58 teaching stations plus a two-step future map for lessons 39–48). No section is dropped and no step is a duplicate: dense sections are split into an explanatory half and a practice half (`s02` → `s02a`/`s02b`, `s30` → `s30a`/`s30b`, …). Chapters group them: ARRIVAL (cover, s01), THE FORM (s02–s05), STATIONS (s06–s09), TWO EVENTS (s10–s13), CONTROL (s14–s19), COMPARE (s20–s25), PRACTICE (s26–s31), READ & TEST (s32–s34), WRAP UP (s35–s36 + roadmap 39–48). The 39–48 map is a closing station, not a new numbered lesson inside lesson 38.
 - Section 33 is the *Future Perfect Master Test*: all **25** questions live once in the dedicated Test Area. Its student step is a launch step that keeps the source section visible and points to the test; it does not duplicate the questions.
 - Section 34 (Teacher solutions area) contains only the heading and «عرض الحلول التفصيلية». The source supplies **no** answer key, so all 25 answers and explanations are **platform/teacher additions**, kept in `src/lessons/lesson38/solutionsData38.ts`, marked `platform-authored-teacher-addition`, and shown only in the gated Solutions/Teacher surfaces.
 
@@ -35,7 +36,7 @@ See `docs/lesson38-source-readability.md`. Summary:
 
 ## Coverage ledger — all 36 numbered sections and the introduction
 
-The in-app ledger is `src/lessons/lesson38/coverage38.ts` (37 rows). Every row's `location` is **derived at runtime** from `SLIDES_38` (`coverageLocation38`), so a coverage row and the step map can never drift: the table below names the source section; where a section is split, the derived location lists every step that carries it (`§2 → الخطوات 3 · 4`). A compact copy:
+The in-app ledger is `src/lessons/lesson38/coverage38.ts` (38 rows: opening + 36 numbered sections + the 39–48 future map). Every row's `location` is **derived at runtime** from `SLIDES_38` (`coverageLocation38`), so a coverage row and the step map can never drift: the table below names the source section; where a section is split, the derived location lists every step that carries it (`§2 → الخطوات 3 · 4`). A compact copy:
 
 | Source | Native location | Transfer | Platform addition |
 |---|---|---|---|

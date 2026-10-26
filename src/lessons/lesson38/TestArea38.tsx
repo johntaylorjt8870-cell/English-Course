@@ -58,14 +58,12 @@ export default function TestArea38({
         <div className="mt-2 flex flex-wrap gap-2">
           <span className="fp38-kicker">🏆 25 QUESTIONS</span>
           <span className="fp38-badge">5 مستويات × 5</span>
-          <span dir="ltr" className="font-en fp38-badge">
-            §33
-          </span>
+          <span className="fp38-badge">Master Test</span>
         </div>
-        <h2 className="mt-2 text-xl font-black leading-8 text-[#3f1233]">
+        <h2 className="mt-2 text-xl font-black leading-8 text-[#122033]">
           <Rich text="Future Perfect Master Test — المستقبل التام" />
         </h2>
-        <div className="mt-2 space-y-1 text-sm leading-7 text-[#2b1633]">
+        <div className="mt-2 space-y-1 text-sm leading-7 text-[#1a2433]">
           {TEST_INTRO_38.map((unit) => (
             <SourceLine38 key={unit.sourceUnitIndex} sectionId="s33" index={unit.sourceUnitIndex} text={unit.text} />
           ))}
@@ -77,11 +75,11 @@ export default function TestArea38({
             aria-valuemin={0}
             aria-valuemax={TEST_COUNT_38}
             aria-valuenow={answered}
-            className="h-2.5 flex-1 overflow-hidden rounded-full bg-[#f6e3de]"
+            className="h-2.5 flex-1 overflow-hidden rounded-full bg-[#ebe3d0]"
           >
-            <div className="h-full bg-[#9f1239] transition-[width] motion-reduce:transition-none" style={{ width: `${Math.round((answered / TEST_COUNT_38) * 100)}%` }} />
+            <div className="h-full bg-[#1b3a5c] transition-[width] motion-reduce:transition-none" style={{ width: `${Math.round((answered / TEST_COUNT_38) * 100)}%` }} />
           </div>
-          <span dir="ltr" className="font-en text-sm font-black tabular-nums text-[#3f1233]" aria-live="polite">
+          <span dir="ltr" className="font-en text-sm font-black tabular-nums text-[#122033]" aria-live="polite">
             {answered}/{TEST_COUNT_38}
           </span>
         </div>
@@ -90,7 +88,7 @@ export default function TestArea38({
           <TenseChip38 tense="continuous" />
           <TenseChip38 tense="perfect" />
         </div>
-        <p className="mt-3 rounded-xl border border-dashed border-[#e9b9c6] bg-[#fff8f3] px-3 py-2 text-sm font-bold leading-6 text-[#7a5767]" data-test-locked={submitted ? undefined : "true"}>
+        <p className="mt-3 rounded-xl border border-dashed border-[#c9b88a] bg-[#f7f2e4] px-3 py-2 text-sm font-bold leading-6 text-[#4a5568]" data-test-locked={submitted ? undefined : "true"}>
           <Rich text="الواجهة محايدة قبل الإرسال: لا تظهر درجة، ولا علامة صحة/خطأ، ولا تفسير، ولا مفتاح إجابة. إجاباتك تبقى محفوظة عند الانتقال إلى منطقة أخرى." />
         </p>
       </section>
@@ -121,25 +119,25 @@ export default function TestArea38({
       ) : null}
 
       {error ? (
-        <p role="alert" className="rounded-xl border border-[#f6c2c9] bg-[#fff1f2] p-3 text-sm font-black text-[#a41c36]">
+        <p role="alert" className="rounded-xl border border-[#fda4af] bg-[#e8eef5] p-3 text-sm font-black text-[#a41c36]">
           {error}
         </p>
       ) : null}
 
       {TEST_LEVELS_38.map((level, levelIndex) => (
         <section key={level.id} aria-labelledby={`l38-${level.id}`} className="space-y-2">
-          <header className="flex flex-wrap items-center gap-2 border-b border-[#f0d9d2] pb-2">
+          <header className="flex flex-wrap items-center gap-2 border-b border-[#d4c4a0] pb-2">
             <span className="fp38-stepnum" dir="ltr">
               {levelIndex + 1}
             </span>
             <h2
               id={`l38-${level.id}`}
               data-source-unit={`s33-unit-${level.titleUnitIndex}`}
-              className="text-base font-black text-[#3f1233] sm:text-lg"
+              className="text-base font-black text-[#122033] sm:text-lg"
             >
               <Rich text={level.title} />
             </h2>
-            <span dir="ltr" className="font-en rounded-full bg-[#fff1f2] px-2.5 py-1 text-[11px] font-black text-[#9f1239]">
+            <span dir="ltr" className="font-en rounded-full bg-[#e8eef5] px-2.5 py-1 text-[11px] font-black text-[#1b3a5c]">
               Q{level.questions[0].n}–Q{level.questions[level.questions.length - 1].n}
             </span>
           </header>
@@ -157,8 +155,8 @@ export default function TestArea38({
             />
           ))}
           {level.trailing?.length ? (
-            <div className="rounded-2xl border border-dashed border-[#e9b9c6] bg-[#fff8f3] p-3">
-              <p className="mb-1 text-sm font-black text-[#7a5767]">تكملة الفقرة الأصلية:</p>
+            <div className="rounded-2xl border border-dashed border-[#c9b88a] bg-[#f7f2e4] p-3">
+              <p className="mb-1 text-sm font-black text-[#4a5568]">تكملة الفقرة الأصلية:</p>
               <div className="space-y-1">
                 {level.trailing.map((line) => (
                   <SourceLine38 key={line.sourceUnitIndex} sectionId="s33" index={line.sourceUnitIndex} text={line.text} />
@@ -169,13 +167,13 @@ export default function TestArea38({
         </section>
       ))}
 
-      <div className="sticky bottom-3 z-10 rounded-2xl border border-[#f0d9d2] bg-white/95 p-3 shadow-lg backdrop-blur">
+      <div className="rounded-2xl border border-[#d4c4a0] bg-white p-3 shadow-sm">
         {!submitted ? (
           <div className="flex flex-wrap items-center justify-center gap-3">
             <ActionButton38 disabled={!ready || grading} onClick={submit}>
               {grading ? "جارٍ التصحيح…" : "إرسال الاختبار"}
             </ActionButton38>
-            <p className="text-sm font-bold text-[#6b4a5e]" aria-live="polite">
+            <p className="text-sm font-bold text-[#3d4a5c]" aria-live="polite">
               {ready ? "أصبحت إجاباتك جاهزة للإرسال." : `أكمل ${TEST_COUNT_38 - answered} سؤالًا متبقيًا.`}
             </p>
           </div>
@@ -209,7 +207,7 @@ function Question38({
   return (
     <fieldset
       className={`rounded-2xl border bg-white p-3 shadow-sm sm:p-4 ${
-        submitted && grade ? (grade.isCorrect ? "border-[#b8ddc5]" : "border-[#fda4af]") : "border-[#f0d9d2]"
+        submitted && grade ? (grade.isCorrect ? "border-[#b8ddc5]" : "border-[#fda4af]") : "border-[#d4c4a0]"
       }`}
       data-test-question={question.n}
       data-graded={submitted ? "true" : undefined}
@@ -224,7 +222,7 @@ function Question38({
         {submitted && grade ? (
           <span
             aria-hidden
-            className={`shrink-0 rounded-full px-2 py-1 text-sm font-black ${grade.isCorrect ? "bg-[#d7f0dc] text-[#1c6b3c]" : "bg-[#ffe4e6] text-[#9f1239]"}`}
+            className={`shrink-0 rounded-full px-2 py-1 text-sm font-black ${grade.isCorrect ? "bg-[#d7f0dc] text-[#1c6b3c]" : "bg-[#ffe4e6] text-[#1b3a5c]"}`}
           >
             {grade.isCorrect ? "✓" : "✕"}
           </span>
@@ -246,12 +244,12 @@ function Question38({
               <label
                 key={option.sourceUnitIndex}
                 data-source-unit={`s33-unit-${option.sourceUnitIndex}`}
-                className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border p-3 text-sm font-bold text-[#2b1633] ${
+                className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border p-3 text-sm font-bold text-[#1a2433] ${
                   showCorrect
                     ? "border-[#1c6b3c] bg-[#f0faf2]"
                     : selected
-                      ? "border-[#9f1239] bg-[#fff1f2]"
-                      : "border-[#f0d9d2] bg-white hover:bg-[#fff8f3]"
+                      ? "border-[#1b3a5c] bg-[#e8eef5]"
+                      : "border-[#d4c4a0] bg-white hover:bg-[#f7f2e4]"
                 }`}
               >
                 <input
@@ -261,7 +259,7 @@ function Question38({
                   checked={selected}
                   disabled={submitted}
                   onChange={(event) => onChange(event.currentTarget.value)}
-                  className={`${FOCUS_38} h-4 w-4 accent-[#9f1239]`}
+                  className={`${FOCUS_38} h-4 w-4 accent-[#1b3a5c]`}
                 />
                 <span dir="ltr" className="font-en text-left">
                   {option.text}
@@ -272,7 +270,7 @@ function Question38({
         </div>
       ) : (
         <label className="mt-3 block">
-          <span className="mb-1 block text-sm font-bold text-[#7a5767]">
+          <span className="mb-1 block text-sm font-bold text-[#4a5568]">
             {question.fieldLabel ??
               (question.type === "fill"
                 ? "أكمل الفراغ"
@@ -289,7 +287,7 @@ function Question38({
               value={value}
               disabled={submitted}
               onChange={(event) => onChange(event.currentTarget.value)}
-              className={`${FOCUS_38} w-full rounded-xl border border-[#dfc2c8] bg-white px-3 py-2.5 text-base text-[#2b1633] disabled:bg-[#fff8f3]`}
+              className={`${FOCUS_38} w-full rounded-xl border border-[#d4c4a0] bg-white px-3 py-2.5 text-base text-[#1a2433] disabled:bg-[#f7f2e4]`}
               aria-label={`${promptLabel} — الإجابة`}
             />
           ) : (
@@ -299,7 +297,7 @@ function Question38({
               value={value}
               disabled={submitted}
               onChange={(event) => onChange(event.currentTarget.value)}
-              className={`${FOCUS_38} w-full resize-y rounded-xl border border-[#dfc2c8] bg-white px-3 py-2.5 text-base leading-7 text-[#2b1633] disabled:bg-[#fff8f3]`}
+              className={`${FOCUS_38} w-full resize-y rounded-xl border border-[#d4c4a0] bg-white px-3 py-2.5 text-base leading-7 text-[#1a2433] disabled:bg-[#f7f2e4]`}
               aria-label={`${promptLabel} — الإجابة`}
             />
           )}

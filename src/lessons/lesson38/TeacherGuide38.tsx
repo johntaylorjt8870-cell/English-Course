@@ -34,7 +34,7 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
       <section className="fp38-card">
         <FinishLine38 label="TEACHER" />
         <p className="fp38-eyebrow mt-2">Teacher Area · Lesson 38</p>
-        <h2 className="mt-1 text-xl font-black text-[#3f1233]">دليل المعلم — Future Perfect</h2>
+        <h2 className="mt-1 text-xl font-black text-[#122033]">دليل المعلم — Future Perfect</h2>
         <div className="mt-3 grid gap-2 sm:grid-cols-4">
           {[
             { k: "أقسام المصدر", v: `${SOURCE_NUMBERED_COUNT_38} قسمًا مرقّمًا + المقدمة` },
@@ -42,9 +42,9 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
             { k: "الاختبار الرسمي", v: "25 سؤالًا · 5 مستويات × 5" },
             { k: "الحلول", v: "25 حلًا تفصيليًا موسومًا" },
           ].map((entry) => (
-            <div key={entry.k} className="rounded-xl border border-[#f3d2d9] bg-[#fffaf7] px-3 py-2">
-              <p className="text-xs font-black text-[#7a5767]">{entry.k}</p>
-              <p className="mt-0.5 text-sm font-bold text-[#3f1233]">{entry.v}</p>
+            <div key={entry.k} className="rounded-xl border border-[#d9cbb0] bg-[#fffdf6] px-3 py-2">
+              <p className="text-xs font-black text-[#4a5568]">{entry.k}</p>
+              <p className="mt-0.5 text-sm font-bold text-[#122033]">{entry.v}</p>
             </div>
           ))}
         </div>
@@ -82,7 +82,7 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
             <table dir="rtl" aria-label="سجل تغطية أقسام المصدر" className="w-full min-w-[46rem] border-collapse text-sm">
               <caption className="sr-only">سجل تغطية المصدر للدرس 38</caption>
               <thead>
-                <tr className="bg-[#9f1239] text-white">
+                <tr className="bg-[#1b3a5c] text-white">
                   {["القسم", "المحتوى المطلوب", "الموضع", "حالة النقل", "إضافة المنصة", "ملاحظة دقة"].map((header) => (
                     <th key={header} scope="col" className="px-3 py-2 text-right font-black">
                       {header}
@@ -92,24 +92,24 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
               </thead>
               <tbody>
                 {COVERAGE_38.map((row, index) => (
-                  <tr key={row.id} data-coverage-section={row.num ?? "cover"} className={index % 2 === 0 ? "bg-white" : "bg-[#fff7f2]"}>
-                    <th scope="row" className="border-t border-[#f6e3de] px-3 py-2 text-right align-top font-black text-[#9f1239]">
+                  <tr key={row.id} data-coverage-section={row.id} className={index % 2 === 0 ? "bg-white" : "bg-[#f7f2e4]"}>
+                    <th scope="row" className="border-t border-[#ebe3d0] px-3 py-2 text-right align-top font-black text-[#1b3a5c]">
                       <span dir="ltr" className="font-en">
-                        {row.num == null ? "COVER" : `§${row.num}`}
+                        {row.id === "roadmap" ? "MAP" : row.num == null ? "COVER" : `§${row.num}`}
                       </span>
-                      <span className="mt-1 block text-xs font-bold text-[#6b4a5e]">
+                      <span className="mt-1 block text-xs font-bold text-[#3d4a5c]">
                         <Rich text={row.title} />
                       </span>
                     </th>
-                    <td className="border-t border-[#f6e3de] px-3 py-2 align-top leading-6 text-[#2b1633]"><Rich text={row.elements} /></td>
-                    <td className="border-t border-[#f6e3de] px-3 py-2 align-top leading-6 text-[#2b1633]"><Rich text={row.location} /></td>
-                    <td className="border-t border-[#f6e3de] px-3 py-2 align-top leading-6">
+                    <td className="border-t border-[#ebe3d0] px-3 py-2 align-top leading-6 text-[#1a2433]"><Rich text={row.elements} /></td>
+                    <td className="border-t border-[#ebe3d0] px-3 py-2 align-top leading-6 text-[#1a2433]"><Rich text={row.location} /></td>
+                    <td className="border-t border-[#ebe3d0] px-3 py-2 align-top leading-6">
                       <span className={`inline-block rounded-full px-2 py-0.5 text-xs font-black ${row.transfer === "verbatim" ? "bg-[#f0faf2] text-[#1c6b3c]" : row.transfer === "table-rebuilt" ? "bg-[#fff8e1] text-[#7c4a03]" : "bg-[#f5f3ff] text-[#5b21b6]"}`}>
                         {row.transfer === "verbatim" ? "منقول كما هو" : row.transfer === "table-rebuilt" ? "تنسيق أُعيد بناؤه" : "مفتاح غير موجود في المصدر"}
                       </span>
                     </td>
-                    <td className="border-t border-[#f6e3de] px-3 py-2 align-top leading-6 text-[#2b1633]">{row.platformAddition ? <Rich text={row.platformAddition} /> : <span className="text-[#9b8188]">—</span>}</td>
-                    <td className="border-t border-[#f6e3de] px-3 py-2 align-top leading-6 text-[#2b1633]">{row.accuracyNote ? <Rich text={row.accuracyNote} /> : <span className="text-[#9b8188]">—</span>}</td>
+                    <td className="border-t border-[#ebe3d0] px-3 py-2 align-top leading-6 text-[#1a2433]">{row.platformAddition ? <Rich text={row.platformAddition} /> : <span className="text-[#4a5568]">—</span>}</td>
+                    <td className="border-t border-[#ebe3d0] px-3 py-2 align-top leading-6 text-[#1a2433]">{row.accuracyNote ? <Rich text={row.accuracyNote} /> : <span className="text-[#4a5568]">—</span>}</td>
                   </tr>
                 ))}
               </tbody>
@@ -120,9 +120,9 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
 
       {tab === "keys" ? (
         <section aria-label="مفاتيح تدريبات الدرس والقراءة" className="space-y-3">
-          <details open className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
-            <summary className="cursor-pointer font-black text-[#9f1239]">§27 · التدريب الأول (6 أسئلة)</summary>
-            <ul className="mt-2 space-y-1 text-sm leading-6 text-[#2b1633]">
+          <details open className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
+            <summary className="cursor-pointer font-black text-[#1b3a5c]">§27 · التدريب الأول (6 أسئلة)</summary>
+            <ul className="mt-2 space-y-1 text-sm leading-6 text-[#1a2433]">
               {EXERCISE27_ITEMS_38.map((item) => (
                 <li key={item.n}>
                   <span dir="ltr" className="font-en">{item.prompt}</span> →{" "}
@@ -131,9 +131,9 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
               ))}
             </ul>
           </details>
-          <details className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
-            <summary className="cursor-pointer font-black text-[#9f1239]">§28 · التدريب الثاني (6 إكمالات)</summary>
-            <ul className="mt-2 space-y-1 text-sm leading-6 text-[#2b1633]">
+          <details className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
+            <summary className="cursor-pointer font-black text-[#1b3a5c]">§28 · التدريب الثاني (6 إكمالات)</summary>
+            <ul className="mt-2 space-y-1 text-sm leading-6 text-[#1a2433]">
               {FILL28_ITEMS_38.map((item) => (
                 <li key={item.n}>
                   <span dir="ltr" className="font-en">{item.prompt}</span> →{" "}
@@ -142,9 +142,9 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
               ))}
             </ul>
           </details>
-          <details className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
-            <summary className="cursor-pointer font-black text-[#9f1239]">§29 · اختيار الزمن (8 مواقف)</summary>
-            <ul className="mt-2 space-y-2 text-sm leading-6 text-[#2b1633]">
+          <details className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
+            <summary className="cursor-pointer font-black text-[#1b3a5c]">§29 · اختيار الزمن (8 مواقف)</summary>
+            <ul className="mt-2 space-y-2 text-sm leading-6 text-[#1a2433]">
               {TENSE29_ITEMS_38.map((item) => (
                 <li key={item.n}>
                   <p dir="ltr" className="font-en text-left">{item.prompt}</p>
@@ -156,9 +156,9 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
               ))}
             </ul>
           </details>
-          <details className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
-            <summary className="cursor-pointer font-black text-[#9f1239]">§30 · Grammar Detective (10 جمل)</summary>
-            <ul className="mt-2 space-y-2 text-sm leading-6 text-[#2b1633]">
+          <details className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
+            <summary className="cursor-pointer font-black text-[#1b3a5c]">§30 · Grammar Detective (10 جمل)</summary>
+            <ul className="mt-2 space-y-2 text-sm leading-6 text-[#1a2433]">
               {DETECTIVE30_ITEMS_38.map((item) => (
                 <li key={item.n}>
                   <p dir="ltr" className="font-en text-left text-[#a41c36]">{`${item.n}. ${item.prompt}`}</p>
@@ -168,21 +168,21 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
               ))}
             </ul>
           </details>
-          <details className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
-            <summary className="cursor-pointer font-black text-[#9f1239]">
+          <details className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
+            <summary className="cursor-pointer font-black text-[#1b3a5c]">
               <Rich text="§32 · Reading — Building a Smarter City" />
             </summary>
-            <ol className="mt-2 list-decimal space-y-1 ps-5 text-sm leading-6 text-[#2b1633]">
+            <ol className="mt-2 list-decimal space-y-1 ps-5 text-sm leading-6 text-[#1a2433]">
               {READING32_QUESTIONS_38.map((question) => (
                 <li key={question} dir="ltr" className="font-en text-left">{question}</li>
               ))}
             </ol>
             <p className="mt-2 text-sm font-bold text-[#1c6b3c]">إجابات المصدر تظهر داخل خطوة §32ب بعد إكمال المحاولة.</p>
-            <h4 className="mt-3 text-sm font-black text-[#9f1239]">تحليل الصيغ في النص — إضافة من المنصة</h4>
-            <ul className="mt-1 space-y-2 text-sm leading-6 text-[#2b1633]">
+            <h4 className="mt-3 text-sm font-black text-[#1b3a5c]">تحليل الصيغ في النص — إضافة من المنصة</h4>
+            <ul className="mt-1 space-y-2 text-sm leading-6 text-[#1a2433]">
               {READING32_ANALYSIS_38.map((entry) => (
                 <li key={entry.line}>
-                  <p dir="ltr" className="font-en text-left text-[#3f1233]">{entry.line}</p>
+                  <p dir="ltr" className="font-en text-left text-[#122033]">{entry.line}</p>
                   <p>
                     <span dir="ltr" className="font-en block w-fit font-black">{entry.form}</span>
                     <Rich text={entry.why} />
@@ -191,9 +191,9 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
               ))}
             </ul>
           </details>
-          <details className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
-            <summary className="cursor-pointer font-black text-[#9f1239]">§13 · The School Exhibition — الترجمة والتحليل</summary>
-            <ul className="mt-2 space-y-2 text-sm leading-6 text-[#2b1633]">
+          <details className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
+            <summary className="cursor-pointer font-black text-[#1b3a5c]">§13 · The School Exhibition — الترجمة والتحليل</summary>
+            <ul className="mt-2 space-y-2 text-sm leading-6 text-[#1a2433]">
               {DIALOGUE_LINES_38.map((line) => (
                 <li key={line.id}>
                   <p dir="ltr" className="font-en text-left">{line.speaker}: {line.en}</p>
@@ -206,9 +206,9 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
               ))}
             </ul>
           </details>
-          <details className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
-            <summary className="cursor-pointer font-black text-[#9f1239]">§26 · Planning a Big Event — الترجمة والتحليل</summary>
-            <ul className="mt-2 space-y-2 text-sm leading-6 text-[#2b1633]">
+          <details className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
+            <summary className="cursor-pointer font-black text-[#1b3a5c]">§26 · Planning a Big Event — الترجمة والتحليل</summary>
+            <ul className="mt-2 space-y-2 text-sm leading-6 text-[#1a2433]">
               {DIALOGUE2_LINES_38.map((line) => (
                 <li key={line.id}>
                   <p dir="ltr" className="font-en text-left">{line.speaker}: {line.en}</p>
@@ -221,19 +221,19 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
               ))}
             </ul>
           </details>
-          <details className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
-            <summary className="cursor-pointer font-black text-[#9f1239]">
+          <details className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
+            <summary className="cursor-pointer font-black text-[#1b3a5c]">
               <Rich text="§35 · Writing Mission — الشروط والنموذج" />
             </summary>
-            <ul className="mt-2 list-disc space-y-1 ps-5 text-sm leading-6 text-[#2b1633]">
+            <ul className="mt-2 list-disc space-y-1 ps-5 text-sm leading-6 text-[#1a2433]">
               {WRITING35_CRITERIA_38.map((criterion) => (
                 <li key={criterion}><Rich text={criterion} /></li>
               ))}
             </ul>
-            <h4 className="mt-2 text-sm font-black text-[#9f1239]">نموذج المصدر (لا يُنسخ)</h4>
+            <h4 className="mt-2 text-sm font-black text-[#1b3a5c]">نموذج المصدر (لا يُنسخ)</h4>
             <ul className="mt-1 space-y-1 text-sm leading-6">
               {WRITING35_MODEL_38.map((line) => (
-                <li key={line} dir="ltr" className="font-en text-left text-[#3f1233]">{line}</li>
+                <li key={line} dir="ltr" className="font-en text-left text-[#122033]">{line}</li>
               ))}
             </ul>
           </details>
@@ -247,22 +247,22 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
             البدائل في أسئلة الاختيار.
           </PlatformNote38>
           {TEST_SOLUTIONS_38.map((solution) => (
-            <article key={solution.n} data-teacher-solution={solution.n} className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
+            <article key={solution.n} data-teacher-solution={solution.n} className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
               <header className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="font-black text-[#9f1239]">
+                <h3 className="font-black text-[#1b3a5c]">
                   السؤال <span dir="ltr" className="font-en">{solution.n}</span>
-                  <span className="ms-2 text-xs font-bold text-[#7a5767]">(المستوى {solution.level})</span>
+                  <span className="ms-2 text-xs font-bold text-[#4a5568]">(المستوى {solution.level})</span>
                 </h3>
                 <span className="rounded-full bg-[#fff8e1] px-2.5 py-1 text-xs font-bold text-[#7c4a03]">
                   {solution.judgment === "open-model" ? "نموذج مفتوح" : solution.judgment === "grammatical-repair" ? "تصحيح نحوي" : solution.judgment === "contextual" ? "سياقي" : "صيغة محددة"}
                 </span>
               </header>
-              <p className="mt-2 text-sm leading-6 text-[#2b1633]">
-                <strong className="text-[#9f1239]">الإجابة: </strong>
+              <p className="mt-2 text-sm leading-6 text-[#1a2433]">
+                <strong className="text-[#1b3a5c]">الإجابة: </strong>
                 <span dir="auto"><Rich text={solution.answer} /></span>
               </p>
-              <p className="mt-1 text-sm leading-6 text-[#2b1633]">
-                <strong className="text-[#9f1239]">القاعدة والسبب: </strong>
+              <p className="mt-1 text-sm leading-6 text-[#1a2433]">
+                <strong className="text-[#1b3a5c]">القاعدة والسبب: </strong>
                 <span dir="auto"><Rich text={solution.explanation} /></span>
               </p>
               {solution.alternatives?.length ? (
@@ -279,9 +279,9 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
 
       {tab === "rules" ? (
         <section aria-label="مرجع القواعد وملاحظات الدقة" className="space-y-3">
-          <div className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
-            <h3 className="font-black text-[#9f1239]">مرجع سريع</h3>
-            <ul className="mt-2 space-y-1 text-sm leading-6 text-[#2b1633]">
+          <div className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
+            <h3 className="font-black text-[#1b3a5c]">مرجع سريع</h3>
+            <ul className="mt-2 space-y-1 text-sm leading-6 text-[#1a2433]">
               <li><Rich text="الصيغة: Subject + will + have + V3 — مع جميع الضمائر بلا has بعد will (§3 · §5)." /></li>
               <li><Rich text="النفي: Subject + won't (will not) + have + V3 (§14). النفي مرتبط بالموعد لا بـ«أبدًا» (§15)." /></li>
               <li><Rich text="السؤال: Will + Subject + have + V3? (§16)." /></li>
@@ -295,12 +295,12 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
               <li>will be ready تصف حالة مستقبلية، وwill have finished تصف إنجازًا مكتملًا (§25).</li>
             </ul>
           </div>
-          <div className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
-            <h3 className="font-black text-[#9f1239]">ملاحظات دقة على المصدر (بلا تعديل صامت)</h3>
-            <ul className="mt-2 space-y-2 text-sm leading-6 text-[#2b1633]">
+          <div className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
+            <h3 className="font-black text-[#1b3a5c]">ملاحظات دقة على المصدر (بلا تعديل صامت)</h3>
+            <ul className="mt-2 space-y-2 text-sm leading-6 text-[#1a2433]">
               {COVERAGE_ACCURACY_NOTES_38.map((row) => (
                 <li key={row.id}>
-                  <p className="font-black text-[#9f1239]">
+                  <p className="font-black text-[#1b3a5c]">
                     <span dir="ltr" className="font-en">§{row.num}</span> — <Rich text={row.title} />
                   </p>
                   <p dir="auto"><Rich text={row.accuracyNote ?? ""} /></p>
@@ -308,13 +308,13 @@ export default function TeacherGuide38({ onGoSolutions, onLock }: { onGoSolution
               ))}
             </ul>
           </div>
-          <div className="rounded-2xl border border-[#f0d9d2] bg-white p-3">
-            <h3 className="font-black text-[#9f1239]">فهرس المصدر (للمعلم)</h3>
-            <ol className="mt-2 list-decimal space-y-1 ps-5 text-sm leading-6 text-[#2b1633]">
+          <div className="rounded-2xl border border-[#d4c4a0] bg-white p-3">
+            <h3 className="font-black text-[#1b3a5c]">فهرس المصدر (للمعلم)</h3>
+            <ol className="mt-2 list-decimal space-y-1 ps-5 text-sm leading-6 text-[#1a2433]">
               {SOURCE_SECTIONS_38.filter((section) => section.num != null).map((section) => (
                 <li key={section.id}>
                   <span className="font-bold"><Rich text={section.title} /></span>{" "}
-                  <span className="text-xs text-[#7a5767]">
+                  <span className="text-xs text-[#4a5568]">
                     · <span dir="ltr" className="font-en">{section.units.length}</span> سطرًا
                     {section.revealUnits?.length ? ` · ${section.revealUnits.length} سطر حل` : ""}
                     {section.tableRows ? " · جدول" : ""}

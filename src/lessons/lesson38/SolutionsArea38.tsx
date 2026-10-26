@@ -38,8 +38,8 @@ export default function SolutionsArea38({
       <div data-area="lesson38-solutions" data-solutions-locked className="mt-3">
         <section className="fp38-card">
           <FinishLine38 label="LOCKED" />
-          <h2 className="mt-2 text-xl font-black text-[#3f1233]">الحلول تُفتح بعد التسليم</h2>
-          <p className="mt-2 text-sm leading-7 text-[#6b4a5e]">ارجع إلى الاختبار وأرسل إجاباتك الـ25، أو ادخل من بوابة المعلم.</p>
+          <h2 className="mt-2 text-xl font-black text-[#122033]">الحلول تُفتح بعد التسليم</h2>
+          <p className="mt-2 text-sm leading-7 text-[#3d4a5c]">ارجع إلى الاختبار وأرسل إجاباتك الـ25، أو ادخل من بوابة المعلم.</p>
           <ActionButton38 className="mt-3" onClick={onGoTest}>العودة إلى الاختبار</ActionButton38>
         </section>
       </div>
@@ -51,22 +51,22 @@ export default function SolutionsArea38({
       <section className="fp38-card">
         <FinishLine38 label="ANSWER KEY" />
         <p dir="ltr" className="fp38-eyebrow font-en mt-2">SOLUTIONS AREA</p>
-        <h2 className="mt-1 text-xl font-black text-[#3f1233]">مفتاح تصحيح الاختبار النهائي — 25 سؤالًا</h2>
+        <h2 className="mt-1 text-xl font-black text-[#122033]">مفتاح تصحيح الاختبار النهائي — 25 سؤالًا</h2>
         <PlatformNote38>
-          نص المصدر §34 لا يحمل مفتاحًا فعليًا. كل إجابة وتفسير أدناه إضافة من إعداد المنصة/المعلم، مكتوبة على أساس قواعد الدرس وأمثلته، وتشمل سبب صحة الإجابة وسبب خطأ البدائل عند الحاجة.
+          مساحة الحلول في المصدر لا تحمل مفتاحًا فعليًا. كل إجابة وتفسير أدناه إضافة من إعداد المنصة/المعلم، مكتوبة على أساس قواعد الدرس وأمثلته، وتشمل سبب صحة الإجابة وسبب خطأ البدائل عند الحاجة.
         </PlatformNote38>
         <div className="mt-3 grid gap-2 sm:grid-cols-3">
-          <div className="rounded-xl border border-[#f3d2d9] bg-white p-3">
-            <p className="text-xs font-black text-[#7a5767]">الإجابة النموذجية</p>
-            <p className="mt-1 text-sm font-bold text-[#3f1233]">ظاهرة في كل بطاقة قبل فتح الشرح.</p>
+          <div className="rounded-xl border border-[#d9cbb0] bg-white p-3">
+            <p className="text-xs font-black text-[#4a5568]">الإجابة النموذجية</p>
+            <p className="mt-1 text-sm font-bold text-[#122033]">ظاهرة في كل بطاقة قبل فتح الشرح.</p>
           </div>
-          <div className="rounded-xl border border-[#f3d2d9] bg-white p-3">
-            <p className="text-xs font-black text-[#7a5767]">القاعدة والسبب</p>
-            <p className="mt-1 text-sm font-bold text-[#3f1233]">شرح لماذا هذه الصيغة، وأين يقع الخطأ.</p>
+          <div className="rounded-xl border border-[#d9cbb0] bg-white p-3">
+            <p className="text-xs font-black text-[#4a5568]">القاعدة والسبب</p>
+            <p className="mt-1 text-sm font-bold text-[#122033]">شرح لماذا هذه الصيغة، وأين يقع الخطأ.</p>
           </div>
-          <div className="rounded-xl border border-[#f3d2d9] bg-white p-3">
-            <p className="text-xs font-black text-[#7a5767]">البدائل والفروق</p>
-            <p className="mt-1 text-sm font-bold text-[#3f1233]">أسئلة المقارنة تشرح فرق التركيز لا الصحة فقط.</p>
+          <div className="rounded-xl border border-[#d9cbb0] bg-white p-3">
+            <p className="text-xs font-black text-[#4a5568]">البدائل والفروق</p>
+            <p className="mt-1 text-sm font-bold text-[#122033]">أسئلة المقارنة تشرح فرق التركيز لا الصحة فقط.</p>
           </div>
         </div>
       </section>
@@ -81,13 +81,13 @@ export default function SolutionsArea38({
             className={`fp38-tab ${FOCUS_38} text-right`}
           >
             {item.title}
-            <span dir="ltr" className="font-en mt-1 block text-xs text-[#f6e3de]">Q{item.range}</span>
+            <span dir="ltr" className="font-en mt-1 block text-xs text-[#ebe3d0]">Q{item.range}</span>
           </button>
         ))}
       </nav>
 
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-sm font-bold text-[#6b4a5e]">افتح الشرح لكل سؤال، أو افتح كل شروح المستوى الحالي.</p>
+        <p className="text-sm font-bold text-[#3d4a5c]">افتح الشرح لكل سؤال، أو افتح كل شروح المستوى الحالي.</p>
         <button type="button" aria-pressed={allOpen} onClick={toggleAll} className={`fp38-tab ${FOCUS_38} font-black`}>
           {allOpen ? "طيّ كل الشروح" : "فتح كل الشروح"}
         </button>
@@ -97,11 +97,11 @@ export default function SolutionsArea38({
         {visible.map((solution) => {
           const question = TEST_LEVELS_38.flatMap((entry) => entry.questions).find((entry) => entry.n === solution.n);
           return (
-            <article key={solution.n} data-solution={solution.n} className="rounded-2xl border border-[#f0d9d2] bg-white p-4 shadow-sm">
+            <article key={solution.n} data-solution={solution.n} className="rounded-2xl border border-[#d4c4a0] bg-white p-4 shadow-sm">
               <header className="flex flex-wrap items-center justify-between gap-2 border-b border-[#f3e2dc] pb-2">
-                <h3 className="font-black text-[#3f1233]">
+                <h3 className="font-black text-[#122033]">
                   السؤال <span dir="ltr" className="font-en">{solution.n}</span>
-                  <span className="ms-2 text-xs font-bold text-[#7a5767]">· المستوى {solution.level}</span>
+                  <span className="ms-2 text-xs font-bold text-[#4a5568]">· المستوى {solution.level}</span>
                 </h3>
                 <span className="rounded-full border border-[#f2c14e] bg-[#fff8e1] px-2.5 py-1 text-[11px] font-black text-[#7c4a03]">
                   {solution.judgment === "open-model"
@@ -116,15 +116,15 @@ export default function SolutionsArea38({
               {question ? (
                 <div className="mt-2 space-y-1">
                   {question.promptLines.map((line, index) => (
-                    <p key={index} dir="auto" className="rounded-lg bg-[#fff8f3] px-3 py-1.5 text-sm font-semibold leading-7 text-[#2b1633]">
+                    <p key={index} dir="auto" className="rounded-lg bg-[#f7f2e4] px-3 py-1.5 text-sm font-semibold leading-7 text-[#1a2433]">
                       <Rich text={line} />
                     </p>
                   ))}
                 </div>
               ) : null}
-              <div className="mt-3 space-y-2 text-base leading-7 text-[#2b1633]">
-                <p className="font-black text-[#9f1239]">الإجابة النموذجية:</p>
-                <p dir="ltr" className="font-en rounded-lg border border-[#f3c7d1] bg-[#fff1f2] px-3 py-1.5 text-left font-black text-[#9f1239]">
+              <div className="mt-3 space-y-2 text-base leading-7 text-[#1a2433]">
+                <p className="font-black text-[#1b3a5c]">الإجابة النموذجية:</p>
+                <p dir="ltr" className="font-en rounded-lg border border-[#d4c4a0] bg-[#e8eef5] px-3 py-1.5 text-left font-black text-[#1b3a5c]">
                   {solution.answer}
                 </p>
                 <button
@@ -139,13 +139,13 @@ export default function SolutionsArea38({
                 {open[solution.n] ? (
                   <div id={`solution-38-details-${solution.n}`} className="space-y-2">
                     <p>
-                      <strong className="text-[#9f1239]">القاعدة والسبب: </strong>
+                      <strong className="text-[#1b3a5c]">القاعدة والسبب: </strong>
                       <span dir="auto"><Rich text={solution.explanation} /></span>
                     </p>
                     {solution.alternatives?.length ? (
                       <div className="rounded-xl border border-[#b8ddc5] bg-[#f0faf2] p-3">
                         <h4 className="text-sm font-black text-[#1c6b3c]">لماذا البدائل خطأ أو مختلفة التركيز؟</h4>
-                        <ul className="mt-1 list-disc space-y-1 ps-5 text-sm leading-6 text-[#2b1633]">
+                        <ul className="mt-1 list-disc space-y-1 ps-5 text-sm leading-6 text-[#1a2433]">
                           {solution.alternatives.map((line) => (
                             <li key={line} dir="auto"><Rich text={line} /></li>
                           ))}

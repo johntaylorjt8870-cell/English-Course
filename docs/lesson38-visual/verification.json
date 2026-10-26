@@ -1,0 +1,33 @@
+{
+  "baseUrl": "http://127.0.0.1:4173/English-Course/#/lesson/38",
+  "generatedAt": "2026-10-26T10:04:34.227Z",
+  "viewports": [
+    {
+      "name": "1920x1080",
+      "overflow": 0,
+      "lockNextOverlap": 0
+    },
+    {
+      "name": "1280x800",
+      "overflow": 0,
+      "lockNextOverlap": 0
+    },
+    {
+      "name": "768x900",
+      "overflow": 0,
+      "lockNextOverlap": 0
+    },
+    {
+      "name": "375x812",
+      "overflow": 0,
+      "lockNextOverlap": 0
+    }
+  ],
+  "consoleErrors": [],
+  "stepCount": 60,
+  "testCount": 25,
+  "checks": 69,
+  "failures": [],
+  "passed": true,
+  "notes": "Screenshots are pre-submit only. Answer keys are never captured."
+}

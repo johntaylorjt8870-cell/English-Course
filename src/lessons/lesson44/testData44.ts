@@ -1,5 +1,20 @@
-// Source-derived §34 prompts only.
-export const TEST_LEVELS_44 = [
+// Lesson 44 Final Master Test — Questions & Prompts ONLY (Zero Answer Keys or Hints).
+export interface TestQuestion44 {
+  id: string;
+  number: number;
+  lines: string[];
+  options: string[];
+  fields: string[];
+}
+
+export interface TestLevel44 {
+  level: number;
+  title: string;
+  context: string[];
+  questions: TestQuestion44[];
+}
+
+export const TEST_LEVELS_44: TestLevel44[] = [
   {
     "level": 1,
     "title": "المستوى الأول: Multiple Choice",
@@ -29,11 +44,11 @@ export const TEST_LEVELS_44 = [
     "title": "المستوى الثالث: Correct the Mistakes",
     "context": [],
     "questions": [
-      { "id": "q11", "number": 11, "lines": ["He musts study harder."], "options": [], "fields": ["إجابتك"] },
-      { "id": "q12", "number": 12, "lines": ["She have to wear a uniform."], "options": [], "fields": ["إجابتك"] },
-      { "id": "q13", "number": 13, "lines": ["Does he has to leave now?"], "options": [], "fields": ["إجابتك"] },
-      { "id": "q14", "number": 14, "lines": ["I didn't had to work yesterday."], "options": [], "fields": ["إجابتك"] },
-      { "id": "q15", "number": 15, "lines": ["She will has to finish the project."], "options": [], "fields": ["إجابتك"] }
+      { "id": "q11", "number": 11, "lines": ["He musts study harder."], "options": [], "fields": ["الجملة الصحيحة"] },
+      { "id": "q12", "number": 12, "lines": ["She have to wear a uniform."], "options": [], "fields": ["الجملة الصحيحة"] },
+      { "id": "q13", "number": 13, "lines": ["Does he has to leave now?"], "options": [], "fields": ["السؤال الصحيح"] },
+      { "id": "q14", "number": 14, "lines": ["I didn't had to work yesterday."], "options": [], "fields": ["الجملة الصحيحة"] },
+      { "id": "q15", "number": 15, "lines": ["She will has to finish the project."], "options": [], "fields": ["الجملة الصحيحة"] }
     ]
   },
   {
@@ -41,11 +56,11 @@ export const TEST_LEVELS_44 = [
     "title": "المستوى الرابع: Understand the Meaning",
     "context": [],
     "questions": [
-      { "id": "q16", "number": 16, "lines": ["ما الفرق بين:", "You mustn't enter.", "You don't have to enter."], "options": [], "fields": ["إجابتك"] },
-      { "id": "q17", "number": 17, "lines": ["لماذا نستخدم HAD TO للتعبير عن ضرورة ماضية؟"], "options": [], "fields": ["إجابتك"] },
-      { "id": "q18", "number": 18, "lines": ["هل يمكن استخدام MUST وHAVE TO في القوانين والتعليمات؟ اشرح."], "options": [], "fields": ["إجابتك"] },
-      { "id": "q19", "number": 19, "lines": ["ما الفرق بين:", "I must improve my English.", "I have to study tonight because I have an exam tomorrow."], "options": [], "fields": ["إجابتك"] },
-      { "id": "q20", "number": 20, "lines": ["هل تعني الجملة التالية أن المتحدث لم يُنهِ التقرير؟", "I didn't have to finish the report yesterday.", "اشرح إجابتك."], "options": [], "fields": ["إجابتك"] }
+      { "id": "q16", "number": 16, "lines": ["ما الفرق بين:", "You mustn't enter.", "You don't have to enter."], "options": [], "fields": ["شرحك للفرق في المعنى"] },
+      { "id": "q17", "number": 17, "lines": ["لماذا نستخدم HAD TO للتعبير عن ضرورة ماضية؟"], "options": [], "fields": ["إجابتك التفسيرية"] },
+      { "id": "q18", "number": 18, "lines": ["هل يمكن استخدام MUST وHAVE TO في القوانين والتعليمات؟ اشرح."], "options": [], "fields": ["إجابتك مع الشرح"] },
+      { "id": "q19", "number": 19, "lines": ["ما الفرق بين:", "I must improve my English.", "I have to study tonight because I have an exam tomorrow."], "options": [], "fields": ["شرحك للفرق"] },
+      { "id": "q20", "number": 20, "lines": ["هل تعني الجملة التالية أن المتحدث لم يُنهِ التقرير؟", "I didn't have to finish the report yesterday.", "اشرح إجابتك."], "options": [], "fields": ["الحكم مع التعليل"] }
     ]
   },
   {
@@ -54,24 +69,35 @@ export const TEST_LEVELS_44 = [
     "context": [
       "أكمل الحوار باستخدام الصيغة المناسبة.",
       "The School Trip",
-      "Teacher: Tomorrow, everyone ______ arrive at school by seven. It's a school requirement.",
-      "Maya: ______ we have to bring our lunch?",
-      "Teacher: No, you ______. The school will provide lunch.",
+      "Teacher: Tomorrow, everyone __(21)__ arrive at school by seven. It's a school requirement.",
+      "Maya: __(22)__ we have to bring our lunch?",
+      "Teacher: No, you __(23)__. The school will provide lunch.",
       "Omar: Can we use our phones during the trip?",
-      "Teacher: No. You ______ use them during the guided tour.",
-      "Daniel: Last year, we ______ bring our own food, but this year everything is provided!"
+      "Teacher: No. You __(24)__ use them during the guided tour.",
+      "Daniel: Last year, we __(25)__ bring our own food, but this year everything is provided!"
     ],
     "questions": [
-      { "id": "q21", "number": 21, "lines": ["التزام حالي باستخدام HAVE TO."], "options": [], "fields": ["إجابتك"] },
-      { "id": "q22", "number": 22, "lines": ["سؤال باستخدام HAVE TO."], "options": [], "fields": ["إجابتك"] },
-      { "id": "q23", "number": 23, "lines": ["عدم الضرورة."], "options": [], "fields": ["إجابتك"] },
-      { "id": "q24", "number": 24, "lines": ["المنع باستخدام MUSTN'T."], "options": [], "fields": ["إجابتك"] },
-      { "id": "q25", "number": 25, "lines": ["ضرورة في الماضي."], "options": [], "fields": ["إجابتك"] }
+      { "id": "q21", "number": 21, "lines": ["Teacher: Tomorrow, everyone ______ arrive at school by seven.", "التزام حالي باستخدام HAVE TO."], "options": [], "fields": ["الفراغ 21"] },
+      { "id": "q22", "number": 22, "lines": ["Maya: ______ we have to bring our lunch?", "سؤال باستخدام HAVE TO."], "options": [], "fields": ["الفراغ 22"] },
+      { "id": "q23", "number": 23, "lines": ["Teacher: No, you ______. The school will provide lunch.", "عدم الضرورة."], "options": [], "fields": ["الفراغ 23"] },
+      { "id": "q24", "number": 24, "lines": ["Teacher: No. You ______ use them during the guided tour.", "المنع باستخدام MUSTN'T."], "options": [], "fields": ["الفراغ 24"] },
+      { "id": "q25", "number": 25, "lines": ["Daniel: Last year, we ______ bring our own food!", "ضرورة في الماضي."], "options": [], "fields": ["الفراغ 25"] }
     ]
   }
 ];
-export const TEST_QUESTIONS_44 = TEST_LEVELS_44.flatMap(level => level.questions);
+
+export const TEST_QUESTIONS_44 = TEST_LEVELS_44.flatMap((level) => level.questions);
 export const TEST_QUESTION_COUNT_44 = TEST_QUESTIONS_44.length;
 export const TEST_LEVEL_COUNT_44 = TEST_LEVELS_44.length;
-export type TestAnswers44 = Record<string,string>;
-export function testComplete44(answers:TestAnswers44) { return TEST_QUESTIONS_44.every(q=>q.fields.every((_,i)=>Boolean(answers[`${q.id}-${i}`]?.trim()))); }
+export type TestAnswers44 = Record<string, string>;
+
+export function isQuestionAnswered44(id: string, fieldsCount: number, answers: TestAnswers44): boolean {
+  for (let i = 0; i < fieldsCount; i++) {
+    if (!answers[`${id}-${i}`]?.trim()) return false;
+  }
+  return true;
+}
+
+export function testComplete44(answers: TestAnswers44): boolean {
+  return TEST_QUESTIONS_44.every((q) => isQuestionAnswered44(q.id, q.fields.length, answers));
+}

@@ -1,200 +1,375 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
-import { Signature } from '../../shared/Signature';
 import {
-  SOURCE_SECTIONS_44, STATIONS_44, LESSON_TITLE_44, LESSON_SUBTITLE_44, LESSON_STEP_COUNT_44, LESSON_IDENTITY_44,
-} from './data';
-import { Workspace44, Text44, Glyph44 } from './kit44';
-import { Steps44 } from './Steps44';
-import { TestArea44 } from './TestArea44';
-import { TeacherArea44 } from './TeacherArea44';
-import { testComplete44, type TestAnswers44 } from './testData44';
-import { station44 } from './ledger44';
-import './lesson44.css';
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import Lesson1Shell, { type Lesson1ShellGroup } from "../../shared/Lesson1Shell";
+import {
+  LESSON_IDENTITY_AR_44,
+  LESSON_STEP_COUNT_44,
+  LESSON_SUBTITLE_44,
+  LESSON_TITLE_44,
+  STATIONS_44,
+  STEP_DESCRIPTORS_44,
+  station44,
+} from "./data";
+import { Glyph44, Text44, Workspace44 } from "./kit44";
+import { Steps44 } from "./Steps44";
+import type { TestAnswers44 } from "./testData44";
+import type { TestGradeReport44 } from "./testKey44";
+import "./lesson44.css";
 
-const SolutionsArea44 = lazy(() => import('./SolutionsArea44'));
-type Area44 = 'student' | 'test' | 'solutions' | 'teacher';
-const LAST_STEP = LESSON_STEP_COUNT_44 - 1;
+const TestArea44 = lazy(() => import("./TestArea44"));
+const SolutionsArea44 = lazy(() => import("./SolutionsArea44"));
+const TeacherArea44 = lazy(() => import("./TeacherArea44"));
+
+export type Lesson44Area = "learn" | "test" | "solutions" | "teacher";
 
 export default function Lesson44({ onExit }: { onExit?: () => void }) {
-  const [area, setArea] = useState<Area44>('student');
-  const [step, setStep] = useState(0);
-  const [visited, setVisited] = useState<number[]>([0]);
-  const [values, setValues] = useState<Record<string, string>>({});
-  const [answers, setAnswers] = useState<TestAnswers44>({});
-  const [submitted, setSubmitted] = useState(false);
-  const [teacher, setTeacher] = useState(false);
-  const [mobileNav, setMobileNav] = useState(false);
-  const unlocked = submitted || teacher;
-  const station = station44(step);
-  const chapterNo = STATIONS_44.indexOf(station) + 1;
+  const [area, setArea] = useState<Lesson44Area>("learn");
+  const [step, setStep] = useState<number>(0);
+  const [visited, setVisited] = useState<Set<number>>(() => new Set([0]));
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [workspaceValues, setWorkspaceValues] = useState<Record<string, string>>({});
+  const [testAnswers, setTestAnswers] = useState<TestAnswers44>({});
+  const [testSubmitted, setTestSubmitted] = useState(false);
+  const [gradeReport, setGradeReport] = useState<TestGradeReport44 | null>(null);
+  const [teacherUnlocked, setTeacherUnlocked] = useState(false);
 
-  function navigate(index: number) {
-    const next = Math.max(0, Math.min(LAST_STEP, index));
-    setStep(next); setArea('student'); setMobileNav(false);
-    setVisited(v => v.includes(next) ? v : [...v, next]);
-  }
-  useEffect(() => {
-    if (!/jsdom/i.test(navigator.userAgent)) {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      document.getElementById('step-title-44')?.focus({ preventScroll: true });
+  const mainRef = useRef<HTMLElement | null>(null);
+  const solutionsUnlocked = testSubmitted || teacherUnlocked;
+
+  const scrollMainTop = useCallback(() => {
+    if (mainRef.current) {
+      mainRef.current.scrollTop = 0;
     }
-  }, [step, area]);
+  }, []);
+
+  const goToStep = useCallback(
+    (target: number) => {
+      const clamped = Math.max(0, Math.min(LESSON_STEP_COUNT_44 - 1, target));
+      setArea("learn");
+      setStep(clamped);
+      setVisited((prev) => {
+        if (prev.has(clamped)) return prev;
+        const next = new Set(prev);
+        next.add(clamped);
+        return next;
+      });
+      setMenuOpen(false);
+      scrollMainTop();
+    },
+    [scrollMainTop]
+  );
+
+  const switchArea = useCallback(
+    (target: Lesson44Area) => {
+      if (target === "solutions" && !solutionsUnlocked) return;
+      setArea(target);
+      setMenuOpen(false);
+      scrollMainTop();
+    },
+    [scrollMainTop, solutionsUnlocked]
+  );
+
+  const prev = useCallback(() => {
+    if (step > 0) goToStep(step - 1);
+  }, [goToStep, step]);
+
+  const next = useCallback(() => {
+    if (step < LESSON_STEP_COUNT_44 - 1) goToStep(step + 1);
+  }, [goToStep, step]);
+
   useEffect(() => {
-    const handler = (event: KeyboardEvent) => {
-      if (area !== 'student' || event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) return;
-      if ((event.target as HTMLElement)?.closest('input,textarea,select,button,a,[contenteditable]')) return;
-      if (event.key === 'ArrowLeft') { event.preventDefault(); navigate(step + 1); }
-      else if (event.key === 'ArrowRight') { event.preventDefault(); navigate(step - 1); }
+    const onKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      const tag = target?.tagName;
+      const inField =
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT" ||
+        tag === "BUTTON" ||
+        Boolean(target?.isContentEditable);
+
+      if (e.key === "Escape") {
+        if (menuOpen) setMenuOpen(false);
+        else if (area !== "learn") switchArea("learn");
+        return;
+      }
+
+      if (inField || area !== "learn") return;
+
+      if (e.key === "ArrowLeft" || e.key === " ") {
+        e.preventDefault();
+        next();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        prev();
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        goToStep(0);
+      } else if (e.key === "End") {
+        e.preventDefault();
+        goToStep(LESSON_STEP_COUNT_44 - 1);
+      }
     };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [area, step]);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [area, goToStep, menuOpen, next, prev, switchArea]);
 
-  const labels: Record<Area44, string> = {
-    student: 'التعلّم', test: 'الاختبار', solutions: unlocked ? 'الحلول' : 'الحلول · مقفلة', teacher: 'المعلم',
-  };
-  const areaName: Record<Area44, string> = {
-    student: `الفصل ${String(chapterNo).padStart(2, '0')} · ${station.name}`,
-    test: 'منطقة الاختبار · 25 سؤالًا',
-    solutions: 'الحلول التفصيلية',
-    teacher: 'مساحة المعلم',
-  };
-  const cover = area === 'student' && step === 0;
+  const setWorkspaceField = useCallback((key: string, value: string) => {
+    setWorkspaceValues((prev) => ({ ...prev, [key]: value }));
+  }, []);
 
-  return <>
-    <Signature />
-    <div className="lesson44" dir="rtl" data-lesson="44">
-      <header className="bar44">
-        <div className="barInner44">
-          <a href="#/" onClick={() => onExit?.()} className="brand44" aria-label="English Course — العودة إلى كل الدروس">
-            <span className="brandNum44" aria-hidden="true">44</span>
-            <span className="brandText44">
-              <span dir="ltr">English Course</span>
-              <small>{LESSON_IDENTITY_44}</small>
-            </span>
-          </a>
-          <nav className="areas44" aria-label="مناطق الدرس">
-            {(['student', 'test', 'solutions', 'teacher'] as const).map((id, i) => (
-              <button key={id} type="button" aria-current={area === id ? 'page' : undefined}
-                disabled={id === 'solutions' && !unlocked} onClick={() => { setArea(id); setMobileNav(false); }}>
-                <span aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                {labels[id]}
-                {id === 'solutions' && !unlocked && <Glyph44 name="lock" className="tabLock44" />}
-              </button>
-            ))}
-          </nav>
-          <div className="barMeta44">
-            <p className="barArea44">{areaName[area]}</p>
-            {area === 'student' && (
-              <p className="barProgress44">
-                <span className="barBar44" aria-hidden="true"><span style={{ width: `${((step + 1) / LESSON_STEP_COUNT_44) * 100}%` }} /></span>
-                <bdi dir="ltr">{step + 1} / {LESSON_STEP_COUNT_44}</bdi>
-              </p>
-            )}
-          </div>
-        </div>
-      </header>
+  const workspaceStore = useMemo(
+    () => ({ values: workspaceValues, set: setWorkspaceField }),
+    [setWorkspaceField, workspaceValues]
+  );
 
-      <Workspace44.Provider value={{ values, set: (key, value) => setValues(v => ({ ...v, [key]: value })) }}>
-        {area === 'student' ? (
-          <div className={cover ? 'layout44 layout44--cover' : 'layout44'}>
-            {!cover && (
-              <aside className="railCol44">
-                <button type="button" className="mobileToggle44" aria-expanded={mobileNav} aria-controls="lesson44-step-nav"
-                  onClick={() => setMobileNav(!mobileNav)}>
-                  <span>الفصول · الخطوة <bdi dir="ltr">{step + 1} / {LESSON_STEP_COUNT_44}</bdi></span>
-                  <Glyph44 name="rule" />
-                </button>
-                <div id="lesson44-step-nav" className={mobileNav ? 'rail44 navContent44 open' : 'rail44 navContent44'}>
-                  <div className="railHead44">
-                    <p className="kicker44">الفصول · CHAPTERS</p>
-                    <p className="railProgress44"><bdi dir="ltr">{visited.length} / {LESSON_STEP_COUNT_44}</bdi> خطوة زُرتها</p>
-                  </div>
-                  <nav className="railNav44" aria-label="فصول الدرس">
-                    {STATIONS_44.map((s, i) => {
-                      const active = s === station;
-                      return (
-                        <div className={`chapter44 ${active ? 'is-active' : ''}`} key={s.start}>
-                          <button type="button" className="chapterBtn44" aria-current={active ? 'true' : undefined}
-                            data-chapter-start={s.start} data-chapter-end={s.end}
-                            onClick={() => navigate(s.start)}>
-                            <span className="chapterNo44" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                            <span className="chapterName44"><b>{s.name}</b><small dir="ltr">{s.en}</small></span>
-                            <span className="chapterCount44" aria-hidden="true">{s.end - s.start + 1}</span>
-                          </button>
-                          {active && (
-                            <ol className="sectionNav44">
-                              {SOURCE_SECTIONS_44.filter(sec => sec.num >= s.start && sec.num <= s.end).map(sec => (
-                                <li key={sec.id}>
-                                  <button type="button" aria-current={sec.num === step ? 'step' : undefined} data-step={sec.num}
-                                    onClick={() => navigate(sec.num)}>
-                                    <span dir="ltr" className="sectionLabel44">
-                                      <bdi className="sectionNo44" aria-hidden="true">{sec.num}</bdi>
-                                      <Text44 text={sec.title} />
-                                    </span>
-                                  </button>
-                                </li>
-                              ))}
-                            </ol>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </nav>
-                  <p className="railNote44">← التالي · → السابق</p>
-                </div>
-              </aside>
-            )}
-            <main id="lesson44-main" className={cover ? 'stage44 stage44--cover' : 'stage44'}>
-              <Steps44 index={step} onTest={() => setArea('test')} onTeacher={() => setArea('teacher')} onNavigate={navigate} />
-              <nav className="stepNav44" aria-label="تنقل الخطوات">
-                <button type="button" className="btn44 btn44--ghost" disabled={step === 0} onClick={() => navigate(step - 1)}>
-                  <Glyph44 name="arrow" className="flip44" /> السابق
-                </button>
-                <span className="stepNavMeta44">
-                  <bdi dir="ltr">{step + 1} / {LESSON_STEP_COUNT_44}</bdi>
-                  <small>{station.name}</small>
-                </span>
-                <button type="button" className="btn44 btn44--solid"
-                  onClick={() => step === LAST_STEP ? setArea('test') : navigate(step + 1)}>
-                  {step === LAST_STEP ? 'ابدأ الاختبار' : 'التالي'} <Glyph44 name="arrow" />
-                </button>
-              </nav>
-            </main>
-          </div>
-        ) : (
-          <main className="area44">
-            {area === 'test' && <TestArea44
-              answers={answers}
-              change={(id, value) => { if (!submitted) setAnswers(a => ({ ...a, [id]: value })); }}
-              submitted={submitted}
-              submit={() => { if (testComplete44(answers)) { setSubmitted(true); setArea('solutions'); } }}
-              reset={() => { setAnswers({}); setSubmitted(false); setArea('test'); }}
-              openSolutions={() => { if (unlocked) setArea('solutions'); }} />}
-            {area === 'solutions' && unlocked && (
-              <Suspense fallback={<p role="status" className="areaLoading44">جارٍ تحميل الحلول…</p>}>
-                <SolutionsArea44 answers={answers} />
-              </Suspense>
-            )}
-            {area === 'teacher' && <TeacherArea44 unlocked={teacher} unlock={() => setTeacher(true)} lock={() => setTeacher(false)} />}
-            <button className="back44" type="button" onClick={() => setArea('student')}>
-              <Glyph44 name="arrow" /> العودة إلى خطوات التعلّم
-            </button>
-          </main>
-        )}
-      </Workspace44.Provider>
+  const groups: Lesson1ShellGroup[] = useMemo(
+    () =>
+      STATIONS_44.map((st, idx) => ({
+        section: `${String(idx + 1).padStart(2, "0")} · ${st.name}`,
+        items: STEP_DESCRIPTORS_44.slice(st.start, st.end + 1).map((desc) => ({
+          index: desc.index,
+          navId: desc.navId,
+          title: <Text44 text={desc.railLabel} />,
+        })),
+      })),
+    []
+  );
 
-      <footer className="footer44">
-        <div className="footerBrand44">
-          <span dir="ltr" className="footerTitle44">{LESSON_TITLE_44}</span>
-          <p>{LESSON_SUBTITLE_44}</p>
-        </div>
-        <p className="footerNote44">القاعدة التي لا تُنسى: <b>MUSTN'T</b> منع ≠ <b>DON'T HAVE TO</b> عدم ضرورة.</p>
-        <nav className="footerLinks44" aria-label="روابط الدرس">
-          <a href="#/lesson/43">الدرس السابق · 43</a>
-          <a href="#/" onClick={() => onExit?.()}>كل الدروس</a>
-        </nav>
-      </footer>
+  const currentDescriptor = STEP_DESCRIPTORS_44[step] ?? STEP_DESCRIPTORS_44[0]!;
+  const currentStation = station44(step);
+
+  const headerContent =
+    area === "learn" ? (
+      <Text44 text={`${currentStation.name} · ${currentDescriptor.railLabel}`} />
+    ) : area === "test" ? (
+      <Text44 text="الاختبار النهائي الشامل · 25 سؤالًا عبر 5 مستويات" />
+    ) : area === "solutions" ? (
+      <Text44 text="منطقة الحلول التفصيلية ومقارنة الإجابات" />
+    ) : (
+      <Text44 text="مساحة المعلم · الدليل التدريسي ومفاتيح التصحيح" />
+    );
+
+  const progress =
+    area === "learn"
+      ? Math.round(((step + 1) / LESSON_STEP_COUNT_44) * 100)
+      : 100;
+
+  const counter =
+    area === "learn"
+      ? `${step + 1} / ${LESSON_STEP_COUNT_44}`
+      : area === "test"
+        ? "25 Q"
+        : area === "solutions"
+          ? "KEY"
+          : "TCHR";
+
+  const areaButtons: ReadonlyArray<{
+    id: Lesson44Area;
+    label: string;
+    badge: string;
+    locked?: boolean;
+  }> = [
+    { id: "learn", label: "منطقة التعلّم", badge: `${LESSON_STEP_COUNT_44}` },
+    {
+      id: "test",
+      label: "منطقة الاختبار",
+      badge: testSubmitted && gradeReport ? `${gradeReport.score}/25` : "25",
+    },
+    {
+      id: "solutions",
+      label: "منطقة الحلول",
+      badge: solutionsUnlocked ? "متاح" : "مقفل",
+      locked: !solutionsUnlocked,
+    },
+    {
+      id: "teacher",
+      label: "مساحة المعلم",
+      badge: teacherUnlocked ? "مفتوح" : "رمز",
+    },
+  ];
+
+  const railFooter = (
+    <div className="occ-rail-foot mt-2">
+      <span>
+        زار المتعلم:{" "}
+        <span dir="ltr" className="font-en inline-block">
+          {visited.size} / {LESSON_STEP_COUNT_44}
+        </span>{" "}
+        خطوة
+      </span>
     </div>
-  </>;
+  );
+
+  return (
+    <Workspace44.Provider value={workspaceStore}>
+      <Lesson1Shell
+        railTitle={
+          <span className="occ-rail-brand">
+            <span>الدرس 44 · </span>
+            <span dir="ltr" lang="en" className="font-en">
+              {LESSON_TITLE_44}
+            </span>
+          </span>
+        }
+        railSubtitle={
+          <div className="mt-2 occ-rail-meta">
+            <span className="occ-rail-kicker">{LESSON_IDENTITY_AR_44}</span>
+            <span className="occ-rail-ar">{LESSON_SUBTITLE_44}</span>
+            <span className="occ-rail-sub">
+              39 خطوة تفاعلية · 6 قنوات دلالية · اختبار 25 سؤالًا
+            </span>
+          </div>
+        }
+        groups={groups}
+        activeIndex={area === "learn" ? step : -1}
+        markActiveStep={area === "learn"}
+        railAriaLabel="فهرس محطات الدرس 44"
+        railFooter={railFooter}
+        isMenuOpen={menuOpen}
+        onMenuOpenChange={setMenuOpen}
+        headerContent={headerContent}
+        progress={progress}
+        counter={counter}
+        counterDir="ltr"
+        contentKey={area === "learn" ? `step-${step}` : area}
+        contentArea={area}
+        onSelectStep={goToStep}
+        onPrev={area === "learn" ? prev : () => switchArea("learn")}
+        onNext={next}
+        showNext={area === "learn"}
+        prevDisabled={area === "learn" ? step === 0 : false}
+        nextDisabled={step === LESSON_STEP_COUNT_44 - 1}
+        prevLabel={area === "learn" ? "→ السابق" : "→ العودة إلى التعلّم"}
+        nextLabel="التالي ←"
+        navAriaLabel="التنقل في الدرس 44"
+        onExit={onExit}
+        mainRef={mainRef}
+        mainId="l44-main"
+        rootDir="rtl"
+        rootDataLesson={44}
+        rootDataShell="lesson-1"
+        rootClassName="obligation44 style-b font-body relative flex h-screen flex-col overflow-hidden"
+      >
+        <nav
+          className="occ-area-bar"
+          aria-label="التبديل بين مساحات الدرس 44"
+        >
+          {areaButtons.map((btn) => {
+            const active = area === btn.id;
+            return (
+              <button
+                key={btn.id}
+                type="button"
+                data-area-tab={btn.id}
+                disabled={btn.locked}
+                aria-current={active ? "page" : undefined}
+                aria-disabled={btn.locked || undefined}
+                className={`occ-area-btn ${active ? "is-active" : ""} ${
+                  btn.locked ? "is-locked" : ""
+                }`.trim()}
+                onClick={() => {
+                  if (!btn.locked) switchArea(btn.id);
+                }}
+              >
+                <span className="occ-area-label">
+                  {btn.locked && <Glyph44 name="lock" className="occ-lock-ico" />}
+                  <span>{btn.label}</span>
+                </span>
+                <span className="occ-area-pill" aria-hidden="true">
+                  {btn.badge}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
+
+        {area === "learn" ? (
+          <Steps44
+            index={step}
+            onNavigate={goToStep}
+            onTest={() => switchArea("test")}
+            onSolutions={() => switchArea("solutions")}
+            onTeacher={() => switchArea("teacher")}
+            testSubmitted={testSubmitted}
+            solutionsUnlocked={solutionsUnlocked}
+          />
+        ) : null}
+
+        {area === "test" ? (
+          <Suspense
+            fallback={
+              <p role="status" className="areaLoading44">
+                جارٍ تجهيز الاختبار النهائي الشامل...
+              </p>
+            }
+          >
+            <TestArea44
+              answers={testAnswers}
+              submitted={testSubmitted}
+              gradeReport={gradeReport}
+              onAnswer={(key, value) =>
+                setTestAnswers((prevAns) => ({ ...prevAns, [key]: value }))
+              }
+              onSubmitted={(report) => {
+                setGradeReport(report);
+                setTestSubmitted(true);
+                scrollMainTop();
+              }}
+              onReset={() => {
+                setTestAnswers({});
+                setGradeReport(null);
+                setTestSubmitted(false);
+                scrollMainTop();
+              }}
+              onSolutions={() => switchArea("solutions")}
+              onBack={() => switchArea("learn")}
+            />
+          </Suspense>
+        ) : null}
+
+        {area === "solutions" && solutionsUnlocked ? (
+          <Suspense
+            fallback={
+              <p role="status" className="areaLoading44">
+                جارٍ فتح منطقة الحلول التفصيلية...
+              </p>
+            }
+          >
+            <SolutionsArea44
+              answers={testAnswers}
+              gradeReport={gradeReport}
+              onBackToTest={() => switchArea("test")}
+              onBackToLearn={() => switchArea("learn")}
+            />
+          </Suspense>
+        ) : null}
+
+        {area === "teacher" ? (
+          <Suspense
+            fallback={
+              <p role="status" className="areaLoading44">
+                جارٍ تحميل بوابة المعلم...
+              </p>
+            }
+          >
+            <TeacherArea44
+              unlocked={teacherUnlocked}
+              unlock={() => setTeacherUnlocked(true)}
+              lock={() => setTeacherUnlocked(false)}
+              onOpenSolutions={() => switchArea("solutions")}
+              onBackToLearn={() => switchArea("learn")}
+            />
+          </Suspense>
+        ) : null}
+      </Lesson1Shell>
+    </Workspace44.Provider>
+  );
 }

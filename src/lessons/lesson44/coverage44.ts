@@ -1,80 +1,100 @@
-import { SOURCE_SECTIONS_44 } from './ledger44';
-import { PRACTICE_44 } from './practiceData44';
-import { TEST_QUESTIONS_44 } from './testData44';
+import { SOURCE_SECTIONS_44 } from "./ledger44";
+import { PRACTICE_44 } from "./practiceData44";
+import { TEST_QUESTIONS_44 } from "./testData44";
 
 const DESTINATIONS: Record<number, { destination: string; answerLocation: string }> = {
-  0: { destination: 'الغلاف — الخطوة 0 (Cover44)', answerLocation: 'لا مفاتيح — تعريف المقرر' },
-  1: { destination: 'الخطوة 1 — الأهداف (GoalList44 + Article)', answerLocation: 'لا مفاتيح — أهداف الدرس' },
-  2: { destination: 'الخطوة 2 — المصدر + ObligationBuilder44', answerLocation: 'باني جمل الضرورة — واجهة المنصة' },
-  3: { destination: 'الخطوة 3 — المصدر + ChoiceLab44 (must-rule)', answerLocation: 'مفاتيح الاختيار بعد التحقق' },
-  4: { destination: 'الخطوة 4 — المصدر (Article44)', answerLocation: 'أمثلة الضرورة الشخصية' },
-  5: { destination: 'الخطوة 5 — المصدر (Article44)', answerLocation: 'قوانين وتعليمات' },
-  6: { destination: 'الخطوة 6 — المصدر (Article44)', answerLocation: 'توصية قوية' },
-  7: { destination: 'الخطوة 7 — المصدر + ChoiceLab44 (hasto-rule)', answerLocation: 'مفاتيح الاختيار بعد التحقق' },
-  8: { destination: 'الخطوة 8 — المصدر (Article44)', answerLocation: 'HAS TO مع المفرد الغائب' },
-  9: { destination: 'الخطوة 9 — المصدر (Article44)', answerLocation: 'متى نستخدم HAVE TO' },
-  10: { destination: 'الخطوة 10 — المصدر (Article44)', answerLocation: 'MUST vs HAVE TO — اتجاه شائع' },
-  11: { destination: 'الخطوة 11 — المصدر (جدول المقارنة الذهبي)', answerLocation: 'جدول المقارنة — Article44' },
-  12: { destination: 'الخطوة 12 — حوار Preparing for the Exam (Dialog44)', answerLocation: 'وسم الاستخدامات' },
-  13: { destination: 'الخطوة 13 — المصدر + ProhibitionSorter44', answerLocation: 'مفاتيح التصنيف بعد التحقق' },
-  14: { destination: "الخطوة 14 — المصدر + ChoiceLab44 (mustn't-check)", answerLocation: 'مفاتيح المنع بعد التحقق' },
-  15: { destination: "الخطوة 15 — المصدر (DON'T HAVE TO)", answerLocation: 'عدم الضرورة' },
-  16: { destination: 'الخطوة 16 — المصدر (مقارنة تغيّر المعنى)', answerLocation: 'القاعدة الذهبية' },
-  17: { destination: 'الخطوة 17 — المصدر (تكوين السؤال)', answerLocation: 'Do/Does + have to' },
-  18: { destination: 'الخطوة 18 — المصدر (الإجابات القصيرة)', answerLocation: 'الإجابات القصيرة' },
-  19: { destination: 'الخطوة 19 — المصدر (MUST في السؤال)', answerLocation: 'فرق مهم في الإجابة' },
-  20: { destination: 'الخطوة 20 — المصدر + TenseMachine44 + ChoiceLab44 (past-check)', answerLocation: 'آلة الأزمنة + مفاتيح الاختيار' },
-  21: { destination: "الخطوة 21 — المصدر (DIDN'T HAVE TO)", answerLocation: 'نقطة دقيقة' },
-  22: { destination: 'الخطوة 22 — المصدر (السؤال في الماضي)', answerLocation: 'الخطأ الشائع' },
-  23: { destination: 'الخطوة 23 — المصدر + ChoiceLab44 (future-check)', answerLocation: 'WILL HAVE TO + مفاتيح الاختيار' },
-  24: { destination: 'الخطوة 24 — المصدر (جدول الأزمنة)', answerLocation: 'مقارنة شاملة' },
-  25: { destination: 'الخطوة 25 — المصدر (MUST vs SHOULD)', answerLocation: 'الضرورة والنصيحة' },
-  26: { destination: 'الخطوة 26 — الحوار الشامل (Dialog44)', answerLocation: 'وسم الاستخدامات السبعة' },
-  27: { destination: 'الخطوة 27 — GrammarDetective44 + DetectiveSourceKey44', answerLocation: 'كتلة مفاتيح §27 بعد كشف البنود العشرة' },
-  28: { destination: 'الخطوة 28 — PracticeSet44(28)', answerLocation: 'مفتاح المصدر بعد التحقق من البنود الخمسة' },
-  29: { destination: 'الخطوة 29 — PracticeSet44(29)', answerLocation: 'مفتاح المصدر بعد التحقق من البنود الخمسة' },
-  30: { destination: 'الخطوة 30 — PracticeSet44(30)', answerLocation: 'مفتاح المصدر بعد التحقق من البنود الخمسة' },
-  31: { destination: 'الخطوة 31 — PracticeSet44(31)', answerLocation: 'مفتاح المصدر بعد التحقق من البنود الخمسة' },
-  32: { destination: 'الخطوة 32 — PracticeSet44(32)', answerLocation: 'مفتاح المصدر بعد التحقق من البنود الخمسة' },
-  33: { destination: 'الخطوة 33 — ReadingChallenge44', answerLocation: 'كتلة مفاتيح §33 بعد مراجعة الأسئلة العشرة' },
-  34: { destination: 'منطقة الاختبار المستقلة — TestArea44 (النص الكامل)', answerLocation: 'مفاتيح §34 — لا تُعرض قبل التسليم' },
-  35: { destination: 'بوابة المعلم — TeacherArea44 + SolutionsArea44', answerLocation: 'مفاتيح الاختبار كاملة بعد رمز المعلم' },
-  36: { destination: 'الخطوة 36 — WritingMission44', answerLocation: 'قائمة تحقق من 10 بنود + مساحة كتابة' },
-  37: { destination: 'الخطوة 37 — الملخص الذهبي (Article44)', answerLocation: 'القاعدة الذهبية الكبرى' },
-  38: { destination: 'الخطوة 38 — Roadmap44', answerLocation: 'خريطة التقدم — الدرس 45 مخطط فقط' },
+  0: { destination: "الخطوة 0 — بوابة مركز قيادة الإلزام (Cover44)", answerLocation: "تمهيد تفاعلي لثلاثة مواقف والفرق المحوري" },
+  1: { destination: "الخطوة 1 — ميثاق الأهداف الاثني عشر (GoalList44)", answerLocation: "متتبع تركيز تفاعلي" },
+  2: { destination: "الخطوة 2 — معنى MUST + باني الجملة (ObligationBuilder44)", answerLocation: "توليد حي للجمل والترجمة" },
+  3: { destination: "الخطوة 3 — قاعدة MUST الذهبية + فحص ثبات الصيغة", answerLocation: "تغذية راجعة بعد المحاولة" },
+  4: { destination: "الخطوة 4 — الضرورة التي يؤكدها المتحدث + فحص سياقي", answerLocation: "تغذية راجعة بعد المحاولة" },
+  5: { destination: "الخطوة 5 — القوانين والتعليمات + تطبيق لوائح السلامة", answerLocation: "تغذية راجعة بعد المحاولة" },
+  6: { destination: "الخطوة 6 — MUST للتوصية القوية + مختبر السياق والنبرة", answerLocation: "تصنيف سياقي بعد المحاولة" },
+  7: { destination: "الخطوة 7 — معنى HAVE TO (Semi-modal) + فحص التوافق", answerLocation: "تغذية راجعة بعد المحاولة" },
+  8: { destination: "الخطوة 8 — HAS TO مع المفرد الغائب + لوحة تصريف الضمائر", answerLocation: "مقارنة حية بين HAVE/HAS TO وMUST" },
+  9: { destination: "الخطوة 9 — متى نستخدم HAVE TO؟ + ربط الظرف بالصيغة", answerLocation: "تغذية راجعة بعد المحاولة" },
+  10: { destination: "الخطوة 10 — الفرق الحقيقي + بوصلة التداخل السياقي", answerLocation: "اتجاه شائع لا قانون جامد" },
+  11: { destination: "الخطوة 11 — جدول المقارنة الذهبي + فحص المقارنة", answerLocation: "تغذية راجعة بعد المحاولة" },
+  12: { destination: "الخطوة 12 — حوار Preparing for the Exam + فحص الحوار", answerLocation: "الترجمة والتحليل + سؤالان بعد المحاولة" },
+  13: { destination: "الخطوة 13 — MUSTN'T مقابل DON'T HAVE TO + رادار التصنيف", answerLocation: "تصنيف 6 جمل بعد المحاولة" },
+  14: { destination: "الخطوة 14 — MUSTN'T للمنع القاطع + فحص المنع", answerLocation: "تغذية راجعة بعد المحاولة" },
+  15: { destination: "الخطوة 15 — DON'T / DOESN'T HAVE TO + فحص عودة HAVE", answerLocation: "تغذية راجعة بعد المحاولة" },
+  16: { destination: "الخطوة 16 — مقارنة تغيّر المعنى + محاكي انعكاس المعنى", answerLocation: "محاكاة تفاعلية فورية" },
+  17: { destination: "الخطوة 17 — تكوين السؤال بـ DO/DOES + مختبر بناء السؤال", answerLocation: "تحويل تفاعلي حي" },
+  18: { destination: "الخطوة 18 — الإجابات القصيرة + فحص دلالة النفي", answerLocation: "تغذية راجعة بعد المحاولة" },
+  19: { destination: "الخطوة 19 — MUST في السؤال + فخ الإجابة المنفية", answerLocation: "تغذية راجعة بعد المحاولة" },
+  20: { destination: "الخطوة 20 — HAD TO في الماضي + آلة الأزمنة + فحص الماضي", answerLocation: "تصريف تفاعلي + فحص بعد المحاولة" },
+  21: { destination: "الخطوة 21 — DIDN'T HAVE TO + مختبر دلالة عدم الإلزام الماضي", answerLocation: "تغذية راجعة بعد المحاولة" },
+  22: { destination: "الخطوة 22 — السؤال في الماضي بـ DID + فحص التصحيح", answerLocation: "تغذية راجعة بعد المحاولة" },
+  23: { destination: "الخطوة 23 — WILL HAVE TO في المستقبل + فحص المستقبل", answerLocation: "تغذية راجعة بعد المحاولة" },
+  24: { destination: "الخطوة 24 — نفي المستقبل وسؤاله + جدول الأزمنة الشامل", answerLocation: "تغذية راجعة بعد المحاولة" },
+  25: { destination: "الخطوة 25 — الفرق التمهيدي بين الضرورة والنصيحة + مقياس القوة", answerLocation: "موازنة تمهيدية دون استباق الدرس 45" },
+  26: { destination: "الخطوة 26 — الحوار الشامل Science Competition + ترجمة اختيارية", answerLocation: "تحليل الاستخدامات السبعة + فحص الحوار" },
+  27: { destination: "الخطوة 27 — المحقق النحوي Grammar Detective (10 جمل)", answerLocation: "التصحيح لكل بند بعد المحاولة والكتلة الختامية بعد إتمام العشرة" },
+  28: { destination: "الخطوة 28 — التدريب الأول: MUST أم HAVE TO؟", answerLocation: "تصحيح آلي لكل بند وفتح الحلول بعد إتمام الخمسة" },
+  29: { destination: "الخطوة 29 — التدريب الثاني: MUSTN'T أم DON'T HAVE TO؟", answerLocation: "تصحيح آلي لكل بند وفتح الحلول بعد إتمام الخمسة" },
+  30: { destination: "الخطوة 30 — التدريب الثالث: الماضي والمستقبل", answerLocation: "تصحيح آلي لكل بند وفتح الحلول بعد إتمام الخمسة" },
+  31: { destination: "الخطوة 31 — التدريب الرابع: التحويل إلى سؤال", answerLocation: "تصحيح آلي لكل بند وفتح الحلول بعد إتمام الخمسة" },
+  32: { destination: "الخطوة 32 — التدريب الخامس: التحويل إلى النفي", answerLocation: "تصحيح آلي لكل بند وفتح الحلول بعد إتمام الخمسة" },
+  33: { destination: "الخطوة 33 — تحدي القراءة A Day at the Science Centre", answerLocation: "فحص كل سؤال بعد الإجابة وفتح الحلول بعد العشرة" },
+  34: { destination: "الخطوة 34 + منطقة الاختبار المستقلة TestArea44 (25 سؤالًا)", answerLocation: "تحميل ديناميكي لمحرك التصحيح عند التسليم فقط" },
+  35: { destination: "الخطوة 35 + مساحة المعلم ومنطقة الحلول", answerLocation: "مفتاح التصحيح الكامل في بوابة المعلم ومنطقة الحلول بعد التسليم" },
+  36: { destination: "الخطوة 36 — مهمة الكتابة My School Rules and Responsibilities", answerLocation: "راصد تلقائي للصيغ الثماني + قائمة مراجعة ذاتية" },
+  37: { destination: "الخطوة 37 — الملخص الذهبي + بطاقات القنوات الست", answerLocation: "مراجعة مركّزة شاملة" },
+  38: { destination: "الخطوة 38 — خريطة التقدم (44 / 120) وتمهيد الدرس 45", answerLocation: "شريط التقدم والجسر الختامي للدرس القادم" },
 };
 
-export type CoverageRow44 = { id: string; number: number; title: string; destination: string; answerLocation: string; units: { id: string; text: string }[]; items: { id: string; parts: string[] }[] };
+export type CoverageRow44 = {
+  id: string;
+  number: number;
+  title: string;
+  destination: string;
+  answerLocation: string;
+  units: { id: string; text: string }[];
+  items: { id: string; parts: string[] }[];
+};
 
-export const COVERAGE_44: CoverageRow44[] = SOURCE_SECTIONS_44.map(section => {
-  const meta = DESTINATIONS[section.num] ?? { destination: 'الخطوة الدراسية', answerLocation: 'المصدر' };
-  const items = PRACTICE_44.filter(item => item.section === section.num).map(item => ({
-    id: item.id, parts: [item.parts.join('+'), item.options.length ? `خيارات: ${item.options.length}` : 'كتابة حرة', `مفتاح: ${item.sourceAnswer}`],
-  }));
-  const testItems = section.num === 34 ? TEST_QUESTIONS_44.map(q => ({ id: q.id, parts: q.fields })) : [];
-  return { id: section.id, number: section.num, title: section.title, destination: meta.destination, answerLocation: meta.answerLocation, units: section.units, items: [...items, ...testItems] };
+export const COVERAGE_44: CoverageRow44[] = SOURCE_SECTIONS_44.map((section) => {
+  const meta = DESTINATIONS[section.num] ?? {
+    destination: "خطوة دراسية",
+    answerLocation: "داخل الخطوة",
+  };
+  const items = PRACTICE_44.filter((item) => item.section === section.num).map(
+    (item) => ({
+      id: item.id,
+      parts: [
+        item.parts.join("+"),
+        item.options.length ? `خيارات: ${item.options.length}` : "إدخال نصي",
+        `المفتاح: ${item.sourceAnswer}`,
+      ],
+    })
+  );
+  const testItems =
+    section.num === 34
+      ? TEST_QUESTIONS_44.map((q) => ({ id: q.id, parts: q.fields }))
+      : [];
+  return {
+    id: section.id,
+    number: section.num,
+    title: section.title,
+    destination: meta.destination,
+    answerLocation: meta.answerLocation,
+    units: section.units,
+    items: [...items, ...testItems],
+  };
 });
 
 export const COVERAGE_ACCURACY_NOTES_44 = [
-  'نُقلت أقسام المصدر الـ39 (الغلاف + §§1–38) كاملة دون حذف أي قسم أو مثال أو سؤال أو إجابة.',
-  'مفاتيح التدريبات §§28–32 من المصدر حرفيًا.',
-  'مفاتيح الاختبار الـ25 من §34 حرفيًا.',
-  'المصدر يقرر أن الفرق بين MUST وHAVE TO اتجاه شائع وليس قانونًا مطلقًا — وهذا محفوظ.',
-  'التطبيعات الموثقة: إزالة الإيموجي وأعلام الأعلام من العناوين، وحذف أشرطة الزينة ━━━، وربط خلايا الجداول بـ |.',
-  'أسئلة §34 الخمسة والعشرون محفوظة في testData44 حرفيًا؛ ومفاتيحها في solutionsData44 مطابقة لـ §34.',
-  'مفاتيح §§28–33 كانت تُطبع قبل المحاولة في التصميم السابق؛ صارت كتلة «الحلول» المصدرية تُفتح فقط بعد التحقق من كل بند، وتبقى كاملة في دليل المعلم.',
-  'القسم 34 (62 سطرًا) يُعرض كاملًا داخل منطقة الاختبار؛ خطوة 34 تعرض الموجز والمستويات الخمسة بدل تكرار ورقة الأسئلة كاملة.',
-  'بطاقات الملخص الخمس (SummaryCards44) كانت تكرارًا للملخص المصري §37؛ استُبدلت بالعرض التحريري الكامل لـ §37 دون حذف أي سطر.',
+  "تُعرض جميع الأقسام الـ39 (الغلاف + الأقسام 1–38) بكامل أمثلتها وجداولها وحواراتها وتدريباتها وأسئلتها دون حذف أو اختصار.",
+  "يبقى الفرق بين MUST وHAVE TO معروضًا بدقة علمية بوصفه اتجاهًا شائعًا يتداخل في اللوائح والتعليمات وليس قانونًا جامدًا.",
+  "تُفصل دلالة المنع القاطع (MUSTN'T) عن دلالة عدم الضرورة (DON'T / DOESN'T HAVE TO) بصريًا وبنيويًا ودلاليًا في كل موضع.",
+  "تُحجب حلول المحقق النحوي والتدريبات الخمسة وتحدي القراءة حتى محاولة المتعلم، مع إمكانية إعادة المحاولة وتصفير الإجابات.",
+  "يُحمَّل محرك تصحيح الاختبار النهائي (testKey44) ديناميكيًا عند التسليم فقط، فلا توجد مفاتيح إجابة في شجرة DOM قبل التسليم.",
 ];
 
 export const COVERAGE_PLATFORM_ADDITIONS_44 = [
-  'ObligationBuilder44: باني جمل الضرورة — واجهة المنصة.',
-  'ProhibitionSorter44: مصنّف المنع مقابل عدم الضرورة — بنود المنصة.',
-  'TenseMachine44: آلة الأزمنة HAVE TO — واجهة المنصة.',
-  'GrammarDetective44: الأخطاء العشرة — كشف تدريجي بعد المحاولة.',
-  'practiceNotes44.ts: سبب كل مفتاح تدريب — شرح المنصة.',
-  'solutionsData44.ts: جملة السبب لكل سؤال اختبار — شرح المنصة.',
-  'WritingMission44: قائمة تحقق من 10 بنود ومساحة كتابة محفوظة — إضافة المنصة.',
-  'الهوية البصرية «English Learning Studio» — تصميم المنصة، بخطَّي Newsreader وTajawal المستضافين محليًا.',
-  'أقسام التعلّم الثلاثة عشر وتسمياتها الإنجليزية — تسميات تنقل من إعداد المنصة.',
+  "نظام الهوية البصرية «مركز قيادة الإلزام والضرورة — The Obligation Command Center» بست قنوات دلالية مميزة بالأيقونة والحدود واللون المتوافق مع WCAG AA.",
+  "مختبرات تفاعلية مدمجة في جميع محطات الشرح: باني الجملة، لوحة الضمائر، مختبر النبرة، بوصلة التداخل، رادار المنع، محاكي انعكاس المعنى، باني السؤال، وآلة الأزمنة.",
+  "تصحيح آلي مرن يقبل الاختصارات والصيغ الكاملة والجمل المصححة في التدريبات الخمسة وفي الاختبار النهائي المؤلف من 25 سؤالًا.",
+  "راصد تلقائي للمتطلبات النحوية الثمانية في مهمة الكتابة مع حفظ المسودة وقائمة التحقق.",
 ];

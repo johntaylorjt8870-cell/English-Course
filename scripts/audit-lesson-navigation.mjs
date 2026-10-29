@@ -120,7 +120,7 @@ function arrows(nav) {
 }
 
 async function main() {
-  const LESSONS_ALL = Array.from({ length: 44 }, (_, i) => ({ n: i + 1 }));
+  const LESSONS_ALL = Array.from({ length: 45 }, (_, i) => ({ n: i + 1 }));
 
   // ============================================================
   // 1) الصفحة الرئيسية — الحالة الأولية
@@ -189,7 +189,7 @@ async function main() {
   ok(nums.join(",") === "2,3,4,5,6,7,8,9,10,11", `hub: نقرة يسار واحدة ترجع خطوة (got ${nums.join(" ")})`);
 
   // ============================================================
-  // 3) النهاية: 35–44 وتعطيل السهم الأيمن (44 درسًا — أضيف الدرس 44)
+  // 3) النهاية: 36–45 وتعطيل السهم الأيمن (45 درسًا — أضيف الدرس 45)
   // ============================================================
   for (let i = 0; i < 42; i++) {
     next.click();
@@ -198,12 +198,12 @@ async function main() {
   nums = visibleNumbers(nav);
   ({ prev, next } = arrows(nav));
   ok(nums.length === 10, `hub: عند النهاية يبقى العدد 10 (got ${nums.length})`);
-  ok(nums.join(",") === "35,36,37,38,39,40,41,42,43,44", `hub: النافذة الأخيرة 35–44 (got ${nums.join(" ")})`);
+  ok(nums.join(",") === "36,37,38,39,40,41,42,43,44,45", `hub: النافذة الأخيرة 36–45 (got ${nums.join(" ")})`);
   ok(next.disabled === true, "hub: السهم الأيمن معطّل في النافذة الأخيرة");
   ok(prev.disabled === false, "hub: السهم الأيسر مفعّل في النافذة الأخيرة");
   next.click();
   await tick();
-  ok(visibleNumbers(nav).join(",") === "35,36,37,38,39,40,41,42,43,44", "hub: النقر على سهم معطّل لا يغيّر النافذة");
+  ok(visibleNumbers(nav).join(",") === "36,37,38,39,40,41,42,43,44,45", "hub: النقر على سهم معطّل لا يغيّر النافذة");
 
   // رجوع خطوة بخطوة حتى البداية
   for (let i = 0; i < 42; i++) {
@@ -347,6 +347,14 @@ async function main() {
   nav = app.host.querySelector(NAV_SELECTOR);
   ok(visibleNumbers(nav).join(",") === "35,36,37,38,39,40,41,42,43,44", "hub: returning from Lesson 44 shows 35–44");
   ok(nav.querySelector('a[href="#/lesson/44"]').getAttribute("aria-current") === "true", "hub: Lesson 44 remains visible and current");
+  win.location.hash = "#/lesson/45";
+  await tick(100);
+  ok(app.host.querySelector('[data-lesson="45"]') && app.host.textContent.includes("SHOULD & OUGHT TO"), "hub: Lesson 45 route renders the new lesson");
+  win.location.hash = "#/";
+  await tick(80);
+  nav = app.host.querySelector(NAV_SELECTOR);
+  ok(visibleNumbers(nav).join(",") === "36,37,38,39,40,41,42,43,44,45", "hub: returning from Lesson 45 shows 36–45");
+  ok(nav.querySelector('a[href="#/lesson/45"]').getAttribute("aria-current") === "true", "hub: Lesson 45 remains visible and current");
   app.root.unmount();
   document.body.innerHTML = "";
 
@@ -370,6 +378,7 @@ async function main() {
     [42, "33,34,35,36,37,38,39,40,41,42", "33–42"],
     [43, "34,35,36,37,38,39,40,41,42,43", "34–43"],
     [44, "35,36,37,38,39,40,41,42,43,44", "35–44"],
+    [45, "36,37,38,39,40,41,42,43,44,45", "36–45"],
   ];
   for (const [current, expected, label] of cases) {
     const { host, root: r } = mount(M.React.createElement(M.LessonNumberNav, { items: LESSONS_ALL, current }));

@@ -1,0 +1,28 @@
+export const TEST_KEY_45: Readonly<Record<string,string>> = {
+  "q1": "should",
+  "q2": "to",
+  "q3": "Should",
+  "q4": "sleep",
+  "q5": "leave",
+  "q6": "shouldn't",
+  "q7": "ought to apologise",
+  "q8": "should have left",
+  "q9": "shouldn't have eaten",
+  "q10": "should",
+  "q11": "she should study more",
+  "q12": "you ought to study harder",
+  "q13": "should i leave now",
+  "q14": "he should have gone home earlier",
+  "q15": "you had better take an umbrella",
+  "q16": "advice; obligation",
+  "q17": "advice; prohibition",
+  "q18": "past regret",
+  "q19": "expectation",
+  "q20": "stronger advice; consequence",
+  "q21": "should",
+  "q22": "should",
+  "q23": "should",
+  "q24": "shouldn't",
+  "q25": "should"
+};
+export const normalizeAnswer45 = (value:string) => value.toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9\s']/g," ").replace(/\s+/g," ").trim();

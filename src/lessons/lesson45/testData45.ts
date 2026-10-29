@@ -1,0 +1,28 @@
+export type TestQuestion45 = { id:string; level:number; type:"choice"|"text"; prompt:string; options?:readonly string[] };
+export const TEST_QUESTIONS_45: readonly TestQuestion45[] = [
+  {id:"q1",level:1,type:"choice",prompt:"She ___ study harder.",options:["shoulds","should","should to"]},
+  {id:"q2",level:1,type:"choice",prompt:"You ought ___ respect others.",options:["to","for","at"]},
+  {id:"q3",level:1,type:"choice",prompt:"___ I call the teacher?",options:["Do should","Should","Does"]},
+  {id:"q4",level:1,type:"choice",prompt:"He shouldn't ___ so late.",options:["sleeps","sleeping","sleep"]},
+  {id:"q5",level:1,type:"choice",prompt:"You'd better ___ now.",options:["leave","to leave","leaving"]},
+  {id:"q6",level:2,type:"text",prompt:"You ___ waste water. (should / not)"},
+  {id:"q7",level:2,type:"text",prompt:"She ___ to apologise to her friend. (ought)"},
+  {id:"q8",level:2,type:"text",prompt:"We ___ have left earlier yesterday, but we didn't. (should)"},
+  {id:"q9",level:2,type:"text",prompt:"He ___ have eaten so much yesterday. (should / not)"},
+  {id:"q10",level:2,type:"text",prompt:"The package ___ arrive tomorrow. (reasonable expectation)"},
+  {id:"q11",level:3,type:"text",prompt:"Correct: She shoulds study more."},
+  {id:"q12",level:3,type:"text",prompt:"Correct: You ought study harder."},
+  {id:"q13",level:3,type:"text",prompt:"Correct: Do I should leave now?"},
+  {id:"q14",level:3,type:"text",prompt:"Correct: He should have went home earlier."},
+  {id:"q15",level:3,type:"text",prompt:"Correct: You had better to take an umbrella."},
+  {id:"q16",level:4,type:"text",prompt:"Explain briefly: You should study vs You must study."},
+  {id:"q17",level:4,type:"text",prompt:"Explain briefly: You shouldn't enter vs You mustn't enter."},
+  {id:"q18",level:4,type:"text",prompt:"What does I should have listened to my teacher express?"},
+  {id:"q19",level:4,type:"text",prompt:"What is the function of SHOULD in The results should be ready tomorrow?"},
+  {id:"q20",level:4,type:"text",prompt:"How is HAD BETTER different from SHOULD?"},
+  {id:"q21",level:5,type:"text",prompt:"Maya: What ___ I do? (ask for advice)"},
+  {id:"q22",level:5,type:"text",prompt:"Omar: You ___ revise the most important topics first."},
+  {id:"q23",level:5,type:"text",prompt:"You ___ have started earlier. (past action that was better)"},
+  {id:"q24",level:5,type:"text",prompt:"You ___ have stayed up so late. (past action to avoid)"},
+  {id:"q25",level:5,type:"text",prompt:"It ___ be manageable if we've prepared well. (expectation)"}
+] as const;

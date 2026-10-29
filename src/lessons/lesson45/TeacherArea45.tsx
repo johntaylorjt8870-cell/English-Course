@@ -1,7 +1,45 @@
-import { lazy, Suspense, useState } from "react";
+import { Component, lazy, Suspense, useState, type ReactNode } from "react";
 import { En45, Text45 } from "./design45";
 
 const TeacherGuide45 = lazy(() => import("./TeacherGuide45"));
+
+class TeacherChunkBoundary45 extends Component<
+  { children: ReactNode; retryKey: number; onRetry: () => void },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidUpdate(prevProps: { retryKey: number }) {
+    if (prevProps.retryKey !== this.props.retryKey && this.state.hasError) {
+      this.setState({ hasError: false });
+    }
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div
+          role="alert"
+          className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border-2 border-rose-200 bg-rose-50 p-4 text-sm font-bold text-rose-900"
+        >
+          <span>⚠️ تعذّر تحميل دليل المعلم. يرجى التحقق من الاتصال وإعادة المحاولة.</span>
+          <button
+            type="button"
+            onClick={this.props.onRetry}
+            className="rounded-xl bg-rose-700 px-4 py-2 text-xs font-bold text-white transition hover:bg-rose-800"
+          >
+            إعادة المحاولة ↺
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 export const TEACHER_PASSWORD_45 = "somer173";
 
@@ -19,6 +57,7 @@ export default function TeacherArea45({
 }) {
   const [value, setValue] = useState("");
   const [wrong, setWrong] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
 
   if (!unlocked) {
     return (
@@ -117,15 +156,21 @@ export default function TeacherArea45({
         <Text45 text={CLIENT_GATE_NOTE} />
       </p>
 
-      <Suspense
-        fallback={
-          <p role="status" className="rounded-2xl border border-slate-200 bg-white p-5 text-center text-base font-bold text-slate-500">
-            جارٍ تحميل مفتاح الإجابات...
-          </p>
-        }
+      <TeacherChunkBoundary45
+        retryKey={retryKey}
+        onRetry={() => setRetryKey((k) => k + 1)}
       >
-        <TeacherGuide45 />
-      </Suspense>
+        <Suspense
+          key={retryKey}
+          fallback={
+            <p role="status" className="rounded-2xl border border-slate-200 bg-white p-5 text-center text-base font-bold text-slate-500">
+              جارٍ تحميل مفتاح الإجابات...
+            </p>
+          }
+        >
+          <TeacherGuide45 />
+        </Suspense>
+      </TeacherChunkBoundary45>
     </div>
   );
 }

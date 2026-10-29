@@ -98,6 +98,8 @@ function CoverSlide45({
 
         <div className="pop pop-4 mt-8">
           <Formula45
+            joiner="·"
+            compact
             parts={[
               { en: "SHOULD + V1", ar: "النصيحة والتوقع", tone: "sky" },
               { en: "OUGHT TO + V1", ar: "الصواب والتوصية", tone: "orange" },
@@ -289,7 +291,7 @@ function StepBody45({
   onRestart: () => void;
   onExit?: () => void;
 }) {
-  const [showReadingAr, setShowReadingAr] = useState(false);
+  const showReadingAr = workspace.showReadingAr;
 
   if (step.kind === "cover") {
     return <CoverSlide45 step={step} onStart={onStart} onGoTest={onGoTest} />;
@@ -384,10 +386,50 @@ function StepBody45({
           </Note45>
         )}
 
-        {step.lab === "advice" && <AdviceLab45 />}
-        {step.lab === "meaning" && <MeaningLab45 />}
-        {step.lab === "past" && <PastLab45 />}
-        {step.lab === "politeness" && <PolitenessLab45 />}
+        {step.lab === "advice" && (
+          <AdviceLab45
+            value={workspace.labs.advice}
+            onSelect={(next) =>
+              onChangeWorkspace((prev) => ({
+                ...prev,
+                labs: { ...prev.labs, advice: next },
+              }))
+            }
+          />
+        )}
+        {step.lab === "meaning" && (
+          <MeaningLab45
+            value={workspace.labs.meaning}
+            onSelect={(next) =>
+              onChangeWorkspace((prev) => ({
+                ...prev,
+                labs: { ...prev.labs, meaning: next },
+              }))
+            }
+          />
+        )}
+        {step.lab === "past" && (
+          <PastLab45
+            value={workspace.labs.past}
+            onSelect={(next) =>
+              onChangeWorkspace((prev) => ({
+                ...prev,
+                labs: { ...prev.labs, past: next },
+              }))
+            }
+          />
+        )}
+        {step.lab === "politeness" && (
+          <PolitenessLab45
+            value={workspace.labs.politeness}
+            onSelect={(next) =>
+              onChangeWorkspace((prev) => ({
+                ...prev,
+                labs: { ...prev.labs, politeness: next },
+              }))
+            }
+          />
+        )}
 
         {step.kind === "dialogue" && step.dialogueTurns && (
           <DialogueView45 turns={step.dialogueTurns} notes={step.dialogueNotes} />
@@ -418,7 +460,12 @@ function StepBody45({
               </En45>
               <button
                 type="button"
-                onClick={() => setShowReadingAr((v) => !v)}
+                onClick={() =>
+                  onChangeWorkspace((prev) => ({
+                    ...prev,
+                    showReadingAr: !prev.showReadingAr,
+                  }))
+                }
                 className="rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1 text-xs font-bold text-slate-700 transition hover:bg-slate-100"
               >
                 {showReadingAr ? "إخفاء الترجمة المرافقة" : "إظهار الترجمة العربية للفقرات"}
@@ -481,6 +528,11 @@ function StepBody45({
       </SlideFrame45>
     </div>
   );
+}
+
+function stepNavTitle45(s: Lesson45Step): string {
+  if (s.kind === "cover") return "الغلاف";
+  return s.title;
 }
 
 export default function Lesson45({ onExit }: { onExit?: () => void }) {
@@ -551,7 +603,7 @@ export default function Lesson45({ onExit }: { onExit?: () => void }) {
         section: station.name,
         items: STEPS_45.slice(station.start, station.end + 1).map((s, offset) => ({
           index: station.start + offset,
-          title: <Text45 text={s.title} />,
+          title: <Text45 text={stepNavTitle45(s)} />,
           mascot: s.emoji,
           navId: s.id,
         })),
@@ -637,12 +689,16 @@ export default function Lesson45({ onExit }: { onExit?: () => void }) {
           </bdi>{" "}
           <span aria-hidden="true">{"\u2022"}</span>{" "}
           <bdi dir="rtl" className="text-slate-800">
-            <Text45 text={currentStep.title} />
+            <Text45 text={stepNavTitle45(currentStep)} />
           </bdi>
         </>
       }
       progress={progress}
-      counter={`${step + 1} / ${LESSON_STEP_COUNT_45}`}
+      counter={
+        <span dir="ltr" className="font-en whitespace-nowrap">
+          {`${step + 1} / ${LESSON_STEP_COUNT_45}`}
+        </span>
+      }
       counterDir="ltr"
       contentKey={step}
       prevDisabled={step === 0}

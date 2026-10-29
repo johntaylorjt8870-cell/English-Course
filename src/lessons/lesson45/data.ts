@@ -581,8 +581,9 @@ export const STEPS_45: readonly Lesson45Step[] = [
       "تكوين أسئلة نعم/لا وأسئلة أدوات الاستفهام WH باستخدام SHOULD.",
       "استخدام OUGHT TO ومقارنته بـ SHOULD في المعنى والتركيب.",
       "التمييز الدقيق بين النصيحة (SHOULD) والضرورة والإلزام (MUST / HAVE TO).",
-      "استخدام SHOULD و OUGHT TO للتعبير عن التوقعات المعقولة.",
-      "فهم صيغتَي SHOULD HAVE + V3 و SHOULDN'T HAVE + V3 لتقييم الماضي.",
+      "استخدام SHOULD أو OUGHT TO للتعبير عن التوقعات المعقولة.",
+      "فهم صيغتَي (SHOULD HAVE + V3 · SHOULDN'T HAVE + V3) لتقييم الماضي.",
+      "التمييز بين SHOULD HAVE و MUST HAVE عند اختلاف المعنى في الماضي.",
       "استخدام HAD BETTER للنصيحة القوية المرتبطة بعاقبة محتملة.",
       "تقديم نصائح طبيعية ومهذبة في مواقف الحياة اليومية.",
     ],
@@ -785,7 +786,7 @@ export const STEPS_45: readonly Lesson45Step[] = [
     id: "shouldnt",
     station: "النفي والأسئلة",
     kind: "lesson",
-    title: "SHOULDN'T — النصيحة بعدم الفعل",
+    title: "النصيحة بعدم الفعل — SHOULDN'T",
     emoji: "🚫",
     tone: "rose",
     lead: "ننفي SHOULD بإضافة not بعدها مباشرة عندما نرى أن الفعل غير مناسب ومن الأفضل تجنبه.",
@@ -1265,6 +1266,11 @@ export const STEPS_45: readonly Lesson45Step[] = [
         tone: "sky",
       },
     ],
+    note: {
+      emoji: "💡",
+      title: "فرق مهم عن MUST HAVE + V3",
+      body: "تقيّم SHOULD HAVE + V3 ما كان ينبغي أن يحدث (ندم أو توقع)، بينما تفيد MUST HAVE + V3 استنتاجًا شبه مؤكد عن الماضي بناءً على دليل، مثل: He must have forgotten (لا بد أنه نسي).",
+    },
     tip: "افهم قصد المتحدث من السياق دائمًا: هل يلوم نفسه على تقصير ماضٍ، أم يقدّر اكتمال حدث وفق الجدول؟",
   },
 
@@ -1671,7 +1677,7 @@ export const STEPS_45: readonly Lesson45Step[] = [
     title: "الملخص الذهبي للدرس 45",
     emoji: "🧠",
     tone: "amber",
-    lead: "راجع الخريطة الكاملة للصيغ الثماني ووظائفها قبل خوض الاختبار النهائي:",
+    lead: "راجع الخريطة الكاملة للصيغ التسع ووظائفها قبل خوض الاختبار النهائي:",
     examples: [
       { en: "SHOULD + V1 → You should study harder.", ar: "نصيحة أو توصية هادئة للحاضر أو المستقبل.", tag: "نصيحة", tone: "sky" },
       { en: "SHOULDN'T + V1 → You shouldn't waste time.", ar: "نصيحة بعدم القيام بتصرف غير مناسب.", tag: "نفي النصيحة", tone: "rose" },
@@ -1680,6 +1686,7 @@ export const STEPS_45: readonly Lesson45Step[] = [
       { en: "OUGHT TO + V1 → You ought to respect others.", ar: "نصيحة أو ما نراه صوابًا وواجبًا أخلاقيًا.", tag: "مع to", tone: "orange" },
       { en: "SHOULD HAVE + V3 → I should have studied earlier.", ar: "كان ينبغي أن يحدث الفعل في الماضي لكنه لم يحدث.", tag: "ندم / مراجعة", tone: "amber" },
       { en: "SHOULDN'T HAVE + V3 → I shouldn't have stayed up so late.", ar: "فعل وقع في الماضي وكان الأفضل تجنبه.", tag: "نفي الماضي", tone: "rose" },
+      { en: "OUGHT TO HAVE + V3 → You ought to have told me earlier.", ar: "توصية أو تقييم لحدث ماضٍ بصيغة OUGHT TO.", tag: "ماضي OUGHT TO", tone: "violet" },
       { en: "HAD BETTER + V1 → You'd better leave now.", ar: "نصيحة أقوى لموقف محدد تحمل تحذيرًا من عاقبة.", tag: "تحذير عاجل", tone: "orange" },
     ],
     tip: "القاعدة الكبرى: SHOULD ليست MUST، و SHOULDN'T ليست MUSTN'T، و SHOULD HAVE ليست نصيحة للحاضر؛ فكل تركيب يمنح كلامك دقة مختلفة.",
@@ -1693,7 +1700,7 @@ export const STEPS_45: readonly Lesson45Step[] = [
     title: "الاختبار النهائي الشامل — الدرس 45",
     emoji: "🏆",
     tone: "violet",
-    lead: "اختبر إتقانك الكامل لـ SHOULD و OUGHT TO و HAD BETTER وتراكيب الماضي والتوقع عبر 25 سؤالًا متدرجًا:",
+    lead: "اختبر إتقانك الكامل لتراكيب الدرس (SHOULD · OUGHT TO · HAD BETTER) وصيغ الماضي والتوقع عبر 25 سؤالًا متدرجًا:",
   },
 
   // 40 — فضاء المعلم

@@ -1,5 +1,5 @@
-import { useState, type ReactNode } from "react";
-import { LatinRuns } from "../../shared/bidi";
+import { Fragment, useState, type ReactNode } from "react";
+import { splitMixedText } from "../../shared/bidi";
 
 export type Tone45 = "sky" | "orange" | "emerald" | "violet" | "amber" | "rose" | "slate";
 
@@ -65,7 +65,17 @@ export function En45({
   );
 }
 
-/** نص عربي أو مختلط مع عزل تلقائي آمن للمقاطع الإنجليزية عبر LatinRuns */
+function splitEnBoundary(raw: string): { lead: string; core: string; trail: string } {
+  const leadMatch = /^([\s:—–·،؛]+)/.exec(raw);
+  const lead = leadMatch ? leadMatch[1] : "";
+  const afterLead = raw.slice(lead.length);
+  const arTrailMatch = /([\s،؛؟]+)$/.exec(afterLead);
+  const trail = arTrailMatch ? arTrailMatch[1] : "";
+  const core = trail ? afterLead.slice(0, afterLead.length - trail.length) : afterLead;
+  return { lead, core, trail };
+}
+
+/** نص عربي أو مختلط مع عزل تلقائي نظيف للمقاطع الإنجليزية دون ابتلاع الفواصل العربية */
 export function Text45({
   text,
   className = "",
@@ -80,9 +90,104 @@ export function Text45({
       </span>
     );
   }
+  const segments = splitMixedText(text);
   return (
     <span className={className}>
-      <LatinRuns text={text} />
+      {segments.map((seg, i) => {
+        if (seg.kind === "text") return <Fragment key={i}>{seg.text}</Fragment>;
+        if (seg.kind === "en") {
+          const { lead, core, trail } = splitEnBoundary(seg.text);
+          if (!core) return <Fragment key={i}>{seg.text}</Fragment>;
+          return (
+            <Fragment key={i}>
+              {lead}
+              <span dir="ltr" lang="en" className="font-en">
+                {core}
+              </span>
+              {trail}
+            </Fragment>
+          );
+        }
+        if (seg.kind === "alts") {
+          const firstSplit = splitEnBoundary(seg.items[0] ?? "");
+          const lastIdx = seg.items.length - 1;
+          const lastSplit =
+            lastIdx === 0
+              ? { lead: "", core: firstSplit.core, trail: firstSplit.trail }
+              : splitEnBoundary(seg.items[lastIdx] ?? "");
+          const prevSeg = i > 0 ? segments[i - 1] : null;
+          const nextSeg = i < segments.length - 1 ? segments[i + 1] : null;
+          const needsSpaceBefore =
+            !firstSplit.lead &&
+            prevSeg?.kind === "text" &&
+            /[\u0621-\u064A0-9]$/.test(prevSeg.text);
+          const needsSpaceAfter =
+            !lastSplit.trail &&
+            nextSeg?.kind === "text" &&
+            /^[\u0621-\u064A0-9]/.test(nextSeg.text);
+          return (
+            <Fragment key={i}>
+              {needsSpaceBefore ? " " : ""}
+              {firstSplit.lead}
+              <span dir="ltr" lang="en" className="ltr-pair">
+                {seg.items.map((item, j) => {
+                  const cleanedItem =
+                    j === 0 && j === lastIdx
+                      ? firstSplit.core
+                      : j === 0
+                      ? firstSplit.core + firstSplit.trail
+                      : j === lastIdx
+                      ? lastSplit.lead + lastSplit.core
+                      : item.trim();
+                  return (
+                    <Fragment key={j}>
+                      {j > 0 && (
+                        <Fragment>
+                          {" "}
+                          <span dir="rtl">{seg.connectors[j - 1]}</span>{" "}
+                        </Fragment>
+                      )}
+                      <span dir="ltr" className="font-en">
+                        {cleanedItem}
+                      </span>
+                    </Fragment>
+                  );
+                })}
+                {seg.gloss && (
+                  <>
+                    {seg.gloss.lead}
+                    {seg.gloss.arabic.map((a, j) => (
+                      <Fragment key={j}>
+                        {j > 0 && seg.gloss!.between[j - 1]}
+                        <span dir="rtl">{a}</span>
+                      </Fragment>
+                    ))}
+                    {seg.gloss.trail}
+                  </>
+                )}
+                {seg.trail && <span dir="rtl">{seg.trail}</span>}
+              </span>
+              {lastSplit.trail}
+              {needsSpaceAfter ? " " : ""}
+            </Fragment>
+          );
+        }
+        return (
+          <span key={i} dir="ltr" className="ltr-pair">
+            <span dir="ltr" className="font-en">
+              {seg.en}
+            </span>
+            {seg.lead}
+            {seg.arabic.map((a, j) => (
+              <Fragment key={j}>
+                {j > 0 && seg.between[j - 1]}
+                <span dir="rtl">{a}</span>
+              </Fragment>
+            ))}
+            {seg.trail}
+          </span>
+        );
+      })}
     </span>
   );
 }
@@ -163,28 +268,40 @@ export function SlideFrame45({
 export function Formula45({
   parts,
   suffix,
+  joiner = "+",
+  compact = false,
 }: {
   parts: FormulaPart45[];
   suffix?: string;
+  joiner?: string;
+  compact?: boolean;
 }) {
   return (
     <div
       dir="ltr"
-      className="ltr-row flex flex-wrap items-center justify-center gap-2.5 rounded-3xl border border-slate-200 bg-slate-50 p-5"
+      className="ltr-row flex flex-wrap items-center justify-center gap-2.5 rounded-3xl border border-slate-200 bg-slate-50 p-4 md:p-5"
     >
       {parts.map((part, idx) => (
         <div key={`${part.en}-${idx}`} className="flex items-center gap-2.5">
           <div
-            className={`rounded-2xl px-5 py-3 text-center shadow-md ${SOLID_TONES[part.tone]}`}
+            className={`rounded-2xl ${
+              compact ? "px-4 py-2.5" : "px-5 py-3"
+            } text-center shadow-md ${SOLID_TONES[part.tone]}`}
           >
-            <div className="font-en text-xl font-extrabold md:text-2xl">{part.en}</div>
+            <div
+              className={`font-en font-extrabold ${
+                compact ? "text-lg md:text-xl" : "text-xl md:text-2xl"
+              }`}
+            >
+              {part.en}
+            </div>
             <div dir="rtl" className="mt-0.5 text-xs font-bold opacity-95 md:text-sm">
               <Text45 text={part.ar} />
             </div>
           </div>
           {idx < parts.length - 1 && (
             <span className="font-en text-2xl font-bold text-slate-300 md:text-3xl" aria-hidden="true">
-              +
+              {joiner}
             </span>
           )}
         </div>

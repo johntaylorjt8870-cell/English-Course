@@ -40,48 +40,100 @@ function cleanBilingualTokens(value: string): string {
     .trim();
 }
 
+/**
+ * يستبدل كلمة not الملاصقة للأفعال الناقصة (مثل should not / must not / ought not)
+ * بصيغة مدمجة حتى لا تُفسَّر not الخاصة باسم الفعل على أنها نفي للخبر الدلالي بعدها.
+ */
+function collapseModalNegationTokens(clauseTokens: string): string {
+  return clauseTokens
+    .replace(/\bshould\s+not\b/g, "shouldnt")
+    .replace(/\bmust\s+not\b/g, "mustnt")
+    .replace(/\bought\s+not(\s+to)?\b/g, "oughtnt")
+    .replace(/\bhad\s+better\s+not\b/g, "hadbetternot")
+    .replace(/\bdo\s+not\s+have\s+to\b/g, "donthaveto")
+    .replace(/\bdoes\s+not\s+have\s+to\b/g, "doesnthaveto");
+}
+
+const EN_PREDICATE_NEG_PREFIX =
+  /\b(?:not|no|neither|nor|never|without|isn't|aren't|doesn't|don't|didn't|cannot|can't|rather\s+than|instead\s+of)\s+(?:[a-z']+\s+){0,3}$/;
+const AR_PREDICATE_NEG_PREFIX =
+  /(?:^|\s)و?(?:لا|ليس|ليست|غير|بدون|بلا|دون|بدل)\s+(?:[\u0600-\u06FF]+\s+){0,2}$/;
+
+/** يعيد فهرس أول تطابق غير منفي للمفهوم داخل النص المطبّع، أو -1 إن كانت كل التطابقات منفية */
+function firstUnnegatedIndex(rawSegment: string, conceptRe: RegExp): number {
+  const seg = collapseModalNegationTokens(cleanBilingualTokens(rawSegment));
+  if (!seg) return -1;
+  const globalRe = new RegExp(conceptRe.source, "gu");
+  for (const m of seg.matchAll(globalRe)) {
+    const idx = m.index ?? 0;
+    const prefix = seg.slice(Math.max(0, idx - 42), idx);
+    if (EN_PREDICATE_NEG_PREFIX.test(prefix) || AR_PREDICATE_NEG_PREFIX.test(prefix)) {
+      continue;
+    }
+    return idx;
+  }
+  return -1;
+}
+
+const CONTRAST_SPLIT_RE =
+  /[.;,،؛\n]+|\b(?:while|whereas|but|and|whilst|yet|vs|versus)\b|(?:بينما|اما|ولكن|لكن|في حين|مقابل)|(?=\s+(?:والثانيه|والثاني|ثانيا)(?:\s|$))|\s+و(?=(?:ال)?(?:نصيح|توصي|ارشاد|الزام|ضرور|واجب|منع|ممنوع|حظر|محظور)|should|must)/;
+
 function gradeQ16(raw: string): boolean {
   const norm = normalizeBilingual45(raw);
   const words = cleanBilingualTokens(raw);
   if (!words || words === "you should study vs you must study") return false;
   if (/\b(same meaning|no difference)\b|نفس المعني|لا فرق|لا يوجد فرق/.test(words)) return false;
+  if (/\bboth\b[^.;,،؛]{0,35}\b(advice|obligation|obligatory|compulsory|necessity|optional)\b/.test(norm)) {
+    return false;
+  }
+  if (/كلاهما\s+(?:يفيد|يعني|تدل علي|ل)?\s*(?:ال)?(نصيحه|الزام|ضروره|واجب|اجبار)/.test(norm)) {
+    return false;
+  }
 
   const adviceRe =
-    /\b(advice|advise|recommend|recommendation|suggest|suggestion|good idea|optional|mild|gentle)\b|(نصيح|توصي|ارشاد|اقتراح|افضل|يفضل|مناسب|غير الزامي|اختياري)/;
+    /\b(advice|advise|advises|advising|recommend|recommends|recommended|recommendation|suggest|suggests|suggestion|good idea|optional|mild|gentle)\b|(نصيح|توصي|ارشاد|اقتراح|افضل|يفضل|مناسب|غير الزامي|اختياري)/;
   const obligRe =
     /\b(obligation|obligatory|necessity|necessary|compulsory|required|requirement|duty|rule|law|order|command|forced|have to)\b|(الزام|ضرور|واجب|اجبار|فرض|لازم|حتمي|قانون|امر)/;
 
-  if (!adviceRe.test(words) || !obligRe.test(words)) return false;
+  const clauses16 = norm.split(CONTRAST_SPLIT_RE).filter((c) => c.trim().length > 0);
 
-  // رفض القلب الصريح للأدوار داخل الشق الواحد (دون القفز فوق أدوات المقابلة مثل while / whereas / بينما)
-  const clauses16 = norm.split(
-    /[.;,،؛\n]+|\b(?:while|whereas|but|and|whilst|yet)\b|(?:بينما|اما|ولكن|لكن|في حين)/
-  );
+  let hasPositiveAdvice = false;
+  let hasPositiveOblig = false;
+
   for (const clause of clauses16) {
-    const enShouldInverted =
-      /\b(should|first|1st)\b(?![^]*\b(?:must|second|2nd)\b)[^]{0,30}\b(is|means|expresses|gives|=|:)?\s*(?!not\b|no\b)(strong\s+)?(obligation|obligatory|compulsory|necessity|forced|command)\b/.test(
-        clause
-      );
-    const enMustInverted =
-      /\b(must|second|2nd)\b(?![^]*\b(?:should|first|1st)\b)[^]{0,26}\b(is|means|expresses|gives|=|:)\s*(?!not\b|more than\b|stronger than\b)(just\s+|only\s+|mild\s+)?(advice|recommendation|suggestion|optional)\b/.test(
-        clause
-      );
-    const arShouldInverted =
-      /(الاولي|الاول|should)\s*(هي|تعني|تعبر عن|تفيد|تدل علي|=|:)?\s*(?!ليست|لا تعني|لا تفيد)(?:ال)?(الزام|ضروره|اجبار|فرض|واجب)/.test(
-        clause
-      );
-    const arMustInverted =
-      /(الثانيه|الثاني|must)\s*(هي|تعني|تعبر عن|تفيد|تدل علي|=|:)?\s*(?!ليست|لا تعني|اقوي من)(مجرد\s+)?(?:ال)?(نصيحه|توصيه|اقتراح|اختياري)/.test(
-        clause
-      );
-    if (enShouldInverted || enMustInverted || arShouldInverted || arMustInverted) return false;
+    const cTokens = collapseModalNegationTokens(cleanBilingualTokens(clause));
+    if (!cTokens) continue;
+
+    const advIdx = firstUnnegatedIndex(clause, adviceRe);
+    const oblIdx = firstUnnegatedIndex(clause, obligRe);
+    if (advIdx >= 0) hasPositiveAdvice = true;
+    if (oblIdx >= 0) hasPositiveOblig = true;
+
+    const mentionsShould = /\b(should|first|1st)\b|(?:^|\s)و?(?:الاولي|الاول)(?:\s|$)/.test(cTokens);
+    const mentionsMust = /\b(must|second|2nd)\b|(?:^|\s)و?(?:الثانيه|الثاني)(?:\s|$)/.test(cTokens);
+
+    // رفض القلب الصريح للأدوار في أي اتجاه داخل الشق المنسوب لطرف واحد
+    if (mentionsShould && !mentionsMust && oblIdx >= 0) {
+      return false;
+    }
+    if (mentionsMust && !mentionsShould && advIdx >= 0) {
+      const comparativeOk =
+        /\b(more than|stronger than)\b|(اقوي من|اشد من|اكثر من)/.test(cTokens);
+      if (!comparativeOk) return false;
+    }
   }
 
-  // في الإجابات المختصرة المكونة من شقين دون تسمية الفعلين (مثل: obligation; advice)، الترتيب يتبع ترتيب الجملتين
-  const mentionsModalsOrOrdinals = /\b(should|must|first|second)\b|(الاولي|الثانيه|الاول|الثاني)/.test(words);
+  // يجب إثبات المفهومين معًا بشكل غير منفي (لا يكفي تعريف طرف واحد بنفي الآخر مثل "advice, not obligation")
+  if (!hasPositiveAdvice || !hasPositiveOblig) return false;
+
+  // في الإجابات المختصرة المكونة من شقين دون تسمية الفعلين (مثل: advice; obligation)، الترتيب يتبع ترتيب الجملتين
+  const mentionsModalsOrOrdinals =
+    /\b(should|must|first|1st|second|2nd)\b|(?:^|\s)و?(?:الاولي|الثانيه|الاول|الثاني)(?:\s|$)/.test(
+      collapseModalNegationTokens(words)
+    );
   if (!mentionsModalsOrOrdinals) {
-    const firstAdvice = words.search(adviceRe);
-    const firstOblig = words.search(obligRe);
+    const firstAdvice = firstUnnegatedIndex(raw, adviceRe);
+    const firstOblig = firstUnnegatedIndex(raw, obligRe);
     if (firstOblig >= 0 && firstAdvice >= 0 && firstOblig < firstAdvice) return false;
   }
 
@@ -93,42 +145,56 @@ function gradeQ17(raw: string): boolean {
   const words = cleanBilingualTokens(raw);
   if (!words || words === "you shouldn't enter vs you mustn't enter") return false;
   if (/\b(same meaning|no difference)\b|نفس المعني|لا فرق|لا يوجد فرق/.test(words)) return false;
+  if (/\bboth\b[^.;,،؛]{0,35}\b(advice|prohibition|prohibited|forbidden|not allowed|ban)\b/.test(norm)) {
+    return false;
+  }
+  if (/كلاهما\s+(?:يفيد|يعني|ل)?\s*(?:ال)?(نصيحه|منع|ممنوع|حظر|محظور)/.test(norm)) {
+    return false;
+  }
 
   const adviceRe =
-    /\b(advice|advise|advises|advising|advised|recommend|recommends|recommended|recommendation|not recommended|not a good idea|bad idea|better not|unwise|suggest|suggests|suggested|suggestion|optional)\b|(نصيح|توصي|ارشاد|افضل الا|افضل عدم|يفضل عدم|غير مناسب|لا ينصح|ليس منعا|ليست منعا)/;
+    /\b(advice|advise|advises|advising|advised|recommend|recommends|recommended|recommendation|not recommended|not a good idea|bad idea|better not|unwise|suggest|suggests|suggested|suggestion|optional)\b|(نصيح|توصي|ارشاد|افضل الا|افضل عدم|يفضل عدم|غير مناسب|غير مستحسن|يستحسن عدم|تجنب|التجنب|تحذير لطيف|لا ينصح)/;
   const prohibRe =
     /\b(prohibition|prohibited|forbid|forbids|forbidden|not allowed|disallow|disallowed|ban|banned|against the rules|illegal|strictly not)\b|(منع|ممنوع|حظر|محظور|غير مسموح|لا يسمح|قانون|تحريم|محرم)/;
 
-  if (!adviceRe.test(words) || !prohibRe.test(words)) return false;
+  const clauses17 = norm.split(CONTRAST_SPLIT_RE).filter((c) => c.trim().length > 0);
 
-  const clauses17 = norm.split(
-    /[.;,،؛\n]+|\b(?:while|whereas|but|and|whilst|yet)\b|(?:بينما|اما|ولكن|لكن|في حين)/
-  );
+  let hasPositiveAdvice = false;
+  let hasPositiveProhib = false;
+
   for (const clause of clauses17) {
-    const enShouldntInverted =
-      /\b(shouldn't|should not|first|1st)\b(?![^]*\b(?:mustn't|must not|second|2nd)\b)[^]{0,30}\b(is|means|expresses|=|:)?\s*(?!not\b|no\b)(strict\s+)?(prohibition|prohibited|forbidden|not allowed|ban|illegal)\b/.test(
-        clause
-      );
-    const enMustntInverted =
-      /\b(mustn't|must not|second|2nd)\b(?![^]*\b(?:shouldn't|should not|first|1st)\b)[^]{0,26}\b(is|means|expresses|=|:)\s*(?!not\b)(just\s+|only\s+|mild\s+)?(advice|recommendation|suggestion)\b/.test(
-        clause
-      );
-    const arShouldntInverted =
-      /(الاولي|الاول|shouldn't|should not)\s*(هي|تعني|تعبر عن|تفيد|تدل علي|=|:)?\s*(?!ليست|لا تعني|ليس)(?:ال)?(منع|ممنوع|حظر|محظور|غير مسموح)/.test(
-        clause
-      );
-    const arMustntInverted =
-      /(الثانيه|الثاني|mustn't|must not)\s*(هي|تعني|تعبر عن|تفيد|تدل علي|=|:)?\s*(?!ليست|لا تعني)(مجرد\s+)?(?:ال)?(نصيحه|توصيه|اقتراح)/.test(
-        clause
-      );
-    if (enShouldntInverted || enMustntInverted || arShouldntInverted || arMustntInverted) return false;
+    const cTokens = collapseModalNegationTokens(cleanBilingualTokens(clause));
+    if (!cTokens) continue;
+
+    const advIdx = firstUnnegatedIndex(clause, adviceRe);
+    const proIdx = firstUnnegatedIndex(clause, prohibRe);
+    if (advIdx >= 0) hasPositiveAdvice = true;
+    if (proIdx >= 0) hasPositiveProhib = true;
+
+    const mentionsShouldnt =
+      /\b(shouldn't|shouldnt|first|1st)\b|(?:^|\s)و?(?:الاولي|الاول)(?:\s|$)/.test(cTokens);
+    const mentionsMustnt =
+      /\b(mustn't|mustnt|second|2nd)\b|(?:^|\s)و?(?:الثانيه|الثاني)(?:\s|$)/.test(cTokens);
+
+    if (mentionsShouldnt && !mentionsMustnt && proIdx >= 0) {
+      return false;
+    }
+    if (mentionsMustnt && !mentionsShouldnt && advIdx >= 0) {
+      const comparativeOk =
+        /\b(more than|stronger than)\b|(اقوي من|اشد من|اكثر من)/.test(cTokens);
+      if (!comparativeOk) return false;
+    }
   }
 
+  if (!hasPositiveAdvice || !hasPositiveProhib) return false;
+
   const mentionsModalsOrOrdinals =
-    /\b(shouldn't|should not|mustn't|must not|first|second)\b|(الاولي|الثانيه|الاول|الثاني)/.test(words);
+    /\b(shouldn't|shouldnt|mustn't|mustnt|first|1st|second|2nd)\b|(?:^|\s)و?(?:الاولي|الثانيه|الاول|الثاني)(?:\s|$)/.test(
+      collapseModalNegationTokens(words)
+    );
   if (!mentionsModalsOrOrdinals) {
-    const firstAdvice = words.search(adviceRe);
-    const firstProhib = words.search(prohibRe);
+    const firstAdvice = firstUnnegatedIndex(raw, adviceRe);
+    const firstProhib = firstUnnegatedIndex(raw, prohibRe);
     if (firstProhib >= 0 && firstAdvice >= 0 && firstProhib < firstAdvice) return false;
   }
 
@@ -140,32 +206,52 @@ function gradeQ18(raw: string): boolean {
   const words = cleanBilingualTokens(raw);
   if (!words || words === "i should have listened to my teacher") return false;
 
-  // رفض النفي الصريح للندم أو تحويل الزمن إلى نصيحة مستقبلية/حاضرة
+  // رفض النفي الصريح للندم أو تحويل الزمن إلى نصيحة/توقع مستقبلي أو حاضر
   if (
-    /\b(no regret|not regret|without regret|future advice|present advice|future expectation)\b/.test(words) ||
-    /\b(not|no|never|doesn't|does not|don't|do not|isn't|is not)\s+([a-z']+\s+){0,2}(regret|remorse)\b/.test(words)
+    /\b(no regret|not regret|without regret|future advice|present advice|future expectation|future obligation|tomorrow)\b/.test(
+      words
+    ) ||
+    /\b(not|no|never|doesn't|does not|don't|do not|isn't|is not)\s+([a-z']+\s+){0,3}(regret|remorse|criticism|blame)\b/.test(
+      words
+    ) ||
+    (/\bfuture\b/.test(words) && !/\b(not|isn't|is not|no)\s+(?:[a-z']+\s+){0,2}future\b/.test(words))
   ) {
     return false;
   }
   if (
-    /(لا ندم|ليس ندما|ليست ندما|بدون ندم|ليس فيها ندم|نصيحه للحاضر|نصيحه للمستقبل|توقع مستقبلي)/.test(words) ||
-    /(لا|ليس|ليست)\s+(تعني|يعني|تعبر عن|يعبر عن|تدل علي|يدل علي|تفيد|يفيد)?\s*(?:ال)?(ندم|تاسف|لوم)/.test(words)
+    /(لا ندم|ليس ندما|ليست ندما|بدون ندم|ليس فيها ندم|نصيحه للحاضر|نصيحه للمستقبل|توقع مستقبلي|غدا)/.test(words) ||
+    /(لا|ليس|ليست)\s+(تعني|يعني|تعبر عن|يعبر عن|تدل علي|يدل علي|تفيد|يفيد)?\s*(?:ال)?(ندم|تاسف|لوم|عتاب)/.test(words) ||
+    (/(المستقبل|للمستقبل|مستقبل)/.test(words) && !/(ليس|ليست|لا)\s+(?:[\u0600-\u06FF]+\s+){0,2}(المستقبل|للمستقبل|مستقبل)/.test(words))
+  ) {
+    return false;
+  }
+
+  // رفض عكس الواقع الماضي (الخلط مع shouldn't have: الزعم أنه استمع فعلًا ويندم على الاستماع)
+  if (
+    /\bregret(s|ted|ting)?\s+(for\s+)?listening\b/.test(words) ||
+    /\b(because|that)\s+(i|he|she|the speaker)\s+(listened|did listen|followed)\b/.test(words)
+  ) {
+    return false;
+  }
+  if (
+    /(ندم|نادم|تاسف|لوم)\s+علي\s+الاستماع/.test(words) ||
+    /(لانه|لاني|لانني|لان المتحدث)\s+(استمع|استمعت|سمع|اطاع)/.test(words)
   ) {
     return false;
   }
 
   const directRegretRe =
-    /\b(regret|regretting|regretful|remorse|criticism|self criticism|blaming|wish i had|wishes|feeling sorry)\b|(ندم|نادم|تاسف|حسره|لوم|نقد|عتاب|تانيب)/;
-  if (directRegretRe.test(words)) return true;
+    /\b(regret|regretting|regretful|remorse|criticism|self criticism|blaming|blame|wish i had|wishes|feeling sorry)\b|(ندم|نادم|تاسف|حسره|لوم|نقد|عتاب|تانيب)/;
+  if (firstUnnegatedIndex(raw, directRegretRe) >= 0) return true;
 
   // شرح المعنى الواقعي للماضي: لم يستمع في الماضي وكان الأفضل أن يستمع
   const enCounterfactual =
-    /\b(didn't listen|did not listen|failed to listen|never listened|didn't do|did not do|did not happen)\b/.test(
+    /\b(didn't listen|did not listen|failed to listen|never listened|didn't do|did not do|did not happen|didn't follow|did not follow)\b/.test(
       words
-    ) && /\b(past|mistake|wrong|better|good idea|wish|earlier)\b/.test(words);
+    ) && /\b(past|mistake|wrong|better|good idea|wish|earlier|should)\b/.test(words);
   const arCounterfactual =
-    /(لم استمع|لم يستمع|لم افعل|لم يفعل|لم يحدث)/.test(words) &&
-    /(ماضي|الماضي|كان ينبغي|كان الافضل|كان من الافضل|خطا)/.test(words);
+    /(لم استمع|لم يستمع|لم افعل|لم يفعل|لم يحدث|لم يقع|عدم الاستماع|ما استمع|ما استمعت)/.test(words) &&
+    /(ماضي|الماضي|كان ينبغي|كان الافضل|كان من الافضل|خطا|تقصير)/.test(words);
 
   void norm;
   return enCounterfactual || arCounterfactual;
@@ -176,24 +262,43 @@ function gradeQ19(raw: string): boolean {
   const words = cleanBilingualTokens(raw);
   if (!words || words === "the results should be ready tomorrow") return false;
 
-  if (/\b(not expectation|not an expectation|no expectation|not expected)\b/.test(words)) return false;
-  if (/(ليس توقع|ليست توقع|لا تعبر عن توقع|لا يعبر عن توقع|بدون توقع)/.test(words)) return false;
+  // رفض أي صيغة نفي للتوقع
+  if (
+    /\b(not|no|never|neither|isn't|is not|doesn't|does not|don't|do not|without)\s+([a-z']+\s+){0,3}(expectation|expectations|expected|expect|prediction|probable|probability|likely)\b/.test(
+      words
+    )
+  ) {
+    return false;
+  }
+  if (
+    /(لا|ليس|ليست|غير|بدون|بلا)\s+([\u0600-\u06FF]+\s+){0,2}(?:ال)?(توقع|توقعا|متوقع|متوقعه|مرجح|احتمال)/.test(
+      words
+    )
+  ) {
+    return false;
+  }
+
+  // رفض الخلط الزمني مع الماضي (الجملة عن tomorrow)
+  if (/\b(past|yesterday)\b/.test(words) && !/\bnot\s+(?:[a-z']+\s+){0,2}past\b/.test(words)) {
+    return false;
+  }
+  if (/(الماضي|للماضي|ماضي|امس)/.test(words) && !/(ليس|ليست|لا)\s+(?:[\u0600-\u06FF]+\s+){0,2}(الماضي|للماضي|ماضي)/.test(words)) {
+    return false;
+  }
 
   const expectRe =
     /\b(expectation|expectations|expected|expect|reasonable prediction|logical prediction|probable|probability|likely|supposed to)\b|(توقع|متوقع|مرجح|مفترض|استنتاج منطقي|احتمال راجح)/;
 
-  if (!expectRe.test(words)) return false;
+  if (firstUnnegatedIndex(raw, expectRe) < 0) return false;
 
-  // إذا ذكر الطالب «نصيحة» فيجب أن تكون منفية (مثل: توقع وليس نصيحة / expectation, not advice)
-  const mentionsAdvice = /\b(advice|recommendation)\b|(نصيح|توصي)/.test(words);
-  if (mentionsAdvice) {
-    const adviceNegated =
-      /\b(not\s+(giving\s+)?advice|rather than advice|instead of advice)\b|(وليس\s+نصيح|وليست\s+نصيح|لا\s+نصيح|غير\s+نصيح|بدل\s+النصيح)/.test(
-        norm
-      );
-    if (!adviceNegated) return false;
+  // إذا ذكر الطالب وظيفة منافسة (نصيحة / إلزام / منع / ندم) فيجب أن تكون منفية صراحةً (مثل: توقع وليس نصيحة)
+  const competingRe =
+    /\b(advice|recommendation|obligation|obligatory|compulsory|prohibition|forbidden|regret|remorse)\b|(نصيح|توصي|الزام|اجبار|منع|حظر|ندم|لوم)/;
+  if (competingRe.test(words) && firstUnnegatedIndex(raw, competingRe) >= 0) {
+    return false;
   }
 
+  void norm;
   return true;
 }
 
@@ -203,6 +308,10 @@ function gradeQ20(raw: string): boolean {
   if (!words || words === "had better vs should") return false;
   if (/\b(same meaning|no difference)\b|نفس المعني|لا فرق|لا يوجد فرق/.test(words)) return false;
 
+  // منع القبول بكلمة مفردة عامة مثل "strong" أو "problem" أو "مشكلة"
+  const tokenCount = words.split(" ").filter(Boolean).length;
+  if (tokenCount < 2) return false;
+
   // رفض الخطأ الشهير: الزعم أن had better للماضي (إلا إذا نفاه الطالب صراحةً مثل not past / ليست للماضي)
   if (/\bpast\b/.test(words) && !/\b(not|isn't|is not|never)\s+(for\s+)?(the\s+)?past\b/.test(words)) {
     return false;
@@ -211,22 +320,29 @@ function gradeQ20(raw: string): boolean {
     return false;
   }
 
-  // رفض عكس المقارنة (مثل: should is stronger than had better / had better is weaker than should)
+  // رفض عكس المقارنة أو عكس نسبة التحذير/العاقبة
   if (
-    /\bshould\b[^.;,،؛]{0,24}\b(is\s+)?(stronger|more urgent|harsher)\b/.test(norm) ||
-    /\bhad better\b[^.;,،؛]{0,24}\b(is\s+)?(weaker|softer|less urgent|milder)\b/.test(norm) ||
-    /should\s*(هي\s*)?(اقوي|اشد|اكثر الحاحا)/.test(norm) ||
-    /had better\s*(هي\s*)?(اضعف|اخف|الطف|اقل قوه)/.test(norm)
+    /\bshould\b[^.;,،؛]{0,30}\b(is\s+|gives\s+|has\s+|carries\s+|means\s+)?(stronger|more urgent|harsher|warning|warns|consequence|bad result|negative result)\b/.test(
+      norm
+    ) ||
+    /\bhad better\b[^.;,،؛]{0,30}\b(is\s+|gives\s+|means\s+)?(weaker|softer|less urgent|milder|general advice|calm advice|mild advice)\b/.test(
+      norm
+    ) ||
+    /should\s*(هي\s*|تفيد\s*|تعطي\s*|تحمل\s*|لل)?(اقوي|اشد|اكثر الحاحا|تحذير|عاقبه)/.test(norm) ||
+    /had better\s*(هي\s*|تفيد\s*|تعطي\s*)?(اضعف|اخف|الطف|اقل قوه|نصيحه عامه|نصيحه هادئه)/.test(norm)
   ) {
     return false;
   }
 
   const strengthOrUrgencyRe =
-    /\b(stronger|strong|more urgent|urgent|urgency|forceful|serious|specific situation)\b|(اقوي|اشد|قويه|استعجال|عاجل|الحاح|موقف محدد|موقف خاص)/;
+    /\b(stronger|strong advice|more urgent|urgent|urgency|forceful|specific situation)\b|(اقوي|اشد|نصيحه قويه|استعجال|عاجل|الحاح|موقف محدد|موقف خاص)/;
   const warningOrConsequenceRe =
-    /\b(warning|warns|warn|consequence|consequences|bad result|negative result|problem|danger|risk|or else|otherwise)\b|(تحذير|يحذر|عاقب|نتيجه سلبيه|نتيجه غير مرغوبه|مشكله|خطر|ضرر|والا)/;
+    /\b(warning|warns|warn|consequence|consequences|bad result|negative result|danger|risk|or else|otherwise)\b|(تحذير|يحذر|عاقب|نتيجه سلبيه|نتيجه غير مرغوبه|خطر|ضرر|والا)/;
 
-  return strengthOrUrgencyRe.test(words) || warningOrConsequenceRe.test(words);
+  return (
+    firstUnnegatedIndex(raw, strengthOrUrgencyRe) >= 0 ||
+    firstUnnegatedIndex(raw, warningOrConsequenceRe) >= 0
+  );
 }
 
 export const TEST_SOLUTIONS_45: readonly SolutionEntry45[] = [
@@ -318,6 +434,10 @@ export const TEST_SOLUTIONS_45: readonly SolutionEntry45[] = [
       "should have",
       "should have left",
       "should've left",
+      "should have left earlier",
+      "should've left earlier",
+      "should have left earlier yesterday",
+      "should've left earlier yesterday",
       "we should have left earlier yesterday",
       "we should've left earlier yesterday",
       "we should have left earlier yesterday but we didn't",
@@ -341,8 +461,14 @@ export const TEST_SOLUTIONS_45: readonly SolutionEntry45[] = [
       "shouldn't have eaten",
       "should not have eaten",
       "shouldn't've eaten",
+      "shouldn't have eaten so much",
+      "should not have eaten so much",
+      "shouldn't've eaten so much",
+      "shouldn't have eaten so much yesterday",
+      "should not have eaten so much yesterday",
       "he shouldn't have eaten so much yesterday",
       "he should not have eaten so much yesterday",
+      "he shouldn't've eaten so much yesterday",
     ],
   },
   {
@@ -357,6 +483,8 @@ export const TEST_SOLUTIONS_45: readonly SolutionEntry45[] = [
       "ought to",
       "should arrive",
       "ought to arrive",
+      "should arrive tomorrow",
+      "ought to arrive tomorrow",
       "the package should arrive tomorrow",
       "the package ought to arrive tomorrow",
     ],
@@ -473,6 +601,8 @@ export const TEST_SOLUTIONS_45: readonly SolutionEntry45[] = [
       "ought to",
       "should revise",
       "ought to revise",
+      "should revise the most important topics first",
+      "ought to revise the most important topics first",
       "you should revise the most important topics first",
       "you ought to revise the most important topics first",
     ],
@@ -492,6 +622,9 @@ export const TEST_SOLUTIONS_45: readonly SolutionEntry45[] = [
       "should have started",
       "should've started",
       "ought to have started",
+      "should have started earlier",
+      "should've started earlier",
+      "ought to have started earlier",
       "you should have started earlier",
       "you should've started earlier",
       "you ought to have started earlier",
@@ -512,11 +645,18 @@ export const TEST_SOLUTIONS_45: readonly SolutionEntry45[] = [
       "shouldn't have",
       "should not have",
       "ought not to have",
+      "oughtn't to have",
       "shouldn't have stayed",
       "shouldn't have stayed up",
       "shouldn't've stayed",
       "shouldn't've stayed up",
+      "should not have stayed",
       "should not have stayed up",
+      "ought not to have stayed",
+      "ought not to have stayed up",
+      "shouldn't have stayed up so late",
+      "should not have stayed up so late",
+      "ought not to have stayed up so late",
       "you shouldn't have stayed up so late",
       "you shouldn't've stayed up so late",
       "you should not have stayed up so late",

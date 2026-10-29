@@ -9,9 +9,16 @@ export type WorkspaceState45 = {
   textStatus: Record<string, "idle" | "ok" | "bad" | "revealed">;
   readingOpen: Record<string, boolean>;
   readingDrafts: Record<string, string>;
+  showReadingAr: boolean;
   writingDraft: string;
   writingModelOpen: boolean;
   selfChecks: Record<number, boolean>;
+  labs: {
+    advice: string;
+    meaning: string;
+    past: string;
+    politeness: string;
+  };
 };
 
 export function createInitialWorkspace45(): WorkspaceState45 {
@@ -22,9 +29,16 @@ export function createInitialWorkspace45(): WorkspaceState45 {
     textStatus: {},
     readingOpen: {},
     readingDrafts: {},
+    showReadingAr: false,
     writingDraft: "",
     writingModelOpen: false,
     selfChecks: {},
+    labs: {
+      advice: "exam",
+      meaning: "should",
+      past: "should",
+      politeness: "think",
+    },
   };
 }
 
@@ -78,8 +92,19 @@ const ADVICE_SITUATIONS = [
   },
 ] as const;
 
-export function AdviceLab45() {
-  const [picked, setPicked] = useState<string>("exam");
+export function AdviceLab45({
+  value,
+  onSelect,
+}: {
+  value?: string;
+  onSelect?: (next: string) => void;
+} = {}) {
+  const [localPicked, setLocalPicked] = useState<string>("exam");
+  const picked = value ?? localPicked;
+  const setPicked = (next: string) => {
+    setLocalPicked(next);
+    onSelect?.(next);
+  };
   const current = ADVICE_SITUATIONS.find((s) => s.id === picked) ?? ADVICE_SITUATIONS[0];
 
   return (
@@ -182,8 +207,19 @@ const MEANING_MODES = [
   },
 ] as const;
 
-export function MeaningLab45() {
-  const [selected, setSelected] = useState<string>("should");
+export function MeaningLab45({
+  value,
+  onSelect,
+}: {
+  value?: string;
+  onSelect?: (next: string) => void;
+} = {}) {
+  const [localSelected, setLocalSelected] = useState<string>("should");
+  const selected = value ?? localSelected;
+  const setSelected = (next: string) => {
+    setLocalSelected(next);
+    onSelect?.(next);
+  };
   const active = MEANING_MODES.find((m) => m.id === selected) ?? MEANING_MODES[0];
 
   return (
@@ -270,8 +306,19 @@ const PAST_LENS_ITEMS = [
   },
 ] as const;
 
-export function PastLab45() {
-  const [kind, setKind] = useState<string>("should");
+export function PastLab45({
+  value,
+  onSelect,
+}: {
+  value?: string;
+  onSelect?: (next: string) => void;
+} = {}) {
+  const [localKind, setLocalKind] = useState<string>("should");
+  const kind = value ?? localKind;
+  const setKind = (next: string) => {
+    setLocalKind(next);
+    onSelect?.(next);
+  };
   const item = PAST_LENS_ITEMS.find((x) => x.id === kind) ?? PAST_LENS_ITEMS[0];
 
   return (
@@ -361,8 +408,19 @@ const POLITENESS_TONES = [
   },
 ] as const;
 
-export function PolitenessLab45() {
-  const [tone, setTone] = useState<string>("think");
+export function PolitenessLab45({
+  value,
+  onSelect,
+}: {
+  value?: string;
+  onSelect?: (next: string) => void;
+} = {}) {
+  const [localTone, setLocalTone] = useState<string>("think");
+  const tone = value ?? localTone;
+  const setTone = (next: string) => {
+    setLocalTone(next);
+    onSelect?.(next);
+  };
   const active = POLITENESS_TONES.find((t) => t.id === tone) ?? POLITENESS_TONES[1];
 
   return (
@@ -917,6 +975,10 @@ export function WritingMission45({
             <Text45 text={c.label} />
           </div>
         ))}
+      </div>
+
+      <div className="rounded-2xl border border-amber-200 bg-amber-50/80 px-4 py-3 text-sm font-bold text-amber-950">
+        <Text45 text="تحدٍّ إضافي بعد الكتابة: حدِّد داخل فقرتك أي جملة استعملت فيها SHOULD للنصيحة، وأي جملة استعملت فيها SHOULD للتوقع المنطقي." />
       </div>
 
       <div>

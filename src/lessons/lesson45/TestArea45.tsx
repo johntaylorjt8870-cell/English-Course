@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { En45, Text45 } from "./design45";
 import {
   TEST_LEVELS_45,
@@ -26,7 +26,10 @@ export type TestArea45Props = {
   onChangeAnswer: (id: string, value: string) => void;
   onSubmitResult: (graded: GradedTestResult45) => void;
   onResetTest: () => void;
+  keyLoader?: () => Promise<typeof import("./testKey45")>;
 };
+
+const defaultKeyLoader45 = () => import("./testKey45");
 
 export default function TestArea45({
   answers,
@@ -34,15 +37,32 @@ export default function TestArea45({
   onChangeAnswer,
   onSubmitResult,
   onResetTest,
+  keyLoader = defaultKeyLoader45,
 }: TestArea45Props) {
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const submittingRef = useRef(false);
+  const justSubmittedRef = useRef(false);
   const bannerRef = useRef<HTMLDivElement | null>(null);
 
   const submitted = result !== null;
   const answered = answeredCount45(answers);
   const complete = testComplete45(answers);
   const remaining = TEST_QUESTION_COUNT_45 - answered;
+
+  useEffect(() => {
+    if (submitted && justSubmittedRef.current) {
+      justSubmittedRef.current = false;
+      const reduced =
+        typeof window !== "undefined" &&
+        typeof window.matchMedia === "function" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      bannerRef.current?.scrollIntoView({
+        behavior: reduced ? "auto" : "smooth",
+        block: "start",
+      });
+    }
+  }, [submitted]);
 
   const focusFirstUnanswered = () => {
     const missingId = firstUnansweredId45(answers);
@@ -59,13 +79,16 @@ export default function TestArea45({
     if (submittingRef.current || submitted || !complete) return;
     submittingRef.current = true;
     setLoading(true);
+    setSubmitError(null);
     try {
-      const { gradeTest45 } = await import("./testKey45");
+      const { gradeTest45 } = await keyLoader();
       const graded = gradeTest45(answers);
+      justSubmittedRef.current = true;
       onSubmitResult(graded);
-      requestAnimationFrame(() => {
-        bannerRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      });
+    } catch {
+      setSubmitError(
+        "تعذّر تحميل وحدة التصحيح مؤقتًا. تحقّق من الاتصال ثم اضغط زر التسليم لإعادة المحاولة — إجاباتك محفوظة بالكامل."
+      );
     } finally {
       submittingRef.current = false;
       setLoading(false);
@@ -74,7 +97,9 @@ export default function TestArea45({
 
   const handleReset = () => {
     submittingRef.current = false;
+    justSubmittedRef.current = false;
     setLoading(false);
+    setSubmitError(null);
     onResetTest();
   };
 
@@ -385,47 +410,58 @@ export default function TestArea45({
       </div>
 
       {/* أزرار التسليم أو الإعادة أسفل الاختبار */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-slate-200 bg-slate-50 p-4 md:p-5">
-        {!submitted ? (
-          <>
-            <div className="flex flex-wrap items-center gap-3">
-              <button
-                type="button"
-                data-test-submit
-                disabled={!complete || loading}
-                onClick={() => void handleSubmit()}
-                className="rounded-2xl bg-emerald-600 px-6 py-3.5 text-lg font-bold text-white shadow-lg transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
-              >
-                {loading ? "جارٍ تصحيح الإجابات..." : "✅ تسليم الاختبار وتصحيح الإجابات"}
-              </button>
-              {!complete && (
-                <button
-                  type="button"
-                  onClick={focusFirstUnanswered}
-                  className="rounded-2xl border-2 border-amber-300 bg-amber-50 px-4 py-2.5 text-sm font-bold text-amber-950 transition hover:bg-amber-100"
-                >
-                  بقي {remaining} سؤال — انتقل إلى أول سؤال غير مُجاب ↵
-                </button>
-              )}
-            </div>
-            <span className="text-sm font-bold text-slate-500">
-              لا تُكشف الإجابات أو الدرجات قبل التسليم الكامل.
-            </span>
-          </>
-        ) : (
-          <div className="flex w-full flex-wrap items-center justify-between gap-3">
-            <span className="text-base font-bold text-emerald-800">
-              ✓ اكتمل التصحيح — راجع ملاحظات كل سؤال أعلاه أو أعد الاختبار للتدرب من جديد.
-            </span>
-            <button
-              type="button"
-              onClick={handleReset}
-              className="rounded-2xl bg-slate-900 px-5 py-3 text-base font-bold text-white shadow transition hover:bg-slate-700"
-            >
-              🔄 إعادة الاختبار من جديد
-            </button>
+      <div className="space-y-3 rounded-3xl border border-slate-200 bg-slate-50 p-4 md:p-5">
+        {submitError && !submitted && (
+          <div
+            role="alert"
+            data-test-error
+            className="rounded-2xl border-2 border-rose-200 bg-rose-50 px-4 py-3 text-sm font-bold text-rose-900"
+          >
+            ⚠️ {submitError}
           </div>
         )}
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          {!submitted ? (
+            <>
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  data-test-submit
+                  disabled={!complete || loading}
+                  onClick={() => void handleSubmit()}
+                  className="rounded-2xl bg-emerald-600 px-6 py-3.5 text-lg font-bold text-white shadow-lg transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
+                >
+                  {loading ? "جارٍ تصحيح الإجابات..." : "✅ تسليم الاختبار وتصحيح الإجابات"}
+                </button>
+                {!complete && (
+                  <button
+                    type="button"
+                    onClick={focusFirstUnanswered}
+                    className="rounded-2xl border-2 border-amber-300 bg-amber-50 px-4 py-2.5 text-sm font-bold text-amber-950 transition hover:bg-amber-100"
+                  >
+                    بقي {remaining} سؤال — انتقل إلى أول سؤال غير مُجاب ↵
+                  </button>
+                )}
+              </div>
+              <span className="text-sm font-bold text-slate-500">
+                لا تُكشف الإجابات أو الدرجات قبل التسليم الكامل.
+              </span>
+            </>
+          ) : (
+            <div className="flex w-full flex-wrap items-center justify-between gap-3">
+              <span className="text-base font-bold text-emerald-800">
+                ✓ اكتمل التصحيح — راجع ملاحظات كل سؤال أعلاه أو أعد الاختبار للتدرب من جديد.
+              </span>
+              <button
+                type="button"
+                onClick={handleReset}
+                className="rounded-2xl bg-slate-900 px-5 py-3 text-base font-bold text-white shadow transition hover:bg-slate-700"
+              >
+                🔄 إعادة الاختبار من جديد
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

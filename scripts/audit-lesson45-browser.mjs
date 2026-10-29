@@ -122,6 +122,13 @@ try {
   });
 
   await desktop.screenshot({ path: `${shotDir}/desktop-01-cover.png` });
+  const coverPillarsSingleRow = await desktop.evaluate(() => {
+    const cards = Array.from(document.querySelectorAll("#l45-main .ltr-row div.rounded-2xl"));
+    if (cards.length < 3) return false;
+    const tops = cards.map((el) => Math.round(el.getBoundingClientRect().top));
+    return tops.every((t) => Math.abs(t - tops[0]) <= 4);
+  });
+  ok(coverPillarsSingleRow, "Desktop 1280x800 Cover: all 3 formula pillars render cleanly on a single row");
 
   // Walk all 42 steps on desktop, checking overflow + lock/next non-overlap on every step
   let desktopOverflowSteps = 0;
@@ -197,6 +204,36 @@ try {
     .locator('#l45-main button[aria-pressed="true"]')
     .count();
   ok(stillPressed === 1, "Intra-lesson navigation preserves student exercise selection");
+
+  // Interactive Lab & Reading Translation persistence across slide navigation
+  await desktop.locator('[data-step-nav="direct-advice"]').first().click();
+  await desktop.waitForFunction(() => document.body.innerText.includes("6 / 42"));
+  await desktop.locator('#l45-main button[aria-pressed="false"]').first().click();
+  const labSelectedTextBefore = await desktop
+    .locator('#l45-main button[aria-pressed="true"]')
+    .first()
+    .innerText();
+  await desktop.locator('[data-step-nav="reading"]').first().click();
+  await desktop.waitForFunction(() => document.body.innerText.includes("36 / 42"));
+  await desktop.getByRole("button", { name: /إظهار الترجمة العربية/ }).click();
+  await desktop.waitForFunction(() => document.body.innerText.includes("إخفاء الترجمة المرافقة"));
+  // Navigate back to Step 6 and verify lab selection persisted, then back to Step 36 and verify translation persisted
+  await desktop.locator('[data-step-nav="direct-advice"]').first().click();
+  await desktop.waitForFunction(() => document.body.innerText.includes("6 / 42"));
+  const labSelectedTextAfter = await desktop
+    .locator('#l45-main button[aria-pressed="true"]')
+    .first()
+    .innerText();
+  ok(
+    labSelectedTextAfter === labSelectedTextBefore,
+    "Intra-lesson navigation preserves interactive lab state (AdviceLab45)"
+  );
+  await desktop.locator('[data-step-nav="reading"]').first().click();
+  await desktop.waitForFunction(() => document.body.innerText.includes("36 / 42"));
+  const readingTogglePersisted = await desktop.evaluate(() =>
+    document.body.innerText.includes("إخفاء الترجمة المرافقة")
+  );
+  ok(readingTogglePersisted, "Intra-lesson navigation preserves Reading Arabic translation toggle");
 
   // Jump to Final Test (step index 39 -> "40 / 42")
   await desktop.locator('[data-step-nav="test-intro"]').first().click();
@@ -335,6 +372,17 @@ try {
   });
 
   await mobile.screenshot({ path: `${shotDir}/mobile-01-cover.png` });
+  const mobileCounterSingleLine = await mobile.evaluate(() => {
+    const spans = Array.from(document.querySelectorAll('span[dir="ltr"]'));
+    const counter = spans.find(
+      (s) =>
+        /^\s*\d+\s*\/\s*42\s*$/.test(s.textContent || "") &&
+        s.getBoundingClientRect().width > 0
+    );
+    if (!counter) return false;
+    return counter.getClientRects().length === 1;
+  });
+  ok(mobileCounterSingleLine, "Mobile 375x812 header counter stays on a single line without wrapping");
 
   // Test mobile drawer open & step jump
   await mobile.locator('button[aria-label="فهرس الدرس"]').click();

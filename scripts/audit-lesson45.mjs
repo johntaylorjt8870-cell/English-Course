@@ -45,6 +45,8 @@ async function loadLesson45Bundle() {
         export * from "./src/lessons/lesson45/data.ts";
         export * from "./src/lessons/lesson45/testData45.ts";
         export * from "./src/lessons/lesson45/testKey45.ts";
+        export { default as TestArea45 } from "./src/lessons/lesson45/TestArea45.tsx";
+        export * from "./src/lessons/lesson45/TestArea45.tsx";
       `,
       resolveDir: root,
       loader: "tsx",
@@ -128,6 +130,7 @@ async function main() {
     rootReact.render(M.React.createElement(M.Lesson45, { onExit: () => {} }));
   });
 
+  let bidiBoundaryViolations = 0;
   for (let i = 0; i < M.LESSON_STEP_COUNT_45; i++) {
     const counterText = host.textContent || "";
     ok(counterText.includes(`${i + 1} / 42`), `Step ${i + 1}/42 counter rendered`);
@@ -136,6 +139,27 @@ async function main() {
       htmlIssues.length === 0,
       `Step ${i + 1} (${M.STEPS_45[i].id}): zero editorial-label violations (${htmlIssues.map((x) => `${x.rules.join(",")}: "${x.text}"`).join("; ")})`
     );
+
+    // Check inline <span dir="ltr"> across the ENTIRE Lesson 45 shell (sidebar + header + slide)
+    const ltrSpans = host.querySelectorAll('span[dir="ltr"]');
+    for (const sp of ltrSpans) {
+      const txt = sp.textContent || "";
+      const prevNode = sp.previousSibling;
+      const nextNode = sp.nextSibling;
+      const hasNeighborText =
+        (prevNode && prevNode.nodeType === 3 && prevNode.nodeValue) ||
+        (nextNode && nextNode.nodeType === 3 && nextNode.nodeValue);
+      if (hasNeighborText && (/^[\s:—–·،؛]/.test(txt) || /[\s،؛]$/.test(txt))) {
+        bidiBoundaryViolations++;
+      }
+      if (prevNode && prevNode.nodeType === 3 && /[\u0621-\u064A]$/.test(prevNode.nodeValue || "")) {
+        bidiBoundaryViolations++;
+      }
+      if (nextNode && nextNode.nodeType === 3 && /^[\u0621-\u064A]/.test(nextNode.nodeValue || "")) {
+        bidiBoundaryViolations++;
+      }
+    }
+
     if (M.STEPS_45[i].kind === "test") {
       ok(!host.textContent.includes("الإجابة النموذجية:"), "Test step hides model answers before submission");
       ok(!host.textContent.includes("التقدير:"), "Test step hides score banner before submission");
@@ -152,6 +176,10 @@ async function main() {
       ok(host.textContent.includes("45 / 120") && host.textContent.includes("Lesson 46"), "Final step 42 renders 45/120 progress and Lesson 46 preview");
     }
   }
+  ok(
+    bidiBoundaryViolations === 0,
+    `All 42 steps have clean RTL/LTR span boundaries with zero punctuation reversal or word collisions (got ${bidiBoundaryViolations})`
+  );
   rootReact.unmount();
   host.remove();
 
@@ -224,6 +252,8 @@ async function main() {
       "should have left",
       "should've left",
       "should’ve left",
+      "should have left earlier",
+      "should've left earlier yesterday",
       "We should have left earlier yesterday.",
       "We should have left earlier yesterday, but we didn't.",
       "We should've left earlier yesterday, but we did not.",
@@ -235,6 +265,8 @@ async function main() {
       "should not have",
       "shouldn't have eaten",
       "shouldn't've eaten",
+      "shouldn't have eaten so much",
+      "should not have eaten so much yesterday",
       "He shouldn't have eaten so much yesterday.",
       "he should not have eaten so much yesterday",
     ],
@@ -243,6 +275,8 @@ async function main() {
       "ought to",
       "should arrive",
       "ought to arrive",
+      "should arrive tomorrow",
+      "ought to arrive tomorrow",
       "The package should arrive tomorrow.",
       "the package ought to arrive tomorrow",
     ],
@@ -264,6 +298,8 @@ async function main() {
       "should تفيد النصيحة بينما must تفيد الإلزام القوي.",
       "Should gives advice or recommendation, whereas must expresses strong obligation.",
       "Should gives advice while must expresses strong obligation.",
+      "Must expresses strong obligation, while should gives gentle advice.",
+      "You should study means advice (not obligation), whereas You must study means strong obligation.",
       "الأولى للنصيحة والثانية للإلزام والواجب القوي",
     ],
     q17: [
@@ -271,22 +307,26 @@ async function main() {
       "shouldn't نصيحة بعدم الدخول بينما mustn't منع بات وحظر.",
       "Shouldn't advises against entering, while mustn't means it is strictly forbidden.",
       "Shouldn't advises against entering while mustn't means strictly forbidden.",
+      "Should not means it is not a good idea to enter; must not means prohibition.",
       "الأولى تحذير ونصيحة بالتجنب والثانية ممنوع تماما",
     ],
     q18: [
       "تعني الندم على الماضي لأن المتحدث لم يستمع إلى معلمه.",
       "Past regret / self-criticism: the speaker did not listen to the teacher in the past.",
       "كان ينبغي أن أستمع إلى معلمي لكنني لم أفعل ذلك في الماضي",
+      "لوم الذات على عدم الاستماع في الماضي",
     ],
     q19: [
       "تعبر عن توقع منطقي بأن النتائج ستكون جاهزة غدًا، وليست نصيحة.",
       "Reasonable expectation that the results will be ready tomorrow, not advice.",
       "احتمال وتوقع طبيعي بجهوزية النتائج غدًا",
+      "Logical expectation (not obligation or advice).",
     ],
     q20: [
       "had better أقوى وأكثر إلحاحًا من should وتحمل تحذيرًا من نتيجة سلبية إذا تُركت النصيحة.",
       "Had better is more urgent and warns of a negative consequence if ignored.",
       "تحذير عاجل من عاقبة سلبية في موقف محدد",
+      "had better نصيحة قوية لموقف محدد وليست للماضي",
     ],
     q21: ["should", "Should", "What should I do?"],
     q22: [
@@ -294,6 +334,7 @@ async function main() {
       "ought to",
       "should revise",
       "ought to revise",
+      "should revise the most important topics first",
       "You should revise the most important topics first.",
       "You ought to revise the most important topics first.",
     ],
@@ -304,6 +345,7 @@ async function main() {
       "should have started",
       "should've started",
       "ought to have started",
+      "should have started earlier",
       "You should have started earlier.",
     ],
     q24: [
@@ -313,6 +355,7 @@ async function main() {
       "shouldn't have stayed",
       "shouldn't have stayed up",
       "shouldn't've stayed up",
+      "shouldn't have stayed up so late",
       "ought not to",
       "You shouldn't have stayed up so late.",
     ],
@@ -348,12 +391,24 @@ async function main() {
       "obligation",
       "should تفيد الإلزام القوي والفرض، بينما must تفيد النصيحة الخفيفة.",
       "Should expresses strong obligation whereas must gives mild advice.",
+      "Strong obligation is expressed by should, while advice is expressed by must.",
+      "الإلزام يكون بـ should، والنصيحة تكون بـ must.",
+      "You should study means advice, not obligation.",
+      "should is not advice and must is not obligation.",
+      "Both should and must mean strong obligation, not advice.",
+      "كلاهما للإلزام وليس للنصيحة",
       "لا يوجد فرق بينهما",
     ],
     q17: [
       "prohibition",
       "shouldn't تعني ممنوع ومحظور، بينما mustn't تعني نصيحة فقط.",
       "Shouldn't means strictly prohibited while mustn't is friendly advice.",
+      "Prohibition is shouldn't, and advice is mustn't.",
+      "المنع البات في shouldn't والنصيحة في mustn't",
+      "shouldn't ليست منعًا",
+      "You shouldn't enter is advice, not prohibition.",
+      "shouldn't is not advice and mustn't is not prohibition.",
+      "Both shouldn't and mustn't mean prohibition, not advice.",
       "تعني أنه ليس مضطرًا للدخول فقط",
     ],
     q18: [
@@ -361,10 +416,17 @@ async function main() {
       "Future advice to listen tomorrow",
       "لا تعني الندم بل تعني أنني استمعت للمعلم فعلًا",
       "It does not mean regret; I listened to my teacher.",
+      "Regret for listening to my teacher.",
+      "ندم على الاستماع إلى المعلم",
+      "ندم لأنه استمع إلى معلمه",
     ],
     q19: [
       "تعني نصيحة للنتائج أن تكون جاهزة",
       "It gives advice to the results.",
+      "It does not express expectation.",
+      "ليست التوقع بل الإلزام",
+      "Expectation and strong obligation.",
+      "توقع وإلزام قانوني معًا",
       "إلزام قوي وفرض",
       "ندم على الماضي",
     ],
@@ -373,6 +435,14 @@ async function main() {
       "had better is past tense of should",
       "had better أضعف وألطف من should",
       "had better is weaker and softer than should",
+      "should carries a warning of a bad consequence, while had better is mild.",
+      "should تحمل تحذيرًا من عاقبة سلبية",
+      "had better ليست أقوى من should وبلا تحذير",
+      "had better is not stronger and has no warning",
+      "problem",
+      "strong",
+      "مشكلة",
+      "قوية",
       "لا فرق بينهما أبدًا",
     ],
     q21: ["do", "ought", "must to", "did"],
@@ -391,6 +461,64 @@ async function main() {
     for (const bad of negativeCases[id]) {
       ok(M.gradeQuestion45(q, bad) === false, `${id.toUpperCase()} rejects invalid answer: "${bad}"`);
     }
+  }
+
+  // 5) Async grading chunk failure & retry recovery verification
+  {
+    const errHost = dom.window.document.createElement("div");
+    dom.window.document.body.appendChild(errHost);
+    let attempts = 0;
+    const flakyLoader = async () => {
+      attempts++;
+      if (attempts === 1) throw new Error("Simulated chunk network failure");
+      return { gradeTest45: M.gradeTest45 };
+    };
+
+    function Harness() {
+      const [answers, setAnswers] = M.React.useState({ ...canonicalSubmission });
+      const [result, setResult] = M.React.useState(null);
+      return M.React.createElement(M.TestArea45, {
+        answers,
+        result,
+        onChangeAnswer: (qid, val) => setAnswers((prev) => ({ ...prev, [qid]: val })),
+        onSubmitResult: setResult,
+        onResetTest: () => {
+          setAnswers({});
+          setResult(null);
+        },
+        keyLoader: flakyLoader,
+      });
+    }
+
+    const r = M.createRoot(errHost);
+    M.flushSync(() => {
+      r.render(M.React.createElement(Harness));
+    });
+
+    const submitBtn = errHost.querySelector("[data-test-submit]");
+    ok(!!submitBtn && !submitBtn.disabled, "Retry harness: submit enabled when 25/25 answered");
+
+    // 1st click fails -> alert rendered, answers preserved, not submitted
+    submitBtn.click();
+    await new Promise((res) => setTimeout(res, 30));
+    M.flushSync(() => {});
+    const errBanner = errHost.querySelector("[data-test-error]");
+    ok(!!errBanner, "Chunk load failure displays retryable [data-test-error] alert");
+    ok(!errHost.querySelector("[data-test-result]"), "Chunk load failure keeps test unsubmitted");
+    ok(!errHost.querySelector("[data-test-submit]").disabled, "Chunk load failure re-enables submit button for retry");
+
+    // 2nd click succeeds -> error cleared, result banner shows 25 / 25
+    errHost.querySelector("[data-test-submit]").click();
+    await new Promise((res) => setTimeout(res, 30));
+    M.flushSync(() => {});
+    ok(!errHost.querySelector("[data-test-error]"), "Retry clears error alert upon success");
+    ok(
+      (errHost.querySelector("[data-test-result]")?.textContent || "").includes("25 / 25"),
+      "Retry after chunk failure grades preserved answers to 25 / 25"
+    );
+
+    r.unmount();
+    errHost.remove();
   }
 
   if (failures.length > 0) {

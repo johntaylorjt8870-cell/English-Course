@@ -1,0 +1,243 @@
+/* Lesson-specific self-hosted fonts: no network or global family overrides. */
+@font-face { font-family: "Doors46Arabic"; src: url("@fontsource/changa/files/changa-arabic-400-normal.woff2") format("woff2"); font-style: normal; font-weight: 400; font-display: swap; }
+@font-face { font-family: "Doors46Arabic"; src: url("@fontsource/changa/files/changa-arabic-700-normal.woff2") format("woff2"); font-style: normal; font-weight: 700; font-display: swap; }
+@font-face { font-family: "Doors46Arabic"; src: url("@fontsource/changa/files/changa-arabic-800-normal.woff2") format("woff2"); font-style: normal; font-weight: 800; font-display: swap; }
+@font-face { font-family: "Doors46Latin"; src: url("@fontsource/rubik/files/rubik-latin-400-normal.woff2") format("woff2"); font-style: normal; font-weight: 400; font-display: swap; }
+@font-face { font-family: "Doors46Latin"; src: url("@fontsource/rubik/files/rubik-latin-700-normal.woff2") format("woff2"); font-style: normal; font-weight: 700; font-display: swap; }
+@font-face { font-family: "Doors46Latin"; src: url("@fontsource/rubik/files/rubik-latin-800-normal.woff2") format("woff2"); font-style: normal; font-weight: 800; font-display: swap; }
+/* Lesson 46 — architectural field guide. All rules are scoped to this lesson. */
+.lesson46 {
+  --l46-ink: #172f32;
+  --l46-muted: #506563;
+  --l46-paper: #fffdf6;
+  --l46-rust: #a53e2c;
+  --l46-teal: #12685e;
+  --l46-gold: #76530f;
+  font-family: "Doors46Latin", "Doors46Arabic", sans-serif;
+  color: var(--l46-ink);
+  background: #f2eedf;
+}
+.lesson46 * { box-sizing: border-box; }
+.lesson46 :focus-visible { outline: 3px solid #145caa !important; outline-offset: 3px; }
+.lesson46 button { cursor: pointer; }
+.lesson46 button:disabled { cursor: not-allowed; opacity: .52; }
+.lesson46 #l46-main { scroll-behavior: auto; }
+.lesson46 .l46-en, .lesson46 [lang="en"] { font-family: "Doors46Latin", Arial, sans-serif; unicode-bidi: isolate; }
+.lesson46 .l46-en { display: inline-block; }
+/* Spacing around the shared bidi isolates prevents adjacent Arabic/Latin runs touching. */
+.lesson46 .l46-mixed > span[dir="ltr"] { margin-inline: .12em; }
+.lesson46 .l46-rail-actions { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .75rem; align-items: center; }
+.lesson46 .l46-rail-actions span { font-size: .72rem; color: #526561; }
+.lesson46 .l46-rail-actions button { border: 1px solid #aac4ba; border-radius: 9px; background: #e5f1eb; padding: .35rem .55rem; font-weight: 800; font-size: .72rem; color: #16574f; }
+.lesson46 .l46-cover, .lesson46 .l46-sheet, .lesson46 .l46-roadmap { min-width: 0; overflow-wrap: anywhere; }
+
+/* Cover: architectural poster rather than the neighbouring lesson's white card. */
+.lesson46 .l46-cover { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); background: #fbf7e9; border: 1px solid #d7d1bd; border-radius: 28px; overflow: hidden; box-shadow: 0 20px 45px -30px #3d4c44; }
+.lesson46 .l46-cover-copy { padding: clamp(1.4rem, 4vw, 3.5rem); display: flex; flex-direction: column; align-items: flex-start; }
+.lesson46 .l46-cover-index { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; border-bottom: 1px solid #cfc9b6; padding-bottom: .7rem; width: 100%; color: #56675e; font: 800 .65rem/1.3 "Doors46Latin", sans-serif; letter-spacing: .1em; }
+.lesson46 .l46-cover-index > span:last-child { direction: ltr; margin-inline-start: auto; }
+.lesson46 .l46-cover-ar { margin: 2.1rem 0 .45rem; color: var(--l46-rust); font-weight: 800; font-size: .95rem; }
+.lesson46 .l46-cover h1 { color: #193538; font-size: clamp(2.1rem, 4vw, 3.7rem); line-height: 1.3; letter-spacing: -.035em; font-weight: 800; margin: 0; }
+.lesson46 .l46-cover h1 span { color: var(--l46-rust); }
+.lesson46 .l46-cover-title { margin-top: 1.25rem; border-inline-start: 4px solid #c38252; padding-inline-start: .8rem; color: #1c3a3a; font-size: clamp(1.1rem, 2vw, 1.65rem); line-height: 1.4; font-weight: 800; letter-spacing: -.03em; }
+.lesson46 .l46-cover-title em { color: #a55034; font-size: .7em; font-style: normal; }
+.lesson46 .l46-cover-lead { max-width: 36rem; margin: 1rem 0 0; line-height: 1.95; font-size: 1rem; font-weight: 600; color: #4c605c; }
+.lesson46 .l46-cover-actions, .lesson46 .l46-roadmap-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem; margin-top: 1.65rem; }
+.lesson46 .l46-cover-foot { width: 100%; display: flex; gap: .7rem 1rem; flex-wrap: wrap; margin-top: 2rem; padding-top: .8rem; border-top: 1px solid #cfc9b6; color: #5b6c62; font-weight: 800; font-size: .7rem; }
+.lesson46 .l46-cover-foot .l46-en { font-size: .63rem; letter-spacing: .04em; }
+.lesson46 .l46-door-stage { min-width: 0; background: #1d4140; padding: 1.4rem 1.3rem 1.25rem; display: flex; flex-direction: column; justify-content: space-between; color: #e9e2cb; background-image: linear-gradient(#ffffff08 1px, transparent 1px), linear-gradient(90deg, #ffffff08 1px, transparent 1px); background-size: 28px 28px; }
+.lesson46 .l46-stage-top, .lesson46 .l46-stage-bottom { display: flex; justify-content: space-between; gap: .4rem; direction: ltr; font: 700 .58rem/1.3 "Doors46Latin", sans-serif; letter-spacing: .12em; color: #c7d6bf; }
+.lesson46 .l46-stage-top { padding-bottom: 1rem; border-bottom: 1px solid #ffffff35; }
+.lesson46 .l46-stage-bottom { padding-top: .7rem; border-top: 1px solid #ffffff35; }
+.lesson46 .l46-architectural-doors { display: flex; align-items: flex-end; justify-content: center; gap: .45rem; padding: 2.8rem .1rem .6rem; flex: 1; }
+.lesson46 .l46-arch { flex: 1 1 0; min-width: 0; max-width: 110px; text-align: center; }
+.lesson46 .l46-arch > span { font: 700 .7rem/1 "Doors46Latin", sans-serif; color: #d9e3ce; }
+.lesson46 .l46-arch > div { position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: clamp(150px, 24vw, 250px); margin-top: .65rem; border: 4px solid #eadfc4; border-bottom: 0; border-radius: 70px 70px 1px 1px; box-shadow: inset 0 0 0 7px #152f302b; padding: 1rem .15rem; }
+.lesson46 .l46-arch--stop > div { background: #ca7155; }
+.lesson46 .l46-arch--choice > div { background: #70b7a1; height: clamp(170px, 27vw, 275px); }
+.lesson46 .l46-arch--need > div { background: #e1bd69; }
+.lesson46 .l46-arch i { position: absolute; top: 45%; right: 19%; width: 6px; height: 6px; background: #183a3b; border-radius: 50%; }
+.lesson46 .l46-arch b { font: 800 .58rem/1 "Doors46Latin", sans-serif; color: #183a3b; letter-spacing: .03em; white-space: nowrap; }
+
+.lesson46 .l46-button { border: 1px solid transparent; border-radius: 10px; min-height: 44px; padding: .65rem 1rem; font-weight: 800; font-size: .9rem; transition: background-color .18s, border-color .18s; }
+.lesson46 .l46-button--dark { background: #193c3b; color: #fffdf5; }
+.lesson46 .l46-button--dark:hover:not(:disabled) { background: #0d5950; }
+.lesson46 .l46-button--outline { border-color: #9bb2aa; background: #fffdf8; color: #244641; }
+.lesson46 .l46-button--outline:hover:not(:disabled) { background: #e7f0e7; }
+.lesson46 .l46-button--light { background: #fff9e7; color: #173d39; }
+.lesson46 .l46-button--outline-light { border-color: #b6d3bf; background: transparent; color: #fff; }
+.lesson46 .l46-text-button { background: transparent; color: #294b45; border: 0; border-bottom: 1px solid #7d9c8f; padding: .5rem .2rem; font-weight: 800; }
+.lesson46 .l46-text-button span { margin-inline-start: .3rem; }
+
+/* Paper / page furniture. */
+.lesson46 .l46-sheet { background: var(--l46-paper); border: 1px solid #d9d4c4; border-radius: 23px; padding: clamp(1.2rem, 3.5vw, 2.7rem); box-shadow: 0 18px 40px -32px #394c41; }
+.lesson46 .l46-slide-head { margin-bottom: 1.5rem; }
+.lesson46 .l46-page-marker { display: flex; direction: ltr; align-items: center; justify-content: space-between; gap: 1rem; padding-bottom: .7rem; border-bottom: 1px solid #c8d2c5; color: #667b6e; font: 800 .66rem/1.3 "Doors46Latin", sans-serif; letter-spacing: .1em; }
+.lesson46 .l46-page-marker > span:last-child { font-size: 1.1rem; color: #ad5037; }
+.lesson46 .l46-slide-head h1 { margin: 1.2rem 0 .5rem; color: #193a38; font-weight: 800; font-size: clamp(1.65rem, 3.2vw, 2.7rem); line-height: 1.42; letter-spacing: -.02em; }
+.lesson46 .l46-slide-head > p { color: #50645e; line-height: 1.9; font-weight: 600; max-width: 48rem; }
+.lesson46 .l46-slide-content { display: grid; gap: 1.1rem; }
+.lesson46 .l46-formula { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .7rem; background: #173f3c; color: #fffbee; border-radius: 14px; padding: 1rem 1.15rem; }
+.lesson46 .l46-formula-label { direction: ltr; color: #b9d5bf; font: 700 .65rem/1 "Doors46Latin", sans-serif; letter-spacing: .14em; }
+.lesson46 .l46-formula > div { font-weight: 700; font-size: clamp(1rem, 1.8vw, 1.35rem); text-align: left; min-width: 0; }
+.lesson46 .l46-note { display: flex; align-items: flex-start; gap: .75rem; margin: 0; padding: 1rem 1.1rem; background: #f7efd9; border-inline-start: 4px solid #ad6a38; border-radius: 3px 12px 12px 3px; color: #684216; font-size: .95rem; font-weight: 700; line-height: 1.85; }
+.lesson46 .l46-note > span:first-child { font-size: 1.2rem; flex: 0 0 auto; }
+.lesson46 .l46-note p { margin: 0; }
+.lesson46 .l46-points { margin: 0; padding-inline-start: 1.4rem; color: #405a54; line-height: 1.9; font-weight: 600; }
+.lesson46 .l46-points li + li { margin-top: .45rem; }
+.lesson46 .l46-examples { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+.lesson46 .l46-example { min-width: 0; border: 1px solid #d6dfd4; border-radius: 13px; background: #f7f8f0; padding: 1rem; }
+.lesson46 .l46-example--stop { background: #fbebe5; border-color: #e7b4a7; }
+.lesson46 .l46-example--choice { background: #eaf4ec; border-color: #b6d8c6; }
+.lesson46 .l46-example--need { background: #fbf3db; border-color: #e2cf94; }
+.lesson46 .l46-example-tag, .lesson46 .l46-mini-label { display: inline-block; margin-bottom: .5rem; font: 800 .6rem/1.3 "Doors46Latin", sans-serif; letter-spacing: .1em; color: #655323; }
+.lesson46 .l46-example-en { margin: 0; color: #172e30; text-align: left; font-size: 1rem; font-weight: 700; line-height: 1.65; }
+.lesson46 .l46-example-ar { margin: .55rem 0 0; color: #475b54; font-weight: 600; line-height: 1.8; font-size: .9rem; }
+.lesson46 .l46-examples--comparison .l46-example { border-radius: 2px 15px 15px 2px; border-inline-start: 5px solid #82a79b; }
+.lesson46 .l46-examples--comparison .l46-example--stop { border-inline-start-color: #b5543d; }
+.lesson46 .l46-examples--comparison .l46-example--need { border-inline-start-color: #a9822e; }
+.lesson46 .l46-examples--timeline { grid-template-columns: 1fr; border-inline-start: 2px solid #adc5b5; margin-inline-start: .4rem; padding-inline-start: 1rem; }
+.lesson46 .l46-examples--timeline .l46-example { position: relative; background: #f8f8ef; }
+.lesson46 .l46-examples--timeline .l46-example::before { content: ""; position: absolute; width: .65rem; height: .65rem; border-radius: 50%; background: #2e796c; inset-inline-start: -1.38rem; top: 1.3rem; }
+.lesson46 .l46-goals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem .9rem; }
+.lesson46 .l46-goals > div { display: flex; gap: .75rem; align-items: flex-start; padding: .8rem; border-bottom: 1px solid #dedfd3; }
+.lesson46 .l46-goals span { direction: ltr; color: #a24831; font: 800 .75rem/1.8 "Doors46Latin", sans-serif; }
+.lesson46 .l46-goals p { margin: 0; font-weight: 700; line-height: 1.8; color: #304d46; }
+
+/* Three interactive doors. */
+.lesson46 .l46-door-interaction { display: grid; gap: 1rem; }
+.lesson46 .l46-door-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); direction: ltr; gap: .65rem; }
+.lesson46 .l46-door-tab { min-width: 0; min-height: 150px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: .35rem; border: 3px solid transparent; border-radius: 85px 85px 8px 8px; padding: 1.2rem .45rem; color: #183a38; text-align: center; font-weight: 800; }
+.lesson46 .l46-door-tab--stop { background: #f0b3a0; }
+.lesson46 .l46-door-tab--choice { background: #9ed0bc; }
+.lesson46 .l46-door-tab--need { background: #e7cf88; }
+.lesson46 .l46-door-tab[aria-pressed="true"] { border-color: #173e3a; box-shadow: 0 0 0 3px #e4ead9; }
+.lesson46 .l46-door-tab .l46-en { font-size: clamp(.7rem, 1.3vw, .9rem); line-height: 1.3; }
+.lesson46 .l46-door-tab-number { font: 700 .65rem/1 "Doors46Latin", sans-serif; opacity: .7; }
+.lesson46 .l46-door-detail { background: #f3f5ea; border: 1px solid #c8d8ca; border-radius: 14px; padding: 1rem 1.2rem; }
+.lesson46 .l46-door-detail p { margin: .3rem 0; font-weight: 700; line-height: 1.7; }
+.lesson46 .l46-door-detail p[lang="en"] { text-align: left; font-size: 1.15rem; }
+
+/* Practice, dialogues, reading. */
+.lesson46 .l46-practice-list { display: grid; gap: .85rem; }
+.lesson46 .l46-practice-card, .lesson46 .l46-test-question { min-width: 0; border: 1px solid #d5ded1; border-radius: 14px; padding: 1rem; background: #fff; }
+.lesson46 .l46-question-top { display: flex; align-items: flex-start; gap: .75rem; }
+.lesson46 .l46-question-number { display: grid; flex: 0 0 2.15rem; width: 2.15rem; height: 2.15rem; place-items: center; background: #e8efe4; border-radius: 9px; color: #24584d; font: 800 .75rem/1 "Doors46Latin", sans-serif; }
+.lesson46 .l46-question-top p { flex: 1; min-width: 0; margin: .1rem 0 0; text-align: left; color: #1c3735; font-size: 1rem; line-height: 1.65; font-weight: 700; }
+.lesson46 .l46-instruction { margin: .65rem 0; color: #51665e; line-height: 1.7; font-size: .88rem; font-weight: 700; }
+.lesson46 .l46-options { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .8rem; }
+.lesson46 .l46-options button { display: inline-flex; align-items: center; gap: .5rem; text-align: start; max-width: 100%; border: 1px solid #adc4b8; border-radius: 9px; padding: .6rem .8rem; background: #fafcf6; color: #22433e; font-size: .9rem; font-weight: 700; line-height: 1.5; }
+.lesson46 .l46-options button[aria-pressed="true"] { background: #1f5c51; border-color: #1f5c51; color: #fff; box-shadow: inset 0 0 0 2px #fff; }
+.lesson46 .l46-option-letter { display: grid; flex: 0 0 1.6rem; width: 1.6rem; height: 1.6rem; place-items: center; border: 1px solid currentColor; border-radius: 50%; font: 700 .7rem/1 "Doors46Latin", sans-serif; }
+.lesson46 .l46-input, .lesson46 .l46-writing textarea, .lesson46 .l46-teacher-form input { display: block; width: 100%; min-width: 0; max-width: 100%; margin-top: .8rem; border: 1.5px solid #a9bdb0; border-radius: 10px; background: #fbfdf8; color: #1b3c37; padding: .75rem .85rem; font-size: 1rem; }
+.lesson46 .l46-input { text-align: left; }
+.lesson46 .l46-practice-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
+.lesson46 .l46-feedback { margin-top: .8rem; padding: .8rem 1rem; border: 1px solid; border-radius: 10px; font-size: .9rem; line-height: 1.8; }
+.lesson46 .l46-feedback p { margin: .3rem 0 0; }
+.lesson46 .l46-feedback.is-correct { background: #e9f5eb; border-color: #a7d2ad; color: #174d31; }
+.lesson46 .l46-feedback.is-retry { background: #fff2e9; border-color: #e5b39f; color: #813b27; }
+.lesson46 .l46-dialogue { background: #f1f4e9; border: 1px solid #ccd9c8; border-radius: 15px; padding: 1rem; }
+.lesson46 .l46-dialogue-label { display: flex; justify-content: space-between; direction: ltr; color: #52746a; font: 800 .65rem/1.3 "Doors46Latin", sans-serif; letter-spacing: .08em; margin-bottom: .8rem; }
+.lesson46 .l46-turn { display: grid; grid-template-columns: 5.3rem minmax(0, 1fr); direction: ltr; gap: .7rem; padding: .7rem; border-bottom: 1px solid #d7e1d2; }
+.lesson46 .l46-turn > span { color: #9c4d36; font-size: .75rem; font-weight: 800; }
+.lesson46 .l46-turn p { margin: 0; text-align: left; color: #1e3b36; line-height: 1.65; font-weight: 600; }
+.lesson46 .l46-lab-check { padding-top: 1rem; }
+.lesson46 .l46-lab-check > p { font-weight: 800; margin-bottom: .6rem; }
+.lesson46 .l46-reading { background: #f6f3e7; padding: clamp(1rem, 2vw, 1.5rem); border: 1px solid #e2dac2; border-radius: 15px; }
+.lesson46 .l46-reading-header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .8rem; padding-bottom: 1rem; border-bottom: 1px solid #d9d1bc; }
+.lesson46 .l46-reading-header .l46-en { color: #a04a32; font-size: .65rem; font-weight: 800; letter-spacing: .1em; }
+.lesson46 .l46-reading-header h2 { direction: ltr; text-align: left; font: 800 1.3rem/1.4 "Doors46Latin", sans-serif; color: #21443c; }
+.lesson46 .l46-reading-paragraph { display: flex; direction: ltr; gap: .8rem; padding: 1rem 0; border-bottom: 1px solid #e4ddca; }
+.lesson46 .l46-reading-paragraph > span { color: #a85e3d; font: 700 .7rem/1.8 "Doors46Latin", sans-serif; }
+.lesson46 .l46-reading-paragraph > div { min-width: 0; flex: 1; }
+.lesson46 .l46-reading-paragraph p { margin: 0; line-height: 1.9; color: #233e38; font-weight: 500; }
+.lesson46 .l46-reading-paragraph p[lang="ar"] { margin-top: .6rem; padding-top: .6rem; border-top: 1px dashed #cfc7b1; text-align: right; }
+
+/* Test and teacher areas. */
+.lesson46 .l46-test { display: grid; gap: 1.2rem; }
+.lesson46 .l46-test-intro { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .8rem; background: #e9f1e6; border-radius: 12px; padding: 1rem; color: #214f43; }
+.lesson46 .l46-test-intro p { margin: .25rem 0 0; font-size: .88rem; line-height: 1.7; }
+.lesson46 .l46-test-intro > span { align-self: flex-start; background: #fff; padding: .4rem .7rem; border-radius: 20px; font-size: .8rem; font-weight: 800; }
+.lesson46 .l46-test-level { display: grid; gap: .8rem; border: 1px solid #d1ddcf; border-radius: 15px; padding: clamp(.8rem, 2vw, 1.2rem); background: #f7f9f2; }
+.lesson46 .l46-level-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: .5rem 1rem; padding-bottom: .65rem; border-bottom: 1px solid #cbdacc; }
+.lesson46 .l46-level-header .l46-en { color: #a34831; font-weight: 800; font-size: .65rem; letter-spacing: .08em; }
+.lesson46 .l46-level-header h2 { color: #224b42; font-size: 1.2rem; font-weight: 800; }
+.lesson46 .l46-level-header > p { color: #536a60; font-size: .82rem; line-height: 1.7; }
+.lesson46 .l46-test-options { display: grid; }
+.lesson46 .l46-test-options button { width: 100%; }
+.lesson46 .l46-test-question.is-correct { border-color: #82b997; }
+.lesson46 .l46-test-question.is-wrong { border-color: #dca594; }
+.lesson46 .l46-submit-bar { display: flex; flex-wrap: wrap; gap: .7rem; align-items: center; padding: 1rem; background: #eeeade; border-radius: 12px; font-size: .88rem; font-weight: 700; }
+.lesson46 .l46-submit-bar p { width: 100%; color: #8d3c2b; }
+.lesson46 .l46-result { display: grid; grid-template-columns: 1fr auto; gap: 1rem; background: #1c5048; border-radius: 15px; color: #fff; padding: 1.2rem; }
+.lesson46 .l46-result h2 { font-size: 1.6rem; font-weight: 800; }
+.lesson46 .l46-result p { color: #d9ecda; }
+.lesson46 .l46-result-kicker { direction: ltr; display: inline-block; color: #d3e9cd; font: 800 .65rem/1.4 "Doors46Latin", sans-serif; letter-spacing: .1em; }
+.lesson46 .l46-level-scores { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .5rem; }
+.lesson46 .l46-level-scores span { background: #ffffff1c; padding: .4rem .6rem; border-radius: 8px; font-size: .8rem; font-weight: 700; }
+.lesson46 .l46-teacher { display: grid; gap: 1rem; padding: 1.1rem; border: 1px dashed #9ab4a3; border-radius: 15px; background: #f5f8ef; }
+.lesson46 .l46-teacher-heading { display: flex; align-items: center; gap: .8rem; }
+.lesson46 .l46-teacher-heading > span { display: grid; place-items: center; flex: 0 0 3rem; width: 3rem; height: 3rem; color: #fff; background: #2a6c5b; border-radius: 11px; font-size: 1.6rem; }
+.lesson46 .l46-teacher-heading .l46-en { font-size: .68rem; letter-spacing: .1em; color: #5b7468; font-weight: 800; }
+.lesson46 .l46-teacher-heading h2 { font-size: 1.2rem; font-weight: 800; }
+.lesson46 .l46-teacher > p { color: #51675d; font-size: .87rem; line-height: 1.8; }
+.lesson46 .l46-teacher-form { display: flex; flex-wrap: wrap; align-items: end; gap: .6rem; }
+.lesson46 .l46-teacher-form label { width: 100%; font-weight: 700; }
+.lesson46 .l46-teacher-form input { width: min(100%, 18rem); margin: 0; }
+.lesson46 .l46-teacher-form p { width: 100%; color: #9f392a; font-weight: 700; }
+.lesson46 .l46-teacher-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem; margin-bottom: .8rem; font-weight: 800; }
+.lesson46 .l46-teacher-guide, .lesson46 .l46-teacher-guide > section { display: grid; gap: .8rem; }
+
+.lesson46 .l46-writing, .lesson46 .l46-summary { display: grid; gap: 1rem; }
+.lesson46 .l46-writing-title { text-align: left; font-weight: 800; color: #9d4932; letter-spacing: .03em; }
+.lesson46 .l46-writing label { font-weight: 800; color: #2c5148; }
+.lesson46 .l46-writing textarea { margin: 0; resize: vertical; line-height: 1.7; }
+.lesson46 .l46-writing-checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+.lesson46 .l46-writing-checks > div { display: flex; gap: .5rem; align-items: flex-start; padding: .65rem; border: 1px solid #d4dfd2; border-radius: 9px; font-size: .83rem; font-weight: 700; color: #415c50; }
+.lesson46 .l46-writing-checks > div.is-met { background: #e4f2e5; border-color: #9dc8a3; color: #205b37; }
+.lesson46 .l46-writing-checks > div > span:first-child { direction: ltr; font: 800 .7rem/1.8 "Doors46Latin", sans-serif; color: #9a4b32; }
+.lesson46 .l46-writing-model { background: #f8f3e6; border: 1px solid #e2d5b8; padding: 1rem; border-radius: 12px; }
+.lesson46 .l46-writing-model p { text-align: left; line-height: 1.9; }
+.lesson46 .l46-summary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+.lesson46 .l46-summary-card { padding: 1rem; background: #edf4e9; border-radius: 12px; border: 1px solid #c8ddc8; }
+.lesson46 .l46-summary-card--stop { background: #f9e6de; border-color: #e4b7a5; }
+.lesson46 .l46-summary-card--need { background: #f8f0d4; border-color: #dfce92; }
+.lesson46 .l46-summary-card .l46-en { color: #274b42; font-size: .82rem; font-weight: 800; }
+.lesson46 .l46-summary-card strong { display: block; margin-top: .5rem; }
+.lesson46 .l46-summary-card p { text-align: left; font-size: .85rem; margin-top: .6rem; }
+.lesson46 .l46-summary-time { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+.lesson46 .l46-summary-time > div { background: #1e4d45; color: #fff; padding: .85rem; border-radius: 10px; }
+.lesson46 .l46-summary-time > div > .l46-en { font-size: .59rem; color: #c1ddc4; font-weight: 800; }
+.lesson46 .l46-summary-time p { margin: .55rem 0; font-weight: 700; font-size: .82rem; }
+.lesson46 .l46-summary-time span:not(.l46-en) { color: #e0eee0; font-size: .8rem; line-height: 1.7; }
+.lesson46 .l46-roadmap { background: #1d4540; color: #fffdf2; border-radius: 24px; padding: clamp(1.3rem, 4vw, 3rem); }
+.lesson46 .l46-roadmap-index { display: flex; justify-content: space-between; direction: ltr; color: #bad5bf; border-bottom: 1px solid #ffffff40; padding-bottom: .8rem; font: 800 .7rem/1 "Doors46Latin", sans-serif; letter-spacing: .1em; }
+.lesson46 .l46-roadmap h1 { margin-top: 1.7rem; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.4; font-weight: 800; }
+.lesson46 .l46-roadmap h1 em { color: #e2c779; font-style: normal; }
+.lesson46 .l46-roadmap > p { margin-top: 1rem; max-width: 40rem; color: #dfede1; line-height: 1.9; }
+.lesson46 .l46-progress-label { display: flex; justify-content: space-between; margin-top: 1.5rem; font-size: .85rem; font-weight: 800; }
+.lesson46 .l46-progress-track { height: 9px; background: #ffffff38; border-radius: 10px; margin-top: .5rem; overflow: hidden; }
+.lesson46 .l46-progress-track > div { width: 38.3333%; height: 100%; background: #ebca75; }
+.lesson46 .l46-next-lesson { margin-top: 1.5rem; padding: 1.2rem; border: 1px solid #ffffff42; background: #ffffff0c; border-radius: 12px; }
+.lesson46 .l46-next-lesson > span { color: #e4ce89; font-size: .8rem; font-weight: 800; }
+.lesson46 .l46-next-lesson h2 { margin-top: .6rem; font-size: clamp(1rem, 2vw, 1.4rem); text-align: left; font-weight: 800; }
+.lesson46 .l46-next-lesson p { margin-top: .5rem; color: #e1eee3; line-height: 1.8; }
+.lesson46 .l46-next-lesson p[lang="en"] { text-align: left; font-size: .85rem; }
+
+@media (max-width: 700px) {
+  .lesson46 .l46-cover { grid-template-columns: 1fr; }
+  .lesson46 .l46-cover-copy { padding: 1.45rem; }
+  .lesson46 .l46-cover-ar { margin-top: 1.2rem; }
+  .lesson46 .l46-door-stage { min-height: 260px; padding: 1rem; }
+  .lesson46 .l46-architectural-doors { padding-top: 1.2rem; }
+  .lesson46 .l46-arch > div { height: 145px; }
+  .lesson46 .l46-arch--choice > div { height: 160px; }
+  .lesson46 .l46-examples, .lesson46 .l46-goals, .lesson46 .l46-writing-checks, .lesson46 .l46-summary-grid, .lesson46 .l46-summary-time { grid-template-columns: 1fr; }
+  .lesson46 .l46-door-tab { min-height: 125px; padding: .8rem .2rem; font-size: .82rem; }
+  .lesson46 .l46-turn { grid-template-columns: 4.5rem minmax(0, 1fr); gap: .5rem; }
+  .lesson46 .l46-result { grid-template-columns: 1fr; }
+  .lesson46 .l46-level-scores { grid-column: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lesson46 *, .lesson46 *::before, .lesson46 *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

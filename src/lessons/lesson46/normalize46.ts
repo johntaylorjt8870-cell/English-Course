@@ -13,6 +13,8 @@ export function normalizeEnglish46(value: string): string {
     .replace(/\b(isn'?t)\b/g, "is not")
     .replace(/\b(it's)\b/g, "it is")
     .replace(/\b(there's)\b/g, "there is")
+    .replace(/\b(aren't)\b/g, "are not")
+    .replace(/\b(we're|they're)\b/g, (match) => (match === "we're" ? "we are" : "they are"))
     .replace(/[.,!?;:،؛؟]/g, " ")
     .replace(/\s+/g, " ").trim();
 }

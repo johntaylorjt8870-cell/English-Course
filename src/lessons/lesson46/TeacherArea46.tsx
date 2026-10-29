@@ -41,16 +41,28 @@ export default function TeacherArea46({ result, unlocked, onUnlock, onLock, load
 
   return (
     <section className="l46-teacher" data-area="teacher">
-      <div className="l46-teacher-heading"><span aria-hidden="true">⌑</span><div><En46>TEACHER'S SPACE</En46><h2>دليل المعلم · الدرس 46</h2></div></div>
+      <div className="l46-teacher-heading">
+        <span aria-hidden="true">🧑‍🏫</span>
+        <div>
+          <En46>TEACHER&rsquo;S SPACE</En46>
+          <h2>دليل المعلم · الدرس 46</h2>
+        </div>
+      </div>
       <p>بوابة عرض تعمل في المتصفح فقط، وليست حماية خادمية لمحتوى الموقع الثابت.</p>
       {!result ? (
-        <div className="l46-note" data-teacher-locked><span aria-hidden="true">🔒</span><p>سلّم الاختبار أولًا؛ بعدها يمكن للمعلم فتح الدليل. لن يُحمّل مفتاح الاختبار قبل التسليم.</p></div>
+        <div className="l46-note" data-teacher-locked>
+          <span className="l46-note-icon" aria-hidden="true">🔒</span>
+          <p>سلّم الاختبار أولًا؛ بعدها يمكن للمعلم فتح الدليل. لن يُحمّل مفتاح الاختبار قبل التسليم.</p>
+        </div>
       ) : !unlocked ? (
-        <form className="l46-teacher-form" onSubmit={(event) => {
-          event.preventDefault();
-          if (password.trim() === TEACHER_PASSWORD_46) { setPassword(""); setWrong(false); onUnlock(); }
-          else setWrong(true);
-        }}>
+        <form
+          className="l46-teacher-form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (password.trim() === TEACHER_PASSWORD_46) { setPassword(""); setWrong(false); onUnlock(); }
+            else setWrong(true);
+          }}
+        >
           <label htmlFor="l46-teacher-password">كلمة مرور فضاء المعلم</label>
           <input id="l46-teacher-password" type="password" dir="ltr" autoComplete="off" value={password} onChange={(event) => { setPassword(event.target.value); setWrong(false); }} />
           <button type="submit" className="l46-button l46-button--dark">فتح المساحة</button>
@@ -58,9 +70,17 @@ export default function TeacherArea46({ result, unlocked, onUnlock, onLock, load
         </form>
       ) : (
         <div className="l46-teacher-open">
-          <div className="l46-teacher-actions"><span>المساحة مفتوحة · الحلول والتعليلات</span><button type="button" className="l46-button l46-button--outline" onClick={onLock}>قفل المساحة</button></div>
+          <div className="l46-teacher-actions">
+            <span>المساحة مفتوحة · الحلول والتعليلات</span>
+            <button type="button" className="l46-button l46-button--outline" onClick={onLock}>قفل المساحة</button>
+          </div>
           {status === "loading" && <p role="status">جارٍ تحميل دليل المعلم…</p>}
-          {status === "error" && <div role="alert" data-teacher-error className="l46-feedback is-retry"><p>تعذّر تحميل الدليل. إجابات الطالب ونتيجته محفوظتان.</p><button type="button" className="l46-button l46-button--outline" onClick={() => setAttempt((n) => n + 1)}>إعادة المحاولة</button></div>}
+          {status === "error" && (
+            <div role="alert" data-teacher-error className="l46-feedback is-retry">
+              <p>تعذّر تحميل الدليل. إجابات الطالب ونتيجته محفوظتان.</p>
+              <button type="button" className="l46-button l46-button--outline" onClick={() => setAttempt((n) => n + 1)}>إعادة المحاولة</button>
+            </div>
+          )}
           {status === "idle" && Guide && <Guide result={result} />}
         </div>
       )}

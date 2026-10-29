@@ -14,7 +14,7 @@ export const PRACTICE_KEYS_46: Readonly<Record<string, PracticeKey46>> = {
   "lab-airport": choice("فعل ماضٍ وقع دون حاجة", "دانيال طبع البطاقات فعلًا، لكن النسخ الرقمية كانت كافية.", "فعل ماضٍ وقع دون حاجة"),
   "lab-museum": choice("فعل ماضٍ وقع دون حاجة", "أحضر عمر الآلة فعلًا، ولم يكن ذلك ضروريًا.", "فعل ماضٍ وقع دون حاجة"),
   "lab-laboratory": choice("don't have to / needn't", "يوفر المختبر الأجهزة؛ الإحضار غير ضروري وليس محظورًا.", "don't have to", "needn't"),
-  d1: item("You mustn't enter this room.", "بعد mustn't يأتي الفعل المجرد دون to.", [/^you must not enter this room$/]),
+  d1: item("You mustn't enter this room.", "بعد mustn't يأتي الفعل المجرد دون to؛ وتُقبل الصياغات التي تحفظ معنى المنع.", [/^you must not enter this room$/, /^you are not allowed to enter this room$/, /^you are forbidden to enter this room$/, /^you are not permitted to enter this room$/]),
   d2: item("She doesn't have to come today.", "بعد doesn't نستخدم have. وتُقبل صيغ عدم الحاجة المناسبة للسياق.", [new RegExp(`^she ${noNeedShe} come today$`)]),
   d3: item("He needn't worry.", "بعد needn't يأتي المصدر دون to؛ وصيغ عدم الحاجة الأخرى صحيحة أيضًا.", [new RegExp(`^he ${noNeedHe} worry$`)]),
   d4: item("We didn't need to pay.", "بعد didn't يعود need إلى صورته الأساسية.", [/^we did not (?:need|have) to pay$/]),

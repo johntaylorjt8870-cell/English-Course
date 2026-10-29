@@ -10,15 +10,18 @@ export type Workspace46 = {
   readingDrafts: Record<number, string>;
   readingOpen: Record<number, boolean>;
   showTranslation: boolean;
+  dialogueAr: Record<string, boolean>;
   writing: string;
   writingExplanation: string;
   writingModelOpen: boolean;
 };
 export const initialWorkspace46 = (): Workspace46 => ({
   answers: {}, checked: {}, revealed: {}, door: 0, readingDrafts: {}, readingOpen: {}, showTranslation: false,
-  writing: "", writingExplanation: "", writingModelOpen: false,
+  dialogueAr: {}, writing: "", writingExplanation: "", writingModelOpen: false,
 });
 type SetWorkspace = (update: (previous: Workspace46) => Workspace46) => void;
+
+const isArabic = (value: string) => /[\u0600-\u06ff]/.test(value);
 
 export function PracticeSet46({ setId, workspace, onChange }: { setId: string; workspace: Workspace46; onChange: SetWorkspace }) {
   const items = PRACTICE_SETS_46[setId] ?? [];
@@ -35,29 +38,62 @@ export function PracticeSet46({ setId, workspace, onChange }: { setId: string; w
         }));
         return (
           <section className="l46-practice-card" key={item.id} data-practice-id={item.id}>
-            <div className="l46-question-top"><span className="l46-question-number">{String(index + 1).padStart(2, "0")}</span><p dir="ltr" lang="en">{item.prompt}</p></div>
+            <div className="l46-question-top">
+              <span className="l46-question-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              <p dir="ltr" lang="en">{item.prompt}</p>
+            </div>
             {item.instruction && <p className="l46-instruction"><Mixed46 text={item.instruction} /></p>}
             {item.options ? (
               <div className="l46-options" role="group" aria-label={`خيارات التمرين ${index + 1}`}>
-                {item.options.map((option) => (
-                  <button type="button" key={option} aria-pressed={value === option} onClick={() => setValue(option)}>
-                    {/[\u0600-\u06ff]/.test(option) ? <span dir="rtl">{option}</span> : <En46>{option}</En46>}
+                {item.options.map((option, optionIndex) => (
+                  <button
+                    type="button"
+                    key={option}
+                    aria-pressed={value === option}
+                    dir={isArabic(option) ? "rtl" : "ltr"}
+                    onClick={() => setValue(option)}
+                  >
+                    <span className="l46-option-letter" aria-hidden="true">{String.fromCharCode(65 + optionIndex)}</span>
+                    {isArabic(option) ? <span dir="rtl" lang="ar">{option}</span> : <En46>{option}</En46>}
                   </button>
                 ))}
               </div>
             ) : (
-              <input dir="ltr" lang="en" type="text" value={value} onChange={(event) => setValue(event.target.value)}
-                placeholder="Write your answer in English…" aria-label={`إجابة التمرين ${index + 1}`} className="l46-input" />
+              <input
+                dir="ltr"
+                lang="en"
+                type="text"
+                value={value}
+                onChange={(event) => setValue(event.target.value)}
+                placeholder="Write your answer in English…"
+                aria-label={`إجابة التمرين ${index + 1}`}
+                className="l46-input"
+              />
             )}
             <div className="l46-practice-actions">
-              <button type="button" className="l46-button l46-button--dark" disabled={!value.trim()} onClick={() => onChange((prev) => ({ ...prev, checked: { ...prev.checked, [item.id]: true } }))}>تحقّق</button>
-              {checked && !correct && <button type="button" className="l46-button l46-button--outline" onClick={() => onChange((prev) => ({ ...prev, revealed: { ...prev.revealed, [item.id]: !prev.revealed[item.id] } }))}>{workspace.revealed[item.id] ? "إخفاء النموذج" : "عرض نموذج"}</button>}
+              <button
+                type="button"
+                className="l46-button l46-button--dark"
+                disabled={!value.trim()}
+                onClick={() => onChange((prev) => ({ ...prev, checked: { ...prev.checked, [item.id]: true } }))}
+              >
+                تحقّق
+              </button>
+              {checked && !correct && (
+                <button
+                  type="button"
+                  className="l46-button l46-button--outline"
+                  onClick={() => onChange((prev) => ({ ...prev, revealed: { ...prev.revealed, [item.id]: !prev.revealed[item.id] } }))}
+                >
+                  {workspace.revealed[item.id] ? "إخفاء النموذج" : "عرض نموذج"}
+                </button>
+              )}
             </div>
             {checked && key && (
               <div role="status" className={`l46-feedback ${correct ? "is-correct" : "is-retry"}`}>
                 <strong>{correct ? "✓ إجابة مناسبة" : "↺ راجع الصيغة والمعنى وحاول مجددًا"}</strong>
                 <p><Mixed46 text={key.why} /></p>
-                {workspace.revealed[item.id] && <p><span>نموذج: </span><Mixed46 text={key.model} /></p>}
+                {workspace.revealed[item.id] && <p><strong>نموذج: </strong><Mixed46 text={key.model} /></p>}
               </div>
             )}
           </section>
@@ -85,20 +121,53 @@ export function Writing46({ workspace, onChange }: { workspace: Workspace46; onC
     { label: "جملة باستخدام WON'T NEED TO", met: count(/\b(?:won't|will not) need to\b/g) >= 1 },
     { label: "من 12 إلى 15 جملة", met: sentences >= 12 && sentences <= 15 },
   ];
+  const metCount = checks.filter((check) => check.met).length;
   return (
     <div className="l46-writing">
-      <p className="l46-writing-title" dir="ltr" lang="en">A Day of Rules and Choices</p>
+      <div className="l46-writing-head">
+        <p className="l46-writing-title" dir="ltr" lang="en">A Day of Rules and Choices</p>
+        <span className="l46-tag"><bdi dir="ltr">{metCount} / {checks.length}</bdi> معايير مستوفاة</span>
+      </div>
       <div className="l46-writing-checks">
-        {checks.map((check, i) => <div key={check.label} className={check.met ? "is-met" : ""}><span aria-hidden="true">{check.met ? "✓" : String(i + 1).padStart(2, "0")}</span><Mixed46 text={check.label} /></div>)}
+        {checks.map((check, i) => (
+          <div key={check.label} className={check.met ? "is-met" : ""}>
+            <span aria-hidden="true">{check.met ? "✓" : String(i + 1).padStart(2, "0")}</span>
+            <Mixed46 text={check.label} />
+          </div>
+        ))}
       </div>
       <p className="l46-instruction">المؤشر إرشادي يعدّ الصيغ فقط؛ راجع المعنى وتصريف الفعل بنفسك.</p>
       <label htmlFor="l46-writing-draft">مسودتك الإنجليزية <bdi dir="ltr">({sentences} sentences)</bdi></label>
-      <textarea id="l46-writing-draft" dir="ltr" lang="en" rows={9} value={workspace.writing} placeholder="Write your 12–15 sentence paragraph…" onChange={(event) => onChange((prev) => ({ ...prev, writing: event.target.value }))} />
-      <Note46 text="تحدٍ إضافي: اختر جملة بـ DIDN'T NEED TO وأخرى بـ NEEDN'T HAVE، واشرح الفرق بينهما بالعربية." />
+      <textarea
+        id="l46-writing-draft"
+        dir="ltr"
+        lang="en"
+        rows={9}
+        value={workspace.writing}
+        placeholder="Write your 12–15 sentence paragraph…"
+        onChange={(event) => onChange((prev) => ({ ...prev, writing: event.target.value }))}
+      />
+      <Note46 text="تحدٍ إضافي: اختر جملة بـ DIDN'T NEED TO وأخرى بـ NEEDN'T HAVE، واشرح الفرق بينهما بالعربية." icon="✍️" />
       <label htmlFor="l46-writing-explanation">شرح الفرق بالعربية</label>
-      <textarea id="l46-writing-explanation" dir="rtl" lang="ar" rows={3} value={workspace.writingExplanation} onChange={(event) => onChange((prev) => ({ ...prev, writingExplanation: event.target.value }))} />
-      <button type="button" className="l46-button l46-button--outline" aria-expanded={workspace.writingModelOpen} onClick={() => onChange((prev) => ({ ...prev, writingModelOpen: !prev.writingModelOpen }))}>{workspace.writingModelOpen ? "إخفاء النموذج الإرشادي" : "عرض نموذج إرشادي"}</button>
-      {workspace.writingModelOpen && <div className="l46-writing-model"><p dir="ltr" lang="en">{MODEL_46}</p></div>}
+      <textarea
+        id="l46-writing-explanation"
+        dir="rtl"
+        lang="ar"
+        rows={3}
+        value={workspace.writingExplanation}
+        onChange={(event) => onChange((prev) => ({ ...prev, writingExplanation: event.target.value }))}
+      />
+      <button
+        type="button"
+        className="l46-button l46-button--outline"
+        aria-expanded={workspace.writingModelOpen}
+        onClick={() => onChange((prev) => ({ ...prev, writingModelOpen: !prev.writingModelOpen }))}
+      >
+        {workspace.writingModelOpen ? "إخفاء النموذج الإرشادي" : "عرض نموذج إرشادي"}
+      </button>
+      {workspace.writingModelOpen && (
+        <div className="l46-writing-model"><p dir="ltr" lang="en">{MODEL_46}</p></div>
+      )}
     </div>
   );
 }

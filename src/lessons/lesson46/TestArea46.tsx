@@ -32,6 +32,7 @@ export default function TestArea46({ answers, result, onChangeAnswer, onSubmitRe
   const answered = answeredCount46(answers);
   const complete = testComplete46(answers);
   const submitted = result !== null;
+  const progress = Math.round((answered / TEST_QUESTION_COUNT_46) * 100);
 
   async function submit() {
     if (busy.current || submitted || !complete) return;
@@ -64,44 +65,96 @@ export default function TestArea46({ answers, result, onChangeAnswer, onSubmitRe
   return (
     <section className="l46-test" data-area="lesson46-test" data-final-test>
       <div className="l46-test-intro">
-        <div><strong>25 سؤالًا · 5 مستويات</strong><p>أجب عن جميع الأسئلة قبل التسليم؛ لا يُعرض التصحيح أثناء الإجابة.</p></div>
-        <span role="status" aria-live="polite">تمت الإجابة عن <bdi dir="ltr">{answered} / {TEST_QUESTION_COUNT_46}</bdi></span>
+        <div>
+          <strong>25 سؤالًا · 5 مستويات</strong>
+          <p>أجب عن جميع الأسئلة قبل التسليم؛ لا يُعرض التصحيح أثناء الإجابة.</p>
+        </div>
+        <span className="l46-test-counter" role="status" aria-live="polite">
+          <span aria-hidden="true">✓</span>
+          <bdi dir="ltr">{answered} / {TEST_QUESTION_COUNT_46}</bdi>
+        </span>
+        <div className="l46-test-progress" role="progressbar" aria-label="تقدم الاختبار" aria-valuemin={0} aria-valuemax={TEST_QUESTION_COUNT_46} aria-valuenow={answered}>
+          <div style={{ width: `${progress}%` }} />
+        </div>
       </div>
+
       {result && (
         <div className="l46-result" data-test-result role="status" aria-live="polite">
-          <div><span className="l46-result-kicker">MISSION COMPLETE</span><h2>نتيجتك: <bdi dir="ltr">{result.score} / {result.total}</bdi></h2><p>راجع تفسير كل إجابة، ثم حاول مجددًا متى شئت.</p></div>
+          <div>
+            <span className="l46-result-kicker">MISSION COMPLETE</span>
+            <h2>نتيجتك: <bdi dir="ltr">{result.score} / {result.total}</bdi></h2>
+            <p>راجع تفسير كل إجابة، ثم حاول مجددًا متى شئت.</p>
+          </div>
           <button type="button" className="l46-button l46-button--light" data-test-reset onClick={reset}>إعادة الاختبار ↺</button>
-          <div className="l46-level-scores">{TEST_LEVELS_46.map((level) => <span key={level.level}>المستوى {level.level} · <bdi dir="ltr">{result.byLevel[level.level]?.score ?? 0} / {result.byLevel[level.level]?.total ?? 5}</bdi></span>)}</div>
+          <div className="l46-level-scores">
+            {TEST_LEVELS_46.map((level) => (
+              <span key={level.level}>
+                المستوى {level.level} · <bdi dir="ltr">{result.byLevel[level.level]?.score ?? 0} / {result.byLevel[level.level]?.total ?? 5}</bdi>
+              </span>
+            ))}
+          </div>
         </div>
       )}
+
       {TEST_LEVELS_46.map((level) => (
         <section className="l46-test-level" data-test-level={level.level} key={level.level}>
-          <div className="l46-level-header"><div><En46>{level.en}</En46><h2>{level.title}</h2></div><p>{level.instruction}</p></div>
+          <div className="l46-level-header">
+            <span className="l46-level-badge" aria-hidden="true">{String(level.level).padStart(2, "0")}</span>
+            <div>
+              <En46>{level.en}</En46>
+              <h2>{level.title}</h2>
+            </div>
+            <p>{level.instruction}</p>
+          </div>
           {TEST_QUESTIONS_46.filter((q) => q.level === level.level).map((question) => {
             const value = answers[question.id] ?? "";
             const correct = result?.byQuestion[question.id];
             const solution = result?.solutions[question.id];
             return (
-              <article key={question.id} data-test-q={question.number} data-question-id={question.id} className={`l46-test-question ${submitted ? (correct ? "is-correct" : "is-wrong") : ""}`}>
-                <div className="l46-question-top"><span className="l46-question-number">{String(question.number).padStart(2, "0")}</span><p dir="ltr" lang="en">{question.prompt}</p></div>
+              <article
+                key={question.id}
+                data-test-q={question.number}
+                data-question-id={question.id}
+                className={`l46-test-question l46-practice-card ${submitted ? (correct ? "is-correct" : "is-wrong") : ""}`}
+              >
+                <div className="l46-question-top">
+                  <span className="l46-question-number">{String(question.number).padStart(2, "0")}</span>
+                  <p dir="ltr" lang="en">{question.prompt}</p>
+                </div>
                 {question.contextAr && <p className="l46-instruction"><Mixed46 text={question.contextAr} /></p>}
                 {question.type === "choice" ? (
                   <div className="l46-options l46-test-options" role="group" aria-label={`خيارات السؤال ${question.number}`}>
                     {question.options?.map((option, i) => (
-                      <button type="button" key={option.id} aria-pressed={value === option.id} disabled={submitted || loading} onClick={() => onChangeAnswer(question.id, option.id)}>
+                      <button
+                        type="button"
+                        key={option.id}
+                        aria-pressed={value === option.id}
+                        disabled={submitted || loading}
+                        dir={option.lang === "en" ? "ltr" : "rtl"}
+                        onClick={() => onChangeAnswer(question.id, option.id)}
+                      >
                         <span className="l46-option-letter" aria-hidden="true">{String.fromCharCode(65 + i)}</span>
                         {option.lang === "en" ? <En46>{option.text}</En46> : <span dir="rtl">{option.text}</span>}
                       </button>
                     ))}
                   </div>
                 ) : (
-                  <input type="text" dir="ltr" lang="en" className="l46-input" aria-label={`إجابة السؤال ${question.number}`} value={value} disabled={submitted || loading}
-                    placeholder="Write in English…" onChange={(event) => onChangeAnswer(question.id, event.target.value)} />
+                  <input
+                    type="text"
+                    dir="ltr"
+                    lang="en"
+                    className="l46-input"
+                    aria-label={`إجابة السؤال ${question.number}`}
+                    value={value}
+                    disabled={submitted || loading}
+                    placeholder="Write in English…"
+                    onChange={(event) => onChangeAnswer(question.id, event.target.value)}
+                  />
                 )}
                 {submitted && solution && (
                   <div className={`l46-feedback ${correct ? "is-correct" : "is-retry"}`} data-question-feedback={question.id}>
                     <strong>{correct ? "✓ إجابة صحيحة" : "✕ تحتاج إلى مراجعة"}</strong>
-                    <p>الإجابة النموذجية: <Mixed46 text={solution.model} /></p>
+                    <p><strong>الإجابة النموذجية: </strong><Mixed46 text={solution.model} /></p>
                     <p><Mixed46 text={solution.why} /></p>
                   </div>
                 )}
@@ -110,12 +163,15 @@ export default function TestArea46({ answers, result, onChangeAnswer, onSubmitRe
           })}
         </section>
       ))}
+
       {!submitted && (
         <div className="l46-submit-bar">
-          {error && <p role="alert" data-test-error>تعذّر تحميل التصحيح مؤقتًا. إجاباتك محفوظة؛ اضغط التسليم لإعادة المحاولة.</p>}
+          <button type="button" data-test-submit className="l46-button l46-button--dark" disabled={!complete || loading} onClick={submit}>
+            {loading ? "جارٍ التسليم…" : "تسليم الاختبار وتصحيحه"}
+          </button>
+          {complete ? <span>كل الأسئلة مكتملة — يمكنك التسليم.</span> : <span>أجب عن الأسئلة المتبقية أولًا: <bdi dir="ltr">{TEST_QUESTION_COUNT_46 - answered}</bdi></span>}
           {loading && <p role="status">جارٍ تحميل التصحيح…</p>}
-          <button type="button" data-test-submit className="l46-button l46-button--dark" disabled={!complete || loading} onClick={submit}>{loading ? "جارٍ التسليم…" : "تسليم الاختبار وتصحيحه"}</button>
-          {!complete && <span>أجب عن الأسئلة المتبقية أولًا: <bdi dir="ltr">{TEST_QUESTION_COUNT_46 - answered}</bdi></span>}
+          {error && <p role="alert" data-test-error>تعذّر تحميل التصحيح مؤقتًا. إجاباتك محفوظة؛ اضغط التسليم لإعادة المحاولة.</p>}
         </div>
       )}
     </section>

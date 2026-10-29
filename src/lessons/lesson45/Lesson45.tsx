@@ -98,7 +98,7 @@ export default function Lesson45({onExit}:{onExit?:()=>void}) {
   const station=STATIONS_45.find(st=>step>=st.start&&step<=st.end)??STATIONS_45[0]!;
   return <Lesson1Shell
     railTitle={<span>الدرس 45 · <English>{LESSON_TITLE_45}</English></span>}
-    railSubtitle={<div className="mt-2 l45-rail-meta"><b>{LESSON_IDENTITY_45}</b><span>{LESSON_SUBTITLE_45}</span><small>40 خطوة · 25 سؤالًا · مختبرات تفاعلية</small></div>}
+    railSubtitle={<div className="mt-2 l45-rail-meta"><b>{LESSON_IDENTITY_45}</b><span>{LESSON_SUBTITLE_45}</span><small>42 خطوة · 25 سؤالًا · مختبرات تفاعلية</small></div>}
     groups={groups} activeIndex={area==="learn"?step:-1} markActiveStep={area==="learn"} railAriaLabel="فهرس محطات الدرس 45"
     railFooter={<div className="mt-2">زار المتعلم: <bdi dir="ltr">{visited.size} / {LESSON_STEP_COUNT_45}</bdi> خطوة</div>}
     isMenuOpen={menuOpen} onMenuOpenChange={setMenuOpen}
@@ -112,7 +112,7 @@ export default function Lesson45({onExit}:{onExit?:()=>void}) {
     rootClassName="advice45 style-b font-body relative flex h-screen flex-col overflow-hidden"
   >
     <nav className="l45-area-bar" aria-label="مساحات الدرس 45">
-      <button className={area==="learn"?"is-active":""} onClick={()=>switchArea("learn")}>منطقة التعلّم <span>40</span></button>
+      <button className={area==="learn"?"is-active":""} onClick={()=>switchArea("learn")}>منطقة التعلّم <span>42</span></button>
       <button className={area==="test"?"is-active":""} onClick={()=>switchArea("test")}>الاختبار النهائي <span>{submitted&&score!==null?`${score}/25`:"25"}</span></button>
     </nav>
     {area==="learn"?<StepContent index={step}/>:<Suspense fallback={<p role="status" className="l45-loading">جارٍ تجهيز الاختبار النهائي...</p>}><TestArea45 onSubmitted={(n)=>{setScore(n);setSubmitted(true)}} submitted={submitted}/></Suspense>}

@@ -67,7 +67,7 @@ ok(!/import\s+\{[^}]*TEST_SOLUTIONS_46/.test(guideSource), "teacher guide receiv
 
 const positives = {
   q1: ["a"], q2: ["b"], q3: ["a"], q4: ["c"], q5: ["b"],
-  q6: ["mustn't", "MUST NOT", "You must not enter this room.", "mustn’t enter this room"],
+  q6: ["mustn't", "MUST NOT", "You must not enter this room.", "mustn’t enter this room", "You are not allowed to enter this room.", "YOU ARE NOT ALLOWED TO ENTER THIS ROOM"],
   q7: ["doesn't need to", "needn't", "doesn't have to", "She need not bring her laptop today.", "She doesn't have to bring her laptop today.", "She needn't bring her laptop."],
   q8: ["didn't have to", "did not need to", "We didn't have to work yesterday.", "We didn't need to work yesterday.", "We didn't have to work."],
   q9: ["won't have to", "will not need to", "He won't need to attend the meeting tomorrow.", "He won't have to attend the meeting."],
@@ -79,14 +79,14 @@ const positives = {
   q15: ["We didn't need to pay.", "We did not have to pay."],
   q16: ["b"], q17: ["b"], q18: ["a"], q19: ["b"], q20: ["a"],
   q21: ["mustn't", "must not", "You mustn't touch the exhibits.", "Students must not touch the exhibits."],
-  q22: ["don't have to", "needn't", "do not need to", "No, you don't have to.", "No, you don't need to bring notebooks."],
+  q22: ["don't have to", "needn't", "do not need to", "No, you don't have to.", "No, you don't need to bring notebooks.", "don't", "do not", "You don't.", "No, you don't.", "No, you do not.", "No, you don’t."],
   q23: ["needn't have", "need not have", "You needn't have bought it.", "You needn't have bought a notebook."],
   q24: ["won't have to", "will not need to", "No, you won't have to pay tomorrow.", "You won't have to pay."],
   q25: ["needn't", "don't need to", "don't have to", "We needn't hurry to buy tickets today.", "We don't need to hurry."],
 };
 const negatives = {
   q1: ["b", "c", "mustn't"], q2: ["a", "c"], q3: ["b", "c"], q4: ["a", "b"], q5: ["a", "c"],
-  q6: ["don't have to", "must", "You must not", "You must not enter another room", "you don't have to enter this room", "not must"],
+  q6: ["don't have to", "must", "You must not", "You must not enter another room", "you don't have to enter this room", "not must", "You are allowed to enter this room.", "You are not required to enter this room.", "You are not allowed to leave this room.", "You are not allowed to enter another room.", "You are not not allowed to enter this room."],
   q7: ["mustn't", "does need to", "She needn't", "She needn't bring her phone today", "She needs to bring her laptop today", "She doesn't need to bring her laptop yesterday"],
   q8: ["had to", "don't have to", "We didn't have to", "We didn't have to work tomorrow", "needn't have worked", "We did not work yesterday"],
   q9: ["mustn't", "has to", "He won't have to", "He won't have to attend the meeting yesterday", "didn't have to"],
@@ -98,7 +98,7 @@ const negatives = {
   q15: ["We didn't needed to pay", "We needed to pay", "We mustn't pay", "We didn't pay", "We didn't need to"],
   q16: ["a", "c", "same meaning"], q17: ["a", "c", "different meanings"], q18: ["b", "c", "not necessary but did not buy"], q19: ["a", "c", "did not buy"], q20: ["b", "c", "same meaning"],
   q21: ["don't have to", "needn't", "must", "You must not", "You must not sell the exhibits"],
-  q22: ["mustn't", "do", "have to", "must", "don't", "You do not have to bring a phone"],
+  q22: ["mustn't", "do", "have to", "must", "You do not have to bring a phone", "No, you do.", "Yes, you do.", "No, you must bring notebooks.", "No, you mustn't bring notebooks.", "No, you don't have to bring phones.", "No, you do not not."],
   q23: ["didn't need to", "shouldn't have", "needn't", "You needn't have", "You needn't have sold it", "You needn't have bought a phone", "You needn't have not bought it"],
   q24: ["mustn't", "didn't have to", "won't has to", "You won't have to", "You won't have to pay yesterday"],
   q25: ["mustn't", "must", "need", "We needn't", "We needn't hurry to buy tickets yesterday", "We needn't not hurry"],
@@ -113,6 +113,8 @@ const perfect = M.gradeTest46(perfectAnswers);
 ok(perfect.score === 25 && perfect.total === 25, "perfect submission scores 25/25");
 ok(Object.values(perfect.byLevel).every((level) => level.score === 5 && level.total === 5), "five scores each 5/5");
 ok(M.gradeTest46({}).score === 0, "blank submission scores zero");
+ok(M.gradeTest46({ ...perfectAnswers, q6: "You are not allowed to enter this room.", q22: "No, you don't." }).score === 25, "requested alternative answers score 25/25 together");
+ok(M.gradeTest46({ ...perfectAnswers, q6: "You are allowed to enter this room.", q22: "No, you must bring notebooks." }).score === 23, "opposite meanings in q6 and q22 are each marked wrong");
 for (const q of M.TEST_QUESTIONS_46) {
   const changed = { ...perfectAnswers, [q.id]: negatives[q.id][0] };
   const report = M.gradeTest46(changed);

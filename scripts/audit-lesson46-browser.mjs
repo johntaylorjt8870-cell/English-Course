@@ -151,6 +151,11 @@ try {
   for (const [number, index] of Object.entries(choiceIndices)) await page.locator(`[data-test-q="${number}"] .l46-options button`).nth(index).click();
   const written = { 7: "needn't", 8: "didn't have to", 9: "won't have to", 10: "needn't have bought", 11: "You mustn't enter.", 12: "She doesn't have to come.", 13: "He needn't worry.", 14: "I needn't have gone there.", 15: "We didn't need to pay.", 21: "mustn't", 22: "don't have to", 23: "needn't have", 24: "won't have to", 25: "needn't" };
   for (const [number, value] of Object.entries(written)) await page.locator(`[data-test-q="${number}"] input`).fill(value);
+  const q6Alternative = "You are not allowed to enter this room.";
+  const q22Alternative = "No, you don't.";
+  await page.locator('[data-test-q="6"] input').fill(q6Alternative);
+  await page.locator('[data-test-q="22"] input').fill(q22Alternative);
+  ok(await page.locator('[data-test-q="6"] input').inputValue() === q6Alternative && await page.locator('[data-test-q="22"] input').inputValue() === q22Alternative, "both requested alternative answers are entered before submit");
   ok(await page.locator('[data-test-submit]').isEnabled(), "submit enabled after all 25 answers");
   ok(!requests.some((url) => /testKey46|TeacherGuide46/.test(url)), "answering does not load solutions");
 
@@ -160,15 +165,18 @@ try {
   await page.locator('[data-test-error]').waitFor({ timeout: 30000 });
   ok(keyAttempts === 1 && await page.locator('[data-test-result]').count() === 0, "real failed key request shows error without score");
   ok(await page.locator('[data-test-q="10"] input').inputValue() === "needn't have bought" && await page.locator('[data-test-submit]').isEnabled(), "real key load failure preserves answers and permits retry");
+  ok(await page.locator('[data-test-q="6"] input').inputValue() === q6Alternative && await page.locator('[data-test-q="22"] input').inputValue() === q22Alternative, "first key-load failure preserves both alternative answers");
   const secondKeyFailure = page.waitForEvent("requestfailed", { predicate: (request) => /testKey46/.test(request.url()) });
   await page.locator('[data-test-submit]').click();
   await secondKeyFailure;
   await page.locator('[data-test-error]').waitFor({ timeout: 30000 });
   ok(keyAttempts === 2 && await page.locator('[data-test-q="10"] input').inputValue() === "needn't have bought", "second failed key request still preserves answers");
+  ok(await page.locator('[data-test-q="6"] input').inputValue() === q6Alternative && await page.locator('[data-test-q="22"] input').inputValue() === q22Alternative, "second key-load failure preserves both alternative answers");
   await page.locator('[data-test-submit]').evaluate((button) => { button.click(); button.click(); });
   await page.locator('[data-test-result]').waitFor({ timeout: 30000 });
   ok(keyAttempts === 3, "after two failures rapid double submit causes only one fresh retry request");
   ok((await page.locator('[data-test-result]').innerText()).includes("25 / 25"), "valid submission grades 25/25");
+  for (const id of ["q6", "q22"]) ok((await page.locator(`[data-question-feedback="${id}"]`).innerText()).includes("إجابة صحيحة"), `${id} alternative is marked correct after successful retry`);
   ok(await page.locator('[data-question-feedback]').count() === 25, "after submission each question has one correction");
   ok(requests.some((url) => /testKey46/.test(url)), "key chunk is fetched after submission only");
   await page.screenshot({ path: `${work}/desktop-test-result.png` });

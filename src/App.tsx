@@ -511,7 +511,7 @@ const CARDS: Card[] = [
     title: "الدرس 45: SHOULD & OUGHT TO — النصيحة والتوقعات ومراجعة الماضي",
     en: "The Art of Giving Smart Advice",
     emoji: "💡",
-    stats: "40 خطوة · 11 محطة · مختبرات تفاعلية · اختبار نهائي 25 سؤالًا",
+    stats: "42 خطوة · 11 محطة · مختبرات تفاعلية · اختبار نهائي 25 سؤالًا",
     href: "#/lesson/45",
     grad: "from-[#123F46] to-[#0F9C8E]",
   },

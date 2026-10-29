@@ -12,20 +12,20 @@ export type Lesson45Step = {
 export const LESSON_TITLE_45 = "SHOULD & OUGHT TO";
 export const LESSON_SUBTITLE_45 = "النصيحة، والتوصيات، والتوقعات، والتحدث عن أخطاء الماضي";
 export const LESSON_IDENTITY_45 = "The Advice Intelligence Lab";
-export const LESSON_STEP_COUNT_45 = 40;
+export const LESSON_STEP_COUNT_45 = 42;
 
 export const STATIONS_45 = [
-  { name: "بوابة النصيحة", start: 0, end: 5, emoji: "💡" },
-  { name: "النفي والأسئلة", start: 6, end: 9, emoji: "❓" },
-  { name: "OUGHT TO", start: 10, end: 14, emoji: "⭐" },
-  { name: "النصيحة أم الإلزام؟", start: 15, end: 16, emoji: "⚖️" },
-  { name: "التوقع المعقول", start: 17, end: 18, emoji: "🔮" },
-  { name: "النظر إلى الماضي", start: 19, end: 23, emoji: "⏳" },
-  { name: "OUGHT TO HAVE", start: 24, end: 24, emoji: "🕰️" },
-  { name: "HAD BETTER", start: 25, end: 26, emoji: "🚨" },
-  { name: "النصيحة اللبقة", start: 27, end: 27, emoji: "🤝" },
-  { name: "المحقق والتطبيق", start: 28, end: 33, emoji: "🕵️" },
-  { name: "القراءة والإنجاز", start: 34, end: 39, emoji: "🏆" },
+  { name: "بوابة النصيحة", start: 0, end: 6, emoji: "💡" },
+  { name: "النفي والأسئلة", start: 7, end: 10, emoji: "❓" },
+  { name: "OUGHT TO", start: 11, end: 15, emoji: "⭐" },
+  { name: "النصيحة أم الإلزام؟", start: 16, end: 17, emoji: "⚖️" },
+  { name: "التوقع المعقول", start: 18, end: 19, emoji: "🔮" },
+  { name: "النظر إلى الماضي", start: 20, end: 24, emoji: "⏳" },
+  { name: "OUGHT TO HAVE", start: 25, end: 25, emoji: "🕰️" },
+  { name: "HAD BETTER", start: 26, end: 27, emoji: "🚨" },
+  { name: "النصيحة اللبقة", start: 28, end: 28, emoji: "🤝" },
+  { name: "المحقق والتطبيق", start: 29, end: 34, emoji: "🕵️" },
+  { name: "القراءة والإنجاز", start: 35, end: 41, emoji: "🏆" },
 ];
 
 export const STEPS_45: Lesson45Step[] = [

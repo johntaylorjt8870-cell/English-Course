@@ -34,6 +34,8 @@
     "audit:lesson43-browser": "node scripts/audit-lesson43-browser.mjs",
     "audit:lesson44": "node scripts/audit-lesson44.mjs",
     "audit:lesson44-dom": "node scripts/audit-lesson44-dom.mjs",
+    "audit:lesson45": "node scripts/audit-lesson45.mjs",
+    "audit:lesson45-browser": "node scripts/audit-lesson45-browser.mjs",
     "audit:lesson32-browser": "node scripts/audit-lesson32-browser.mjs",
     "audit:lesson34-contrast": "node scripts/audit-lesson34-contrast.mjs"
   },

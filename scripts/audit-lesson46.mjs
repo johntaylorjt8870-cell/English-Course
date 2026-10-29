@@ -67,20 +67,22 @@ ok(!/import\s+\{[^}]*TEST_SOLUTIONS_46/.test(guideSource), "teacher guide receiv
 
 const positives = {
   q1: ["a"], q2: ["b"], q3: ["a"], q4: ["c"], q5: ["b"],
-  q6: ["mustn't", "MUST NOT", "You must not enter this room.", "mustn’t enter this room", "You are not allowed to enter this room.", "YOU ARE NOT ALLOWED TO ENTER THIS ROOM"],
+  q6: ["mustn't", "MUST NOT", "You must not enter this room.", "mustn’t enter this room", "You are not allowed to enter this room.", "YOU ARE NOT ALLOWED TO ENTER THIS ROOM",
+    "You are forbidden to enter this room.", "You are not permitted to enter this room.", "You aren’t allowed to enter this room.", "must not enter this room"],
   q7: ["doesn't need to", "needn't", "doesn't have to", "She need not bring her laptop today.", "She doesn't have to bring her laptop today.", "She needn't bring her laptop."],
   q8: ["didn't have to", "did not need to", "We didn't have to work yesterday.", "We didn't need to work yesterday.", "We didn't have to work."],
   q9: ["won't have to", "will not need to", "He won't need to attend the meeting tomorrow.", "He won't have to attend the meeting."],
   q10: ["needn't have bought", "I need not have bought another ticket.", "I bought another ticket but I didn't need one.", "I bought another ticket unnecessarily.", "I bought another ticket but I didn't have to."],
-  q11: ["You mustn't enter.", "You must not enter", "You are not allowed to enter."],
+  q11: ["You mustn't enter.", "You must not enter", "You are not allowed to enter.", "You are forbidden to enter.", "You are not permitted to enter.", "you aren't allowed to enter"],
   q12: ["She doesn't have to come.", "She needn't come.", "She does not need to come."],
   q13: ["He needn't worry.", "He doesn't need to worry.", "He does not have to worry."],
   q14: ["I needn't have gone there.", "I need not have gone there", "I needn't have gone."],
   q15: ["We didn't need to pay.", "We did not have to pay."],
   q16: ["b"], q17: ["b"], q18: ["a"], q19: ["b"], q20: ["a"],
-  q21: ["mustn't", "must not", "You mustn't touch the exhibits.", "Students must not touch the exhibits."],
-  q22: ["don't have to", "needn't", "do not need to", "No, you don't have to.", "No, you don't need to bring notebooks.", "don't", "do not", "You don't.", "No, you don't.", "No, you do not.", "No, you don’t."],
-  q23: ["needn't have", "need not have", "You needn't have bought it.", "You needn't have bought a notebook."],
+  q21: ["mustn't", "must not", "You mustn't touch the exhibits.", "Students must not touch the exhibits.", "You are not allowed to touch the exhibits.", "Students are not allowed to touch the exhibits."],
+  q22: ["don't have to", "needn't", "do not need to", "No, you don't have to.", "No, you don't need to bring notebooks.", "don't", "do not", "You don't.", "No, you don't.", "No, you do not.", "No, you don’t.",
+    "No", "no", "No, you don't have to bring your notebooks.", "No, you needn’t bring your notebooks.", "There is no need for you to bring notebooks.", "It is not necessary for you to bring your notebooks."],
+  q23: ["needn't have", "need not have", "You needn't have bought it.", "You needn't have bought a notebook.", "You bought it unnecessarily.", "You bought a notebook, but it was not necessary.", "You bought a notebook but you didn't need to."],
   q24: ["won't have to", "will not need to", "No, you won't have to pay tomorrow.", "You won't have to pay."],
   q25: ["needn't", "don't need to", "don't have to", "We needn't hurry to buy tickets today.", "We don't need to hurry."],
 };
@@ -108,6 +110,34 @@ for (const q of M.TEST_QUESTIONS_46) {
   for (const value of positives[q.id] || []) ok(M.gradeQuestion46(q, value), `${q.id} accepts ${JSON.stringify(value)}`);
   for (const value of [...(negatives[q.id] || []), "", "  "]) ok(!M.gradeQuestion46(q, value), `${q.id} rejects ${JSON.stringify(value)}`);
 }
+
+// Explicit regression cases for the two previously reported false negatives, plus
+// their meaning-changing opposites: every accepted paraphrase and every rejected
+// near-miss is asserted here, independent of the per-question table above.
+const regression46 = {
+  q6: {
+    accept: [
+      "No, you don't.", // sanity: this is the wrong question on purpose (see reject below)
+    ].slice(1),
+    reject: ["No, you don't.", "You don't have to enter this room.", "You are not required to enter this room.",
+      "You are allowed to enter this room.", "You are not allowed to leave this room.", "You are not allowed to enter another room."],
+  },
+  q22: {
+    accept: ["No, you don't.", "no you don't", "NO, YOU DON’T", "No, you don't have to.", "No, you needn't.", "No, you don't need to.", "No", "You don't."],
+    reject: ["No, you do.", "Yes, you do.", "No, you mustn't.", "You mustn't bring notebooks.", "You do.", "No, you don't have to bring a phone.",
+      "No, you do not not.", "You are not allowed to bring notebooks."],
+  },
+};
+for (const [id, cases] of Object.entries(regression46)) {
+  const question = M.TEST_QUESTIONS_46.find((q) => q.id === id);
+  for (const value of cases.accept) ok(M.gradeQuestion46(question, value), `${id} regression accepts ${JSON.stringify(value)}`);
+  for (const value of cases.reject) ok(!M.gradeQuestion46(question, value), `${id} regression rejects ${JSON.stringify(value)}`);
+}
+// The forbidden paraphrase for q6 must be accepted, while its deontic opposite must fail.
+ok(M.gradeQuestion46(M.TEST_QUESTIONS_46.find((q) => q.id === "q6"), "You are not allowed to enter this room."), "q6 accepts ‘You are not allowed to enter this room.’");
+ok(!M.gradeQuestion46(M.TEST_QUESTIONS_46.find((q) => q.id === "q6"), "You are not required to enter this room."), "q6 rejects ‘not required’ (no obligation, not prohibition)");
+ok(M.gradeQuestion46(M.TEST_QUESTIONS_46.find((q) => q.id === "q22"), "No, you don't."), "q22 accepts ‘No, you don't.’");
+ok(!M.gradeQuestion46(M.TEST_QUESTIONS_46.find((q) => q.id === "q22"), "No, you do."), "q22 rejects the polarity-flipped short answer");
 const perfectAnswers = Object.fromEntries(M.TEST_QUESTIONS_46.map((q) => [q.id, positives[q.id][0]]));
 const perfect = M.gradeTest46(perfectAnswers);
 ok(perfect.score === 25 && perfect.total === 25, "perfect submission scores 25/25");
@@ -142,6 +172,8 @@ for (const p of practices.filter((p) => !p.options)) {
   ok(!M.gradePractice46(p.id, practiceNegative[p.id] ?? ""), `${p.id} rejects wrong rewrite / polarity`);
   ok(!M.gradePractice46(p.id, ""), `${p.id} rejects blank`);
 }
+for (const alt of ["You are not allowed to enter this room.", "You are forbidden to enter this room.", "You are not permitted to enter this room."]) ok(M.gradePractice46("d1", alt), `d1 accepts the prohibition paraphrase ${alt}`);
+for (const wrong of ["You don't have to enter this room.", "You are not required to enter this room.", "You are allowed to enter this room."]) ok(!M.gradePractice46("d1", wrong), `d1 rejects the meaning-changing ${wrong}`);
 for (const [id, answer] of [["p34-1", "I didn't have to work"], ["p34-2", "She didn't need to bring her laptop"], ["p34-3", "We won't have to come early"], ["p34-4", "He won't need to buy another ticket"]]) ok(M.gradePractice46(id, answer), `${id} accepts a full sentence with implied time`);
 for (const alt of ["You don't have to come tomorrow", "You needn't come tomorrow", "There is no need for you to come tomorrow"]) ok(M.gradePractice46("p36-1", alt), `p36-1 accepts ${alt}`);
 for (const alt of ["I needn't have bought a ticket", "I bought a ticket but it wasn't necessary", "I bought a ticket unnecessarily"]) ok(M.gradePractice46("p36-3", alt), `p36-3 accepts ${alt}`);

@@ -33,11 +33,18 @@ Student prompts live in `testData46.ts`; answers, explanations and grading live 
 
 This is a static client-side site: deferred loading and the existing password are presentation conveniences, **not server-side security**. Browser state is in memory and is not promised across a page reload. Typed answers use bounded, normalized patterns rather than full natural-language understanding, so a correct but unforeseen paraphrase may need manual review; writing checks are advisory, not semantic grading.
 
+## Design system (rebuilt to Lesson 1's baseline)
+
+Lesson 46 is now styled by a single scoped system in `src/lessons/lesson46/lesson46.css` (`.lesson46` only) that mirrors Lesson 1 rather than patching the previous "field notes" look: the same Changa/Rubik families, one `2rem` sheet per slide with `p-6 → p-10` padding and Lesson 1's shadow, a dark number chip + violet station badge + floating emoji + `clamp()` heading, the `pop-1..6`-style staggered entry (disabled under `prefers-reduced-motion`), and fixed semantic colours per meaning (rose = prohibition, sky = no obligation, emerald = no necessity, violet = comparison). English runs are isolated `dir="ltr"` panels through `shared/bidi` with the Arabic translation beneath; the cover opens on three illustrated doors and the comparison stations use a map and a timeline rather than prose. No shared component, stylesheet, dependency or route was changed.
+
 ## Reproducible checks
 
 - `npm run build` then `npm run audit:lesson46-browser`: production Chromium, all 39 slides, desktop/mobile/tablet, key isolation, two-failure retry, grading/reset, teacher gate, lock, keyboard focus, representative contrast and overflow.
 - `npm run audit:lesson46`: content, all 25 questions with positive and negative cases, practice keys and jsdom state/failure handling.
 - `npx tsc --noEmit --jsx react-jsx --module esnext --target es2022 --moduleResolution bundler --allowSyntheticDefaultImports --skipLibCheck src/lessons/lesson46/*.ts src/lessons/lesson46/*.tsx`: lesson-local type check (the repository has no project typecheck configuration).
 - `npm run check:english-direction`, `ONLY=46 node scripts/audit-bidi-mixed.mjs`, `npm run audit:lesson-navigation`, `npm run audit:lesson45`, `npm run audit:lesson45-browser`.
+- Manual and automated visual sweep of all 39 slides at 1280/768/375/320 px: no document or card overflow, no clipped or sub-11px text, no zero-width blocks, no console errors, and no answer or key visible before submission.
+
+Latest run of the Lesson 46 suite: `audit:lesson46` 766/0, `audit:lesson46-browser` 564/0, `check:english-direction` 59/59, `audit-bidi-mixed` 0 violations, `audit:lesson-navigation` 192/0, production build clean.
 
 On baseline `main` commit `13484a98f1e4216714ec8b20b2a1aeaf01dfd865`, separate checks confirmed older Lesson 35 final-test/teacher-gate failures, a Lesson 36 lock-audit selector failure, four Lesson 38 strict bidi findings and one source-reveal finding, a Lesson 41 audit card-stat lookup error, and 272 full-project ad hoc TypeScript errors. Old inventory assertions in the Lesson 31, 38 and 42 audit scripts were updated to require all 46 lessons/cards rather than their stale count of 44; no checks were removed. Some older lesson audits also enforce a historical lesson-specific Git change scope, so they reject a legitimate Lesson 46 change; their guards were not relaxed. See the PR report for command results and remaining baseline failures.

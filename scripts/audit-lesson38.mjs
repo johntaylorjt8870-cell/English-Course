@@ -810,7 +810,7 @@ ok(!/[\u2066\u2067\u2068\u2069\u202A\u202B\u202C\u202D\u202E]/.test(directionSou
   const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
   ok(pkg.scripts["audit:lesson38"] === "node scripts/audit-lesson38.mjs", "package.json exposes audit:lesson38");
   ok(pkg.scripts["audit:english-direction"].includes("audit-lesson38.mjs"), "audit:english-direction runs this audit");
-  ok(readFileSync(join(root, "scripts/check-english-direction.mjs"), "utf8").includes("lessons.length === 44"), "the direction inventory still covers 44 lessons");
+  ok(readFileSync(join(root, "scripts/check-english-direction.mjs"), "utf8").includes("lessons.length === 46"), "the direction inventory covers all 46 lessons");
   ok(readFileSync(join(root, "scripts/audit-lesson-navigation.mjs"), "utf8").includes('"#/lesson/38"'), "the navigation audit covers the Lesson 38 route");
   ok(existsSync(join(root, "src/lessons/lesson38/ledger38.ts")) && existsSync(join(root, "src/lessons/lesson38/solutionsData38.ts")) && existsSync(join(root, "docs/lesson38-coverage.md")), "the source ledger, separate solution data, and coverage document exist");
 }

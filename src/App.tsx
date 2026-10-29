@@ -44,6 +44,7 @@ import Lesson42 from "./lessons/lesson42/Lesson42";
 import Lesson43 from "./lessons/lesson43/Lesson43";
 import Lesson44 from "./lessons/lesson44/Lesson44";
 import Lesson45 from "./lessons/lesson45/Lesson45";
+import Lesson46 from "./lessons/lesson46/Lesson46";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -515,6 +516,15 @@ const CARDS: Card[] = [
     href: "#/lesson/45",
     grad: "from-[#123F46] to-[#0F9C8E]",
   },
+  {
+    n: 46,
+    title: "الدرس 46: MUSTN'T vs DON'T HAVE TO vs NEEDN'T — المنع وعدم الضرورة",
+    en: "The Three Doors of Obligation",
+    emoji: "🚪",
+    stats: "39 خطوة · 18 محطة · مختبرات وتدريبات · اختبار 25 سؤالًا",
+    href: "#/lesson/46",
+    grad: "from-[#A53E2C] to-[#12685E]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -641,6 +651,7 @@ export default function App() {
   else if (route === 43) page = <Lesson43 onExit={goHome} />;
   else if (route === 44) page = <Lesson44 onExit={goHome} />;
   else if (route === 45) page = <Lesson45 onExit={goHome} />;
+  else if (route === 46) page = <Lesson46 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

@@ -330,7 +330,7 @@ ok(card42 === card1, `hub card reuses the Lesson 1 gradient (${card42})`);
 ok(card42 === card41, "hub card matches the Lesson 41 rebuild gradient");
 const cardStats = /n: 42,[\s\S]*?stats: "[^"]*?(\d+) شريحة قصيرة/.exec(app);
 ok(cardStats && Number(cardStats[1]) === slides.length, `hub stats match the slide count (${cardStats?.[1]} vs ${slides.length})`);
-ok((app.match(/n: (\d+),/g) || []).length === 44, "the hub still lists 44 cards");
+ok((app.match(/n: (\d+),/g) || []).length === 46, "the hub lists all 46 cards");
 ok(/120/.test(read("Lesson42.tsx")), "the 120-lesson course total is preserved in the roadmap slide");
 
 // --- contrast tokens --------------------------------------------------------

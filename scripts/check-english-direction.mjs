@@ -19,7 +19,7 @@ function ok(cond, msg) {
 function src(lesson, file) {
   return readFileSync(join(ROOT, lesson, file), "utf8");
 }
-ok(lessons.length === 45, `full-course regression inventory contains 45 lessons (got ${lessons.length})`);
+ok(lessons.length === 46, `full-course regression inventory contains 46 lessons (got ${lessons.length})`);
 // يقتطع جسم دالة بالاسم: من تعريفها حتى بداية الدالة التالية
 function fnBody(code, name) {
   const start = code.search(new RegExp(`function ${name}\\s*\\(`));
@@ -1662,6 +1662,17 @@ for (const [l, fn] of LTR_SPOTS) {
     const t = src(l, `Lesson${l.replace("lesson", "")}.tsx`);
     ok(t.includes(`export default function Lesson${l.replace("lesson", "")}`), `lesson31: ${l} kept intact`);
   }
+}
+
+// ---------- 46) أدوات الاتجاه المشتركة + عزل النص والحقول ----------
+{
+  const lesson = src("lesson46", "Lesson46.tsx");
+  const kit = src("lesson46", "kit46.tsx");
+  const test = src("lesson46", "TestArea46.tsx");
+  ok(kit.includes('../../shared/bidi') && kit.includes('<LatinRuns text={text} />'), "lesson46: mixed Arabic/English uses shared LatinRuns");
+  ok(kit.includes('dir="ltr"') && kit.includes('lang="en"'), "lesson46: English units have explicit LTR and language");
+  ok(lesson.includes('rootDir="rtl"') && lesson.includes('Lesson1Shell'), "lesson46: Arabic shell remains RTL with shared navigation");
+  ok(test.includes('dir="ltr"') && test.includes('lang="en"'), "lesson46: English test prompts and input fields are LTR");
 }
 
 // ---------- النتيجة ----------

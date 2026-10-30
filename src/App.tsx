@@ -45,6 +45,7 @@ import Lesson43 from "./lessons/lesson43/Lesson43";
 import Lesson44 from "./lessons/lesson44/Lesson44";
 import Lesson45 from "./lessons/lesson45/Lesson45";
 import Lesson46 from "./lessons/lesson46/Lesson46";
+import Lesson47 from "./lessons/lesson47/Lesson47";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -525,6 +526,15 @@ const CARDS: Card[] = [
     href: "#/lesson/46",
     grad: "from-[#A53E2C] to-[#12685E]",
   },
+  {
+    n: 47,
+    title: "الدرس 47: WOULD, WOULD LIKE & WOULD RATHER — الرغبات والتفضيلات والطلبات المهذبة",
+    en: "The Art of Polite English",
+    emoji: "🎟️",
+    stats: "46 شريحة · 15 محطة · مختبرات وتدريبات · اختبار 25 سؤالًا",
+    href: "#/lesson/47",
+    grad: "from-[#8E2D54] to-[#B7791F]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -652,6 +662,7 @@ export default function App() {
   else if (route === 44) page = <Lesson44 onExit={goHome} />;
   else if (route === 45) page = <Lesson45 onExit={goHome} />;
   else if (route === 46) page = <Lesson46 onExit={goHome} />;
+  else if (route === 47) page = <Lesson47 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

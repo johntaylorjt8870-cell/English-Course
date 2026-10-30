@@ -47,7 +47,7 @@ const ALLOWLIST = new Set([
 // here: their own audits cover them and the ratchet file has no bounds for them.
 const LESSONS = process.env.ONLY
   ? process.env.ONLY.split(",").map(Number)
-  : [...Array.from({ length: 34 }, (_, i) => i + 1), 37, 38, 39, 40, 42, 43, 44, 45, 46];
+  : [...Array.from({ length: 34 }, (_, i) => i + 1), 37, 38, 39, 40, 42, 43, 44, 45, 46, 47];
 const WRITE = process.argv.includes("--write-baseline");
 
 // ---------------- crawler ----------------

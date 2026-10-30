@@ -19,7 +19,7 @@ function ok(cond, msg) {
 function src(lesson, file) {
   return readFileSync(join(ROOT, lesson, file), "utf8");
 }
-ok(lessons.length === 46, `full-course regression inventory contains 46 lessons (got ${lessons.length})`);
+ok(lessons.length === 47, `full-course regression inventory contains 47 lessons (got ${lessons.length})`);
 // يقتطع جسم دالة بالاسم: من تعريفها حتى بداية الدالة التالية
 function fnBody(code, name) {
   const start = code.search(new RegExp(`function ${name}\\s*\\(`));

@@ -47,6 +47,7 @@ import Lesson45 from "./lessons/lesson45/Lesson45";
 import Lesson46 from "./lessons/lesson46/Lesson46";
 import Lesson47 from "./lessons/lesson47/Lesson47";
 import Lesson48 from "./lessons/lesson48/Lesson48";
+import Lesson49 from "./lessons/lesson49/Lesson49";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -545,6 +546,15 @@ const CARDS: Card[] = [
     href: "#/lesson/48",
     grad: "from-[#0A1C38] to-[#0E7490]",
   },
+  {
+    n: 49,
+    title: "الدرس 49: MODAL PERFECT — الأفعال الناقصة مع HAVE + V3",
+    en: "The Past Evidence File — Deduction, Regret and Missed Chances",
+    emoji: "🗂️",
+    stats: "52 شريحة · 22 محطة · Timeline وDetector ومختبرات · اختبار 25 سؤالًا",
+    href: "#/lesson/49",
+    grad: "from-[#21302F] to-[#9A6A1C]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -674,6 +684,7 @@ export default function App() {
   else if (route === 46) page = <Lesson46 onExit={goHome} />;
   else if (route === 47) page = <Lesson47 onExit={goHome} />;
   else if (route === 48) page = <Lesson48 onExit={goHome} />;
+  else if (route === 49) page = <Lesson49 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

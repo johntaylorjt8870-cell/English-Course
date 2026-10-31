@@ -41,7 +41,9 @@
     "audit:lesson46": "node scripts/audit-lesson46.mjs",
     "audit:lesson46-browser": "node scripts/audit-lesson46-browser.mjs",
     "audit:lesson47": "node scripts/audit-lesson47.mjs",
-    "audit:lesson47-browser": "node scripts/audit-lesson47-browser.mjs"
+    "audit:lesson47-browser": "node scripts/audit-lesson47-browser.mjs",
+    "audit:lesson48": "node scripts/audit-lesson48.mjs",
+    "audit:lesson48-browser": "node scripts/audit-lesson48-browser.mjs"
   },
   "dependencies": {
     "clsx": "2.1.1",

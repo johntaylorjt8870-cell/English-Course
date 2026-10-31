@@ -46,6 +46,7 @@ import Lesson44 from "./lessons/lesson44/Lesson44";
 import Lesson45 from "./lessons/lesson45/Lesson45";
 import Lesson46 from "./lessons/lesson46/Lesson46";
 import Lesson47 from "./lessons/lesson47/Lesson47";
+import Lesson48 from "./lessons/lesson48/Lesson48";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -535,6 +536,15 @@ const CARDS: Card[] = [
     href: "#/lesson/47",
     grad: "from-[#8E2D54] to-[#B7791F]",
   },
+  {
+    n: 48,
+    title: "الدرس 48: MODAL VERBS MASTER REVIEW — المراجعة الشاملة للأفعال الناقصة",
+    en: "The Complete Modal Verbs Challenge — Choose the Right Meaning!",
+    emoji: "🎯",
+    stats: "52 شريحة · 18 محطة · Decision Map ومختبرات · اختبار 25 سؤالًا",
+    href: "#/lesson/48",
+    grad: "from-[#0A1C38] to-[#0E7490]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -663,6 +673,7 @@ export default function App() {
   else if (route === 45) page = <Lesson45 onExit={goHome} />;
   else if (route === 46) page = <Lesson46 onExit={goHome} />;
   else if (route === 47) page = <Lesson47 onExit={goHome} />;
+  else if (route === 48) page = <Lesson48 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

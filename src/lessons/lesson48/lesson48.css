@@ -1,0 +1,1441 @@
+/* ============================================================
+   Lesson 48 — «لوحة قرار الأفعال الناقصة» (MODAL COMMAND DECK)
+   هوية مستقلة عن الدرس 47: سطح بارد مخطط كأجهزة قياس، شريط داكن
+   لكل شريحة، رقائق أحادية المسافة، وألوان دلالية ثابتة للمعاني.
+   كل القواعد محصورة داخل .lesson48، وتعتمد ألوانًا متغيّرة عبر
+   .l48-tone--* كي يبقى المعنى نفسه باللون نفسه من الغلاف إلى الاختبار.
+   ============================================================ */
+
+@font-face { font-family: "Deck48Arabic"; src: url("@fontsource/changa/files/changa-arabic-400-normal.woff2") format("woff2"); font-style: normal; font-weight: 400; font-display: swap; }
+@font-face { font-family: "Deck48Arabic"; src: url("@fontsource/changa/files/changa-arabic-700-normal.woff2") format("woff2"); font-style: normal; font-weight: 700; font-display: swap; }
+@font-face { font-family: "Deck48Arabic"; src: url("@fontsource/changa/files/changa-arabic-800-normal.woff2") format("woff2"); font-style: normal; font-weight: 800; font-display: swap; }
+@font-face { font-family: "Deck48Latin"; src: url("@fontsource/rubik/files/rubik-latin-400-normal.woff2") format("woff2"); font-style: normal; font-weight: 400; font-display: swap; }
+@font-face { font-family: "Deck48Latin"; src: url("@fontsource/rubik/files/rubik-latin-500-normal.woff2") format("woff2"); font-style: normal; font-weight: 500; font-display: swap; }
+@font-face { font-family: "Deck48Latin"; src: url("@fontsource/rubik/files/rubik-latin-700-normal.woff2") format("woff2"); font-style: normal; font-weight: 700; font-display: swap; }
+@font-face { font-family: "Deck48Latin"; src: url("@fontsource/rubik/files/rubik-latin-800-normal.woff2") format("woff2"); font-style: normal; font-weight: 800; font-display: swap; }
+
+.lesson48 {
+  --l48-ink: #0d1b2e;
+  --l48-body: #24344a;
+  --l48-muted: #61718c;
+  --l48-line: #d9e2f0;
+  --l48-line-strong: #c3d1e6;
+  --l48-canvas: #edf2f9;
+  --l48-paper: #fdfeff;
+  --l48-panel: #f4f7fd;
+  --l48-deep: #0a1c38;
+  --l48-deep-2: #10294c;
+  --l48-signal: #0e7490;
+  --l48-shadow: 0 16px 44px -26px rgba(13, 27, 46, 0.45);
+  --l48-shadow-soft: 0 24px 60px -38px rgba(13, 27, 46, 0.55);
+  --l48-radius: 1.6rem;
+  --tone: #334155;
+  --tone-strong: #1e293b;
+  --tone-soft: #eef2f8;
+  --tone-line: #d6dfec;
+  --tone-ink: #1e293b;
+  font-family: "Deck48Arabic", "Tajawal", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", sans-serif;
+  color: var(--l48-ink);
+  background:
+    linear-gradient(0deg, rgba(13, 27, 46, 0.035) 1px, transparent 1px) 0 0 / 100% 44px,
+    linear-gradient(90deg, rgba(13, 27, 46, 0.032) 1px, transparent 1px) 0 0 / 44px 100%,
+    radial-gradient(1200px 560px at 88% -18%, #dbe8fb 0%, rgba(219, 232, 251, 0) 64%),
+    radial-gradient(900px 520px at 0% 108%, #e4eef8 0%, rgba(228, 238, 248, 0) 62%),
+    var(--l48-canvas);
+}
+.lesson48 * { box-sizing: border-box; }
+.lesson48 [class*="l48-"] { min-width: 0; }
+.lesson48 :focus-visible,
+.lesson48 .l48-decision-step:focus,
+.lesson48 .l48-map-key:focus,
+.lesson48 .l48-case-tile:focus,
+.lesson48 .l48-contrast-tabs button:focus {
+  outline: 3px solid #1d4ed8 !important;
+  outline-offset: 3px;
+}
+.lesson48 button { cursor: pointer; font-family: inherit; }
+.lesson48 button:disabled { cursor: not-allowed; opacity: 0.45; }
+.lesson48 #l48-main { scroll-behavior: auto; }
+.lesson48 p, .lesson48 h1, .lesson48 h2, .lesson48 h3, .lesson48 ul, .lesson48 ol, .lesson48 li { margin: 0; }
+.lesson48 ul, .lesson48 ol { padding: 0; list-style: none; }
+
+/* عزل الإنجليزية — نفس قاعدة المشروع */
+.lesson48 .l48-en,
+.lesson48 [lang="en"] {
+  font-family: "Deck48Latin", "Rubik", "Apple Color Emoji", "Segoe UI Emoji", Arial, sans-serif;
+  unicode-bidi: isolate;
+}
+.lesson48 .l48-en { display: inline-block; max-width: 100%; }
+.lesson48 .l48-mixed > span[dir="ltr"] { margin-inline: 0.1em; }
+.lesson48 .l48-emblem,
+.lesson48 .l48-tip-icon,
+.lesson48 .l48-note-icon,
+.lesson48 .l48-summary-icon,
+.lesson48 .l48-phase-badge,
+.lesson48 .l48-avatar {
+  font-family: "Deck48Arabic", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+/* النغمات الدلالية — ثابتة في الدرس كله */
+.l48-tone--ability { --tone: #0e7490; --tone-strong: #0b5c73; --tone-soft: #e2f5f9; --tone-line: #b7e2ec; --tone-ink: #094b5e; }
+.l48-tone--possibility { --tone: #6d28d9; --tone-strong: #5521ab; --tone-soft: #f1eaff; --tone-line: #dbccf9; --tone-ink: #481b91; }
+.l48-tone--necessity { --tone: #b45309; --tone-strong: #8f4107; --tone-soft: #fdf1e1; --tone-line: #f2d6ae; --tone-ink: #7a3706; }
+.l48-tone--prohibition { --tone: #be123c; --tone-strong: #98102f; --tone-soft: #fde9ee; --tone-line: #f5c8d4; --tone-ink: #850d29; }
+.l48-tone--advice { --tone: #047857; --tone-strong: #036a4d; --tone-soft: #e2f7ef; --tone-line: #b5e5d2; --tone-ink: #035a42; }
+.l48-tone--desire { --tone: #a21caf; --tone-strong: #82158c; --tone-soft: #fbeafe; --tone-line: #eed0f6; --tone-ink: #6c1275; }
+.l48-tone--future { --tone: #1d4ed8; --tone-strong: #1740ad; --tone-soft: #e7edfe; --tone-line: #c7d6f9; --tone-ink: #15368f; }
+.l48-tone--review { --tone: #334155; --tone-strong: #1f2b3d; --tone-soft: #eef2f8; --tone-line: #d6dfec; --tone-ink: #1f2b3d; }
+
+/* ============================================================
+   الشريط الجانبي
+   ============================================================ */
+.lesson48 .l48-rail-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.7rem; align-items: center; }
+.lesson48 .l48-rail-actions > span { font-size: 0.72rem; color: var(--l48-muted); font-weight: 700; }
+.lesson48 .l48-rail-actions button {
+  border: 1px solid var(--l48-line-strong);
+  border-radius: 0.7rem;
+  background: var(--l48-deep);
+  color: #eaf2ff;
+  padding: 0.34rem 0.7rem;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.01em;
+  transition: background 0.15s ease;
+}
+.lesson48 .l48-rail-actions button:hover { background: var(--l48-deep-2); }
+
+/* ============================================================
+   بطاقة الشريحة
+   ============================================================ */
+.lesson48 .l48-cover,
+.lesson48 .l48-sheet,
+.lesson48 .l48-roadmap { min-width: 0; overflow-wrap: anywhere; }
+
+.lesson48 .l48-sheet {
+  position: relative;
+  isolation: isolate;
+  background: var(--l48-paper);
+  border: 1px solid var(--l48-line);
+  border-radius: var(--l48-radius);
+  padding: clamp(1.1rem, 3.6vw, 2.4rem);
+  box-shadow: var(--l48-shadow);
+  overflow: hidden;
+}
+.lesson48 .l48-sheet::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 6px;
+  background:
+    linear-gradient(90deg, var(--tone) 0%, var(--tone) 34%, #9fb6d6 34%, #9fb6d6 36%, #dfe8f4 36%, #dfe8f4 100%);
+}
+.lesson48 .l48-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--l48-line-strong);
+  opacity: 0.75;
+  pointer-events: none;
+}
+.lesson48 .l48-corner--tl { inset-block-start: 14px; inset-inline-start: 14px; border-inline-end: 0; border-block-end: 0; border-start-start-radius: 4px; }
+.lesson48 .l48-corner--br { inset-block-end: 14px; inset-inline-end: 14px; border-inline-start: 0; border-block-start: 0; border-end-end-radius: 4px; }
+
+.lesson48 .l48-slide-head { display: grid; gap: 0.55rem; margin-bottom: clamp(0.9rem, 2.2vw, 1.5rem); }
+.lesson48 .l48-head-row { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
+.lesson48 .l48-step-badge {
+  display: grid;
+  place-items: center;
+  min-width: 2.6rem;
+  height: 2.6rem;
+  padding-inline: 0.4rem;
+  border-radius: 0.9rem;
+  background: var(--l48-deep);
+  color: #f2f7ff;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  box-shadow: 0 6px 16px -8px rgba(10, 28, 56, 0.7);
+}
+.lesson48 .l48-station-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.32rem 0.72rem;
+  border-radius: 9999px;
+  border: 1px solid var(--tone-line);
+  background: var(--tone-soft);
+  color: var(--tone-ink);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+.lesson48 .l48-station-dot { width: 7px; height: 7px; border-radius: 9999px; background: var(--tone); }
+.lesson48 .l48-emblem { margin-inline-start: auto; font-size: 1.9rem; }
+.lesson48 .l48-signal { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+.lesson48 .l48-signal > span { width: 4px; border-radius: 2px; background: var(--l48-line-strong); height: 6px; }
+.lesson48 .l48-signal > span:nth-child(2) { height: 10px; }
+.lesson48 .l48-signal > span:nth-child(3) { height: 14px; }
+.lesson48 .l48-signal > span.is-on { background: var(--tone); }
+
+.lesson48 .l48-slide-head h1 {
+  font-size: clamp(1.4rem, 4.1vw, 2.15rem);
+  font-weight: 800;
+  line-height: 1.34;
+  color: var(--l48-ink);
+  letter-spacing: -0.005em;
+}
+.lesson48 .l48-title-sep { margin-inline: 0.35rem; color: var(--tone); font-weight: 800; }
+.lesson48 .l48-lead {
+  max-width: 62ch;
+  color: var(--l48-muted);
+  font-size: clamp(0.95rem, 2.2vw, 1.08rem);
+  line-height: 1.8;
+}
+.lesson48 .l48-slide-content { display: grid; gap: clamp(0.75rem, 2vw, 1.1rem); }
+
+/* ============================================================
+   الأزرار
+   ============================================================ */
+.lesson48 .l48-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 0.85rem;
+  border: 1px solid transparent;
+  padding: 0.62rem 1.05rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.lesson48 .l48-button:hover:not(:disabled) { transform: translateY(-1px); }
+.lesson48 .l48-button--primary { background: var(--l48-deep); color: #f4f8ff; box-shadow: 0 14px 30px -18px rgba(10, 28, 56, 0.9); }
+.lesson48 .l48-button--primary:hover { background: var(--l48-deep-2); }
+.lesson48 .l48-button--dark { background: var(--tone-strong); color: #fff; }
+.lesson48 .l48-button--outline { background: #fff; border-color: var(--l48-line-strong); color: var(--l48-body); }
+.lesson48 .l48-button--outline:hover { background: var(--l48-panel); }
+.lesson48 .l48-button--light { background: #fff; color: var(--l48-deep); }
+.lesson48 .l48-button--outline-light { background: transparent; border-color: rgba(255, 255, 255, 0.55); color: #f2f7ff; }
+.lesson48 .l48-text-button {
+  border: 0;
+  background: none;
+  color: var(--tone-strong);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0.2rem 0.1rem;
+}
+
+/* ============================================================
+   الغلاف
+   ============================================================ */
+.lesson48 .l48-cover {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.2rem);
+  padding: clamp(1.2rem, 3.5vw, 2.6rem);
+  border: 1px solid var(--l48-line);
+  border-radius: 1.9rem;
+  background:
+    radial-gradient(680px 320px at 100% 0%, #e6f0fd 0%, rgba(230, 240, 253, 0) 70%),
+    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: var(--l48-shadow-soft);
+}
+.lesson48 .l48-cover-main { display: grid; gap: 0.75rem; align-content: start; }
+.lesson48 .l48-cover-kicker { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.lesson48 .l48-cover-chip {
+  border: 1px solid var(--l48-line-strong);
+  border-radius: 9999px;
+  background: #fff;
+  padding: 0.26rem 0.66rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--l48-muted);
+}
+.lesson48 .l48-cover-chip--dark { background: var(--l48-deep); border-color: var(--l48-deep); color: #dbe9ff; letter-spacing: 0.08em; }
+.lesson48 .l48-cover h1 {
+  font-size: clamp(1.7rem, 5.2vw, 2.9rem);
+  font-weight: 800;
+  line-height: 1.28;
+  color: var(--l48-ink);
+}
+.lesson48 .l48-cover-accent { color: var(--l48-signal); }
+.lesson48 .l48-cover-title {
+  display: grid;
+  gap: 0.1rem;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+}
+.lesson48 .l48-cover-title > span { font-size: clamp(1.05rem, 3vw, 1.5rem); color: #58708f; }
+.lesson48 .l48-cover-title > em { font-style: normal; font-size: clamp(1.5rem, 4.6vw, 2.4rem); color: var(--l48-ink); }
+.lesson48 .l48-cover-sub {
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: clamp(0.82rem, 2vw, 0.98rem);
+  font-weight: 500;
+  color: var(--l48-muted);
+}
+.lesson48 .l48-cover-lead { color: var(--l48-body); font-size: clamp(0.92rem, 2.1vw, 1.02rem); line-height: 1.75; }
+.lesson48 .l48-cover-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.35rem; }
+.lesson48 .l48-cover-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.9rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed var(--l48-line-strong);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--l48-muted);
+}
+.lesson48 .l48-cover-deck {
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+  padding: clamp(0.85rem, 2.2vw, 1.3rem);
+  border-radius: 1.3rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 40%),
+    var(--l48-deep);
+  color: #e8f1ff;
+  border: 1px solid #1b3a63;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+.lesson48 .l48-deck-head { display: flex; align-items: center; justify-content: space-between; }
+.lesson48 .l48-cover-deck .l48-mini-label { color: #8fb0d6; }
+.lesson48 .l48-deck-status { display: inline-flex; gap: 4px; }
+.lesson48 .l48-deck-status i { width: 22px; height: 4px; border-radius: 4px; background: #2b4b75; display: block; }
+.lesson48 .l48-deck-status i:first-child { background: #7fd4c1; }
+.lesson48 .l48-deck-status i:nth-child(2) { background: #8fb8f5; }
+.lesson48 .l48-deck-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.34rem; }
+.lesson48 .l48-deck-tile {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-inline-start: 3px solid var(--tone);
+  background: rgba(255, 255, 255, 0.05);
+}
+.lesson48 .l48-deck-tile .l48-en { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.04em; color: #f0f6ff; }
+.lesson48 .l48-deck-tile > span:last-child { font-size: 0.64rem; color: #a9c1de; line-height: 1.4; }
+.lesson48 .l48-deck-strip { display: flex; flex-wrap: wrap; gap: 0.3rem; padding-top: 0.45rem; border-top: 1px dashed rgba(255, 255, 255, 0.18); }
+.lesson48 .l48-deck-strip > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.24rem;
+  padding: 0.16rem 0.42rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.66rem;
+  color: #d9e7f8;
+}
+.lesson48 .l48-deck-strip .l48-en { color: #fff; font-weight: 800; font-size: 0.66rem; }
+.lesson48 .l48-deck-hint {
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.68rem;
+  line-height: 1.6;
+  color: #93b0d3;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+}
+
+/* ============================================================
+   الأهداف ومراجعة المرحلة
+   ============================================================ */
+.lesson48 .l48-goals { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 0.5rem; }
+.lesson48 .l48-goal {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.68rem 0.8rem;
+  border: 1px solid var(--l48-line);
+  border-radius: 0.85rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fafe 100%);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--l48-body);
+}
+.lesson48 .l48-goal-n {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 0.5rem;
+  background: var(--l48-deep);
+  color: #eaf2ff;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+.lesson48 .l48-recap { display: grid; gap: 0.34rem; }
+.lesson48 .l48-recap-row {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1.15fr) minmax(0, 1.35fr);
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--l48-line);
+  border-radius: 0.7rem;
+  background: #fff;
+  font-size: 0.86rem;
+}
+.lesson48 .l48-recap-row.is-current { border-color: var(--l48-signal); background: #eef8fb; box-shadow: inset 0 0 0 1px rgba(14, 116, 144, 0.16); }
+.lesson48 .l48-recap-n {
+  display: grid;
+  place-items: center;
+  height: 1.6rem;
+  border-radius: 0.45rem;
+  background: var(--l48-panel);
+  color: var(--l48-muted);
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+.lesson48 .l48-recap-row.is-current .l48-recap-n { background: var(--l48-signal); color: #fff; }
+.lesson48 .l48-recap-en { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.01em; color: var(--l48-body); }
+.lesson48 .l48-recap-ar { color: var(--l48-muted); line-height: 1.6; }
+.lesson48 .l48-recap-note {
+  margin-top: 0.3rem;
+  padding: 0.6rem 0.75rem;
+  border-inline-start: 3px solid var(--l48-signal);
+  background: var(--l48-panel);
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--l48-body);
+}
+
+/* ============================================================
+   الصيغة
+   ============================================================ */
+.lesson48 .l48-formula {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--tone-line);
+  border-radius: 1rem;
+  background: var(--tone-soft);
+}
+.lesson48 .l48-formula-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--tone-ink);
+  letter-spacing: 0.02em;
+}
+.lesson48 .l48-formula-label > span {
+  display: grid;
+  place-items: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 0.35rem;
+  background: var(--tone);
+  color: #fff;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.7rem;
+}
+.lesson48 .l48-formula-body { display: grid; gap: 0.34rem; }
+.lesson48 .l48-formula-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; }
+.lesson48 .l48-formula-chip {
+  display: inline-block;
+  padding: 0.26rem 0.62rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--l48-line-strong);
+  background: #fff;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: clamp(0.82rem, 2.2vw, 0.98rem);
+  font-weight: 800;
+  color: var(--l48-body);
+}
+.lesson48 .l48-formula-chip.is-accent { background: var(--tone); border-color: var(--tone); color: #fff; }
+.lesson48 .l48-formula-plus { font-family: "Deck48Latin", "Rubik", sans-serif; font-weight: 800; color: var(--tone); }
+.lesson48 .l48-formula-arrow { color: var(--tone); font-weight: 800; }
+.lesson48 .l48-formula-slice {
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: clamp(0.85rem, 2.2vw, 1rem);
+  font-weight: 700;
+  color: var(--l48-body);
+}
+.lesson48 .l48-formula-verdicts { display: grid; gap: 0.24rem; }
+.lesson48 .l48-verdict-line {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+.lesson48 .l48-verdict-line.is-ok { color: #046b4d; }
+.lesson48 .l48-verdict-line.is-bad { color: #9f1239; text-decoration: line-through; text-decoration-color: rgba(159, 18, 57, 0.4); }
+.lesson48 .l48-verdict-mark { font-weight: 800; }
+
+/* ============================================================
+   الأمثلة
+   ============================================================ */
+.lesson48 .l48-examples { display: grid; gap: 0.55rem; }
+.lesson48 .l48-examples--grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.lesson48 .l48-examples--comparison { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.lesson48 .l48-examples--list { grid-template-columns: 1fr; }
+.lesson48 .l48-example {
+  position: relative;
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.72rem 0.85rem 0.78rem;
+  border: 1px solid var(--l48-line);
+  border-radius: 0.9rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+.lesson48 .l48-example::before {
+  content: "";
+  position: absolute;
+  inset-block: 0.6rem;
+  inset-inline-start: 0;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--tone-line);
+}
+.lesson48 .l48-example-tag { font-size: 0.68rem; font-weight: 800; color: var(--l48-muted); letter-spacing: 0.03em; }
+.lesson48 .l48-example-en {
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: clamp(0.98rem, 2.6vw, 1.16rem);
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--l48-ink);
+}
+.lesson48 .l48-example-ar { font-size: 0.88rem; line-height: 1.7; color: var(--l48-muted); }
+.lesson48 .l48-example-verdicts { display: grid; gap: 0.2rem; }
+.lesson48 .l48-example-verdict-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.38rem;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+.lesson48 .l48-example-verdict-line.is-ok { color: #046b4d; }
+.lesson48 .l48-example-verdict-line.is-bad { color: #9f1239; text-decoration: line-through; text-decoration-color: rgba(159, 18, 57, 0.35); }
+
+/* ============================================================
+   الجدول
+   ============================================================ */
+.lesson48 .l48-table-wrap { overflow-x: auto; border: 1px solid var(--l48-line); border-radius: 0.9rem; background: #fff; }
+.lesson48 .l48-table { width: 100%; border-collapse: collapse; min-width: 340px; font-size: 0.88rem; }
+.lesson48 .l48-table th,
+.lesson48 .l48-table td { padding: 0.55rem 0.65rem; text-align: start; vertical-align: top; border-bottom: 1px solid var(--l48-line); }
+.lesson48 .l48-table thead th {
+  background: var(--l48-panel);
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--l48-body);
+  letter-spacing: 0.02em;
+}
+.lesson48 .l48-table tbody th { font-weight: 800; color: var(--l48-body); background: #fbfdff; }
+.lesson48 .l48-table td { color: var(--l48-muted); line-height: 1.6; }
+.lesson48 .l48-table tbody tr:last-child th,
+.lesson48 .l48-table tbody tr:last-child td { border-bottom: 0; }
+.lesson48 .l48-table .l48-en { font-size: 0.88rem; font-weight: 700; color: var(--l48-ink); }
+.lesson48 .l48-table-note {
+  padding: 0.55rem 0.75rem;
+  border-top: 1px dashed var(--l48-line-strong);
+  background: #fbfdff;
+  font-size: 0.82rem;
+  color: var(--l48-muted);
+  line-height: 1.7;
+}
+
+/* ============================================================
+   ملاحظة ونقاط وقاعدة ذهبية
+   ============================================================ */
+.lesson48 .l48-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--tone-line);
+  border-radius: 0.85rem;
+  background: var(--tone-soft);
+  color: var(--tone-ink);
+  font-size: 0.88rem;
+  line-height: 1.75;
+}
+.lesson48 .l48-note-icon { flex: none; font-size: 1.05rem; line-height: 1.4; }
+.lesson48 .l48-points { display: grid; gap: 0.4rem; }
+.lesson48 .l48-points > li {
+  position: relative;
+  padding: 0.5rem 0.7rem 0.5rem 0.7rem;
+  padding-inline-start: 1.9rem;
+  border: 1px solid var(--l48-line);
+  border-radius: 0.7rem;
+  background: #fff;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--l48-body);
+}
+.lesson48 .l48-points > li::before {
+  content: "▸";
+  position: absolute;
+  inset-inline-start: 0.75rem;
+  inset-block-start: 0.5rem;
+  color: var(--tone);
+  font-size: 0.85rem;
+}
+.lesson48 .l48-tip-line {
+  display: block;
+}
+
+.l48-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.85rem;
+  background: linear-gradient(90deg, var(--l48-deep) 0%, var(--l48-deep-2) 100%);
+  color: #eaf2ff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.75;
+}
+.lesson48 .l48-tip-icon { flex: none; }
+.lesson48 .l48-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  background: var(--l48-deep);
+  color: #eaf2ff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.lesson48 .l48-mini-label {
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--l48-muted);
+}
+
+/* ============================================================
+   خريطة الوظائف
+   ============================================================ */
+.lesson48 .l48-map { display: grid; gap: 0.8rem; }
+.lesson48 .l48-map-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 0.4rem; }
+.lesson48 .l48-map-key {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--l48-line);
+  border-inline-start: 3px solid var(--tone);
+  border-radius: 0.65rem;
+  background: #fff;
+  text-align: start;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.lesson48 .l48-map-key:hover { background: var(--tone-soft); transform: translateY(-1px); }
+.lesson48 .l48-map-key.is-active { background: var(--tone-soft); border-color: var(--tone); box-shadow: 0 0 0 2px var(--tone-soft) inset; }
+.lesson48 .l48-map-key-top { display: flex; align-items: center; justify-content: space-between; gap: 0.3rem; }
+.lesson48 .l48-map-key .l48-en { font-size: 0.82rem; font-weight: 800; color: var(--tone-ink); letter-spacing: 0.03em; }
+.lesson48 .l48-map-key-ar { font-size: 0.72rem; line-height: 1.5; color: var(--l48-muted); }
+.lesson48 .l48-map-detail {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--tone-line);
+  border-radius: 1rem;
+  background: var(--tone-soft);
+}
+.lesson48 .l48-map-detail-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; }
+.lesson48 .l48-map-modal { font-size: clamp(1.2rem, 3.4vw, 1.6rem); font-weight: 800; color: var(--tone-strong); letter-spacing: 0.02em; }
+.lesson48 .l48-map-function { font-size: 0.8rem; font-weight: 700; color: var(--tone-ink); }
+.lesson48 .l48-map-formula {
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tone-ink);
+  padding: 0.3rem 0.55rem;
+  background: #fff;
+  border-radius: 0.5rem;
+  border: 1px dashed var(--tone-line);
+  justify-self: start;
+  max-width: 100%;
+}
+.lesson48 .l48-map-ar { font-size: 0.86rem; color: var(--tone-ink); }
+.lesson48 .l48-map-examples { display: grid; gap: 0.35rem; }
+.lesson48 .l48-map-examples > li {
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.55rem;
+  background: #fff;
+  border: 1px solid var(--tone-line);
+}
+.lesson48 .l48-map-examples > li > p {
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--l48-ink);
+  line-height: 1.5;
+}
+.lesson48 .l48-map-examples > li > span { font-size: 0.82rem; color: var(--l48-muted); }
+
+/* ============================================================
+   المواقف السبعة
+   ============================================================ */
+.lesson48 .l48-cases { display: grid; gap: 0.75rem; }
+.lesson48 .l48-case-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 0.4rem; }
+.lesson48 .l48-case-tile {
+  display: grid;
+  gap: 0.28rem;
+  padding: 0.55rem 0.6rem;
+  border: 1px solid var(--l48-line);
+  border-radius: 0.7rem;
+  background: #fff;
+  text-align: start;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.lesson48 .l48-case-tile:hover { transform: translateY(-1px); background: var(--tone-soft); }
+.lesson48 .l48-case-tile.is-active { border-color: var(--tone); background: var(--tone-soft); }
+.lesson48 .l48-case-tile-top { display: flex; align-items: center; justify-content: space-between; }
+.lesson48 .l48-case-n { font-size: 0.7rem; font-weight: 800; color: var(--l48-muted); }
+.lesson48 .l48-case-situation { font-size: 0.78rem; line-height: 1.6; color: var(--l48-body); }
+.lesson48 .l48-case-modal { font-size: 0.78rem; font-weight: 800; color: var(--tone-strong); letter-spacing: 0.03em; }
+.lesson48 .l48-case-detail {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--tone-line);
+  border-radius: 0.95rem;
+  background: var(--tone-soft);
+}
+.lesson48 .l48-case-verdict {
+  justify-self: start;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  background: var(--tone);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+.lesson48 .l48-case-en { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: clamp(1.02rem, 2.8vw, 1.24rem); font-weight: 500; color: var(--l48-ink); line-height: 1.55; }
+.lesson48 .l48-case-ar { font-size: 0.88rem; color: var(--tone-ink); }
+.lesson48 .l48-case-why { font-size: 0.82rem; color: var(--l48-muted); line-height: 1.7; }
+
+/* ============================================================
+   خريطة القرار
+   ============================================================ */
+.lesson48 .l48-decision { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 0.8rem; align-items: start; }
+.lesson48 .l48-decision-steps { display: grid; gap: 0.3rem; }
+.lesson48 .l48-decision-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--l48-line);
+  border-radius: 0.6rem;
+  background: #fff;
+  text-align: start;
+  font-size: 0.83rem;
+  line-height: 1.55;
+  color: var(--l48-body);
+  transition: background 0.15s ease;
+}
+.lesson48 .l48-decision-step:hover { background: var(--tone-soft); }
+.lesson48 .l48-decision-step.is-active { border-color: var(--tone); background: var(--tone-soft); color: var(--tone-ink); }
+.lesson48 .l48-decision-n {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 0.4rem;
+  background: var(--l48-panel);
+  color: var(--l48-muted);
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 800;
+}
+.lesson48 .l48-decision-step.is-active .l48-decision-n { background: var(--tone); color: #fff; }
+.lesson48 .l48-decision-panel {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--tone-line);
+  border-radius: 1rem;
+  background: var(--tone-soft);
+}
+.lesson48 .l48-decision-answer { font-size: 1.1rem; font-weight: 800; color: var(--tone-ink); }
+.lesson48 .l48-decision-modals { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.lesson48 .l48-decision-chip {
+  padding: 0.24rem 0.6rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  border: 1px solid var(--tone-line);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--tone-strong);
+}
+.lesson48 .l48-decision-example {
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--l48-ink);
+  background: #fff;
+  border: 1px dashed var(--tone-line);
+  border-radius: 0.55rem;
+  padding: 0.45rem 0.6rem;
+  line-height: 1.55;
+}
+.lesson48 .l48-decision-why { font-size: 0.86rem; color: var(--tone-ink); line-height: 1.75; }
+.lesson48 .l48-decision-paths ul { display: grid; gap: 0.2rem; margin-top: 0.28rem; }
+.lesson48 .l48-decision-paths li {
+  position: relative;
+  padding-inline-start: 1rem;
+  font-size: 0.8rem;
+  color: var(--l48-muted);
+}
+.lesson48 .l48-decision-paths li::before { content: "→"; position: absolute; inset-inline-start: 0; color: var(--tone); }
+
+/* ============================================================
+   مختبر المقارنة
+   ============================================================ */
+.lesson48 .l48-lab { display: grid; gap: 0.7rem; }
+.lesson48 .l48-contrast {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--l48-line);
+  border-radius: 0.95rem;
+  background: #fff;
+}
+.lesson48 .l48-contrast-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.4rem; }
+.lesson48 .l48-contrast-head h3 { font-size: 0.98rem; font-weight: 800; color: var(--l48-ink); }
+.lesson48 .l48-contrast-head .l48-en { font-size: 0.76rem; font-weight: 800; color: var(--tone-strong); letter-spacing: 0.03em; }
+.lesson48 .l48-contrast-axis { font-size: 0.82rem; color: var(--l48-muted); }
+.lesson48 .l48-contrast-tabs { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.lesson48 .l48-contrast-tabs button {
+  border: 1px solid var(--l48-line-strong);
+  border-radius: 9999px;
+  background: #fff;
+  padding: 0.26rem 0.7rem;
+  transition: background 0.15s ease;
+}
+.lesson48 .l48-contrast-tabs button .l48-en { font-size: 0.76rem; font-weight: 800; color: var(--l48-body); }
+.lesson48 .l48-contrast-tabs button:hover { background: var(--tone-soft); }
+.lesson48 .l48-contrast-tabs button[aria-pressed="true"] { background: var(--tone); border-color: var(--tone); }
+.lesson48 .l48-contrast-tabs button[aria-pressed="true"] .l48-en { color: #fff; }
+.lesson48 .l48-contrast-stage {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.7rem;
+  background: var(--tone-soft);
+  border: 1px solid var(--tone-line);
+}
+.lesson48 .l48-contrast-sentence { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: clamp(1rem, 2.6vw, 1.16rem); font-weight: 500; color: var(--l48-ink); line-height: 1.5; }
+.lesson48 .l48-contrast-ar { font-size: 0.86rem; color: var(--tone-ink); }
+.lesson48 .l48-contrast-meaning { font-size: 0.84rem; color: var(--l48-muted); line-height: 1.7; }
+.lesson48 .l48-contrast-caution { font-size: 0.8rem; line-height: 1.7; color: #7a3706; background: #fdf1e1; border-radius: 0.5rem; padding: 0.4rem 0.55rem; }
+.lesson48 .l48-lab-quiz { display: grid; gap: 0.55rem; margin-top: 0.3rem; }
+
+/* ============================================================
+   التدريب والاختبار — بطاقات الأسئلة
+   ============================================================ */
+.lesson48 .l48-practice-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--l48-muted); }
+.lesson48 .l48-practice-list { display: grid; gap: 0.6rem; }
+.lesson48 .l48-practice-card {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--l48-line);
+  border-radius: 0.85rem;
+  background: #fff;
+}
+.lesson48 .l48-practice-card.is-correct { border-color: #9fdec4; background: #f3fbf7; }
+.lesson48 .l48-practice-card.is-wrong { border-color: #f2c1cf; background: #fef5f8; }
+.lesson48 .l48-question-top { display: flex; align-items: flex-start; gap: 0.5rem; }
+.lesson48 .l48-question-top > p {
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: clamp(0.92rem, 2.3vw, 1.02rem);
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--l48-ink);
+  overflow-wrap: anywhere;
+}
+.lesson48 .l48-question-number {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.45rem;
+  background: var(--l48-deep);
+  color: #eaf2ff;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+.lesson48 .l48-instruction { font-size: 0.8rem; color: var(--l48-muted); line-height: 1.65; }
+.lesson48 .l48-options { display: grid; gap: 0.32rem; }
+.lesson48 .l48-options button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--l48-line-strong);
+  border-radius: 0.6rem;
+  background: #fff;
+  text-align: start;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--l48-body);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.lesson48 .l48-options button:hover:not(:disabled) { background: var(--l48-panel); }
+.lesson48 .l48-options button[aria-pressed="true"] { border-color: var(--l48-deep); background: #eaf1fb; box-shadow: inset 0 0 0 1px var(--l48-deep); }
+.lesson48 .l48-option-letter {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 0.4rem;
+  background: var(--l48-panel);
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--l48-muted);
+}
+.lesson48 .l48-options button[aria-pressed="true"] .l48-option-letter { background: var(--l48-deep); color: #fff; }
+.lesson48 .l48-input {
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--l48-line-strong);
+  border-radius: 0.6rem;
+  background: #fff;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.95rem;
+  color: var(--l48-ink);
+}
+.lesson48 .l48-input::placeholder { color: #9aabc4; }
+.lesson48 .l48-input:focus { border-color: var(--l48-deep); outline: none; box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.14); }
+.lesson48 .l48-practice-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin-top: 0.1rem; }
+.lesson48 .l48-practice-actions .l48-button { padding: 0.4rem 0.8rem; font-size: 0.82rem; }
+.lesson48 .l48-feedback {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 0.15rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.6rem;
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+.lesson48 .l48-feedback.is-correct { background: #e8f8f1; border: 1px solid #b3e6d1; color: #04553f; }
+.lesson48 .l48-feedback.is-retry { background: #fdf0f4; border: 1px solid #f3c8d5; color: #8a1236; }
+.lesson48 .l48-feedback > strong { font-size: 0.85rem; }
+.lesson48 .l48-feedback p { color: var(--l48-body); }
+
+/* ============================================================
+   الحوار
+   ============================================================ */
+.lesson48 .l48-dialogue { display: grid; gap: 0.5rem; }
+.lesson48 .l48-dialogue-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.4rem; }
+.lesson48 .l48-dialogue-label { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em; color: var(--l48-muted); }
+.lesson48 .l48-dialogue-label > span[aria-hidden] { color: var(--tone); }
+.lesson48 .l48-dialogue-setting { font-size: 0.82rem; color: var(--l48-muted); }
+.lesson48 .l48-turn { display: flex; align-items: flex-start; gap: 0.5rem; }
+.lesson48 .l48-avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background: var(--speaker, #0f766e);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.lesson48 .l48-bubble {
+  flex: 1;
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--l48-line);
+  border-radius: 0.85rem;
+  background: #fff;
+}
+.lesson48 .l48-speaker { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.05em; color: var(--speaker, #0f766e); }
+.lesson48 .l48-bubble > p[lang="en"] { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: 0.94rem; font-weight: 400; line-height: 1.6; color: var(--l48-ink); }
+.lesson48 .l48-turn-ar { font-size: 0.82rem; color: var(--l48-muted); border-top: 1px dashed var(--l48-line); padding-top: 0.25rem; }
+.lesson48 .l48-dialogue-analysis {
+  margin-top: 0.2rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px dashed var(--l48-line-strong);
+  border-radius: 0.7rem;
+  background: #fbfdff;
+}
+.lesson48 .l48-dialogue-analysis ul { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.3rem; }
+.lesson48 .l48-dialogue-analysis li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 9999px;
+  background: #fff;
+  border: 1px solid var(--l48-line);
+  font-size: 0.74rem;
+  color: var(--l48-muted);
+}
+.lesson48 .l48-dialogue-analysis .l48-en { font-size: 0.72rem; font-weight: 800; color: var(--tone-strong); }
+.lesson48 .l48-dialogue-lab { display: grid; gap: 0.4rem; margin-top: 0.3rem; }
+
+/* ============================================================
+   القراءة
+   ============================================================ */
+.lesson48 .l48-reading { display: grid; gap: 0.7rem; }
+.lesson48 .l48-reading-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 0.6rem; }
+.lesson48 .l48-reading-head h2 { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: clamp(1.1rem, 3vw, 1.45rem); font-weight: 800; color: var(--l48-ink); margin-top: 0.15rem; }
+.lesson48 .l48-reading-head p { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: 0.82rem; color: var(--l48-muted); }
+.lesson48 .l48-reading-body { display: grid; gap: 0.35rem; }
+.lesson48 .l48-reading-paragraph {
+  position: relative;
+  padding: 0.55rem 0.7rem;
+  padding-inline-start: 2.5rem;
+  border: 1px solid var(--l48-line);
+  border-radius: 0.7rem;
+  background: #fff;
+}
+.lesson48 .l48-reading-index {
+  position: absolute;
+  inset-inline-start: 0.6rem;
+  inset-block-start: 0.6rem;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 800;
+  color: #9aabc4;
+}
+.lesson48 .l48-reading-paragraph > p[lang="en"] {
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.72;
+  color: var(--l48-body);
+}
+.lesson48 .l48-reading-ar {
+  margin-top: 0.28rem;
+  padding-top: 0.28rem;
+  border-top: 1px dashed var(--l48-line);
+  font-size: 0.84rem;
+  color: var(--l48-muted);
+  line-height: 1.7;
+}
+.lesson48 .l48-reading-questions { display: grid; gap: 0.5rem; }
+.lesson48 .l48-reading-q {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--l48-line);
+  border-radius: 0.75rem;
+  background: #fff;
+}
+.lesson48 .l48-reading-q-top { display: flex; align-items: flex-start; gap: 0.5rem; }
+.lesson48 .l48-reading-q-top > span {
+  flex: none;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--l48-signal);
+  padding-top: 0.15rem;
+}
+.lesson48 .l48-reading-q-top > p { font-size: 0.92rem; line-height: 1.65; color: var(--l48-ink); }
+.lesson48 .l48-reading-q-top > p[lang="en"] { font-family: "Deck48Latin", "Rubik", sans-serif; }
+.lesson48 .l48-reading-actions { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.lesson48 .l48-reading-actions .l48-button { padding: 0.32rem 0.7rem; font-size: 0.78rem; }
+.lesson48 .l48-answer-model {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 0.55rem;
+  background: var(--l48-panel);
+  border: 1px dashed var(--l48-line-strong);
+}
+.lesson48 .l48-answer-model > p[lang="en"] { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: 0.9rem; color: var(--l48-ink); line-height: 1.6; }
+.lesson48 .l48-answer-model > p[lang="ar"] { font-size: 0.82rem; color: var(--l48-muted); }
+
+/* ============================================================
+   الكتابة
+   ============================================================ */
+.lesson48 .l48-writing { display: grid; gap: 0.55rem; }
+.lesson48 .l48-writing-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.4rem; }
+.lesson48 .l48-writing-title { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: clamp(1rem, 2.8vw, 1.2rem); font-weight: 800; color: var(--l48-ink); }
+.lesson48 .l48-writing-checks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 0.3rem; }
+.lesson48 .l48-writing-checks > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  padding: 0.42rem 0.55rem;
+  border: 1px solid var(--l48-line);
+  border-radius: 0.55rem;
+  background: #fff;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--l48-muted);
+}
+.lesson48 .l48-writing-checks > div > span:first-child {
+  flex: none;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #9aabc4;
+  padding-top: 0.1rem;
+}
+.lesson48 .l48-writing-checks > div.is-met { border-color: #b3e6d1; background: #f2fbf7; color: #04553f; }
+.lesson48 .l48-writing-checks > div.is-met > span:first-child { color: #047857; }
+.lesson48 .l48-check-body { display: grid; gap: 0.1rem; }
+.lesson48 .l48-check-formula { font-size: 0.72rem; font-weight: 800; color: var(--l48-body); letter-spacing: 0.02em; }
+.lesson48 .l48-writing label { font-size: 0.82rem; font-weight: 800; color: var(--l48-body); margin-top: 0.2rem; }
+.lesson48 .l48-writing textarea {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--l48-line-strong);
+  border-radius: 0.65rem;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--l48-ink);
+  background: #fff;
+  resize: vertical;
+}
+.lesson48 .l48-writing textarea[lang="ar"] { font-family: "Deck48Arabic", sans-serif; }
+.lesson48 .l48-writing textarea:focus { border-color: var(--l48-deep); outline: none; box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.14); }
+.lesson48 .l48-writing-meta { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; font-size: 0.78rem; color: var(--l48-muted); }
+.lesson48 .l48-writing-meta .is-ok { color: #047857; font-weight: 800; }
+.lesson48 .l48-writing-model { padding: 0.7rem 0.8rem; border: 1px dashed var(--l48-line-strong); border-radius: 0.7rem; background: #fbfdff; }
+.lesson48 .l48-writing-model p { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: 0.9rem; line-height: 1.85; color: var(--l48-body); }
+
+/* ============================================================
+   لوحة الإتقان
+   ============================================================ */
+.lesson48 .l48-dashboard { display: grid; gap: 0.8rem; }
+.lesson48 .l48-dashboard-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 0.5rem; }
+.lesson48 .l48-dashboard-summary > div {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--l48-line);
+  border-radius: 0.75rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fafe 100%);
+}
+.lesson48 .l48-dashboard-big { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--l48-deep); font-variant-numeric: tabular-nums; }
+.lesson48 .l48-dashboard-summary p { font-size: 0.76rem; line-height: 1.65; color: var(--l48-muted); }
+.lesson48 .l48-dashboard-skills { display: grid; gap: 0.4rem; }
+.lesson48 .l48-skill-row { display: grid; gap: 0.2rem; padding: 0.5rem 0.65rem; border: 1px solid var(--l48-line); border-radius: 0.65rem; background: #fff; }
+.lesson48 .l48-skill-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.4rem; font-size: 0.82rem; font-weight: 800; color: var(--l48-body); }
+.lesson48 .l48-skill-head bdi { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: 0.76rem; color: var(--l48-muted); }
+.lesson48 .l48-skill-track { height: 6px; border-radius: 9999px; background: #e8eefa; overflow: hidden; }
+.lesson48 .l48-skill-track > div { height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #0e7490 0%, #1d4ed8 100%); transition: width 0.35s ease; }
+.lesson48 .l48-skill-track.is-empty { background: repeating-linear-gradient(90deg, #e8eefa 0 8px, #f4f7fd 8px 16px); }
+.lesson48 .l48-skill-note { font-size: 0.74rem; color: var(--l48-muted); }
+.lesson48 .l48-dashboard-levels { padding: 0.6rem 0.7rem; border: 1px dashed var(--l48-line-strong); border-radius: 0.7rem; background: #fbfdff; }
+.lesson48 .l48-dashboard-levels ul { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; margin-top: 0.3rem; font-size: 0.8rem; color: var(--l48-body); }
+.lesson48 .l48-dashboard-levels bdi { font-family: "Deck48Latin", "Rubik", sans-serif; font-weight: 800; }
+
+/* ============================================================
+   الاختبار
+   ============================================================ */
+.lesson48 .l48-test { display: grid; gap: 0.75rem; }
+.lesson48 .l48-test-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.4rem 0.8rem;
+  align-items: center;
+  padding: 0.7rem 0.85rem;
+  border-radius: 0.85rem;
+  background: var(--l48-deep);
+  color: #eaf2ff;
+}
+.lesson48 .l48-test-intro strong { font-size: 0.92rem; }
+.lesson48 .l48-test-intro p { font-size: 0.78rem; color: #b9cfea; line-height: 1.6; }
+.lesson48 .l48-test-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.lesson48 .l48-test-progress { grid-column: 1 / -1; height: 5px; border-radius: 9999px; background: rgba(255, 255, 255, 0.16); overflow: hidden; }
+.lesson48 .l48-test-progress > div { height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #7fd4c1, #8fb8f5); transition: width 0.3s ease; }
+.lesson48 .l48-result {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.4rem 0.8rem;
+  align-items: center;
+  padding: 0.85rem 0.95rem;
+  border-radius: 0.9rem;
+  background: linear-gradient(90deg, #0a1c38 0%, #12406b 100%);
+  color: #eef5ff;
+}
+.lesson48 .l48-result-kicker { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.14em; color: #9fc1e6; }
+.lesson48 .l48-result h2 { font-size: clamp(1.05rem, 3vw, 1.4rem); font-weight: 800; }
+.lesson48 .l48-result p { font-size: 0.8rem; color: #b9cfea; }
+.lesson48 .l48-level-scores { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.lesson48 .l48-level-scores > span {
+  padding: 0.2rem 0.5rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 0.7rem;
+}
+.lesson48 .l48-test-level { display: grid; gap: 0.5rem; }
+.lesson48 .l48-level-header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.45rem 0.6rem;
+  align-items: center;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.7rem;
+  background: var(--l48-panel);
+  border: 1px solid var(--l48-line);
+}
+.lesson48 .l48-level-badge {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.55rem;
+  background: var(--l48-deep);
+  color: #eaf2ff;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.lesson48 .l48-level-header .l48-en { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.1em; color: var(--l48-muted); }
+.lesson48 .l48-level-header h2 { font-size: 0.95rem; font-weight: 800; color: var(--l48-ink); }
+.lesson48 .l48-level-header p { grid-column: 1 / -1; font-size: 0.78rem; color: var(--l48-muted); line-height: 1.6; }
+.lesson48 .l48-submit-bar { display: grid; gap: 0.35rem; padding: 0.7rem 0.8rem; border: 1px dashed var(--l48-line-strong); border-radius: 0.8rem; background: #fbfdff; }
+.lesson48 .l48-submit-bar > span { font-size: 0.78rem; color: var(--l48-muted); }
+.lesson48 .l48-submit-bar [role="alert"] { color: #9f1239; font-size: 0.8rem; font-weight: 700; }
+
+/* ============================================================
+   المعلم
+   ============================================================ */
+.lesson48 .l48-teacher { display: grid; gap: 0.6rem; }
+.lesson48 .l48-teacher-heading { display: flex; align-items: center; gap: 0.6rem; }
+.lesson48 .l48-teacher-heading > span { font-size: 1.6rem; }
+.lesson48 .l48-teacher-heading .l48-en { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.12em; color: var(--l48-muted); }
+.lesson48 .l48-teacher-heading h2 { font-size: 1.05rem; font-weight: 800; }
+.lesson48 .l48-teacher > p { font-size: 0.8rem; color: var(--l48-muted); line-height: 1.7; }
+.lesson48 .l48-teacher-form { display: grid; gap: 0.4rem; max-width: 320px; }
+.lesson48 .l48-teacher-form label { font-size: 0.8rem; font-weight: 800; color: var(--l48-body); }
+.lesson48 .l48-teacher-form input {
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--l48-line-strong);
+  border-radius: 0.55rem;
+  font-family: "Deck48Latin", "Rubik", sans-serif;
+  font-size: 0.95rem;
+}
+.lesson48 .l48-teacher-form [role="alert"] { color: #9f1239; font-size: 0.8rem; font-weight: 700; }
+.lesson48 .l48-teacher-open { display: grid; gap: 0.55rem; }
+.lesson48 .l48-teacher-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.4rem; font-size: 0.78rem; color: var(--l48-muted); }
+.lesson48 .l48-teacher-guide { display: grid; gap: 0.7rem; }
+.lesson48 .l48-guide-note { display: grid; gap: 0.35rem; padding: 0.7rem 0.85rem; border: 1px solid var(--l48-line); border-radius: 0.8rem; background: #fbfdff; }
+.lesson48 .l48-guide-note h3 { font-size: 0.95rem; font-weight: 800; color: var(--l48-ink); }
+.lesson48 .l48-guide-note p, .lesson48 .l48-guide-note li { font-size: 0.84rem; line-height: 1.8; color: var(--l48-body); }
+.lesson48 .l48-guide-note ul, .lesson48 .l48-guide-note ol { display: grid; gap: 0.4rem; }
+.lesson48 .l48-guide-en { margin-top: 0.25rem; font-size: 0.8rem; color: var(--l48-muted); }
+.lesson48 .l48-guide-ar { color: var(--l48-muted); font-size: 0.8rem; }
+.lesson48 .l48-teacher-mark { font-size: 0.8rem; font-weight: 800; }
+.lesson48 .l48-teacher-mark.is-correct { color: #047857; }
+.lesson48 .l48-teacher-mark.is-wrong { color: #9f1239; }
+
+/* ============================================================
+   الملخص والإتمام
+   ============================================================ */
+.lesson48 .l48-summary { display: grid; gap: 0.8rem; }
+.lesson48 .l48-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 0.4rem; }
+.lesson48 .l48-summary-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--l48-line);
+  border-inline-start: 3px solid var(--tone);
+  border-radius: 0.6rem;
+  background: #fff;
+}
+.lesson48 .l48-summary-icon { flex: none; font-size: 0.95rem; }
+.lesson48 .l48-summary-body { display: grid; gap: 0.05rem; }
+.lesson48 .l48-summary-formula { font-size: 0.78rem; font-weight: 800; color: var(--tone-strong); letter-spacing: 0.02em; }
+.lesson48 .l48-summary-ar { font-size: 0.78rem; color: var(--l48-body); }
+.lesson48 .l48-summary-ex { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: 0.76rem; color: var(--l48-muted); }
+.lesson48 .l48-comparisons { padding: 0.7rem 0.85rem; border-radius: 0.85rem; background: var(--l48-deep); color: #eaf2ff; }
+.lesson48 .l48-comparisons h3 { font-size: 0.95rem; font-weight: 800; }
+.lesson48 .l48-comparisons ul { display: grid; gap: 0.35rem; margin-top: 0.4rem; }
+.lesson48 .l48-comparisons li { display: grid; grid-template-columns: 1.2rem minmax(0, 1fr); gap: 0.1rem 0.4rem; align-items: baseline; }
+.lesson48 .l48-comparison-n { grid-row: 1 / span 2; color: #8fb8f5; font-weight: 800; }
+.lesson48 .l48-comparisons .l48-en { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: 0.8rem; font-weight: 800; color: #d5e6fb; }
+.lesson48 .l48-comparison-ar { font-size: 0.78rem; color: #a9c4e2; line-height: 1.6; }
+
+.lesson48 .l48-phase { display: grid; gap: 0.75rem; }
+.lesson48 .l48-phase-hero {
+  display: grid;
+  justify-items: center;
+  gap: 0.15rem;
+  padding: 1.1rem 1rem;
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #f5f9ff 0%, #e9f2fd 100%);
+  border: 1px solid var(--l48-line);
+  text-align: center;
+}
+.lesson48 .l48-phase-badge { font-size: 2rem; }
+.lesson48 .l48-phase-hero h2 { font-size: clamp(1.1rem, 3.2vw, 1.4rem); font-weight: 800; color: var(--l48-ink); }
+.lesson48 .l48-phase-ratio { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: clamp(1.6rem, 5vw, 2.1rem); font-weight: 800; color: var(--l48-signal); font-variant-numeric: tabular-nums; }
+.lesson48 .l48-phase-hero p { font-size: 0.82rem; color: var(--l48-muted); }
+.lesson48 .l48-phase-list { display: grid; gap: 0.3rem; }
+.lesson48 .l48-phase-list li {
+  display: grid;
+  grid-template-columns: 1.1rem minmax(0, 1fr);
+  gap: 0.4rem;
+  align-items: baseline;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--l48-line);
+  border-radius: 0.55rem;
+  background: #fff;
+  font-size: 0.8rem;
+}
+.lesson48 .l48-phase-list li > span:first-child { color: #047857; font-weight: 800; }
+.lesson48 .l48-phase-list .l48-en { font-size: 0.74rem; font-weight: 800; color: var(--l48-body); }
+.lesson48 .l48-phase-list li > span:last-child { grid-column: 2; font-size: 0.78rem; color: var(--l48-muted); }
+.lesson48 .l48-phase-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr)); gap: 0.4rem; }
+.lesson48 .l48-phase-stats > div {
+  display: grid;
+  gap: 0.05rem;
+  justify-items: center;
+  padding: 0.55rem 0.5rem;
+  border-radius: 0.7rem;
+  background: var(--l48-deep);
+  color: #eaf2ff;
+  text-align: center;
+}
+.lesson48 .l48-phase-stats bdi { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.lesson48 .l48-phase-stats span { font-size: 0.72rem; color: #a9c4e2; }
+.lesson48 .l48-phase-track, .lesson48 .l48-progress-track { height: 7px; border-radius: 9999px; background: #dfe8f4; overflow: hidden; }
+.lesson48 .l48-phase-track > div, .lesson48 .l48-progress-track > div { height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #0e7490, #1d4ed8); }
+.lesson48 .l48-phase-track > div { width: 40%; }
+
+/* ============================================================
+   صفحة الطريق
+   ============================================================ */
+.lesson48 .l48-roadmap {
+  position: relative;
+  padding: clamp(1.2rem, 4vw, 2.4rem);
+  border-radius: 1.8rem;
+  background:
+    radial-gradient(700px 320px at 100% 0%, rgba(127, 212, 193, 0.16) 0%, rgba(127, 212, 193, 0) 70%),
+    linear-gradient(160deg, #071426 0%, #0d2340 58%, #0a1c38 100%);
+  color: #ecf3ff;
+  box-shadow: var(--l48-shadow-soft);
+  display: grid;
+  gap: 0.7rem;
+}
+.lesson48 .l48-roadmap-index { display: flex; align-items: center; justify-content: space-between; }
+.lesson48 .l48-roadmap-index .l48-en { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.16em; color: #7fb4e0; }
+.lesson48 .l48-roadmap-index > span { color: #7fd4c1; }
+.lesson48 .l48-roadmap h1 { font-size: clamp(1.35rem, 4.4vw, 2.1rem); font-weight: 800; line-height: 1.35; }
+.lesson48 .l48-roadmap h1 em { font-style: normal; color: #7fd4c1; }
+.lesson48 .l48-roadmap > p { font-size: 0.9rem; line-height: 1.85; color: #b9cfe8; }
+.lesson48 .l48-roadmap-progress { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; font-size: 0.78rem; color: #9fbbdc; }
+.lesson48 .l48-roadmap-progress bdi { font-family: "Deck48Latin", "Rubik", sans-serif; font-weight: 800; color: #dbeaff; font-variant-numeric: tabular-nums; }
+.lesson48 .l48-roadmap .l48-progress-track { background: rgba(255, 255, 255, 0.14); }
+.lesson48 .l48-roadmap .l48-progress-track > div { background: linear-gradient(90deg, #7fd4c1, #8fb8f5); }
+.lesson48 .l48-next-lesson {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.2rem;
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(143, 184, 245, 0.26);
+}
+.lesson48 .l48-next-lesson > span { font-size: 0.74rem; color: #9fbbdc; }
+.lesson48 .l48-next-lesson > span .l48-en { font-weight: 800; color: #cfe1f7; }
+.lesson48 .l48-next-lesson h2 { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: clamp(1.25rem, 4vw, 1.8rem); font-weight: 800; letter-spacing: 0.03em; color: #ffffff; }
+.lesson48 .l48-next-formula { font-family: "Deck48Latin", "Rubik", sans-serif; font-size: 0.85rem; font-weight: 700; color: #7fd4c1; }
+.lesson48 .l48-next-lesson > p { font-size: 0.85rem; color: #b9cfe8; line-height: 1.75; }
+.lesson48 .l48-next-pairs { display: grid; gap: 0.25rem; margin-top: 0.15rem; }
+.lesson48 .l48-next-pairs > div { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: #dbe9fb; }
+.lesson48 .l48-next-pairs > div > span:first-child { color: #9fbbdc; }
+.lesson48 .l48-next-pairs > div > span:last-child { font-weight: 700; color: #ffffff; }
+.lesson48 .l48-next-topics { display: grid; gap: 0.25rem; margin-top: 0.2rem; }
+.lesson48 .l48-next-topics li { position: relative; padding-inline-start: 1rem; font-size: 0.8rem; color: #b9cfe8; line-height: 1.65; }
+.lesson48 .l48-next-topics li::before { content: "◆"; position: absolute; inset-inline-start: 0; color: #7fb4e0; font-size: 0.6rem; }
+.lesson48 .l48-roadmap-actions { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.35rem; }
+
+/* ============================================================
+   الاستجابة
+   ============================================================ */
+@media (max-width: 1000px) {
+  .lesson48 .l48-cover { grid-template-columns: 1fr; }
+  .lesson48 .l48-cover-deck { order: 2; }
+  .lesson48 .l48-decision { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .lesson48 .l48-sheet { border-radius: 1.2rem; }
+  .lesson48 .l48-corner { display: none; }
+  .lesson48 .l48-emblem { margin-inline-start: 0; }
+  .lesson48 .l48-recap-row { grid-template-columns: 2rem minmax(0, 1fr); }
+  .lesson48 .l48-recap-ar { grid-column: 2; }
+  .lesson48 .l48-case-tiles, .lesson48 .l48-map-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 132px), 1fr)); }
+  .lesson48 .l48-writing-checks { grid-template-columns: 1fr; }
+  .lesson48 .l48-test-intro, .lesson48 .l48-result { grid-template-columns: 1fr; }
+  .lesson48 .l48-deck-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lesson48 .l48-cover-foot { font-size: 0.72rem; }
+}
+@media (max-width: 420px) {
+  .lesson48 .l48-sheet { padding: 0.9rem; }
+  .lesson48 .l48-options button { padding: 0.42rem 0.5rem; font-size: 0.86rem; }
+  .lesson48 .l48-decision-step { font-size: 0.78rem; }
+  .lesson48 .l48-question-number { min-width: 1.55rem; height: 1.55rem; }
+}
+
+/* ============================================================
+   تقليل الحركة
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .lesson48 *,
+  .lesson48 *::before,
+  .lesson48 *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .lesson48 .anim-drift { animation: none !important; }
+}
+
+/* دخول الشريحة — نفس إيقاع الدرس الأول لكن بمدة أقصر */
+@keyframes l48-pop {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.lesson48 .l48-slide-content > * { animation: l48-pop 0.32s ease both; }
+.lesson48 .l48-slide-content > *:nth-child(2) { animation-delay: 0.04s; }
+.lesson48 .l48-slide-content > *:nth-child(3) { animation-delay: 0.08s; }
+.lesson48 .l48-slide-content > *:nth-child(4) { animation-delay: 0.12s; }
+@media (prefers-reduced-motion: reduce) {
+  .lesson48 .l48-slide-content > * { animation: none !important; }
+}

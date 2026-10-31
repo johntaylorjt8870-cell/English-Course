@@ -1,0 +1,2300 @@
+/* ============================================================
+   Lesson 49 — «ملف الماضي» (THE PAST CASE FILE)
+   هوية مستقلة عن الدرس 48: ورق أرشيفي دافئ، خطوط تحقيق، أختام
+   أدلة، تبويبات ملفات، وحبر فحمي. اللون لا يعمل وحده: كل وظيفة
+   تحمل رمزًا ونصًا عربيًا ثابتًا معها. المتغيّرات .l49-tone--*
+   تحفظ المعنى نفسه من الغلاف إلى الاختبار.
+   ============================================================ */
+
+@font-face { font-family: "Deck49Arabic"; src: url("@fontsource/changa/files/changa-arabic-400-normal.woff2") format("woff2"); font-style: normal; font-weight: 400; font-display: swap; }
+@font-face { font-family: "Deck49Arabic"; src: url("@fontsource/changa/files/changa-arabic-700-normal.woff2") format("woff2"); font-style: normal; font-weight: 700; font-display: swap; }
+@font-face { font-family: "Deck49Arabic"; src: url("@fontsource/changa/files/changa-arabic-800-normal.woff2") format("woff2"); font-style: normal; font-weight: 800; font-display: swap; }
+@font-face { font-family: "Deck49Latin"; src: url("@fontsource/rubik/files/rubik-latin-400-normal.woff2") format("woff2"); font-style: normal; font-weight: 400; font-display: swap; }
+@font-face { font-family: "Deck49Latin"; src: url("@fontsource/rubik/files/rubik-latin-500-normal.woff2") format("woff2"); font-style: normal; font-weight: 500; font-display: swap; }
+@font-face { font-family: "Deck49Latin"; src: url("@fontsource/rubik/files/rubik-latin-700-normal.woff2") format("woff2"); font-style: normal; font-weight: 700; font-display: swap; }
+@font-face { font-family: "Deck49Latin"; src: url("@fontsource/rubik/files/rubik-latin-800-normal.woff2") format("woff2"); font-style: normal; font-weight: 800; font-display: swap; }
+
+.lesson49 {
+  --l49-ink: #241f1a;
+  --l49-body: #3d362c;
+  --l49-muted: #6f6557;
+  --l49-line: #ddd0b8;
+  --l49-line-strong: #c9b795;
+  --l49-canvas: #efe6d3;
+  --l49-paper: #fffdf6;
+  --l49-panel: #f8f2e3;
+  --l49-deep: #21302f;
+  --l49-deep-2: #2d4240;
+  --l49-signal: #9a6a1c;
+  --l49-signal-2: #0f6f68;
+  --l49-stamp: #a94f32;
+  --l49-shadow: 0 18px 46px -30px rgba(36, 31, 26, 0.5);
+  --l49-shadow-soft: 0 28px 64px -40px rgba(36, 31, 26, 0.58);
+  --l49-radius: 0.95rem;
+  --tone: #4b5563;
+  --tone-strong: #374151;
+  --tone-soft: #f1ece1;
+  --tone-line: #d8cbb4;
+  --tone-ink: #374151;
+  font-family: "Deck49Arabic", "Tajawal", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", sans-serif;
+  color: var(--l49-ink);
+  background:
+    linear-gradient(0deg, rgba(111, 101, 87, 0.075) 1px, transparent 1px) 0 0 / 100% 32px,
+    radial-gradient(1200px 560px at 88% -18%, #f6ecd6 0%, rgba(246, 236, 214, 0) 64%),
+    radial-gradient(960px 520px at -6% 108%, #e6dcc6 0%, rgba(230, 220, 198, 0) 62%),
+    var(--l49-canvas);
+}
+.lesson49 * { box-sizing: border-box; }
+.lesson49 [class*="l49-"] { min-width: 0; }
+.lesson49 :focus-visible,
+.lesson49 .l49-decision-step:focus,
+.lesson49 .l49-map-key:focus,
+.lesson49 .l49-case-tile:focus,
+.lesson49 .l49-contrast-tabs button:focus,
+.lesson49 .l49-timeline-option:focus,
+.lesson49 .l49-evidence-option:focus,
+.lesson49 .l49-detector-option:focus {
+  outline: 3px solid #9a6a1c !important;
+  outline-offset: 3px;
+}
+.lesson49 button { cursor: pointer; font-family: inherit; }
+.lesson49 button:disabled { cursor: not-allowed; opacity: 0.45; }
+.lesson49 #l49-main { scroll-behavior: auto; }
+.lesson49 p, .lesson49 h1, .lesson49 h2, .lesson49 h3, .lesson49 ul, .lesson49 ol, .lesson49 li { margin: 0; }
+.lesson49 ul, .lesson49 ol { padding: 0; list-style: none; }
+
+/* عزل الإنجليزية — نفس قاعدة المشروع */
+.lesson49 .l49-en,
+.lesson49 [lang="en"] {
+  font-family: "Deck49Latin", "Rubik", "Apple Color Emoji", "Segoe UI Emoji", Arial, sans-serif;
+  unicode-bidi: isolate;
+}
+.lesson49 .l49-en { display: inline-block; max-width: 100%; }
+.lesson49 .l49-mixed > span[dir="ltr"] { margin-inline: 0.1em; }
+.lesson49 .l49-emblem,
+.lesson49 .l49-tip-icon,
+.lesson49 .l49-note-icon,
+.lesson49 .l49-summary-icon,
+.lesson49 .l49-phase-badge,
+.lesson49 .l49-avatar,
+.lesson49 .l49-stamp-glyph {
+  font-family: "Deck49Arabic", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+/* النغمات الدلالية — ثابتة في الدرس كله */
+.l49-tone--deduction { --tone: #0f6f68; --tone-strong: #0a544f; --tone-soft: #e3f3ef; --tone-line: #b7ddd5; --tone-ink: #08443f; }
+.l49-tone--possibility { --tone: #4a4fa3; --tone-strong: #383c85; --tone-soft: #eaeaf8; --tone-line: #cbcced; --tone-ink: #2f3272; }
+.l49-tone--regret { --tone: #a94f32; --tone-strong: #883a22; --tone-soft: #f9e9e2; --tone-line: #ecc8b9; --tone-ink: #74301c; }
+.l49-tone--opportunity { --tone: #9a6a1c; --tone-strong: #7a5212; --tone-soft: #f8efd8; --tone-line: #e6d3a7; --tone-ink: #63420c; }
+.l49-tone--unnecessary { --tone: #5b6b23; --tone-strong: #47531a; --tone-soft: #eff2de; --tone-line: #d6dfb5; --tone-ink: #3a4413; }
+.l49-tone--hypothetical { --tone: #7b3f88; --tone-strong: #61306d; --tone-soft: #f4e8f6; --tone-line: #e0c6e5; --tone-ink: #4f2759; }
+.l49-tone--impossible { --tone: #4b5563; --tone-strong: #374151; --tone-soft: #eceef1; --tone-line: #cfd5dd; --tone-ink: #2f3742; }
+.l49-tone--review { --tone: #6f6557; --tone-strong: #4d453a; --tone-soft: #f1ece1; --tone-line: #d8cbb4; --tone-ink: #3d362c; }
+
+/* ============================================================
+   الشريط الجانبي
+   ============================================================ */
+.lesson49 .l49-rail-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.7rem; align-items: center; }
+.lesson49 .l49-rail-actions > span { font-size: 0.72rem; color: var(--l49-muted); font-weight: 700; }
+.lesson49 .l49-rail-actions button {
+  border: 1px solid var(--l49-line-strong);
+  border-radius: 0.7rem;
+  background: var(--l49-deep);
+  color: #eaf2ff;
+  padding: 0.34rem 0.7rem;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.01em;
+  transition: background 0.15s ease;
+}
+.lesson49 .l49-rail-actions button:hover { background: var(--l49-deep-2); }
+
+/* ============================================================
+   بطاقة الشريحة
+   ============================================================ */
+.lesson49 .l49-cover,
+.lesson49 .l49-sheet,
+.lesson49 .l49-roadmap { min-width: 0; overflow-wrap: anywhere; }
+
+.lesson49 .l49-sheet {
+  position: relative;
+  isolation: isolate;
+  background: var(--l49-paper);
+  border: 1px solid var(--l49-line);
+  border-radius: var(--l49-radius);
+  padding: clamp(1.1rem, 3.6vw, 2.4rem);
+  box-shadow: var(--l49-shadow);
+  overflow: hidden;
+}
+.lesson49 .l49-sheet::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 6px;
+  background:
+    linear-gradient(90deg, var(--tone) 0%, var(--tone) 34%, #9fb6d6 34%, #9fb6d6 36%, #dfe8f4 36%, #dfe8f4 100%);
+}
+.lesson49 .l49-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--l49-line-strong);
+  opacity: 0.75;
+  pointer-events: none;
+}
+.lesson49 .l49-corner--tl { inset-block-start: 14px; inset-inline-start: 14px; border-inline-end: 0; border-block-end: 0; border-start-start-radius: 4px; }
+.lesson49 .l49-corner--br { inset-block-end: 14px; inset-inline-end: 14px; border-inline-start: 0; border-block-start: 0; border-end-end-radius: 4px; }
+
+.lesson49 .l49-slide-head { display: grid; gap: 0.55rem; margin-bottom: clamp(0.9rem, 2.2vw, 1.5rem); }
+.lesson49 .l49-head-row { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
+.lesson49 .l49-step-badge {
+  display: grid;
+  place-items: center;
+  min-width: 2.6rem;
+  height: 2.6rem;
+  padding-inline: 0.4rem;
+  border-radius: 0.9rem;
+  background: var(--l49-deep);
+  color: #f2f7ff;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  box-shadow: 0 6px 16px -8px rgba(10, 28, 56, 0.7);
+}
+.lesson49 .l49-station-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.32rem 0.72rem;
+  border-radius: 9999px;
+  border: 1px solid var(--tone-line);
+  background: var(--tone-soft);
+  color: var(--tone-ink);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+.lesson49 .l49-station-dot { width: 7px; height: 7px; border-radius: 9999px; background: var(--tone); }
+.lesson49 .l49-emblem { margin-inline-start: auto; font-size: 1.9rem; }
+.lesson49 .l49-signal { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+.lesson49 .l49-signal > span { width: 4px; border-radius: 2px; background: var(--l49-line-strong); height: 6px; }
+.lesson49 .l49-signal > span:nth-child(2) { height: 10px; }
+.lesson49 .l49-signal > span:nth-child(3) { height: 14px; }
+.lesson49 .l49-signal > span.is-on { background: var(--tone); }
+
+.lesson49 .l49-slide-head h1 {
+  font-size: clamp(1.4rem, 4.1vw, 2.15rem);
+  font-weight: 800;
+  line-height: 1.34;
+  color: var(--l49-ink);
+  letter-spacing: -0.005em;
+}
+.lesson49 .l49-title-sep { margin-inline: 0.35rem; color: var(--tone); font-weight: 800; }
+.lesson49 .l49-lead {
+  max-width: 62ch;
+  color: var(--l49-muted);
+  font-size: clamp(0.95rem, 2.2vw, 1.08rem);
+  line-height: 1.8;
+}
+.lesson49 .l49-slide-content { display: grid; gap: clamp(0.75rem, 2vw, 1.1rem); }
+
+/* ============================================================
+   الأزرار
+   ============================================================ */
+.lesson49 .l49-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 0.85rem;
+  border: 1px solid transparent;
+  padding: 0.62rem 1.05rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.lesson49 .l49-button:hover:not(:disabled) { transform: translateY(-1px); }
+.lesson49 .l49-button--primary { background: var(--l49-deep); color: #f4f8ff; box-shadow: 0 14px 30px -18px rgba(10, 28, 56, 0.9); }
+.lesson49 .l49-button--primary:hover { background: var(--l49-deep-2); }
+.lesson49 .l49-button--dark { background: var(--tone-strong); color: #fff; }
+.lesson49 .l49-button--outline { background: #fff; border-color: var(--l49-line-strong); color: var(--l49-body); }
+.lesson49 .l49-button--outline:hover { background: var(--l49-panel); }
+.lesson49 .l49-button--light { background: #fff; color: var(--l49-deep); }
+.lesson49 .l49-button--outline-light { background: transparent; border-color: rgba(255, 255, 255, 0.55); color: #f2f7ff; }
+.lesson49 .l49-text-button {
+  border: 0;
+  background: none;
+  color: var(--tone-strong);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0.2rem 0.1rem;
+}
+
+/* ============================================================
+   الغلاف
+   ============================================================ */
+.lesson49 .l49-cover {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.2rem);
+  padding: clamp(1.2rem, 3.5vw, 2.6rem);
+  border: 1px solid var(--l49-line);
+  border-radius: 1.9rem;
+  background:
+    radial-gradient(680px 320px at 100% 0%, #e6f0fd 0%, rgba(230, 240, 253, 0) 70%),
+    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: var(--l49-shadow-soft);
+}
+.lesson49 .l49-cover-main { display: grid; gap: 0.75rem; align-content: start; }
+.lesson49 .l49-cover-kicker { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.lesson49 .l49-cover-chip {
+  border: 1px solid var(--l49-line-strong);
+  border-radius: 9999px;
+  background: #fff;
+  padding: 0.26rem 0.66rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--l49-muted);
+}
+.lesson49 .l49-cover-chip--dark { background: var(--l49-deep); border-color: var(--l49-deep); color: #dbe9ff; letter-spacing: 0.08em; }
+.lesson49 .l49-cover h1 {
+  font-size: clamp(1.7rem, 5.2vw, 2.9rem);
+  font-weight: 800;
+  line-height: 1.28;
+  color: var(--l49-ink);
+}
+.lesson49 .l49-cover-accent { color: var(--l49-signal); }
+.lesson49 .l49-cover-title {
+  display: grid;
+  gap: 0.1rem;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+}
+.lesson49 .l49-cover-title > span { font-size: clamp(1.05rem, 3vw, 1.5rem); color: #58708f; }
+.lesson49 .l49-cover-title > em { font-style: normal; font-size: clamp(1.5rem, 4.6vw, 2.4rem); color: var(--l49-ink); }
+.lesson49 .l49-cover-sub {
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: clamp(0.82rem, 2vw, 0.98rem);
+  font-weight: 500;
+  color: var(--l49-muted);
+}
+.lesson49 .l49-cover-lead { color: var(--l49-body); font-size: clamp(0.92rem, 2.1vw, 1.02rem); line-height: 1.75; }
+.lesson49 .l49-cover-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.35rem; }
+.lesson49 .l49-cover-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.9rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed var(--l49-line-strong);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--l49-muted);
+}
+.lesson49 .l49-cover-deck {
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+  padding: clamp(0.85rem, 2.2vw, 1.3rem);
+  border-radius: 1.3rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 40%),
+    var(--l49-deep);
+  color: #e8f1ff;
+  border: 1px solid #1b3a63;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+.lesson49 .l49-deck-head { display: flex; align-items: center; justify-content: space-between; }
+.lesson49 .l49-cover-deck .l49-mini-label { color: #8fb0d6; }
+.lesson49 .l49-deck-status { display: inline-flex; gap: 4px; }
+.lesson49 .l49-deck-status i { width: 22px; height: 4px; border-radius: 4px; background: #2b4b75; display: block; }
+.lesson49 .l49-deck-status i:first-child { background: #7fd4c1; }
+.lesson49 .l49-deck-status i:nth-child(2) { background: #8fb8f5; }
+.lesson49 .l49-deck-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.34rem; }
+.lesson49 .l49-deck-tile {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-inline-start: 3px solid var(--tone);
+  background: rgba(255, 255, 255, 0.05);
+}
+.lesson49 .l49-deck-tile .l49-en { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.04em; color: #f0f6ff; }
+.lesson49 .l49-deck-tile > span:last-child { font-size: 0.64rem; color: #a9c1de; line-height: 1.4; }
+.lesson49 .l49-deck-strip { display: flex; flex-wrap: wrap; gap: 0.3rem; padding-top: 0.45rem; border-top: 1px dashed rgba(255, 255, 255, 0.18); }
+.lesson49 .l49-deck-strip > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.24rem;
+  padding: 0.16rem 0.42rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.66rem;
+  color: #d9e7f8;
+}
+.lesson49 .l49-deck-strip .l49-en { color: #fff; font-weight: 800; font-size: 0.66rem; }
+.lesson49 .l49-deck-hint {
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.68rem;
+  line-height: 1.6;
+  color: #93b0d3;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+}
+
+/* ============================================================
+   الأهداف ومراجعة المرحلة
+   ============================================================ */
+.lesson49 .l49-goals { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 0.5rem; }
+.lesson49 .l49-goal {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.68rem 0.8rem;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.85rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fafe 100%);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--l49-body);
+}
+.lesson49 .l49-goal-n {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 0.5rem;
+  background: var(--l49-deep);
+  color: #eaf2ff;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+.lesson49 .l49-recap { display: grid; gap: 0.34rem; }
+.lesson49 .l49-recap-row {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1.15fr) minmax(0, 1.35fr);
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.7rem;
+  background: #fff;
+  font-size: 0.86rem;
+}
+.lesson49 .l49-recap-row.is-current { border-color: var(--l49-signal); background: #eef8fb; box-shadow: inset 0 0 0 1px rgba(14, 116, 144, 0.16); }
+.lesson49 .l49-recap-n {
+  display: grid;
+  place-items: center;
+  height: 1.6rem;
+  border-radius: 0.45rem;
+  background: var(--l49-panel);
+  color: var(--l49-muted);
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+.lesson49 .l49-recap-row.is-current .l49-recap-n { background: var(--l49-signal); color: #fff; }
+.lesson49 .l49-recap-en { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.01em; color: var(--l49-body); }
+.lesson49 .l49-recap-ar { color: var(--l49-muted); line-height: 1.6; }
+.lesson49 .l49-recap-note {
+  margin-top: 0.3rem;
+  padding: 0.6rem 0.75rem;
+  border-inline-start: 3px solid var(--l49-signal);
+  background: var(--l49-panel);
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--l49-body);
+}
+
+/* ============================================================
+   الصيغة
+   ============================================================ */
+.lesson49 .l49-formula {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--tone-line);
+  border-radius: 1rem;
+  background: var(--tone-soft);
+}
+.lesson49 .l49-formula-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--tone-ink);
+  letter-spacing: 0.02em;
+}
+.lesson49 .l49-formula-label > span {
+  display: grid;
+  place-items: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 0.35rem;
+  background: var(--tone);
+  color: #fff;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.7rem;
+}
+.lesson49 .l49-formula-body { display: grid; gap: 0.34rem; }
+.lesson49 .l49-formula-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; }
+.lesson49 .l49-formula-chip {
+  display: inline-block;
+  padding: 0.26rem 0.62rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--l49-line-strong);
+  background: #fff;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: clamp(0.82rem, 2.2vw, 0.98rem);
+  font-weight: 800;
+  color: var(--l49-body);
+}
+.lesson49 .l49-formula-chip.is-accent { background: var(--tone); border-color: var(--tone); color: #fff; }
+.lesson49 .l49-formula-plus { font-family: "Deck49Latin", "Rubik", sans-serif; font-weight: 800; color: var(--tone); }
+.lesson49 .l49-formula-arrow { color: var(--tone); font-weight: 800; }
+.lesson49 .l49-formula-slice {
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: clamp(0.85rem, 2.2vw, 1rem);
+  font-weight: 700;
+  color: var(--l49-body);
+}
+.lesson49 .l49-formula-verdicts { display: grid; gap: 0.24rem; }
+.lesson49 .l49-verdict-line {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+.lesson49 .l49-verdict-line.is-ok { color: #046b4d; }
+.lesson49 .l49-verdict-line.is-bad { color: #9f1239; text-decoration: line-through; text-decoration-color: rgba(159, 18, 57, 0.4); }
+.lesson49 .l49-verdict-mark { font-weight: 800; }
+
+/* ============================================================
+   الأمثلة
+   ============================================================ */
+.lesson49 .l49-examples { display: grid; gap: 0.55rem; }
+.lesson49 .l49-examples--grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.lesson49 .l49-examples--comparison { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.lesson49 .l49-examples--list { grid-template-columns: 1fr; }
+.lesson49 .l49-example {
+  position: relative;
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.72rem 0.85rem 0.78rem;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.9rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+.lesson49 .l49-example::before {
+  content: "";
+  position: absolute;
+  inset-block: 0.6rem;
+  inset-inline-start: 0;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--tone-line);
+}
+.lesson49 .l49-example-tag { font-size: 0.68rem; font-weight: 800; color: var(--l49-muted); letter-spacing: 0.03em; }
+.lesson49 .l49-example-en {
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: clamp(0.98rem, 2.6vw, 1.16rem);
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--l49-ink);
+}
+.lesson49 .l49-example-ar { font-size: 0.88rem; line-height: 1.7; color: var(--l49-muted); }
+.lesson49 .l49-example-verdicts { display: grid; gap: 0.2rem; }
+.lesson49 .l49-example-verdict-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.38rem;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+.lesson49 .l49-example-verdict-line.is-ok { color: #046b4d; }
+.lesson49 .l49-example-verdict-line.is-bad { color: #9f1239; text-decoration: line-through; text-decoration-color: rgba(159, 18, 57, 0.35); }
+
+/* ============================================================
+   الجدول
+   ============================================================ */
+.lesson49 .l49-table-wrap { overflow-x: auto; border: 1px solid var(--l49-line); border-radius: 0.9rem; background: #fff; }
+.lesson49 .l49-table { width: 100%; border-collapse: collapse; min-width: 340px; font-size: 0.88rem; }
+.lesson49 .l49-table th,
+.lesson49 .l49-table td { padding: 0.55rem 0.65rem; text-align: start; vertical-align: top; border-bottom: 1px solid var(--l49-line); }
+.lesson49 .l49-table thead th {
+  background: var(--l49-panel);
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--l49-body);
+  letter-spacing: 0.02em;
+}
+.lesson49 .l49-table tbody th { font-weight: 800; color: var(--l49-body); background: #fbfdff; }
+.lesson49 .l49-table td { color: var(--l49-muted); line-height: 1.6; }
+.lesson49 .l49-table tbody tr:last-child th,
+.lesson49 .l49-table tbody tr:last-child td { border-bottom: 0; }
+.lesson49 .l49-table .l49-en { font-size: 0.88rem; font-weight: 700; color: var(--l49-ink); }
+.lesson49 .l49-table-note {
+  padding: 0.55rem 0.75rem;
+  border-top: 1px dashed var(--l49-line-strong);
+  background: #fbfdff;
+  font-size: 0.82rem;
+  color: var(--l49-muted);
+  line-height: 1.7;
+}
+
+/* ============================================================
+   ملاحظة ونقاط وقاعدة ذهبية
+   ============================================================ */
+.lesson49 .l49-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--tone-line);
+  border-radius: 0.85rem;
+  background: var(--tone-soft);
+  color: var(--tone-ink);
+  font-size: 0.88rem;
+  line-height: 1.75;
+}
+.lesson49 .l49-note-icon { flex: none; font-size: 1.05rem; line-height: 1.4; }
+.lesson49 .l49-points { display: grid; gap: 0.4rem; }
+.lesson49 .l49-points > li {
+  position: relative;
+  padding: 0.5rem 0.7rem 0.5rem 0.7rem;
+  padding-inline-start: 1.9rem;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.7rem;
+  background: #fff;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--l49-body);
+}
+.lesson49 .l49-points > li::before {
+  content: "▸";
+  position: absolute;
+  inset-inline-start: 0.75rem;
+  inset-block-start: 0.5rem;
+  color: var(--tone);
+  font-size: 0.85rem;
+}
+.lesson49 .l49-tip-line {
+  display: block;
+}
+
+.l49-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.85rem;
+  background: linear-gradient(90deg, var(--l49-deep) 0%, var(--l49-deep-2) 100%);
+  color: #eaf2ff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.75;
+}
+.lesson49 .l49-tip-icon { flex: none; }
+.lesson49 .l49-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  background: var(--l49-deep);
+  color: #eaf2ff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.lesson49 .l49-mini-label {
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--l49-muted);
+}
+
+/* ============================================================
+   خريطة الوظائف
+   ============================================================ */
+.lesson49 .l49-map { display: grid; gap: 0.8rem; }
+.lesson49 .l49-map-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 0.4rem; }
+.lesson49 .l49-map-key {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--l49-line);
+  border-inline-start: 3px solid var(--tone);
+  border-radius: 0.65rem;
+  background: #fff;
+  text-align: start;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.lesson49 .l49-map-key:hover { background: var(--tone-soft); transform: translateY(-1px); }
+.lesson49 .l49-map-key.is-active { background: var(--tone-soft); border-color: var(--tone); box-shadow: 0 0 0 2px var(--tone-soft) inset; }
+.lesson49 .l49-map-key-top { display: flex; align-items: center; justify-content: space-between; gap: 0.3rem; }
+.lesson49 .l49-map-key .l49-en { font-size: 0.82rem; font-weight: 800; color: var(--tone-ink); letter-spacing: 0.03em; }
+.lesson49 .l49-map-key-ar { font-size: 0.72rem; line-height: 1.5; color: var(--l49-muted); }
+.lesson49 .l49-map-detail {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--tone-line);
+  border-radius: 1rem;
+  background: var(--tone-soft);
+}
+.lesson49 .l49-map-detail-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; }
+.lesson49 .l49-map-modal { font-size: clamp(1.2rem, 3.4vw, 1.6rem); font-weight: 800; color: var(--tone-strong); letter-spacing: 0.02em; }
+.lesson49 .l49-map-function { font-size: 0.8rem; font-weight: 700; color: var(--tone-ink); }
+.lesson49 .l49-map-formula {
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tone-ink);
+  padding: 0.3rem 0.55rem;
+  background: #fff;
+  border-radius: 0.5rem;
+  border: 1px dashed var(--tone-line);
+  justify-self: start;
+  max-width: 100%;
+}
+.lesson49 .l49-map-ar { font-size: 0.86rem; color: var(--tone-ink); }
+.lesson49 .l49-map-examples { display: grid; gap: 0.35rem; }
+.lesson49 .l49-map-examples > li {
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.55rem;
+  background: #fff;
+  border: 1px solid var(--tone-line);
+}
+.lesson49 .l49-map-examples > li > p {
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--l49-ink);
+  line-height: 1.5;
+}
+.lesson49 .l49-map-examples > li > span { font-size: 0.82rem; color: var(--l49-muted); }
+
+/* ============================================================
+   المواقف السبعة
+   ============================================================ */
+.lesson49 .l49-cases { display: grid; gap: 0.75rem; }
+.lesson49 .l49-case-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 0.4rem; }
+.lesson49 .l49-case-tile {
+  display: grid;
+  gap: 0.28rem;
+  padding: 0.55rem 0.6rem;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.7rem;
+  background: #fff;
+  text-align: start;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.lesson49 .l49-case-tile:hover { transform: translateY(-1px); background: var(--tone-soft); }
+.lesson49 .l49-case-tile.is-active { border-color: var(--tone); background: var(--tone-soft); }
+.lesson49 .l49-case-tile-top { display: flex; align-items: center; justify-content: space-between; }
+.lesson49 .l49-case-n { font-size: 0.7rem; font-weight: 800; color: var(--l49-muted); }
+.lesson49 .l49-case-situation { font-size: 0.78rem; line-height: 1.6; color: var(--l49-body); }
+.lesson49 .l49-case-modal { font-size: 0.78rem; font-weight: 800; color: var(--tone-strong); letter-spacing: 0.03em; }
+.lesson49 .l49-case-detail {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--tone-line);
+  border-radius: 0.95rem;
+  background: var(--tone-soft);
+}
+.lesson49 .l49-case-verdict {
+  justify-self: start;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  background: var(--tone);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+.lesson49 .l49-case-en { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: clamp(1.02rem, 2.8vw, 1.24rem); font-weight: 500; color: var(--l49-ink); line-height: 1.55; }
+.lesson49 .l49-case-ar { font-size: 0.88rem; color: var(--tone-ink); }
+.lesson49 .l49-case-why { font-size: 0.82rem; color: var(--l49-muted); line-height: 1.7; }
+
+/* ============================================================
+   خريطة القرار
+   ============================================================ */
+.lesson49 .l49-decision { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 0.8rem; align-items: start; }
+.lesson49 .l49-decision-steps { display: grid; gap: 0.3rem; }
+.lesson49 .l49-decision-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.6rem;
+  background: #fff;
+  text-align: start;
+  font-size: 0.83rem;
+  line-height: 1.55;
+  color: var(--l49-body);
+  transition: background 0.15s ease;
+}
+.lesson49 .l49-decision-step:hover { background: var(--tone-soft); }
+.lesson49 .l49-decision-step.is-active { border-color: var(--tone); background: var(--tone-soft); color: var(--tone-ink); }
+.lesson49 .l49-decision-n {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 0.4rem;
+  background: var(--l49-panel);
+  color: var(--l49-muted);
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 800;
+}
+.lesson49 .l49-decision-step.is-active .l49-decision-n { background: var(--tone); color: #fff; }
+.lesson49 .l49-decision-panel {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--tone-line);
+  border-radius: 1rem;
+  background: var(--tone-soft);
+}
+.lesson49 .l49-decision-answer { font-size: 1.1rem; font-weight: 800; color: var(--tone-ink); }
+.lesson49 .l49-decision-modals { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.lesson49 .l49-decision-chip {
+  padding: 0.24rem 0.6rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  border: 1px solid var(--tone-line);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--tone-strong);
+}
+.lesson49 .l49-decision-example {
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--l49-ink);
+  background: #fff;
+  border: 1px dashed var(--tone-line);
+  border-radius: 0.55rem;
+  padding: 0.45rem 0.6rem;
+  line-height: 1.55;
+}
+.lesson49 .l49-decision-why { font-size: 0.86rem; color: var(--tone-ink); line-height: 1.75; }
+.lesson49 .l49-decision-paths ul { display: grid; gap: 0.2rem; margin-top: 0.28rem; }
+.lesson49 .l49-decision-paths li {
+  position: relative;
+  padding-inline-start: 1rem;
+  font-size: 0.8rem;
+  color: var(--l49-muted);
+}
+.lesson49 .l49-decision-paths li::before { content: "→"; position: absolute; inset-inline-start: 0; color: var(--tone); }
+
+/* ============================================================
+   مختبر المقارنة
+   ============================================================ */
+.lesson49 .l49-lab { display: grid; gap: 0.7rem; }
+.lesson49 .l49-contrast {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.95rem;
+  background: #fff;
+}
+.lesson49 .l49-contrast-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.4rem; }
+.lesson49 .l49-contrast-head h3 { font-size: 0.98rem; font-weight: 800; color: var(--l49-ink); }
+.lesson49 .l49-contrast-head .l49-en { font-size: 0.76rem; font-weight: 800; color: var(--tone-strong); letter-spacing: 0.03em; }
+.lesson49 .l49-contrast-axis { font-size: 0.82rem; color: var(--l49-muted); }
+.lesson49 .l49-contrast-tabs { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.lesson49 .l49-contrast-tabs button {
+  border: 1px solid var(--l49-line-strong);
+  border-radius: 9999px;
+  background: #fff;
+  padding: 0.26rem 0.7rem;
+  transition: background 0.15s ease;
+}
+.lesson49 .l49-contrast-tabs button .l49-en { font-size: 0.76rem; font-weight: 800; color: var(--l49-body); }
+.lesson49 .l49-contrast-tabs button:hover { background: var(--tone-soft); }
+.lesson49 .l49-contrast-tabs button[aria-pressed="true"] { background: var(--tone); border-color: var(--tone); }
+.lesson49 .l49-contrast-tabs button[aria-pressed="true"] .l49-en { color: #fff; }
+.lesson49 .l49-contrast-stage {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.7rem;
+  background: var(--tone-soft);
+  border: 1px solid var(--tone-line);
+}
+.lesson49 .l49-contrast-sentence { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: clamp(1rem, 2.6vw, 1.16rem); font-weight: 500; color: var(--l49-ink); line-height: 1.5; }
+.lesson49 .l49-contrast-ar { font-size: 0.86rem; color: var(--tone-ink); }
+.lesson49 .l49-contrast-meaning { font-size: 0.84rem; color: var(--l49-muted); line-height: 1.7; }
+.lesson49 .l49-contrast-caution { font-size: 0.8rem; line-height: 1.7; color: #7a3706; background: #fdf1e1; border-radius: 0.5rem; padding: 0.4rem 0.55rem; }
+.lesson49 .l49-lab-quiz { display: grid; gap: 0.55rem; margin-top: 0.3rem; }
+
+/* ============================================================
+   التدريب والاختبار — بطاقات الأسئلة
+   ============================================================ */
+.lesson49 .l49-practice-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--l49-muted); }
+.lesson49 .l49-practice-list { display: grid; gap: 0.6rem; }
+.lesson49 .l49-practice-card {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.85rem;
+  background: #fff;
+}
+.lesson49 .l49-practice-card.is-correct { border-color: #9fdec4; background: #f3fbf7; }
+.lesson49 .l49-practice-card.is-wrong { border-color: #f2c1cf; background: #fef5f8; }
+.lesson49 .l49-question-top { display: flex; align-items: flex-start; gap: 0.5rem; }
+.lesson49 .l49-question-top > p {
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: clamp(0.92rem, 2.3vw, 1.02rem);
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--l49-ink);
+  overflow-wrap: anywhere;
+}
+.lesson49 .l49-question-number {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.45rem;
+  background: var(--l49-deep);
+  color: #eaf2ff;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+.lesson49 .l49-instruction { font-size: 0.8rem; color: var(--l49-muted); line-height: 1.65; }
+.lesson49 .l49-options { display: grid; gap: 0.32rem; }
+.lesson49 .l49-options button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--l49-line-strong);
+  border-radius: 0.6rem;
+  background: #fff;
+  text-align: start;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--l49-body);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.lesson49 .l49-options button:hover:not(:disabled) { background: var(--l49-panel); }
+.lesson49 .l49-options button[aria-pressed="true"] { border-color: var(--l49-deep); background: #eaf1fb; box-shadow: inset 0 0 0 1px var(--l49-deep); }
+.lesson49 .l49-option-letter {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 0.4rem;
+  background: var(--l49-panel);
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--l49-muted);
+}
+.lesson49 .l49-options button[aria-pressed="true"] .l49-option-letter { background: var(--l49-deep); color: #fff; }
+.lesson49 .l49-input {
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--l49-line-strong);
+  border-radius: 0.6rem;
+  background: #fff;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.95rem;
+  color: var(--l49-ink);
+}
+.lesson49 .l49-input::placeholder { color: #9aabc4; }
+.lesson49 .l49-input:focus { border-color: var(--l49-deep); outline: none; box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.14); }
+.lesson49 .l49-practice-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin-top: 0.1rem; }
+.lesson49 .l49-practice-actions .l49-button { padding: 0.4rem 0.8rem; font-size: 0.82rem; }
+.lesson49 .l49-feedback {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 0.15rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.6rem;
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+.lesson49 .l49-feedback.is-correct { background: #e8f8f1; border: 1px solid #b3e6d1; color: #04553f; }
+.lesson49 .l49-feedback.is-retry { background: #fdf0f4; border: 1px solid #f3c8d5; color: #8a1236; }
+.lesson49 .l49-feedback > strong { font-size: 0.85rem; }
+.lesson49 .l49-feedback p { color: var(--l49-body); }
+
+/* ============================================================
+   الحوار
+   ============================================================ */
+.lesson49 .l49-dialogue { display: grid; gap: 0.5rem; }
+.lesson49 .l49-dialogue-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.4rem; }
+.lesson49 .l49-dialogue-label { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em; color: var(--l49-muted); }
+.lesson49 .l49-dialogue-label > span[aria-hidden] { color: var(--tone); }
+.lesson49 .l49-dialogue-setting { font-size: 0.82rem; color: var(--l49-muted); }
+.lesson49 .l49-turn { display: flex; align-items: flex-start; gap: 0.5rem; }
+.lesson49 .l49-avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background: var(--speaker, #0f766e);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.lesson49 .l49-bubble {
+  flex: 1;
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.85rem;
+  background: #fff;
+}
+.lesson49 .l49-speaker { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.05em; color: var(--speaker, #0f766e); }
+.lesson49 .l49-bubble > p[lang="en"] { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.94rem; font-weight: 400; line-height: 1.6; color: var(--l49-ink); }
+.lesson49 .l49-turn-ar { font-size: 0.82rem; color: var(--l49-muted); border-top: 1px dashed var(--l49-line); padding-top: 0.25rem; }
+.lesson49 .l49-dialogue-analysis {
+  margin-top: 0.2rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px dashed var(--l49-line-strong);
+  border-radius: 0.7rem;
+  background: #fbfdff;
+}
+.lesson49 .l49-dialogue-analysis ul { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.3rem; }
+.lesson49 .l49-dialogue-analysis li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 9999px;
+  background: #fff;
+  border: 1px solid var(--l49-line);
+  font-size: 0.74rem;
+  color: var(--l49-muted);
+}
+.lesson49 .l49-dialogue-analysis .l49-en { font-size: 0.72rem; font-weight: 800; color: var(--tone-strong); }
+.lesson49 .l49-dialogue-lab { display: grid; gap: 0.4rem; margin-top: 0.3rem; }
+
+/* ============================================================
+   القراءة
+   ============================================================ */
+.lesson49 .l49-reading { display: grid; gap: 0.7rem; }
+.lesson49 .l49-reading-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 0.6rem; }
+.lesson49 .l49-reading-head h2 { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: clamp(1.1rem, 3vw, 1.45rem); font-weight: 800; color: var(--l49-ink); margin-top: 0.15rem; }
+.lesson49 .l49-reading-head p { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.82rem; color: var(--l49-muted); }
+.lesson49 .l49-reading-body { display: grid; gap: 0.35rem; }
+.lesson49 .l49-reading-paragraph {
+  position: relative;
+  padding: 0.55rem 0.7rem;
+  padding-inline-start: 2.5rem;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.7rem;
+  background: #fff;
+}
+.lesson49 .l49-reading-index {
+  position: absolute;
+  inset-inline-start: 0.6rem;
+  inset-block-start: 0.6rem;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 800;
+  color: #9aabc4;
+}
+.lesson49 .l49-reading-paragraph > p[lang="en"] {
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.72;
+  color: var(--l49-body);
+}
+.lesson49 .l49-reading-ar {
+  margin-top: 0.28rem;
+  padding-top: 0.28rem;
+  border-top: 1px dashed var(--l49-line);
+  font-size: 0.84rem;
+  color: var(--l49-muted);
+  line-height: 1.7;
+}
+.lesson49 .l49-reading-questions { display: grid; gap: 0.5rem; }
+.lesson49 .l49-reading-q {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.75rem;
+  background: #fff;
+}
+.lesson49 .l49-reading-q-top { display: flex; align-items: flex-start; gap: 0.5rem; }
+.lesson49 .l49-reading-q-top > span {
+  flex: none;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--l49-signal);
+  padding-top: 0.15rem;
+}
+.lesson49 .l49-reading-q-top > p { font-size: 0.92rem; line-height: 1.65; color: var(--l49-ink); }
+.lesson49 .l49-reading-q-top > p[lang="en"] { font-family: "Deck49Latin", "Rubik", sans-serif; }
+.lesson49 .l49-reading-actions { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.lesson49 .l49-reading-actions .l49-button { padding: 0.32rem 0.7rem; font-size: 0.78rem; }
+.lesson49 .l49-answer-model {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 0.55rem;
+  background: var(--l49-panel);
+  border: 1px dashed var(--l49-line-strong);
+}
+.lesson49 .l49-answer-model > p[lang="en"] { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.9rem; color: var(--l49-ink); line-height: 1.6; }
+.lesson49 .l49-answer-model > p[lang="ar"] { font-size: 0.82rem; color: var(--l49-muted); }
+
+/* ============================================================
+   الكتابة
+   ============================================================ */
+.lesson49 .l49-writing { display: grid; gap: 0.55rem; }
+.lesson49 .l49-writing-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.4rem; }
+.lesson49 .l49-writing-title { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: clamp(1rem, 2.8vw, 1.2rem); font-weight: 800; color: var(--l49-ink); }
+.lesson49 .l49-writing-checks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 0.3rem; }
+.lesson49 .l49-writing-checks > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  padding: 0.42rem 0.55rem;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.55rem;
+  background: #fff;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--l49-muted);
+}
+.lesson49 .l49-writing-checks > div > span:first-child {
+  flex: none;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #9aabc4;
+  padding-top: 0.1rem;
+}
+.lesson49 .l49-writing-checks > div.is-met { border-color: #b3e6d1; background: #f2fbf7; color: #04553f; }
+.lesson49 .l49-writing-checks > div.is-met > span:first-child { color: #047857; }
+.lesson49 .l49-check-body { display: grid; gap: 0.1rem; }
+.lesson49 .l49-check-formula { font-size: 0.72rem; font-weight: 800; color: var(--l49-body); letter-spacing: 0.02em; }
+.lesson49 .l49-writing label { font-size: 0.82rem; font-weight: 800; color: var(--l49-body); margin-top: 0.2rem; }
+.lesson49 .l49-writing textarea {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--l49-line-strong);
+  border-radius: 0.65rem;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--l49-ink);
+  background: #fff;
+  resize: vertical;
+}
+.lesson49 .l49-writing textarea[lang="ar"] { font-family: "Deck49Arabic", sans-serif; }
+.lesson49 .l49-writing textarea:focus { border-color: var(--l49-deep); outline: none; box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.14); }
+.lesson49 .l49-writing-meta { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; font-size: 0.78rem; color: var(--l49-muted); }
+.lesson49 .l49-writing-meta .is-ok { color: #047857; font-weight: 800; }
+.lesson49 .l49-writing-model { padding: 0.7rem 0.8rem; border: 1px dashed var(--l49-line-strong); border-radius: 0.7rem; background: #fbfdff; }
+.lesson49 .l49-writing-model p { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.9rem; line-height: 1.85; color: var(--l49-body); }
+
+/* ============================================================
+   لوحة الإتقان
+   ============================================================ */
+.lesson49 .l49-dashboard { display: grid; gap: 0.8rem; }
+.lesson49 .l49-dashboard-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 0.5rem; }
+.lesson49 .l49-dashboard-summary > div {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.75rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fafe 100%);
+}
+.lesson49 .l49-dashboard-big { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--l49-deep); font-variant-numeric: tabular-nums; }
+.lesson49 .l49-dashboard-summary p { font-size: 0.76rem; line-height: 1.65; color: var(--l49-muted); }
+.lesson49 .l49-dashboard-skills { display: grid; gap: 0.4rem; }
+.lesson49 .l49-skill-row { display: grid; gap: 0.2rem; padding: 0.5rem 0.65rem; border: 1px solid var(--l49-line); border-radius: 0.65rem; background: #fff; }
+.lesson49 .l49-skill-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.4rem; font-size: 0.82rem; font-weight: 800; color: var(--l49-body); }
+.lesson49 .l49-skill-head bdi { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.76rem; color: var(--l49-muted); }
+.lesson49 .l49-skill-track { height: 6px; border-radius: 9999px; background: #e8eefa; overflow: hidden; }
+.lesson49 .l49-skill-track > div { height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #0e7490 0%, #1d4ed8 100%); transition: width 0.35s ease; }
+.lesson49 .l49-skill-track.is-empty { background: repeating-linear-gradient(90deg, #e8eefa 0 8px, #f4f7fd 8px 16px); }
+.lesson49 .l49-skill-note { font-size: 0.74rem; color: var(--l49-muted); }
+.lesson49 .l49-dashboard-levels { padding: 0.6rem 0.7rem; border: 1px dashed var(--l49-line-strong); border-radius: 0.7rem; background: #fbfdff; }
+.lesson49 .l49-dashboard-levels ul { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; margin-top: 0.3rem; font-size: 0.8rem; color: var(--l49-body); }
+.lesson49 .l49-dashboard-levels bdi { font-family: "Deck49Latin", "Rubik", sans-serif; font-weight: 800; }
+
+/* ============================================================
+   الاختبار
+   ============================================================ */
+.lesson49 .l49-test { display: grid; gap: 0.75rem; }
+.lesson49 .l49-test-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.4rem 0.8rem;
+  align-items: center;
+  padding: 0.7rem 0.85rem;
+  border-radius: 0.85rem;
+  background: var(--l49-deep);
+  color: #eaf2ff;
+}
+.lesson49 .l49-test-intro strong { font-size: 0.92rem; }
+.lesson49 .l49-test-intro p { font-size: 0.78rem; color: #b9cfea; line-height: 1.6; }
+.lesson49 .l49-test-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.lesson49 .l49-test-progress { grid-column: 1 / -1; height: 5px; border-radius: 9999px; background: rgba(255, 255, 255, 0.16); overflow: hidden; }
+.lesson49 .l49-test-progress > div { height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #7fd4c1, #8fb8f5); transition: width 0.3s ease; }
+.lesson49 .l49-result {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.4rem 0.8rem;
+  align-items: center;
+  padding: 0.85rem 0.95rem;
+  border-radius: 0.9rem;
+  background: linear-gradient(90deg, #0a1c38 0%, #12406b 100%);
+  color: #eef5ff;
+}
+.lesson49 .l49-result-kicker { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.14em; color: #9fc1e6; }
+.lesson49 .l49-result h2 { font-size: clamp(1.05rem, 3vw, 1.4rem); font-weight: 800; }
+.lesson49 .l49-result p { font-size: 0.8rem; color: #b9cfea; }
+.lesson49 .l49-level-scores { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.lesson49 .l49-level-scores > span {
+  padding: 0.2rem 0.5rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 0.7rem;
+}
+.lesson49 .l49-test-level { display: grid; gap: 0.5rem; }
+.lesson49 .l49-level-header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.45rem 0.6rem;
+  align-items: center;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.7rem;
+  background: var(--l49-panel);
+  border: 1px solid var(--l49-line);
+}
+.lesson49 .l49-level-badge {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.55rem;
+  background: var(--l49-deep);
+  color: #eaf2ff;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.lesson49 .l49-level-header .l49-en { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.1em; color: var(--l49-muted); }
+.lesson49 .l49-level-header h2 { font-size: 0.95rem; font-weight: 800; color: var(--l49-ink); }
+.lesson49 .l49-level-header p { grid-column: 1 / -1; font-size: 0.78rem; color: var(--l49-muted); line-height: 1.6; }
+.lesson49 .l49-submit-bar { display: grid; gap: 0.35rem; padding: 0.7rem 0.8rem; border: 1px dashed var(--l49-line-strong); border-radius: 0.8rem; background: #fbfdff; }
+.lesson49 .l49-submit-bar > span { font-size: 0.78rem; color: var(--l49-muted); }
+.lesson49 .l49-submit-bar [role="alert"] { color: #9f1239; font-size: 0.8rem; font-weight: 700; }
+
+/* ============================================================
+   المعلم
+   ============================================================ */
+.lesson49 .l49-teacher { display: grid; gap: 0.6rem; }
+.lesson49 .l49-teacher-heading { display: flex; align-items: center; gap: 0.6rem; }
+.lesson49 .l49-teacher-heading > span { font-size: 1.6rem; }
+.lesson49 .l49-teacher-heading .l49-en { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.12em; color: var(--l49-muted); }
+.lesson49 .l49-teacher-heading h2 { font-size: 1.05rem; font-weight: 800; }
+.lesson49 .l49-teacher > p { font-size: 0.8rem; color: var(--l49-muted); line-height: 1.7; }
+.lesson49 .l49-teacher-form { display: grid; gap: 0.4rem; max-width: 320px; }
+.lesson49 .l49-teacher-form label { font-size: 0.8rem; font-weight: 800; color: var(--l49-body); }
+.lesson49 .l49-teacher-form input {
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--l49-line-strong);
+  border-radius: 0.55rem;
+  font-family: "Deck49Latin", "Rubik", sans-serif;
+  font-size: 0.95rem;
+}
+.lesson49 .l49-teacher-form [role="alert"] { color: #9f1239; font-size: 0.8rem; font-weight: 700; }
+.lesson49 .l49-teacher-open { display: grid; gap: 0.55rem; }
+.lesson49 .l49-teacher-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.4rem; font-size: 0.78rem; color: var(--l49-muted); }
+.lesson49 .l49-teacher-guide { display: grid; gap: 0.7rem; }
+.lesson49 .l49-guide-note { display: grid; gap: 0.35rem; padding: 0.7rem 0.85rem; border: 1px solid var(--l49-line); border-radius: 0.8rem; background: #fbfdff; }
+.lesson49 .l49-guide-note h3 { font-size: 0.95rem; font-weight: 800; color: var(--l49-ink); }
+.lesson49 .l49-guide-note p, .lesson49 .l49-guide-note li { font-size: 0.84rem; line-height: 1.8; color: var(--l49-body); }
+.lesson49 .l49-guide-note ul, .lesson49 .l49-guide-note ol { display: grid; gap: 0.4rem; }
+.lesson49 .l49-guide-en { margin-top: 0.25rem; font-size: 0.8rem; color: var(--l49-muted); }
+.lesson49 .l49-guide-ar { color: var(--l49-muted); font-size: 0.8rem; }
+.lesson49 .l49-teacher-mark { font-size: 0.8rem; font-weight: 800; }
+.lesson49 .l49-teacher-mark.is-correct { color: #047857; }
+.lesson49 .l49-teacher-mark.is-wrong { color: #9f1239; }
+
+/* ============================================================
+   الملخص والإتمام
+   ============================================================ */
+.lesson49 .l49-summary { display: grid; gap: 0.8rem; }
+.lesson49 .l49-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 0.4rem; }
+.lesson49 .l49-summary-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--l49-line);
+  border-inline-start: 3px solid var(--tone);
+  border-radius: 0.6rem;
+  background: #fff;
+}
+.lesson49 .l49-summary-icon { flex: none; font-size: 0.95rem; }
+.lesson49 .l49-summary-body { display: grid; gap: 0.05rem; }
+.lesson49 .l49-summary-formula { font-size: 0.78rem; font-weight: 800; color: var(--tone-strong); letter-spacing: 0.02em; }
+.lesson49 .l49-summary-ar { font-size: 0.78rem; color: var(--l49-body); }
+.lesson49 .l49-summary-ex { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.76rem; color: var(--l49-muted); }
+.lesson49 .l49-comparisons { padding: 0.7rem 0.85rem; border-radius: 0.85rem; background: var(--l49-deep); color: #eaf2ff; }
+.lesson49 .l49-comparisons h3 { font-size: 0.95rem; font-weight: 800; }
+.lesson49 .l49-comparisons ul { display: grid; gap: 0.35rem; margin-top: 0.4rem; }
+.lesson49 .l49-comparisons li { display: grid; grid-template-columns: 1.2rem minmax(0, 1fr); gap: 0.1rem 0.4rem; align-items: baseline; }
+.lesson49 .l49-comparison-n { grid-row: 1 / span 2; color: #8fb8f5; font-weight: 800; }
+.lesson49 .l49-comparisons .l49-en { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.8rem; font-weight: 800; color: #d5e6fb; }
+.lesson49 .l49-comparison-ar { font-size: 0.78rem; color: #a9c4e2; line-height: 1.6; }
+
+.lesson49 .l49-phase { display: grid; gap: 0.75rem; }
+.lesson49 .l49-phase-hero {
+  display: grid;
+  justify-items: center;
+  gap: 0.15rem;
+  padding: 1.1rem 1rem;
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #f5f9ff 0%, #e9f2fd 100%);
+  border: 1px solid var(--l49-line);
+  text-align: center;
+}
+.lesson49 .l49-phase-badge { font-size: 2rem; }
+.lesson49 .l49-phase-hero h2 { font-size: clamp(1.1rem, 3.2vw, 1.4rem); font-weight: 800; color: var(--l49-ink); }
+.lesson49 .l49-phase-ratio { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: clamp(1.6rem, 5vw, 2.1rem); font-weight: 800; color: var(--l49-signal); font-variant-numeric: tabular-nums; }
+.lesson49 .l49-phase-hero p { font-size: 0.82rem; color: var(--l49-muted); }
+.lesson49 .l49-phase-list { display: grid; gap: 0.3rem; }
+.lesson49 .l49-phase-list li {
+  display: grid;
+  grid-template-columns: 1.1rem minmax(0, 1fr);
+  gap: 0.4rem;
+  align-items: baseline;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.55rem;
+  background: #fff;
+  font-size: 0.8rem;
+}
+.lesson49 .l49-phase-list li > span:first-child { color: #047857; font-weight: 800; }
+.lesson49 .l49-phase-list .l49-en { font-size: 0.74rem; font-weight: 800; color: var(--l49-body); }
+.lesson49 .l49-phase-list li > span:last-child { grid-column: 2; font-size: 0.78rem; color: var(--l49-muted); }
+.lesson49 .l49-phase-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr)); gap: 0.4rem; }
+.lesson49 .l49-phase-stats > div {
+  display: grid;
+  gap: 0.05rem;
+  justify-items: center;
+  padding: 0.55rem 0.5rem;
+  border-radius: 0.7rem;
+  background: var(--l49-deep);
+  color: #eaf2ff;
+  text-align: center;
+}
+.lesson49 .l49-phase-stats bdi { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.lesson49 .l49-phase-stats span { font-size: 0.72rem; color: #a9c4e2; }
+.lesson49 .l49-phase-track, .lesson49 .l49-progress-track { height: 7px; border-radius: 9999px; background: #dfe8f4; overflow: hidden; }
+.lesson49 .l49-phase-track > div, .lesson49 .l49-progress-track > div { height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #0e7490, #1d4ed8); }
+.lesson49 .l49-phase-track > div { width: 40%; }
+
+/* ============================================================
+   صفحة الطريق
+   ============================================================ */
+.lesson49 .l49-roadmap {
+  position: relative;
+  padding: clamp(1.2rem, 4vw, 2.4rem);
+  border-radius: 1.8rem;
+  background:
+    radial-gradient(700px 320px at 100% 0%, rgba(127, 212, 193, 0.16) 0%, rgba(127, 212, 193, 0) 70%),
+    linear-gradient(160deg, #071426 0%, #0d2340 58%, #0a1c38 100%);
+  color: #ecf3ff;
+  box-shadow: var(--l49-shadow-soft);
+  display: grid;
+  gap: 0.7rem;
+}
+.lesson49 .l49-roadmap-index { display: flex; align-items: center; justify-content: space-between; }
+.lesson49 .l49-roadmap-index .l49-en { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.16em; color: #7fb4e0; }
+.lesson49 .l49-roadmap-index > span { color: #7fd4c1; }
+.lesson49 .l49-roadmap h1 { font-size: clamp(1.35rem, 4.4vw, 2.1rem); font-weight: 800; line-height: 1.35; }
+.lesson49 .l49-roadmap h1 em { font-style: normal; color: #7fd4c1; }
+.lesson49 .l49-roadmap > p { font-size: 0.9rem; line-height: 1.85; color: #b9cfe8; }
+.lesson49 .l49-roadmap-progress { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; font-size: 0.78rem; color: #9fbbdc; }
+.lesson49 .l49-roadmap-progress bdi { font-family: "Deck49Latin", "Rubik", sans-serif; font-weight: 800; color: #dbeaff; font-variant-numeric: tabular-nums; }
+.lesson49 .l49-roadmap .l49-progress-track { background: rgba(255, 255, 255, 0.14); }
+.lesson49 .l49-roadmap .l49-progress-track > div { background: linear-gradient(90deg, #7fd4c1, #8fb8f5); }
+.lesson49 .l49-next-lesson {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.2rem;
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(143, 184, 245, 0.26);
+}
+.lesson49 .l49-next-lesson > span { font-size: 0.74rem; color: #9fbbdc; }
+.lesson49 .l49-next-lesson > span .l49-en { font-weight: 800; color: #cfe1f7; }
+.lesson49 .l49-next-lesson h2 { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: clamp(1.25rem, 4vw, 1.8rem); font-weight: 800; letter-spacing: 0.03em; color: #ffffff; }
+.lesson49 .l49-next-formula { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.85rem; font-weight: 700; color: #7fd4c1; }
+.lesson49 .l49-next-lesson > p { font-size: 0.85rem; color: #b9cfe8; line-height: 1.75; }
+.lesson49 .l49-next-pairs { display: grid; gap: 0.25rem; margin-top: 0.15rem; }
+.lesson49 .l49-next-pairs > div { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: #dbe9fb; }
+.lesson49 .l49-next-pairs > div > span:first-child { color: #9fbbdc; }
+.lesson49 .l49-next-pairs > div > span:last-child { font-weight: 700; color: #ffffff; }
+.lesson49 .l49-next-topics { display: grid; gap: 0.25rem; margin-top: 0.2rem; }
+.lesson49 .l49-next-topics li { position: relative; padding-inline-start: 1rem; font-size: 0.8rem; color: #b9cfe8; line-height: 1.65; }
+.lesson49 .l49-next-topics li::before { content: "◆"; position: absolute; inset-inline-start: 0; color: #7fb4e0; font-size: 0.6rem; }
+.lesson49 .l49-roadmap-actions { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.35rem; }
+
+/* ============================================================
+   الاستجابة
+   ============================================================ */
+@media (max-width: 1000px) {
+  .lesson49 .l49-cover { grid-template-columns: 1fr; }
+  .lesson49 .l49-cover-deck { order: 2; }
+  .lesson49 .l49-decision { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .lesson49 .l49-sheet { border-radius: 1.2rem; }
+  .lesson49 .l49-corner { display: none; }
+  .lesson49 .l49-emblem { margin-inline-start: 0; }
+  .lesson49 .l49-recap-row { grid-template-columns: 2rem minmax(0, 1fr); }
+  .lesson49 .l49-recap-ar { grid-column: 2; }
+  .lesson49 .l49-case-tiles, .lesson49 .l49-map-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 132px), 1fr)); }
+  .lesson49 .l49-writing-checks { grid-template-columns: 1fr; }
+  .lesson49 .l49-test-intro, .lesson49 .l49-result { grid-template-columns: 1fr; }
+  .lesson49 .l49-deck-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lesson49 .l49-cover-foot { font-size: 0.72rem; }
+}
+@media (max-width: 420px) {
+  .lesson49 .l49-sheet { padding: 0.9rem; }
+  .lesson49 .l49-options button { padding: 0.42rem 0.5rem; font-size: 0.86rem; }
+  .lesson49 .l49-decision-step { font-size: 0.78rem; }
+  .lesson49 .l49-question-number { min-width: 1.55rem; height: 1.55rem; }
+}
+
+/* ============================================================
+   تقليل الحركة
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .lesson49 *,
+  .lesson49 *::before,
+  .lesson49 *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .lesson49 .anim-drift { animation: none !important; }
+}
+
+/* دخول الشريحة — نفس إيقاع الدرس الأول لكن بمدة أقصر */
+@keyframes l49-pop {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.lesson49 .l49-slide-content > * { animation: l49-pop 0.32s ease both; }
+.lesson49 .l49-slide-content > *:nth-child(2) { animation-delay: 0.04s; }
+.lesson49 .l49-slide-content > *:nth-child(3) { animation-delay: 0.08s; }
+.lesson49 .l49-slide-content > *:nth-child(4) { animation-delay: 0.12s; }
+@media (prefers-reduced-motion: reduce) {
+  .lesson49 .l49-slide-content > * { animation: none !important; }
+}
+
+/* ============================================================
+   هوية «ملف الماضي» — لمسات الملف والأرشيف
+   ============================================================ */
+
+/* ورق الملف: خط هامش، ثقبّا ملف، وختم زاوية */
+.lesson49 .l49-sheet {
+  background:
+    linear-gradient(90deg, rgba(169, 79, 50, 0.05) 0 1px, transparent 1px) 2.4rem 0 / 1px 100% no-repeat,
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(111, 101, 87, 0.055) 31px 32px),
+    var(--l49-paper);
+  border-radius: 0.55rem 0.55rem 0.9rem 0.9rem;
+  border-color: var(--l49-line-strong);
+}
+.lesson49 .l49-sheet::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 46%;
+  inset-inline-end: 0.62rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 9999px;
+  background: var(--l49-canvas);
+  box-shadow: 0 34px 0 var(--l49-canvas), 0 0 0 1px rgba(201, 183, 149, 0.8), 0 34px 0 0 rgba(201, 183, 149, 0.8);
+  pointer-events: none;
+}
+.lesson49 .l49-slide-head {
+  padding-bottom: 0.65rem;
+  border-bottom: 1px dashed var(--l49-line-strong);
+}
+.lesson49 .l49-step-badge {
+  background: var(--l49-deep);
+  border-radius: 0.3rem;
+  transform: rotate(-2deg);
+}
+.lesson49 .l49-station-pill {
+  border-radius: 0.3rem;
+  background: var(--tone-soft);
+  border-color: var(--tone-line);
+  color: var(--tone-ink);
+}
+.lesson49 .l49-tag {
+  border-radius: 0.28rem;
+  border-style: solid;
+  background: #fbf6e9;
+  color: var(--l49-body);
+}
+.lesson49 .l49-note {
+  border-inline-start-width: 4px;
+  border-radius: 0.25rem;
+  background: #fbf5e6;
+}
+.lesson49 .l49-tip {
+  border-radius: 0.25rem;
+  background: var(--l49-deep);
+}
+.lesson49 .l49-button {
+  border-radius: 0.34rem;
+  letter-spacing: 0.01em;
+}
+.lesson49 .l49-button--primary { box-shadow: 4px 4px 0 -1px #c9b795; }
+.lesson49 .l49-input,
+.lesson49 .l49-writing textarea,
+.lesson49 .l49-teacher-form input {
+  border-radius: 0.3rem;
+  background: #fffdf6;
+}
+.lesson49 .l49-practice-card {
+  border-radius: 0.45rem;
+  border-color: var(--l49-line);
+  background: #fffdf7;
+}
+.lesson49 .l49-options button {
+  border-radius: 0.3rem;
+  background: #fffdf7;
+}
+.lesson49 .l49-option-letter { border-radius: 0.24rem; }
+.lesson49 .l49-formula {
+  border-radius: 0.45rem;
+  background: #f7f0df;
+  border: 1px solid var(--l49-line);
+}
+.lesson49 .l49-formula-chip { border-radius: 0.24rem; }
+.lesson49 .l49-example {
+  border-radius: 0.35rem;
+  background: #fffdf7;
+  border-color: var(--l49-line);
+}
+.lesson49 .l49-example::before { background: var(--tone); width: 3px; }
+.lesson49 .l49-table-wrap { border-radius: 0.4rem; background: #fffdf7; }
+.lesson49 .l49-map-key,
+.lesson49 .l49-case-tile,
+.lesson49 .l49-decision-step { border-radius: 0.35rem; background: #fffdf7; }
+.lesson49 .l49-map-detail,
+.lesson49 .l49-case-detail,
+.lesson49 .l49-decision-panel { border-radius: 0.4rem; }
+.lesson49 .l49-summary-row { border-radius: 0.35rem; background: #fffdf7; }
+.lesson49 .l49-comparisons { border-radius: 0.45rem; }
+.lesson49 .l49-roadmap { border-radius: 0.6rem; }
+
+/* ترويسة الملف */
+.lesson49 .l49-file-code {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: "Courier New", "Deck49Latin", monospace;
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--l49-muted);
+  text-transform: uppercase;
+}
+.lesson49 .l49-file-code::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--l49-signal);
+  border-radius: 9999px;
+  background: var(--l49-signal);
+  box-shadow: inset 0 0 0 2px #fbf5e6;
+}
+.lesson49 .l49-rail-case {
+  display: grid;
+  gap: 0.15rem;
+  margin-top: 0.4rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px dashed var(--l49-line-strong);
+  border-radius: 0.3rem;
+  background: #fbf6e9;
+  font-family: "Courier New", "Deck49Latin", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: var(--l49-muted);
+}
+.lesson49 .l49-rail-case b { color: var(--l49-ink); font-size: 0.72rem; letter-spacing: 0.04em; }
+
+/* الغلاف: مجلد تحقيق */
+.lesson49 .l49-cover {
+  position: relative;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  gap: clamp(0.8rem, 2.4vw, 1.5rem);
+  align-items: start;
+  background:
+    linear-gradient(0deg, rgba(111, 101, 87, 0.05) 1px, transparent 1px) 0 0 / 100% 30px,
+    var(--l49-paper);
+  border: 1px solid var(--l49-line-strong);
+  border-radius: 0.6rem 0.6rem 1rem 1rem;
+  padding: clamp(1.1rem, 3.6vw, 2.4rem);
+  box-shadow: var(--l49-shadow-soft);
+  overflow: hidden;
+}
+.lesson49 .l49-cover::before {
+  content: "CASE FILE № 49";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 1.4rem;
+  padding: 0.22rem 0.8rem 0.3rem;
+  background: var(--l49-signal);
+  color: #fff8e8;
+  font-family: "Courier New", "Deck49Latin", monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  border-radius: 0 0 0.3rem 0.3rem;
+}
+.lesson49 .l49-cover h1 { font-size: clamp(1.65rem, 5vw, 2.7rem); line-height: 1.28; }
+.lesson49 .l49-cover-accent { color: var(--l49-stamp); }
+.lesson49 .l49-cover-chip {
+  border-radius: 0.22rem;
+  background: #f7f0df;
+  border-color: var(--l49-line-strong);
+  color: var(--l49-body);
+  font-family: "Courier New", "Deck49Latin", monospace;
+  letter-spacing: 0.08em;
+}
+.lesson49 .l49-cover-chip--dark {
+  background: transparent;
+  border-color: var(--l49-stamp);
+  color: var(--l49-stamp);
+}
+.lesson49 .l49-cover-title { border-block: 1px dashed var(--l49-line-strong); padding-block: 0.45rem; }
+.lesson49 .l49-cover-title > span { font-family: "Courier New", "Deck49Latin", monospace; font-size: 0.72rem; letter-spacing: 0.2em; color: var(--l49-muted); }
+.lesson49 .l49-cover-title > em { font-family: "Deck49Latin", "Rubik", sans-serif; letter-spacing: 0.03em; color: var(--l49-ink); }
+.lesson49 .l49-cover-sub { font-size: 0.74rem; letter-spacing: 0.04em; color: var(--l49-muted); }
+.lesson49 .l49-cover-deck {
+  border-radius: 0.45rem;
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px) 0 0 / 100% 24px,
+    var(--l49-deep);
+  border: 1px solid #182625;
+  box-shadow: 5px 6px 0 -1px #d8cbb4;
+}
+.lesson49 .l49-deck-grid { grid-template-columns: 1fr; gap: 0.2rem; }
+.lesson49 .l49-deck-tile {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem;
+  padding: 0.32rem 0.45rem;
+  border-radius: 0.2rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-inline-start: 3px solid var(--tone);
+}
+.lesson49 .l49-deck-tile .l49-en { color: #fff8e8; font-family: "Courier New", "Deck49Latin", monospace; letter-spacing: 0.05em; }
+.lesson49 .l49-deck-tile > span:last-child { color:#cfc4ad; font-size: 0.62rem; }
+.lesson49 .l49-deck-strip > span { border-radius: 0.2rem; background: rgba(255,255,255,0.08); }
+.lesson49 .l49-cover-foot { border-top: 1px dashed var(--l49-line-strong); padding-top: 0.5rem; }
+.lesson49 .l49-cover-stamp {
+  position: absolute;
+  inset-block-start: 1.1rem;
+  inset-inline-end: 1.1rem;
+  display: grid;
+  place-items: center;
+  width: 5.6rem;
+  height: 5.6rem;
+  border: 2px solid var(--l49-stamp);
+  border-radius: 9999px;
+  color: var(--l49-stamp);
+  font-family: "Courier New", "Deck49Latin", monospace;
+  font-size: 0.54rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-align: center;
+  line-height: 1.35;
+  transform: rotate(-9deg);
+  opacity: 0.82;
+  pointer-events: none;
+}
+.lesson49 .l49-cover-stamp::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px dashed currentColor;
+  border-radius: 9999px;
+}
+.lesson49 .l49-cover-stamp b { display: block; font-size: 0.86rem; letter-spacing: 0.04em; }
+
+/* شرائط الوظيفة: رمز + نص، لا لون وحده */
+.lesson49 .l49-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.12rem 0.42rem;
+  border: 1px solid var(--tone-line);
+  border-radius: 0.22rem;
+  background: var(--tone-soft);
+  color: var(--tone-ink);
+  font-size: 0.66rem;
+  font-weight: 800;
+}
+.lesson49 .l49-mode-glyph {
+  display: inline-grid;
+  place-items: center;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.14rem;
+  background: var(--tone);
+  color: #fff;
+  font-size: 0.6rem;
+  line-height: 1;
+}
+.lesson49 .l49-mode--sm { font-size: 0.6rem; padding: 0.08rem 0.32rem; }
+
+/* الخط الزمني: Modal + V1 / Modal + HAVE + V3 */
+.lesson49 .l49-timeline { display: grid; gap: 0.6rem; }
+.lesson49 .l49-timeline-pair {
+  border: 1px solid var(--l49-line);
+  border-radius: 0.4rem;
+  background: #fffdf7;
+  padding: 0.6rem 0.7rem;
+  display: grid;
+  gap: 0.45rem;
+}
+.lesson49 .l49-timeline-sentences { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 0.45rem; }
+.lesson49 .l49-timeline-sentence {
+  padding: 0.45rem 0.55rem;
+  border: 1px dashed var(--l49-line-strong);
+  border-radius: 0.3rem;
+  background: #fbf6e9;
+}
+.lesson49 .l49-timeline-sentence .l49-en { font-size: 0.98rem; font-weight: 700; color: var(--l49-ink); }
+.lesson49 .l49-timeline-sentence p[lang="ar"] { font-size: 0.78rem; color: var(--l49-muted); margin-top: 0.15rem; }
+.lesson49 .l49-timeline-sentence.is-past { border-color: var(--l49-signal); }
+.lesson49 .l49-timeline-q { font-size: 0.82rem; color: var(--l49-body); font-weight: 700; }
+.lesson49 .l49-timeline-options { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.lesson49 .l49-timeline-option {
+  border: 1px solid var(--l49-line-strong);
+  border-radius: 0.26rem;
+  background: #fffdf7;
+  padding: 0.34rem 0.6rem;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: var(--l49-body);
+}
+.lesson49 .l49-timeline-option:hover { background: #f5eeda; }
+.lesson49 .l49-timeline-option[aria-pressed="true"] { background: var(--l49-deep); border-color: var(--l49-deep); color: #fff8e8; }
+.lesson49 .l49-timeline-verdict {
+  border-inline-start: 3px solid var(--tone);
+  background: var(--tone-soft);
+  color: var(--tone-ink);
+  padding: 0.4rem 0.55rem;
+  border-radius: 0.2rem;
+  font-size: 0.8rem;
+  line-height: 1.75;
+}
+.lesson49 .l49-timeline-rail {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  padding-top: 0.7rem;
+}
+.lesson49 .l49-timeline-rail::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0.35rem;
+  inset-inline: 1rem;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, var(--l49-line-strong) 0 8px, transparent 8px 14px);
+}
+.lesson49 .l49-timeline-rail span {
+  position: relative;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--l49-muted);
+  text-align: center;
+}
+.lesson49 .l49-timeline-rail span::before {
+  content: "";
+  position: absolute;
+  inset-block-start: -0.62rem;
+  inset-inline-start: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--l49-signal);
+  transform: translateX(50%);
+}
+
+/* تحقيق الأدلة */
+.lesson49 .l49-evidence { display: grid; gap: 0.6rem; }
+.lesson49 .l49-evidence-card {
+  position: relative;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.4rem;
+  background: #fffdf7;
+  padding: 0.7rem 0.8rem;
+  display: grid;
+  gap: 0.45rem;
+}
+.lesson49 .l49-evidence-card::before {
+  content: "EXHIBIT";
+  position: absolute;
+  inset-block-start: 0.55rem;
+  inset-inline-end: 0.7rem;
+  font-family: "Courier New", "Deck49Latin", monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
+  color: var(--l49-line-strong);
+}
+.lesson49 .l49-evidence-clue { font-size: 0.9rem; line-height: 1.75; color: var(--l49-ink); font-weight: 700; }
+.lesson49 .l49-evidence-clue .l49-en { font-weight: 700; }
+.lesson49 .l49-evidence-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); gap: 0.3rem; }
+.lesson49 .l49-evidence-option {
+  border: 1px solid var(--l49-line-strong);
+  border-radius: 0.28rem;
+  background: #fffdf7;
+  padding: 0.4rem 0.5rem;
+  display: grid;
+  gap: 0.12rem;
+  text-align: start;
+}
+.lesson49 .l49-evidence-option .l49-en { font-size: 0.78rem; font-weight: 800; color: var(--tone-ink); }
+.lesson49 .l49-evidence-option small { font-size: 0.62rem; color: var(--l49-muted); }
+.lesson49 .l49-evidence-option:hover { background: var(--tone-soft); }
+.lesson49 .l49-evidence-option[aria-pressed="true"] { border-color: var(--tone); background: var(--tone-soft); box-shadow: inset 0 0 0 1px var(--tone); }
+.lesson49 .l49-evidence-feedback {
+  border-radius: 0.24rem;
+  padding: 0.42rem 0.55rem;
+  font-size: 0.78rem;
+  line-height: 1.7;
+}
+.lesson49 .l49-evidence-feedback.is-correct { background: #e8f5ee; border: 1px solid #b7ddc8; color: #14523b; }
+.lesson49 .l49-evidence-feedback.is-retry { background: #fbf0e4; border: 1px solid #e8cfae; color: #6b3d15; }
+.lesson49 .l49-evidence-strength { display: inline-flex; gap: 2px; vertical-align: middle; }
+.lesson49 .l49-evidence-strength i { width: 5px; height: 10px; background: var(--l49-line-strong); border-radius: 1px; }
+.lesson49 .l49-evidence-strength i.on { background: var(--tone); }
+
+/* كاشف المعنى */
+.lesson49 .l49-detector { display: grid; gap: 0.55rem; }
+.lesson49 .l49-detector-card { border: 1px solid var(--l49-line); border-radius: 0.4rem; background: #fffdf7; padding: 0.65rem 0.75rem; display: grid; gap: 0.4rem; }
+.lesson49 .l49-detector-sentence { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 1rem; font-weight: 700; color: var(--l49-ink); line-height: 1.5; }
+.lesson49 .l49-detector-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 128px), 1fr)); gap: 0.26rem; }
+.lesson49 .l49-detector-option {
+  border: 1px solid var(--l49-line-strong);
+  border-radius: 0.24rem;
+  background: #fffdf7;
+  padding: 0.32rem 0.38rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--l49-body);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.lesson49 .l49-detector-option:hover { background: var(--tone-soft); }
+.lesson49 .l49-detector-option[aria-pressed="true"] { background: var(--tone-soft); border-color: var(--tone); color: var(--tone-ink); box-shadow: inset 0 0 0 1px var(--tone); }
+.lesson49 .l49-detector-feedback { border-radius: 0.22rem; padding: 0.38rem 0.5rem; font-size: 0.76rem; line-height: 1.7; }
+.lesson49 .l49-detector-feedback.is-correct { background: #e8f5ee; border: 1px solid #b7ddc8; color: #14523b; }
+.lesson49 .l49-detector-feedback.is-retry { background: #fbf0e4; border: 1px solid #e8cfae; color: #6b3d15; }
+
+/* ورشة V3 */
+.lesson49 .l49-v3 { display: grid; gap: 0.55rem; }
+.lesson49 .l49-v3-legend { display: flex; flex-wrap: wrap; gap: 0.35rem; font-size: 0.7rem; color: var(--l49-muted); }
+.lesson49 .l49-v3-legend span { border: 1px solid var(--l49-line); border-radius: 0.2rem; padding: 0.14rem 0.4rem; background: #fbf6e9; }
+.lesson49 .l49-v3-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 0.4rem; }
+.lesson49 .l49-v3-card { border: 1px solid var(--l49-line); border-radius: 0.34rem; background: #fffdf7; padding: 0.55rem 0.6rem; display: grid; gap: 0.3rem; }
+.lesson49 .l49-v3-base { display: flex; align-items: baseline; justify-content: space-between; gap: 0.3rem; }
+.lesson49 .l49-v3-base .l49-en { font-size: 0.78rem; font-weight: 800; color: var(--l49-body); }
+.lesson49 .l49-v3-base small { font-size: 0.64rem; color: var(--l49-muted); }
+.lesson49 .l49-v3-sentence { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.84rem; color: var(--l49-ink); line-height: 1.5; }
+.lesson49 .l49-v3-sentence b { color: var(--l49-signal); }
+.lesson49 .l49-v3-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.28rem; align-items: center; }
+.lesson49 .l49-v3-verdict { font-size: 0.7rem; font-weight: 800; }
+.lesson49 .l49-v3-verdict.is-correct { color: #14523b; }
+.lesson49 .l49-v3-verdict.is-wrong { color: #8a3020; }
+.lesson49 .l49-v3-card.is-correct { border-color: #9fceb8; background: #f4fbf7; }
+.lesson49 .l49-v3-card.is-wrong { border-color: #e5b9a9; background: #fdf5f1; }
+.lesson49 .l49-v3-form-table { display: grid; grid-template-columns: repeat(10, minmax(4.2rem, 1fr)); gap: 0.2rem; overflow-x: auto; padding-bottom: 0.2rem; }
+.lesson49 .l49-v3-form {
+  border: 1px solid var(--l49-line);
+  border-radius: 0.22rem;
+  background: #fbf6e9;
+  padding: 0.34rem 0.4rem;
+  text-align: center;
+  min-width: 4.2rem;
+}
+.lesson49 .l49-v3-form b { display: block; font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.72rem; color: var(--l49-ink); }
+.lesson49 .l49-v3-form span { display: block; font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.64rem; color: var(--l49-muted); }
+.lesson49 .l49-v3-form.is-third { border-color: var(--l49-signal); background: #fbf2d9; }
+
+/* جدار الأخطاء */
+.lesson49 .l49-error-wall { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 0.45rem; }
+.lesson49 .l49-error-card { border: 1px solid #e6c8bc; border-radius: 0.34rem; background: #fdf7f2; padding: 0.6rem 0.65rem; display: grid; gap: 0.24rem; }
+.lesson49 .l49-error-card h3 { font-size: 0.82rem; font-weight: 800; color: #7c3720; }
+.lesson49 .l49-error-bad, .lesson49 .l49-error-good { font-family: "Deck49Latin", "Rubik", sans-serif; font-size: 0.82rem; line-height: 1.5; }
+.lesson49 .l49-error-bad { color: #953a22; text-decoration: line-through; text-decoration-thickness: 1px; }
+.lesson49 .l49-error-good { color: #14523b; font-weight: 700; }
+.lesson49 .l49-error-why { font-size: 0.73rem; line-height: 1.65; color: var(--l49-muted); }
+
+/* خريطة المعاني التسعة/العشرة */
+.lesson49 .l49-clue {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.6rem;
+  font-size: 0.74rem;
+  color: var(--l49-muted);
+  border-top: 1px dashed var(--l49-line-strong);
+  padding-top: 0.35rem;
+}
+.lesson49 .l49-clue b { color: var(--l49-body); }
+.lesson49 .l49-diff {
+  font-size: 0.75rem;
+  line-height: 1.7;
+  color: var(--tone-ink);
+  background: var(--tone-soft);
+  border-radius: 0.24rem;
+  padding: 0.35rem 0.5rem;
+}
+
+/* بداية المرحلة الثالثة */
+.lesson49 .l49-stage { display: grid; gap: 0.6rem; }
+.lesson49 .l49-stage-banner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: center;
+  border: 1px solid var(--l49-line-strong);
+  border-radius: 0.4rem;
+  background: #fbf6e9;
+  padding: 0.6rem 0.7rem;
+}
+.lesson49 .l49-stage-badge {
+  display: grid;
+  place-items: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border: 2px solid var(--l49-signal);
+  border-radius: 9999px;
+  color: var(--l49-signal);
+  font-family: "Courier New", "Deck49Latin", monospace;
+  font-weight: 700;
+  font-size: 0.66rem;
+  text-align: center;
+  line-height: 1.1;
+  transform: rotate(-6deg);
+}
+.lesson49 .l49-stage-banner h2 { font-size: 1rem; font-weight: 800; color: var(--l49-ink); }
+.lesson49 .l49-stage-banner p { font-size: 0.78rem; color: var(--l49-muted); line-height: 1.65; }
+.lesson49 .l49-stage-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); gap: 0.35rem; }
+.lesson49 .l49-stage-step { border: 1px dashed var(--l49-line-strong); border-radius: 0.3rem; padding: 0.45rem 0.5rem; background: #fffdf7; }
+.lesson49 .l49-stage-step b { display: block; font-size: 0.7rem; color: var(--l49-signal); font-family: "Courier New", "Deck49Latin", monospace; letter-spacing: 0.08em; }
+.lesson49 .l49-stage-step span { font-size: 0.76rem; line-height: 1.6; color: var(--l49-body); }
+
+/* تحدي القراءة */
+.lesson49 .l49-challenge { display: grid; gap: 0.5rem; }
+.lesson49 .l49-challenge-q { border: 1px solid var(--l49-line); border-radius: 0.36rem; background: #fffdf7; padding: 0.55rem 0.65rem; display: grid; gap: 0.35rem; }
+.lesson49 .l49-challenge-q > p { font-size: 0.82rem; line-height: 1.7; color: var(--l49-ink); }
+.lesson49 .l49-challenge-options { display: grid; gap: 0.22rem; }
+.lesson49 .l49-challenge-options button {
+  border: 1px solid var(--l49-line-strong);
+  border-radius: 0.22rem;
+  background: #fffdf7;
+  padding: 0.32rem 0.45rem;
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--l49-body);
+  text-align: start;
+}
+.lesson49 .l49-challenge-options button:hover { background: #f7f0df; }
+.lesson49 .l49-challenge-options button[aria-pressed="true"] { border-color: var(--l49-deep); background: #eef1ea; }
+.lesson49 .l49-challenge-feedback { font-size: 0.72rem; line-height: 1.65; border-radius: 0.2rem; padding: 0.32rem 0.45rem; }
+.lesson49 .l49-challenge-feedback.is-correct { background: #e8f5ee; color: #14523b; border: 1px solid #b7ddc8; }
+.lesson49 .l49-challenge-feedback.is-retry { background: #fbf0e4; color: #6b3d15; border: 1px solid #e8cfae; }
+
+/* مهمة التحدث */
+.lesson49 .l49-speaking { display: grid; gap: 0.45rem; border: 1px dashed var(--l49-line-strong); border-radius: 0.36rem; background: #fbf6e9; padding: 0.6rem 0.7rem; }
+.lesson49 .l49-speaking h3 { font-size: 0.86rem; font-weight: 800; color: var(--l49-ink); }
+.lesson49 .l49-speaking ol { display: grid; gap: 0.25rem; }
+.lesson49 .l49-speaking li { display: grid; grid-template-columns: 1.1rem minmax(0, 1fr); gap: 0.25rem; font-size: 0.76rem; line-height: 1.65; color: var(--l49-body); }
+.lesson49 .l49-speaking li span:first-child { font-family: "Deck49Latin", "Rubik", sans-serif; font-weight: 800; color: var(--l49-signal); }
+
+/* ملاحظات ووسوم سياقية */
+.lesson49 .l49-context {
+  border: 1px solid var(--l49-line);
+  border-inline-start: 4px solid var(--tone);
+  border-radius: 0.25rem;
+  background: #fffdf7;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--l49-body);
+}
+.lesson49 .l49-context b { color: var(--tone-ink); }
+.lesson49 .l49-rule-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 0.35rem; }
+.lesson49 .l49-rule-step {
+  position: relative;
+  border: 1px solid var(--l49-line);
+  border-radius: 0.3rem;
+  background: #fffdf7;
+  padding: 0.5rem 0.55rem 0.5rem 0.55rem;
+}
+.lesson49 .l49-rule-step b { display: block; font-size: 0.78rem; color: var(--l49-ink); }
+.lesson49 .l49-rule-step span { font-size: 0.72rem; line-height: 1.6; color: var(--l49-muted); }
+.lesson49 .l49-rule-step em { display: block; font-style: normal; font-family: "Courier New", "Deck49Latin", monospace; font-size: 0.62rem; letter-spacing: 0.12em; color: var(--l49-signal); }
+
+/* استجابة الهاتف */
+@media (max-width: 860px) {
+  .lesson49 .l49-cover { grid-template-columns: 1fr; }
+  .lesson49 .l49-cover-stamp { position: static; width: 4.2rem; height: 4.2rem; font-size: 0.46rem; margin-top: 0.2rem; }
+  .lesson49 .l49-cover-stamp b { font-size: 0.7rem; }
+  .lesson49 .l49-v3-form-table { grid-template-columns: repeat(10, minmax(3.6rem, 1fr)); }
+}
+@media (max-width: 480px) {
+  .lesson49 .l49-sheet { padding: 0.9rem 0.75rem 0.95rem; }
+  .lesson49 .l49-cover { padding: 1.05rem 0.8rem; }
+  .lesson49 .l49-cover::before { inset-inline-start: 0.8rem; font-size: 0.54rem; }
+  .lesson49 .l49-timeline-sentences { grid-template-columns: 1fr; }
+  .lesson49 .l49-detector-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lesson49 .l49-evidence-options { grid-template-columns: 1fr; }
+  .lesson49 .l49-deck-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lesson49 .l49-cover-stamp { transform: none; }
+}
+
+/* ============================================================
+   الغلاف: ملف التحقيق + بطاقة الأدلة
+   ============================================================ */
+.lesson49 .l49-cover { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); gap: clamp(1.4rem, 3vw, 3rem); align-items: center; min-height: 100%; padding: clamp(1rem, 3vw, 2rem) 0; }
+.lesson49 .l49-cover-main { display: flex; flex-direction: column; gap: 1rem; }
+.lesson49 .l49-cover-kicker { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.lesson49 .l49-cover-chip { border: 1px solid var(--l49-line-strong); background: var(--l49-paper); color: var(--l49-body); padding: 0.32rem 0.7rem; border-radius: 999px; font-size: 0.74rem; font-weight: 800; letter-spacing: 0.02em; }
+.lesson49 .l49-cover-chip--dark { background: var(--l49-deep); border-color: var(--l49-deep); color: #f6efdf; }
+.lesson49 .l49-cover-chip--stamp { color: var(--l49-stamp); border: 1.5px dashed var(--l49-stamp); background: #fbf1ec; transform: rotate(-1.6deg); }
+.lesson49 .l49-cover h1 { font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.08; font-weight: 800; letter-spacing: -0.02em; }
+.lesson49 .l49-cover-accent { color: var(--l49-signal-2); text-decoration: underline; text-decoration-thickness: 6px; text-decoration-color: rgba(154, 106, 28, 0.42); text-underline-offset: 0.12em; }
+.lesson49 .l49-cover-sub { font-size: clamp(1rem, 1.6vw, 1.2rem); color: var(--l49-body); font-weight: 700; line-height: 1.75; max-width: 36rem; }
+.lesson49 .l49-cover-title { display: flex; flex-direction: column; gap: 0.2rem; border-inline-start: 4px solid var(--l49-signal); padding-inline-start: 0.9rem; }
+.lesson49 .l49-cover-title span { font-family: "Deck49Latin", sans-serif; font-size: clamp(1.1rem, 2.2vw, 1.6rem); font-weight: 800; letter-spacing: 0.12em; color: var(--l49-ink); }
+.lesson49 .l49-cover-title em { font-family: "Deck49Latin", sans-serif; font-style: normal; font-size: 0.78rem; letter-spacing: 0.24em; color: var(--l49-muted); }
+.lesson49 .l49-cover-lead { color: var(--l49-body); line-height: 1.9; max-width: 38rem; }
+.lesson49 .l49-cover-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.3rem; }
+.lesson49 .l49-cover-foot { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.lesson49 .l49-cover-foot span { font-size: 0.72rem; font-weight: 700; color: var(--l49-muted); border-top: 1px solid var(--l49-line); padding-top: 0.35rem; margin-inline-end: 1rem; }
+.lesson49 .l49-cover-dossier { background: var(--l49-paper); border: 1px solid var(--l49-line-strong); border-radius: 0.55rem; box-shadow: var(--l49-shadow-soft); padding: 1rem; position: relative; transform: rotate(0.4deg); }
+.lesson49 .l49-cover-dossier::before { content: ""; position: absolute; inset: -7px 7px 7px -7px; border: 1px dashed var(--l49-line-strong); border-radius: 0.6rem; z-index: -1; }
+.lesson49 .l49-dossier-head { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--l49-line); padding-bottom: 0.6rem; font-family: "Deck49Latin", sans-serif; font-size: 0.7rem; letter-spacing: 0.16em; font-weight: 800; color: var(--l49-muted); }
+.lesson49 .l49-dossier-stamp { color: var(--l49-stamp); border: 2px solid var(--l49-stamp); padding: 0.1rem 0.35rem; border-radius: 0.25rem; transform: rotate(-4deg); font-size: 0.66rem; letter-spacing: 0.2em; }
+.lesson49 .l49-dossier-row { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; border-bottom: 1px dashed var(--l49-line); padding: 0.5rem 0; }
+.lesson49 .l49-dossier-label { font-family: "Deck49Latin", sans-serif; font-size: 0.6rem; letter-spacing: 0.16em; color: var(--l49-muted); font-weight: 800; }
+.lesson49 .l49-dossier-value { font-size: 0.85rem; font-weight: 700; color: var(--l49-body); text-align: end; }
+.lesson49 .l49-dossier-formula { font-family: "Deck49Latin", sans-serif; direction: ltr; color: var(--l49-signal-2); letter-spacing: 0.04em; }
+.lesson49 .l49-dossier-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.4rem; margin-top: 0.65rem; }
+.lesson49 .l49-dossier-tile { border: 1px solid var(--tone-line); background: var(--tone-soft); color: var(--tone-ink); border-radius: 0.4rem; padding: 0.45rem 0.5rem; display: grid; gap: 0.15rem; }
+.lesson49 .l49-dossier-tile > span[aria-hidden] { font-size: 0.8rem; opacity: 0.85; }
+.lesson49 .l49-dossier-tile .l49-en { font-size: 0.72rem; font-weight: 700; text-align: start; }
+.lesson49 .l49-dossier-tile small { font-size: 0.64rem; font-weight: 700; color: var(--l49-muted); }
+.lesson49 .l49-dossier-timeline { display: grid; grid-template-columns: auto 1fr auto 1fr auto; gap: 0.35rem; align-items: center; margin-top: 0.8rem; font-size: 0.56rem; letter-spacing: 0.1em; color: var(--l49-muted); font-weight: 800; }
+.lesson49 .l49-dossier-timeline i { display: block; height: 1px; background: var(--l49-line-strong); position: relative; }
+.lesson49 .l49-dossier-timeline i::after { content: ""; position: absolute; inset-inline-end: 0; top: -2px; width: 5px; height: 5px; border-radius: 50%; background: var(--l49-signal-2); }
+.lesson49 .l49-dossier-hint { margin-top: 0.75rem; font-family: "Deck49Latin", sans-serif; font-size: 0.66rem; line-height: 1.5; color: var(--l49-muted); border-top: 1px solid var(--l49-line); padding-top: 0.55rem; letter-spacing: 0.02em; }
+
+/* ============================================================
+   الأهداف والمرحلة
+   ============================================================ */
+.lesson49 .l49-goals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.55rem; }
+.lesson49 .l49-goal { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.6rem; align-items: start; background: var(--l49-paper); border: 1px solid var(--l49-line); border-radius: 0.6rem; padding: 0.65rem 0.7rem; line-height: 1.7; font-size: 0.84rem; }
+.lesson49 .l49-goal-n { font-family: "Deck49Latin", sans-serif; font-size: 0.66rem; font-weight: 800; color: var(--l49-signal); border: 1px solid var(--l49-line-strong); border-radius: 999px; width: 2rem; height: 2rem; display: grid; place-items: center; background: var(--l49-panel); }
+.lesson49 .l49-phase-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; margin-top: 0.9rem; }
+.lesson49 .l49-phase-facts > div { border: 1px solid var(--l49-line); background: var(--l49-paper); border-radius: 0.55rem; padding: 0.6rem 0.7rem; display: grid; gap: 0.2rem; }
+.lesson49 .l49-phase-facts > div > span[aria-hidden] { font-family: "Deck49Latin", sans-serif; color: var(--l49-signal); font-size: 0.62rem; font-weight: 800; }
+.lesson49 .l49-phase-facts p { font-size: 0.78rem; color: var(--l49-body); line-height: 1.6; }
+
+/* ============================================================
+   الخلاصة وإنجاز المرحلة وخريطة الطريق
+   ============================================================ */
+.lesson49 .l49-summary { display: grid; gap: 0.9rem; }
+.lesson49 .l49-summary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; }
+.lesson49 .l49-summary-row { display: grid; grid-template-columns: 1.7rem minmax(0, 1fr); gap: 0.5rem; border: 1px solid var(--tone-line); background: var(--l49-paper); border-radius: 0.55rem; padding: 0.55rem 0.65rem; border-inline-start: 4px solid var(--tone); }
+.lesson49 .l49-summary-glyph { color: var(--tone-strong); font-size: 0.95rem; }
+.lesson49 .l49-summary-form { font-size: 0.8rem; font-weight: 800; color: var(--l49-ink); }
+.lesson49 .l49-summary-ar { font-size: 0.76rem; color: var(--l49-body); margin-top: 0.1rem; }
+.lesson49 .l49-summary-ex { font-family: "Deck49Latin", sans-serif; font-size: 0.72rem; color: var(--l49-muted); margin-top: 0.2rem; direction: ltr; }
+.lesson49 .l49-summary-compare { border-top: 2px solid var(--l49-ink); padding-top: 0.8rem; }
+.lesson49 .l49-summary-compare ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.4rem 0.8rem; margin-top: 0.5rem; }
+.lesson49 .l49-summary-compare li { display: grid; grid-template-columns: 1.3rem minmax(0, 1fr); gap: 0.35rem; font-size: 0.76rem; line-height: 1.6; border-bottom: 1px dashed var(--l49-line); padding-bottom: 0.35rem; }
+.lesson49 .l49-summary-compare li .l49-en { grid-column: 2; font-weight: 700; }
+.lesson49 .l49-summary-compare li > span:last-child { grid-column: 2; color: var(--l49-body); }
+.lesson49 .l49-phase-head { display: flex; align-items: center; gap: 1rem; }
+.lesson49 .l49-phase-stamp { width: 4.4rem; height: 4.4rem; border: 2px solid var(--l49-signal-2); color: var(--l49-signal-2); border-radius: 50%; display: grid; place-items: center; font-family: "Deck49Latin", sans-serif; font-size: 1.5rem; font-weight: 800; transform: rotate(-6deg); flex: 0 0 auto; background: var(--l49-paper); }
+.lesson49 .l49-phase-head h2 { font-size: clamp(1.3rem, 2.4vw, 1.8rem); font-weight: 800; margin-top: 0.15rem; }
+.lesson49 .l49-phase-head p { color: var(--l49-body); font-size: 0.85rem; margin-top: 0.2rem; }
+.lesson49 .l49-phase-numbers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; margin-top: 1rem; }
+.lesson49 .l49-phase-numbers > div { background: var(--l49-paper); border: 1px solid var(--l49-line); border-radius: 0.6rem; padding: 0.7rem; text-align: center; }
+.lesson49 .l49-phase-big { display: block; font-family: "Deck49Latin", sans-serif; font-size: clamp(1.05rem, 2vw, 1.5rem); font-weight: 800; color: var(--l49-deep); direction: ltr; }
+.lesson49 .l49-phase-numbers span { font-size: 0.7rem; color: var(--l49-muted); font-weight: 700; }
+.lesson49 .l49-phase-track { height: 0.7rem; border-radius: 999px; background: var(--l49-line); overflow: hidden; margin-top: 0.9rem; }
+.lesson49 .l49-phase-track > div { height: 100%; background: linear-gradient(to left, var(--l49-signal-2), var(--l49-signal)); }
+.lesson49 .l49-roadmap { display: grid; gap: 1rem; max-width: 52rem; margin: 0 auto; padding: 1rem 0; }
+.lesson49 .l49-roadmap-card { background: var(--l49-paper); border: 1px solid var(--l49-line-strong); border-radius: 0.8rem; box-shadow: var(--l49-shadow); padding: clamp(1rem, 3vw, 2rem); position: relative; overflow: hidden; }
+.lesson49 .l49-roadmap-card::after { content: ""; position: absolute; inset-block-start: 0; inset-inline-start: 0; width: 9rem; height: 9rem; background: radial-gradient(circle at 0 0, rgba(15, 111, 104, 0.12), transparent 70%); pointer-events: none; }
+.lesson49 .l49-roadmap-no { display: block; font-family: "Deck49Latin", sans-serif; font-size: clamp(3.4rem, 9vw, 5.6rem); line-height: 0.9; font-weight: 800; color: var(--l49-line-strong); letter-spacing: -0.04em; }
+.lesson49 .l49-roadmap-card h2 { font-size: clamp(1.2rem, 2.6vw, 1.8rem); margin-top: 0.2rem; }
+.lesson49 .l49-roadmap-card h2 .l49-en { font-weight: 800; }
+.lesson49 .l49-roadmap-card > p { color: var(--l49-body); line-height: 1.9; margin-top: 0.5rem; max-width: 38rem; }
+.lesson49 .l49-roadmap-links { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+.lesson49 .l49-roadmap-links span { border: 1px solid var(--l49-line); background: var(--l49-panel); border-radius: 999px; font-family: "Deck49Latin", sans-serif; font-size: 0.64rem; font-weight: 800; letter-spacing: 0.08em; padding: 0.22rem 0.6rem; color: var(--l49-muted); }
+.lesson49 .l49-roadmap-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 1rem; align-items: center; }
+.lesson49 .l49-roadmap-note { display: flex; gap: 0.7rem; align-items: flex-start; background: var(--l49-deep); color: #efe6d3; border-radius: 0.7rem; padding: 0.75rem 0.9rem; font-size: 0.8rem; line-height: 1.8; }
+.lesson49 .l49-roadmap-note > span { font-size: 1.2rem; }
+.lesson49 .l49-roadmap-note .l49-en { color: #f3d9a0; }
+
+/* ============================================================
+   أدوات مشتركة ظهرت في مكوّنات جديدة
+   ============================================================ */
+.lesson49 .l49-timeline-sentence-en { direction: ltr; font-family: "Deck49Latin", sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--l49-ink); }
+.lesson49 .l49-tip-text { display: grid; gap: 0.2rem; }
+.lesson49 .l49-formula-row--plain { flex-wrap: wrap; }
+.lesson49 .l49-table-corner { color: var(--l49-line-strong); }
+.lesson49 .l49-examples--comparison .l49-example { border-inline-start-width: 4px; }
+
+/* لوحة الإتقان: المختبرات */
+.lesson49 .l49-dashboard-labs { margin-top: 0.9rem; border-top: 1px dashed var(--l49-line-strong); padding-top: 0.7rem; }
+.lesson49 .l49-dashboard-labs ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.35rem 0.9rem; margin-top: 0.45rem; }
+.lesson49 .l49-dashboard-labs li { font-size: 0.78rem; color: var(--l49-body); display: flex; gap: 0.4rem; justify-content: space-between; border-bottom: 1px dotted var(--l49-line); padding-bottom: 0.25rem; }
+.lesson49 .l49-dashboard-labs li bdi { font-family: "Deck49Latin", sans-serif; color: var(--l49-ink); font-weight: 700; }
+
+/* ============================================================
+   الاختبار النهائي
+   ============================================================ */
+.lesson49 .l49-test { display: grid; gap: 0.9rem; }
+.lesson49 .l49-test-status { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.4rem; border: 1px solid var(--l49-line-strong); background: var(--l49-panel); border-radius: 0.55rem; padding: 0.55rem 0.75rem; font-size: 0.76rem; font-weight: 700; color: var(--l49-body); }
+.lesson49 .l49-test-level { border: 1px solid var(--l49-line); border-radius: 0.7rem; background: var(--l49-paper); overflow: hidden; }
+.lesson49 .l49-test-level-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.6rem; align-items: flex-start; padding: 0.75rem 0.9rem; background: linear-gradient(180deg, rgba(33, 48, 47, 0.06), transparent); border-bottom: 1px solid var(--l49-line); }
+.lesson49 .l49-test-level-no { font-family: "Deck49Latin", sans-serif; font-size: 0.62rem; letter-spacing: 0.14em; font-weight: 800; color: var(--l49-signal-2); display: block; }
+.lesson49 .l49-test-level-head h3 { font-size: 1.02rem; font-weight: 800; margin-top: 0.1rem; }
+.lesson49 .l49-test-level-head p { font-size: 0.76rem; color: var(--l49-muted); margin-top: 0.2rem; line-height: 1.6; }
+.lesson49 .l49-test-level-meta { display: grid; gap: 0.15rem; justify-items: end; font-size: 0.7rem; font-weight: 700; color: var(--l49-muted); text-align: end; }
+.lesson49 .l49-test-level-meta .l49-en { font-size: 0.6rem; letter-spacing: 0.12em; color: var(--l49-signal); font-weight: 800; }
+.lesson49 .l49-test-level-meta bdi { font-family: "Deck49Latin", sans-serif; direction: ltr; color: var(--l49-deep); }
+.lesson49 .l49-test-q { padding: 0.75rem 0.9rem; border-bottom: 1px solid var(--l49-line); display: grid; gap: 0.5rem; }
+.lesson49 .l49-test-q:last-child { border-bottom: 0; }
+.lesson49 .l49-test-q.is-correct { background: #f3faf4; }
+.lesson49 .l49-test-q.is-wrong { background: #fdf4f0; }
+.lesson49 .l49-test-q.is-correct .l49-question-number { border-color: #46916a; color: #2b6b48; }
+.lesson49 .l49-test-q.is-wrong .l49-question-number { border-color: #c07552; color: #8c3f22; }
+.lesson49 .l49-test-hint { font-size: 0.74rem; font-weight: 700; color: var(--l49-signal); background: #fbf4e4; border: 1px dashed var(--l49-line-strong); border-radius: 0.4rem; padding: 0.35rem 0.55rem; line-height: 1.7; }
+.lesson49 .l49-test-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.4rem; }
+.lesson49 .l49-test-option { display: flex; align-items: center; gap: 0.4rem; border: 1px solid var(--l49-line-strong); background: var(--l49-paper); border-radius: 0.45rem; padding: 0.45rem 0.5rem; text-align: start; font-size: 0.8rem; color: var(--l49-body); transition: border-color 0.15s ease, background 0.15s ease; }
+.lesson49 .l49-test-option:hover:not(:disabled) { border-color: var(--l49-signal); background: #fdf8ec; }
+.lesson49 .l49-test-option[aria-pressed="true"] { border-color: var(--l49-signal-2); background: #eaf5f2; box-shadow: inset 0 0 0 1px var(--l49-signal-2); }
+.lesson49 .l49-test-option:disabled { opacity: 0.85; cursor: default; }
+.lesson49 .l49-test-feedback { border-top: 1px dashed var(--l49-line-strong); padding-top: 0.5rem; display: grid; gap: 0.25rem; font-size: 0.78rem; line-height: 1.75; color: var(--l49-body); }
+.lesson49 .l49-test-feedback strong { color: var(--l49-ink); }
+.lesson49 .l49-test-verdict { font-weight: 800; font-size: 0.8rem; }
+.lesson49 .l49-test-verdict.is-correct { color: #2b6b48; }
+.lesson49 .l49-test-verdict.is-wrong { color: #8c3f22; }
+.lesson49 .l49-test-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; border-top: 2px solid var(--l49-ink); padding-top: 0.8rem; }
+.lesson49 .l49-test-note { font-size: 0.74rem; color: var(--l49-muted); font-weight: 700; }
+.lesson49 .l49-test-error { border: 1px solid #d8a58e; background: #fdf1ea; color: #7a3018; border-radius: 0.45rem; padding: 0.55rem 0.7rem; font-size: 0.8rem; line-height: 1.7; }
+.lesson49 .l49-test-error .l49-text-button { color: #7a3018; text-decoration: underline; }
+.lesson49 .l49-test-result { border: 1px solid var(--l49-line-strong); border-radius: 0.7rem; background: var(--l49-paper); padding: 0.9rem; display: grid; gap: 0.8rem; }
+.lesson49 .l49-test-score { display: grid; gap: 0.3rem; }
+.lesson49 .l49-test-score-value { font-family: "Deck49Latin", sans-serif; font-size: clamp(1.8rem, 5vw, 2.7rem); font-weight: 800; color: var(--l49-deep); direction: ltr; line-height: 1; }
+.lesson49 .l49-test-score p { font-size: 0.78rem; color: var(--l49-body); line-height: 1.7; }
+.lesson49 .l49-score-track { height: 0.55rem; background: var(--l49-line); border-radius: 999px; overflow: hidden; }
+.lesson49 .l49-score-track > div { height: 100%; background: linear-gradient(to left, var(--l49-signal-2), var(--l49-signal)); }
+.lesson49 .l49-test-levels { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.4rem; }
+.lesson49 .l49-test-levels > div { border: 1px solid var(--l49-line); background: var(--l49-panel); border-radius: 0.45rem; padding: 0.45rem 0.5rem; display: grid; gap: 0.15rem; font-size: 0.7rem; font-weight: 700; color: var(--l49-muted); }
+.lesson49 .l49-test-levels bdi { font-family: "Deck49Latin", sans-serif; color: var(--l49-deep); font-size: 0.8rem; }
+
+/* ============================================================
+   مساحة المعلم والدليل
+   ============================================================ */
+.lesson49 .l49-teacher { display: grid; gap: 0.8rem; }
+.lesson49 .l49-teacher--locked, .lesson49 .l49-teacher--waiting { border: 1px dashed var(--l49-line-strong); border-radius: 0.7rem; background: var(--l49-panel); padding: 1rem; align-content: start; }
+.lesson49 .l49-teacher--waiting { grid-template-columns: auto minmax(0, 1fr); align-items: start; }
+.lesson49 .l49-teacher--waiting .l49-button { grid-column: 2; justify-self: start; }
+.lesson49 .l49-teacher-note { display: flex; gap: 0.8rem; align-items: flex-start; }
+.lesson49 .l49-teacher-note h2 { font-size: 1.2rem; font-weight: 800; }
+.lesson49 .l49-teacher-note p { font-size: 0.8rem; line-height: 1.8; color: var(--l49-body); margin-top: 0.25rem; }
+.lesson49 .l49-teacher-stamp { font-size: 1.4rem; width: 3.2rem; height: 3.2rem; border: 2px solid var(--l49-stamp); color: var(--l49-stamp); border-radius: 50%; display: grid; place-items: center; flex: 0 0 auto; background: var(--l49-paper); }
+.lesson49 .l49-teacher-form { display: grid; gap: 0.4rem; max-width: 26rem; }
+.lesson49 .l49-teacher-form label { font-size: 0.78rem; font-weight: 800; color: var(--l49-body); }
+.lesson49 .l49-teacher-row { display: flex; gap: 0.4rem; align-items: stretch; }
+.lesson49 .l49-teacher-row input { flex: 1; }
+.lesson49 .l49-teacher-error { color: #8c3f22; font-size: 0.76rem; font-weight: 700; }
+.lesson49 .l49-teacher-head { display: flex; justify-content: space-between; gap: 0.8rem; align-items: flex-start; border-bottom: 2px solid var(--l49-ink); padding-bottom: 0.7rem; }
+.lesson49 .l49-teacher-head h2 { font-size: 1.15rem; font-weight: 800; margin-top: 0.1rem; }
+.lesson49 .l49-teacher-head p { font-size: 0.78rem; color: var(--l49-body); line-height: 1.7; margin-top: 0.2rem; }
+.lesson49 .l49-teacher-loading { font-size: 0.8rem; color: var(--l49-muted); }
+.lesson49 .l49-guide { display: grid; gap: 0.8rem; }
+.lesson49 .l49-guide-section { border: 1px solid var(--l49-line); border-radius: 0.6rem; background: var(--l49-paper); padding: 0.8rem; }
+.lesson49 .l49-guide-section h3 { font-size: 0.98rem; font-weight: 800; border-inline-start: 4px solid var(--l49-signal-2); padding-inline-start: 0.55rem; }
+.lesson49 .l49-guide-section > p { font-size: 0.8rem; line-height: 1.85; color: var(--l49-body); margin-top: 0.45rem; }
+.lesson49 .l49-guide-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.35rem; margin-top: 0.5rem; }
+.lesson49 .l49-guide-grid > div { border: 1px solid var(--l49-line); background: var(--l49-panel); border-radius: 0.4rem; padding: 0.4rem; text-align: center; }
+.lesson49 .l49-guide-grid span { display: block; font-size: 0.64rem; color: var(--l49-muted); font-weight: 700; }
+.lesson49 .l49-guide-grid bdi { font-family: "Deck49Latin", sans-serif; font-size: 0.9rem; font-weight: 800; color: var(--l49-deep); }
+.lesson49 .l49-guide-key, .lesson49 .l49-guide-reading { display: grid; gap: 0.55rem; margin-top: 0.5rem; }
+.lesson49 .l49-guide-key > li { border: 1px solid var(--l49-line); border-inline-start: 4px solid var(--l49-line-strong); border-radius: 0.45rem; padding: 0.55rem 0.65rem; font-size: 0.78rem; line-height: 1.75; color: var(--l49-body); }
+.lesson49 .l49-guide-key > li.is-correct { border-inline-start-color: #46916a; background: #f6fbf7; }
+.lesson49 .l49-guide-key > li.is-wrong { border-inline-start-color: #c07552; background: #fdf7f3; }
+.lesson49 .l49-guide-key-head { display: flex; gap: 0.5rem; align-items: baseline; }
+.lesson49 .l49-guide-key-no { font-family: "Deck49Latin", sans-serif; font-size: 0.66rem; font-weight: 800; color: var(--l49-signal); }
+.lesson49 .l49-guide-key-answer { font-weight: 800; color: var(--l49-ink); }
+.lesson49 .l49-guide-key-mark { margin-inline-start: auto; font-size: 0.9rem; }
+.lesson49 .l49-guide-key > li.is-correct .l49-guide-key-mark { color: #2b6b48; }
+.lesson49 .l49-guide-key > li.is-wrong .l49-guide-key-mark { color: #8c3f22; }
+.lesson49 .l49-guide-prompt { font-size: 0.72rem; color: var(--l49-muted); font-family: "Deck49Latin", sans-serif; direction: ltr; text-align: start; margin: 0.15rem 0 0.3rem; }
+.lesson49 .l49-guide-reading > li { border-bottom: 1px dashed var(--l49-line); padding-bottom: 0.45rem; font-size: 0.78rem; line-height: 1.7; }
+.lesson49 .l49-guide-reading p[lang="en"] { font-family: "Deck49Latin", sans-serif; color: var(--l49-body); direction: ltr; text-align: start; }
+.lesson49 .l49-guide-model { background: var(--l49-panel); border: 1px solid var(--l49-line); border-radius: 0.45rem; padding: 0.6rem; line-height: 2; font-size: 0.8rem; }
+.lesson49 .l49-guide-plan { display: grid; gap: 0.4rem; margin-top: 0.45rem; }
+.lesson49 .l49-guide-plan li { font-size: 0.78rem; line-height: 1.75; color: var(--l49-body); border-bottom: 1px dotted var(--l49-line); padding-bottom: 0.3rem; }
+.lesson49 .l49-guide-mini { font-size: 0.72rem !important; color: var(--l49-muted) !important; }
+
+/* ============================================================
+   استجابة
+   ============================================================ */
+@media (max-width: 980px) {
+  .lesson49 .l49-cover { grid-template-columns: minmax(0, 1fr); }
+  .lesson49 .l49-cover-dossier { transform: none; max-width: 34rem; }
+  .lesson49 .l49-summary-grid, .lesson49 .l49-summary-compare ul, .lesson49 .l49-phase-facts { grid-template-columns: minmax(0, 1fr); }
+  .lesson49 .l49-goals { grid-template-columns: minmax(0, 1fr); }
+  .lesson49 .l49-dashboard-labs ul { grid-template-columns: minmax(0, 1fr); }
+  .lesson49 .l49-guide-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .lesson49 .l49-test-options { grid-template-columns: minmax(0, 1fr); }
+  .lesson49 .l49-test-levels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lesson49 .l49-phase-numbers { grid-template-columns: minmax(0, 1fr); }
+  .lesson49 .l49-phase-head { align-items: flex-start; }
+  .lesson49 .l49-phase-stamp { width: 3.6rem; height: 3.6rem; font-size: 1.2rem; }
+  .lesson49 .l49-test-level-head { flex-direction: column; }
+  .lesson49 .l49-test-level-meta { justify-items: start; text-align: start; }
+  .lesson49 .l49-teacher--waiting { grid-template-columns: minmax(0, 1fr); }
+  .lesson49 .l49-teacher--waiting .l49-button { grid-column: 1; }
+  .lesson49 .l49-cover-actions .l49-button, .lesson49 .l49-roadmap-actions .l49-button { flex: 1 1 100%; justify-content: center; }
+  .lesson49 .l49-guide-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+  .lesson49 .l49-dossier-tiles { grid-template-columns: minmax(0, 1fr); }
+  .lesson49 .l49-cover h1 { font-size: 2.05rem; }
+  .lesson49 .l49-cover-title span { font-size: 0.95rem; }
+  .lesson49 .l49-dossier-timeline { font-size: 0.5rem; }
+}
+
+/* V3 revision table: adapt to the available width instead of forcing ten columns. */
+.lesson49 .l49-v3-form-table { grid-template-columns: repeat(auto-fit, minmax(3.4rem, 1fr)); overflow-x: visible; }
+.lesson49 .l49-v3-form { min-width: 0; }
+
+/* Scoped polish: archive palette for the shared progress bar, then alignment. */
+.lesson49 header .bg-gradient-to-l { background-image: linear-gradient(to left, var(--l49-signal-2), var(--l49-signal)) !important; }
+.lesson49 .l49-cover { align-items: start; }
+.lesson49 .l49-test-options { direction: ltr; }
+.lesson49 .l49-test-option { text-align: left; }
+.lesson49 .l49-options[dir="ltr"] { direction: ltr; }
+.lesson49 .l49-options[dir="ltr"] button { text-align: left; }
+.lesson49 .l49-writing-head { align-items: center; }
+
+/* Cover typography: Changa has deep descenders; 1.08 overlapped the chips. */
+.lesson49 .l49-cover { padding: clamp(1rem, 3vw, 2rem) clamp(0.95rem, 3.2vw, 1.8rem); }
+.lesson49 .l49-cover h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.42; }
+@media (max-width: 480px) {
+  .lesson49 .l49-cover h1 { font-size: 2rem; line-height: 1.45; }
+}
+
+/* Formula sheet: English forms on the left, Arabic meaning on the right. */
+.lesson49 .l49-formula-line { display: grid; grid-template-columns: minmax(0, 1fr) minmax(5.5rem, auto); gap: 0.3rem 0.9rem; align-items: baseline; padding-block: 0.34rem; border-bottom: 1px dashed var(--l49-line); }
+.lesson49 .l49-formula-line:last-child { border-bottom: 0; }
+.lesson49 .l49-formula-gloss { font-size: 0.76rem; color: var(--l49-muted); text-align: end; line-height: 1.5; }
+@media (max-width: 560px) {
+  .lesson49 .l49-formula-line { grid-template-columns: 1fr; }
+  .lesson49 .l49-formula-gloss { text-align: start; }
+}
+
+/* Remaining scoped polish after the Chromium walk. */
+.lesson49 .l49-roadmap { background: transparent; color: var(--l49-ink); }
+.lesson49 .l49-roadmap-card h2,
+.lesson49 .l49-roadmap-card h2 .l49-en { color: var(--l49-ink); }
+.lesson49 .l49-teacher-features { display: grid; gap: 0.3rem; margin: 0.9rem 0 0.2rem; padding: 0; list-style: none; }
+.lesson49 .l49-teacher-features li { position: relative; padding-inline-start: 1.1rem; font-size: 0.82rem; line-height: 1.7; color: var(--l49-body); }
+.lesson49 .l49-teacher-features li::before { content: "◆"; position: absolute; inset-inline-start: 0; top: 0.25rem; font-size: 0.58rem; color: var(--l49-signal); }
+@media (min-width: 720px) {
+  .lesson49 .l49-map-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+@media (max-width: 719px) {
+  .lesson49 .l49-map-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 340px) {
+  .lesson49 [data-site-lock-host="pill"] { flex-wrap: nowrap !important; gap: 0.3rem !important; padding-inline: 0.35rem !important; }
+  .lesson49 [data-site-lock-host="pill"] > div:first-child { flex-wrap: nowrap !important; }
+  .lesson49 [data-site-lock-host="pill"] .site-lock-btn { width: 2.45rem; min-width: 2.45rem; min-height: 2.45rem; padding: 0 !important; font-size: 0 !important; }
+  .lesson49 [data-site-lock-host="pill"] .site-lock-btn::before { content: "🔒"; font-size: 0.9rem; }
+  .lesson49 [data-lesson-step-nav] button { padding-inline: 0.62rem; font-size: 0.78rem; }
+}
+
+/* One equation per line keeps multi-part Arabic explanations from reordering as a block. */
+.lesson49 .l49-feedback-line { display: block; }
+
+.lesson49 .l49-dossier-value[dir="ltr"] { text-align: start; }
+.lesson49 .l49-dossier-hint { text-align: start; }

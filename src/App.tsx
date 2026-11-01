@@ -48,6 +48,7 @@ import Lesson46 from "./lessons/lesson46/Lesson46";
 import Lesson47 from "./lessons/lesson47/Lesson47";
 import Lesson48 from "./lessons/lesson48/Lesson48";
 import Lesson49 from "./lessons/lesson49/Lesson49";
+import Lesson50 from "./lessons/lesson50/Lesson50";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -555,6 +556,15 @@ const CARDS: Card[] = [
     href: "#/lesson/49",
     grad: "from-[#21302F] to-[#9A6A1C]",
   },
+  {
+    n: 50,
+    title: "الدرس 50: DEDUCTION & SPECULATION — الاستنتاج والتخمين في الحاضر والماضي",
+    en: "The Deduction Lens — Evidence, Certainty and Time",
+    emoji: "🔎",
+    stats: "46 شريحة · 20 محطة · مقياس الثقة وعدستا الزمن ومختبرات · اختبار 25 سؤالًا",
+    href: "#/lesson/50",
+    grad: "from-[#1B1F3B] to-[#D97706]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -685,6 +695,7 @@ export default function App() {
   else if (route === 47) page = <Lesson47 onExit={goHome} />;
   else if (route === 48) page = <Lesson48 onExit={goHome} />;
   else if (route === 49) page = <Lesson49 onExit={goHome} />;
+  else if (route === 50) page = <Lesson50 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

@@ -331,12 +331,24 @@ const lesson50DedicatedAssessment =
   !lesson50TestData.includes("TEST_SOLUTIONS_50") && !lesson50TestData.includes("modelAnswer") &&
   lesson50Key.includes("TEST_SOLUTIONS_50") && lesson50Key.includes("gradeTest50");
 ok(lesson50DedicatedAssessment, "Lesson 50: 25 questions, four groups, independent test without solution imports");
+// Lesson 51: 25-question / four-group Zero Conditional assessment; semantic and behavioral cases in audit:lesson51.
+const lesson51TestData = readFileSync(join(root, "src/lessons/lesson51/testData51.ts"), "utf8");
+const lesson51TestArea = readFileSync(join(root, "src/lessons/lesson51/TestArea51.tsx"), "utf8");
+const lesson51Key = readFileSync(join(root, "src/lessons/lesson51/testKey51.ts"), "utf8");
+const lesson51DedicatedAssessment =
+  (lesson51TestData.match(/id: "q\d+"/g) || []).length === 25 &&
+  (lesson51TestData.match(/level: \d,/g) || []).length >= 25 &&
+  lesson51TestArea.includes("TEST_LEVELS_51") && lesson51TestArea.includes('import("./testKey51")') &&
+  !lesson51TestArea.includes("TEST_SOLUTIONS_51") &&
+  !lesson51TestData.includes("TEST_SOLUTIONS_51") && !lesson51TestData.includes("modelAnswer") &&
+  lesson51Key.includes("TEST_SOLUTIONS_51") && lesson51Key.includes("gradeTest51");
+ok(lesson51DedicatedAssessment, "Lesson 51: 25 questions, four groups, independent test without solution imports");
 const appLessons = [...new Set([...appSrc.matchAll(/route === (\d+)/g)].map((x) => Number(x[1])))].sort((a, b) => a - b);
 ok(appLessons.length >= 46, `كل دروس التطبيق مسجلة (${appLessons.length})`);
 for (const n of appLessons) {
   const legacy = (m.QUIZZES[n] || []).length >= 12;
   const modern = m.finalTestLessons().includes(n);
-  const dedicated = (n === 36 && lesson36DedicatedAssessment) || (n === 37 && lesson37DedicatedAssessment) || (n === 38 && lesson38DedicatedAssessment) || (n === 39 && lesson39DedicatedAssessment) || (n === 40 && lesson40DedicatedAssessment) || (n === 41 && lesson41DedicatedAssessment) || (n === 42 && lesson42DedicatedAssessment) || (n === 43 && lesson43DedicatedAssessment) || (n === 44 && lesson44DedicatedAssessment) || (n === 45 && lesson45DedicatedAssessment) || (n === 46 && lesson46DedicatedAssessment) || (n === 47 && lesson47DedicatedAssessment) || (n === 48 && lesson48DedicatedAssessment) || (n === 49 && lesson49DedicatedAssessment) || (n === 50 && lesson50DedicatedAssessment);
+  const dedicated = (n === 36 && lesson36DedicatedAssessment) || (n === 37 && lesson37DedicatedAssessment) || (n === 38 && lesson38DedicatedAssessment) || (n === 39 && lesson39DedicatedAssessment) || (n === 40 && lesson40DedicatedAssessment) || (n === 41 && lesson41DedicatedAssessment) || (n === 42 && lesson42DedicatedAssessment) || (n === 43 && lesson43DedicatedAssessment) || (n === 44 && lesson44DedicatedAssessment) || (n === 45 && lesson45DedicatedAssessment) || (n === 46 && lesson46DedicatedAssessment) || (n === 47 && lesson47DedicatedAssessment) || (n === 48 && lesson48DedicatedAssessment) || (n === 49 && lesson49DedicatedAssessment) || (n === 50 && lesson50DedicatedAssessment) || (n === 51 && lesson51DedicatedAssessment);
   ok(legacy || modern || dedicated, `الدرس ${n}: له اختبار نهائي (قديم أو جديد أو Master Test مستقل)`);
 }
 

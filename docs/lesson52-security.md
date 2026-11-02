@@ -21,7 +21,9 @@
   rendered guide is removed from the React tree.
 
 These are **presentation guarantees for honest use**, not a security boundary
-against a user who wants the key.
+against a user who wants the key. This boundary concerns the 25-question test
+key; the six exercise solutions on slides 52–53 are intended student teaching
+content and are deliberately visible during practice.
 
 ## 2. What can be requested directly
 

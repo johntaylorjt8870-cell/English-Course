@@ -50,6 +50,7 @@ import Lesson48 from "./lessons/lesson48/Lesson48";
 import Lesson49 from "./lessons/lesson49/Lesson49";
 import Lesson50 from "./lessons/lesson50/Lesson50";
 import Lesson51 from "./lessons/lesson51/Lesson51";
+import Lesson52 from "./lessons/lesson52/Lesson52";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -575,6 +576,15 @@ const CARDS: Card[] = [
     href: "#/lesson/51",
     grad: "from-[#0E3742] to-[#0E9F6E]",
   },
+  {
+    n: 52,
+    title: "الدرس 52: FIRST CONDITIONAL — الشرط الأول",
+    en: "Future Possibilities — If + Present Simple, Will + V1",
+    emoji: "🌤️",
+    stats: "64 شريحة · 21 محطة · 11 مختبرًا تفاعليًا · 6 تدريبات · اختبار 25 سؤالًا",
+    href: "#/lesson/52",
+    grad: "from-sky-500 to-emerald-500",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -707,6 +717,7 @@ export default function App() {
   else if (route === 49) page = <Lesson49 onExit={goHome} />;
   else if (route === 50) page = <Lesson50 onExit={goHome} />;
   else if (route === 51) page = <Lesson51 onExit={goHome} />;
+  else if (route === 52) page = <Lesson52 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

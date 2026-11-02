@@ -26,7 +26,7 @@ The presentation layer is a literal clone of Lesson 1 (`Lesson1Shell` + the exac
 | writing | writing, speaking | «My Plans for the Future» 8–12 sentences with ≥5 first conditionals (labelled model has 8 sentences/6 conditionals); 2-minute speaking task with 7 questions and 8 starters |
 | review | summary, review, self-check | lesson summary, golden review table + core sentences, 8-point self-check |
 | final-test | final test | **25 questions: 8 MCQ + 5 completion + 5 correction + 3 classify + 4 translation** (last assessed station) |
-| teacher | teacher area | gated behind a submitted result + password; guide built only from `result.solutions` |
+| teacher | teacher area | gated behind a submitted result + a client-side display gate; guide built only from `result.solutions`; **not real authentication** (see `docs/lesson52-security.md`) |
 | progress | dashboard, progress, roadmap, closing | real progress only; 52/120 = 43.3%, 68 remaining; Lesson 53 (SECOND CONDITIONAL) roadmap |
 
 ## All 24 source axes
@@ -56,13 +56,14 @@ The presentation layer is a literal clone of Lesson 1 (`Lesson1Shell` + the exac
 23. Exercise 5 — 5 unless rewrites; Exercise 6 — 8 translations; answers with explanations on solutions 1–2.
 24. 25-question final test + answer key + explanations; writing, speaking, summary, progress 52/120 and Lesson 53 navigation.
 
-## Answer-key protection and grading
+## Answer-key handling and grading (honest limits)
 
 - `testData52.ts` contains prompts, options and `data-test-*` hooks only. No answers, no `modelAnswer`, no solutions import.
 - The key lives in `testKey52.ts` (`TEST_SOLUTIONS_52`, `gradeQuestion52`, `gradeTest52`) and reaches the page only through `import("./testKey52")` inside `submit()`, with `retry52.ts` for chunk failures. The student bundle never statically imports the key.
 - Single submission is guarded; inputs lock after submit; «محاولة جديدة» clears answers/score and re-locks the teacher area.
 - Grading normalises case, punctuation, apostrophes and whitespace; accepts `doesn't/does not`, `won't/will not`, `practice/practise`, `begin/start`, `arrive/come`, `goal/goals`, `phone/mobile phone`; rejects `will` after IF, `doesn't studies`, missing will, `Unless … don't`, inverted question order and blank answers.
 - The teacher guide (`TeacherGuide52.tsx`) derives everything from the submitted `result.solutions`; it never imports the solutions constant.
+- **Not protected against extraction:** the key is in the public source (`testKey52.ts`) and the built `testKey52-*.js` chunk can be requested directly by URL. The teacher gate is a UI gate, not authentication. Full threat model: `docs/lesson52-security.md`.
 
 ## Verified by real runs
 
@@ -70,8 +71,8 @@ The presentation layer is a literal clone of Lesson 1 (`Lesson1Shell` + the exac
 |---|---|
 | `npm run build` | ✓ built (only the repo-wide >500 kB chunk warning) |
 | `npx tsc --noEmit --strict --jsx react-jsx --module esnext --moduleResolution bundler --target es2022 --skipLibCheck src/lessons/lesson52/*.tsx src/lessons/lesson52/*.ts` | 0 diagnostics |
-| `npm run audit:lesson52` | **485 assertions, 0 failures** (64 slides / 21 stations / 11 labs / 6 exercises = 47 items / 25-question key isolation / accept–reject / retry harness / jsdom slide walk with student-copy leak audit / test + teacher rendering) |
-| `npm run audit:lesson52-browser` | **2342 checks, 0 failures** (Chromium: every slide at 1280/768/375/320 — no horizontal overflow, no lock/nav overlap, next/prev hit-testable, RTL preserved, drawer navigation; no key/guide request before submit; 25/25; two grammar errors graded 23/25 with corrections; retake clears score and re-locks teacher; correct password loads 25 keys; progress 52/120 · 43.3% · 68) |
+| `npm run audit:lesson52` | **490 assertions, 0 failures** (64 slides / 21 stations / 11 labs / 6 exercises = 47 items / 25-question key isolation / accept–reject / retry harness / jsdom slide walk with student-copy leak audit / test + teacher rendering) |
+| `npm run audit:lesson52-browser` | **2342 checks, 0 failures** (Chromium: every slide at 1280/768/375/320 — no horizontal overflow, no lock/nav overlap, next/prev hit-testable, RTL preserved, drawer navigation; no key/guide request before submit; 25/25; two grammar errors graded 23/25 with corrections; retake clears score and re-locks teacher; operator code supplied via env loads 25 keys; progress 52/120 · 43.3% · 68) |
 | `node scripts/audit-final-test.mjs` | Lesson 52 dedicated block passes; only the 5 pre-existing L35 failures remain (same on clean `main`) |
 | `npm run audit:lesson-navigation` | 240 passed, 0 failed (52-lesson windows incl. `43–52`, route 52 renders `data-lesson="52"` + "FIRST CONDITIONAL") |
 | `npm run check:english-direction` | passes (52-lesson inventory) |
@@ -96,7 +97,7 @@ Verified against the untouched `main` commit `13cb9e3` in a separate worktree:
 - Answering all 25 questions issues **no** request for `testKey52` or `TeacherGuide52`.
 - The first key request happens only after the Submit click.
 - Before submission there is no feedback element and no key in the DOM; after submission feedback with model, `why`, accepted alternatives and rejected patterns appears for all 25.
-- Teacher slide shows `[data-teacher-waiting]` with no password field until a result exists; wrong password rejected; the guide chunk fetches only after `somer173`.
+- Teacher slide shows `[data-teacher-waiting]` with no code field until a result exists; a wrong code is rejected; the guide chunk is imported only after the client-side gate accepts the operator code. This is **not** authentication: the key remains extractable from the public source and the built assets (`docs/lesson52-security.md`).
 
 ## Screenshots
 

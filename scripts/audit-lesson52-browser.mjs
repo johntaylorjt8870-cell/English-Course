@@ -101,6 +101,8 @@ async function desktopJump(page, id) {
   await page.waitForTimeout(80);
 }
 
+const teacherPassword = process.env.LESSON52_TEACHER_PASSWORD ?? "";
+
 const perfectAnswers = {
   q1: 1, q2: 2, q3: 2, q4: 0, q5: 1, q6: 1, q7: 2, q8: 0,
   q19: 0, q20: 1, q21: 0,
@@ -245,10 +247,14 @@ try {
   await page.locator("#l52-teacher-password").press("Enter");
   await page.waitForTimeout(120);
   ok((await page.locator('[role="alert"]').count()) === 1, "wrong teacher password is rejected");
-  await page.locator("#l52-teacher-password").fill("somer173");
-  await page.locator("#l52-teacher-password").press("Enter");
-  await page.locator("[data-teacher-guide]").waitFor({ timeout: 15000 });
-  ok((await page.locator("[data-teacher-q]").count()) === 25, "teacher guide lists all 25 keys");
+  if (teacherPassword) {
+    await page.locator("#l52-teacher-password").fill(teacherPassword);
+    await page.locator("#l52-teacher-password").press("Enter");
+    await page.locator("[data-teacher-guide]").waitFor({ timeout: 15000 });
+    ok((await page.locator("[data-teacher-q]").count()) === 25, "teacher guide lists all 25 keys");
+  } else {
+    console.log("↳ set LESSON52_TEACHER_PASSWORD to exercise the positive teacher-gate case");
+  }
 
   /* ---------- retake clears the result and re-locks the teacher ---------- */
   await desktopJump(page, "final-test");

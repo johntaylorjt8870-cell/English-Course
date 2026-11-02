@@ -154,6 +154,8 @@ const practiceSource = readFileSync(join(root, "src/lessons/lesson52/Practice52.
 const lessonSource = readFileSync(join(root, "src/lessons/lesson52/Lesson52.tsx"), "utf8");
 const guideSource = readFileSync(join(root, "src/lessons/lesson52/TeacherGuide52.tsx"), "utf8");
 const teacherSource = readFileSync(join(root, "src/lessons/lesson52/TeacherArea52.tsx"), "utf8");
+ok(!/const PASSWORD\s*=\s*["']/.test(teacherSource), "teacher area has no plaintext password constant");
+ok(teacherSource.includes("TEACHER_GATE_HASH_52") && teacherSource.includes("crypto?.subtle"), "teacher gate compares a digest through Web Crypto");
 ok(!/TEST_SOLUTIONS_52|gradeTest52|gradeQuestion52/.test(dataSource), "student test data has no key");
 ok(areaSource.includes('import("./testKey52")') && areaSource.includes('import("./testKey52?retry")'), "key uses submit-only dynamic primary and retry imports");
 ok(!/^import\s+\{[^}]*\}\s+from\s+"\.\/testKey52"/m.test(areaSource), "test area has no runtime static key import");
@@ -345,7 +347,14 @@ testApp.root.unmount();
 document.body.innerHTML = "";
 
 /* ---------- teacher gate ---------- */
-ok(M.isTeacherPassword52("somer173") && !M.isTeacherPassword52("wrong"), "teacher password gate");
+const operatorPassword = process.env.LESSON52_TEACHER_PASSWORD ?? "";
+ok(!(await M.isTeacherPassword52("wrong")), "teacher gate rejects a wrong code");
+ok(!(await M.isTeacherPassword52("")), "teacher gate rejects a blank code");
+if (operatorPassword) {
+  ok(await M.isTeacherPassword52(operatorPassword), "teacher gate accepts the operator-supplied code");
+} else {
+  console.log("↳ set LESSON52_TEACHER_PASSWORD to exercise the positive teacher-gate case");
+}
 const teacherApp = mount(
   M.React.createElement(M.TeacherArea52, {
     result: perfect,
@@ -354,6 +363,7 @@ const teacherApp = mount(
 );
 await tick(80);
 ok(Boolean(teacherApp.host.querySelector("[data-teacher-locked]")), "teacher area locked before password");
+ok(Boolean(teacherApp.host.querySelector("[data-teacher-limits]")), "locked teacher area states the client-side limit");
 ok(!teacherApp.host.querySelector("[data-teacher-guide]"), "guide not loaded before password");
 const input = teacherApp.host.querySelector("#l52-teacher-password");
 const setInput = (value) => {
@@ -363,12 +373,11 @@ const setInput = (value) => {
 };
 setInput("wrong");
 teacherApp.host.querySelector('#l52-teacher-password')?.closest("form")?.querySelector('button[type="submit"]')?.click();
-await tick(40);
+await tick(160);
 ok(Boolean(teacherApp.host.querySelector('[role="alert"]')), "wrong password is rejected");
-setInput("somer173");
-// React's controlled-input tracker resets after the failed attempt in jsdom;
-// the real browser audit types the correct password. Here we mount the guide
-// with the same `unlocked` prop the shell passes after a successful unlock.
+// The real browser audit supplies the operator code through the environment.
+// Here we mount the guide with the same `unlocked` prop the shell passes after
+// a successful unlock, so the guide rendering itself stays covered.
 teacherApp.root.unmount();
 document.body.innerHTML = "";
 const guideApp = mount(

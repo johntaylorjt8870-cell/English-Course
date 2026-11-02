@@ -4,9 +4,31 @@ import type { TeacherGuideProps52 } from "./TeacherGuide52";
 import { retryModuleUrl52 } from "./retry52";
 import { En52 } from "./kit52";
 
-const PASSWORD = "somer173";
-export function isTeacherPassword52(value: string): boolean {
-  return value.trim() === PASSWORD;
+/**
+ * بوابة عرض فقط — ليست مصادقة.
+ *
+ * الموقع ثابت على GitHub Pages، ولا يوجد خادم يتحقق من الهوية. لذلك لا
+ * يمكن لكلمة مرور داخل JavaScript أن تحمي مفتاح الإجابات؛ الملفات التي
+ * تحمل المفتاح يمكن طلبها مباشرة من الحزمة (راجع docs/lesson52-security.md).
+ *
+ * نخزّن هنا بصمة SHA-256 مملّحة بدل النص الصريح، حتى لا تُقرأ كلمة المرور
+ * بالعين من المصدر. هذا إخفاء للواجهة، وليس حماية بيانات.
+ */
+const TEACHER_GATE_SALT_52 = "lesson-52-teacher-gate-v1";
+const TEACHER_GATE_HASH_52 = "1076766a6a638904a50505be0bb427cd8eaabc76a48941808f4ebcf3e54e2305";
+
+function toHex52(bytes: ArrayBuffer): string {
+  return [...new Uint8Array(bytes)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+export async function isTeacherPassword52(value: string): Promise<boolean> {
+  const candidate = value.trim();
+  if (!candidate) return false;
+  const subtle = globalThis.crypto?.subtle;
+  // سياقات غير آمنة (http) لا توفّر Web Crypto؛ عندها تبقى البوابة مقفلة.
+  if (!subtle) return false;
+  const digest = await subtle.digest("SHA-256", new TextEncoder().encode(`${TEACHER_GATE_SALT_52}:${candidate}`));
+  return toHex52(digest) === TEACHER_GATE_HASH_52;
 }
 
 type LoadedGuide = { default: React.ComponentType<TeacherGuideProps52> };
@@ -50,6 +72,7 @@ export function TeacherArea52({
   const unlocked = unlockedProp ?? internalUnlocked;
   const [password, setPassword] = useState("");
   const [wrong, setWrong] = useState(false);
+  const [checking, setChecking] = useState(false);
   const [Guide, setGuide] = useState<LoadedGuide["default"] | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -87,9 +110,13 @@ export function TeacherArea52({
     };
   }, [unlocked, Guide, attempt, loader]);
 
-  function submitPassword(event: React.FormEvent) {
+  async function submitPassword(event: React.FormEvent) {
     event.preventDefault();
-    if (isTeacherPassword52(password)) {
+    if (checking) return;
+    setChecking(true);
+    const accepted = await isTeacherPassword52(password);
+    setChecking(false);
+    if (accepted) {
       setInternalUnlocked(true);
       onUnlock?.();
       setWrong(false);
@@ -117,8 +144,8 @@ export function TeacherArea52({
           <div>
             <h2 className="font-head text-2xl font-bold text-slate-900">مساحة المعلّم</h2>
             <p className="mt-1 text-slate-600">
-              تُعرض هذه المساحة بعد التسليم فقط، وتحتوي مفتاح التصحيح الكامل والبدائل والملاحظات البيداغوجية. احمِها بكلمة
-              مرور المعلّم المعتادة.
+              تُعرض هذه المساحة بعد التسليم فقط، وتحتوي مفتاح التصحيح الكامل والبدائل والملاحظات البيداغوجية. افتحها برمز
+              المعلّم المعتاد.
             </p>
           </div>
         </div>
@@ -129,7 +156,7 @@ export function TeacherArea52({
         </ul>
         <form className="mt-4" onSubmit={submitPassword}>
           <label htmlFor="l52-teacher-password" className="text-sm font-bold text-slate-600">
-            كلمة مرور المعلّم
+            رمز فتح مساحة المعلّم
           </label>
           <div className="mt-2 flex flex-wrap gap-2">
             <input
@@ -142,16 +169,20 @@ export function TeacherArea52({
               aria-describedby={wrong ? "l52-teacher-error" : undefined}
               className="w-56 rounded-xl border-2 border-slate-300 bg-white px-3 py-2 text-slate-800 outline-none transition focus:border-sky-400"
             />
-            <button type="submit" className="rounded-xl bg-slate-900 px-4 py-2 font-bold text-white transition hover:bg-slate-700">
+            <button type="submit" disabled={checking} className="rounded-xl bg-slate-900 px-4 py-2 font-bold text-white transition hover:bg-slate-700 disabled:opacity-60">
               فتح الدليل
             </button>
           </div>
           {wrong && (
             <p className="mt-2 text-sm font-bold text-rose-600" id="l52-teacher-error" role="alert">
-              كلمة المرور غير صحيحة.
+              الرمز غير صحيح.
             </p>
           )}
         </form>
+        <p className="mt-3 text-xs font-semibold leading-6 text-slate-500" data-teacher-limits>
+          ملاحظة صادقة: هذه بوابة عرض داخل تطبيق يعمل من جهة العميل، وليست مصادقة خادمية. تمنع الفتح العَرَضي، لكنها لا تمنع
+          من يملك أدوات المطوّر من الوصول إلى ملفات الحزمة. لا تعتمد عليها لحماية أسرار حقيقية.
+        </p>
       </section>
     );
   }

@@ -49,6 +49,7 @@ import Lesson47 from "./lessons/lesson47/Lesson47";
 import Lesson48 from "./lessons/lesson48/Lesson48";
 import Lesson49 from "./lessons/lesson49/Lesson49";
 import Lesson50 from "./lessons/lesson50/Lesson50";
+import Lesson51 from "./lessons/lesson51/Lesson51";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -565,6 +566,15 @@ const CARDS: Card[] = [
     href: "#/lesson/50",
     grad: "from-[#1B1F3B] to-[#D97706]",
   },
+  {
+    n: 51,
+    title: "الدرس 51: ZERO CONDITIONAL — الشرط الصفري",
+    en: "The Law of Cause & Effect — General Facts and Fixed Results",
+    emoji: "⚗️",
+    stats: "48 شريحة · 22 محطة · مختبر السبب والنتيجة ومقياس التكرار · اختبار 25 سؤالًا",
+    href: "#/lesson/51",
+    grad: "from-[#0E3742] to-[#0E9F6E]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -696,6 +706,7 @@ export default function App() {
   else if (route === 48) page = <Lesson48 onExit={goHome} />;
   else if (route === 49) page = <Lesson49 onExit={goHome} />;
   else if (route === 50) page = <Lesson50 onExit={goHome} />;
+  else if (route === 51) page = <Lesson51 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

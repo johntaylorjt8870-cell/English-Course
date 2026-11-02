@@ -1,0 +1,1659 @@
+/* ============================================================
+   Lesson 51 — «مختبر السبب والنتيجة» (THE LAW OF CAUSE & EFFECT)
+   هوية مستقلة عن الدرس 50: مختبر تفاعلي بألواح بيضاء على خلفية
+   نعناعية، سلسلة تفاعل «IF ➜ RESULT» بشريط شعاعي، ومقياس تكرار
+   يميّز الحقيقة الثابتة عن العادة عن الحدث المستقبلي المحدد.
+   اللون لا يعمل وحده: كل نغمة تحمل رمزًا وكلمة وشرحًا عربيًا.
+   المتغيّرات .l51-tone--* تحفظ المعنى نفسه من الغلاف إلى الاختبار.
+   ============================================================ */
+
+@font-face { font-family: "Deck51Arabic"; src: url("@fontsource/changa/files/changa-arabic-400-normal.woff2") format("woff2"); font-style: normal; font-weight: 400; font-display: swap; }
+@font-face { font-family: "Deck51Arabic"; src: url("@fontsource/changa/files/changa-arabic-700-normal.woff2") format("woff2"); font-style: normal; font-weight: 700; font-display: swap; }
+@font-face { font-family: "Deck51Arabic"; src: url("@fontsource/changa/files/changa-arabic-800-normal.woff2") format("woff2"); font-style: normal; font-weight: 800; font-display: swap; }
+@font-face { font-family: "Deck51Latin"; src: url("@fontsource/rubik/files/rubik-latin-400-normal.woff2") format("woff2"); font-style: normal; font-weight: 400; font-display: swap; }
+@font-face { font-family: "Deck51Latin"; src: url("@fontsource/rubik/files/rubik-latin-500-normal.woff2") format("woff2"); font-style: normal; font-weight: 500; font-display: swap; }
+@font-face { font-family: "Deck51Latin"; src: url("@fontsource/rubik/files/rubik-latin-700-normal.woff2") format("woff2"); font-style: normal; font-weight: 700; font-display: swap; }
+@font-face { font-family: "Deck51Latin"; src: url("@fontsource/rubik/files/rubik-latin-800-normal.woff2") format("woff2"); font-style: normal; font-weight: 800; font-display: swap; }
+
+.lesson51 {
+  --l51-ink: #12323f;
+  --l51-body: #2c4a56;
+  --l51-muted: #5f7c88;
+  --l51-line: #c3d9dd;
+  --l51-line-strong: #9dbec5;
+  --l51-canvas: #e6f2f0;
+  --l51-paper: #fbfefd;
+  --l51-panel: #edf7f4;
+  --l51-deep: #0e3742;
+  --l51-deep-2: #14505e;
+  --l51-signal: #0e9f6e;
+  --l51-signal-2: #c2740a;
+  --l51-stamp: #b4233f;
+  --l51-shadow: 0 18px 46px -30px rgba(18, 50, 63, 0.5);
+  --l51-shadow-soft: 0 28px 64px -40px rgba(18, 50, 63, 0.55);
+  --l51-radius: 0.95rem;
+  --tone: #4b6570;
+  --tone-strong: #354c56;
+  --tone-soft: #eef3f4;
+  --tone-line: #cfdde1;
+  --tone-ink: #354c56;
+  font-family: "Deck51Arabic", "Tajawal", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", sans-serif;
+  color: var(--l51-ink);
+  background:
+    radial-gradient(rgba(18, 50, 63, 0.06) 1.2px, transparent 1.2px) 0 0 / 24px 24px,
+    radial-gradient(1100px 560px at 88% -18%, #d7ede7 0%, rgba(215, 237, 231, 0) 62%),
+    radial-gradient(920px 520px at -6% 108%, #fde8c8 0%, rgba(253, 232, 200, 0) 58%),
+    var(--l51-canvas);
+}
+.lesson51 * { box-sizing: border-box; }
+.lesson51 [class*="l51-"] { min-width: 0; }
+.lesson51 :focus-visible,
+.lesson51 .l51-lab-options button:focus,
+.lesson51 .l51-order-words button:focus,
+.lesson51 .l51-options button:focus,
+.lesson51 .l51-hunt-options button:focus,
+.lesson51 .l51-speaking-situations button:focus,
+.lesson51 .l51-test-option:focus {
+  outline: 3px solid #b45309 !important;
+  outline-offset: 3px;
+}
+.lesson51 button { cursor: pointer; font-family: inherit; }
+.lesson51 button:disabled { cursor: not-allowed; opacity: 0.45; }
+.lesson51 #l51-main { scroll-behavior: auto; }
+.lesson51 p, .lesson51 h1, .lesson51 h2, .lesson51 h3, .lesson51 ul, .lesson51 ol, .lesson51 li { margin: 0; }
+.lesson51 ul, .lesson51 ol { padding: 0; list-style: none; }
+
+/* عزل الإنجليزية — نفس قاعدة المشروع */
+.lesson51 .l51-en,
+.lesson51 [lang="en"] {
+  font-family: "Deck51Latin", "Rubik", "Apple Color Emoji", "Segoe UI Emoji", Arial, sans-serif;
+  unicode-bidi: isolate;
+}
+.lesson51 .l51-en { display: inline-block; max-width: 100%; }
+.lesson51 .l51-mixed > span[dir="ltr"] { margin-inline: 0.1em; }
+.lesson51 .l51-emblem,
+.lesson51 .l51-tip-icon,
+.lesson51 .l51-note-icon,
+.lesson51 .l51-avatar,
+.lesson51 .l51-teacher-stamp,
+.lesson51 .l51-board-pin {
+  font-family: "Deck51Arabic", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+/* النغمات الدلالية — ثابتة في الدرس كله */
+.l51-tone--law { --tone: #0e7c5b; --tone-strong: #085c42; --tone-soft: #dcf3ea; --tone-line: #a5d9c6; --tone-ink: #06402e; }
+.l51-tone--habit { --tone: #4f46e5; --tone-strong: #3c34b8; --tone-soft: #e8e7fc; --tone-line: #c3c0f3; --tone-ink: #2b2587; }
+.l51-tone--negative { --tone: #be123c; --tone-strong: #930e2d; --tone-soft: #fce7ec; --tone-line: #f2b9c5; --tone-ink: #7c0d28; }
+.l51-tone--future { --tone: #b45309; --tone-strong: #8a3e06; --tone-soft: #fbf0dc; --tone-line: #ecd3a4; --tone-ink: #6f3104; }
+.l51-tone--modal { --tone: #7c3aed; --tone-strong: #5b21b6; --tone-soft: #f1e9fe; --tone-line: #d4c2f7; --tone-ink: #4c1d95; }
+.l51-tone--review { --tone: #4b6570; --tone-strong: #354c56; --tone-soft: #eaf1f3; --tone-line: #c7d7dc; --tone-ink: #2b3d45; }
+
+/* ============================================================
+   الشريط الجانبي
+   ============================================================ */
+.lesson51 .l51-rail-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.7rem; align-items: center; }
+.lesson51 .l51-rail-actions > span { font-size: 0.72rem; color: var(--l51-muted); font-weight: 700; }
+.lesson51 .l51-rail-actions button {
+  border: 1px solid var(--l51-line-strong);
+  border-radius: 0.7rem;
+  background: var(--l51-deep);
+  color: #eaf7f3;
+  padding: 0.34rem 0.7rem;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.01em;
+  transition: background 0.15s ease;
+}
+.lesson51 .l51-rail-actions button:hover { background: var(--l51-deep-2); }
+
+/* ============================================================
+   بطاقة الشريحة
+   ============================================================ */
+.lesson51 .l51-cover,
+.lesson51 .l51-sheet,
+.lesson51 .l51-roadmap { min-width: 0; overflow-wrap: anywhere; }
+
+.lesson51 .l51-sheet {
+  position: relative;
+  isolation: isolate;
+  background: var(--l51-paper);
+  border: 1px solid var(--l51-line);
+  border-radius: var(--l51-radius);
+  padding: clamp(1.1rem, 3.6vw, 2.4rem);
+  box-shadow: var(--l51-shadow);
+  overflow: hidden;
+}
+.lesson51 .l51-sheet::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--tone) 0%, var(--tone) 30%, #8fd8bd 30%, #8fd8bd 34%, var(--l51-signal) 34%, var(--l51-signal) 100%);
+}
+
+.lesson51 .l51-slide-head { display: grid; gap: 0.55rem; margin-bottom: clamp(0.9rem, 2.2vw, 1.5rem); }
+.lesson51 .l51-head-row { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
+.lesson51 .l51-step-badge {
+  display: grid;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 0.75rem;
+  background: var(--l51-deep);
+  color: #eaf7f3;
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+.lesson51 .l51-station-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--tone-line);
+  background: var(--tone-soft);
+  color: var(--tone-ink);
+  border-radius: 999px;
+  padding: 0.22rem 0.75rem;
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+.lesson51 .l51-station-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--tone);
+}
+.lesson51 .l51-lab-code {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--l51-muted);
+  border: 1px dashed var(--l51-line-strong);
+  border-radius: 0.55rem;
+  padding: 0.18rem 0.55rem;
+}
+.lesson51 .l51-emblem { font-size: 1.65rem; line-height: 1; margin-inline-start: auto; }
+.lesson51 .l51-sheet h1 {
+  font-size: clamp(1.35rem, 4.6vw, 2.15rem);
+  font-weight: 800;
+  line-height: 1.45;
+  color: var(--l51-ink);
+}
+.lesson51 .l51-title-sep { color: var(--tone); font-weight: 800; }
+.lesson51 .l51-lead {
+  font-size: clamp(0.92rem, 2.6vw, 1.05rem);
+  line-height: 1.9;
+  color: var(--l51-body);
+}
+.lesson51 .l51-slide-content { display: grid; gap: clamp(0.85rem, 2.2vw, 1.35rem); }
+
+/* ============================================================
+   الغلاف
+   ============================================================ */
+.lesson51 .l51-cover {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2rem);
+  background: var(--l51-paper);
+  border: 1px solid var(--l51-line);
+  border-radius: var(--l51-radius);
+  padding: clamp(1.2rem, 4vw, 2.6rem);
+  box-shadow: var(--l51-shadow-soft);
+}
+.lesson51 .l51-cover-main { display: grid; gap: 0.85rem; align-content: start; }
+.lesson51 .l51-cover-kicker { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.lesson51 .l51-cover-chip {
+  border: 1px solid var(--l51-line-strong);
+  background: var(--l51-panel);
+  color: var(--l51-deep);
+  border-radius: 999px;
+  padding: 0.22rem 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+.lesson51 .l51-cover-chip--dark { background: var(--l51-deep); color: #eaf7f3; border-color: var(--l51-deep); }
+.lesson51 .l51-cover-chip--lab {
+  background: var(--l51-signal);
+  color: #04281c;
+  border-color: var(--l51-signal);
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  letter-spacing: 0.12em;
+}
+.lesson51 .l51-cover h1 {
+  font-size: clamp(1.75rem, 6vw, 2.9rem);
+  font-weight: 800;
+  line-height: 1.35;
+}
+.lesson51 .l51-cover-accent { color: var(--l51-signal); }
+.lesson51 .l51-cover-sub { font-size: clamp(0.95rem, 2.8vw, 1.12rem); line-height: 1.9; color: var(--l51-body); }
+.lesson51 .l51-cover-title {
+  display: grid;
+  gap: 0.15rem;
+  border-inline-start: 4px solid var(--l51-signal);
+  padding-inline-start: 0.85rem;
+}
+.lesson51 .l51-cover-title span {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: clamp(1.05rem, 3.4vw, 1.55rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--l51-deep);
+}
+.lesson51 .l51-cover-title em {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-style: normal;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: var(--l51-signal-2);
+  font-weight: 700;
+}
+.lesson51 .l51-cover-lead { font-size: 0.95rem; line-height: 1.9; color: var(--l51-body); }
+.lesson51 .l51-cover-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 0.55rem; }
+.lesson51 .l51-cover-pill {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-weight: 800;
+  font-size: clamp(0.72rem, 2.2vw, 0.92rem);
+  letter-spacing: 0.05em;
+  border-radius: 0.85rem;
+  padding: 0.55rem 0.95rem;
+  border: 1px solid;
+}
+.lesson51 .l51-cover-pill--if { background: var(--l51-tone--habit-soft, #e8e7fc); border-color: #c3c0f3; color: #2b2587; }
+.lesson51 .l51-cover-pill--result { background: #dcf3ea; border-color: #a5d9c6; color: #06402e; }
+.lesson51 .l51-cover-arrow { color: var(--l51-signal); font-size: 1.25rem; font-weight: 800; }
+.lesson51 .l51-cover-actions { display: flex; flex-wrap: wrap; gap: 0.65rem; }
+.lesson51 .l51-cover-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.35rem;
+}
+.lesson51 .l51-cover-foot span {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--l51-muted);
+  background: var(--l51-panel);
+  border: 1px solid var(--l51-line);
+  border-radius: 999px;
+  padding: 0.22rem 0.7rem;
+}
+.lesson51 .l51-cover-board {
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
+  background: var(--l51-deep);
+  color: #eaf7f3;
+  border-radius: 0.95rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+}
+.lesson51 .l51-board-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: #9fd8c4;
+}
+.lesson51 .l51-board-pin { font-size: 1.1rem; }
+.lesson51 .l51-board-hint {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.74rem;
+  line-height: 1.7;
+  color: #9fd8c4;
+  opacity: 0.9;
+}
+
+/* ============================================================
+   الأزرار والحقول
+   ============================================================ */
+.lesson51 .l51-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 0.85rem;
+  border: 1px solid transparent;
+  padding: 0.62rem 1.25rem;
+  font-weight: 800;
+  font-size: 0.92rem;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.lesson51 .l51-button--dark { background: var(--l51-deep); color: #eaf7f3; }
+.lesson51 .l51-button--dark:hover { background: var(--l51-deep-2); }
+.lesson51 .l51-button--outline { background: transparent; border-color: var(--l51-line-strong); color: var(--l51-deep); }
+.lesson51 .l51-button--outline:hover { border-color: var(--l51-deep); background: var(--l51-panel); }
+.lesson51 .l51-text-button {
+  border: 0;
+  background: none;
+  color: var(--l51-deep-2);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0.25rem 0.15rem;
+}
+.lesson51 .l51-input {
+  width: 100%;
+  border: 1px solid var(--l51-line-strong);
+  border-radius: 0.85rem;
+  padding: 0.65rem 0.95rem;
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.95rem;
+  background: #fff;
+  color: var(--l51-ink);
+}
+.lesson51 textarea {
+  width: 100%;
+  border: 1px solid var(--l51-line-strong);
+  border-radius: 0.85rem;
+  padding: 0.75rem 1rem;
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  background: #fff;
+  color: var(--l51-ink);
+  resize: vertical;
+}
+.lesson51 label { font-weight: 800; font-size: 0.88rem; color: var(--l51-body); }
+
+/* ============================================================
+   سلسلة السبب والنتيجة — العنصر المميّز
+   ============================================================ */
+.lesson51 .l51-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 0.65rem;
+  align-items: stretch;
+}
+.lesson51 .l51-flow-card {
+  display: grid;
+  gap: 0.35rem;
+  align-content: start;
+  border: 1px solid var(--tone-line);
+  border-radius: 0.95rem;
+  padding: 0.85rem 1rem;
+  background: #fff;
+}
+.lesson51 .l51-flow-card--if { background: #efeeff; border-color: #c3c0f3; }
+.lesson51 .l51-flow-card--result { background: var(--tone-soft); border-color: var(--tone-line); }
+.lesson51 .l51-flow-tag {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--l51-muted);
+}
+.lesson51 .l51-flow-en {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: clamp(0.95rem, 2.8vw, 1.18rem);
+  font-weight: 700;
+  line-height: 1.5;
+}
+.lesson51 .l51-flow-ar { font-size: 0.82rem; color: var(--l51-muted); font-weight: 700; }
+.lesson51 .l51-flow-arrow {
+  display: grid;
+  place-items: center;
+  gap: 0.15rem;
+  align-content: center;
+  min-width: 3.6rem;
+}
+.lesson51 .l51-flow-beam {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #8f8be8, var(--l51-signal));
+}
+.lesson51 .l51-flow-head { color: var(--l51-signal); font-size: 1.35rem; font-weight: 800; line-height: 1; }
+.lesson51 .l51-flow-always {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--l51-signal-2);
+}
+
+/* ============================================================
+   مقياس التكرار
+   ============================================================ */
+.lesson51 .l51-meter {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  background: var(--l51-panel);
+  padding: 0.95rem 1.1rem;
+  display: grid;
+  gap: 0.65rem;
+}
+.lesson51 .l51-meter-track {
+  height: 10px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--l51-line);
+  overflow: hidden;
+}
+.lesson51 .l51-meter-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--l51-signal) 0%, var(--l51-signal) 55%, var(--l51-signal-2) 82%, #b45309 100%);
+}
+.lesson51 .l51-meter-stops { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.55rem; }
+.lesson51 .l51-meter-stop {
+  display: grid;
+  gap: 0.18rem;
+  border: 1px solid var(--tone-line);
+  background: #fff;
+  border-radius: 0.85rem;
+  padding: 0.6rem 0.75rem;
+  border-block-start: 4px solid var(--tone);
+}
+.lesson51 .l51-meter-stop.is-active { box-shadow: 0 0 0 2px var(--tone) inset; }
+.lesson51 .l51-meter-form { font-family: "Deck51Latin", "Rubik", sans-serif; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; }
+.lesson51 .l51-meter-ar { font-size: 0.74rem; font-weight: 700; color: var(--l51-body); }
+.lesson51 .l51-meter-band {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--tone);
+}
+.lesson51 .l51-meter-note { font-size: 0.78rem; color: var(--l51-muted); line-height: 1.8; }
+
+/* ============================================================
+   الصيغة
+   ============================================================ */
+.lesson51 .l51-formula {
+  border: 1px solid var(--tone-line);
+  background: var(--tone-soft);
+  border-radius: 0.95rem;
+  padding: clamp(0.85rem, 2.6vw, 1.25rem);
+  display: grid;
+  gap: 0.55rem;
+}
+.lesson51 .l51-formula-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; }
+.lesson51 .l51-formula-chip {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-weight: 800;
+  font-size: clamp(0.85rem, 2.6vw, 1.15rem);
+  letter-spacing: 0.03em;
+  background: #fff;
+  border: 1px solid var(--tone-line);
+  border-radius: 0.75rem;
+  padding: 0.45rem 0.85rem;
+  color: var(--tone-ink);
+}
+.lesson51 .l51-formula-plus { font-family: "Deck51Latin", "Rubik", sans-serif; font-weight: 800; color: var(--tone); font-size: 1.15rem; }
+.lesson51 .l51-formula-gloss {
+  font-size: 0.82rem;
+  color: var(--tone-ink);
+  font-weight: 700;
+  padding-inline-start: 0.25rem;
+}
+
+/* ============================================================
+   الجدول
+   ============================================================ */
+.lesson51 .l51-table-wrap {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  overflow-x: auto;
+  background: #fff;
+}
+.lesson51 .l51-table { width: 100%; border-collapse: collapse; min-width: 30rem; }
+.lesson51 .l51-table th,
+.lesson51 .l51-table td {
+  border: 1px solid var(--l51-line);
+  padding: 0.65rem 0.85rem;
+  text-align: start;
+  font-size: 0.88rem;
+  line-height: 1.8;
+  vertical-align: top;
+}
+.lesson51 .l51-table thead th {
+  background: var(--l51-deep);
+  color: #eaf7f3;
+  font-size: 0.82rem;
+}
+.lesson51 .l51-table tbody th { background: var(--l51-panel); font-weight: 800; }
+.lesson51 .l51-table-note {
+  padding: 0.75rem 0.95rem;
+  font-size: 0.82rem;
+  color: var(--l51-muted);
+  line-height: 1.85;
+  border-block-start: 1px solid var(--l51-line);
+}
+
+/* ============================================================
+   النقاط والأمثلة والملاحظات
+   ============================================================ */
+.lesson51 .l51-points { display: grid; gap: 0.55rem; }
+.lesson51 .l51-points li {
+  display: flex;
+  gap: 0.65rem;
+  align-items: baseline;
+  background: var(--l51-panel);
+  border: 1px solid var(--l51-line);
+  border-radius: 0.85rem;
+  padding: 0.65rem 0.95rem;
+  line-height: 1.9;
+  font-size: 0.92rem;
+}
+.lesson51 .l51-point-no {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-weight: 800;
+  color: var(--l51-signal-2);
+  font-size: 0.8rem;
+}
+.lesson51 .l51-examples { display: grid; gap: 0.75rem; }
+.lesson51 .l51-examples--grid { grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
+.lesson51 .l51-examples--comparison { grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); }
+.lesson51 .l51-example {
+  display: grid;
+  gap: 0.45rem;
+  align-content: start;
+  border: 1px solid var(--tone-line);
+  border-inline-start: 5px solid var(--tone);
+  border-radius: 0.95rem;
+  background: #fff;
+  padding: 0.85rem 1rem;
+}
+.lesson51 .l51-example-top { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center; }
+.lesson51 .l51-example-en {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: clamp(0.95rem, 2.6vw, 1.12rem);
+  font-weight: 600;
+  line-height: 1.65;
+  color: var(--l51-ink);
+}
+.lesson51 .l51-example-ar { font-size: 0.85rem; line-height: 1.9; color: var(--l51-body); }
+.lesson51 .l51-tag {
+  display: inline-flex;
+  align-items: center;
+  background: var(--tone-soft);
+  border: 1px solid var(--tone-line);
+  color: var(--tone-ink);
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  border-radius: 999px;
+  padding: 0.18rem 0.65rem;
+}
+.lesson51 .l51-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  border: 1px solid var(--tone-line);
+  background: var(--tone-soft);
+  color: var(--tone-ink);
+  font-size: 0.72rem;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 0.18rem 0.62rem;
+}
+.lesson51 .l51-mode-glyph { font-family: "Deck51Latin", "Rubik", sans-serif; }
+.lesson51 .l51-note {
+  display: flex;
+  gap: 0.65rem;
+  align-items: baseline;
+  background: #fff8e8;
+  border: 1px solid #ecd3a4;
+  border-radius: 0.95rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.88rem;
+  line-height: 1.95;
+  color: #6f3104;
+}
+.lesson51 .l51-note-icon { flex: none; }
+.lesson51 .l51-tip {
+  display: flex;
+  gap: 0.65rem;
+  align-items: baseline;
+  margin-top: clamp(0.85rem, 2.2vw, 1.25rem);
+  background: var(--l51-panel);
+  border: 1px dashed var(--l51-line-strong);
+  border-radius: 0.95rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  line-height: 1.9;
+  color: var(--l51-body);
+}
+.lesson51 .l51-tip-icon { flex: none; }
+
+/* ============================================================
+   الأهداف
+   ============================================================ */
+.lesson51 .l51-goals { display: grid; gap: 0.55rem; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); }
+.lesson51 .l51-goal {
+  display: flex;
+  gap: 0.65rem;
+  align-items: baseline;
+  border: 1px solid var(--l51-line);
+  border-radius: 0.85rem;
+  background: var(--l51-panel);
+  padding: 0.75rem 0.95rem;
+  font-size: 0.92rem;
+  line-height: 1.85;
+}
+.lesson51 .l51-goal-n {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--l51-signal);
+  flex: none;
+}
+
+/* ============================================================
+   المدخل
+   ============================================================ */
+.lesson51 .l51-intro-chain { display: grid; gap: 0.85rem; }
+
+/* ============================================================
+   المختبرات والبطاقات التفاعلية
+   ============================================================ */
+.lesson51 .l51-lab { display: grid; gap: 0.85rem; }
+.lesson51 .l51-practice-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.95rem;
+  align-items: center;
+  font-size: 0.82rem;
+  color: var(--l51-muted);
+  font-weight: 700;
+}
+.lesson51 .l51-lab-card {
+  border: 1px solid var(--tone-line);
+  border-radius: 0.95rem;
+  background: #fff;
+  padding: clamp(0.85rem, 2.4vw, 1.25rem);
+  display: grid;
+  gap: 0.75rem;
+}
+.lesson51 .l51-lab-scene { display: flex; gap: 0.75rem; align-items: baseline; }
+.lesson51 .l51-lab-no {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 0.7rem;
+  background: var(--l51-deep);
+  color: #eaf7f3;
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-weight: 800;
+  font-size: 0.88rem;
+}
+.lesson51 .l51-lab-scene p[dir="ltr"] {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: clamp(1rem, 2.9vw, 1.22rem);
+  font-weight: 700;
+  line-height: 1.55;
+}
+.lesson51 .l51-lab-scene p[dir="rtl"] { font-size: 0.85rem; color: var(--l51-muted); font-weight: 700; }
+.lesson51 .l51-lab-options { display: grid; gap: 0.55rem; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); }
+.lesson51 .l51-lab-options button,
+.lesson51 .l51-options button,
+.lesson51 .l51-hunt-options button {
+  display: grid;
+  gap: 0.22rem;
+  align-content: start;
+  text-align: start;
+  border: 1px solid var(--l51-line-strong);
+  border-radius: 0.85rem;
+  background: #fff;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.lesson51 .l51-lab-options button:hover,
+.lesson51 .l51-options button:hover,
+.lesson51 .l51-hunt-options button:hover { border-color: var(--l51-deep-2); }
+.lesson51 .l51-lab-options button[aria-pressed="true"],
+.lesson51 .l51-options button[aria-pressed="true"],
+.lesson51 .l51-hunt-options button[aria-pressed="true"] {
+  border-color: var(--l51-deep);
+  background: var(--l51-panel);
+  box-shadow: 0 0 0 1px var(--l51-deep);
+}
+.lesson51 .l51-lab-options button span[dir="rtl"] { font-size: 0.78rem; color: var(--l51-muted); font-weight: 700; }
+.lesson51 .l51-practice-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.lesson51 .l51-feedback {
+  border: 1px solid;
+  border-radius: 0.95rem;
+  padding: 0.85rem 1rem;
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  line-height: 1.9;
+}
+.lesson51 .l51-feedback.is-correct { border-color: #a5d9c6; background: #dcf3ea; color: #06402e; }
+.lesson51 .l51-feedback.is-retry { border-color: #ecd3a4; background: #fbf0dc; color: #6f3104; }
+.lesson51 .l51-hunt-feedback {
+  border: 1px solid;
+  border-radius: 0.85rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.88rem;
+  line-height: 1.9;
+}
+.lesson51 .l51-hunt-feedback.is-correct { border-color: #a5d9c6; background: #dcf3ea; color: #06402e; }
+.lesson51 .l51-hunt-feedback.is-retry { border-color: #ecd3a4; background: #fbf0dc; color: #6f3104; }
+
+/* ============================================================
+   باني النفي وإعادة البناء
+   ============================================================ */
+.lesson51 .l51-order-words { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.lesson51 .l51-order-words button {
+  border: 1px solid var(--l51-line-strong);
+  background: var(--l51-panel);
+  border-radius: 0.85rem;
+  padding: 0.55rem 0.9rem;
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.lesson51 .l51-order-words button:hover { border-color: var(--l51-deep); background: #fff; }
+.lesson51 .l51-order-built {
+  border: 1px dashed var(--l51-line-strong);
+  border-radius: 0.85rem;
+  background: #fff;
+  min-height: 3.1rem;
+  padding: 0.75rem 1rem;
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 1.02rem;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.lesson51 .l51-modal-strip { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.lesson51 .l51-modal-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--tone-line);
+  background: var(--tone-soft);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.lesson51 .l51-modal-chip .l51-en { color: var(--tone-strong); }
+
+/* ============================================================
+   جدار الأخطاء
+   ============================================================ */
+.lesson51 .l51-errors { display: grid; gap: 0.85rem; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); }
+.lesson51 .l51-error-card {
+  border: 1px solid var(--tone-line);
+  border-radius: 0.95rem;
+  background: #fff;
+  padding: 1rem 1.15rem;
+  display: grid;
+  gap: 0.55rem;
+}
+.lesson51 .l51-error-card header { display: flex; gap: 0.55rem; align-items: baseline; }
+.lesson51 .l51-error-card header span {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-weight: 800;
+  color: var(--tone);
+}
+.lesson51 .l51-error-card h3 { font-size: 1.02rem; font-weight: 800; line-height: 1.6; }
+.lesson51 .l51-error-bad {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  background: #fce7ec;
+  border: 1px solid #f2b9c5;
+  color: #7c0d28;
+  border-radius: 0.85rem;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+.lesson51 .l51-error-good {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  background: #dcf3ea;
+  border: 1px solid #a5d9c6;
+  color: #06402e;
+  border-radius: 0.85rem;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+.lesson51 .l51-error-card > p[dir="rtl"] { font-size: 0.85rem; line-height: 1.95; color: var(--l51-body); }
+
+/* ============================================================
+   الحوار
+   ============================================================ */
+.lesson51 .l51-dialogue {
+  border: 1px solid var(--tone-line);
+  border-radius: 0.95rem;
+  background: #fff;
+  padding: clamp(0.95rem, 2.6vw, 1.5rem);
+  display: grid;
+  gap: 0.85rem;
+}
+.lesson51 .l51-dialogue-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: space-between;
+  align-items: center;
+}
+.lesson51 .l51-dialogue-label {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+  background: var(--l51-deep);
+  color: #eaf7f3;
+  border-radius: 999px;
+  padding: 0.35rem 1rem;
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+.lesson51 .l51-dialogue-setting { font-size: 0.92rem; color: var(--l51-body); line-height: 1.9; }
+.lesson51 .l51-turn { display: flex; gap: 0.65rem; align-items: start; }
+.lesson51 .l51-avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.45rem;
+  height: 2.45rem;
+  border-radius: 50%;
+  background: var(--speaker, var(--l51-deep));
+  color: #fff;
+  font-weight: 800;
+}
+.lesson51 .l51-bubble {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  border-start-start-radius: 0.25rem;
+  background: var(--l51-panel);
+  padding: 0.65rem 0.95rem;
+  display: grid;
+  gap: 0.32rem;
+}
+.lesson51 .l51-speaker { font-size: 0.78rem; font-weight: 800; color: var(--l51-signal-2); }
+.lesson51 .l51-bubble p[dir="ltr"] {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 1.02rem;
+  line-height: 1.8;
+}
+.lesson51 .l51-turn-ar { font-size: 0.85rem; color: var(--l51-body); line-height: 1.9; }
+.lesson51 .l51-dialogue-analysis {
+  border-block-start: 1px dashed var(--l51-line-strong);
+  padding-top: 0.85rem;
+  display: grid;
+  gap: 0.55rem;
+}
+.lesson51 .l51-mini-label {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--l51-muted);
+  text-transform: uppercase;
+}
+.lesson51 .l51-dialogue-analysis ul { display: grid; gap: 0.45rem; }
+.lesson51 .l51-dialogue-analysis li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: baseline;
+  border: 1px solid var(--l51-line);
+  border-radius: 0.85rem;
+  padding: 0.55rem 0.85rem;
+  background: var(--l51-panel);
+}
+.lesson51 .l51-dialogue-analysis li .l51-en { font-weight: 700; }
+.lesson51 .l51-dialogue-analysis li span { font-size: 0.82rem; color: var(--l51-body); }
+.lesson51 .l51-analysis-fn {
+  margin-inline-start: auto;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--l51-signal-2);
+  font-weight: 800;
+}
+.lesson51 .l51-dialogue-lab {
+  border-block-start: 1px dashed var(--l51-line-strong);
+  padding-top: 0.85rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+/* ============================================================
+   القراءة
+   ============================================================ */
+.lesson51 .l51-reading {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  background: #fff;
+  padding: clamp(0.95rem, 2.6vw, 1.5rem);
+  display: grid;
+  gap: 0.85rem;
+}
+.lesson51 .l51-reading-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: space-between;
+  align-items: center;
+}
+.lesson51 .l51-reading-head p[dir="ltr"] {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.lesson51 .l51-reading-body { display: grid; gap: 0.75rem; }
+.lesson51 .l51-reading-paragraph {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  border-inline-start: 4px solid var(--l51-signal);
+  padding-inline-start: 0.85rem;
+}
+.lesson51 .l51-reading-index {
+  flex: none;
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--l51-signal-2);
+}
+.lesson51 .l51-reading-paragraph p[dir="ltr"] {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 1.02rem;
+  line-height: 2;
+}
+.lesson51 .l51-reading-ar {
+  font-size: 0.92rem;
+  line-height: 2;
+  color: var(--l51-body);
+}
+.lesson51 .l51-reading-questions,
+.lesson51 .l51-hunt { display: grid; gap: 0.85rem; }
+.lesson51 .l51-reading-q,
+.lesson51 .l51-hunt-q {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  background: #fff;
+  padding: 0.95rem 1.15rem;
+  display: grid;
+  gap: 0.65rem;
+}
+.lesson51 .l51-reading-q-top { display: flex; gap: 0.65rem; align-items: baseline; }
+.lesson51 .l51-reading-q-top span {
+  flex: none;
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-weight: 800;
+  color: var(--l51-signal-2);
+}
+.lesson51 .l51-reading-q-top p[dir="ltr"] {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.75;
+}
+.lesson51 .l51-reading-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.lesson51 .l51-answer-model {
+  border: 1px dashed var(--l51-signal);
+  border-radius: 0.85rem;
+  background: var(--tone-soft);
+  padding: 0.75rem 1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+.lesson51 .l51-answer-model p[dir="ltr"] {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.lesson51 .l51-answer-model p[dir="rtl"] { font-size: 0.85rem; color: var(--l51-body); }
+.lesson51 .l51-hunt-q > p { line-height: 2; }
+.lesson51 .l51-hunt-options { display: grid; gap: 0.55rem; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); }
+
+/* ============================================================
+   التدريبات
+   ============================================================ */
+.lesson51 .l51-practice-list { display: grid; gap: 0.85rem; }
+.lesson51 .l51-practice-card {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  background: #fff;
+  padding: clamp(0.85rem, 2.4vw, 1.25rem);
+  display: grid;
+  gap: 0.65rem;
+}
+.lesson51 .l51-question-top { display: flex; gap: 0.65rem; align-items: baseline; }
+.lesson51 .l51-question-number {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 0.7rem;
+  background: var(--l51-panel);
+  border: 1px solid var(--l51-line);
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-weight: 800;
+  color: var(--l51-deep);
+}
+.lesson51 .l51-question-top p {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: clamp(1rem, 2.9vw, 1.18rem);
+  font-weight: 600;
+  line-height: 1.75;
+}
+.lesson51 .l51-question-top p[dir="rtl"] { font-family: inherit; }
+.lesson51 .l51-instruction { font-size: 0.85rem; color: var(--l51-muted); line-height: 1.95; }
+.lesson51 .l51-options { display: grid; gap: 0.55rem; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); }
+.lesson51 .l51-option-letter {
+  display: inline-grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 0.5rem;
+  background: var(--l51-deep);
+  color: #eaf7f3;
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+.lesson51 .l51-options button { display: flex; gap: 0.55rem; align-items: center; }
+
+/* ============================================================
+   الكتابة والتحدث
+   ============================================================ */
+.lesson51 .l51-writing {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  background: #fff;
+  padding: clamp(0.95rem, 2.6vw, 1.5rem);
+  display: grid;
+  gap: 0.85rem;
+}
+.lesson51 .l51-writing-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.lesson51 .l51-writing-checks { display: grid; gap: 0.45rem; grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr)); }
+.lesson51 .l51-writing-checks > div {
+  display: flex;
+  gap: 0.55rem;
+  align-items: baseline;
+  border: 1px solid var(--l51-line);
+  border-radius: 0.85rem;
+  padding: 0.55rem 0.85rem;
+  background: var(--l51-panel);
+  font-size: 0.85rem;
+}
+.lesson51 .l51-writing-checks > div.is-met { border-color: #a5d9c6; background: #dcf3ea; }
+.lesson51 .l51-check-body { display: grid; gap: 0.12rem; }
+.lesson51 .l51-check-formula { font-size: 0.78rem; font-weight: 700; color: var(--l51-deep-2); }
+.lesson51 .l51-check-count { font-family: "Deck51Latin", "Rubik", sans-serif; font-size: 0.75rem; color: var(--l51-muted); }
+.lesson51 .l51-writing-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--l51-muted);
+}
+.lesson51 .l51-writing-meta .is-ok { color: var(--l51-signal); }
+.lesson51 .l51-writing-model {
+  border: 1px dashed var(--l51-signal);
+  border-radius: 0.95rem;
+  background: var(--tone-soft);
+  padding: 1rem 1.15rem;
+  display: grid;
+  gap: 0.55rem;
+}
+.lesson51 .l51-writing-model p[dir="ltr"] {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 1.02rem;
+  line-height: 2;
+}
+.lesson51 .l51-speaking {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  background: var(--l51-panel);
+  padding: clamp(0.85rem, 2.4vw, 1.25rem);
+  display: grid;
+  gap: 0.75rem;
+}
+.lesson51 .l51-speaking h3 { font-size: 1.12rem; font-weight: 800; }
+.lesson51 .l51-speaking-situations { display: grid; gap: 0.55rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+.lesson51 .l51-speaking-situations button {
+  border: 1px solid var(--l51-line-strong);
+  border-radius: 0.85rem;
+  background: #fff;
+  padding: 0.65rem 0.85rem;
+  text-align: start;
+  font-size: 0.88rem;
+}
+.lesson51 .l51-speaking-situations button[aria-pressed="true"] {
+  border-color: var(--l51-deep);
+  background: var(--l51-panel);
+  box-shadow: 0 0 0 1px var(--l51-deep);
+}
+.lesson51 .l51-speaking-chosen { font-size: 0.88rem; line-height: 1.9; }
+.lesson51 .l51-speaking-starters { display: grid; gap: 0.35rem; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
+.lesson51 .l51-speaking-starters li {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.75rem;
+  background: #fff;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+/* ============================================================
+   المراجعة والتقدم
+   ============================================================ */
+.lesson51 .l51-review { display: grid; gap: 0.95rem; }
+.lesson51 .l51-five { display: grid; gap: 0.55rem; }
+.lesson51 .l51-five-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: baseline;
+  border: 1px solid var(--l51-line);
+  border-radius: 0.85rem;
+  background: #fff;
+  padding: 0.65rem 0.95rem;
+}
+.lesson51 .l51-five-row > span[aria-hidden] { font-family: "Deck51Latin", "Rubik", sans-serif; font-weight: 800; color: var(--l51-signal); }
+.lesson51 .l51-five-row div { flex: 1; min-width: 12rem; display: grid; gap: 0.12rem; }
+.lesson51 .l51-five-row p[dir="ltr"] { font-family: "Deck51Latin", "Rubik", sans-serif; font-size: 1.02rem; font-weight: 600; }
+.lesson51 .l51-five-row p[dir="rtl"] { font-size: 0.85rem; color: var(--l51-body); }
+.lesson51 .l51-five-fn { font-size: 0.75rem; font-weight: 800; color: var(--l51-signal-2); }
+.lesson51 .l51-uses-strip { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.lesson51 .l51-use-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--l51-line-strong);
+  background: var(--l51-panel);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+.lesson51 .l51-use-chip b { color: var(--l51-signal-2); }
+
+.lesson51 .l51-progress { display: grid; gap: 1.15rem; }
+.lesson51 .l51-progress-points { display: grid; gap: 0.45rem; }
+.lesson51 .l51-progress-points li {
+  display: flex;
+  gap: 0.65rem;
+  align-items: baseline;
+  border: 1px solid var(--l51-line);
+  border-radius: 0.85rem;
+  background: var(--l51-panel);
+  padding: 0.55rem 0.95rem;
+  font-size: 0.92rem;
+  line-height: 1.9;
+}
+.lesson51 .l51-progress-points li span[aria-hidden] { font-family: "Deck51Latin", "Rubik", sans-serif; color: var(--l51-signal); font-weight: 800; }
+.lesson51 .l51-golden {
+  border: 1px solid var(--l51-signal-2);
+  border-radius: 0.95rem;
+  background: #fff8e8;
+  padding: clamp(0.95rem, 2.6vw, 1.35rem);
+  display: grid;
+  gap: 0.55rem;
+}
+.lesson51 .l51-golden-lines { display: grid; gap: 0.45rem; }
+.lesson51 .l51-golden-lines p { font-size: 0.95rem; line-height: 2; color: #6f3104; }
+.lesson51 .l51-course-progress {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  background: var(--l51-deep);
+  color: #eaf7f3;
+  padding: clamp(0.95rem, 2.6vw, 1.35rem);
+  display: grid;
+  gap: 0.55rem;
+}
+.lesson51 .l51-course-progress > div { display: flex; flex-wrap: wrap; gap: 0.55rem; align-items: baseline; }
+.lesson51 .l51-course-big { font-family: "Deck51Latin", "Rubik", sans-serif; font-size: 1.85rem; font-weight: 800; }
+.lesson51 .l51-progress-track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+}
+.lesson51 .l51-progress-track > div { height: 100%; background: var(--l51-signal); }
+
+/* ============================================================
+   الاختبار النهائي
+   ============================================================ */
+.lesson51 .l51-test { display: grid; gap: 1.05rem; }
+.lesson51 .l51-test-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: space-between;
+  background: var(--l51-deep);
+  color: #eaf7f3;
+  border-radius: 0.95rem;
+  padding: 0.85rem 1.15rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+.lesson51 .l51-test-level {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  background: #fff;
+  padding: clamp(0.85rem, 2.4vw, 1.25rem);
+  display: grid;
+  gap: 0.85rem;
+}
+.lesson51 .l51-test-level-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: space-between;
+  align-items: start;
+  border-block-end: 1px solid var(--l51-line);
+  padding-bottom: 0.75rem;
+}
+.lesson51 .l51-test-level-no {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--l51-signal-2);
+}
+.lesson51 .l51-test-level-head h3 { font-size: 1.12rem; font-weight: 800; }
+.lesson51 .l51-test-level-head p { font-size: 0.85rem; color: var(--l51-muted); line-height: 1.85; }
+.lesson51 .l51-test-level-meta {
+  display: grid;
+  gap: 0.22rem;
+  justify-items: end;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--l51-muted);
+}
+.lesson51 .l51-test-q {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  padding: 0.85rem 1.05rem;
+  display: grid;
+  gap: 0.65rem;
+}
+.lesson51 .l51-test-q.is-correct { border-color: #a5d9c6; background: #f2fbf8; }
+.lesson51 .l51-test-q.is-wrong { border-color: #f2b9c5; background: #fdf4f6; }
+.lesson51 .l51-test-hint { font-size: 0.82rem; color: var(--l51-muted); font-weight: 700; }
+.lesson51 .l51-test-options { display: grid; gap: 0.55rem; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); }
+.lesson51 .l51-test-option {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  text-align: start;
+  border: 1px solid var(--l51-line-strong);
+  border-radius: 0.85rem;
+  background: #fff;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.92rem;
+}
+.lesson51 .l51-test-option[aria-pressed="true"] {
+  border-color: var(--l51-deep);
+  background: var(--l51-panel);
+  box-shadow: 0 0 0 1px var(--l51-deep);
+}
+.lesson51 .l51-test-feedback {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.85rem;
+  background: var(--l51-panel);
+  padding: 0.85rem 1rem;
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  line-height: 1.95;
+}
+.lesson51 .l51-feedback-line { display: block; }
+.lesson51 .l51-test-verdict { font-weight: 800; }
+.lesson51 .l51-test-verdict.is-correct { color: #085c42; }
+.lesson51 .l51-test-verdict.is-wrong { color: #930e2d; }
+.lesson51 .l51-test-error {
+  border: 1px solid #f2b9c5;
+  background: #fce7ec;
+  color: #7c0d28;
+  border-radius: 0.85rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+}
+.lesson51 .l51-test-actions { display: flex; flex-wrap: wrap; gap: 0.65rem; align-items: center; }
+.lesson51 .l51-test-note { font-size: 0.82rem; color: var(--l51-muted); font-weight: 700; }
+.lesson51 .l51-test-result {
+  border: 1px solid var(--l51-signal);
+  border-radius: 0.95rem;
+  background: var(--l51-deep);
+  color: #eaf7f3;
+  padding: clamp(1rem, 2.8vw, 1.5rem);
+  display: grid;
+  gap: 1.05rem;
+}
+.lesson51 .l51-test-score { display: grid; gap: 0.45rem; }
+.lesson51 .l51-test-score-value { font-family: "Deck51Latin", "Rubik", sans-serif; font-size: clamp(1.9rem, 6vw, 2.6rem); font-weight: 800; }
+.lesson51 .l51-score-track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+}
+.lesson51 .l51-score-track > div { height: 100%; background: var(--l51-signal); }
+.lesson51 .l51-test-score p { font-size: 0.88rem; line-height: 1.95; opacity: 0.92; }
+.lesson51 .l51-test-levels { display: grid; gap: 0.45rem; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); }
+.lesson51 .l51-test-levels > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.55rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* ============================================================
+   مساحة المعلم
+   ============================================================ */
+.lesson51 .l51-teacher {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  background: #fff;
+  padding: clamp(0.95rem, 2.6vw, 1.5rem);
+  display: grid;
+  gap: 0.85rem;
+}
+.lesson51 .l51-teacher--waiting {
+  background: var(--l51-panel);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+}
+.lesson51 .l51-teacher-note {
+  display: flex;
+  gap: 0.75rem;
+  align-items: start;
+}
+.lesson51 .l51-teacher-stamp {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  border: 2px solid var(--l51-deep);
+  border-radius: 0.85rem;
+  font-size: 1.35rem;
+}
+.lesson51 .l51-teacher-features { display: grid; gap: 0.35rem; }
+.lesson51 .l51-teacher-features li {
+  border-inline-start: 3px solid var(--l51-signal);
+  padding-inline-start: 0.65rem;
+  font-size: 0.85rem;
+  line-height: 1.9;
+}
+.lesson51 .l51-teacher-form { display: grid; gap: 0.45rem; }
+.lesson51 .l51-teacher-row { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.lesson51 .l51-teacher-row input {
+  flex: 1;
+  min-width: 12rem;
+  border: 1px solid var(--l51-line-strong);
+  border-radius: 0.85rem;
+  padding: 0.65rem 0.95rem;
+  background: #fff;
+}
+.lesson51 .l51-teacher-error { color: var(--l51-stamp); font-weight: 800; font-size: 0.85rem; }
+.lesson51 .l51-teacher-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: space-between;
+  align-items: start;
+}
+.lesson51 .l51-teacher-head h2 { font-size: 1.25rem; font-weight: 800; }
+.lesson51 .l51-teacher-head p { font-size: 0.88rem; color: var(--l51-body); line-height: 1.9; }
+.lesson51 .l51-teacher-loading { font-size: 0.88rem; font-weight: 700; color: var(--l51-muted); }
+
+/* ============================================================
+   دليل المعلم
+   ============================================================ */
+.lesson51 .l51-guide { display: grid; gap: 1.05rem; }
+.lesson51 .l51-guide-section {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  background: var(--l51-panel);
+  padding: clamp(0.85rem, 2.4vw, 1.25rem);
+  display: grid;
+  gap: 0.65rem;
+}
+.lesson51 .l51-guide-section h3 { font-size: 1.05rem; font-weight: 800; }
+.lesson51 .l51-guide-section p { font-size: 0.88rem; line-height: 2; }
+.lesson51 .l51-guide-grid { display: grid; gap: 0.55rem; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); }
+.lesson51 .l51-guide-grid > div {
+  display: grid;
+  gap: 0.12rem;
+  background: #fff;
+  border: 1px solid var(--l51-line);
+  border-radius: 0.75rem;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.lesson51 .l51-guide-key { display: grid; gap: 0.65rem; }
+.lesson51 .l51-guide-key > li {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.85rem;
+  background: #fff;
+  padding: 0.75rem 1rem;
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  line-height: 1.95;
+}
+.lesson51 .l51-guide-key > li.is-correct { border-inline-start: 5px solid var(--l51-signal); }
+.lesson51 .l51-guide-key > li.is-wrong { border-inline-start: 5px solid var(--l51-stamp); }
+.lesson51 .l51-guide-key-head { display: flex; flex-wrap: wrap; gap: 0.55rem; align-items: center; }
+.lesson51 .l51-guide-key-no {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-weight: 800;
+  background: var(--l51-deep);
+  color: #eaf7f3;
+  border-radius: 0.55rem;
+  padding: 0.15rem 0.55rem;
+}
+.lesson51 .l51-guide-key-answer { font-weight: 800; }
+.lesson51 .l51-guide-key-mark { margin-inline-start: auto; font-weight: 800; }
+.lesson51 .l51-guide-prompt { opacity: 0.85; }
+.lesson51 .l51-guide-reading { display: grid; gap: 0.55rem; }
+.lesson51 .l51-guide-reading > li {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.85rem;
+  background: #fff;
+  padding: 0.65rem 0.95rem;
+  display: grid;
+  gap: 0.32rem;
+}
+.lesson51 .l51-guide-reading p[dir="ltr"] { font-family: "Deck51Latin", "Rubik", sans-serif; line-height: 1.85; }
+.lesson51 .l51-guide-five { display: grid; gap: 0.45rem; }
+.lesson51 .l51-guide-five li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: baseline;
+  border: 1px solid var(--l51-line);
+  border-radius: 0.75rem;
+  background: #fff;
+  padding: 0.45rem 0.75rem;
+}
+.lesson51 .l51-guide-five span { font-size: 0.78rem; color: var(--l51-signal-2); font-weight: 800; }
+
+/* ============================================================
+   لوحة الإتقان
+   ============================================================ */
+.lesson51 .l51-dashboard { display: grid; gap: 1.05rem; }
+.lesson51 .l51-dashboard-summary { display: grid; gap: 0.65rem; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
+.lesson51 .l51-dashboard-summary > div {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  background: #fff;
+  padding: 0.95rem 1.15rem;
+  display: grid;
+  gap: 0.32rem;
+}
+.lesson51 .l51-dashboard-big { font-family: "Deck51Latin", "Rubik", sans-serif; font-size: 1.65rem; font-weight: 800; }
+.lesson51 .l51-dashboard-summary p { font-size: 0.82rem; color: var(--l51-muted); line-height: 1.85; }
+.lesson51 .l51-dashboard-skills,
+.lesson51 .l51-dashboard-labs,
+.lesson51 .l51-dashboard-levels {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  background: var(--l51-panel);
+  padding: clamp(0.85rem, 2.4vw, 1.25rem);
+  display: grid;
+  gap: 0.65rem;
+}
+.lesson51 .l51-skill-row { display: grid; gap: 0.35rem; }
+.lesson51 .l51-skill-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+.lesson51 .l51-skill-track {
+  height: 10px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--l51-line);
+  overflow: hidden;
+}
+.lesson51 .l51-skill-track > div { height: 100%; background: var(--l51-signal); }
+.lesson51 .l51-skill-track.is-empty > div { background: var(--l51-line-strong); }
+.lesson51 .l51-skill-note { font-size: 0.8rem; color: var(--l51-muted); line-height: 1.85; }
+.lesson51 .l51-dashboard-labs ul { display: grid; gap: 0.35rem; }
+.lesson51 .l51-dashboard-labs li {
+  border: 1px solid var(--l51-line);
+  border-radius: 0.75rem;
+  background: #fff;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.lesson51 .l51-dashboard-levels ul { display: grid; gap: 0.35rem; }
+.lesson51 .l51-dashboard-levels li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.55rem;
+  border: 1px solid var(--l51-line);
+  border-radius: 0.75rem;
+  background: #fff;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* ============================================================
+   الدرس القادم
+   ============================================================ */
+.lesson51 .l51-roadmap { display: grid; gap: 1.05rem; }
+.lesson51 .l51-roadmap-card {
+  border: 1px solid var(--l51-line);
+  border-radius: var(--l51-radius);
+  background: var(--l51-paper);
+  padding: clamp(1.15rem, 3.4vw, 2.15rem);
+  box-shadow: var(--l51-shadow);
+  display: grid;
+  gap: 0.75rem;
+}
+.lesson51 .l51-roadmap-no {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: clamp(2.6rem, 9vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--l51-signal);
+}
+.lesson51 .l51-roadmap-card h2 { font-size: clamp(1.35rem, 4.4vw, 2rem); font-weight: 800; }
+.lesson51 .l51-roadmap-card p { line-height: 2; color: var(--l51-body); }
+.lesson51 .l51-roadmap-links { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.lesson51 .l51-roadmap-links span {
+  font-family: "Deck51Latin", "Rubik", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  border: 1px solid var(--l51-line-strong);
+  border-radius: 999px;
+  padding: 0.22rem 0.75rem;
+  color: var(--l51-deep);
+}
+.lesson51 .l51-roadmap-actions { display: flex; flex-wrap: wrap; gap: 0.65rem; align-items: center; }
+.lesson51 .l51-roadmap-note {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  border: 1px solid var(--l51-line);
+  border-radius: 0.95rem;
+  background: var(--l51-panel);
+  padding: 0.95rem 1.15rem;
+  font-size: 0.92rem;
+  line-height: 2;
+}
+
+/* ============================================================
+   استجابة الشاشات — 1280 / 768 / 375 / 320
+   ============================================================ */
+@media (max-width: 920px) {
+  .lesson51 .l51-cover { grid-template-columns: minmax(0, 1fr); }
+  .lesson51 .l51-cover-board { order: -1; }
+}
+@media (max-width: 640px) {
+  .lesson51 .l51-flow { grid-template-columns: minmax(0, 1fr); }
+  .lesson51 .l51-flow-arrow {
+    grid-auto-flow: column;
+    justify-content: start;
+    gap: 0.55rem;
+    min-width: 0;
+    padding: 0.15rem 0;
+  }
+  .lesson51 .l51-flow-beam { width: 3.5rem; }
+  .lesson51 .l51-meter-stops { grid-template-columns: minmax(0, 1fr); }
+  .lesson51 .l51-teacher--waiting { grid-template-columns: minmax(0, 1fr); }
+  .lesson51 .l51-table { min-width: 24rem; }
+}
+@media (max-width: 400px) {
+  .lesson51 .l51-sheet { padding: 0.95rem 0.85rem; }
+  .lesson51 .l51-head-row { gap: 0.4rem; }
+  .lesson51 .l51-emblem { font-size: 1.35rem; }
+  .lesson51 .l51-lab-options,
+  .lesson51 .l51-options,
+  .lesson51 .l51-test-options,
+  .lesson51 .l51-hunt-options,
+  .lesson51 .l51-speaking-situations,
+  .lesson51 .l51-writing-checks,
+  .lesson51 .l51-goals,
+  .lesson51 .l51-errors { grid-template-columns: minmax(0, 1fr); }
+  .lesson51 .l51-cover-pill { font-size: 0.68rem; padding: 0.45rem 0.65rem; }
+  .lesson51 .l51-cover-actions .l51-button { width: 100%; }
+  .lesson51 .l51-order-built { font-size: 0.92rem; }
+}
+
+/* احترام تقليل الحركة */
+@media (prefers-reduced-motion: reduce) {
+  .lesson51 *,
+  .lesson51 *::before,
+  .lesson51 *::after {
+    animation-duration: 0.001s !important;
+    transition-duration: 0.001s !important;
+    scroll-behavior: auto !important;
+  }
+}

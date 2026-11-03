@@ -1,0 +1,26 @@
+.lesson55 { --l55-ink:#173a49; --l55-accent:#ae4f2a; }
+.lesson55 #l55-main { margin-bottom:5rem; }
+.lesson55 .l55-cover { background:linear-gradient(135deg,#123d4d,#235c69 55%,#a65031); color:white; border-radius:1.5rem; padding:clamp(1.5rem,5vw,4rem); }
+.lesson55 .l55-cover h2 {font-size:clamp(1.2rem,5vw,4rem);line-height:1.05;font-weight:800;overflow-wrap:normal;}
+.lesson55 .l55-cover p {font-size:1.2rem;margin:1rem 0;}
+.lesson55 .l55-card {background:#f7faf9;border:1px solid #b9d5d3;border-inline-start:4px solid #c86c42;border-radius:1rem;padding:1rem;margin:1rem 0;overflow-wrap:anywhere;}
+.lesson55 .l55-en {text-align:left; font-size:1.15rem; line-height:1.6; overflow-wrap:anywhere;}
+.lesson55 .l55-text {font-size:1.15rem;line-height:1.8;}
+.lesson55 .l55-formula {text-align:left;background:#173a49;color:white;border-radius:1rem;padding:1rem;font-weight:700;overflow-wrap:anywhere;}
+.lesson55 textarea {display:block;width:100%;min-width:0;min-height:5rem;border:2px solid #8eafaf;border-radius:.75rem;padding:.75rem;margin:.75rem 0;background:white;}
+.lesson55 .l55-card button, .lesson55 .l55-lab button, .lesson55 .l55-content > button {border:1px solid #173a49;border-radius:.7rem;padding:.6rem .9rem;background:white;color:#173a49;margin:.25rem;}
+.lesson55 .l55-card button[aria-pressed="true"], .lesson55 .l55-lab button[aria-pressed="true"] {background:#173a49;color:white;}
+.lesson55 .l55-card button:disabled, .lesson55 .l55-lab button:disabled, .lesson55 .l55-content > button:disabled {opacity:.5;}
+.lesson55 button:focus-visible,.lesson55 a:focus-visible,.lesson55 textarea:focus-visible {outline:3px solid #c45c31;outline-offset:3px;}
+.lesson55 .l55-options {display:flex;flex-wrap:wrap;gap:.25rem;}
+.lesson55 .l55-feedback {background:#e5f4eb;border-radius:.75rem;padding:1rem;margin-top:.75rem;}
+.lesson55 .l55-lab {background:#ecf7f4;border:1px solid #a6d1c5;border-radius:1.2rem;padding:1rem;}
+.lesson55 .l55-track {display:flex;direction:ltr;justify-content:space-between;align-items:center;background:#173a49;color:white;padding:1rem;border-radius:.8rem;letter-spacing:.12em;font-weight:800;}
+.lesson55 .l55-lab fieldset {margin:.8rem 0;border:1px solid #b3d1ca;border-radius:.8rem;padding:.5rem;}
+.lesson55 .l55-builder {padding:1rem;background:white;border:1px dashed #357464;border-radius:.8rem;min-height:3rem;overflow-wrap:anywhere;}
+.lesson55 .l55-text span[lang="en"], .lesson55 .l55-card span[lang="en"] {display:inline-block;max-width:100%;overflow-wrap:anywhere;}
+.lesson55 .l55-content > div > button {border:1px solid #173a49;border-radius:.7rem;padding:.6rem .9rem;background:white;color:#173a49;margin:.25rem;}
+.lesson55 .l55-content > div > button:disabled {opacity:.5;}
+.lesson55 .l55-text + .l55-text, .lesson55 .l55-formula + .l55-formula {margin-top:.8rem;}
+.lesson55 .l55-requirements {list-style:decimal;padding-inline-start:1.5rem;line-height:1.9;}
+.lesson55 .l55-text .ltr-pair > span[dir="ltr"], .lesson55 .l55-card .ltr-pair > span[dir="ltr"] {display:inline-block;max-width:100%;}

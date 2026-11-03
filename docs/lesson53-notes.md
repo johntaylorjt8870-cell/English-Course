@@ -23,6 +23,7 @@
   being structurally correct, so the originals are retained with a note.
 - The source's writing example has eight sentences while the assignment asks
   for 10–14; both are retained, with the distinction explained to the learner.
-- Lesson 54 is not registered in the current repository. The next-lesson link
-  follows the existing hash convention and will lead to the hub until 54 is
-  implemented; this is identified in the lesson.
+- Lesson 54 is now registered: `#/lesson/53` → `#/lesson/54` resolves to the
+  Third Conditional lesson on this branch. Lesson 54's own next-lesson link
+  points at `#/lesson/55` (MIXED CONDITIONALS), which still falls back to the
+  hub until lesson 55 is built; lesson 54 says so explicitly.

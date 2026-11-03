@@ -355,7 +355,7 @@ function BlockView({ b }: { b: Block }) {
 // إطار الشريحة
 // ============================================================
 
-function SlideFrame({
+export function SlideFrame({
   mascot,
   step,
   badge,

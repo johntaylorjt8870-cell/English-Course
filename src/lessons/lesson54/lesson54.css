@@ -1,0 +1,106 @@
+/* ============================================================
+   الدرس 54 — «مختبر إعادة الماضي» (هوية بصرية خاصة)
+   مبني على قالب الدرس الأول دون تعديل Lesson1Shell أو أي ملف مشترك.
+   كل التنسيقات محصورة تحت .lesson54 ولا تصل إلى الدرس الأول.
+   ============================================================ */
+
+/* إبقاء أدوات التمرير فوق شريط التنقل/قفل الموقع العائم (نفس عقد الدرس 53). */
+.lesson54 #l54-main { margin-bottom: 5rem; }
+
+.lesson54 {
+  --l54-ink: #241b4a;
+  --l54-violet: #6d4bd8;
+  --l54-amber: #e7a52b;
+  --l54-mist: #f1edff;
+}
+
+/* إطار الشريحة الأصلي (SlideFrame) يكتسب حواف وظلال الدرس دون تعديله. */
+.lesson54 .l54-frame > section {
+  border-color: rgba(109, 75, 216, 0.22);
+  box-shadow: 0 18px 48px -22px rgba(71, 43, 145, 0.42);
+}
+.lesson54 .l54-frame > section::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  width: 100%;
+  height: 5px;
+  border-radius: 2rem 2rem 0 0;
+  background: linear-gradient(90deg, var(--l54-violet), var(--l54-amber));
+  pointer-events: none;
+}
+
+/* المعادلات: نص واضح باتجاه يسار→يمين، دون تعديل Formula في الدرس الأول. */
+.lesson54 .l54-formula {
+  display: block;
+  width: 100%;
+  overflow-wrap: anywhere;
+  text-align: left;
+  direction: ltr;
+  unicode-bidi: isolate;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(109, 75, 216, 0.28);
+  background: linear-gradient(180deg, #ffffff, var(--l54-mist));
+  padding: 1rem 1.25rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.6;
+  color: var(--l54-ink);
+}
+
+.lesson54 .l54-enblock {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: left;
+  border-radius: 1.25rem;
+  border: 1px solid #e5e0f6;
+  background: #fbfaff;
+  padding: 1rem 1.25rem;
+}
+.lesson54 .l54-enblock > div + div { margin-top: 0.4rem; }
+
+.lesson54 .l54-pair {
+  border-radius: 1.5rem;
+  border: 1px solid #e6e1f5;
+  background: #ffffff;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 6px 18px -14px rgba(36, 27, 74, 0.5);
+}
+.lesson54 .l54-pair .font-en {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: left;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--l54-ink);
+}
+
+.lesson54 .l54-answer {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: left;
+  border-radius: 1rem;
+  background: #eefbf3;
+  padding: 0.75rem 1rem;
+  color: #14532d;
+  font-weight: 700;
+}
+
+.lesson54 .l54-cover {
+  background-image: radial-gradient(circle at 12% 12%, rgba(109, 75, 216, 0.18), transparent 42%),
+    radial-gradient(circle at 88% 88%, rgba(231, 165, 43, 0.22), transparent 44%);
+}
+.lesson54 .l54-chip {
+  background: var(--l54-ink);
+  color: #fff;
+}
+.lesson54 .l54-next {
+  background: linear-gradient(90deg, var(--l54-violet), var(--l54-amber));
+  color: #fff;
+}
+
+@media (max-width: 640px) {
+  .lesson54 .l54-formula { font-size: 1.05rem; padding: 0.8rem 0.9rem; }
+  .lesson54 .l54-enblock { padding: 0.8rem 0.9rem; }
+}

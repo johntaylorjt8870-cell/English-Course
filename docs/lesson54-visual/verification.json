@@ -1,0 +1,17 @@
+{
+  "lesson": 54,
+  "slides": 47,
+  "viewports": [
+    "1280x900",
+    "768x900",
+    "375x812",
+    "320x720"
+  ],
+  "checks": 970,
+  "failures": [],
+  "externalNetworkErrors": [
+    "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap"
+  ],
+  "consoleErrors": [],
+  "generatedAt": "2026-11-03T18:20:03.933Z"
+}

@@ -828,7 +828,8 @@ try {
       ok(app.includes(`#/lesson/${n}`), `Lesson ${n} hub card remains`);
     }
     const dirCheck = readFileSync(join(root, "scripts", "check-english-direction.mjs"), "utf8");
-    ok(dirCheck.includes("lessons.length === 52"), "direction check inventory covers all 52 lessons");
+    // الجرد مشتق الآن من مجلدات الدروس (52 → 53 → 54) بدل رقم ثابت.
+    ok(dirCheck.includes("lessons.length === latestLesson"), "direction check inventory is derived from all lesson folders");
     const renderCheck = readFileSync(join(root, "scripts", "audit-render-direction.mjs"), "utf8");
     ok(renderCheck.includes("lessonFolders.length >= 52") && renderCheck.includes("n <= 52"), "render audit covers and routes all 52 lesson folders");
   }

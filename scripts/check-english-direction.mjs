@@ -19,7 +19,11 @@ function ok(cond, msg) {
 function src(lesson, file) {
   return readFileSync(join(ROOT, lesson, file), "utf8");
 }
-ok(lessons.length === 52, `full-course regression inventory contains 52 lessons (got ${lessons.length})`);
+// عدد الدروس مشتق من السجل نفسه (كان ثابتًا 52 فتعطّل بعد إضافة 53 ثم 54).
+// الشرط: المجلدات متصلة من الدرس 1 حتى آخر درس مسجّل.
+const lessonNumbers = lessons.map((d) => Number(d.replace(/^lesson/, ""))).filter(Number.isFinite);
+const latestLesson = Math.max(...lessonNumbers);
+ok(lessons.length === latestLesson, `full-course regression inventory is contiguous through lesson ${latestLesson} (got ${lessons.length} folders)`);
 // يقتطع جسم دالة بالاسم: من تعريفها حتى بداية الدالة التالية
 function fnBody(code, name) {
   const start = code.search(new RegExp(`function ${name}\\s*\\(`));

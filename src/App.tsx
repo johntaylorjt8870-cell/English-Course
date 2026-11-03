@@ -53,6 +53,7 @@ import Lesson51 from "./lessons/lesson51/Lesson51";
 import Lesson52 from "./lessons/lesson52/Lesson52";
 import Lesson53 from "./lessons/lesson53/Lesson53";
 import Lesson54 from "./lessons/lesson54/Lesson54";
+import Lesson55 from "./lessons/lesson55/Lesson55";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -589,6 +590,7 @@ const CARDS: Card[] = [
   },
   { n: 53, title: "الدرس 53: SECOND CONDITIONAL — الشرط الثاني", en: "Second Conditional — If + Past Simple, would + V1", emoji: "💭", stats: "8 تدريبات · اختبار 25 سؤالًا", href: "#/lesson/53", grad: "from-sky-500 to-emerald-500" },
   { n: 54, title: "الدرس 54: THIRD CONDITIONAL — الشرط الثالث", en: "Third Conditional — If + Past Perfect, would have + V3", emoji: "⏳", stats: "8 تدريبات · 58 سؤالًا · اختبار 25 سؤالًا", href: "#/lesson/54", grad: "from-violet-600 to-amber-500" },
+  { n: 55, title: "الدرس 55: MIXED CONDITIONALS — الجمل الشرطية المختلطة", en: "Mixed Conditionals — Past and Present", emoji: "⏳", stats: "8 تدريبات · 46 سؤالًا · اختبار 25 سؤالًا", href: "#/lesson/55", grad: "from-teal-700 to-orange-600" },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -724,6 +726,7 @@ export default function App() {
   else if (route === 52) page = <Lesson52 onExit={goHome} />;
   else if (route === 53) page = <Lesson53 onExit={goHome} />;
   else if (route === 54) page = <Lesson54 onExit={goHome} />;
+  else if (route === 55) page = <Lesson55 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

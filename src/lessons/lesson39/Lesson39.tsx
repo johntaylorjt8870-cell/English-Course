@@ -230,7 +230,7 @@ export default function Lesson39({ onExit }: { onExit?: () => void }) {
       showStepContent={area !== "test"}
       mainAfter={
         testVisited ? (
-          <div hidden={area !== "test"} className="pop mx-auto max-w-4xl" data-area="lesson39-test">
+          <div hidden={area !== "test"} className="pop lesson-content-container" data-area="lesson39-test">
             <Suspense fallback={<PanelLoading39 label="جارٍ فتح الاختبار…" />}>
               <TestArea39 onSubmitted={() => setTestSubmitted(true)} onGoSolutions={openSolutions} />
             </Suspense>

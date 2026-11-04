@@ -37,7 +37,7 @@ export function TestArea43({
   };
 
   return (
-    <div className="mx-auto w-full max-w-4xl">
+    <div className="w-full">
       <Panel43 title="تقييم الدرس" kicker="EXAM · 25 QUESTIONS · 5 LEVELS">
         {EXAM_INTRO_43.map((line) => (
           <p key={line} className="text-sm font-bold text-slate-600">

@@ -2903,7 +2903,7 @@ export default function Lesson18({ onExit }: { onExit: () => void }) {
           <Rail i={index} setI={setIndex} onExit={onExit} />
         </div>
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
-          <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
+          <header className="flex items-center gap-3 px-4 pt-3 lg:px-6 xl:px-8">
             <button
               onClick={() => setMenu(true)}
               className="grid h-10 w-10 place-items-center rounded-xl border-2 border-slate-200 bg-white text-lg shadow-sm lg:hidden"
@@ -2929,8 +2929,8 @@ export default function Lesson18({ onExit }: { onExit: () => void }) {
               {`${index + 1} / ${total}`}
             </span>
           </header>
-          <main id="l18-main" className="flex-1 overflow-y-auto px-3 pb-32 pt-4 md:px-6 lg:px-10">
-            <div key={index} className="pop mx-auto max-w-4xl">
+          <main id="l18-main" className="lesson-main-scroll flex-1 overflow-y-auto pb-32 pt-4">
+            <div key={index} className="pop lesson-content-container">
               <SlideView18 s={slide} onExit={onExit} />
             </div>
           </main>

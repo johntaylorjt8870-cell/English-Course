@@ -675,8 +675,8 @@ export default function Lesson2({ onExit }: { onExit: () => void }) {
       </div>
 
       {/* منطقة الشريحة */}
-      <main className="relative z-10 flex flex-1 items-start justify-center px-3 py-6 md:px-8 md:py-10">
-        <div key={i} className="pop w-full max-w-4xl rounded-[2rem] border-2 border-white bg-white/85 p-6 shadow-xl shadow-amber-200/40 backdrop-blur-sm md:p-10">
+      <main className="lesson-main-scroll relative z-10 flex flex-1 items-start justify-center py-6 md:py-10">
+        <div key={i} className="pop lesson-content-container rounded-[2rem] border-2 border-white bg-white/85 p-6 shadow-xl shadow-amber-200/40 backdrop-blur-sm md:p-10">
           <SlideView s={SLIDES[i]} idx={i} />
         </div>
       </main>

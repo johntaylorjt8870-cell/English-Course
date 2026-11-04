@@ -113,9 +113,15 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 1460px;
+  max-width: var(--lesson-shell-max);
   margin-inline: auto;
   padding: clamp(0.7rem, 1.6vw, 1.4rem);
+}
+
+.l34-frame > .l34-main {
+  width: 100%;
+  max-width: var(--lesson-content-max);
+  margin-inline: auto;
 }
 
 .l34-rise {

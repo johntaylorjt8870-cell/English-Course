@@ -158,7 +158,7 @@ export default function Lesson1Shell({
           {rail}
         </div>
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
-          <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
+          <header className="flex items-center gap-3 px-4 pt-3 lg:px-6 xl:px-8">
             <button
               type="button"
               onClick={() => onMenuOpenChange(true)}
@@ -178,9 +178,9 @@ export default function Lesson1Shell({
             </span>
           </header>
 
-          <main id={mainId} ref={mainRef} className="flex-1 overflow-y-auto px-3 pb-32 pt-4 md:px-6 lg:px-10">
+          <main id={mainId} ref={mainRef} className="lesson-main-scroll flex-1 overflow-y-auto pb-32 pt-4">
             {showStepContent ? (
-              <div key={contentKey} className="pop mx-auto max-w-4xl" data-area={contentArea}>
+              <div key={contentKey} className="pop lesson-content-container" data-area={contentArea}>
                 {children}
               </div>
             ) : null}

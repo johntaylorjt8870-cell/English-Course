@@ -133,7 +133,7 @@ for (const viewport of [
   if (viewport.rail) {
     ok(Math.abs(state.rail.width - 288) <= 1, `${viewport.name}: sidebar is fixed at 288px (got ${state.rail.width})`);
     ok(state.main.width > state.rail.width * 2, `${viewport.name}: explanation region is substantially wider than the index`);
-    ok(state.content.width <= 896, `${viewport.name}: centered explanation content is at most 896px (got ${state.content.width})`);
+    ok(state.content.width <= 1536, `${viewport.name}: centered explanation content stays within --lesson-content-max 1536px (got ${state.content.width})`);
     ok(state.content.width > state.rail.width, `${viewport.name}: explanation content is wider than the index`);
   }
   const contrast = await contrastAudit();

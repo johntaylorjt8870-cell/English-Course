@@ -3,6 +3,19 @@
 :root {
   --ink: #2b2440;
   --paper: #fff8ee;
+  --lesson-content-max: 96rem;
+  --lesson-shell-max: 114rem;
+  --hub-content-max: 96rem;
+}
+
+.lesson-main-scroll {
+  padding-inline: clamp(0.75rem, 2vw, 2rem);
+}
+
+.lesson-content-container {
+  width: 100%;
+  max-width: var(--lesson-content-max);
+  margin-inline: auto;
 }
 
 html,

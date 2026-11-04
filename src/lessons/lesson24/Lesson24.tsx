@@ -1764,7 +1764,7 @@ export default function Lesson24({ onExit }: Props) {
           <Rail active={active} setActive={setActive} onExit={onExit} />
         </div>
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
-          <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
+          <header className="flex items-center gap-3 px-4 pt-3 lg:px-6 xl:px-8">
             <button
               type="button"
               onClick={() => setMenu(true)}
@@ -1791,13 +1791,13 @@ export default function Lesson24({ onExit }: Props) {
               {active + 1} / {total}
             </span>
           </header>
-          <main id="l24-main" data-area="student-lesson" className="flex-1 overflow-y-auto px-3 pb-28 pt-4 md:px-6 lg:px-10">
+          <main id="l24-main" data-area="student-lesson" className="lesson-main-scroll flex-1 overflow-y-auto pb-28 pt-4">
             {STEPS_24.map((s, i) => (
               <section
                 key={s.id}
                 id={`zone-${s.id}`}
                 hidden={i !== active}
-                className={`mx-auto max-w-4xl scroll-mt-24 ${i === active ? "pop" : ""}`}
+                className={`lesson-content-container scroll-mt-24 ${i === active ? "pop" : ""}`}
               >
                 <StepSection st={s} index={i} goTo={goTo} onExit={onExit} />
               </section>

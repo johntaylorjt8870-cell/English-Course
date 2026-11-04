@@ -462,7 +462,7 @@ export default function Lesson41({ onExit }: { onExit: () => void }) {
         <div className="relative z-10 hidden w-72 shrink-0 border-l border-slate-200 bg-white/80 backdrop-blur lg:block">{rail}</div>
 
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
-          <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
+          <header className="flex items-center gap-3 px-4 pt-3 lg:px-6 xl:px-8">
             <button
               onClick={() => setMenu(true)}
               className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-lg shadow-sm lg:hidden"
@@ -483,9 +483,9 @@ export default function Lesson41({ onExit }: { onExit: () => void }) {
             </span>
           </header>
 
-          <main ref={mainRef} id="l41-main" className="flex-1 overflow-y-auto px-3 pb-32 pt-4 md:px-6 lg:px-10">
+          <main ref={mainRef} id="l41-main" className="lesson-main-scroll flex-1 overflow-y-auto pb-32 pt-4">
             <Workspace41Provider>
-              <div key={slide.id} className="pop mx-auto max-w-4xl">
+              <div key={slide.id} className="pop lesson-content-container">
                 <SlideBody
                   slide={slide}
                   index={index}

@@ -195,8 +195,8 @@ function RoadmapSlide45({
           </p>
         </div>
 
-        {/* شريط التقدم الكلي في المنهج */}
-        <div className="mx-auto max-w-xl rounded-2xl border border-white/15 bg-white/5 p-4 text-right">
+          {/* شريط التقدم الكلي في المنهج */}
+          <div className="mx-auto max-w-3xl rounded-2xl border border-white/15 bg-white/5 p-4 text-right">
           <div className="flex items-center justify-between text-sm font-bold text-slate-200">
             <span>التقدم الكلي في المنهج الشامل</span>
             <span dir="ltr" className="font-en text-emerald-300">
@@ -208,8 +208,8 @@ function RoadmapSlide45({
           </div>
         </div>
 
-        {/* بطاقة الدرس القادم 46 */}
-        <div className="mx-auto max-w-2xl space-y-3 rounded-3xl border border-white/15 bg-white/10 p-5 text-right backdrop-blur-xs">
+          {/* بطاقة الدرس القادم 46 */}
+          <div className="mx-auto max-w-3xl space-y-3 rounded-3xl border border-white/15 bg-white/10 p-5 text-right backdrop-blur-xs">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="rounded-full bg-amber-400/20 px-3 py-1 text-xs font-extrabold text-amber-300">
               المحطة القادمة

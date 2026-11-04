@@ -2521,7 +2521,7 @@ export default function Lesson29({ onExit }: { onExit: () => void }) {
           <Rail index={index} setIndex={setIndex} area={area} setArea={setArea} onExit={onExit} />
         </div>
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
-          <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
+          <header className="flex items-center gap-3 px-4 pt-3 lg:px-6 xl:px-8">
             <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border-2 border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس الدرس">
               ☰
             </button>
@@ -2547,8 +2547,8 @@ export default function Lesson29({ onExit }: { onExit: () => void }) {
               </span>
             )}
           </header>
-          <main id="l29-main" className="flex-1 overflow-y-auto px-3 pb-32 pt-4 md:px-6 lg:px-10">
-            <div data-area="student-lesson" className="mx-auto max-w-4xl" hidden={area !== "lesson"}>
+          <main id="l29-main" className="lesson-main-scroll flex-1 overflow-y-auto pb-32 pt-4">
+            <div data-area="student-lesson" className="lesson-content-container" hidden={area !== "lesson"}>
               <div key={index} className="pop">
                 <SlideView slide={slide} onExit={onExit} onGoTest={() => setArea("test")} />
                 {/* 🏁 الاختبار النهائي — طبقة نهاية الدرس (تظهر مع الخطوة الأخيرة فقط) */}
@@ -2564,13 +2564,13 @@ export default function Lesson29({ onExit }: { onExit: () => void }) {
                 )}
               </div>
             </div>
-            <div className="mx-auto max-w-4xl" hidden={area !== "test"}>
+            <div className="lesson-content-container" hidden={area !== "test"}>
               <TestArea onSubmitted={() => setTestDone(true)} />
             </div>
-            <div className="mx-auto max-w-4xl" hidden={area !== "solutions"}>
+            <div className="lesson-content-container" hidden={area !== "solutions"}>
               <Solutions unlocked={solutionsUnlocked} onGoTest={() => setArea("test")} onGoTeacher={() => setArea("teacher")} />
             </div>
-            <div className="mx-auto max-w-4xl" hidden={area !== "teacher"}>
+            <div className="lesson-content-container" hidden={area !== "teacher"}>
               <Teacher unlocked={teacherOk} onUnlock={() => setTeacherOk(true)} onGoSolutions={() => setArea("solutions")} />
             </div>
           </main>

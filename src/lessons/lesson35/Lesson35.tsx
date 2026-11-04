@@ -132,7 +132,7 @@ export default function Lesson35({ onExit }: { onExit?: () => void }) {
       contentArea={contentAreaName}
       showStepContent={area !== "test"}
       mainAfter={testVisited ? (
-        <div hidden={area !== "test"} className="pop mx-auto max-w-4xl" data-area="l35-test">
+        <div hidden={area !== "test"} className="pop lesson-content-container" data-area="l35-test">
           <Suspense fallback={<div className="rounded-3xl border border-slate-200 bg-white p-5 text-slate-600" role="status">جارٍ فتح الاختبار…</div>}>
             <TestArea35 onSubmitted={() => setTestSubmitted(true)} onGoSolutions={() => setArea("solutions")} />
           </Suspense>

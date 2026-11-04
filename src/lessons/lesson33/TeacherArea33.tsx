@@ -70,7 +70,7 @@ export default function TeacherArea33({ unlocked, onUnlockChange, onGoSolutions 
   }
 
   return (
-    <div className="mx-auto max-w-4xl space-y-4" data-area="l33-teacher-body">
+    <div className="w-full space-y-4" data-area="l33-teacher-body">
       <header className="flex flex-wrap items-center justify-between gap-2 rounded-3xl border-2 border-slate-200 bg-white p-4">
         <div>
           <h2 className="font-head text-xl font-black text-slate-900">

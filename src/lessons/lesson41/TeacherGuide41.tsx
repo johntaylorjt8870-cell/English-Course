@@ -27,7 +27,7 @@ const MISCONCEPTIONS = [
 export default function TeacherGuide41() {
   const practice = PRACTICE_41;
   return (
-    <div className="mx-auto max-w-5xl space-y-4" data-teacher-guide="41">
+    <div className="w-full space-y-4" data-teacher-guide="41">
       <Panel41 title="دليل التدريس — من الشكل إلى الوظيفة" kicker="DELIVERY GUIDE">
         <p className="text-base leading-8 text-slate-700">
           <Text41 text="الدرس يعيد بناء أربعين قسمًا في شرائح قصيرة. استخدم المحطات كوحدات جلسة، ولا تختزل التدريبات في عينة. الشروح في هذا الدليل إضافات المنصة، أما نصوص الأسئلة والأمثلة فمن المصدر." />

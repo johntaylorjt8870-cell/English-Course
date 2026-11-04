@@ -24,7 +24,7 @@ export function TeacherArea42({ unlocked, unlock, lock }: { unlocked: boolean; u
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   return (
-    <section data-area="teacher" className="mx-auto max-w-4xl">
+    <section data-area="teacher" className="w-full">
       {unlocked ? (
         <div className="space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-3">

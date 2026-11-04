@@ -630,7 +630,7 @@ function CoverStep({ slide }: { slide: Slide30 }) {
           <h1 className="font-head mt-1 text-3xl font-black leading-tight text-slate-900 md:text-5xl">{slide.title}</h1>
           <p className="mx-auto mt-3 max-w-2xl text-lg leading-relaxed text-slate-600 md:text-xl">{slide.lead}</p>
           <p dir="ltr" className="ltr-pair mt-3 text-sm font-bold text-slate-500 md:text-base"><LatinRuns text={LESSON_SUBTITLE_30} /></p>
-          <div dir="ltr" className="ltr-row mx-auto mt-4 max-w-2xl rounded-2xl border border-sky-100 bg-white/85 p-3 shadow-sm">
+            <div dir="ltr" className="ltr-row mx-auto mt-4 max-w-3xl rounded-2xl border border-sky-100 bg-white/85 p-3 shadow-sm">
             <En className="block text-sm font-bold leading-relaxed text-slate-700 md:text-base">{LAB_MOTTO_30}</En>
           </div>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm font-black">
@@ -725,9 +725,9 @@ function ObjectivesStep() {
         <div className="grid gap-2 sm:grid-cols-2">
           {OBJECTIVES_30.map((obj, i) => (
             <button key={i} type="button" onClick={() => setChecked((p) => ({ ...p, [i]: !p[i] }))} aria-pressed={checked[i] === true}
-              className={`flex items-start gap-2.5 rounded-2xl border-2 p-3 text-right transition active:scale-[0.98] ${checked[i] ? "border-emerald-300 bg-emerald-50" : "border-slate-200 bg-white hover:border-teal-300"}`}>
+              className={`flex min-w-0 items-start gap-2.5 rounded-2xl border-2 p-3 text-right transition active:scale-[0.98] ${checked[i] ? "border-emerald-300 bg-emerald-50" : "border-slate-200 bg-white hover:border-teal-300"}`}>
               <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg text-sm font-black text-white ${checked[i] ? "bg-emerald-600" : "bg-slate-300"}`}>{checked[i] ? "✓" : i + 1}</span>
-              <LatinRuns text={obj} />
+              <span className="min-w-0 flex-1 leading-relaxed"><LatinRuns text={obj} /></span>
             </button>
           ))}
         </div>
@@ -1909,7 +1909,7 @@ function SummaryStep() {
         <div className={`tada mt-3 rounded-2xl border-2 p-4 text-center ${LENS_META[lens].soft}`} key={lens}>
           <div className="text-3xl">{LENS_META[lens].emoji}</div>
           <Rich text={cards[lens].def} className={`mt-1 block text-base font-black ${LENS_META[lens].text}`} />
-          <div className="mx-auto mt-2 max-w-xl rounded-xl bg-slate-900 p-3" dir="ltr"><En className="text-base font-black text-white md:text-lg">{cards[lens].en}</En></div>
+            <div className="mx-auto mt-2 max-w-3xl rounded-xl bg-slate-900 p-3" dir="ltr"><En className="text-base font-black text-white md:text-lg">{cards[lens].en}</En></div>
           <div className="mt-2 text-sm font-bold text-slate-600"><EnAr en={LENS_META[lens].qEn} sep="—" ar={LENS_META[lens].q} enClassName="font-black" /></div>
         </div>
       </Lab>
@@ -2750,8 +2750,8 @@ export default function Lesson30({ onExit }: { onExit: () => void }) {
             </nav>
           </header>
 
-          <main id="l30-main" ref={scrollRef} className="l30-scroll flex-1 overflow-y-auto px-3 pb-32 pt-4 sm:px-4 md:px-6 lg:px-10">
-            <div className="l30-content mx-auto w-full max-w-4xl">
+          <main id="l30-main" ref={scrollRef} className="lesson-main-scroll l30-scroll flex-1 overflow-y-auto pb-32 pt-4">
+            <div className="l30-content lesson-content-container">
               {area === "lesson" && (
                 <div data-area="l30-lesson">
                   <SlideView30 key={index} s={slide} onGoTest={() => setArea("test")} />

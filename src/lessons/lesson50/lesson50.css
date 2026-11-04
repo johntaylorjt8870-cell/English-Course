@@ -2091,7 +2091,7 @@
 .lesson50 .l50-phase-numbers span { font-size: 0.7rem; color: var(--l50-muted); font-weight: 700; }
 .lesson50 .l50-phase-track { height: 0.7rem; border-radius: 999px; background: var(--l50-line); overflow: hidden; margin-top: 0.9rem; }
 .lesson50 .l50-phase-track > div { height: 100%; background: linear-gradient(to left, var(--l50-signal-2), var(--l50-signal)); }
-.lesson50 .l50-roadmap { display: grid; gap: 1rem; max-width: 52rem; margin: 0 auto; padding: 1rem 0; }
+.lesson50 .l50-roadmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: 1rem; width: 100%; max-width: none; margin: 0 auto; padding: 1rem 0; }
 .lesson50 .l50-roadmap-card { background: var(--l50-paper); border: 1px solid var(--l50-line-strong); border-radius: 0.8rem; box-shadow: var(--l50-shadow); padding: clamp(1rem, 3vw, 2rem); position: relative; overflow: hidden; }
 .lesson50 .l50-roadmap-card::after { content: ""; position: absolute; inset-block-start: 0; inset-inline-start: 0; width: 9rem; height: 9rem; background: radial-gradient(circle at 0 0, rgba(15, 111, 104, 0.12), transparent 70%); pointer-events: none; }
 .lesson50 .l50-roadmap-no { display: block; font-family: "Deck50Latin", sans-serif; font-size: clamp(3.4rem, 9vw, 5.6rem); line-height: 0.9; font-weight: 800; color: var(--l50-line-strong); letter-spacing: -0.04em; }

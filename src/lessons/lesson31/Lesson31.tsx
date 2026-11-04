@@ -1678,7 +1678,7 @@ function CoverStep({ slide }: { slide: Slide31 }) {
             <LatinRuns text={LESSON_SUBTITLE_31} />
           </p>
 
-          <div dir="ltr" className="pop pop-4 ltr-row mx-auto mt-4 max-w-2xl rounded-2xl border border-teal-100 bg-teal-50/80 p-3 shadow-sm">
+            <div dir="ltr" className="pop pop-4 ltr-row mx-auto mt-4 max-w-3xl rounded-2xl border border-teal-100 bg-teal-50/80 p-3 shadow-sm">
             <En className="block text-sm font-bold leading-relaxed text-teal-900 md:text-base">{LAB_MOTTO_31}</En>
           </div>
 
@@ -3921,7 +3921,7 @@ function S44_BigMapStep() {
         <div key={lens} className="tada mt-3 rounded-2xl border-2 border-slate-200 bg-white p-4 text-center">
           <div className="text-3xl">{active.emoji}</div>
           <Rich text={active.ar} className="mt-1 block text-base font-black text-slate-800" />
-          <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row mx-auto mt-2 max-w-xl rounded-xl bg-slate-900 p-3">
+            <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row mx-auto mt-2 max-w-3xl rounded-xl bg-slate-900 p-3">
             <En className="text-base font-black text-white md:text-lg">{active.en}</En>
           </div>
           <En className="mt-1 block text-xs font-bold text-slate-400">{active.tense}</En>
@@ -5000,8 +5000,8 @@ export default function Lesson31({ onExit }: { onExit: () => void }) {
             </nav>
           </header>
 
-          <main id="l31-main" ref={scrollRef} className="l31-scroll flex-1 overflow-y-auto px-3 pb-32 pt-4 sm:px-4 md:px-6 lg:px-10">
-            <div className="l31-content mx-auto w-full max-w-4xl">
+          <main id="l31-main" ref={scrollRef} className="lesson-main-scroll l31-scroll flex-1 overflow-y-auto pb-32 pt-4">
+            <div className="l31-content lesson-content-container">
               {area === "lesson" && (
                 <div data-area="l31-lesson">
                   <SlideView31 key={index} s={slide} onGoTest={() => setArea("test")} />

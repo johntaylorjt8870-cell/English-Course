@@ -110,7 +110,7 @@
   flex-shrink: 0;
   align-self: center;
   width: calc(100% - 1rem);
-  max-width: 60rem;
+  max-width: var(--lesson-content-max);
   margin: 0 auto 0.6rem;
   border-radius: 9999px;
   border: 1px solid #e2e8f0;
@@ -242,11 +242,11 @@
 /* ---------- مقاسات كبيرة ---------- */
 @media (min-width: 1600px) {
   .lesson33 .l33-step-nav {
-    max-width: 68rem;
+    max-width: var(--lesson-content-max);
   }
 
   .lesson33 main > .pop {
-    max-width: 58rem;
+    max-width: var(--lesson-content-max);
   }
 }
 

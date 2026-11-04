@@ -633,7 +633,7 @@ function Hub({ currentLesson }: { currentLesson: number | null }) {
   return (
     <div className="font-body relative min-h-screen bg-[#f4f6fb] text-slate-800">
       <SignatureGhost />
-      <div className="relative z-10 mx-auto max-w-5xl px-5 py-14 md:py-20">
+      <div className="lesson-content-container relative z-10 px-4 py-12 sm:px-6 md:py-16 lg:px-8">
         <header className="text-center">
           <div className="pop text-6xl anim-float">📚</div>
           <div className="pop pop-1 mt-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 shadow-sm">
@@ -652,7 +652,7 @@ function Hub({ currentLesson }: { currentLesson: number | null }) {
           className="pop pop-3 mt-10"
         />
 
-        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {CARDS.map((c, i) => (
             <LessonCard key={c.n} c={c} i={i} />
           ))}

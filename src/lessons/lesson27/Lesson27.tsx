@@ -2893,22 +2893,22 @@ export default function Lesson27({ onExit }: { onExit?: () => void }) {
     <div dir="rtl" className="min-h-screen bg-slate-50 font-sans text-slate-800 antialiased selection:bg-violet-200">
       {/* الشريط العلوي العام */}
       <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <div className="flex items-center gap-3">
+        <div className="mx-auto flex w-full max-w-[var(--lesson-shell-max)] flex-wrap items-center justify-between gap-2 px-3 py-2.5 sm:px-4 sm:py-3 lg:px-8">
+          <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
             {onExit && (
               <button
                 type="button"
                 onClick={onExit}
-                className="grid h-9 w-9 place-items-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm transition active:scale-95 hover:bg-slate-50"
+                className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm transition active:scale-95 hover:bg-slate-50"
                 title="العودة للصفحة الرئيسية"
               >
                 🏠
               </button>
             )}
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="rounded-lg bg-violet-700 px-2 py-0.5 text-xs font-black text-white">الدرس 27</span>
-                <span className="font-head text-base font-black text-slate-900 md:text-lg"><LatinRuns text="Past Perfect — الماضي التام" /></span>
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="shrink-0 rounded-lg bg-violet-700 px-2 py-0.5 text-xs font-black text-white">الدرس 27</span>
+                <span className="font-head text-sm font-black text-slate-900 sm:text-base md:text-lg"><LatinRuns text="Past Perfect — الماضي التام" /></span>
               </div>
               <div className="hidden text-xs font-bold text-slate-500 sm:block">
                 <LatinRuns text="THE FLASHBACK DIRECTOR · المخرج الذي يرتّب حدثين في الماضي" />
@@ -2917,32 +2917,32 @@ export default function Lesson27({ onExit }: { onExit?: () => void }) {
           </div>
 
           {/* أزرار التبويب الرئيسية */}
-          <div className="flex items-center gap-1.5 rounded-2xl border border-slate-200 bg-slate-100 p-1">
+          <div className="flex flex-wrap items-center gap-1 rounded-2xl border border-slate-200 bg-slate-100 p-1 sm:gap-1.5">
             <button
               type="button"
               onClick={() => setTab("lesson")}
-              className={`rounded-xl px-3 py-1.5 text-xs font-bold transition ${tab === "lesson" ? "bg-white text-violet-900 shadow-sm" : "text-slate-600 hover:text-slate-900"}`}
+              className={`rounded-xl px-2.5 py-1.5 text-xs font-bold transition sm:px-3 ${tab === "lesson" ? "bg-white text-violet-900 shadow-sm" : "text-slate-600 hover:text-slate-900"}`}
             >
               📖 الدرس
             </button>
             <button
               type="button"
               onClick={() => setTab("test")}
-              className={`rounded-xl px-3 py-1.5 text-xs font-bold transition ${tab === "test" ? "bg-white text-violet-900 shadow-sm" : "text-slate-600 hover:text-slate-900"}`}
+              className={`rounded-xl px-2.5 py-1.5 text-xs font-bold transition sm:px-3 ${tab === "test" ? "bg-white text-violet-900 shadow-sm" : "text-slate-600 hover:text-slate-900"}`}
             >
               📝 الاختبار
             </button>
             <button
               type="button"
               onClick={() => setTab("solutions")}
-              className={`rounded-xl px-3 py-1.5 text-xs font-bold transition ${tab === "solutions" ? "bg-white text-violet-900 shadow-sm" : "text-slate-600 hover:text-slate-900"}`}
+              className={`rounded-xl px-2.5 py-1.5 text-xs font-bold transition sm:px-3 ${tab === "solutions" ? "bg-white text-violet-900 shadow-sm" : "text-slate-600 hover:text-slate-900"}`}
             >
               💡 الحلول
             </button>
             <button
               type="button"
               onClick={() => setTab("teacher")}
-              className={`rounded-xl px-3 py-1.5 text-xs font-bold transition ${tab === "teacher" ? "bg-white text-violet-900 shadow-sm" : "text-slate-600 hover:text-slate-900"}`}
+              className={`rounded-xl px-2.5 py-1.5 text-xs font-bold transition sm:px-3 ${tab === "teacher" ? "bg-white text-violet-900 shadow-sm" : "text-slate-600 hover:text-slate-900"}`}
             >
               🔐 المعلم
             </button>
@@ -2951,7 +2951,7 @@ export default function Lesson27({ onExit }: { onExit?: () => void }) {
       </header>
 
       {/* محتوى التبويبات */}
-      <main id="l27-main" className="mx-auto max-w-6xl px-4 py-6">
+      <main id="l27-main" className="lesson-main-scroll mx-auto w-full max-w-[var(--lesson-shell-max)] py-6">
         {tab === "lesson" && (
           <div data-area="student-lesson" className="grid gap-6 lg:grid-cols-[280px_1fr]">
             {/* القائمة الجانبية للشاشات الكبيرة */}
@@ -2980,7 +2980,7 @@ export default function Lesson27({ onExit }: { onExit?: () => void }) {
             </aside>
 
             {/* محتوى الشريحة المعروضة */}
-            <div className="space-y-4">
+            <div className="min-w-0 space-y-4">
               {/* شريط التقدم والتنقل السريع */}
               <div className="flex items-center justify-between rounded-2xl border-2 border-slate-200 bg-white px-4 py-2.5 shadow-sm">
                 <div className="flex items-center gap-2">
@@ -3072,27 +3072,33 @@ export default function Lesson27({ onExit }: { onExit?: () => void }) {
         )}
 
         {tab === "test" && (
-          <TestArea27
-            onShowSolutions={() => {
-              setTestUnlocked(true);
-              setTab("solutions");
-            }}
-          />
+          <div className="lesson-content-container">
+            <TestArea27
+              onShowSolutions={() => {
+                setTestUnlocked(true);
+                setTab("solutions");
+              }}
+            />
+          </div>
         )}
 
         {tab === "solutions" && (
-          <Solutions27 unlocked={testUnlocked || teacherUnlocked} />
+          <div className="lesson-content-container">
+            <Solutions27 unlocked={testUnlocked || teacherUnlocked} />
+          </div>
         )}
 
         {tab === "teacher" && (
-          <TeacherArea27
-            unlocked={teacherUnlocked}
-            onUnlockChange={(u) => {
-              setTeacherUnlocked(u);
-              if (u) setTestUnlocked(true);
-            }}
-            onGoSolutions={() => setTab("solutions")}
-          />
+          <div className="lesson-content-container">
+            <TeacherArea27
+              unlocked={teacherUnlocked}
+              onUnlockChange={(u) => {
+                setTeacherUnlocked(u);
+                if (u) setTestUnlocked(true);
+              }}
+              onGoSolutions={() => setTab("solutions")}
+            />
+          </div>
         )}
       </main>
 

@@ -32,7 +32,7 @@ const MISCONCEPTIONS = [
 export default function TeacherGuide42() {
   const teacherNote = TEACHER_SECTION_42.lines.slice(49, 56);
   return (
-    <div className="mx-auto max-w-5xl space-y-4" data-teacher-guide="42">
+    <div className="w-full space-y-4" data-teacher-guide="42">
       <Panel42 title="دليل التدريس — من القدرة إلى التواصل اللبق" kicker="DELIVERY GUIDE · PLATFORM-AUTHORED">
         <p className="text-base leading-8 text-slate-700">
           <Text42 text="الدرس يعيد بناء أربعة وأربعين قسمًا في شرائح قصيرة. استخدم المحطات العشر كوحدات جلسة، ولا تختزل التدريبات في عينة. هذا الدليل إضافات من المنصة، أما نصوص الأسئلة والأمثلة والحوارات فمن المصدر." />

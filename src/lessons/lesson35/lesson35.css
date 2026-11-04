@@ -32,7 +32,7 @@
 
 .fg35-shell {
   width: 100%;
-  max-width: 1480px;
+  max-width: var(--lesson-content-max);
   margin: 0 auto;
   padding: 14px 14px 28px;
 }

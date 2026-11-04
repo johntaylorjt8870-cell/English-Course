@@ -10,7 +10,7 @@ import { WRITING_CRITERIA_43 } from "./kit43";
 export default function TeacherGuide43() {
   const key = section34Lines();
   return (
-    <div className="mx-auto w-full max-w-4xl">
+    <div className="w-full">
       <Panel43 title="دليل المعلم ومخطط التدريس" kicker="TEACHER GUIDE · LESSON 43">
         <p className="text-base font-bold text-slate-700">
           <Text43 text="في هذا الدرس يكتسب الطالب القدرة على التمييز بين MAY وMIGHT في الاحتمال والتوقعات، وعلى استخدام كل منهما في طلب الإذن ومنح الإذن، مع تفادي أخطاء MAY BE وMAYBE الشائعة." />

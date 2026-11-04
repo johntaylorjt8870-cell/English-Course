@@ -7,7 +7,7 @@ import { SOLUTIONS_43 } from "./key43";
  */
 export default function SolutionsArea43() {
   return (
-    <div className="mx-auto w-full max-w-4xl">
+    <div className="w-full">
       <Panel43 title="نماذج الحلول" kicker="TEACHER · SOLUTIONS · §34 KEY">
         <Tip43>
           <Text43 text="هذه النماذج مخصصة للمعلم أو للمراجعة بعد التصحيح. لا تظهر للطالب قبل تسجيل محاولة." />

@@ -10,7 +10,7 @@ import { grade33, MIA_CORRECTED_33 } from "./key33";
 export default function SolutionsArea33({ answers = {}, teacher = false }: { answers?: TestAnswers33; teacher?: boolean }) {
   const { results, score, total } = grade33(answers);
   return (
-    <div className="mx-auto max-w-4xl space-y-4" data-area="solutions">
+    <div className="w-full space-y-4" data-area="solutions">
       <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm md:p-7">
         <p className="text-xs font-extrabold tracking-wide text-emerald-700">
           <En33>REVIEW &amp; REASONING · LESSON 33</En33>

@@ -53,7 +53,9 @@
     "audit:lesson52": "node scripts/audit-lesson52.mjs",
     "audit:lesson52-browser": "node scripts/audit-lesson52-browser.mjs",
     "audit:lesson54": "node scripts/audit-lesson54.mjs",
-    "audit:lesson54-browser": "node scripts/audit-lesson54-browser.mjs"
+    "audit:lesson54-browser": "node scripts/audit-lesson54-browser.mjs",
+    "audit:layout-width": "node scripts/audit-layout-width.mjs",
+    "audit:layout-width-browser": "node scripts/audit-layout-width-browser.mjs"
   },
   "dependencies": {
     "clsx": "2.1.1",

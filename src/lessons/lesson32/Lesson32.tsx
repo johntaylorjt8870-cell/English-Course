@@ -349,12 +349,12 @@ export default function Lesson32({ onExit }: { onExit: () => void }) {
           <main
             id="l32-main"
             ref={mainRef}
-            className="l32-scroll l32-main relative z-10 min-h-0 flex-1 overflow-y-auto px-3 pb-4 pt-3 sm:px-5"
+            className="lesson-main-scroll l32-scroll l32-main relative z-10 min-h-0 flex-1 overflow-y-auto pb-4 pt-3"
           >
             <p role="status" aria-live="polite" className="sr-only">
               <Rich text={area === "lesson" ? `الصفحة ${index + 1} من ${PAGE_COUNT_32}: ${page.title}` : areaLabel} />
             </p>
-            <div className="mx-auto w-full max-w-4xl space-y-3">
+            <div className="lesson-content-container space-y-3">
               {area === "lesson" && (
                 <div data-area="l32-lesson" className="space-y-3">
                   <SlideView32 key={page.id} page={page} onGoTest={() => setArea("test")} />

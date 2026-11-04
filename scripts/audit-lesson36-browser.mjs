@@ -177,7 +177,7 @@ for (const viewport of [
   ok((state.clipped ?? []).length === 0, `${viewport.name}: no clipped lesson text (${(state.clipped ?? []).join(" | ")})`);
   if (viewport.rail) {
     ok(Math.abs(state.rail.width - 288) <= 1, `${viewport.name}: rail is 288px (got ${state.rail.width})`);
-    ok(state.content.width <= 896, `${viewport.name}: centred content is at most 896px (got ${state.content.width})`);
+    ok(state.content.width <= 1536, `${viewport.name}: centred content stays within --lesson-content-max 1536px (got ${state.content.width})`);
   }
   ok(overlapArea(state.prev, state.lock) === 0 && overlapArea(state.next, state.lock) === 0, `${viewport.name}: floating step navigation is not covered by the site-lock button`);
   ok(!!state.next, `${viewport.name}: prev/next navigation comes from the shared shell`);

@@ -5,7 +5,7 @@ import { grade41 } from "./key41";
 export default function SolutionsArea41({ answers = {}, teacher = false }: { answers?: TestAnswers41; teacher?: boolean }) {
   const { results, score, total } = grade41(answers);
   return (
-    <div className="mx-auto max-w-4xl space-y-4" data-area="solutions">
+    <div className="w-full space-y-4" data-area="solutions">
       <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm md:p-7">
         <p className="text-xs font-extrabold tracking-wide text-emerald-700">REVIEW &amp; REASONING · LESSON 41</p>
         <h1 className="font-head mt-1 text-2xl font-bold text-slate-900 md:text-3xl">

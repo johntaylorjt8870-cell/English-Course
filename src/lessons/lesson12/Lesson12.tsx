@@ -578,8 +578,8 @@ function ReadTrick() {
 function TimelineVis() {
   const [mode, setMode] = useState<"yesterday" | "now">("yesterday");
   return (
-    <div className="rounded-3xl border-2 border-slate-100 bg-slate-50/70 p-5">
-      <div dir="ltr" style={{ direction: "ltr" }} className="relative mx-auto mt-2 max-w-2xl">
+      <div className="rounded-3xl border-2 border-slate-100 bg-slate-50/70 p-5">
+        <div dir="ltr" style={{ direction: "ltr" }} className="relative mx-auto mt-2 max-w-4xl">
         <div className="flex items-center justify-between">
           <span className="rounded-full bg-orange-100 px-3 py-1 text-sm font-black text-orange-800">الماضي</span>
           <span className="rounded-full bg-cyan-100 px-3 py-1 text-sm font-black text-cyan-800">الآن</span>
@@ -990,9 +990,9 @@ function TeacherChallenge() {
         <div className="font-head text-lg font-bold text-amber-900">الشروط:</div>
         <div className="mt-2 grid gap-2 sm:grid-cols-2">
           {TEACHER_CHALLENGE.conditions.map((c) => (
-            <div key={c} className="flex items-center gap-2 rounded-2xl border-2 border-amber-100 bg-white px-3 py-2 text-sm font-bold text-slate-700">
+            <div key={c} className="flex min-w-0 items-center gap-2 rounded-2xl border-2 border-amber-100 bg-white px-3 py-2 text-sm font-bold text-slate-700">
               <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-amber-400 text-xs text-white">✓</span>
-              <LatinRuns text={c} />
+              <span className="min-w-0 flex-1"><LatinRuns text={c} /></span>
             </div>
           ))}
         </div>
@@ -1064,7 +1064,7 @@ function Cover() {
           <span>🔥</span>
           <span className="text-sm font-bold text-amber-800">IQ200 — كيف نتحدث عن شيء حدث وانتهى؟</span>
         </div>
-        <div className="pop pop-5 mt-6 max-w-xl mx-auto space-y-3 rounded-3xl border-2 border-slate-100 bg-slate-50 p-5 text-right">
+          <div className="pop pop-5 mt-6 max-w-3xl mx-auto space-y-3 rounded-3xl border-2 border-slate-100 bg-slate-50 p-5 text-right">
           <div className="text-sm font-bold text-slate-600">ممتاز جدًا! 👏 وصلنا الآن إلى مرحلة جديدة في رحلة الأزمنة.</div>
           <div className="text-sm font-bold text-slate-700">حتى الآن تعلمنا:</div>
           <div className="grid gap-2">
@@ -1081,7 +1081,7 @@ function Cover() {
             لن نقفز مباشرة إلى كل قواعد <En className="font-extrabold text-orange-700">Past Simple</En> — سنبدأ بالأساس بطريقة واسعة جدًا، ونبني عليه في الدروس القادمة خطوة خطوة. اليوم سنفهم:
           </div>
         </div>
-        <div className="pop pop-6 mt-4 grid max-w-2xl mx-auto grid-cols-1 gap-1.5 text-right sm:grid-cols-2">
+          <div className="pop pop-6 mt-4 grid max-w-4xl mx-auto grid-cols-1 gap-2 text-right sm:grid-cols-2 lg:grid-cols-3">
           {COVER_PLAN.map((x, i) => (
             <div key={i} className={`pop pop-${Math.min((i % 6) + 1, 6)} flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-700`}>
               <LatinRuns text={x} />
@@ -1479,7 +1479,7 @@ export default function Lesson12({ onExit }: { onExit: () => void }) {
           <Rail i={i} setI={setI} onExit={onExit} />
         </div>
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
-          <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
+          <header className="flex items-center gap-3 px-4 pt-3 lg:px-6 xl:px-8">
             <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border-2 border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس">
               ☰
             </button>
@@ -1495,8 +1495,8 @@ export default function Lesson12({ onExit }: { onExit: () => void }) {
               {i + 1} / {total}
             </span>
           </header>
-          <main id="l12-main" className="flex-1 overflow-y-auto px-3 pb-32 pt-4 md:px-6 lg:px-10">
-            <div key={i} className="pop mx-auto max-w-4xl">
+          <main id="l12-main" className="lesson-main-scroll flex-1 overflow-y-auto pb-32 pt-4">
+            <div key={i} className="pop lesson-content-container">
               <SlideView s={slide} onExit={onExit} />
             </div>
           </main>

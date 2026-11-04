@@ -1298,7 +1298,7 @@ export default function Lesson16({ onExit }: { onExit: () => void }) {
         <SignatureGhost />
         <div className="relative z-10 hidden w-72 shrink-0 border-l border-slate-200 bg-white/80 backdrop-blur lg:block"><Rail i={index} setI={setIndex} onExit={onExit} /></div>
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
-          <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
+          <header className="flex items-center gap-3 px-4 pt-3 lg:px-6 xl:px-8">
             <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border-2 border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس">☰</button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500"><Rich text={`${slide.section} · `} /><span className="text-slate-800"><Rich text={slideTitle(slide)} /></span></div>
@@ -1306,7 +1306,7 @@ export default function Lesson16({ onExit }: { onExit: () => void }) {
             </div>
             <span className="rounded-lg bg-white px-3 py-1 text-sm font-bold text-slate-500 shadow-sm">{index + 1} / {total}</span>
           </header>
-          <main id="l16-main" className="flex-1 overflow-y-auto px-3 pb-32 pt-4 md:px-6 lg:px-10"><div key={index} className="pop mx-auto max-w-4xl"><SlideView s={slide} onExit={onExit} /></div></main>
+          <main id="l16-main" className="lesson-main-scroll flex-1 overflow-y-auto pb-32 pt-4"><div key={index} className="pop lesson-content-container"><SlideView s={slide} onExit={onExit} /></div></main>
           <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center px-3">
             <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border-2 border-slate-900/[0.05] bg-white/95 p-1.5 shadow-xl backdrop-blur">
               <button onClick={navigation.prev} disabled={index === 0} className="rounded-full px-4 py-2 text-sm font-bold text-slate-700 transition enabled:hover:bg-slate-100 disabled:opacity-30">→ السابق</button>

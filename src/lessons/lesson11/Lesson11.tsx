@@ -929,7 +929,7 @@ function Cover() {
           <span>🔥</span>
           <span className="text-sm font-bold text-amber-800">IQ200 — لا تعتمد على كلمة now وحدها</span>
         </div>
-        <div className="pop pop-5 mt-6 rounded-3xl border-2 border-slate-100 bg-slate-50 p-5 max-w-xl mx-auto text-right">
+          <div className="pop pop-5 mt-6 rounded-3xl border-2 border-slate-100 bg-slate-50 p-5 max-w-3xl mx-auto text-right">
           <div className="text-sm font-bold text-slate-500">ممتاز جدًا. بما أننا أنهينا أساس Present Simple وPresent Continuous، فالآن سنجمعهما معًا بشكل أوسع وأعمق.</div>
           <div className="mt-2 text-sm font-bold text-slate-700">هذا الدرس مهم جدًا لأنه لن يعلمك قاعدة جديدة فقط، بل سيعلمك كيف "تفكر" عند اختيار الزمن.</div>
           <div className="mt-3 text-sm font-bold text-slate-600">سنتعلم كيف نعرف من معنى الجملة:</div>
@@ -1275,7 +1275,7 @@ export default function Lesson11({ onExit }: { onExit: () => void }) {
           <Rail i={i} setI={setI} onExit={onExit} />
         </div>
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
-          <header className="flex items-center gap-3 px-4 pt-3 lg:px-10">
+          <header className="flex items-center gap-3 px-4 pt-3 lg:px-6 xl:px-8">
             <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border-2 border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس">
               ☰
             </button>
@@ -1291,8 +1291,8 @@ export default function Lesson11({ onExit }: { onExit: () => void }) {
               {i + 1} / {total}
             </span>
           </header>
-          <main id="l11-main" className="flex-1 overflow-y-auto px-3 pb-32 pt-4 md:px-6 lg:px-10">
-            <div key={i} className="pop mx-auto max-w-4xl">
+          <main id="l11-main" className="lesson-main-scroll flex-1 overflow-y-auto pb-32 pt-4">
+            <div key={i} className="pop lesson-content-container">
               <SlideView s={slide} onExit={onExit} />
             </div>
           </main>

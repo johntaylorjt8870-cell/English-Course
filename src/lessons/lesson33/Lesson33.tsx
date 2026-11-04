@@ -803,13 +803,13 @@ export default function Lesson33({ onExit }: { onExit?: () => void }) {
             <main
               id="l33-main"
               ref={mainRef}
-              className="l33-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-3 pb-8 pt-4 md:px-6 lg:px-10"
+              className="lesson-main-scroll l33-scroll relative z-10 min-h-0 flex-1 overflow-y-auto pb-8 pt-4"
               data-area={area === "lesson" ? "l33-lesson" : area === "test" ? "l33-test" : area === "solutions" ? "l33-solutions" : "l33-teacher"}
             >
               <p role="status" aria-live="polite" className="sr-only">
                 <MixedTitle33 text={area === "lesson" ? `الخطوة ${index + 1} من ${SLIDE_COUNT_33}: ${slide.title}` : areaLabel} />
               </p>
-              <div className="pop mx-auto w-full max-w-4xl">{areaMain}</div>
+              <div className="pop lesson-content-container">{areaMain}</div>
             </main>
 
             <LessonStepNav

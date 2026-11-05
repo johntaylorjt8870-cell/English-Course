@@ -1,0 +1,262 @@
+[
+  {
+    "number": 1,
+    "kind": "multiple",
+    "prompt": "If you ______ water, it boils.",
+    "options": [
+      "heat",
+      "will heat",
+      "heated",
+      "would heat"
+    ],
+    "answer": 0,
+    "explanation": "حقيقة عامة، Zero Conditional."
+  },
+  {
+    "number": 2,
+    "kind": "multiple",
+    "prompt": "If she studies hard, she ______ the exam.",
+    "options": [
+      "passed",
+      "will pass",
+      "would pass",
+      "would have passed"
+    ],
+    "answer": 1,
+    "explanation": "احتمال مستقبلي، First Conditional."
+  },
+  {
+    "number": 3,
+    "kind": "multiple",
+    "prompt": "If I ______ a bird, I would fly.",
+    "options": [
+      "am",
+      "will be",
+      "were",
+      "had been"
+    ],
+    "answer": 2,
+    "explanation": "افتراض غير واقعي، Second Conditional."
+  },
+  {
+    "number": 4,
+    "kind": "multiple",
+    "prompt": "If they had arrived earlier, they ______ the beginning of the show.",
+    "options": [
+      "see",
+      "will see",
+      "would see",
+      "would have seen"
+    ],
+    "answer": 3,
+    "explanation": "شرط ونتيجة ماضيان، Third Conditional."
+  },
+  {
+    "number": 5,
+    "kind": "multiple",
+    "prompt": "If I had studied medicine, I ______ a doctor now.",
+    "options": [
+      "am",
+      "would be",
+      "would have been",
+      "will be"
+    ],
+    "answer": 1,
+    "explanation": "شرط ماضٍ ونتيجة حاضرة، Mixed Conditional النوع الأول."
+  },
+  {
+    "number": 6,
+    "kind": "multiple",
+    "prompt": "If he were more careful, he ______ his glasses yesterday.",
+    "options": [
+      "wouldn't break",
+      "won't break",
+      "wouldn't have broken",
+      "doesn't break"
+    ],
+    "answer": 2,
+    "explanation": "حالة حاضرة ونتيجة ماضية، Mixed Conditional النوع الثاني."
+  },
+  {
+    "number": 7,
+    "kind": "multiple",
+    "prompt": "If you ______ enough, you feel tired.",
+    "options": [
+      "don't sleep",
+      "won't sleep",
+      "wouldn't sleep",
+      "hadn't slept"
+    ],
+    "answer": 0,
+    "explanation": "حقيقة أو نتيجة عامة متكررة."
+  },
+  {
+    "number": 8,
+    "kind": "multiple",
+    "prompt": "If I see her tomorrow, I ______ her the news.",
+    "options": [
+      "told",
+      "would tell",
+      "will tell",
+      "would have told"
+    ],
+    "answer": 2,
+    "explanation": "احتمال مستقبلي، First Conditional."
+  },
+  {
+    "number": 9,
+    "kind": "multiple",
+    "prompt": "If I had more money, I ______ a new computer.",
+    "options": [
+      "buy",
+      "will buy",
+      "would buy",
+      "would have bought"
+    ],
+    "answer": 2,
+    "explanation": "افتراض عن الحاضر، Second Conditional."
+  },
+  {
+    "number": 10,
+    "kind": "multiple",
+    "prompt": "If she had practiced more, she ______ the competition.",
+    "options": [
+      "wins",
+      "will win",
+      "would win",
+      "would have won"
+    ],
+    "answer": 3,
+    "explanation": "نتيجة ماضية افتراضية، Third Conditional."
+  },
+  {
+    "number": 11,
+    "kind": "written",
+    "prompt": "If ice ______ (get) warm, it ______ (melt).",
+    "answer": "If ice gets warm, it melts."
+  },
+  {
+    "number": 12,
+    "kind": "written",
+    "prompt": "If he ______ (call) me tonight, I ______ (answer).",
+    "answer": "If he calls me tonight, I will answer."
+  },
+  {
+    "number": 13,
+    "kind": "written",
+    "prompt": "If I ______ (be) you, I ______ (accept) the offer.",
+    "answer": "If I were you, I would accept the offer."
+  },
+  {
+    "number": 14,
+    "kind": "written",
+    "prompt": "If we ______ (leave) earlier, we ______ (not / be) late yesterday.",
+    "answer": "If we had left earlier, we wouldn't have been late yesterday."
+  },
+  {
+    "number": 15,
+    "kind": "written",
+    "prompt": "If she ______ (study) English when she was young, she ______ (speak) it fluently now.",
+    "answer": "If she had studied English when she was young, she would speak it fluently now."
+  },
+  {
+    "number": 16,
+    "kind": "written",
+    "prompt": "If I will have time, I will help you.",
+    "answer": "If I have time, I will help you."
+  },
+  {
+    "number": 17,
+    "kind": "written",
+    "prompt": "If she had studied harder, she would pass the exam last year.",
+    "answer": "If she had studied harder, she would have passed the exam last year."
+  },
+  {
+    "number": 18,
+    "kind": "written",
+    "prompt": "If I were more careful, I wouldn't lose my wallet yesterday.",
+    "answer": "If I were more careful, I wouldn't have lost my wallet yesterday."
+  },
+  {
+    "number": 19,
+    "kind": "written",
+    "prompt": "If he had went to university, he would have a better job now.",
+    "answer": "If he had gone to university, he would have a better job now."
+  },
+  {
+    "number": 20,
+    "kind": "written",
+    "prompt": "If I had more money, I would have bought a house now.",
+    "answer": "If I had more money, I would own a house now."
+  },
+  {
+    "number": 21,
+    "kind": "classification",
+    "prompt": "If you don't exercise, you become less fit.",
+    "options": [
+      "Zero Conditional",
+      "First Conditional",
+      "Second Conditional",
+      "Third Conditional",
+      "Mixed Conditional النوع الأول",
+      "Mixed Conditional النوع الثاني"
+    ],
+    "answer": 0
+  },
+  {
+    "number": 22,
+    "kind": "classification",
+    "prompt": "If I win the competition, I will celebrate.",
+    "options": [
+      "Zero Conditional",
+      "First Conditional",
+      "Second Conditional",
+      "Third Conditional",
+      "Mixed Conditional النوع الأول",
+      "Mixed Conditional النوع الثاني"
+    ],
+    "answer": 1
+  },
+  {
+    "number": 23,
+    "kind": "classification",
+    "prompt": "If I were taller, I would play basketball.",
+    "options": [
+      "Zero Conditional",
+      "First Conditional",
+      "Second Conditional",
+      "Third Conditional",
+      "Mixed Conditional النوع الأول",
+      "Mixed Conditional النوع الثاني"
+    ],
+    "answer": 2
+  },
+  {
+    "number": 24,
+    "kind": "classification",
+    "prompt": "If they had invited us, we would have attended.",
+    "options": [
+      "Zero Conditional",
+      "First Conditional",
+      "Second Conditional",
+      "Third Conditional",
+      "Mixed Conditional النوع الأول",
+      "Mixed Conditional النوع الثاني"
+    ],
+    "answer": 3
+  },
+  {
+    "number": 25,
+    "kind": "classification",
+    "prompt": "If I had accepted the scholarship, I would be studying abroad now.",
+    "options": [
+      "Zero Conditional",
+      "First Conditional",
+      "Second Conditional",
+      "Third Conditional",
+      "Mixed Conditional النوع الأول",
+      "Mixed Conditional النوع الثاني"
+    ],
+    "answer": 4
+  }
+]

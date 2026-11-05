@@ -1,0 +1,112 @@
+{
+  "dialogueQA": [
+    [
+      "What happens if you don't water a plant?",
+      "It dies."
+    ],
+    [
+      "What will Emma do if it rains tomorrow?",
+      "She will stay at home."
+    ],
+    [
+      "What would Emma buy if she won a million dollars?",
+      "She would buy a house."
+    ],
+    [
+      "What would have happened if Emma had studied for the exam?",
+      "She would have passed the exam."
+    ],
+    [
+      "What would Emma be now if she had studied medicine?",
+      "She would be a doctor now."
+    ]
+  ],
+  "readingQA": [
+    [
+      "What happens if people make healthy choices?",
+      "They usually feel better."
+    ],
+    [
+      "What may happen if students don't manage their time?",
+      "They may struggle with their responsibilities."
+    ],
+    [
+      "Which conditional type is used in \"If I had more free time, I would travel around the world\"?",
+      "Second Conditional."
+    ],
+    [
+      "What does the sentence \"If I had prepared better, I would have passed\" express?",
+      "Third Conditional؛ لأنها تتحدث عن شرط ونتيجة في الماضي."
+    ],
+    [
+      "Which conditional type is used in \"If I had studied medicine, I would be a doctor now\"?",
+      "Mixed Conditional النوع الأول؛ الشرط ماضٍ والنتيجة حاضرة."
+    ],
+    [
+      "What does \"If I were more careful, I wouldn't have made that mistake yesterday\" express?",
+      "Mixed Conditional النوع الثاني؛ الحالة حاضرة والنتيجة ماضية."
+    ],
+    [
+      "What are the five main uses of conditional sentences mentioned in the passage?",
+      "Facts, future possibilities, imaginary situations, regrets, and connections between past and present."
+    ]
+  ],
+  "vocabulary": [
+    [
+      "decisions",
+      "قرارات"
+    ],
+    [
+      "affect",
+      "يؤثر في"
+    ],
+    [
+      "regularly",
+      "بانتظام"
+    ],
+    [
+      "develop",
+      "يطوّر"
+    ],
+    [
+      "habits",
+      "عادات"
+    ],
+    [
+      "achieve",
+      "يحقق"
+    ],
+    [
+      "manage time",
+      "ينظم الوقت"
+    ],
+    [
+      "responsibilities",
+      "مسؤوليات"
+    ],
+    [
+      "imaginary",
+      "خيالي أو افتراضي"
+    ],
+    [
+      "prepare",
+      "يستعد"
+    ],
+    [
+      "characteristic",
+      "صفة أو خاصية"
+    ],
+    [
+      "careless",
+      "مهمل أو غير حذر"
+    ],
+    [
+      "regret",
+      "يندم"
+    ],
+    [
+      "possibility",
+      "احتمال"
+    ]
+  ]
+}

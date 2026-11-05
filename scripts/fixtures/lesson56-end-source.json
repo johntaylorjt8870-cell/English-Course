@@ -1,0 +1,78 @@
+{
+  "ranges": [
+    "23–25: ممتاز جدًا — إتقان قوي",
+    "20–22: ممتاز — فهم جيد جدًا",
+    "17–19: جيد جدًا — تحتاج مراجعة بسيطة",
+    "14–16: جيد — راجع الفروق بين الأنواع",
+    "10–13: تحتاج إلى تدريب إضافي",
+    "أقل من 10: أعد مراجعة القواعد والأمثلة"
+  ],
+  "writing": [
+    "How Choices Shape Our Lives",
+    "كيف تشكّل الاختيارات حياتنا؟",
+    "150–180",
+    "جملتان من Zero Conditional.",
+    "جملتان من First Conditional.",
+    "جملتان من Second Conditional.",
+    "جملتان من Third Conditional.",
+    "جملتان من Mixed Conditionals.",
+    "Our choices play an important role in shaping our lives. Every decision can lead to different results. If we make good choices, we often create better opportunities for ourselves.",
+    "تلعب اختياراتنا دورًا مهمًا في تشكيل حياتنا. كل قرار يمكن أن يؤدي إلى نتائج مختلفة. إذا اتخذنا اختيارات جيدة، فإننا غالبًا ما نصنع فرصًا أفضل لأنفسنا."
+  ],
+  "speaking": [
+    "What happens if people don't get enough sleep?",
+    "What will you do if you have free time next weekend?",
+    "What would you do if you could live anywhere in the world?",
+    "What would you have done differently if you had known the truth earlier?",
+    "How would your life be different now if you had chosen a different career?",
+    "If you were more confident, what would you have done last year?"
+  ],
+  "summary": [
+    [
+      "If + Present Simple, Present Simple",
+      "If you heat ice, it melts.",
+      "إذا سخّنت الثلج، فإنه يذوب."
+    ],
+    [
+      "If + Present Simple, will + V1",
+      "If I study, I will pass.",
+      "إذا درست، فسأنجح."
+    ],
+    [
+      "If + Past Simple, would + V1",
+      "If I were rich, I would travel.",
+      "لو كنت غنيًا، لسافرت."
+    ],
+    [
+      "If + Past Perfect, would have + V3",
+      "If I had studied, I would have passed.",
+      "لو كنت قد درست، لكنت نجحت."
+    ],
+    [
+      "If + Past Perfect, would + V1",
+      "If I had studied medicine, I would be a doctor now.",
+      "لو كنت قد درست الطب، لكنت طبيبًا الآن."
+    ],
+    [
+      "If + Past Simple, would have + V3",
+      "If I were more careful, I wouldn't have made that mistake yesterday.",
+      "لو كنت أكثر حذرًا، لما ارتكبت ذلك الخطأ أمس."
+    ]
+  ],
+  "progress": [
+    "56 / 120",
+    "56 درسًا مكتملًا",
+    "64 درسًا متبقيًا",
+    "46.67%"
+  ],
+  "next": [
+    "Passive Voice: Foundations",
+    "المبني للمجهول: الأساسيات",
+    "الفرق بين Active Voice وPassive Voice.",
+    "لماذا نستخدم المبني للمجهول؟",
+    "كيف نحدد الفاعل والمفعول به؟",
+    "كيف نحول الجملة من المعلوم إلى المجهول؟",
+    "كيف نستخدم فعل be مع التصريف الثالث V3؟",
+    "كيف نتعامل مع by عند ذكر من قام بالفعل؟"
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "exercise2": [
+    {
+      "prompt": "If water ______ (reach) 100°C, it ______ (boil).",
+      "answer": "reaches / boils.\nIf water reaches 100°C, it boils."
+    },
+    {
+      "prompt": "If I ______ (finish) my work early tomorrow, I ______ (visit) you.",
+      "answer": "finish / will visit.\nIf I finish my work early tomorrow, I will visit you."
+    },
+    {
+      "prompt": "If I ______ (have) a private plane, I ______ (travel) around the world.",
+      "answer": "had / would travel.\nIf I had a private plane, I would travel around the world."
+    },
+    {
+      "prompt": "If they ______ (leave) earlier, they ______ (not / miss) the train.",
+      "answer": "had left / wouldn't have missed.\nIf they had left earlier, they wouldn't have missed the train."
+    },
+    {
+      "prompt": "If she ______ (study) medicine, she ______ (be) a doctor now.",
+      "answer": "had studied / would be.\nIf she had studied medicine, she would be a doctor now."
+    },
+    {
+      "prompt": "If he ______ (be) more polite, he ______ (not / offend) his manager yesterday.",
+      "answer": "were / wouldn't have offended.\nIf he were more polite, he wouldn't have offended his manager yesterday."
+    },
+    {
+      "prompt": "If you ______ (not / sleep) enough, you ______ (feel) tired.",
+      "answer": "don't sleep / feel.\nIf you don't sleep enough, you feel tired."
+    },
+    {
+      "prompt": "If I ______ (see) her tonight, I ______ (give) her your message.",
+      "answer": "see / will give.\nIf I see her tonight, I will give her your message."
+    },
+    {
+      "prompt": "If we ______ (know) about the problem, we ______ (help) you.",
+      "answer": "had known / would have helped.\nIf we had known about the problem, we would have helped you."
+    },
+    {
+      "prompt": "If I ______ (save) more money last year, I ______ (own) a car now.",
+      "answer": "had saved / would own.\nIf I had saved more money last year, I would own a car now."
+    },
+    {
+      "prompt": "If she ______ (be) more organized, she ______ (not / forget) the appointment last week.",
+      "answer": "were / wouldn't have forgotten.\nIf she were more organized, she wouldn't have forgotten the appointment last week."
+    },
+    {
+      "prompt": "If he ______ (practice) regularly, he ______ (improve) his English.",
+      "answer": "practices / will improve.\nIf he practices regularly, he will improve his English."
+    }
+  ],
+  "exercise3": [
+    {
+      "prompt": "If you mix red and blue, you get purple.",
+      "answer": "Zero Conditional."
+    },
+    {
+      "prompt": "If I finish early, I will call you.",
+      "answer": "First Conditional."
+    },
+    {
+      "prompt": "If I were a bird, I would fly around the world.",
+      "answer": "Second Conditional."
+    },
+    {
+      "prompt": "If he had studied, he would have passed.",
+      "answer": "Third Conditional."
+    },
+    {
+      "prompt": "If I had accepted the job, I would live in Paris now.",
+      "answer": "Mixed Conditional النوع الأول."
+    },
+    {
+      "prompt": "If she were more confident, she would have spoken yesterday.",
+      "answer": "Mixed Conditional النوع الثاني."
+    },
+    {
+      "prompt": "If you don't charge your phone, it runs out of battery.",
+      "answer": "Zero Conditional."
+    },
+    {
+      "prompt": "If they invite me, I will attend.",
+      "answer": "First Conditional."
+    },
+    {
+      "prompt": "If I had a car, I would drive to work.",
+      "answer": "Second Conditional."
+    },
+    {
+      "prompt": "If he hadn't forgotten his passport, he would have traveled.",
+      "answer": "Third Conditional."
+    },
+    {
+      "prompt": "If she had learned to cook, she would prepare dinner herself now.",
+      "answer": "Mixed Conditional النوع الأول."
+    },
+    {
+      "prompt": "If I were more patient, I wouldn't have argued with him.",
+      "answer": "Mixed Conditional النوع الثاني."
+    }
+  ],
+  "exercise4": [
+    {
+      "prompt": "If you will heat water, it boils.",
+      "answer": "If you heat water, it boils.",
+      "explanation": "حقيقة عامة، لذلك نستخدم المضارع البسيط في الجملتين."
+    },
+    {
+      "prompt": "If I have a million dollars, I would buy a house.",
+      "answer": "If I had a million dollars, I would buy a house.",
+      "explanation": "افتراض حاضر، Second Conditional."
+    },
+    {
+      "prompt": "If she had studied, she would pass the exam yesterday.",
+      "answer": "If she had studied, she would have passed the exam yesterday.",
+      "explanation": "النتيجة ماضية، لذلك نستخدم would have + V3."
+    },
+    {
+      "prompt": "If I had learned English, I would have a better job now.",
+      "answer": "الجملة صحيحة.\nIf I had learned English, I would have a better job now.",
+      "explanation": "شرط ماضٍ ونتيجة حاضرة."
+    },
+    {
+      "prompt": "If he were more careful, he wouldn't break the window yesterday.",
+      "answer": "If he were more careful, he wouldn't have broken the window yesterday.",
+      "explanation": "النتيجة ماضية، ولذلك نستخدم wouldn't have + V3."
+    },
+    {
+      "prompt": "If I would see him tomorrow, I will tell him.",
+      "answer": "If I see him tomorrow, I will tell him.",
+      "explanation": "لا نستخدم would بعد If في هذه الحالة."
+    },
+    {
+      "prompt": "If they had went earlier, they would have arrived on time.",
+      "answer": "If they had gone earlier, they would have arrived on time.",
+      "explanation": "بعد had نستخدم V3: gone."
+    },
+    {
+      "prompt": "If I were rich, I will travel around the world.",
+      "answer": "If I were rich, I would travel around the world.",
+      "explanation": "Second Conditional."
+    },
+    {
+      "prompt": "If she had accepted the job, she would have worked in London now.",
+      "answer": "If she had accepted the job, she would be working in London now.",
+      "explanation": "النتيجة في الحاضر، ولذلك نستخدم would + V1 أو would be + V-ing حسب المعنى."
+    },
+    {
+      "prompt": "If he was more responsible, he wouldn't have forgotten the keys yesterday.",
+      "answer": "If he were more responsible, he wouldn't have forgotten the keys yesterday.",
+      "explanation": "نستخدم were في الافتراض التقليدي، والنتيجة ماضية."
+    }
+  ],
+  "exercise5": [
+    {
+      "prompt": "إذا لم يأكل الإنسان، فإنه يشعر بالجوع. If a person ______, he ______ hungry.",
+      "answer": "If a person doesn't eat, he feels hungry.\nZero Conditional."
+    },
+    {
+      "prompt": "إذا درست غدًا، فسأنجح في الامتحان. If I ______ tomorrow, I ______ the exam.",
+      "answer": "If I study tomorrow, I will pass the exam.\nFirst Conditional."
+    },
+    {
+      "prompt": "لو كنت غنيًا، لاشتريت منزلًا كبيرًا. If I ______ rich, I ______ a big house.",
+      "answer": "If I were rich, I would buy a big house.\nSecond Conditional."
+    },
+    {
+      "prompt": "لو كنت قد استيقظت مبكرًا، لما فاتني القطار. If I ______ early, I ______ the train.",
+      "answer": "If I had woken up early, I wouldn't have missed the train.\nThird Conditional."
+    },
+    {
+      "prompt": "لو كنت قد تعلمت البرمجة، لكنت أعمل في شركة تقنية الآن. If I ______ programming, I ______ for a technology company now.",
+      "answer": "If I had learned programming, I would work for a technology company now.\nMixed Conditional النوع الأول."
+    },
+    {
+      "prompt": "لو كنت أكثر انتباهًا، لما ارتكبت ذلك الخطأ أمس. If I ______ more attentive, I ______ that mistake yesterday.",
+      "answer": "If I were more attentive, I wouldn't have made that mistake yesterday.\nMixed Conditional النوع الثاني."
+    }
+  ],
+  "exercise6": [
+    {
+      "prompt": "إذا لم تشرب الماء، فقد تشعر بالعطش.",
+      "answer": "If you don't drink water, you may feel thirsty."
+    },
+    {
+      "prompt": "إذا درست جيدًا، فسوف تحصل على درجات أفضل.",
+      "answer": "If you study well, you will get better grades."
+    },
+    {
+      "prompt": "لو كنت أملك وقتًا أكثر، لتعلمت لغة جديدة.",
+      "answer": "If I had more time, I would learn a new language."
+    },
+    {
+      "prompt": "لو كانت قد وصلت مبكرًا، لكانت قد قابلت المدير.",
+      "answer": "If she had arrived early, she would have met the manager."
+    },
+    {
+      "prompt": "لو كنت قد قبلت تلك الوظيفة، لكنت أعيش في لندن الآن.",
+      "answer": "If I had accepted that job, I would be living in London now."
+    },
+    {
+      "prompt": "لو كان أكثر هدوءًا، لما تشاجر مع صديقه أمس.",
+      "answer": "If he were calmer, he wouldn't have argued with his friend yesterday."
+    },
+    {
+      "prompt": "إذا تجمد الماء، فإنه يتحول إلى جليد.",
+      "answer": "If water freezes, it turns into ice."
+    },
+    {
+      "prompt": "إذا اتصل بي غدًا، فسأخبره بالحقيقة.",
+      "answer": "If he calls me tomorrow, I will tell him the truth."
+    },
+    {
+      "prompt": "لو كنت مكانك، لما فعلت ذلك.",
+      "answer": "If I were you, I wouldn't do that."
+    },
+    {
+      "prompt": "لو كنا قد حجزنا مبكرًا، لكنا في الفندق الآن.",
+      "answer": "If we had booked earlier, we would be at the hotel now."
+    }
+  ]
+}

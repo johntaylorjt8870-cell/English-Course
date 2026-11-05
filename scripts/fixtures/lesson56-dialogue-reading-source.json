@@ -1,0 +1,62 @@
+{
+  "dialogue": [
+    [
+      "Emma: I want to understand the differences between conditional sentences.",
+      "أريد أن أفهم الفروق بين الجمل الشرطية."
+    ],
+    [
+      "David: Let's start with a general fact. What happens if you don't water a plant?",
+      "لنبدأ بحقيقة عامة. ماذا يحدث إذا لم تسقِ نبتة؟"
+    ],
+    [
+      "Emma: If you don't water a plant, it dies.",
+      "إذا لم تسقِ نبتة، فإنها تموت."
+    ],
+    [
+      "David: Good. That's the Zero Conditional. Now, what will you do if it rains tomorrow?",
+      "جيد. هذا هو الشرط الصفري. والآن، ماذا ستفعلين إذا أمطرت غدًا؟"
+    ],
+    [
+      "Emma: If it rains tomorrow, I will stay at home.",
+      "إذا أمطرت غدًا، فسأبقى في المنزل."
+    ],
+    [
+      "David: Excellent. That's the First Conditional. What would you do if you won a million dollars?",
+      "ممتاز. هذا هو الشرط الأول. ماذا ستفعلين لو ربحت مليون دولار؟"
+    ],
+    [
+      "Emma: If I won a million dollars, I would buy a house.",
+      "لو ربحت مليون دولار، لاشتريت منزلًا."
+    ],
+    [
+      "David: That's the Second Conditional. Now imagine you didn't study for an exam last week. What would have happened if you had studied?",
+      "هذا هو الشرط الثاني. تخيلي أنك لم تدرسي لامتحان الأسبوع الماضي. ماذا كان سيحدث لو كنت قد درست؟"
+    ],
+    [
+      "Emma: If I had studied, I would have passed the exam.",
+      "لو كنت قد درست، لكنت نجحت في الامتحان."
+    ],
+    [
+      "David: Exactly. That's the Third Conditional. Finally, what would your life be like now if you had studied a different subject?",
+      "بالضبط. هذا هو الشرط الثالث. وأخيرًا، كيف كانت حياتك ستكون الآن لو كنت قد درست مادة مختلفة؟"
+    ],
+    [
+      "Emma: If I had studied medicine, I would be a doctor now.",
+      "لو كنت قد درست الطب، لكنت طبيبة الآن."
+    ],
+    [
+      "David: Perfect! That's a Mixed Conditional.",
+      "ممتاز! هذه جملة شرطية مختلطة."
+    ]
+  ],
+  "reading": [
+    "Every day, people make decisions that affect their lives. Some decisions are small, while others can change their future completely.",
+    "If people make healthy choices, they usually feel better. For example, if someone exercises regularly and eats well, they often have more energy.",
+    "In the future, if students develop good study habits, they will probably achieve better results. However, if they don't manage their time, they may struggle with their responsibilities.",
+    "Sometimes people imagine different lives. A person might say, \"If I had more free time, I would travel around the world.\" This is an example of an imaginary situation in the present.",
+    "People also think about their past decisions. Someone who failed an important exam might say, \"If I had prepared better, I would have passed.\" This person is imagining a different past.",
+    "Other situations connect the past with the present. A woman who did not study medicine might say, \"If I had studied medicine, I would be a doctor now.\"",
+    "Finally, some people connect a present characteristic with a past result. Someone who often acts carelessly might say, \"If I were more careful, I wouldn't have made that mistake yesterday.\"",
+    "Conditional sentences help us describe facts, future possibilities, imaginary situations, regrets, and the relationship between past and present."
+  ]
+}

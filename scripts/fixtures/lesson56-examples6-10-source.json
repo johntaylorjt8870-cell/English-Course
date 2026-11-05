@@ -1,0 +1,124 @@
+{
+  "study": [
+    [
+      "If students don't study, they don't learn enough.",
+      "إذا لم يدرس الطلاب، فإنهم لا يتعلمون ما يكفي.",
+      "حقيقة عامة."
+    ],
+    [
+      "If I study tonight, I will pass the exam tomorrow.",
+      "إذا درست الليلة، فسأنجح في امتحان الغد.",
+      "احتمال مستقبلي."
+    ],
+    [
+      "If I had more time, I would study another subject.",
+      "لو كان لدي وقت أكثر، لدرست مادة أخرى.",
+      "افتراض عن وضعي الحالي."
+    ],
+    [
+      "If I had studied last night, I would have passed the exam.",
+      "لو كنت قد درست الليلة الماضية، لكنت نجحت في الامتحان.",
+      "ماضٍ لم يحدث ونتيجة ماضية لم تحدث."
+    ],
+    [
+      "If I had studied harder, I would have better grades now.",
+      "لو كنت قد درست بجد أكثر، لكانت علاماتي أفضل الآن.",
+      "شرط في الماضي ونتيجة في الحاضر."
+    ],
+    [
+      "If I were more disciplined, I would have studied last night.",
+      "لو كنت أكثر انضباطًا، لكنت درست الليلة الماضية.",
+      "حالة حالية افتراضية ونتيجة ماضية."
+    ]
+  ],
+  "decisions": [
+    [
+      "If I ______ (study) harder, I ______ (have) a better job now.",
+      "If I had studied harder, I would have a better job now.",
+      "لو كنت قد درست بجد أكثر، لكان لدي عمل أفضل الآن."
+    ],
+    [
+      "If she ______ (be) more careful, she ______ (not / break) the vase yesterday.",
+      "If she were more careful, she wouldn't have broken the vase yesterday.",
+      "لو كانت أكثر حذرًا، لما كسرت المزهرية أمس."
+    ],
+    [
+      "If it ______ (rain) tomorrow, we ______ (stay) at home.",
+      "If it rains tomorrow, we will stay at home.",
+      "إذا أمطرت غدًا، فسنظل في المنزل."
+    ]
+  ],
+  "modals": [
+    [
+      "If you finish your work, you can go home.",
+      "إذا أنهيت عملك، يمكنك العودة إلى المنزل."
+    ],
+    [
+      "If it rains, we may cancel the trip.",
+      "إذا أمطرت، فقد نلغي الرحلة."
+    ],
+    [
+      "If you need help, you should call me.",
+      "إذا احتجت إلى مساعدة، ينبغي أن تتصل بي."
+    ],
+    [
+      "If I had more time, I could learn another language.",
+      "لو كان لدي وقت أكثر، لاستطعت تعلم لغة أخرى."
+    ],
+    [
+      "If she practiced more, she might become a professional singer.",
+      "لو تدربت أكثر، فربما أصبحت مغنية محترفة."
+    ],
+    [
+      "If he had left earlier, he could have caught the train.",
+      "لو كان قد غادر مبكرًا، لكان قد تمكن من اللحاق بالقطار."
+    ],
+    [
+      "If they had invited us, we might have attended.",
+      "لو كانوا قد دعونا، فربما حضرنا."
+    ],
+    [
+      "If I had learned to drive, I could drive to work now.",
+      "لو كنت قد تعلمت القيادة، لاستطعت الذهاب إلى العمل بالسيارة الآن."
+    ],
+    [
+      "If she were more experienced, she might have handled the situation better yesterday.",
+      "لو كانت أكثر خبرة، فربما كانت قد تعاملت مع الموقف بشكل أفضل أمس."
+    ]
+  ],
+  "unless": [
+    [
+      "If you don't hurry, you will miss the bus.",
+      "Unless you hurry, you will miss the bus.",
+      "إذا لم تسرع، فستفوتك الحافلة."
+    ],
+    [
+      "If you don't study, you won't pass.",
+      "Unless you study, you won't pass.",
+      "إذا لم تدرس، فلن تنجح."
+    ],
+    [
+      "If I hadn't taken a taxi, I would have been late.",
+      "Unless I had taken a taxi, I would have been late.",
+      "لو لم أستقل سيارة أجرة، لكنت قد تأخرت."
+    ]
+  ],
+  "order": [
+    [
+      "If I study hard, I will pass the exam.",
+      "I will pass the exam if I study hard."
+    ],
+    [
+      "If I had more money, I would travel.",
+      "I would travel if I had more money."
+    ],
+    [
+      "If she had studied, she would have passed.",
+      "She would have passed if she had studied."
+    ],
+    [
+      "If I had learned English earlier, I would speak it fluently now.",
+      "I would speak English fluently now if I had learned it earlier."
+    ]
+  ]
+}

@@ -62,3 +62,26 @@ practiceGroups[0].items.forEach((item,i)=>{
  if (m) item.prompt = `${m[1]}\n${m[2].split(' / ').map((option,j)=>`${'ABCD'[j]}. ${option}`).join('  ')}`;
  item.answer = `${originalLetters[i]}. ${item.answer}`;
 });
+
+// صيغ الإجابة المختصرة والتصنيفات المصاحبة كما وردت في مفتاح المصدر.
+const verbForms = [
+ 'reaches / boils.','finish / will visit.','had / would travel.',"had left / wouldn't have missed.",'had studied / would be.',"were / wouldn't have offended.","don't sleep / feel.",'see / will give.','had known / would have helped.','had saved / would own.',"were / wouldn't have forgotten.",'practices / will improve.'
+];
+practiceGroups[1].items.forEach((item,i)=>{item.answer=`${verbForms[i]}\n${item.answer}`});
+const fullTypes = ['Zero Conditional.','First Conditional.','Second Conditional.','Third Conditional.','Mixed Conditional النوع الأول.','Mixed Conditional النوع الثاني.'];
+practiceGroups[2].items.forEach((item,i)=>{item.answer=fullTypes[[0,1,2,3,4,5,0,1,2,3,4,5][i]]});
+practiceGroups[4].items.forEach((item,i)=>{item.answer=`${item.answer}\n${fullTypes[i]}`});
+practiceGroups[3].items[3].answer='الجملة صحيحة.\nIf I had learned English, I would have a better job now.';
+const correctionExplanations = [
+ 'حقيقة عامة، لذلك نستخدم المضارع البسيط في الجملتين.',
+ 'افتراض حاضر، Second Conditional.',
+ 'النتيجة ماضية، لذلك نستخدم would have + V3.',
+ 'شرط ماضٍ ونتيجة حاضرة.',
+ "النتيجة ماضية، ولذلك نستخدم wouldn't have + V3.",
+ 'لا نستخدم would بعد If في هذه الحالة.',
+ 'بعد had نستخدم V3: gone.',
+ 'Second Conditional.',
+ 'النتيجة في الحاضر، ولذلك نستخدم would + V1 أو would be + V-ing حسب المعنى.',
+ 'نستخدم were في الافتراض التقليدي، والنتيجة ماضية. وقد تستعمل was في الحديث غير الرسمي.'
+];
+practiceGroups[3].items.forEach((item,i)=>{item.explanation=correctionExplanations[i]});

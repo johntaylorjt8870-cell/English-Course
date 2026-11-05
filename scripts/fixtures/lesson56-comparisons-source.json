@@ -1,0 +1,41 @@
+[
+  {
+    "lines": [
+      "If I had more money, I would buy a car.",
+      "If I had had more money, I would have bought a car.",
+      "If I had saved more money, I would own a car now."
+    ],
+    "translations": [
+      "لو كان لدي مال أكثر، لاشتريت سيارة.",
+      "لو كان لدي مال أكثر في الماضي، لكنت اشتريت سيارة.",
+      "لو كنت قد ادخرت مالًا أكثر، لامتلكت سيارة الآن."
+    ],
+    "explain": "A: Second Conditional؛ أتحدث عن وضعي الحالي. B: Third Conditional؛ أتحدث عن فرصة ماضية انتهت. C: Mixed Conditional؛ شرط في الماضي ونتيجة حاضرة."
+  },
+  {
+    "lines": [
+      "If she were more careful, she wouldn't make mistakes.",
+      "If she had been more careful, she wouldn't have made that mistake.",
+      "If she were more careful, she wouldn't have made that mistake yesterday."
+    ],
+    "translations": [
+      "لو كانت أكثر حذرًا، لما ارتكبت أخطاء.",
+      "لو كانت أكثر حذرًا، لما ارتكبت ذلك الخطأ.",
+      "لو كانت أكثر حذرًا، لما ارتكبت ذلك الخطأ أمس."
+    ],
+    "explain": "A: Second Conditional؛ افتراض عن صفة حالية ونتيجة عامة أو مستقبلية. B: Third Conditional؛ شرط ونتيجة في الماضي. C: Mixed Conditional النوع الثاني؛ صفة حالية ونتيجة ماضية."
+  },
+  {
+    "lines": [
+      "If I learned English, I would work abroad.",
+      "If I had learned English, I would have worked abroad.",
+      "If I had learned English, I would work abroad now."
+    ],
+    "translations": [
+      "لو تعلمت الإنجليزية، لعملت في الخارج.",
+      "لو كنت قد تعلمت الإنجليزية، لكنت عملت في الخارج.",
+      "لو كنت قد تعلمت الإنجليزية، لعملت في الخارج الآن."
+    ],
+    "explain": "A: Second Conditional. B: Third Conditional. C: Mixed Conditional النوع الأول. عندما ترى had، لا تفترض مباشرة أن الجملة Third Conditional؛ انظر إلى زمن النتيجة أيضًا."
+  }
+]

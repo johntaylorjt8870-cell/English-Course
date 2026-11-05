@@ -1,0 +1,122 @@
+[
+  {
+    "number": 1,
+    "prompt": "If you heat ice, it ______.",
+    "options": [
+      "melts",
+      "will melt",
+      "would melt",
+      "would have melted"
+    ],
+    "answer": "A. melts",
+    "explanation": "حقيقة عامة، Zero Conditional."
+  },
+  {
+    "number": 2,
+    "prompt": "If it rains tomorrow, we ______ at home.",
+    "options": [
+      "stayed",
+      "will stay",
+      "would stay",
+      "would have stayed"
+    ],
+    "answer": "B. will stay",
+    "explanation": "احتمال مستقبلي، First Conditional."
+  },
+  {
+    "number": 3,
+    "prompt": "If I were rich, I ______ a big house.",
+    "options": [
+      "buy",
+      "will buy",
+      "would buy",
+      "would have bought"
+    ],
+    "answer": "C. would buy",
+    "explanation": "افتراض حاضر، Second Conditional."
+  },
+  {
+    "number": 4,
+    "prompt": "If she had studied, she ______ the exam.",
+    "options": [
+      "passes",
+      "will pass",
+      "would pass",
+      "would have passed"
+    ],
+    "answer": "D. would have passed",
+    "explanation": "شرط ونتيجة في الماضي، Third Conditional."
+  },
+  {
+    "number": 5,
+    "prompt": "If I had learned English earlier, I ______ fluently now.",
+    "options": [
+      "speak",
+      "will speak",
+      "would speak",
+      "would have spoken"
+    ],
+    "answer": "C. would speak",
+    "explanation": "شرط ماضٍ ونتيجة حاضرة، Mixed Conditional النوع الأول."
+  },
+  {
+    "number": 6,
+    "prompt": "If he were more careful, he ______ his car yesterday.",
+    "options": [
+      "wouldn't damage",
+      "wouldn't have damaged",
+      "won't damage",
+      "doesn't damage"
+    ],
+    "answer": "B. wouldn't have damaged",
+    "explanation": "حالة حالية ونتيجة ماضية، Mixed Conditional النوع الثاني."
+  },
+  {
+    "number": 7,
+    "prompt": "If you don't water flowers, they ______.",
+    "options": [
+      "die",
+      "will die",
+      "would die",
+      "would have died"
+    ],
+    "answer": "A. die",
+    "explanation": "حقيقة عامة، Zero Conditional."
+  },
+  {
+    "number": 8,
+    "prompt": "If I see Ahmed tomorrow, I ______ him.",
+    "options": [
+      "told",
+      "would tell",
+      "will tell",
+      "would have told"
+    ],
+    "answer": "C. will tell",
+    "explanation": "احتمال مستقبلي، First Conditional."
+  },
+  {
+    "number": 9,
+    "prompt": "If she had left earlier, she ______ the train.",
+    "options": [
+      "catches",
+      "will catch",
+      "would catch",
+      "would have caught"
+    ],
+    "answer": "D. would have caught",
+    "explanation": "حدث ماضٍ افتراضي ونتيجته ماضية، Third Conditional."
+  },
+  {
+    "number": 10,
+    "prompt": "If I had more free time, I ______ another language.",
+    "options": [
+      "learn",
+      "will learn",
+      "would learn",
+      "would have learned"
+    ],
+    "answer": "C. would learn",
+    "explanation": "افتراض حاضر أو مستقبل، Second Conditional."
+  }
+]

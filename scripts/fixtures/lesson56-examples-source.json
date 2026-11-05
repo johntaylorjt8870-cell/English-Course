@@ -1,0 +1,210 @@
+[
+  [
+    [
+      "If you heat water to 100°C, it boils.",
+      "إذا سخّنت الماء إلى 100 درجة مئوية، فإنه يغلي."
+    ],
+    [
+      "If people don't drink enough water, they become thirsty.",
+      "إذا لم يشرب الناس كمية كافية من الماء، فإنهم يشعرون بالعطش."
+    ],
+    [
+      "If you press this button, the machine starts.",
+      "إذا ضغطت هذا الزر، يبدأ الجهاز."
+    ],
+    [
+      "If I drink coffee at night, I can't sleep easily.",
+      "إذا شربت القهوة ليلًا، لا أستطيع النوم بسهولة."
+    ],
+    [
+      "If you don't water plants, they die.",
+      "إذا لم تسقِ النباتات، فإنها تموت."
+    ],
+    [
+      "If I don't sleep well, I don't feel energetic.",
+      "إذا لم أنم جيدًا، لا أشعر بالنشاط."
+    ],
+    [
+      "When you heat ice, it melts.",
+      "عندما تسخّن الثلج، فإنه يذوب."
+    ],
+    [
+      "If you heat ice, it will melts.",
+      null
+    ],
+    [
+      "If you heat ice, it melts.",
+      "إذا سخّنت الثلج، فإنه يذوب."
+    ],
+    [
+      "If you heat the ice, it will melt.",
+      null
+    ]
+  ],
+  [
+    [
+      "If I study hard, I will pass the exam.",
+      "إذا درست بجد، فسأنجح في الامتحان."
+    ],
+    [
+      "If it rains tomorrow, we will stay at home.",
+      "إذا أمطرت غدًا، فسنظل في المنزل."
+    ],
+    [
+      "If she doesn't hurry, she will miss the bus.",
+      "إذا لم تسرع، فستفوتها الحافلة."
+    ],
+    [
+      "If you practice English every day, you will improve.",
+      "إذا تدربت على الإنجليزية كل يوم، فسوف تتحسن."
+    ],
+    [
+      "If I don't finish my homework, I won't watch television.",
+      "إذا لم أنهِ واجبي، فلن أشاهد التلفاز."
+    ],
+    [
+      "If he doesn't call me, I won't wait.",
+      "إذا لم يتصل بي، فلن أنتظر."
+    ],
+    [
+      "What will you do if it rains tomorrow?",
+      "ماذا ستفعل إذا أمطرت غدًا؟"
+    ],
+    [
+      "Will you come if I invite you?",
+      "هل ستأتي إذا دعوتك؟"
+    ],
+    [
+      "If I see him tomorrow, I will tell him.",
+      "إذا رأيته غدًا، سأخبره."
+    ],
+    [
+      "If I will see him tomorrow, I will tell him.",
+      null
+    ]
+  ],
+  [
+    [
+      "If I had more money, I would buy a new car.",
+      "لو كان لدي مال أكثر، لاشتريت سيارة جديدة."
+    ],
+    [
+      "If I were you, I would apologize.",
+      "لو كنت مكانك، لاعتذرت."
+    ],
+    [
+      "If she lived near us, we would visit her every week.",
+      "لو كانت تعيش بالقرب منا، لزرناها كل أسبوع."
+    ],
+    [
+      "If I knew the answer, I would tell you.",
+      "لو كنت أعرف الإجابة، لأخبرتك."
+    ],
+    [
+      "If I were rich, I would travel around the world.",
+      "لو كنت غنيًا، لسافرت حول العالم."
+    ],
+    [
+      "If he were here, he would help us.",
+      "لو كان هنا، لساعدنا."
+    ],
+    [
+      "If she were more confident, she would speak in public.",
+      "لو كانت أكثر ثقة، لتحدثت أمام الجمهور."
+    ],
+    [
+      "If I didn't have a car, I would use public transport.",
+      "لو لم تكن لدي سيارة، لاستخدمت وسائل النقل العامة."
+    ],
+    [
+      "If he weren't so lazy, he would achieve more.",
+      "لو لم يكن كسولًا إلى هذا الحد، لحقق المزيد."
+    ],
+    [
+      "What would you do if you won a million dollars?",
+      "ماذا ستفعل لو ربحت مليون دولار؟"
+    ],
+    [
+      "Where would you live if you could choose any country?",
+      "أين ستعيش لو استطعت اختيار أي بلد؟"
+    ],
+    [
+      "If I had more time, I would learn another language.",
+      "لو كان لدي وقت أكثر، لتعلمت لغة أخرى."
+    ]
+  ],
+  [
+    [
+      "If I had studied harder, I would have passed the exam.",
+      "لو كنت قد درست بجد أكثر، لكنت نجحت في الامتحان."
+    ],
+    [
+      "If she had left earlier, she wouldn't have missed the train.",
+      "لو كانت قد غادرت مبكرًا، لما فاتها القطار."
+    ],
+    [
+      "If they had invited me, I would have attended the party.",
+      "لو كانوا قد دعوني، لحضرت الحفلة."
+    ],
+    [
+      "If he had taken the medicine, he might have recovered sooner.",
+      "لو كان قد تناول الدواء، فربما كان قد تعافى في وقت أبكر."
+    ],
+    [
+      "If I hadn't forgotten my keys, I wouldn't have been late.",
+      "لو لم أنسَ مفاتيحي، لما تأخرت."
+    ],
+    [
+      "If she had studied, she wouldn't have failed.",
+      "لو كانت قد درست، لما رسبت."
+    ],
+    [
+      "If I had had more time, I could have finished the project.",
+      "لو كان لدي وقت أكثر، لتمكنت من إنهاء المشروع."
+    ],
+    [
+      "If he had called earlier, we might have helped him.",
+      "لو كان قد اتصل مبكرًا، فربما كنا قد ساعدناه."
+    ],
+    [
+      "If I had had more money, I would have bought the car.",
+      "لو كان لدي مال أكثر، لكنت اشتريت السيارة."
+    ]
+  ],
+  [
+    [
+      "If I had studied medicine, I would be a doctor now.",
+      "لو كنت قد درست الطب، لكنت طبيبًا الآن."
+    ],
+    [
+      "If I had learned English earlier, I would speak it fluently now.",
+      "لو كنت قد تعلمت الإنجليزية في وقت أبكر، لتحدثتها بطلاقة الآن."
+    ],
+    [
+      "If we had bought that house, we would live near the sea now.",
+      "لو كنا قد اشترينا ذلك المنزل، لكنا نعيش بالقرب من البحر الآن."
+    ],
+    [
+      "If she had accepted the job, she would earn more money today.",
+      "لو كانت قد قبلت الوظيفة، لكانت تكسب مالًا أكثر اليوم."
+    ]
+  ],
+  [
+    [
+      "If I were more careful, I wouldn't have made that mistake yesterday.",
+      "لو كنت أكثر حذرًا، لما ارتكبت ذلك الخطأ أمس."
+    ],
+    [
+      "If he were more responsible, he wouldn't have forgotten the meeting yesterday.",
+      "لو كان أكثر مسؤولية، لما نسي الاجتماع أمس."
+    ],
+    [
+      "If I weren't so shy, I would have spoken at the conference last week.",
+      "لو لم أكن خجولًا إلى هذا الحد، لكنت تحدثت في المؤتمر الأسبوع الماضي."
+    ],
+    [
+      "If she knew how to drive, she would have taken us to the airport yesterday.",
+      "لو كانت تعرف القيادة، لأوصلتنا إلى المطار أمس."
+    ]
+  ]
+]

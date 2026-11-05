@@ -54,3 +54,11 @@ const groupPatterns: (Pattern[] | null)[] = [null,
  ['Zero','First','Second','Third','Mixed 1','First','Third','Mixed 2','Mixed 1','Second']
 ];
 practiceGroups.forEach((group,i)=>group.items.forEach((item,j)=>{const key=groupPatterns[i]?.[j];if(!item.explanation && key)item.explanation=patterns[key]}));
+
+// نعيد الحروف الأصلية لخيارات التمرين الأول دون تغيير نصوص الخيارات أو المفتاح.
+const originalLetters = ['A','B','C','D','C','B','A','C','D','C'];
+practiceGroups[0].items.forEach((item,i)=>{
+ const m = item.prompt.match(/^(.*) \((.*)\)$/);
+ if (m) item.prompt = `${m[1]}\n${m[2].split(' / ').map((option,j)=>`${'ABCD'[j]}. ${option}`).join('  ')}`;
+ item.answer = `${originalLetters[i]}. ${item.answer}`;
+});

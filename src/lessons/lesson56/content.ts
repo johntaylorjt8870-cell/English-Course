@@ -32,3 +32,36 @@ export const dialogueQA = [
 ["What happens if you don't water a plant?",'It dies.'],['What will Emma do if it rains tomorrow?','She will stay at home.'],['What would Emma buy if she won a million dollars?','She would buy a house.'],['What would have happened if Emma had studied for the exam?','She would have passed the exam.'],['What would Emma be now if she had studied medicine?','She would be a doctor now.']];
 export const readingQA = [['What happens if people make healthy choices?','They usually feel better.'],["What may happen if students don't manage their time?",'They may struggle with their responsibilities.'],['Which conditional type is used in "If I had more free time, I would travel around the world"?','Second Conditional.'],['What does the sentence "If I had prepared better, I would have passed" express?','Third Conditional؛ شرط ونتيجة في الماضي.'],['Which conditional type is used in "If I had studied medicine, I would be a doctor now"?','Mixed 1؛ الشرط ماضٍ والنتيجة حاضرة.'],['What does "If I were more careful, I wouldn\'t have made that mistake yesterday" express?','Mixed 2؛ الحالة حاضرة والنتيجة ماضية.'],['What are the five main uses of conditional sentences mentioned in the passage?','Facts, future possibilities, imaginary situations, regrets, and connections between past and present.']];
 export const speaking = ["What happens if people don't get enough sleep?",'What will you do if you have free time next weekend?','What would you do if you could live anywhere in the world?','What would you have done differently if you had known the truth earlier?','How would your life be different now if you had chosen a different career?','If you were more confident, what would you have done last year?'];
+
+/** الشروح التحليلية من مراجعة المصدر، منفصلة عن بطاقات الأمثلة حتى لا تزدحم. */
+export const analysisNotes = [
+ {title:'Zero · من الحقيقة إلى النتيجة',items:[
+ 'نستخدم الشرط الصفري للحقائق العلمية والقوانين الطبيعية والحقائق العامة والعادات والنتائج المتكررة، أي ما يحدث دائمًا أو عادةً عندما يتحقق الشرط.',
+ 'If you heat وit boils كلاهما في المضارع البسيط: المثال حقيقة علمية، لا مجرد احتمال. وامتناع الناس عن شرب الماء والزر الذي يبدأ تشغيل الجهاز يوضحان نتيجة عامة أو منتظمة؛ أثر القهوة ليلًا يوضح عادة شخصية متكررة.',
+ 'يمكن نفي جملة الشرط أو النتيجة: قارن بين عدم سقي النباتات وعدم الشعور بالنشاط بعد نوم غير جيد.',
+ 'يمكن أحيانًا استعمال When بدل If للنتيجة المتوقعة أو المتكررة: If يركّز على الشرط وWhen يركّز على الوقت أو حدوث الأمر؛ وقد يصلح كلاهما للحقائق العامة.',
+ 'في المعنى العام نقول If you heat ice, it melts. لا نستخدم will عادةً في نتيجة Zero. أما If you heat the ice, it will melt فتناسب نتيجة مستقبلية محددة. الصيغة will melts غير صحيحة لأن will تتبعها صيغة الفعل الأساسية.']},
+ {title:'First · احتمال لا وعد مؤكد',items:[
+ 'نستخدم الشرط الأول لشرط واقعي ممكن في المستقبل ونتيجة متوقعة إذا تحقق. لا يعني ذلك أن النتيجة مؤكدة دون تحقق الشرط.',
+ 'في If I study hard, I will pass the exam نجد If I study في المضارع البسيط وI will pass بصيغة will + V1؛ النجاح احتمال مستقبلي مرتبط بالدراسة.',
+ 'يمكن النفي في الشرط والنتيجة، كما في عدم إنهاء الواجب وعدم مشاهدة التلفاز. ويمكن تقديم النتيجة في الأسئلة: What will you do if it rains tomorrow? وWill you come if I invite you?',
+ 'بعد If نستخدم المضارع البسيط في هذا التركيب حتى عند الحديث عن المستقبل: If I see him tomorrow, I will tell him. الصيغة If I will see him tomorrow غير مناسبة للقاعدة المعتادة هنا.']},
+ {title:'Second · شكل الماضي ومعنى الحاضر',items:[
+ 'نستخدمه للمواقف غير الواقعية في الحاضر، ولتخيل أشياء لا نملكها الآن، وللاحتمالات المستقبلية البعيدة أو غير المرجحة، وللنصيحة والخيال والتمني. لا يعني الافتراض بالضرورة الاستحالة.',
+ 'في If I had more money, I would buy a new car صيغة had ماضٍ بسيط في الشكل، لكن المعنى أن المال الكافي غير متاح الآن وأن المتكلم يتخيل وضعًا مختلفًا؛ would buy هي would + V1.',
+ 'If I were you صيغة شائعة للنصيحة، وIf I knew the answer تعني في سياق المثال أنني لا أعرف الإجابة الآن. كذلك If I had more time, I would learn another language عن الحاضر أو المستقبل، لا حدث انتهى في الماضي.',
+ 'في الافتراض التقليدي، خاصة في اللغة الرسمية والاختبارات، نستخدم were مع جميع الضمائر. وقد تُسمع was في المحادثة غير الرسمية. يمكن النفي في أي جزء، ويمكن تكوين سؤال باستخدام What would you do أو Where would you live.']},
+ {title:'Third · ماضٍ لا يمكن تغييره',items:[
+ 'نستخدمه للأحداث الماضية التي لم تقع والنتائج الماضية التي نتخيل وقوعها، وللندم على القرارات السابقة والفرص الضائعة. الشرط والنتيجة في الماضي وقد انتهيا.',
+ 'في If I had studied harder, I would have passed the exam: had studied ماضٍ تام، وwould have passed نتيجة افتراضية ماضية. المعنى المقصود في المثال أنني لم أدرس بما يكفي ولم أنجح.',
+ 'يمكن النفي في الشرط أو النتيجة، كما في نسيان المفاتيح والتأخر أو الدراسة والرسوب. would have + V3 لنتيجة افتراضية، وcould have + V3 لإمكانية أو قدرة، وmight have + V3 لنتيجة محتملة غير مؤكدة.',
+ 'في If I had had more money, I would have bought the car: had الأولى فعل مساعد لتكوين الماضي التام، والثانية التصريف الثالث من have.']},
+ {title:'Mixed 1 · الماضي يغيّر الحاضر',items:[
+ 'في الشرط المختلط قد يكون الشرط والنتيجة في زمنين مختلفين. النمط الأول يربط شرطًا لم يقع في الماضي بنتيجة افتراضية في الحاضر: If + Past Perfect, would + V1.',
+ 'If I had studied medicine, I would be a doctor now: الدراسة had studied في الماضي؛ وwould be تصف النتيجة الحاضرة؛ now توضح زمن النتيجة في هذا السياق.',
+ 'تعلم الإنجليزية سابقًا، وشراء المنزل، وقبول الوظيفة كلها شروط ماضية؛ الطلاقة والسكن قرب البحر وكسب مال أكثر نتائج حاضرة. وجود had في الشرط وحده لا يحدد زمن النتيجة.']},
+ {title:'Mixed 2 · الحالة الحاضرة والماضي',items:[
+ 'النمط الثاني يربط حالة أو صفة حالية افتراضية بنتيجة افتراضية في الماضي: If + Past Simple, would have + V3.',
+ "في If I were more careful, I wouldn't have made that mistake yesterday: were more careful حالة أو صفة حالية افتراضية، وwouldn't have made نتيجة ماضية، وyesterday توضح زمن النتيجة في هذا السياق.",
+ 'المسؤولية والخجل ومعرفة القيادة صفات أو حالات في الشرط؛ نسيان الاجتماع والتحدث في المؤتمر والذهاب إلى المطار نتائج ماضية. هذا النمط أقل شيوعًا ويحتاج إلى سياق يثبت امتداد الحالة إلى زمن الحدث؛ كلمة زمن وحدها لا تكفي للتصنيف.' ]}
+];

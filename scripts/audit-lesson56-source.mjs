@@ -1,7 +1,8 @@
 /**
- * Independent source fixture for the original 25-question assessment.
- * This audit deliberately does NOT claim coverage of other lesson sections.
- * Usage: node scripts/audit-lesson56-source.mjs [--json]
+ * Independent fixtures for the currently inventoried source items.
+ * The whole-source inventory remains incomplete. Default execution fails until
+ * that is resolved. Use --partial to run only the explicitly inventoried scope.
+ * Usage: node scripts/audit-lesson56-source.mjs [--partial] [--json]
  */
 import {readFileSync,unlinkSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
@@ -122,9 +123,10 @@ const counts={complete:0,partial:0,missing:0,corrected:0};for(const r of records
 const rendered=/questions=\{test\}/.test(component)&&/practiceGroups\[i\]\.items/.test(component)&&/l\.lines\.map/.test(component)&&/attempts\(dialogueQA/.test(component)&&/attempts\(readingQA/.test(component)&&/vocabulary\.map/.test(component)&&/dialogue\.map/.test(component)&&/reading\.map/.test(component)&&/ComparisonChallenge56/.test(component)&&/sourceExplanations\[n\]\.map/.test(component);
 const itemStatuses=new Map();const severity={complete:0,corrected:1,partial:2,missing:3};for(const r of records){const previous=itemStatuses.get(r.number)??'complete';if(severity[r.status]>severity[previous])itemStatuses.set(r.number,r.status);else if(!itemStatuses.has(r.number))itemStatuses.set(r.number,previous)}
 const itemCounts={complete:0,partial:0,missing:0,corrected:0};for(const status of itemStatuses.values())itemCounts[status]++;
-const report={scope:'selected explanations, examples and translations from sections 1–5, examples and translations in sections 6–10, section 11 dialogue and questions, section 12 reading and vocabulary and questions, all six exercises in section 13, section 14 comparisons, sections 15–16, and selected items in sections 17–22; all other material remains unaudited by this fixture',sourceQuestions:source.length+exercise1.length+Object.values(exercises2to6).reduce((n,g)=>n+g.length,0)+comprehension.dialogueQA.length+comprehension.readingQA.length,reviewedItems:itemStatuses.size,itemCounts,sourceFields:records.length,counts,renderPathsPresent:rendered,records};
+const unreviewed=['full teaching paragraphs and clause-by-clause example analyses','complete original activity instructions','complete original summary, achievement and next-lesson explanatory prose','independent semantic review for all translations and paraphrases'];
+const report={fullSourceInventoried:false,totalSourceItems:null,unreviewed,scope:'selected explanations, examples and translations from sections 1–5, examples and translations in sections 6–10, section 11 dialogue and questions, section 12 reading and vocabulary and questions, all six exercises in section 13, section 14 comparisons, sections 15–16, and selected items in sections 17–22; all other material remains unaudited by this fixture',sourceQuestions:source.length+exercise1.length+Object.values(exercises2to6).reduce((n,g)=>n+g.length,0)+comprehension.dialogueQA.length+comprehension.readingQA.length,reviewedItems:itemStatuses.size,itemCounts,sourceFields:records.length,counts,renderPathsPresent:rendered,records};
 if(process.argv.includes('--json'))console.log(JSON.stringify(report,null,2));else{
- console.log(`Scope: ${report.scope}`);console.log(`Item status: ${JSON.stringify(itemCounts)}`);console.log(`Questions: ${report.sourceQuestions}; reviewed items: ${report.reviewedItems}; source fields: ${report.sourceFields}; complete: ${counts.complete}; partial: ${counts.partial}; missing: ${counts.missing}; corrected: ${counts.corrected}; render paths: ${rendered}`);
+ console.log(`Scope: ${report.scope}`);console.log(`Full source inventoried: ${report.fullSourceInventoried}; total source items: unknown`);for(const entry of unreviewed)console.log(`UNREVIEWED: ${entry}`);console.log(`Item status: ${JSON.stringify(itemCounts)}`);console.log(`Questions: ${report.sourceQuestions}; reviewed items: ${report.reviewedItems}; source fields: ${report.sourceFields}; complete: ${counts.complete}; partial: ${counts.partial}; missing: ${counts.missing}; corrected: ${counts.corrected}; render paths: ${rendered}`);
  for(const r of records.filter(r=>r.status!=='complete'))console.log(`${r.number} ${r.field}: ${r.status} (${r.location}) expected=${JSON.stringify(r.expected)} actual=${JSON.stringify(r.actual)}`);
 }
-if(counts.partial||counts.missing||!rendered||source.length!==25||exercise1.length!==10)process.exitCode=1;
+if(counts.partial||counts.missing||!rendered||source.length!==25||exercise1.length!==10||(!report.fullSourceInventoried&&!process.argv.includes('--partial')))process.exitCode=1;

@@ -189,24 +189,27 @@ async function main() {
   ok(nums.join(",") === "2,3,4,5,6,7,8,9,10,11", `hub: نقرة يسار واحدة ترجع خطوة (got ${nums.join(" ")})`);
 
   // ============================================================
-  // 3) النهاية: 45–54 وتعطيل السهم الأيمن (54 درسًا)
+  // 3) النهاية وتعطيل السهم الأيمن — تُشتق من روابط الدروس الفعلية
   // ============================================================
-  for (let i = 0; i < 45; i++) {
+  const hubLessonNumbers = [...app.host.querySelectorAll("a[href^='#/lesson/']")].map(a => Number(a.getAttribute("href").match(/\d+/)?.[0])).filter(Number.isFinite);
+  const lastHubLesson = Math.max(...hubLessonNumbers);
+  const lastWindow = Array.from({ length: 10 }, (_, i) => lastHubLesson - 9 + i).join(",");
+  for (let i = 0; i < lastHubLesson; i++) {
     next.click();
     await tick(0);
   }
   nums = visibleNumbers(nav);
   ({ prev, next } = arrows(nav));
   ok(nums.length === 10, `hub: عند النهاية يبقى العدد 10 (got ${nums.length})`);
-  ok(nums.join(",") === "45,46,47,48,49,50,51,52,53,54", `hub: النافذة الأخيرة 45–54 (got ${nums.join(" ")})`);
+  ok(nums.join(",") === lastWindow, `hub: النافذة الأخيرة ${lastWindow} (got ${nums.join(" ")})`);
   ok(next.disabled === true, "hub: السهم الأيمن معطّل في النافذة الأخيرة");
   ok(prev.disabled === false, "hub: السهم الأيسر مفعّل في النافذة الأخيرة");
   next.click();
   await tick();
-  ok(visibleNumbers(nav).join(",") === "45,46,47,48,49,50,51,52,53,54", "hub: النقر على سهم معطّل لا يغيّر النافذة");
+  ok(visibleNumbers(nav).join(",") === lastWindow, "hub: النقر على سهم معطّل لا يغيّر النافذة");
 
   // رجوع خطوة بخطوة حتى البداية
-  for (let i = 0; i < 45; i++) {
+  for (let i = 0; i < lastHubLesson; i++) {
     prev.click();
     await tick(0);
   }

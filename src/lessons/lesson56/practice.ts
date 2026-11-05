@@ -34,3 +34,23 @@ export const practiceGroups: {title:string; items:Practice[]}[] = [
 {title:'تدريب إضافي من التقييم: أكمل وصحح',items:[
 ['If ice ______ (get) warm, it ______ (melt).','If ice gets warm, it melts.'],['If he ______ (call) me tonight, I ______ (answer).','If he calls me tonight, I will answer.'],['If I ______ (be) you, I ______ (accept) the offer.','If I were you, I would accept the offer.'],['If we ______ (leave) earlier, we ______ (not / be) late yesterday.',"If we had left earlier, we wouldn't have been late yesterday."],['If she ______ (study) English when she was young, she ______ (speak) it fluently now.','If she had studied English when she was young, she would speak it fluently now.'],['If I will have time, I will help you.','If I have time, I will help you.'],['If she had studied harder, she would pass the exam last year.','If she had studied harder, she would have passed the exam last year.'],["If I were more careful, I wouldn't lose my wallet yesterday.","If I were more careful, I wouldn't have lost my wallet yesterday."],['If he had went to university, he would have a better job now.','If he had gone to university, he would have a better job now.'],['If I had more money, I would have bought a house now.','If I had more money, I would own a house now.']].map(([prompt,answer])=>({prompt,answer}))}
 ];
+
+// توضيحات إضافية للتعليم عندما لم يتضمن المصدر تفسيرًا مستقلًا لكل إجابة.
+const patterns = {
+ Zero:'إضافة تفسيرية: حقيقة عامة أو نتيجة متكررة؛ المضارع البسيط في الشرط والنتيجة.',
+ First:'إضافة تفسيرية: احتمال واقعي مستقبلي؛ المضارع في الشرط وwill + V1 في النتيجة.',
+ Second:'إضافة تفسيرية: افتراض حالي أو مستقبلي؛ الماضي في الشكل لا يستلزم الماضي في المعنى.',
+ Third:'إضافة تفسيرية: شرط ونتيجة افتراضيان في الماضي؛ had + V3 ثم would have + V3.',
+ 'Mixed 1':'إضافة تفسيرية: شرط ماضٍ ونتيجة حاضرة؛ had + V3 ثم would + V1.',
+ 'Mixed 2':'إضافة تفسيرية: حالة حاضرة افتراضية ونتيجة ماضية؛ الماضي في الشكل ثم would have + V3.',
+ Modal:'إضافة تفسيرية: may تعبّر عن احتمال، ويمكن أن تختلف الترجمة الطبيعية بحسب السياق.'
+} as const;
+type Pattern = keyof typeof patterns;
+const groupPatterns: (Pattern[] | null)[] = [null,
+ ['Zero','First','Second','Third','Mixed 1','Mixed 2','Zero','First','Third','Mixed 1','Mixed 2','First'],
+ ['Zero','First','Second','Third','Mixed 1','Mixed 2','Zero','First','Second','Third','Mixed 1','Mixed 2'], null,
+ ['Zero','First','Second','Third','Mixed 1','Mixed 2'],
+ ['Modal','First','Second','Third','Mixed 1','Mixed 2','Zero','First','Second','Mixed 1'],
+ ['Zero','First','Second','Third','Mixed 1','First','Third','Mixed 2','Mixed 1','Second']
+];
+practiceGroups.forEach((group,i)=>group.items.forEach((item,j)=>{const key=groupPatterns[i]?.[j];if(!item.explanation && key)item.explanation=patterns[key]}));

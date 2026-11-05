@@ -8,3 +8,6 @@
 @media(prefers-reduced-motion:reduce){.lesson56 *{animation:none!important;transition:none!important}}
 
 .lesson56 .l56-radar select,.lesson56 .l56-radar textarea{max-width:100%;border:1px solid #aac8c4;border-radius:.6rem;padding:.5rem;background:white}.lesson56 .l56-radar textarea{display:block;width:100%;min-height:5rem}
+
+/* Keep the question options and multi-line model answers legible. */
+.lesson56 .l56-card > p[dir="auto"],.lesson56 .l56-answer > p{white-space:pre-line}

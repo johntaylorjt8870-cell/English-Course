@@ -14,7 +14,7 @@ const {studyComparison,modalTranslations,decisionExamples}=await load('src/lesso
 const challenges=readFileSync('src/lessons/lesson56/Challenges56.tsx','utf8');
 const notes=analysisNotes.flatMap(x=>x.items).join(' ');
 const sourceChecks=[
- ()=>{assert.equal(lessons[0].lines.length,9);assert.match(notes,/When/);assert.match(notes,/will melts/);},
+ ()=>{assert.equal(lessons[0].lines.length,10);assert.ok(lessons[0].lines.some(([en,ar])=>en==='If you heat ice, it melts.'&&ar==='إذا سخّنت الثلج، فإنه يذوب.'));assert.match(notes,/When/);assert.match(notes,/will melts/);},
  ()=>{assert.equal(lessons[1].lines.length,10);assert.match(notes,/احتمال مستقبلي/);},
  ()=>{assert.equal(lessons[2].lines.length,12);assert.match(notes,/الاستحالة/);assert.match(notes,/were/);},
  ()=>{assert.equal(lessons[3].lines.length,9);assert.match(notes,/التصريف الثالث من have/);},

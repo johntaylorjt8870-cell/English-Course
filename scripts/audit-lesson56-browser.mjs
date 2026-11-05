@@ -43,6 +43,8 @@ for(let i=0;i<examples.length;i++){
   if(ar!==null)ok(actual.includes(norm(ar)),`source example ${i+1}.${j+1} Arabic paired in same card`);
  }
 }
+await go('choose');const decisionCards=page.locator('#l56-main .l56-content > .l56-grid .l56-card');for(const [i,expected] of ['حقيقة عامة: Zero.','احتمال مستقبلي: First.','افتراض حاضر أو مستقبل: Second.','شرط ونتيجة في الماضي: Third.','ماضٍ ونتيجة حاضرة: Mixed 1.','حالة حاضرة ونتيجة ماضية: Mixed 2.'].entries())ok((await decisionCards.nth(i).innerText()).replace(/\s/g,'').includes(expected.replace(/\s/g,'')),`decision mapping ${i+1} visible`);
+await go('practice-0');ok(await page.locator('#l56-main .l56-card > p[dir="auto"]').first().evaluate(e=>getComputedStyle(e).whiteSpace)==='pre-line','exercise options retain line breaks');
 const narrative=fixture('dialogue-reading');await go('dialogue');
 const dialogueCards=page.locator('#l56-main .l56-content > .l56-card');ok(await dialogueCards.count()===narrative.dialogue.length,'dialogue line count in student DOM');
 for(let i=0;i<narrative.dialogue.length;i++){const text=norm(await dialogueCards.nth(i).textContent());ok(text.includes(norm(narrative.dialogue[i][0]))&&text.includes(norm(narrative.dialogue[i][1])),`dialogue line ${i+1} and translation in same card`)}

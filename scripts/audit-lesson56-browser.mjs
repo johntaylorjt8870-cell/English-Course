@@ -61,6 +61,7 @@ for(const [group,qs] of groups.entries()){
   if(q.explanation)ok(feedback.includes(norm(q.explanation)),`exercise ${group+1}.${i+1} explanation after attempt: expected ${JSON.stringify(norm(q.explanation))}, actual ${JSON.stringify(feedback)}`);
  }
 }
+await go('summary');const summaries=page.locator('#l56-main .l56-content > .l56-grid .l56-card');for(const [i,usage] of ['الحقائق العامة والعادات والنتائج المتكررة.','احتمال واقعي في المستقبل.','افتراض غير واقعي أو بعيد في الحاضر أو المستقبل.','تخيل ماضٍ مختلف ونتيجة ماضية مختلفة.','شرط ماضٍ ونتيجة حاضرة.','حالة حاضرة افتراضية ونتيجة ماضية.'].entries())ok(norm(await summaries.nth(i).innerText()).includes(usage),`summary ${i+1} source usage visible`);
 const extra=fixture('examples6-10');await go('matrix');const matrixCards=page.locator('#l56-main .l56-content > .l56-grid').nth(1).locator('.l56-card');
 for(const [i,[en,ar,meaning]] of extra.study.entries()){const text=norm(await matrixCards.nth(i).textContent());ok(text.includes(norm(en))&&text.includes(norm(ar))&&text.includes(norm(meaning)),`comparison ${i+1} example, translation, and meaning paired`)}
 await go('modals');const modalCards=page.locator('#l56-main .l56-content > .l56-card');for(const [i,[en,ar]] of extra.modals.entries()){const text=norm(await modalCards.nth(i).textContent());ok(text.includes(norm(en))&&text.includes(norm(ar)),`modal ${i+1} example and translation paired`)}

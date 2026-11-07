@@ -461,7 +461,7 @@ export default function FinalTest({
         })}
       </ol>
 
-      <div className="sticky bottom-4 z-10">
+      <div className="sticky bottom-4 z-10" data-ft-bar="">
         <div className="flex flex-wrap items-center gap-3 rounded-2xl border-2 border-slate-900/10 bg-white/95 p-4 shadow-xl backdrop-blur">
           {!corrected ? (
             <>

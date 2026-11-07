@@ -56,6 +56,7 @@ import Lesson54 from "./lessons/lesson54/Lesson54";
 import Lesson55 from "./lessons/lesson55/Lesson55";
 import Lesson56 from "./lessons/lesson56/Lesson56";
 import Lesson57 from "./lessons/lesson57/Lesson57";
+import Lesson58 from "./lessons/lesson58/Lesson58";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -603,6 +604,15 @@ const CARDS: Card[] = [
     href: "#/lesson/57",
     grad: "from-[#0d1729] to-[#b1214b]",
   },
+  {
+    n: 58,
+    title: "الدرس 58: PASSIVE VOICE ACROSS TENSES — المبني للمجهول عبر الأزمنة",
+    en: "The Tense Transformation Lab · Seven Tenses",
+    emoji: "⚗",
+    stats: "21 قسمًا · 9 تدريبات · 7 محطات تفاعلية · اختبار 15 سؤالًا",
+    href: "#/lesson/58",
+    grad: "from-[#0b2028] to-[#a1e0c4]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -741,6 +751,7 @@ export default function App() {
   else if (route === 55) page = <Lesson55 onExit={goHome} />;
   else if (route === 56) page = <Lesson56 onExit={goHome} />;
   else if (route === 57) page = <Lesson57 onExit={goHome} />;
+  else if (route === 58) page = <Lesson58 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

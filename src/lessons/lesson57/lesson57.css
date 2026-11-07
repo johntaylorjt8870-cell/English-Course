@@ -2825,3 +2825,8 @@
      يتوقّف فوق الشريط اللاصق بدل أن يضع العنصر تحته. */
   scroll-padding-bottom: 8rem;
 }
+
+/* Lesson 57 → 58 continuity: keep the existing progress card and make the
+   next-course handoff a real, keyboard-focusable route instead of a placeholder. */
+.lesson57 .l57-next-link{display:inline-flex;align-items:center;gap:.35rem;color:#125f6b;font-weight:800;text-decoration:underline;text-underline-offset:3px;border-radius:.35rem}
+.lesson57 .l57-next-link:focus-visible{outline:3px solid #f2b544;outline-offset:3px}

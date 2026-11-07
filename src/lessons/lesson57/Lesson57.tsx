@@ -328,7 +328,7 @@ function Progress57() {
           ))}
         </ul>
         <p className="l57-hint">
-          <Mixed57 text="الدرس 58 غير متاح بعد في هذه النسخة — الأرقام تُفتح بالتتابع." />
+          <a className="l57-next-link" href="#/lesson/58">انتقل إلى الدرس 58 — Passive Voice Across Tenses ↗</a>
         </p>
       </div>
     </div>

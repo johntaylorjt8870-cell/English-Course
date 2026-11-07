@@ -55,6 +55,7 @@ import Lesson53 from "./lessons/lesson53/Lesson53";
 import Lesson54 from "./lessons/lesson54/Lesson54";
 import Lesson55 from "./lessons/lesson55/Lesson55";
 import Lesson56 from "./lessons/lesson56/Lesson56";
+import Lesson57 from "./lessons/lesson57/Lesson57";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -593,6 +594,15 @@ const CARDS: Card[] = [
   { n: 54, title: "الدرس 54: THIRD CONDITIONAL — الشرط الثالث", en: "Third Conditional — If + Past Perfect, would have + V3", emoji: "⏳", stats: "8 تدريبات · 58 سؤالًا · اختبار 25 سؤالًا", href: "#/lesson/54", grad: "from-violet-600 to-amber-500" },
   { n: 55, title: "الدرس 55: MIXED CONDITIONALS — الجمل الشرطية المختلطة", en: "Mixed Conditionals — Past and Present", emoji: "⏳", stats: "8 تدريبات · 46 سؤالًا · اختبار 25 سؤالًا", href: "#/lesson/55", grad: "from-teal-700 to-orange-600" },
   { n: 56, title: "الدرس 56: المراجعة الشاملة للجمل الشرطية", en: "Conditional Sentences Master Review", emoji: "◉", stats: "6 تدريبات · اختبار 15 سؤالًا", href: "#/lesson/56", grad: "from-teal-800 to-amber-500" },
+  {
+    n: 57,
+    title: "الدرس 57: PASSIVE VOICE — FOUNDATIONS — المبني للمجهول: الأساسيات",
+    en: "The Voice Shift Lab — Active ⇄ Passive",
+    emoji: "⇄",
+    stats: "54 خطوة · 10 محطات · 10 مختبرات تفاعلية · 10 تدريبات · اختبار 15 سؤالًا",
+    href: "#/lesson/57",
+    grad: "from-[#0d1729] to-[#b1214b]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -730,6 +740,7 @@ export default function App() {
   else if (route === 54) page = <Lesson54 onExit={goHome} />;
   else if (route === 55) page = <Lesson55 onExit={goHome} />;
   else if (route === 56) page = <Lesson56 onExit={goHome} />;
+  else if (route === 57) page = <Lesson57 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

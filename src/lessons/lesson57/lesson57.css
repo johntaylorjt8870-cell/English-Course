@@ -1,0 +1,2827 @@
+/* ============================================================
+   Lesson 57 — «مختبر تحويل الجملة» / THE VOICE SHIFT LAB
+   هوية مستقلة: لوح حبري داكن + أوراق دافئة + مسار جملة ملوّن.
+   الأدوار ثابتة في الدرس كله ولا تعمل باللون وحده:
+     ذهبي  ◆ AGENT      من قام بالفعل
+     وردي   ● RECEIVER   ما وقع عليه الفعل
+     أخضر  ▮ BE         فعل be
+     بنفسجي ▰ V3        التصريف الثالث
+     رمادي ◇ BY         حرف الجر by
+   ============================================================ */
+
+@font-face {
+  font-family: "Voice57Arabic";
+  src: url("@fontsource/changa/files/changa-arabic-400-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Voice57Arabic";
+  src: url("@fontsource/changa/files/changa-arabic-700-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Voice57Arabic";
+  src: url("@fontsource/changa/files/changa-arabic-800-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Voice57Latin";
+  src: url("@fontsource/rubik/files/rubik-latin-400-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Voice57Latin";
+  src: url("@fontsource/rubik/files/rubik-latin-700-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Voice57Latin";
+  src: url("@fontsource/rubik/files/rubik-latin-800-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
+.lesson57 {
+  --l57-ink: #101c30;
+  --l57-body: #26374f;
+  /* كان #6b7c92 = تباين 4.20:1 على الورق (دون AA 4.5). الجديد يضمن
+     ≥ 4.65:1 حتى على أغمق خلفية (--l57-paper-2) مع بقاء اللون هادئًا. */
+  --l57-muted: #5f6f86;
+  --l57-line: #d7dde6;
+  --l57-line-soft: #e7ecf3;
+  --l57-canvas: #0d1729;
+  --l57-canvas-2: #16243c;
+  --l57-paper: #fffdf8;
+  --l57-paper-2: #f7f4ec;
+
+  --l57-agent: #a8630a;
+  --l57-agent-soft: #fdf3df;
+  --l57-agent-line: #e8c98d;
+
+  --l57-receiver: #b1214b;
+  --l57-receiver-soft: #fdeaf0;
+  --l57-receiver-line: #f0b9c9;
+
+  --l57-be: #0d6f66;
+  --l57-be-soft: #dff3ef;
+  --l57-be-line: #94d4ca;
+
+  --l57-v3: #4531a8;
+  --l57-v3-soft: #e9e6fb;
+  --l57-v3-line: #bcb1ee;
+
+  --l57-by: #46586f;
+  --l57-by-soft: #edf1f7;
+  --l57-by-line: #c3cfdd;
+
+  --l57-not: #b8253d;
+  --l57-not-soft: #fde8eb;
+  --l57-not-line: #f2b3bd;
+
+  --l57-wh: #0b5ea8;
+  --l57-wh-soft: #e3effb;
+  --l57-wh-line: #a9ccef;
+
+  --l57-ok: #0f7a53;
+  --l57-ok-soft: #e3f6ed;
+  --l57-bad: #b01837;
+  --l57-bad-soft: #fdeaea;
+
+  --l57-shadow: 0 24px 60px -40px rgba(6, 16, 32, 0.65);
+  --l57-shadow-soft: 0 12px 28px -22px rgba(6, 16, 32, 0.6);
+
+  font-family: "Voice57Arabic", "Tajawal", "Rubik", sans-serif;
+  color: var(--l57-ink);
+  background:
+    radial-gradient(1100px 540px at 92% -14%, #1d3355 0%, rgba(29, 51, 85, 0) 62%),
+    radial-gradient(900px 500px at -8% 106%, #24344f 0%, rgba(36, 52, 79, 0) 58%),
+    linear-gradient(180deg, #0d1729 0%, #101d33 100%);
+}
+
+.lesson57 *,
+.lesson57 *::before,
+.lesson57 *::after {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.lesson57 :focus-visible,
+.lesson57 button:focus-visible,
+.lesson57 input:focus-visible,
+.lesson57 textarea:focus-visible,
+.lesson57 select:focus-visible {
+  outline: 3px solid #f2b544;
+  outline-offset: 3px;
+  border-radius: 0.6rem;
+}
+
+/* لا ترفع خصوصية القاعدة الأساسية فوق أصناف المكوّنات: :where() يجعلها 0,0,1
+   حتى يبقى لون .l57-btn--dark و.is-on و.is-solution و.is-miss هو الفعّال.
+   (بدونها كان الزرّ الداكن نصًّا داكنًا على خلفية داكنة = زرّ «فارغ» بصريًا.) */
+:where(.lesson57) button {
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+}
+
+/* أزرار التنقل/القفل المشتركة (Lesson1Shell) تقع داخل .lesson57 أيضًا، فلا يجب
+   أن يطمس color:inherit لونها الأبيض على الخلفية الداكنة. نُعيدها صراحةً. */
+.lesson57 button[data-step-nav],
+.lesson57 .site-lock-slot button {
+  color: inherit;
+}
+.lesson57 button[data-step-nav="next"] {
+  color: #ffffff;
+}
+.lesson57 button[data-step-nav="next"]:disabled {
+  color: #ffffff;
+}
+.lesson57 button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.lesson57 p,
+.lesson57 h1,
+.lesson57 h2,
+.lesson57 h3,
+.lesson57 ul,
+.lesson57 ol,
+.lesson57 li {
+  margin: 0;
+}
+.lesson57 ul,
+.lesson57 ol {
+  padding: 0;
+  list-style: none;
+}
+
+/* الإنجليزية معزولة دائمًا */
+.lesson57 .l57-en {
+  font-family: "Voice57Latin", "Rubik", "Segoe UI", Arial, sans-serif;
+  unicode-bidi: isolate;
+  letter-spacing: 0.005em;
+}
+
+/* الشريط الجانبي على اللوح الداكن */
+.lesson57 > div > div > div > aside,
+.lesson57 aside {
+  background: #0f1c31;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.lesson57 aside .font-head,
+.lesson57 aside .text-slate-900,
+.lesson57 aside .text-slate-800,
+.lesson57 aside .text-slate-700 {
+  color: #eef3fb !important;
+}
+.lesson57 aside .text-slate-400,
+.lesson57 aside .text-slate-500,
+.lesson57 aside .text-slate-600 {
+  color: #93a5c0 !important;
+}
+.lesson57 aside nav button {
+  color: #c0cee2;
+}
+.lesson57 aside nav button:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+.lesson57 aside nav button[aria-current="step"] {
+  background: #f4d796;
+  color: #26200f;
+  box-shadow: 0 8px 20px -14px #000;
+}
+.lesson57 aside nav button[aria-current="step"] span:first-child {
+  background: rgba(38, 32, 15, 0.16);
+  color: #26200f;
+}
+.lesson57 aside nav span.bg-slate-100 {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #c0cee2 !important;
+}
+.lesson57 aside .border-slate-100,
+.lesson57 aside .border-slate-200 {
+  border-color: rgba(255, 255, 255, 0.09) !important;
+}
+.lesson57 header .text-slate-500 {
+  color: #a8b8cd;
+}
+.lesson57 header .bg-slate-200 {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* ============================================================
+   الورقة — إطار الشريحة
+   ============================================================ */
+.l57-sheet {
+  position: relative;
+  border-radius: 1.35rem;
+  background:
+    repeating-linear-gradient(180deg, rgba(16, 28, 48, 0.016) 0 1px, transparent 1px 26px),
+    linear-gradient(180deg, var(--l57-paper) 0%, var(--l57-paper) 62%, var(--l57-paper-2) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: var(--l57-shadow);
+  padding: clamp(1rem, 2.6vw, 2.1rem);
+  overflow: hidden;
+}
+.l57-sheet::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 5px;
+  background: linear-gradient(
+    90deg,
+    var(--l57-agent) 0 22%,
+    var(--l57-receiver) 22% 44%,
+    var(--l57-be) 44% 66%,
+    var(--l57-v3) 66% 88%,
+    var(--l57-by) 88% 100%
+  );
+}
+.l57-sheet[data-l57-tone="passive"]::before {
+  background: linear-gradient(90deg, var(--l57-receiver) 0 45%, var(--l57-be) 45% 72%, var(--l57-v3) 72% 100%);
+}
+.l57-sheet[data-l57-tone="lab"]::before {
+  background: linear-gradient(90deg, var(--l57-be) 0 50%, var(--l57-agent) 50% 100%);
+}
+.l57-sheet[data-l57-tone="test"]::before {
+  background: linear-gradient(90deg, #16232f 0 100%);
+}
+
+.l57-sheet-head {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: clamp(0.85rem, 2vw, 1.4rem);
+}
+.l57-sheet-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+.l57-step-no {
+  display: grid;
+  place-items: center;
+  min-width: 2.35rem;
+  height: 2.35rem;
+  padding-inline: 0.4rem;
+  border-radius: 0.7rem;
+  background: var(--l57-ink);
+  color: #f7e2af;
+  font-family: "Voice57Latin", sans-serif;
+  font-weight: 800;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+}
+.l57-phase {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--l57-agent-line);
+  background: var(--l57-agent-soft);
+  color: #7a4a05;
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+.l57-phase-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--l57-agent);
+}
+.l57-emblem {
+  margin-inline-start: auto;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--l57-be);
+  opacity: 0.75;
+  line-height: 1;
+}
+.l57-sheet-title {
+  font-size: clamp(1.3rem, 3.7vw, 2.05rem);
+  font-weight: 800;
+  line-height: 1.42;
+  color: var(--l57-ink);
+}
+.l57-sheet-lead {
+  font-size: clamp(0.92rem, 2.3vw, 1.06rem);
+  line-height: 1.95;
+  color: var(--l57-muted);
+  max-width: 68ch;
+}
+.l57-sheet-body {
+  display: grid;
+  gap: clamp(0.8rem, 1.9vw, 1.15rem);
+}
+
+.l57-tip {
+  margin-top: clamp(0.9rem, 2vw, 1.35rem);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  border-radius: 0.95rem;
+  border: 1px solid #d6c9a6;
+  background: linear-gradient(100deg, #fdf6e3 0%, #f8efd7 100%);
+  padding: 0.8rem 0.95rem;
+  color: #4a3a12;
+  font-weight: 700;
+  font-size: 0.92rem;
+  line-height: 1.85;
+}
+.l57-tip-glyph {
+  display: grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #a9730f;
+  color: #fff8e5;
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+   الطوبات والمسار
+   ============================================================ */
+.l57-rail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  direction: ltr;
+}
+.l57-rail-stop {
+  display: inline-flex;
+}
+.l57-rail-dot {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: #c3cedb;
+  flex: 0 0 auto;
+}
+
+.l57-block {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.05rem;
+  border: 1.5px solid var(--l57-line);
+  border-radius: 0.8rem;
+  background: #fff;
+  padding: 0.4rem 0.65rem;
+  box-shadow: 0 1px 0 rgba(16, 28, 48, 0.06);
+  max-width: 100%;
+}
+.l57-block-en {
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: var(--l57-ink);
+  line-height: 1.35;
+}
+.l57-block-sub {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+  line-height: 1.4;
+}
+.l57-block-role {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  opacity: 0.55;
+  text-transform: uppercase;
+}
+.l57-block--lg {
+  padding: 0.6rem 0.95rem;
+  border-radius: 1rem;
+}
+.l57-block--lg .l57-block-en {
+  font-size: 1.45rem;
+}
+.l57-block--sm {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.6rem;
+}
+.l57-block--sm .l57-block-en {
+  font-size: 0.88rem;
+}
+.l57-block--ghost {
+  background: transparent;
+  border-style: dashed;
+  box-shadow: none;
+}
+.l57-block--muted .l57-block-en {
+  color: var(--l57-muted);
+}
+.l57-block--dim {
+  opacity: 0.55;
+}
+
+.l57-soft--agent {
+  border-color: var(--l57-agent-line);
+  background: var(--l57-agent-soft);
+}
+.l57-soft--agent .l57-block-en {
+  color: #6d4306;
+}
+.l57-soft--receiver {
+  border-color: var(--l57-receiver-line);
+  background: var(--l57-receiver-soft);
+}
+.l57-soft--receiver .l57-block-en {
+  color: #8a1739;
+}
+.l57-soft--be {
+  border-color: var(--l57-be-line);
+  background: var(--l57-be-soft);
+}
+.l57-soft--be .l57-block-en {
+  color: #0a544d;
+}
+.l57-soft--v3 {
+  border-color: var(--l57-v3-line);
+  background: var(--l57-v3-soft);
+}
+.l57-soft--v3 .l57-block-en {
+  color: #32237d;
+}
+.l57-soft--by {
+  border-color: var(--l57-by-line);
+  background: var(--l57-by-soft);
+}
+.l57-soft--by .l57-block-en {
+  color: #35455a;
+}
+.l57-soft--not {
+  border-color: var(--l57-not-line);
+  background: var(--l57-not-soft);
+}
+.l57-soft--wh {
+  border-color: var(--l57-wh-line);
+  background: var(--l57-wh-soft);
+}
+
+/* وسم الدور */
+.l57-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  border: 1px solid var(--l57-line);
+  background: #fff;
+  padding: 0.18rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--l57-body);
+  white-space: nowrap;
+}
+.l57-role-glyph {
+  font-size: 0.7rem;
+}
+.l57-role-ar {
+  color: var(--l57-muted);
+  font-weight: 700;
+}
+.l57-chip--agent {
+  border-color: var(--l57-agent-line);
+  background: var(--l57-agent-soft);
+  color: #7a4a05;
+}
+.l57-chip--receiver {
+  border-color: var(--l57-receiver-line);
+  background: var(--l57-receiver-soft);
+  color: #8a1739;
+}
+.l57-chip--be {
+  border-color: var(--l57-be-line);
+  background: var(--l57-be-soft);
+  color: #0a544d;
+}
+.l57-chip--v3 {
+  border-color: var(--l57-v3-line);
+  background: var(--l57-v3-soft);
+  color: #32237d;
+}
+.l57-chip--by {
+  border-color: var(--l57-by-line);
+  background: var(--l57-by-soft);
+  color: #35455a;
+}
+.l57-chip--not {
+  border-color: var(--l57-not-line);
+  background: var(--l57-not-soft);
+  color: #8c1c2f;
+}
+.l57-chip--wh {
+  border-color: var(--l57-wh-line);
+  background: var(--l57-wh-soft);
+  color: #084a83;
+}
+
+.l57-plus {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #b3c0d0;
+  padding-inline: 0.1rem;
+}
+
+/* سهم Shift */
+.l57-shift {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  min-width: 5.2rem;
+}
+.l57-shift-line {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--l57-agent) 0 45%, var(--l57-receiver) 55% 100%);
+  position: relative;
+}
+.l57-shift-head {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--l57-receiver);
+  margin-top: -0.35rem;
+}
+.l57-shift-label {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--l57-muted);
+}
+.l57-shift-sub {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+}
+
+/* البطاقة المزدوجة */
+.l57-pair {
+  display: grid;
+  gap: 0.5rem;
+}
+.l57-pair-card {
+  display: grid;
+  gap: 0.2rem;
+  border-radius: 1rem;
+  border: 1.5px solid var(--l57-line);
+  padding: 0.7rem 0.9rem;
+  background: #fff;
+}
+.l57-pair-card--active {
+  border-color: var(--l57-agent-line);
+  background: linear-gradient(180deg, #fffdf8, var(--l57-agent-soft));
+}
+.l57-pair-card--passive {
+  border-color: var(--l57-receiver-line);
+  background: linear-gradient(180deg, #fffdf8, var(--l57-receiver-soft));
+}
+.l57-pair-tag {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--l57-muted);
+}
+.l57-pair-en {
+  font-size: clamp(1rem, 2.6vw, 1.2rem);
+  font-weight: 800;
+  color: var(--l57-ink);
+  line-height: 1.6;
+}
+.l57-pair-ar {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+  line-height: 1.8;
+}
+.l57-pair-mid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.l57-pair-mid-glyph {
+  font-size: 1.1rem;
+  color: var(--l57-be);
+  font-weight: 800;
+}
+.l57-pair-mid-label {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--l57-muted);
+}
+.l57-pair-note {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--l57-body);
+  line-height: 1.85;
+  background: var(--l57-paper-2);
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.8rem;
+}
+.l57-pair--grid .l57-pair-card {
+  min-height: 100%;
+}
+
+@media (min-width: 860px) {
+  .l57-pair--grid {
+    grid-template-columns: 1fr auto 1fr;
+    align-items: stretch;
+  }
+  .l57-pair--grid .l57-pair-note {
+    grid-column: 1 / -1;
+  }
+  .l57-pair--grid .l57-pair-mid {
+    flex-direction: column;
+  }
+}
+
+/* ============================================================
+   أزرار
+   ============================================================ */
+.l57-btn {
+  border-radius: 0.7rem;
+  border: 1.5px solid var(--l57-line);
+  background: #fff;
+  padding: 0.42rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--l57-body);
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+.l57-btn:hover:not(:disabled) {
+  border-color: #9fb0c4;
+  background: #f6f8fb;
+}
+.l57-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+.l57-btn--dark {
+  background: var(--l57-ink);
+  border-color: var(--l57-ink);
+  color: #fff8e8;
+}
+.l57-btn--dark:hover:not(:disabled) {
+  background: #1d3050;
+  border-color: #1d3050;
+}
+.l57-btn--ghost {
+  background: transparent;
+  border-style: dashed;
+  border-color: #b7c4d3;
+  color: var(--l57-body);
+}
+.l57-btn--tiny {
+  padding: 0.2rem 0.55rem;
+  font-size: 0.72rem;
+}
+
+/* ============================================================
+   المختبرات
+   ============================================================ */
+.l57-lab {
+  display: grid;
+  gap: 0.75rem;
+  border-radius: 1rem;
+  border: 1px dashed #c6d1de;
+  background:
+    radial-gradient(circle at 14px 14px, rgba(13, 111, 102, 0.07) 1.5px, transparent 1.6px) 0 0 / 22px 22px,
+    #fbfcfe;
+  padding: clamp(0.7rem, 1.8vw, 1.05rem);
+}
+.l57-lab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.l57-lab-line {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+  line-height: 1.85;
+}
+.l57-hint {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #8494a8;
+  line-height: 1.8;
+}
+.l57-lab-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.l57-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+.l57-toggle button {
+  display: grid;
+  gap: 0.15rem;
+  border-radius: 0.85rem;
+  border: 1.5px solid var(--l57-line);
+  background: #fff;
+  padding: 0.55rem 0.7rem;
+  text-align: start;
+  transition: all 0.15s ease;
+}
+.l57-toggle button span {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--l57-muted);
+}
+.l57-toggle button em {
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--l57-body);
+}
+.l57-toggle button.is-on {
+  border-color: var(--l57-ink);
+  background: var(--l57-ink);
+  box-shadow: 0 10px 22px -18px #000;
+}
+.l57-toggle button.is-on span {
+  color: #f4d796;
+}
+.l57-toggle button.is-on em {
+  color: #fff;
+}
+
+.l57-focus-stage {
+  display: grid;
+  gap: 0.6rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  padding: 0.8rem;
+}
+.l57-focus-question {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--l57-muted);
+}
+.l57-focus-answer {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: clamp(1.35rem, 4vw, 1.9rem);
+  font-weight: 800;
+  color: var(--l57-be);
+  line-height: 1.3;
+}
+.l57-focus-ar {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--l57-body);
+  line-height: 1.8;
+}
+
+/* أدوار التحليل */
+.l57-role-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.l57-role-picker button {
+  border-radius: 0.65rem;
+  border: 1.5px solid var(--l57-line);
+  background: #fff;
+  padding: 0.32rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--l57-body);
+}
+.l57-role-picker button.is-on {
+  background: var(--l57-ink);
+  border-color: var(--l57-ink);
+  color: #fff;
+}
+.l57-analysis-tokens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  direction: ltr;
+}
+.l57-analysis-token {
+  display: grid;
+  gap: 0.1rem;
+  text-align: left;
+  border-radius: 0.8rem;
+  border: 1.5px dashed #c3cedb;
+  background: #fff;
+  padding: 0.45rem 0.7rem;
+  transition: all 0.15s ease;
+}
+.l57-analysis-token .l57-en {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--l57-ink);
+}
+.l57-analysis-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+}
+.l57-analysis-token.is-subject {
+  border-color: var(--l57-agent-line);
+  background: var(--l57-agent-soft);
+}
+.l57-analysis-token.is-verb {
+  border-color: var(--l57-v3-line);
+  background: var(--l57-v3-soft);
+}
+.l57-analysis-token.is-object {
+  border-color: var(--l57-receiver-line);
+  background: var(--l57-receiver-soft);
+}
+.l57-analysis-token.is-ok {
+  box-shadow: inset 0 0 0 2px var(--l57-ok);
+}
+.l57-analysis-token.is-bad {
+  box-shadow: inset 0 0 0 2px var(--l57-bad);
+}
+
+/* رأس المهمة */
+.l57-task-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.l57-task-chip {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  border-radius: 999px;
+  background: var(--l57-ink);
+  color: #f4d796;
+  padding: 0.16rem 0.55rem;
+}
+.l57-task-en {
+  font-size: clamp(1rem, 2.6vw, 1.18rem);
+  font-weight: 800;
+  color: var(--l57-ink);
+  line-height: 1.55;
+}
+.l57-task-ar {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+  line-height: 1.7;
+}
+
+/* خطوات المختبر */
+.l57-stage {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+.l57-stage legend {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--l57-body);
+  padding: 0;
+  margin-bottom: 0.2rem;
+}
+.l57-stage-no {
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 0.45rem;
+  background: var(--l57-be);
+  color: #fff;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.l57-options {
+  display: grid;
+  gap: 0.4rem;
+}
+.l57-options--2 {
+  /* عمودان فقط عندما يسمح العرض؛ وإلا عمود واحد بعرض كامل (كانت minmax 9rem
+     تصنع صفوفًا فارغة عريضة على سطح المكتب). */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+}
+.l57-options--3 {
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+}
+.l57-options--4 {
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+}
+.l57-options button,
+.l57-options button.l57-opt {
+  display: grid;
+  gap: 0.1rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid var(--l57-line);
+  background: #fff;
+  padding: 0.5rem 0.7rem;
+  text-align: start;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--l57-ink);
+  transition: all 0.15s ease;
+}
+.l57-options button:hover:not(:disabled):not(.is-on):not(.is-solution):not(.is-miss) {
+  border-color: #9fb0c4;
+  background: #f7f9fc;
+}
+.l57-options button em {
+  font-size: 0.68rem;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--l57-muted);
+}
+.l57-options button.is-on,
+.l57-options button.l57-opt.is-on {
+  border-color: var(--l57-ink);
+  background: var(--l57-ink);
+  color: #fff;
+}
+.l57-options button.is-on em,
+.l57-options button.l57-opt.is-on em {
+  color: #c9d6e6;
+}
+.l57-options button.is-solution,
+.l57-options button.l57-opt.is-solution {
+  border-color: var(--l57-ok);
+  background: var(--l57-ok-soft);
+  color: #0b5c3e;
+}
+.l57-options button.is-miss,
+.l57-options button.l57-opt.is-miss {
+  border-color: var(--l57-bad);
+  background: var(--l57-bad-soft);
+  color: #8a1229;
+}
+
+/* النتيجة */
+.l57-result {
+  display: grid;
+  gap: 0.5rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  padding: 0.8rem;
+}
+.l57-result-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--l57-muted);
+}
+.l57-result-en {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: clamp(1rem, 2.6vw, 1.2rem);
+  font-weight: 800;
+  color: var(--l57-ink);
+  line-height: 1.6;
+}
+.l57-result-ar {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+}
+.l57-result-why {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--l57-body);
+  line-height: 1.85;
+  border-top: 1px dashed var(--l57-line);
+  padding-top: 0.45rem;
+}
+.l57-check-list {
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--l57-body);
+}
+.l57-check-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.l57-check-list li.is-ok {
+  color: var(--l57-ok);
+}
+.l57-check-list li.is-bad {
+  color: var(--l57-bad);
+}
+
+.l57-verdict {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  border-radius: 0.8rem;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1.8;
+}
+.l57-verdict.is-ok {
+  background: var(--l57-ok-soft);
+  color: #0a5b3d;
+  border: 1px solid #a7ddc5;
+}
+.l57-verdict.is-bad {
+  background: var(--l57-bad-soft);
+  color: #8a1229;
+  border: 1px solid #f0b6bf;
+}
+
+/* معمل الأخطاء */
+.l57-segment-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  direction: ltr;
+}
+.l57-segment {
+  border-radius: 0.65rem;
+  border: 1.5px solid var(--l57-line);
+  background: #fff;
+  padding: 0.4rem 0.65rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--l57-ink);
+}
+.l57-segment.is-on {
+  border-color: var(--l57-ink);
+  background: var(--l57-ink);
+  color: #fff;
+}
+.l57-segment.is-ok {
+  border-color: var(--l57-ok);
+  background: var(--l57-ok-soft);
+  color: #0a5b3d;
+}
+.l57-segment.is-bad {
+  border-color: var(--l57-bad);
+  background: var(--l57-bad-soft);
+  color: #8a1229;
+}
+.l57-error-compare {
+  display: grid;
+  gap: 0.25rem;
+  justify-items: start;
+}
+.l57-error-line {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  border-radius: 0.55rem;
+  padding: 0.3rem 0.6rem;
+  direction: ltr;
+}
+.l57-error-line.is-bad {
+  background: var(--l57-bad-soft);
+  color: #8a1229;
+  text-decoration: line-through;
+  text-decoration-color: rgba(176, 24, 55, 0.5);
+}
+.l57-error-line.is-ok {
+  background: var(--l57-ok-soft);
+  color: #0a5b3d;
+}
+.l57-error-arrow {
+  font-size: 0.9rem;
+  color: var(--l57-muted);
+}
+
+/* النفي */
+.l57-neg-sentence {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  direction: ltr;
+  border-radius: 0.8rem;
+  border: 1px dashed var(--l57-line);
+  background: #fff;
+  padding: 0.65rem 0.8rem;
+  font-size: clamp(0.95rem, 2.4vw, 1.1rem);
+  font-weight: 800;
+}
+.l57-neg-part {
+  color: var(--l57-ink);
+}
+.l57-neg-part--be {
+  color: var(--l57-be);
+}
+.l57-neg-insert {
+  font-family: "Voice57Latin", sans-serif;
+  border-radius: 0.4rem;
+  background: var(--l57-not-soft);
+  color: var(--l57-not);
+  border: 1px solid var(--l57-not-line);
+  padding: 0.05rem 0.4rem;
+  font-weight: 800;
+}
+
+/* بناء السؤال */
+.l57-build-slot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 3rem;
+  border-radius: 0.8rem;
+  border: 2px dashed #c3cedb;
+  background: #fff;
+  padding: 0.5rem;
+  direction: ltr;
+}
+.l57-build-empty {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #93a3b6;
+  width: 100%;
+  text-align: center;
+}
+.l57-build-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.55rem;
+  border: 1.5px solid var(--l57-line);
+  background: #f6f8fb;
+  padding: 0.25rem 0.55rem;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--l57-ink);
+}
+.l57-build-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  direction: ltr;
+}
+.l57-build-chip--btn {
+  background: #fff;
+  transition: all 0.15s ease;
+}
+.l57-build-chip--btn:hover:not(:disabled) {
+  border-color: #9fb0c4;
+  background: #eef3f9;
+}
+.l57-build-chip--btn.is-used {
+  opacity: 0.32;
+}
+
+/* وكيل by */
+.l57-agent-pill {
+  display: flex;
+  justify-content: center;
+  padding: 0.2rem 0;
+}
+
+/* التصريف */
+.l57-v3-track {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--l57-muted);
+  direction: ltr;
+}
+.l57-v3-track > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--l57-line);
+  background: #fff;
+  padding: 0.22rem 0.5rem;
+}
+.l57-v3-track .is-target {
+  border-color: var(--l57-v3-line);
+  background: var(--l57-v3-soft);
+  color: #32237d;
+}
+.l57-v3-arrow {
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  color: #b3c0d0;
+}
+
+/* ============================================================
+   المعادلة
+   ============================================================ */
+.l57-formula {
+  display: grid;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--l57-line-soft);
+  background: linear-gradient(180deg, #fff, #f8fafd);
+  padding: 0.9rem;
+}
+.l57-formula-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  direction: ltr;
+}
+.l57-formula-plus {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #a9b8ca;
+}
+.l57-formula-caption {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+  line-height: 1.8;
+}
+
+/* ============================================================
+   جدول الأفعال
+   ============================================================ */
+.l57-verbs {
+  display: grid;
+  gap: 0.3rem;
+  max-height: 22rem;
+  overflow-y: auto;
+  padding-inline-end: 0.2rem;
+}
+.l57-verb-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 0.3rem;
+  align-items: center;
+  border-radius: 0.65rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  padding: 0.25rem 0.35rem;
+}
+.l57-verb-cell {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--l57-body);
+  border-radius: 0.45rem;
+  padding: 0.15rem 0.35rem;
+}
+.l57-verb-cell em {
+  font-size: 0.55rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--l57-muted);
+}
+.l57-verb-cell.is-on {
+  background: var(--l57-v3-soft);
+  color: #32237d;
+}
+.l57-verb-cell--v3.is-on {
+  box-shadow: inset 0 0 0 1.5px var(--l57-v3-line);
+}
+.l57-verb-ar {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+  text-align: end;
+  white-space: nowrap;
+}
+@media (max-width: 520px) {
+  .l57-verb-row {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .l57-verb-ar {
+    grid-column: 1 / -1;
+    text-align: start;
+  }
+}
+
+/* ============================================================
+   ملاحظات وقوائم
+   ============================================================ */
+.l57-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  border-radius: 0.9rem;
+  padding: 0.7rem 0.85rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.9;
+  border: 1px solid var(--l57-line);
+  background: #fff;
+}
+.l57-note-glyph {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #fff;
+  background: var(--l57-by);
+}
+.l57-note--note {
+  border-color: #bcd6e8;
+  background: #f2f8fd;
+  color: #1c425e;
+}
+.l57-note--note .l57-note-glyph {
+  background: #1c6ca8;
+}
+.l57-note--warn {
+  border-color: #f0c9a4;
+  background: #fdf4ea;
+  color: #6d3a09;
+}
+.l57-note--warn .l57-note-glyph {
+  background: #a8630a;
+}
+.l57-note--good {
+  border-color: #a7ddc5;
+  background: var(--l57-ok-soft);
+  color: #0a5b3d;
+}
+.l57-note--good .l57-note-glyph {
+  background: var(--l57-ok);
+}
+.l57-note-title {
+  font-size: 0.8rem;
+  font-weight: 800;
+  opacity: 0.85;
+  margin-bottom: 0.1rem;
+}
+
+.l57-bullets {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--l57-body);
+  line-height: 1.9;
+}
+.l57-bullets li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.l57-bullet-mark {
+  flex: 0 0 auto;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--l57-be);
+  padding-top: 0.35rem;
+}
+.l57-bullets--ordered .l57-bullet-mark {
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-top: 0.2rem;
+  border-radius: 0.4rem;
+  background: var(--l57-be-soft);
+  color: var(--l57-be);
+  font-size: 0.62rem;
+}
+
+.l57-reveal {
+  display: grid;
+  gap: 0.5rem;
+}
+.l57-reveal-body[hidden] {
+  display: none;
+}
+
+/* ============================================================
+   سؤال وجواب
+   ============================================================ */
+.l57-qa-list {
+  display: grid;
+  gap: 0.45rem;
+}
+.l57-qa {
+  border-radius: 0.85rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  padding: 0.6rem 0.75rem;
+}
+.l57-qa-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.l57-qa-no {
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--l57-ink);
+  color: #f4d796;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+.l57-qa-q {
+  flex: 1;
+  min-width: 8rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--l57-ink);
+  line-height: 1.6;
+}
+.l57-qa-body {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 0.4rem;
+  border-top: 1px dashed var(--l57-line);
+  padding-top: 0.4rem;
+}
+.l57-qa-a {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #0a5b3d;
+  direction: ltr;
+  text-align: start;
+  line-height: 1.7;
+}
+.l57-qa-why {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+  line-height: 1.8;
+}
+
+/* ============================================================
+   التمارين
+   ============================================================ */
+.l57-practice {
+  display: grid;
+  gap: 0.6rem;
+}
+.l57-practice-top {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: 0.8rem;
+  background: var(--l57-paper-2);
+  border: 1px solid var(--l57-line-soft);
+  padding: 0.5rem 0.7rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--l57-body);
+  line-height: 1.8;
+}
+.l57-practice-progress {
+  position: relative;
+  flex: 1 1 auto;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: #dfe6ee;
+  overflow: hidden;
+}
+.l57-practice-bar {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--l57-teal), var(--l57-gold));
+  transition: width 0.25s ease;
+}
+.l57-practice-progress-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex: 0 0 auto;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: var(--l57-muted);
+}
+.l57-practice-progress-label bdi {
+  font-family: "Voice57Latin", sans-serif;
+  border-radius: 999px;
+  background: var(--l57-ink);
+  color: #f4d796;
+  padding: 0.14rem 0.5rem;
+}
+.l57-practice-list {
+  display: grid;
+  gap: 0.5rem;
+}
+.l57-practice-card {
+  display: grid;
+  gap: 0.5rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  padding: 0.65rem 0.75rem;
+}
+.l57-practice-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+}
+.l57-practice-no {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: 0 0 auto;
+  border-radius: 0.45rem;
+  background: #eef2f8;
+  color: var(--l57-muted);
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+.l57-practice-en {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--l57-ink);
+  line-height: 1.65;
+}
+.l57-practice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.l57-practice-feedback {
+  display: grid;
+  gap: 0.25rem;
+  border-radius: 0.7rem;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.85;
+  border: 1px solid;
+}
+.l57-practice-feedback.is-ok {
+  border-color: #a7ddc5;
+  background: var(--l57-ok-soft);
+  color: #0a5b3d;
+}
+.l57-practice-feedback.is-bad {
+  border-color: #f0b6bf;
+  background: var(--l57-bad-soft);
+  color: #8a1229;
+}
+.l57-practice-model {
+  display: inline-block;
+  font-family: "Voice57Latin", sans-serif;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 0.4rem;
+  padding: 0.1rem 0.45rem;
+  direction: ltr;
+}
+.l57-practice-hint {
+  font-size: 0.76rem;
+  opacity: 0.8;
+}
+.l57-analyse-grid {
+  display: grid;
+  gap: 0.4rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
+.l57-analyse-field {
+  display: grid;
+  gap: 0.15rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--l57-muted);
+}
+.l57-analyse-field select {
+  border-radius: 0.6rem;
+  border: 1.5px solid var(--l57-line);
+  background: #fff;
+  padding: 0.35rem 0.5rem;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--l57-ink);
+}
+.l57-write-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  direction: ltr;
+}
+.l57-write-row input {
+  flex: 1;
+  min-width: 10rem;
+  border-radius: 0.6rem;
+  border: 1.5px solid var(--l57-line);
+  background: #fff;
+  padding: 0.42rem 0.6rem;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--l57-ink);
+}
+.l57-write-row input::placeholder {
+  color: #a4b2c4;
+  font-weight: 500;
+}
+
+/* ============================================================
+   الحوار
+   ============================================================ */
+.l57-dialogue {
+  display: grid;
+  gap: 0.45rem;
+}
+.l57-bubble {
+  display: grid;
+  gap: 0.2rem;
+  border-radius: 1rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  max-width: 96%;
+}
+.l57-bubble--t {
+  border-inline-start: 3px solid var(--l57-agent);
+  background: linear-gradient(180deg, #fff, #fdf8ee);
+}
+.l57-bubble--s {
+  border-inline-start: 3px solid var(--l57-be);
+  background: linear-gradient(180deg, #fff, #f2faf8);
+  margin-inline-start: auto;
+}
+.l57-bubble-who {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--l57-muted);
+}
+.l57-bubble-en {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--l57-ink);
+  line-height: 1.65;
+}
+.l57-bubble-toggle {
+  justify-self: start;
+  border: 0;
+  background: transparent;
+  color: var(--l57-be);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0;
+  text-decoration: underline dotted;
+}
+.l57-bubble-ar {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+  line-height: 1.8;
+}
+
+/* ============================================================
+   القراءة
+   ============================================================ */
+.l57-reading {
+  display: grid;
+  gap: 0.7rem;
+}
+.l57-reading-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.l57-reading-kicker {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--l57-muted);
+  border: 1px dashed #b7c4d3;
+  border-radius: 0.45rem;
+  padding: 0.14rem 0.45rem;
+}
+.l57-reading-head h2 {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: clamp(1.05rem, 2.8vw, 1.3rem);
+  font-weight: 800;
+  color: var(--l57-ink);
+  flex: 1;
+}
+.l57-reading-body {
+  display: grid;
+  gap: 0.55rem;
+}
+.l57-reading-para {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+}
+.l57-reading-no {
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #eef2f8;
+  color: var(--l57-muted);
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 800;
+  margin-top: 0.1rem;
+}
+.l57-reading-en {
+  font-size: clamp(0.92rem, 2.2vw, 1rem);
+  font-weight: 600;
+  color: var(--l57-body);
+  line-height: 2;
+  direction: ltr;
+  text-align: start;
+}
+.l57-reading-ar {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+  line-height: 1.95;
+  margin-top: 0.2rem;
+  padding-inline-start: 0.6rem;
+  border-inline-start: 2px solid var(--l57-line);
+}
+
+.l57-vocab {
+  display: grid;
+  gap: 0.3rem;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+}
+.l57-vocab-card {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  border-radius: 0.65rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  padding: 0.35rem 0.55rem;
+}
+.l57-vocab-en {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--l57-vocab-ink, var(--l57-v3));
+}
+.l57-vocab-ar {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+}
+
+.l57-hunt {
+  display: grid;
+  gap: 0.6rem;
+}
+.l57-hunt-list {
+  display: grid;
+  gap: 0.3rem;
+  border-radius: 0.8rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  padding: 0.6rem;
+}
+.l57-hunt-item {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0a5b3d;
+  background: var(--l57-ok-soft);
+  border-radius: 0.45rem;
+  padding: 0.25rem 0.5rem;
+  direction: ltr;
+  text-align: start;
+}
+
+/* ============================================================
+   الكتابة والتحدث
+   ============================================================ */
+.l57-writing,
+.l57-speaking {
+  display: grid;
+  gap: 0.7rem;
+}
+.l57-writing-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.l57-writing-head h2 {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-weight: 800;
+  color: var(--l57-ink);
+}
+.l57-writing-ar {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+}
+.l57-mini-chip {
+  border-radius: 999px;
+  border: 1px solid var(--l57-line);
+  background: #fff;
+  padding: 0.12rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--l57-muted);
+}
+.l57-starter {
+  display: grid;
+  gap: 0.3rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--l57-agent-line);
+  background: var(--l57-agent-soft);
+  padding: 0.6rem 0.75rem;
+}
+.l57-starter-tag {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #7a4a05;
+}
+.l57-writing-area {
+  width: 100%;
+  min-height: 11rem;
+  border-radius: 0.85rem;
+  border: 1.5px solid var(--l57-line);
+  background: #fff;
+  padding: 0.7rem;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.95;
+  color: var(--l57-ink);
+  resize: vertical;
+}
+.l57-writing-meter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--l57-muted);
+}
+.l57-writing-meter > span {
+  border-radius: 999px;
+  background: #eef2f8;
+  padding: 0.14rem 0.55rem;
+}
+.l57-checklist {
+  display: grid;
+  gap: 0.3rem;
+}
+.l57-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--l57-body);
+  cursor: pointer;
+}
+.l57-check input {
+  accent-color: var(--l57-ok);
+  width: 1rem;
+  height: 1rem;
+}
+.l57-check.is-on {
+  border-color: #a7ddc5;
+  background: var(--l57-ok-soft);
+  color: #0a5b3d;
+}
+
+.l57-speak-example {
+  display: grid;
+  gap: 0.2rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--l57-be-line);
+  background: var(--l57-be-soft);
+  padding: 0.6rem 0.75rem;
+}
+.l57-speak-list {
+  display: grid;
+  gap: 0.5rem;
+}
+.l57-speak-card {
+  display: grid;
+  gap: 0.35rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  padding: 0.6rem 0.75rem;
+}
+.l57-speak-no {
+  display: none;
+}
+.l57-speak-q {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--l57-ink);
+  direction: ltr;
+  text-align: start;
+}
+.l57-speak-a {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0a5b3d;
+  direction: ltr;
+  text-align: start;
+}
+.l57-speak-ar {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+}
+.l57-speak-card textarea {
+  width: 100%;
+  min-height: 4rem;
+  border-radius: 0.6rem;
+  border: 1.5px solid var(--l57-line);
+  padding: 0.45rem 0.6rem;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--l57-ink);
+  resize: vertical;
+}
+
+/* ============================================================
+   الملخص ومقياس التقييم
+   ============================================================ */
+.l57-summary {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+.l57-summary-card {
+  display: grid;
+  gap: 0.15rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--l57-line-soft);
+  border-inline-start: 3px solid var(--l57-be);
+  background: #fff;
+  padding: 0.6rem 0.75rem;
+}
+.l57-summary-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.l57-summary-no {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--l57-be);
+}
+.l57-summary-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--l57-ink);
+}
+.l57-summary-formula {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: var(--l57-v3);
+  background: var(--l57-v3-soft);
+  border-radius: 0.4rem;
+  padding: 0.1rem 0.4rem;
+  justify-self: start;
+  direction: ltr;
+}
+.l57-summary-en {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--l57-body);
+  direction: ltr;
+  text-align: start;
+}
+.l57-summary-ar {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+}
+
+.l57-rating {
+  display: grid;
+  gap: 0.3rem;
+}
+.l57-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  padding: 0.4rem 0.65rem;
+}
+.l57-rating-range {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--l57-ink);
+  min-width: 4.5rem;
+  direction: ltr;
+}
+.l57-rating-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--l57-body);
+}
+
+/* ============================================================
+   الغلاف
+   ============================================================ */
+.l57-cover {
+  display: grid;
+  gap: 1rem;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    radial-gradient(900px 420px at 88% -20%, #24405f 0%, rgba(36, 64, 95, 0) 60%),
+    linear-gradient(165deg, #0e1b2f 0%, #16263f 55%, #101c30 100%);
+  box-shadow: var(--l57-shadow);
+  padding: clamp(1.1rem, 3vw, 2.2rem);
+  color: #eaf1fb;
+}
+.l57-cover-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+.l57-cover-chip {
+  border-radius: 999px;
+  border: 1px solid rgba(244, 215, 150, 0.4);
+  background: rgba(244, 215, 150, 0.12);
+  color: #f4d796;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.2rem 0.65rem;
+}
+.l57-cover-chip--lab {
+  font-family: "Voice57Latin", sans-serif;
+  letter-spacing: 0.12em;
+  border-color: rgba(148, 212, 202, 0.4);
+  background: rgba(148, 212, 202, 0.12);
+  color: #9fe0d8;
+}
+.l57-cover h1 {
+  font-size: clamp(1.7rem, 5.6vw, 3rem);
+  font-weight: 800;
+  line-height: 1.35;
+  color: #fffdf5;
+}
+.l57-cover h1 em {
+  font-style: normal;
+  color: #f4d796;
+}
+.l57-cover-sub {
+  font-size: clamp(0.92rem, 2.4vw, 1.08rem);
+  font-weight: 600;
+  line-height: 2;
+  color: #b9c9dd;
+  max-width: 62ch;
+}
+.l57-cover-title {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: 0.9rem;
+  border: 1px dashed rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  direction: ltr;
+  text-align: start;
+}
+.l57-cover-title span {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: clamp(1.05rem, 3.4vw, 1.5rem);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #fff;
+}
+.l57-cover-title em {
+  font-family: "Voice57Latin", sans-serif;
+  font-style: normal;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #8fb3d8;
+}
+.l57-cover-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.l57-cover-pill {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  border-radius: 0.55rem;
+  padding: 0.3rem 0.65rem;
+}
+.l57-cover-pill--active {
+  background: rgba(244, 215, 150, 0.16);
+  border: 1px solid rgba(244, 215, 150, 0.5);
+  color: #f4d796;
+}
+.l57-cover-pill--passive {
+  background: rgba(240, 185, 201, 0.14);
+  border: 1px solid rgba(240, 185, 201, 0.5);
+  color: #f7b9c9;
+}
+.l57-cover-arrow {
+  color: #8fb3d8;
+  font-weight: 800;
+}
+.l57-cover-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.l57-cover-actions .l57-btn--dark {
+  background: #f4d796;
+  border-color: #f4d796;
+  color: #1b2333;
+}
+.l57-cover-actions .l57-btn--dark:hover {
+  background: #ffe9b0;
+  border-color: #ffe9b0;
+}
+.l57-cover-actions .l57-btn--outline {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #dfeaf7;
+}
+.l57-cover-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #96a9c1;
+}
+.l57-cover-foot span {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 0.14rem 0.55rem;
+}
+
+.l57-board {
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 26px),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 26px),
+    rgba(255, 255, 255, 0.03);
+  padding: 0.9rem;
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+}
+.l57-board-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #8fb3d8;
+}
+.l57-board .l57-block {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: none;
+}
+.l57-board .l57-block-en {
+  color: #eef5ff;
+}
+.l57-board .l57-block-role {
+  color: #8fb3d8;
+  opacity: 0.9;
+}
+.l57-board .l57-soft--agent {
+  border-color: rgba(244, 215, 150, 0.5);
+  background: rgba(244, 215, 150, 0.12);
+}
+.l57-board .l57-soft--agent .l57-block-en {
+  color: #f7dfa8;
+}
+.l57-board .l57-soft--receiver {
+  border-color: rgba(240, 185, 201, 0.5);
+  background: rgba(240, 185, 201, 0.12);
+}
+.l57-board .l57-soft--receiver .l57-block-en {
+  color: #f8c2d0;
+}
+.l57-board .l57-soft--be {
+  border-color: rgba(148, 212, 202, 0.5);
+  background: rgba(148, 212, 202, 0.12);
+}
+.l57-board .l57-soft--be .l57-block-en {
+  color: #a8e6dd;
+}
+.l57-board .l57-soft--v3 {
+  border-color: rgba(188, 177, 238, 0.5);
+  background: rgba(188, 177, 238, 0.12);
+}
+.l57-board .l57-soft--v3 .l57-block-en {
+  color: #cfc6f8;
+}
+.l57-board .l57-soft--by {
+  border-color: rgba(195, 207, 221, 0.4);
+  background: rgba(195, 207, 221, 0.1);
+}
+.l57-board .l57-soft--by .l57-block-en {
+  color: #cfdaea;
+}
+.l57-board .l57-rail-dot {
+  background: rgba(255, 255, 255, 0.35);
+}
+.l57-board-hint {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #8fb3d8;
+  direction: ltr;
+  text-align: start;
+  line-height: 1.7;
+}
+
+@media (min-width: 900px) {
+  .l57-cover {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: start;
+  }
+  .l57-cover > .l57-cover-main {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+  }
+}
+
+/* ============================================================
+   شريحة الختام / التقدم
+   ============================================================ */
+.l57-progress {
+  display: grid;
+  gap: 0.6rem;
+}
+.l57-progress-hero {
+  display: grid;
+  gap: 0.3rem;
+  justify-items: center;
+  text-align: center;
+  border-radius: 1rem;
+  border: 1px solid var(--l57-line-soft);
+  background: linear-gradient(180deg, #fff, #f6f8fc);
+  padding: 1rem;
+}
+.l57-progress-big {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  font-weight: 800;
+  color: var(--l57-ink);
+  line-height: 1.1;
+}
+.l57-progress-track {
+  width: 100%;
+  max-width: 24rem;
+  height: 0.6rem;
+  border-radius: 999px;
+  background: #e4e9f1;
+  overflow: hidden;
+}
+.l57-progress-track > div {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--l57-agent), var(--l57-receiver), var(--l57-v3));
+}
+.l57-next {
+  display: grid;
+  gap: 0.4rem;
+  border-radius: 1rem;
+  border: 1px solid var(--l57-line);
+  background: #fff;
+  padding: 0.9rem;
+}
+.l57-next-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.l57-next-no {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.85rem;
+  background: var(--l57-ink);
+  color: #f4d796;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+.l57-next h3 {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--l57-ink);
+}
+.l57-next-sub {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+}
+
+/* ============================================================
+   الاستجابة للشاشات
+   ============================================================ */
+@media (max-width: 640px) {
+  .l57-sheet {
+    border-radius: 1.05rem;
+  }
+  .l57-toggle {
+    grid-template-columns: 1fr;
+  }
+  .l57-block-en {
+    font-size: 0.95rem;
+  }
+  .l57-block--lg .l57-block-en {
+    font-size: 1.2rem;
+  }
+  .l57-bubble {
+    max-width: 100%;
+  }
+  .l57-vocab {
+    grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  }
+  .l57-summary {
+    grid-template-columns: 1fr;
+  }
+  .l57-rail {
+    gap: 0.3rem;
+  }
+  .l57-shift {
+    min-width: 3.5rem;
+  }
+  .l57-writing-meter {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .l57-options--3,
+  .l57-options--2 {
+    grid-template-columns: 1fr;
+  }
+  .l57-analyse-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lesson57 * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ============================================================
+   فضاء المعلم
+   ============================================================ */
+.l57-teacher,
+.l57-teacher-gate {
+  display: grid;
+  gap: 0.7rem;
+}
+.l57-teacher-block {
+  display: grid;
+  gap: 0.4rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  padding: 0.75rem 0.9rem;
+}
+.l57-teacher-block h3 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--l57-ink);
+}
+.l57-teacher-block h4 {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: var(--l57-body);
+  margin-bottom: 0.3rem;
+}
+.l57-teacher-block p {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--l57-body);
+  line-height: 1.9;
+}
+.l57-teacher-mistakes {
+  display: grid;
+  gap: 0.4rem;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+.l57-teacher-mistake {
+  display: grid;
+  gap: 0.2rem;
+  border-radius: 0.7rem;
+  border: 1px dashed var(--l57-line);
+  padding: 0.5rem;
+}
+.l57-teacher-mistake p {
+  font-size: 0.76rem;
+  color: var(--l57-muted);
+}
+.l57-teacher-keys {
+  display: grid;
+  gap: 0.6rem;
+}
+.l57-teacher-keyblock ol {
+  display: grid;
+  gap: 0.25rem;
+}
+.l57-teacher-keyblock li {
+  display: grid;
+  grid-template-columns: 1.4rem minmax(0, 1fr);
+  gap: 0.2rem 0.4rem;
+  align-items: baseline;
+  border-radius: 0.55rem;
+  background: #f8fafc;
+  padding: 0.3rem 0.45rem;
+  font-size: 0.8rem;
+}
+.l57-teacher-key-no {
+  display: grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background: var(--l57-ink);
+  color: #f4d796;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 800;
+}
+.l57-teacher-key-q {
+  font-family: "Voice57Latin", sans-serif;
+  font-weight: 700;
+  color: var(--l57-muted);
+  direction: ltr;
+  text-align: start;
+}
+.l57-teacher-key-a {
+  font-family: "Voice57Latin", sans-serif;
+  font-weight: 800;
+  color: #0a5b3d;
+  grid-column: 2;
+  direction: ltr;
+  text-align: start;
+}
+.l57-teacher-key-why {
+  grid-column: 2;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+  line-height: 1.8;
+}
+
+/* ============================================================
+   الأهداف والخطوات والمقارنة والمصفوفة
+   ============================================================ */
+.l57-goals {
+  border-radius: 1rem;
+  border: 1px solid var(--l57-line-soft);
+  background: linear-gradient(180deg, #fff, #f8fafd);
+  padding: 0.85rem 1rem;
+}
+
+.l57-steps {
+  display: grid;
+  gap: 0.4rem;
+}
+.l57-step-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  border-radius: 0.8rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  padding: 0.5rem 0.65rem;
+}
+.l57-step-bullet {
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  flex: 0 0 auto;
+  border-radius: 0.55rem;
+  background: var(--l57-ink);
+  color: #f4d796;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.l57-step-tag {
+  display: inline-block;
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--l57-be);
+  background: var(--l57-be-soft);
+  border-radius: 0.35rem;
+  padding: 0.05rem 0.35rem;
+  margin-bottom: 0.15rem;
+}
+.l57-step-row p {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--l57-body);
+  line-height: 1.85;
+}
+
+.l57-matrix {
+  display: grid;
+  gap: 0.25rem;
+}
+.l57-matrix-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  padding: 0.28rem 0.5rem;
+}
+.l57-matrix-subject {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: var(--l57-ink);
+  min-width: 5.5rem;
+}
+.l57-matrix-be {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  border-radius: 0.4rem;
+  padding: 0.05rem 0.45rem;
+}
+.l57-matrix-be.is-am {
+  background: var(--l57-agent-soft);
+  color: #7a4a05;
+}
+.l57-matrix-be.is-is {
+  background: var(--l57-be-soft);
+  color: #0a544d;
+}
+.l57-matrix-be.is-are {
+  background: var(--l57-v3-soft);
+  color: #32237d;
+}
+.l57-matrix-arrow {
+  color: #b3c0d0;
+  font-weight: 800;
+}
+.l57-matrix-ar {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+}
+
+.l57-compare {
+  display: grid;
+  gap: 0.4rem;
+}
+.l57-compare-row {
+  display: grid;
+  gap: 0.2rem 0.5rem;
+  align-items: baseline;
+  border-radius: 0.8rem;
+  border: 1px solid var(--l57-line-soft);
+  background: #fff;
+  padding: 0.5rem 0.7rem;
+}
+.l57-compare-en {
+  font-family: "Voice57Latin", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #6d4306;
+  direction: ltr;
+  text-align: start;
+}
+.l57-compare-en.is-passive {
+  color: #8a1739;
+}
+.l57-compare-arrow {
+  color: #b3c0d0;
+  font-weight: 800;
+}
+.l57-compare-focus {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--l57-muted);
+}
+@media (min-width: 760px) {
+  .l57-compare-row {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+  .l57-compare-focus {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ============================================================
+   الاختبار النهائي المشترك داخل هوية الدرس 57
+   زر «تصحيح الاختبار» يملك صنف bg-slate-900 من المكوّن المشترك، وكان
+   color:inherit يجعله نصًّا داكنًا على خلفية داكنة. نُعيد الأبيض هنا فقط
+   (بلا تعديل المكوّن المشترك نفسه).
+   ============================================================ */
+.lesson57 [data-ft-submit] {
+  color: #ffffff;
+}
+.lesson57 [data-ft-submit]:disabled {
+  color: #ffffff;
+  opacity: 0.45;
+}
+.lesson57 [data-final-test] input[type="radio"],
+.lesson57 [data-final-test] input[type="checkbox"] {
+  accent-color: #b1214b;
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+/* ============================================================
+   شريط «تصحيح الاختبار» الثابت — يبقى ثابتًا أسفل منطقة الاختبار.
+   على الهاتف كان يتداخل مع السؤال والملاحظة لأنه:
+     (1) نصف شفاف (bg-white/95 + backdrop-blur) فيمرّ نص السؤال من تحته،
+     (2) عريض بارتفاع 184px (22% من شاشة 390px و26% من 320px) لأن الزر
+         والشرح وزر «إعادة» تأخذ ثلاثة أسطر،
+     (3) لاصق أسفل حاويته فيلتصق بنهاية المحتوى لا بأسفل الشاشة،
+         فيقف في منتصف الشاشة عند نهاية الصفحة.
+   الإصلاح: خلفية معتمة كاملة، زر وشرح و«إعادة» في صف واحد على الهاتف،
+   والشريط يلتصق بأسفل منطقة التمرير مع هامش أمان فوق شريط التنقل.
+   لا يمسّ الهوية البصرية ولا وظيفة الشريط، ولا يعمل على الشاشات الواسعة.
+   ============================================================ */
+.lesson57 [data-ft-bar] {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  padding-bottom: 0;
+  background: var(--l57-paper);
+}
+.lesson57 [data-ft-bar] > div {
+  background: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 10px 30px -12px rgba(15, 28, 49, 0.35), 0 0 0 1px rgba(15, 28, 49, 0.04);
+}
+
+@media (max-width: 759px) {
+  /* صف واحد: «تصحيح» + الشرح + «إعادة» بدل ثلاثة أسطر */
+  .lesson57 [data-ft-bar] > div {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 0.5rem 0.6rem;
+    padding: 0.6rem 0.7rem;
+  }
+  .lesson57 [data-ft-bar] [data-ft-submit] {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.9rem;
+  }
+  .lesson57 [data-ft-bar] [data-ft-reset] {
+    grid-column: 2;
+    grid-row: 1;
+    margin-inline-start: 0;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.8rem;
+  }
+  /* الشرح سطر واحد صغير تحت الزرين، لا سطر عريض فوقهما */
+  .lesson57 [data-ft-bar] > div > span {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+  /* حالة النتيجة: النسبة والملخص في صف واحد، وزر الإعادة تحته لا بجانبه */
+  .lesson57 [data-ft-bar] [data-ft-result] {
+    width: 2.6rem;
+    height: 2.6rem;
+    font-size: 0.9rem;
+    border-radius: 0.9rem;
+  }
+  .lesson57 [data-ft-bar] > div > div.min-w-0 {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .lesson57 [data-ft-bar] > div > div.min-w-0 > div:first-child {
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+  .lesson57 [data-ft-bar] > div > div.min-w-0 > div:nth-child(2) {
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+  /* آخر سطر شرح يطول الشريط بلا فائدة على الهاتف — النتيجة نفسها تظهر أسفل كل سؤال */
+  .lesson57 [data-ft-bar] > div > div.min-w-0 > div:nth-child(3) {
+    display: none;
+  }
+  /* حالة النتيجة فقط: «إعادة الاختبار» تحت صف النسبة.
+     قبل التسليم يكون «↺ إعادة» بجانب زر التصحيح في الصف الأول (rule أعلاه)،
+     فلا يجوز أن يقع مع النص الإرشادي في الخلية نفسها — كان ذلك تداخلًا حقيقيًا. */
+  .lesson57 [data-ft-bar] > div:has([data-ft-result]) > [data-ft-reset],
+  .lesson57 [data-ft-bar] > div:has([data-ft-result]) > [data-ft-teacher-link] {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.78rem;
+  }
+  .lesson57 [data-ft-bar] > div:has([data-ft-result]) > [data-ft-teacher-link] {
+    grid-row: 3;
+  }
+}
+
+
+/* سبب إضافي للتداخل: منطقة التمرير تحجز pb-32 (128px) لشريط التنقل السفلي،
+   فيصعد الشريط اللاصق 128px عن أسفل الشاشة ويقف فوق نص السؤال.
+   شريط التنقل خارج منطقة التمرير (أسفلها مباشرة) لا فوقها، لذلك نُلغي الحجز
+   أثناء خطوة الاختبار فقط، ونعوّض المساحة داخل حاوية الاختبار نفسها
+   حتى يبقى آخر سؤال قابلًا للتمرير ولمس الاختيارات. */
+.lesson57 .lesson-main-scroll:has([data-l57-test]:not([hidden])) {
+  padding-bottom: 0;
+  /* أي تمرير تلقائي (scrollIntoView، التنقل بلوحة المفاتيح، التركيز على خيار)
+     يتوقّف فوق الشريط اللاصق بدل أن يضع العنصر تحته. */
+  scroll-padding-bottom: 8rem;
+}

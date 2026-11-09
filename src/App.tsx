@@ -57,6 +57,7 @@ import Lesson55 from "./lessons/lesson55/Lesson55";
 import Lesson56 from "./lessons/lesson56/Lesson56";
 import Lesson57 from "./lessons/lesson57/Lesson57";
 import Lesson58 from "./lessons/lesson58/Lesson58";
+import Lesson59 from "./lessons/lesson59/Lesson59";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -613,6 +614,15 @@ const CARDS: Card[] = [
     href: "#/lesson/58",
     grad: "from-[#0b2028] to-[#a1e0c4]",
   },
+  {
+    n: 59,
+    title: "الدرس 59: ADVANCED PASSIVE — WITH MODALS AND ADVANCED STRUCTURES",
+    en: "Advanced Passive — Control Room · Modals & Advanced Structures",
+    emoji: "🎛️",
+    stats: "11 قسمًا · 33 موضوعًا · 9 تدريبات · 10 مختبرات · اختبار أصلي 25 سؤالًا + اختبار 15 سؤالًا",
+    href: "#/lesson/59",
+    grad: "from-[#070f1d] to-[#ffc45c]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -752,6 +762,7 @@ export default function App() {
   else if (route === 56) page = <Lesson56 onExit={goHome} />;
   else if (route === 57) page = <Lesson57 onExit={goHome} />;
   else if (route === 58) page = <Lesson58 onExit={goHome} />;
+  else if (route === 59) page = <Lesson59 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

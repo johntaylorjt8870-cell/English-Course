@@ -10,7 +10,12 @@ export interface Lesson1ShellItem {
 }
 
 export interface Lesson1ShellGroup {
-  section: string;
+  /**
+   * عنوان المجموعة. صار ReactNode ليتيح للدروس التي تحتاج عزل اتجاه (مدى رقمي
+   * مثل «1–6» أو ذيل إنجليزي داخل عنوان عربي) أن تمرّر عنصرًا بدل نص خام.
+   * كل الدروس القديمة تمرّر نصًا كما هو، فهو ReactNode صالح.
+   */
+  section: ReactNode;
   items: Lesson1ShellItem[];
 }
 
@@ -111,8 +116,8 @@ export default function Lesson1Shell({
         {railSubtitle}
       </div>
       <nav aria-label={railAriaLabel} className="flex-1 overflow-y-auto p-3">
-        {groups.map((group) => (
-          <div key={group.section} className="mb-3">
+        {groups.map((group, groupIndex) => (
+          <div key={groupIndex} className="mb-3">
             <div className="px-3 py-1 text-xs font-bold text-slate-400">{group.section}</div>
             {group.items.map((item) => {
               const active = item.index === activeIndex;

@@ -50,12 +50,14 @@ ok(/import Lesson59 from "\.\/lessons\/lesson59\/Lesson59"/.test(app), "App impo
 ok(/route === 59\) page = <Lesson59 onExit=\{goHome\}/.test(app), "App routes #/lesson/59 to Lesson59");
 ok(/href: "#\/lesson\/59"/.test(app), "course hub has a card pointing at #/lesson/59");
 ok(/n: 59,/.test(app), "hub card carries lesson number 59");
-ok(!/#\/lesson\/60/.test(app), "hub/router do not invent a lesson 60 route");
+// الدرس 60 مسجّل الآن في الفهرس والراوتر (أضيف بعد الدرس 59) — التأكد من
+// اتساق التسجيل بدلًا من حظر رقمه.
+ok(/#\/lesson\/60/.test(app) && /route === 60/.test(app), "lesson 60 is now registered in hub and router, after lesson 59");
 ok(/href="#\/lesson\/58"/.test(lessonSrc) && /location\.hash = "\/lesson\/58"/.test(lessonSrc), "lesson 59 links back to lesson 58");
-// لا يُسمح برابط إلى درس غير مسجّل: الدرس 59 هو آخر درس في الفهرس الآن.
-ok(!/lesson\/60/.test(lessonSrc), "lesson 59 never links to a lesson 60 that does not exist");
-ok(/l59-endnote/.test(lessonSrc) && /آخر درس مسجّل/.test(lessonSrc), "lesson 59 states plainly that it is the last registered lesson");
-ok(!/href="#\/lesson\/(?!58|57)/.test(lessonSrc), "no forward link to an unregistered lesson anywhere in the lesson");
+ok(/href="#\/lesson\/60"/.test(lessonSrc) && /location\.hash = "\/lesson\/60"/.test(lessonSrc), "lesson 59 links forward to lesson 60");
+// الخاتمة تقود إلى الدرس 60 الحقيقي، ولم يعد هناك ادعاء «آخر درس مسجّل».
+ok(/l59-endnote/.test(lessonSrc) && !/آخر درس مسجّل/.test(lessonSrc), "lesson 59 endnote now points to lesson 60 and drops the 'last lesson' claim");
+ok(!/href="#\/lesson\/(?!58|57|60)/.test(lessonSrc), "no forward link beyond the registered lesson 60 anywhere in the lesson");
 ok(/<FinalTest lesson=\{59\} questions=\{TEST_59\}/.test(lessonSrc), "shared FinalTest is mounted for lesson 59");
 ok(!/quizBank/.test(lessonSrc), "no second quiz system was introduced");
 ok(/navId: slide\.id/.test(lessonSrc), "each step is addressable in the shell rail");

@@ -401,6 +401,16 @@ const lesson59SharedAssessment =
   (lesson59Data.match(/\n    type: /g) || []).length === 15 &&
   lesson59Teacher.includes("FinalTestAnswerKey") && lesson59Teacher.includes("questions={TEST_59}");
 ok(lesson59SharedAssessment, "Lesson 59: shared FinalTest with 15 local questions and teacher answer key");
+// Lesson 60: same shared FinalTest contract (15 local questions) + teacher key.
+const lesson60Src = readFileSync(join(root, "src/lessons/lesson60/Lesson60.tsx"), "utf8");
+const lesson60Data = readFileSync(join(root, "src/lessons/lesson60/test60.ts"), "utf8");
+const lesson60Teacher = readFileSync(join(root, "src/lessons/lesson60/TeacherArea60.tsx"), "utf8");
+const lesson60SharedAssessment =
+  lesson60Src.includes("<FinalTest lesson={60} questions={TEST_60}") &&
+  lesson60Src.includes('from "./test60"') &&
+  (lesson60Data.match(/\n    type: /g) || []).length === 15 &&
+  lesson60Teacher.includes("FinalTestAnswerKey") && lesson60Teacher.includes("questions={TEST_60}");
+ok(lesson60SharedAssessment, "Lesson 60: shared FinalTest with 15 local questions and teacher answer key");
 const lesson53TestData = readFileSync(join(root, "src/lessons/lesson53/testData53.ts"), "utf8");
 const lesson55TestData = readFileSync(join(root, "src/lessons/lesson55/test55.ts"), "utf8");
 const lesson53HasAssessment = (lesson53TestData.match(/(?:choice|text)\(/g) || []).length >= 25;
@@ -410,7 +420,7 @@ ok(appLessons.length >= 46, `كل دروس التطبيق مسجلة (${appLesso
 for (const n of appLessons) {
   const legacy = (m.QUIZZES[n] || []).length >= 12;
   const modern = m.finalTestLessons().includes(n);
-  const dedicated = (n === 36 && lesson36DedicatedAssessment) || (n === 37 && lesson37DedicatedAssessment) || (n === 38 && lesson38DedicatedAssessment) || (n === 39 && lesson39DedicatedAssessment) || (n === 40 && lesson40DedicatedAssessment) || (n === 41 && lesson41DedicatedAssessment) || (n === 42 && lesson42DedicatedAssessment) || (n === 43 && lesson43DedicatedAssessment) || (n === 44 && lesson44DedicatedAssessment) || (n === 45 && lesson45DedicatedAssessment) || (n === 46 && lesson46DedicatedAssessment) || (n === 47 && lesson47DedicatedAssessment) || (n === 48 && lesson48DedicatedAssessment) || (n === 49 && lesson49DedicatedAssessment) || (n === 50 && lesson50DedicatedAssessment) || (n === 51 && lesson51DedicatedAssessment) || (n === 52 && lesson52DedicatedAssessment) || (n === 53 && lesson53HasAssessment) || (n === 54 && lesson54DedicatedAssessment) || (n === 55 && lesson55HasAssessment) || (n === 56 && lesson56SharedAssessment) || (n === 57 && lesson57SharedAssessment) || (n === 58 && lesson58SharedAssessment) || (n === 59 && lesson59SharedAssessment);
+  const dedicated = (n === 36 && lesson36DedicatedAssessment) || (n === 37 && lesson37DedicatedAssessment) || (n === 38 && lesson38DedicatedAssessment) || (n === 39 && lesson39DedicatedAssessment) || (n === 40 && lesson40DedicatedAssessment) || (n === 41 && lesson41DedicatedAssessment) || (n === 42 && lesson42DedicatedAssessment) || (n === 43 && lesson43DedicatedAssessment) || (n === 44 && lesson44DedicatedAssessment) || (n === 45 && lesson45DedicatedAssessment) || (n === 46 && lesson46DedicatedAssessment) || (n === 47 && lesson47DedicatedAssessment) || (n === 48 && lesson48DedicatedAssessment) || (n === 49 && lesson49DedicatedAssessment) || (n === 50 && lesson50DedicatedAssessment) || (n === 51 && lesson51DedicatedAssessment) || (n === 52 && lesson52DedicatedAssessment) || (n === 53 && lesson53HasAssessment) || (n === 54 && lesson54DedicatedAssessment) || (n === 55 && lesson55HasAssessment) || (n === 56 && lesson56SharedAssessment) || (n === 57 && lesson57SharedAssessment) || (n === 58 && lesson58SharedAssessment) || (n === 59 && lesson59SharedAssessment) || (n === 60 && lesson60SharedAssessment);
   ok(legacy || modern || dedicated, `الدرس ${n}: له اختبار نهائي (قديم أو جديد أو Master Test مستقل)`);
 }
 

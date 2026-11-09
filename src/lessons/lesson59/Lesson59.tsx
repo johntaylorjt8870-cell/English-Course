@@ -1190,11 +1190,15 @@ function Body59({
             </a>
           </p>
           <p className="l59-endnote">
-            هذا هو آخر درس مسجّل في الفهرس حتى الآن، فلا يوجد رابط إلى درس غير موجود. عند تسجيل الدرس التالي
-            سيُضاف رابطه هنا وفي فهرس الدروس.
+            الدرس التالي متاح الآن:{" "}
+            <a className="l59-prev-link" href="#/lesson/60">
+              الدرس 60 — <En59>Reported Speech — Statements</En59>
+            </a>
+            .
           </p>
           <div className="l59-actions">
             <Btn59 onClick={() => (window.location.hash = "/lesson/58")}>← الدرس السابق · 58</Btn59>
+            <Btn59 onClick={() => (window.location.hash = "/lesson/60")}>الدرس التالي · 60 →</Btn59>
             {onExit && (
               <Btn59 variant="soft" onClick={onExit}>
                 العودة إلى فهرس الدروس

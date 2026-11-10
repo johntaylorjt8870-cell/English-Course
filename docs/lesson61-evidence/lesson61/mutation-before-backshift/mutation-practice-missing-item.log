@@ -1,0 +1,5 @@
+Lesson 61 static audit FAILED: 3 / 271
+  - Complete practices text, examples, translations, answers and explanations match the implementation snapshot (not independent source verification)
+  - All 8 practice groups and all 55 individual sentences
+  - Each practice item has a prompt, answer and explanation
+SOURCE FIDELITY: UNVERIFIED — the current fixture is an implementation snapshot, not an independent transcription of the user-provided source.

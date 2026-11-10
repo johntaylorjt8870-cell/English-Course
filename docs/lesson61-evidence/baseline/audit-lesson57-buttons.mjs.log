@@ -1,0 +1,4 @@
+glyph coverage: 31 symbols, 0 missing
+Lesson 57 button audit: 37214/37214 checks passed
+measured: 5088 button states across 57 steps × 3 viewports
+lowest enabled contrast: 5.69 — desktop · dialogue · button.l57-bubble-toggle · "الترجمة"

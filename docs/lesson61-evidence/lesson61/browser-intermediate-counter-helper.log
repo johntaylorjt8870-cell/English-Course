@@ -1,0 +1,11 @@
+Labs: 10 consoles, 38 cases checked.
+Practice: 55 questions solved.
+FAIL Shared test counter visually reads 0 / 15 left to right
+FAIL Shared test submit counter visually reads 0/15 left to right
+Width 320: 61 scenes inspected.
+Width 360: 61 scenes inspected.
+Width 390: 61 scenes inspected.
+Width 414: 61 scenes inspected.
+Width 1280: 61 scenes inspected.
+External Google Fonts: unavailable in this sandbox (2 events); bundled Lesson 61 fonts checked above.
+Lesson 61 browser audit FAILED: 2 failures, 1660 checks.

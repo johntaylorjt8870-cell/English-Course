@@ -1,0 +1,2 @@
+# Raw tool logs retain the generator's alignment and trailing padding verbatim.
+*.log whitespace=-blank-at-eol

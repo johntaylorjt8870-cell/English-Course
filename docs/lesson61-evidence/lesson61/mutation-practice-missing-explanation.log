@@ -1,0 +1,5 @@
+Lesson 61 static audit FAILED: 3 / 274
+  - Complete practices text, examples, translations, answers and explanations match the implementation snapshot (not independent source verification)
+  - Each practice item has a prompt, answer and explanation
+  - practice-1 item 1: complete prompt/key/explanation, reviewed alternatives, and wrong or blank answers rejected
+SOURCE FIDELITY: UNVERIFIED — the current fixture is an implementation snapshot, not an independent transcription of the user-provided source.

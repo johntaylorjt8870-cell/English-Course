@@ -1,0 +1,16 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator('.lesson44 .stepNav44').first() to be visible
+
+    at /home/user/lesson61-baseline/scripts/audit-navigation-lock-browser.mjs:241:53 {
+  log: [
+    "  - waiting for locator('.lesson44 .stepNav44').first() to be visible"
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v22.22.3

@@ -2,7 +2,7 @@
 // Lesson 60 — تدقيق المحتوى والقواعد والتغطية (ثابت)
 //
 // يتحقق من:
-//   1) تسجيل الدرس في الراوتر والفهرس، والتنقل من الدرس 59، وعدم وجود 61.
+//   1) تسجيل الدرس في الراوتر والفهرس والتنقل بين 59 و60 و61 بلا روابط وهمية.
 //   2) تغطية المصدر: 17 قسمًا · 39 موضوعًا · 8 تدريبات (59 بندًا) · اختبار 25 سؤالًا.
 //   3) الجداول الأربعة (Backshift 12 · الضمائر 8 · الزمان 13 · المكان 5 · الناقصة 10).
 //   4) الاستثناءات الثلاثة بنصوصها، وتنبيه must (التزام ↔ استنتاج).
@@ -13,7 +13,7 @@
 //
 //   node scripts/audit-lesson60.mjs
 // ============================================================
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
@@ -43,6 +43,26 @@ const lesson59Src = readFileSync("src/lessons/lesson59/Lesson59.tsx", "utf8");
 const app = readFileSync("src/App.tsx", "utf8");
 const css = readFileSync("src/lessons/lesson60/lesson60.css", "utf8");
 
+// Lesson 61 now exists. Keep the old anti-phantom intent, but verify the
+// actual file, import, hub card and route rather than forbidding 61 outright.
+function registeredLesson(number, appSource = app, hasFile = existsSync(`src/lessons/lesson${number}/Lesson${number}.tsx`)) {
+  return hasFile &&
+    appSource.includes(`import Lesson${number} from "./lessons/lesson${number}/Lesson${number}"`) &&
+    appSource.includes(`href: "#/lesson/${number}"`) &&
+    appSource.includes(`route === ${number}) page = <Lesson${number} onExit={goHome}`);
+}
+function lessonTargets(source) {
+  return [...source.matchAll(/(?:#\/lesson\/|location\.hash\s*=\s*["']\/lesson\/)(\d+)\b/g)].map((match) => Number(match[1]));
+}
+function onlyRegisteredTargets(source, appSource = app) {
+  const targets = lessonTargets(source);
+  return targets.length > 0 && targets.every((number) => registeredLesson(number, appSource));
+}
+function noPhantom62(appSource = app, lessonSource = lessonSrc + labsSrc + teacherSrc) {
+  const referenced = /(?:#\/lesson\/62\b|route\s*===\s*62\b|\bn:\s*62\s*,|location\.hash\s*=\s*["']\/lesson\/62\b)/.test(appSource + lessonSource);
+  return !referenced || registeredLesson(62, appSource);
+}
+
 /* ---------- 1) التكامل مع التطبيق ---------- */
 ok(/import Lesson60 from "\.\/lessons\/lesson60\/Lesson60"/.test(app), "App imports Lesson 60");
 ok(/route === 60\) page = <Lesson60 onExit=\{goHome\}/.test(app), "App routes #/lesson/60 to Lesson60");
@@ -50,9 +70,11 @@ ok(/href: "#\/lesson\/60"/.test(app), "course hub has a card pointing at #/lesso
 ok(/n: 60,/.test(app), "hub card carries lesson number 60");
 ok(app.indexOf('href: "#/lesson/59"') < app.indexOf('href: "#/lesson/60"'), "lesson 60 card comes right after lesson 59 in the hub");
 ok(/import Lesson59[^\n]*\nimport Lesson60/.test(app), "Lesson60 import follows Lesson59 import");
-ok(!/#\/lesson\/61/.test(app), "hub/router never invent a lesson 61 route");
+ok(registeredLesson(61) && (app.match(/import Lesson61 from "\.\/lessons\/lesson61\/Lesson61"/g) || []).length === 1 && (app.match(/href: "#\/lesson\/61"/g) || []).length === 1 && (app.match(/route === 61\) page = <Lesson61/g) || []).length === 1, "lesson 61 exists and has exactly one real import, hub card and route");
 ok(/href="#\/lesson\/59"/.test(lessonSrc) && /location\.hash = "\/lesson\/59"/.test(lessonSrc), "lesson 60 links back to lesson 59");
-ok(!/lesson\/61/.test(lessonSrc + labsSrc + teacherSrc), "no link to a lesson 61 that does not exist anywhere in the lesson");
+ok(/href="#\/lesson\/61"/.test(lessonSrc) && /location\.hash = "\/lesson\/61"/.test(lessonSrc) && onlyRegisteredTargets(lessonSrc + labsSrc + teacherSrc), "lesson 60 links and navigates to registered lesson 61; every lesson target exists and is registered");
+ok(!registeredLesson(61, app, false) && !registeredLesson(61, app.replace('route === 61) page = <Lesson61', 'route === 61) page = <MissingLesson'), true), "registration guard rejects missing files and a missing actual route");
+ok(!onlyRegisteredTargets(`${lessonSrc}\n<a href="#/lesson/999999">ghost</a>`), "lesson-target guard rejects an unregistered fictional lesson");
 ok(/href="#\/lesson\/60"/.test(lesson59Src) && /location\.hash = "\/lesson\/60"/.test(lesson59Src), "lesson 59 links forward to lesson 60");
 ok(/<FinalTest lesson=\{60\} questions=\{TEST_60\}/.test(lessonSrc), "shared FinalTest is mounted for lesson 60");
 ok(!/quizBank/.test(lessonSrc), "no second quiz system was introduced");
@@ -228,7 +250,7 @@ for (const phrase of banned) {
   ok(!lessonSrc.includes(phrase) && !labsSrc.includes(phrase), `student copy is free of “${phrase}”`);
 }
 ok(!/القسم \d+:/.test(lessonSrc + labsSrc), "no raw «القسم N:» source labels leak into student screens");
-ok(!/lesson\/61/.test(lessonSrc), "student copy never mentions lesson 61");
+ok(onlyRegisteredTargets(lessonSrc + labsSrc) && noPhantom62(), "student lesson links are registered and any lesson 62 reference must lead to a real registered lesson");
 
 console.log(`\nLesson 60 static audit: ${checks - failures.length}/${checks} passed`);
 if (failures.length) {

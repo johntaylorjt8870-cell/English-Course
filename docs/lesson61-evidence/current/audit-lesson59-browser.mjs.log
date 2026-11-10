@@ -1,0 +1,117 @@
+✓ direct route #/lesson/59 opens the lesson cover
+✓ cover shows the lesson title
+✓ cover states full source scope
+✓ course hub has one dedicated card for lesson 59
+✓ hub card opens the lesson
+✓ lesson 58 keeps its onward link to lesson 59
+✓ lesson 58 → lesson 59 navigation works
+✓ lesson 59 links back to lesson 58
+✓ back navigation to lesson 58 works
+✓ section 1 renders its title
+✓ section 1 shows the LTR rule
+✓ section 1 renders the four opening pairs
+✓ section 1 keeps 6 correct and 3 wrong forms (6/3)
+✓ CAN shows its three uses as tabs
+✓ CAN renders both original pairs
+✓ CAN permission-tab content updates on demand
+✓ MUST question form renders
+✓ MUST prohibition contrast renders (must not be opened)
+✓ MUST negative block explains prohibition rather than absence of necessity
+✓ HAVE TO passive example renders
+✓ don't have to ≠ prohibition renders
+✓ SHOULD HAVE BEEN keeps four pairs
+✓ perfect passive questions render
+✓ MUST HAVE BEEN deduction examples render
+✓ natural negative can't have been renders
+✓ NEEDS TO BE examples render
+✓ needs repairing contrast renders
+✓ causative section renders all source examples
+✓ master table renders all fifteen rows
+✓ The report ladder renders seven contrasts
+✓ eight transformation steps render
+✓ seven common mistakes render
+✓ dialogue renders nine turns
+✓ dialogue renders seven answerable questions
+✓ reading renders five English paragraphs
+✓ full Arabic translation opens
+✓ reading renders eight comprehension questions
+✓ choosing an answer does not reveal correctness
+✓ feedback appears only after explicit check
+✓ retry clears answer and feedback
+✓ typed transformation answer is accepted
+✓ p3 renders its items
+✓ p4 renders its items
+✓ p5 renders its items
+✓ p6 renders its items
+✓ p7 renders its items
+✓ p8 renders its items
+✓ p9 renders its items
+✓ original 25-question test renders
+✓ original key keeps 25 entries
+✓ extra review renders the ten remaining original questions
+✓ Modal Meaning Explorer mounts
+✓ modal switch rewrites the sentence and keeps be + V3
+✓ explorer quiz hides judgement before check
+✓ explorer quiz explains after check
+✓ builder exposes four slots
+✓ builder assembles the learner's sentence
+✓ builder does not grade on selection
+✓ builder confirms a correct structure
+✓ builder reset clears the sentence
+✓ timeline shows the four contrasted structures
+✓ timeline quiz starts without answers
+✓ timeline quiz grades every item after check
+✓ detective lists seven meanings
+✓ detective hides explanations before checking
+✓ detective explains all seven after check
+✓ engine shows only the next stage, not the answer
+✓ engine reveals the first transformation stage
+✓ engine completes the passive sentence step by step
+✓ causative lab compares three sentences
+✓ causative explanation follows the selected card
+✓ causative quiz returns three graded results
+✓ error lab lists all seven mistakes
+✓ error lab hides corrections before check
+✓ error lab explains all seven corrections
+✓ structure contrast switches to the past form
+✓ advanced drill shows a full source sentence
+✓ advanced drill compares against the source meaning
+✓ V3 lab lists all twenty-nine verbs (20 regular + 9 irregular)
+✓ V3 lab search filters down to the matching verb
+✓ V3 lab search keeps the irregular past participle
+✓ shared FinalTest renders fifteen questions
+✓ no verdict before submission
+✓ answering every question still reveals nothing
+✓ submit becomes available once all fifteen are answered
+✓ after submission every question is graded
+✓ result summary appears after grading
+✓ result text rendered (53%%)
+✓ final-test state survives navigation (no new quiz system)
+✓ teacher gate asks for a password
+✓ wrong password is rejected
+✓ teacher key exposes the shared fifteen-question key
+✓ teacher area keeps practice + original-test keys
+✓ 320px: no horizontal document overflow (320)
+✓ 320px: lesson column does not overflow (320/320)
+✓ 320px: next button never overlaps the site-lock button
+✓ 320px: rich console section stays inside the column (0)
+✓ 360px: no horizontal document overflow (360)
+✓ 360px: lesson column does not overflow (360/360)
+✓ 360px: next button never overlaps the site-lock button
+✓ 360px: rich console section stays inside the column (0)
+✓ 390px: no horizontal document overflow (390)
+✓ 390px: lesson column does not overflow (390/390)
+✓ 390px: next button never overlaps the site-lock button
+✓ 390px: rich console section stays inside the column (0)
+✓ 414px: no horizontal document overflow (414)
+✓ 414px: lesson column does not overflow (414/414)
+✓ 414px: next button never overlaps the site-lock button
+✓ 414px: rich console section stays inside the column (0)
+✓ 1280px: no horizontal document overflow (1280)
+✓ 1280px: lesson column does not overflow (992/992)
+✓ 1280px: next button never overlaps the site-lock button
+✓ 1280px: rich console section stays inside the column (0)
+✓ no runtime/console errors (0)
+✓ only external font requests failed if any (1)
+
+Lesson 59 browser audit: 115/115 passed

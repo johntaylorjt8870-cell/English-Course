@@ -1,0 +1,4 @@
+Lesson 61 static audit FAILED: 2 / 274
+  - Complete practices text, examples, translations, answers and explanations match the implementation snapshot (not independent source verification)
+  - practice-5 item 2: choices and accepted keys are complete; a wrong choice is rejected
+SOURCE FIDELITY: UNVERIFIED — the current fixture is an implementation snapshot, not an independent transcription of the user-provided source.

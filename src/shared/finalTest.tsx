@@ -377,6 +377,7 @@ export default function FinalTest({
   accent = ACCENT_DEFAULT,
   title = "🏁 الاختبار النهائي",
   onGoTeacher,
+  isolateProgress = false,
 }: {
   lesson: number;
   questions: FinalTestQuestion[];
@@ -384,6 +385,8 @@ export default function FinalTest({
   title?: string;
   /** فتح منطقة المعلم (مفتاح الإجابات) داخل نفس الدرس — بلا مغادرة للدرس */
   onGoTeacher?: () => void;
+  /** Optional LTR isolation for mixed-script progress fractions. Off by default. */
+  isolateProgress?: boolean;
 }) {
   const [answers, setAnswers] = useState<Record<number, FinalTestAnswer>>({});
   const [corrected, setCorrected] = useState(false);
@@ -420,7 +423,7 @@ export default function FinalTest({
             </p>
           </div>
           <span className="rounded-full bg-white px-3 py-1 text-sm font-black text-slate-500 shadow-sm">
-            <Localized text={`أجبت عن ${answered} / ${questions.length}`} />
+            {isolateProgress ? <>أجبت عن <bdi dir="ltr">{answered} / {questions.length}</bdi></> : <Localized text={`أجبت عن ${answered} / ${questions.length}`} />}
           </span>
         </div>
         <div className="mt-3 rounded-2xl border-2 border-dashed border-slate-200 bg-white/70 p-3 text-sm font-bold text-slate-600">
@@ -472,7 +475,7 @@ export default function FinalTest({
                 disabled={!allAnswered}
                 className={`rounded-xl px-5 py-2.5 font-black text-white shadow transition enabled:hover:brightness-110 disabled:opacity-30 ${accent}`}
               >
-                <Localized text={`تصحيح الاختبار (${answered}/${questions.length})`} />
+                {isolateProgress ? <>تصحيح الاختبار (<bdi dir="ltr">{answered}/{questions.length}</bdi>)</> : <Localized text={`تصحيح الاختبار (${answered}/${questions.length})`} />}
               </button>
               {!allAnswered && (
                 <span className="text-sm font-bold text-slate-500">

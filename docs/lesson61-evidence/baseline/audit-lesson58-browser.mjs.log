@@ -1,0 +1,80 @@
+✓ direct route opens the new lesson and distinctive lab cover
+✓ cover advertises complete source scope
+✓ lesson hub has one dedicated card for lesson 58
+✓ lesson 57 has a real onward link to lesson 58
+✓ lesson 57 onward link opens lesson 58
+✓ lesson 58 points onward to lesson 59
+✓ lesson 58 onward link opens the now-registered lesson 59 without an unavailable-lesson message
+✓ source section 2 is reachable from the course rail
+✓ Present Simple renders four original active/passive pairs
+✓ Past Perfect renders both original examples
+✓ comparison station renders all seven tense rows
+✓ comparison station includes perfect-vs-perfect contrast
+✓ dialogue renders all ten speaker turns
+✓ dialogue comprehension has five answerable questions
+✓ reading renders all five English paragraphs
+✓ Arabic reading translation opens in full
+✓ reading has seven comprehension questions
+✓ s1 source/practice station renders in the lesson
+✓ s3 source/practice station renders in the lesson
+✓ s4 source/practice station renders in the lesson
+✓ s5 source/practice station renders in the lesson
+✓ s6 source/practice station renders in the lesson
+✓ s7 source/practice station renders in the lesson
+✓ s10 source/practice station renders in the lesson
+✓ s11 source/practice station renders in the lesson
+✓ s12 source/practice station renders in the lesson
+✓ s13 source/practice station renders in the lesson
+✓ p1 source/practice station renders in the lesson
+✓ p2 source/practice station renders in the lesson
+✓ p3 source/practice station renders in the lesson
+✓ p4 source/practice station renders in the lesson
+✓ p5 source/practice station renders in the lesson
+✓ p6 source/practice station renders in the lesson
+✓ p7 source/practice station renders in the lesson
+✓ p8 source/practice station renders in the lesson
+✓ p9 source/practice station renders in the lesson
+✓ s17 source/practice station renders in the lesson
+✓ s18 source/practice station renders in the lesson
+✓ s19 source/practice station renders in the lesson
+✓ s20 source/practice station renders in the lesson
+✓ s21 source/practice station renders in the lesson
+✓ practice answer choice does not reveal correctness
+✓ practice feedback appears only after explicit check
+✓ practice retry resets answer and feedback
+✓ selector makes no judgement before check
+✓ selector confirms formula and reveals result after check
+✓ Transformation Engine builds correct passive in stages
+✓ engine advances to a second, different tense example
+✓ Being/Been does not grade on selection
+✓ Being/Been challenge checks all four contrasts
+✓ comparison picker updates selected formula and explanation
+✓ Error Detective hides solution before verification
+✓ Error Detective reveals correction and reason after verification
+✓ reverse switch converts with explicit original agent
+✓ reverse switch explicitly avoids claiming an unknown agent
+✓ final challenge hides correctness before checking
+✓ final challenge returns feedback
+✓ shared FinalTest renders exactly fifteen questions
+✓ shared FinalTest has no verdict before submission
+✓ FinalTest lets learner change selection without showing correctness
+✓ final test enables submit after all fifteen answers
+✓ final test reveals all grades only after submission
+✓ final test shows result summary after grading
+✓ Teacher Area exposes the shared 15-question FinalTest key after unlock
+✓ Teacher Area retains all 25 original keyed answers
+✓ Teacher Area includes all nine practice keys
+✓ 320px viewport has no horizontal document overflow (320)
+✓ 320px lesson content stays within its viewport column
+✓ 320px cover CTA remains reachable and does not overlap the fixed next control after scroll
+✓ 360px viewport has no horizontal document overflow (360)
+✓ 360px lesson content stays within its viewport column
+✓ 390px viewport has no horizontal document overflow (390)
+✓ 390px lesson content stays within its viewport column
+✓ 414px viewport has no horizontal document overflow (414)
+✓ 414px lesson content stays within its viewport column
+✓ 1280px viewport has no horizontal document overflow (1280)
+✓ 1280px lesson content stays within its viewport column
+✓ browser runtime/console errors (excluding failed external font fetch): 0
+✓ network resource failures are limited to the existing Google Fonts import (1)
+Lesson 58 browser audit: 79/79 passed

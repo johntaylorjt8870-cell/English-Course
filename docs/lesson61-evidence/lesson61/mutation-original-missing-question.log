@@ -1,0 +1,6 @@
+Lesson 61 static audit FAILED: 4 / 271
+  - Complete original text, examples, translations, answers and explanations match the implementation snapshot (not independent source verification)
+  - Original test numbered consecutively from 1 to 25
+  - Five original test groups have exactly five questions each in order
+  - Every numbered original prompt, including repetitions, matches the implementation snapshot
+SOURCE FIDELITY: UNVERIFIED — the current fixture is an implementation snapshot, not an independent transcription of the user-provided source.

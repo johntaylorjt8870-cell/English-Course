@@ -1,0 +1,16 @@
+PASS shared-valid-wrong-choice: exit=1; expected diagnostic present
+PASS shared-out-of-range-key: exit=1; expected diagnostic present
+PASS shared-missing-explanation: exit=1; expected diagnostic present
+PASS shared-missing-question: exit=1; expected diagnostic present
+PASS shared-unreviewed-typed-answer: exit=1; expected diagnostic present
+PASS shared-wrong-multi-key: exit=1; expected diagnostic present
+PASS practice-missing-explanation: exit=1; expected diagnostic present
+PASS practice-wrong-valid-choice: exit=1; expected diagnostic present
+PASS original-wrong-valid-choice: exit=1; expected diagnostic present
+PASS practice-invalid-added-alternative: exit=1; expected diagnostic present
+PASS original-invalid-added-alternative: exit=1; expected diagnostic present
+PASS practice-missing-item: exit=1; expected diagnostic present
+PASS original-missing-question: exit=1; expected diagnostic present
+RESTORED shared: sha256=92e40afe95f00607f496518417112cbe30caed17880a077edb2d6b8572f27dc5
+RESTORED practice: sha256=728ab563558f411d69310228788cf4267bb485f7771ca3110b00366834ee4545
+13/13 mutation probes rejected as intended.

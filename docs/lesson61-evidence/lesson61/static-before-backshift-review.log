@@ -1,0 +1,7 @@
+
+> react-vite-tailwind@0.0.0 audit:lesson61
+> node scripts/audit-lesson61.mjs
+
+Lesson 61 structural and snapshot checks: 272/272 passed · 16 sections · 61 scenes · 10 labs · 55 practice items · 25 original + 15 shared-test questions.
+Western digits static audit: PASS — no Arabic-Indic digits or circled numerals in Lesson 61 source, CSS, fixtures, integration or shared UI components.
+SOURCE FIDELITY: UNVERIFIED — the current fixture is an implementation snapshot, not an independent transcription of the user-provided source.

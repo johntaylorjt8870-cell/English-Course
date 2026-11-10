@@ -1,0 +1,7 @@
+PASS missing-route: exit=1, required diagnostic present
+PASS missing-import: exit=1, required diagnostic present
+PASS missing-card: exit=1, required diagnostic present
+PASS ghost-onward-link: exit=1, required diagnostic present
+RESTORED app: sha256=546070af7750f42b826380a5da65c2da2d28972492c3ea63288a732384d913ae
+RESTORED lesson60: sha256=d9348db272a3700757aa703b3b553217a713c78fb57b986c1713a524e2d360c6
+4/4 invalid registration and ghost-link mutations rejected.

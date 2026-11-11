@@ -1,0 +1,2 @@
+Command: node scripts/audit-navigation-lock-overlap.mjs
+Exit: 1

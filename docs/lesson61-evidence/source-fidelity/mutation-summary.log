@@ -1,0 +1,17 @@
+PASS practice-source-prompt: exit=1; expected source diagnostic present
+PASS exam-graded-key: exit=1; expected source diagnostic present
+PASS exam-displayed-key: exit=1; expected source diagnostic present
+PASS invalid-mc-alternative: exit=1; expected source diagnostic present
+PASS exam-source-explanation: exit=1; expected source diagnostic present
+PASS arabic-reading-translation: exit=1; expected source diagnostic present
+PASS wh-subject-pair: exit=1; expected source diagnostic present
+PASS dialogue-source-addressee: exit=1; expected source diagnostic present
+PASS paragraph-as-seven-items: exit=1; expected source diagnostic present
+PASS summary-distinction: exit=1; expected source diagnostic present
+PASS wh-word-translation: exit=1; expected source diagnostic present
+PASS procedure-step-detail: exit=1; expected source diagnostic present
+PASS solved-concept-label: exit=1; expected source diagnostic present
+PASS say-recipient-explanation: exit=1; expected source diagnostic present
+PASS summary-example-association: exit=1; expected source diagnostic present
+PASS source-byte-tampering: exit=1; expected source diagnostic present
+16/16 deliberate mutations rejected; isolated copies restored byte-for-byte. Checkout files were never mutated.

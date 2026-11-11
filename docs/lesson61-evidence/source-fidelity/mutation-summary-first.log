@@ -1,0 +1,12 @@
+PASS practice-source-prompt: exit=1; expected source diagnostic present
+PASS exam-graded-key: exit=1; expected source diagnostic present
+PASS exam-displayed-key: exit=1; expected source diagnostic present
+PASS invalid-mc-alternative: exit=1; expected source diagnostic present
+PASS exam-source-explanation: exit=1; expected source diagnostic present
+PASS arabic-reading-translation: exit=1; expected source diagnostic present
+PASS wh-subject-pair: exit=1; expected source diagnostic present
+PASS dialogue-source-addressee: exit=1; expected source diagnostic present
+PASS paragraph-as-seven-items: exit=1; expected source diagnostic present
+PASS summary-distinction: exit=1; expected source diagnostic present
+PASS source-byte-tampering: exit=1; expected source diagnostic present
+11/11 deliberate mutations rejected; isolated copies restored byte-for-byte. Checkout files were never mutated.

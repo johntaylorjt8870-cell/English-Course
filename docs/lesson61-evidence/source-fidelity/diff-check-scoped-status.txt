@@ -1,0 +1,3 @@
+Command: git diff --cached --check
+Exit: 0
+Original attachment retains Markdown hard breaks; only that file and raw logs have targeted whitespace attributes.

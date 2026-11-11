@@ -1,0 +1,1476 @@
+✓ LatinRuns emits dir=ltr
+✓ LatinRuns keeps "Subject · Verb · Object" as one LTR run
+✓ LatinRuns must not reverse SVO
+✓ Lesson 1 cover renders Formula [data-en-seq=svo-roles]
+✓ Lesson 1 Formula row is dir=ltr
+✓ Lesson 1 cover Formula: Subject → Verb → Object  (got ["Subject","Verb","Object"])
+✓ Lesson 1 cover subtitle "Sentence Structure" is LTR-isolated
+✓ Lesson 4 cover renders PartsSentence .ltr-row
+✓ Lesson 4 chip row is dir=ltr
+✓ Lesson 4 cover I am a student: I → am → a → student  (got ["I","am","a","student"])
+✓ no reversed SVO in: ما هو الـ Subject؟
+✓ English words preserved in mixed line: ما هو الـ Subject؟
+✓ no reversed SVO in: حدّد الـ Subject والـ Verb
+✓ English words preserved in mixed line: حدّد الـ Subject والـ Verb
+✓ exercise-2 subtitle SVO stays one LTR run
+✓ no reversed SVO in: Subject · Verb · Object — اضغط على الكلمة لتغيير دورها
+✓ English words preserved in mixed line: Subject · Verb · Object — اضغط على الكلمة لتغيير دورها
+✓ no reversed SVO in: إضافة المفعول به Object
+✓ English words preserved in mixed line: إضافة المفعول به Object
+✓ Lesson 10 representative route renders without throwing
+✓ Lesson 10 representative route keeps English LTR isolation
+✓ Lesson 13 FormulaBoard renders [data-en-seq=l13-formulas]
+✓ Lesson 13 l13-formula-aff present
+✓ Lesson 13 l13-formula-aff row element is dir=ltr
+✓ Lesson 13 l13-formula-aff: Subject → Past Verb  (got ["Subject","+","Past Verb"])
+✓ Lesson 13 l13-formula-aff: must keep 1 "+" separators
+✓ Lesson 13 l13-formula-neg present
+✓ Lesson 13 l13-formula-neg row element is dir=ltr
+✓ Lesson 13 l13-formula-neg: Subject → didn't → Base Verb  (got ["Subject","+","didn't","+","Base Verb"])
+✓ Lesson 13 l13-formula-neg: must keep 2 "+" separators
+✓ Lesson 13 l13-formula-q present
+✓ Lesson 13 l13-formula-q row element is dir=ltr
+✓ Lesson 13 l13-formula-q: Did → Subject → Base Verb → ?  (got ["Did","+","Subject","+","Base Verb","?"])
+✓ Lesson 13 l13-formula-q: must keep 2 "+" separators
+✓ Lesson 13 l13-formula-q: "?" must come after Base Verb, never reversed
+✓ Lesson 13 l13-formula-wh present
+✓ Lesson 13 l13-formula-wh row element is dir=ltr
+✓ Lesson 13 l13-formula-wh: Wh-word → did → Subject → Base Verb → ?  (got ["Wh-word","+","did","+","Subject","+","Base Verb","?"])
+✓ Lesson 13 l13-formula-wh: must keep 3 "+" separators
+✓ Lesson 13 l13-formula-wh: "?" must come after Base Verb, never reversed
+✓ Lesson 13 must not render a reversed formula (/Base Verb\s*\+\s*did\s*\+\s*Subject/)
+✓ Lesson 13 must not render a reversed formula (/Past Verb\s*\+\s*Subject/)
+✓ Lesson 13 must not render a reversed formula (/Subject\s*\+\s*Did\s*\+/)
+✓ Lesson 13 renders without throwing
+✓ Lesson 13 cover isolates English as LTR
+✓ Lesson 13 cover renders Subject + didn't + Base Verb in LTR
+✓ Lesson 13 must keep its full slide count (got 37)
+✓ Lesson 13: every slide must render without errors (37/37)
+✓ Lesson 13: no slide may throw or render empty ()
+✓ Lesson 13: no slide may render a reversed formula ()
+✓ Lesson 13 must keep all 10 exercise/game slides (got 10)
+✓ Lesson 13 exercise type present: errorHunter
+✓ Lesson 13 exercise type present: negTransform
+✓ Lesson 13 exercise type present: qTransform
+✓ Lesson 13 exercise type present: choose
+✓ Lesson 13 exercise type present: fill
+✓ Lesson 13 exercise type present: triple
+✓ Lesson 13 exercise type present: iq200
+✓ Lesson 13 exercise type present: pattern
+✓ Lesson 13 exercise type present: detective
+✓ Lesson 13 exercise type present: finalChallenge
+✓ Lesson 13 must keep all 20 teaching sections (got 20)
+✓ Lesson 13 teaching sections must stay in source order 1→20 (got 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20)
+✓ Lesson 13 closing slide present: summary
+✓ Lesson 13 closing slide present: keyRule
+✓ Lesson 13 closing slide present: roadmap
+✓ Lesson 13 closing slide present: quiz
+✓ Lesson 13 closing slide present: closing
+✓ Lesson 14 FormulaBoard renders [data-en-seq=l14-formulas]
+✓ Lesson 14 formula row present: affirmative
+✓ Lesson 14 affirmative row is dir=ltr
+✓ Lesson 14 affirmative: Subject → Past Verb  (got ["Subject","+","Past Verb"])
+✓ Lesson 14 affirmative: keeps 1 plus separators
+✓ Lesson 14 formula row present: negative
+✓ Lesson 14 negative row is dir=ltr
+✓ Lesson 14 negative: Subject → didn't → Base Verb  (got ["Subject","+","didn't","+","Base Verb"])
+✓ Lesson 14 negative: keeps 2 plus separators
+✓ Lesson 14 formula row present: yesNo
+✓ Lesson 14 yesNo row is dir=ltr
+✓ Lesson 14 yesNo: Did → Subject → Base Verb → ?  (got ["Did","+","Subject","+","Base Verb","?"])
+✓ Lesson 14 yesNo: keeps 2 plus separators
+✓ Lesson 14 yesNo: question mark follows Base Verb
+✓ Lesson 14 formula row present: wh
+✓ Lesson 14 wh row is dir=ltr
+✓ Lesson 14 wh: Wh-word → did → Subject → Base Verb → ?  (got ["Wh-word","+","did","+","Subject","+","Base Verb","?","Wh + did + Subject + Base Verb?",": Wh → did → Subject → Base Verb"])
+✓ Lesson 14 wh: keeps 3 plus separators
+✓ Lesson 14 wh: question mark follows Base Verb
+✓ Lesson 14 FormulaBoard has no reversed formula (/Base Verb\s*\+\s*did\s*\+\s*Subject/)
+✓ Lesson 14 FormulaBoard has no reversed formula (/Past Verb\s*\+\s*Subject/)
+✓ Lesson 14 FormulaBoard has no reversed formula (/Subject\s*\+\s*Did\s*\+/)
+✓ Lesson 14 keeps the complete 35-slide sequence (got 35)
+✓ Lesson 14 every slide renders (35/35)
+✓ Lesson 14 has no empty or throwing slide ()
+✓ Lesson 14 has no reversed English formula/order ()
+✓ Lesson 14 exercise slides expose interactive controls ()
+✓ Lesson 14 rendered HTML keeps English phrase: Where did Ali go?
+✓ Lesson 14 rendered HTML keeps English phrase: What did she buy?
+✓ Lesson 14 rendered HTML keeps English phrase: When did they arrive?
+✓ Lesson 14 rendered HTML keeps English phrase: Why did he leave early?
+✓ Lesson 14 rendered HTML keeps English phrase: How did she solve the puzzle?
+✓ Lesson 14 rendered HTML keeps English phrase: Who did Sara meet?
+✓ Lesson 14 teaching sections 1–19 are present (19)
+✓ Lesson 14 teaching order remains 1→19 (got 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19)
+✓ Lesson 14 exercises 20–28 are present (9)
+✓ Lesson 14 exercise type present: level1
+✓ Lesson 14 exercise type present: level2
+✓ Lesson 14 exercise type present: level3
+✓ Lesson 14 exercise type present: level4
+✓ Lesson 14 exercise type present: detective
+✓ Lesson 14 exercise type present: iq200
+✓ Lesson 14 exercise type present: hard
+✓ Lesson 14 exercise type present: conversation
+✓ Lesson 14 exercise type present: finalChallenge
+✓ Lesson 14 closing slide present: summary
+✓ Lesson 14 closing slide present: keyRule
+✓ Lesson 14 closing slide present: roadmap
+✓ Lesson 14 closing slide present: quiz
+✓ Lesson 14 closing slide present: closing
+✓ Lesson 17 keeps its complete slide sequence (got 53)
+✓ Lesson 17 every slide renders (53/53)
+✓ Lesson 17 has no empty or throwing slide ()
+✓ Lesson 17 has no reversed English word order ()
+✓ Lesson 17 exercise slides expose interactive controls ()
+✓ Lesson 17 teaching sections 1–35 are present (35)
+✓ Lesson 17 teaching order remains 1→35 (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35)
+✓ Lesson 17 exercises 36–45 are present (10)
+✓ Lesson 17 exercise numbering stays 36→45 (36,37,38,39,40,41,42,43,44,45)
+✓ Lesson 17 exercise type present: level1
+✓ Lesson 17 exercise type present: level2
+✓ Lesson 17 exercise type present: level3
+✓ Lesson 17 exercise type present: level4
+✓ Lesson 17 exercise type present: level5
+✓ Lesson 17 exercise type present: level6
+✓ Lesson 17 exercise type present: detective
+✓ Lesson 17 exercise type present: iq200
+✓ Lesson 17 exercise type present: iq200b
+✓ Lesson 17 exercise type present: finalChallenge
+✓ Lesson 17 slide present: cover
+✓ Lesson 17 slide present: objectives
+✓ Lesson 17 slide present: summary
+✓ Lesson 17 slide present: iq200Rule
+✓ Lesson 17 slide present: fiveErrors
+✓ Lesson 17 slide present: roadmap
+✓ Lesson 17 slide present: quiz
+✓ Lesson 17 slide present: closing
+✓ Lesson 17 rendered HTML keeps English unit: This is my book.
+✓ Lesson 17 rendered HTML keeps English unit: This book is mine.
+✓ Lesson 17 rendered HTML keeps English unit: This is my notebook.
+✓ Lesson 17 rendered HTML keeps English unit: This notebook is mine.
+✓ Lesson 17 rendered HTML keeps English unit: This is his laptop.
+✓ Lesson 17 rendered HTML keeps English unit: This laptop is his.
+✓ Lesson 17 rendered HTML keeps English unit: This is her camera.
+✓ Lesson 17 rendered HTML keeps English unit: This camera is hers.
+✓ Lesson 17 rendered HTML keeps English unit: This is our classroom.
+✓ Lesson 17 rendered HTML keeps English unit: This classroom is ours.
+✓ Lesson 17 rendered HTML keeps English unit: This house is theirs.
+✓ Lesson 17 rendered HTML keeps English unit: Whose phone is this?
+✓ Lesson 17 rendered HTML keeps English unit: Whose bag is this?
+✓ Lesson 17 rendered HTML keeps English unit: Whose car is that?
+✓ Lesson 17 rendered HTML keeps English unit: It's mine.
+✓ Lesson 17 rendered HTML keeps English unit: It's hers.
+✓ Lesson 17 rendered HTML keeps English unit: It's theirs.
+✓ Lesson 17 rendered HTML keeps English unit: Yes, it is mine.
+✓ Lesson 17 rendered HTML keeps English unit: This is Sara's notebook.
+✓ Lesson 17 rendered HTML keeps English unit: Alex's laptop
+✓ Lesson 17 rendered HTML keeps English unit: The robot moved its arm.
+✓ Lesson 17 rendered HTML keeps English unit: His car is fast.
+✓ Lesson 17 rendered HTML keeps English unit: The car is his.
+✓ Lesson 17 rendered HTML keeps English unit: Their car is new.
+✓ Lesson 17 rendered HTML keeps English unit: They're happy.
+✓ Lesson 17 rendered HTML keeps English unit: The book is yours.
+✓ Lesson 17 rendered HTML keeps English unit: my book
+✓ Lesson 17 rendered HTML keeps English unit: your bag
+✓ Lesson 17 rendered HTML keeps English unit: her phone
+✓ Lesson 17 rendered HTML keeps English unit: our house
+✓ Lesson 17 rendered HTML keeps English unit: their car
+✓ Lesson 17 rendered HTML keeps English unit: Possessive Adjective + Noun
+✓ Lesson 17 rendered HTML keeps English unit: my → mine
+✓ Lesson 17 rendered HTML keeps English unit: my book → mine
+✓ Lesson 17 rendered HTML keeps English unit: her camera
+✓ Lesson 17 rendered HTML keeps English unit: his camera
+✓ Lesson 17 rendered HTML keeps English unit: Their cameras
+✓ Lesson 17 rendered HTML keeps English unit: Is this yours?
+✓ Lesson 17 rendered HTML keeps English unit: This one is hers.
+✓ Lesson 17 rendered HTML keeps English unit: Sara's book
+✓ Lesson 17 rendered HTML keeps English unit: the book is hers
+✓ Lesson 17 rendered HTML keeps English unit: Omar's phone
+✓ Lesson 17 rendered HTML keeps English unit: the phone is his
+✓ Lesson 17 rendered HTML keeps English unit: This book is mine.
+✓ Lesson 17 rendered HTML keeps English unit: These books are mine.
+✓ Lesson 17 rendered HTML keeps English unit: I have five books.
+✓ Lesson 17 rendered HTML keeps English unit: The books are mine.
+✓ Lesson 17 rendered HTML keeps English unit: Emma brought her camera to the competition.
+✓ Lesson 17 core map renders [data-en-seq=l17-coremap]
+✓ Lesson 17 core map row container is dir=ltr
+✓ Lesson 17 core map (I): I → my → mine  (got ["I","→","my","→","mine","You","→","your","→","yours","He","→","his","→","his","She","→","her","→","hers","It","→","its","→","—","We","→","our","→","ours","They","→","their","→","theirs","my","→","mine","your","→","yours","his","→","his","her","→","hers","our","→","ours","their","→","theirs"])
+✓ Lesson 17 core map (She): She → her → hers  (got ["I","→","my","→","mine","You","→","your","→","yours","He","→","his","→","his","She","→","her","→","hers","It","→","its","→","—","We","→","our","→","ours","They","→","their","→","theirs","my","→","mine","your","→","yours","his","→","his","her","→","hers","our","→","ours","their","→","theirs"])
+✓ Lesson 17 core map (They): They → their → theirs  (got ["I","→","my","→","mine","You","→","your","→","yours","He","→","his","→","his","She","→","her","→","hers","It","→","its","→","—","We","→","our","→","ours","They","→","their","→","theirs","my","→","mine","your","→","yours","his","→","his","her","→","hers","our","→","ours","their","→","theirs"])
+✓ Lesson 17 must-memorize: my → mine → your → yours  (got ["I","→","my","→","mine","You","→","your","→","yours","He","→","his","→","his","She","→","her","→","hers","It","→","its","→","—","We","→","our","→","ours","They","→","their","→","theirs","my","→","mine","your","→","yours","his","→","his","her","→","hers","our","→","ours","their","→","theirs"])
+✓ Lesson 17 core map never reverses the pair
+✓ Lesson 17 comparison table renders [data-en-seq=l17-compare]
+✓ Lesson 17 comparison table: I → my → mine → You → your → yours → He → his → his → She → her → hers → We → our → ours → They → their → theirs in strict order  (got ["I","my","mine","You","your","yours","He","his","his","She","her","hers","We","our","ours","They","their","theirs","my book → mine","your phone → yours","his jacket → his","her bag → hers","our house → ours","their car → theirs"])
+✓ Lesson 17 before/after ownership cards render
+✓ Lesson 17 before/after pairs: my book → your car → his jacket → her bag → our house → their school in strict order  (got ["BEFORE / AFTER OWNERSHIP CARDS","Possessive Adjective + Noun","Possessive Pronoun","my book","•••","mine","yours","his","hers","ours","theirs","your car","•••","mine","yours","his","hers","ours","theirs","his jacket","•••","mine","yours","his","hers","ours","theirs","her bag","•••","mine","yours","his","hers","ours","theirs","our house","•••","mine","yours","his","hers","ours","theirs","their school","•••","mine","yours","his","hers","ours","theirs"])
+✓ Lesson 17 transformation machine renders [data-en-seq=l17-machine]
+✓ Lesson 17 machine pairs: my book → your bag → his jacket → her phone → our house → their car in strict order  (got ["POSSESSION TRANSFORMATION MACHINE","my book","your bag","his jacket","her phone","our house","their car","my","book","→","???","Possessive Adjective + Noun","THE NOUN REMOVAL LAB","my","notebook","→","•••","my","bicycle","→","•••","your","jacket","→","•••","your"])
+✓ Lesson 17 machine stage: my → book  (got ["POSSESSION TRANSFORMATION MACHINE","my book","your bag","his jacket","her phone","our house","their car","my","book","→","???","Possessive Adjective + Noun","THE NOUN REMOVAL LAB","my","notebook","→","•••","my","bicycle","→","•••","your","jacket","→","•••","your"])
+✓ Lesson 17 machine never renders 'book my'
+✓ Lesson 17 noun removal lab renders
+✓ Lesson 17 noun removal lab: my → notebook  (got ["THE NOUN REMOVAL LAB","my","notebook","→","•••","my","bicycle","→","•••","your","jacket","→","•••","your","seat","→","•••","your","idea","→","•••","your","camera","→","•••","his","laptop","→","•••","his","jacket","→","•••","her","camera","→","•••","her","bicycle","→","•••","her","notebook","→","•••","her","jacket","→","•••","our","classroom","→","•••","our","project","→","•••","our","table","→","•••","their","house","→","•••","their","books","→","•••","their","car","→","•••","their","project","→","•••"])
+✓ Lesson 17 IQ200 rule renders [data-en-seq=l17-iq200rule]
+✓ Lesson 17 IQ200 rule container is dir=ltr
+✓ Lesson 17 IQ200 rule: Possessive Adjective + Noun → my book → my → mine → my book → mine  (got ["Possessive Adjective + Noun","↓","my book","↓","my → mine","↓","my book → mine","your bag → yours","her phone → hers","our house → ours","their car → theirs"])
+✓ Lesson 17 IQ200 pairs: your bag → yours → her phone → hers → our house → ours → their car → theirs  (got ["Possessive Adjective + Noun","↓","my book","↓","my → mine","↓","my book → mine","your bag → yours","her phone → hers","our house → ours","their car → theirs"])
+✓ Lesson 17 summary renders both ownership columns
+✓ Lesson 17 summary adjectives: my → your → his → her → our → their → my book → her phone → their house  (got ["my","your","his","her","our","their","my book","her phone","their house"])
+✓ Lesson 17 summary pronouns: mine → yours → his → hers → ours → theirs → The book is mine. → The phone is hers. → The house is theirs.  (got ["mine","yours","his","hers","ours","theirs","The book is mine.","The phone is hers.","The house is theirs."])
+✓ Lesson 17 36: six option groups rendered (got 6)
+✓ Lesson 17 36: A/B markers present on all six questions
+✓ Lesson 17 36: option A always precedes option B
+✓ Lesson 17 38: six option groups rendered (got 6)
+✓ Lesson 17 38: A/B markers present on all six questions
+✓ Lesson 17 38: option A always precedes option B
+✓ Lesson 17 Whose exercise keeps: Whose phone is this?
+✓ Lesson 17 Whose exercise keeps: Whose bicycle is this?
+✓ Lesson 17 Whose exercise keeps: Whose jacket is this?
+✓ Lesson 17 Whose exercise keeps: Whose house is this?
+✓ Lesson 17 Whose exercise keeps: Whose books are these?
+✓ Lesson 17 Whose exercise keeps the It's ______ pattern
+✓ Lesson 17 Whose exercise keeps the They're ______ pattern
+✓ Lesson 17 detective keeps target: her
+✓ Lesson 17 detective keeps target: his
+✓ Lesson 17 detective keeps target: their
+✓ Lesson 17 detective keeps target: yours
+✓ Lesson 17 detective keeps target: mine
+✓ Lesson 17 detective keeps target: hers
+✓ Lesson 17 detective passage renders verbatim
+✓ Lesson 17 detective keeps the quoted lines
+✓ Lesson 17 IQ200 chain renders [data-en-seq=l17-iq200chain]
+✓ Lesson 17 IQ200 keeps Alex's laptop in LTR
+✓ Lesson 17 IQ200 chain starts with the source sentence (got ["Alex's laptop","???","???"])
+✓ Lesson 17 IQ200 prompt sentence is verbatim
+✓ Lesson 17 final mission exposes a writing area
+✓ Lesson 17 final mission keeps required word: my
+✓ Lesson 17 final mission keeps required word: mine
+✓ Lesson 17 final mission keeps required word: your
+✓ Lesson 17 final mission keeps required word: yours
+✓ Lesson 17 final mission keeps required word: his
+✓ Lesson 17 final mission keeps required word: her
+✓ Lesson 17 final mission keeps required word: hers
+✓ Lesson 17 final mission keeps required word: our
+✓ Lesson 17 final mission keeps required word: ours
+✓ Lesson 17 final mission keeps required word: their
+✓ Lesson 17 final mission keeps required word: theirs
+✓ Lesson 17 final mission keeps the Whose requirement
+✓ Lesson 17 renders without throwing
+✓ Lesson 17 isolates English as LTR
+✓ Lesson 17 keeps the Arabic RTL shell
+✓ Lesson 17 renders no GB flag emoji
+Row: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)
+✓ Lesson 18 keeps its complete 26-slide sequence (got 26)
+✓ Lesson 18 every slide renders (26/26)
+✓ Lesson 18 has no empty or throwing slide ()
+✓ Lesson 18 has no reversed English word order ()
+✓ Lesson 18 exercise slides expose interactive controls ()
+✓ Lesson 18 teaching sections 1–11 are present (11)
+✓ Lesson 18 teaching order remains 1→11 (1,2,3,4,5,6,7,8,9,10,11)
+✓ Lesson 18 exercises 12–19 are present (8)
+✓ Lesson 18 exercise numbering stays 12→19 (12,13,14,15,16,17,18,19)
+✓ Lesson 18 exercise type present: detective
+✓ Lesson 18 exercise type present: challenge1
+✓ Lesson 18 exercise type present: challenge2
+✓ Lesson 18 exercise type present: challenge3
+✓ Lesson 18 exercise type present: iq200
+✓ Lesson 18 exercise type present: iq200why
+✓ Lesson 18 exercise type present: finalBoss
+✓ Lesson 18 exercise type present: miniGame
+✓ Lesson 18 slide present: cover
+✓ Lesson 18 slide present: objectives
+✓ Lesson 18 slide present: summary
+✓ Lesson 18 slide present: keyRule
+✓ Lesson 18 slide present: roadmap
+✓ Lesson 18 slide present: quiz
+✓ Lesson 18 slide present: closing
+✓ Lesson 18 rendered HTML keeps English unit: I have a book.
+✓ Lesson 18 rendered HTML keeps English unit: I have two books.
+✓ Lesson 18 rendered HTML keeps English unit: boxs
+✓ Lesson 18 rendered HTML keeps English unit: The man is tall.
+✓ Lesson 18 rendered HTML keeps English unit: The men are tall.
+✓ Lesson 18 rendered HTML keeps English unit: The woman is a doctor.
+✓ Lesson 18 rendered HTML keeps English unit: The women are doctors.
+✓ Lesson 18 rendered HTML keeps English unit: The child is happy.
+✓ Lesson 18 rendered HTML keeps English unit: The children are happy.
+✓ Lesson 18 rendered HTML keeps English unit: One person is waiting.
+✓ Lesson 18 rendered HTML keeps English unit: Five people are waiting.
+✓ Lesson 18 rendered HTML keeps English unit: I have one tooth.
+✓ Lesson 18 rendered HTML keeps English unit: I have many teeth.
+✓ Lesson 18 rendered HTML keeps English unit: My foot is cold.
+✓ Lesson 18 rendered HTML keeps English unit: My feet are cold.
+✓ Lesson 18 rendered HTML keeps English unit: I see one mouse.
+✓ Lesson 18 rendered HTML keeps English unit: I see two mice.
+✓ Lesson 18 rendered HTML keeps English unit: one sheep
+✓ Lesson 18 rendered HTML keeps English unit: five sheep
+✓ Lesson 18 rendered HTML keeps English unit: I can see three fish.
+✓ Lesson 18 rendered HTML keeps English unit: The boy is happy.
+✓ Lesson 18 rendered HTML keeps English unit: The boys are happy.
+✓ Lesson 18 rendered HTML keeps English unit: The child is tired.
+✓ Lesson 18 rendered HTML keeps English unit: The children are tired.
+✓ Lesson 18 rendered HTML keeps English unit: The woman is busy.
+✓ Lesson 18 rendered HTML keeps English unit: The women are busy.
+✓ Lesson 18 rendered HTML keeps English unit: The child was tired.
+✓ Lesson 18 rendered HTML keeps English unit: The children were tired.
+✓ Lesson 18 rendered HTML keeps English unit: The man was angry.
+✓ Lesson 18 rendered HTML keeps English unit: The men were angry.
+✓ Lesson 18 rendered HTML keeps English unit: The woman was at home.
+✓ Lesson 18 rendered HTML keeps English unit: The women were at home.
+✓ Lesson 18 rendered HTML keeps English unit: The boy plays football.
+✓ Lesson 18 rendered HTML keeps English unit: The boys play football.
+✓ Lesson 18 rendered HTML keeps English unit: The girl works here.
+✓ Lesson 18 rendered HTML keeps English unit: The girls work here.
+✓ Lesson 18 rendered HTML keeps English unit: The student studies English.
+✓ Lesson 18 rendered HTML keeps English unit: The students study English.
+✓ Lesson 18 rendered HTML keeps English unit: The child plays outside.
+✓ Lesson 18 rendered HTML keeps English unit: The children play outside.
+✓ Lesson 18 rendered HTML keeps English unit: The children play.
+✓ Lesson 18 rendered HTML keeps English unit: I have two book.
+✓ Lesson 18 rendered HTML keeps English unit: Three child are playing.
+✓ Lesson 18 rendered HTML keeps English unit: The womans are doctors.
+✓ Lesson 18 rendered HTML keeps English unit: The boys plays chess.
+✓ Lesson 18 rendered HTML keeps English unit: She has five tooths.
+✓ Lesson 18 rendered HTML keeps English unit: The men is outside.
+✓ Lesson 18 rendered HTML keeps English unit: I can see two mouses.
+✓ Lesson 18 rendered HTML keeps English unit: There are three boxs.
+✓ Lesson 18 rendered HTML keeps English unit: I have two books.
+✓ Lesson 18 rendered HTML keeps English unit: Three children are playing.
+✓ Lesson 18 rendered HTML keeps English unit: The women are doctors.
+✓ Lesson 18 rendered HTML keeps English unit: The boys play chess.
+✓ Lesson 18 rendered HTML keeps English unit: She has five teeth.
+✓ Lesson 18 rendered HTML keeps English unit: The men are outside.
+✓ Lesson 18 rendered HTML keeps English unit: I can see two mice.
+✓ Lesson 18 rendered HTML keeps English unit: There are three boxes.
+✓ Lesson 18 rendered HTML keeps English unit: The children plays in the garden.
+✓ Lesson 18 rendered HTML keeps English unit: The child play in the garden.
+✓ Lesson 18 rendered HTML keeps English unit: The men is very strong.
+✓ Lesson 18 rendered HTML keeps English unit: The woman are doctors.
+✓ Lesson 18 rendered HTML keeps English unit: Two mouse are under the table.
+✓ Lesson 18 rendered HTML keeps English unit: A children is waiting outside.
+✓ Lesson 18 rendered HTML keeps English unit: Three person are talking.
+✓ Lesson 18 rendered HTML keeps English unit: The boys studies English.
+✓ Lesson 18 rendered HTML keeps English unit: The children play football.
+✓ Lesson 18 rendered HTML keeps English unit: The child plays football.
+✓ Lesson 18 rendered HTML keeps English unit: children = plural
+✓ Lesson 18 rendered HTML keeps English unit: plural = they
+✓ Lesson 18 rendered HTML keeps English unit: They play.
+✓ Lesson 18 rendered HTML keeps English unit: child = singular
+✓ Lesson 18 rendered HTML keeps English unit: singular = he/she/it
+✓ Lesson 18 rendered HTML keeps English unit: He plays.
+✓ Lesson 18 rendered HTML keeps English unit: Yesterday, a child walked into a park.
+✓ Lesson 18 rendered HTML keeps English unit: The children were playing.
+✓ Lesson 18 rendered HTML keeps English unit: The children was playing.
+✓ Lesson 18 rendered HTML keeps English unit: Ali's book
+✓ Lesson 18 rendered HTML keeps English unit: Sara's phone
+✓ Lesson 18 rendered HTML keeps English unit: the boy's bicycle
+✓ Lesson 18 rendered HTML keeps English unit: the boys' bicycles
+✓ Lesson 18 rendered HTML keeps English unit: the child's toy
+✓ Lesson 18 rendered HTML keeps English unit: the children's toys
+✓ Lesson 18 transformation machine renders [data-en-seq=l18-machine]
+✓ Lesson 18 machine container is dir=ltr
+✓ Lesson 18 machine word bank: book → box → baby → knife → child → sheep  (got ["SINGULAR → PLURAL TRANSFORMATION MACHINE","book","box","baby","knife","child","sheep","book","→","???"])
+✓ Lesson 18 machine never reverses the word bank
+✓ Lesson 18 S/ES/IES lab renders
+✓ Lesson 18 is/are control panel renders
+✓ Lesson 18 is/are pair 1: The boy → is → happy. → The boys → are → happy. in strict order  (got ["IS / ARE CONTROL PANEL","is",": are","The boy","is","happy.","The boys","are","happy.","The child","is","tired.","The children","are","tired.","The woman","is","busy.","The women","are","busy.","boy","is","boys","are","The children is happy. ❌","children","The children are happy. ✅"])
+✓ Lesson 18 is/are pair 2: The child → is → tired. → The children → are → tired. in strict order  (got ["IS / ARE CONTROL PANEL","is",": are","The boy","is","happy.","The boys","are","happy.","The child","is","tired.","The children","are","tired.","The woman","is","busy.","The women","are","busy.","boy","is","boys","are","The children is happy. ❌","children","The children are happy. ✅"])
+✓ Lesson 18 was/were quick rule: is / was → are / were  (got ["WAS / WERE","WAS / WERE",": was",": were","WAS / WERE CONTROL PANEL",": was / were","The child","was","tired.","The children","were","tired.","The man","was","angry.","The men","were","angry.","The woman","was","at home.","The women","were","at home.","Singular:","is / was","Plural:","are / were","Singular: is / was","Plural: are / were"])
+✓ Lesson 18 present simple machine renders
+✓ Lesson 18 present simple both-sides contrast renders
+✓ Lesson 18 keeps both present simple sentences intact
+✓ Lesson 18 present simple chain: The boy plays football. → The boys play football.  (got ["Present Simple","Present Simple","Present Simple:","He / She / It → verb + s","They → base verb","PRESENT SIMPLE CONNECTION MACHINE",": He plays / They play","The boy","The boys","The boy","=","He","↓","He plays","←","plays","↓","The boy plays football.","مفرد:","The boy plays football.","The boy = He","plays","جمع:","The boys play football.","The boys = They","play","plays","The girl","works","here.","The girls","work","here.","The student","studies","English.","The students","study","English.","The child","plays","outside.","The children","play","outside.","children","The children play.","The children plays.","The girl works here. ✅","The girls work here. ✅","The student studies English. ✅","The students study English. ✅","The child plays outside. ✅","The children play outside. ✅","children","The children play. ✅","The children plays. ❌"])
+✓ Lesson 18 present simple never reverses word order
+✓ Lesson 18 Challenge 2: five option groups rendered (got 5)
+✓ Lesson 18 Challenge 2: A/B/C markers present on all five questions
+✓ Lesson 18 Challenge 2: option A always precedes B and B precedes C
+✓ Lesson 18 final boss renders
+✓ Lesson 18 final boss passage renders verbatim
+✓ Lesson 18 final boss keeps investigation word: child
+✓ Lesson 18 final boss keeps investigation word: mice
+✓ Lesson 18 final boss keeps investigation word: woman
+✓ Lesson 18 final boss keeps investigation word: children
+✓ Lesson 18 final boss keeps investigation word: balls
+✓ Lesson 18 final boss keeps investigation word: box
+✓ Lesson 18 mini game renders
+✓ Lesson 18 mini game keeps word: child
+✓ Lesson 18 mini game keeps word: children
+✓ Lesson 18 mini game keeps word: woman
+✓ Lesson 18 mini game keeps word: women
+✓ Lesson 18 mini game keeps word: mouse
+✓ Lesson 18 mini game keeps word: mice
+✓ Lesson 18 mini game keeps word: book
+✓ Lesson 18 mini game keeps word: books
+✓ Lesson 18 mini game keeps word: sheep
+✓ Lesson 18 mini game keeps word: men
+✓ Lesson 18 mini game keeps word: person
+✓ Lesson 18 mini game keeps word: people
+✓ Lesson 18 detective keeps: I have two book.
+✓ Lesson 18 detective keeps: Three child are playing.
+✓ Lesson 18 detective keeps: The womans are doctors.
+✓ Lesson 18 detective keeps: The boys plays chess.
+✓ Lesson 18 detective keeps: She has five tooths.
+✓ Lesson 18 detective keeps: The men is outside.
+✓ Lesson 18 detective keeps: I can see two mouses.
+✓ Lesson 18 detective keeps: There are three boxs.
+✓ Lesson 18 renders without throwing
+✓ Lesson 18 isolates English as LTR
+✓ Lesson 18 keeps the Arabic RTL shell
+✓ Lesson 18 renders no GB flag emoji
+✓ Lesson 19 rendered HTML keeps English unit: Ali's book
+✓ Lesson 19 rendered HTML keeps English unit: The book belongs to Ali.
+✓ Lesson 19 rendered HTML keeps English unit: Ali book
+✓ Lesson 19 rendered HTML keeps English unit: Sara's phone
+✓ Lesson 19 rendered HTML keeps English unit: Omar's bicycle
+✓ Lesson 19 rendered HTML keeps English unit: Lina's notebook
+✓ Lesson 19 rendered HTML keeps English unit: The dog's tail
+✓ Lesson 19 rendered HTML keeps English unit: The teacher's desk
+✓ Lesson 19 rendered HTML keeps English unit: the book of Ali
+✓ Lesson 19 rendered HTML keeps English unit: the camera of Sara
+✓ Lesson 19 rendered HTML keeps English unit: the tail of the dog
+✓ Lesson 19 rendered HTML keeps English unit: Maya's backpack
+✓ Lesson 19 rendered HTML keeps English unit: James's book
+✓ Lesson 19 rendered HTML keeps English unit: James' book
+✓ Lesson 19 rendered HTML keeps English unit: The boy's bag.
+✓ Lesson 19 rendered HTML keeps English unit: The boys' bags.
+✓ Lesson 19 rendered HTML keeps English unit: The girl's bicycle.
+✓ Lesson 19 rendered HTML keeps English unit: The girls' bicycles.
+✓ Lesson 19 rendered HTML keeps English unit: The student's book.
+✓ Lesson 19 rendered HTML keeps English unit: The students' books.
+✓ Lesson 19 rendered HTML keeps English unit: The teacher's room.
+✓ Lesson 19 rendered HTML keeps English unit: The teachers' room.
+✓ Lesson 19 rendered HTML keeps English unit: The students's books
+✓ Lesson 19 rendered HTML keeps English unit: The students' books.
+✓ Lesson 19 rendered HTML keeps English unit: The child's toy.
+✓ Lesson 19 rendered HTML keeps English unit: The children's toys.
+✓ Lesson 19 rendered HTML keeps English unit: childrens'
+✓ Lesson 19 rendered HTML keeps English unit: children's
+✓ Lesson 19 rendered HTML keeps English unit: The man's jacket.
+✓ Lesson 19 rendered HTML keeps English unit: The men's jackets.
+✓ Lesson 19 rendered HTML keeps English unit: The woman's bag.
+✓ Lesson 19 rendered HTML keeps English unit: The women's bags.
+✓ Lesson 19 rendered HTML keeps English unit: The person's name.
+✓ Lesson 19 rendered HTML keeps English unit: The people's opinions.
+✓ Lesson 19 rendered HTML keeps English unit: The tooth's shape.
+✓ Lesson 19 rendered HTML keeps English unit: The teeth's condition.
+✓ Lesson 19 rendered HTML keeps English unit: The man's foot.
+✓ Lesson 19 rendered HTML keeps English unit: The men's feet.
+✓ Lesson 19 rendered HTML keeps English unit: students' books
+✓ Lesson 19 rendered HTML keeps English unit: children's toys
+✓ Lesson 19 rendered HTML keeps English unit: the school's name
+✓ Lesson 19 rendered HTML keeps English unit: the city's center
+✓ Lesson 19 rendered HTML keeps English unit: the company's website
+✓ Lesson 19 rendered HTML keeps English unit: the dog's name
+✓ Lesson 19 rendered HTML keeps English unit: His book
+✓ Lesson 19 rendered HTML keeps English unit: Sara's laptop.
+✓ Lesson 19 rendered HTML keeps English unit: Her laptop.
+✓ Lesson 19 rendered HTML keeps English unit: The laptop is hers.
+✓ Lesson 19 rendered HTML keeps English unit: Omar's phone.
+✓ Lesson 19 rendered HTML keeps English unit: His phone.
+✓ Lesson 19 rendered HTML keeps English unit: The phone is his.
+✓ Lesson 19 rendered HTML keeps English unit: Maya's notebook.
+✓ Lesson 19 rendered HTML keeps English unit: The notebook is hers.
+✓ Lesson 19 rendered HTML keeps English unit: The students' classroom.
+✓ Lesson 19 rendered HTML keeps English unit: Their classroom.
+✓ Lesson 19 rendered HTML keeps English unit: The classroom is theirs.
+✓ Lesson 19 rendered HTML keeps English unit: The book's cover.
+✓ Lesson 19 rendered HTML keeps English unit: The books are interesting.
+✓ Lesson 19 rendered HTML keeps English unit: one boy's bicycle
+✓ Lesson 19 rendered HTML keeps English unit: two boys' bicycles
+✓ Lesson 19 rendered HTML keeps English unit: The boy's shoes are dirty.
+✓ Lesson 19 rendered HTML keeps English unit: The boys' shoes are dirty.
+✓ Lesson 19 rendered HTML keeps English unit: The child's toys.
+✓ Lesson 19 rendered HTML keeps English unit: The children's toys.
+✓ Lesson 19 rendered HTML keeps English unit: Liam has a small dog. The dog's name is Rocket. Liam also has two sisters. The girls' room is next to Liam's room. Their mother keeps the children's toys in a large box.
+✓ Lesson 19 rendered HTML keeps English unit: The boy's are playing.
+✓ Lesson 19 rendered HTML keeps English unit: The boys' are playing.
+✓ Lesson 19 rendered HTML keeps English unit: The boys' bags are heavy.
+✓ Lesson 19 rendered HTML keeps English unit: The childrens' books are new.
+✓ Lesson 19 rendered HTML keeps English unit: The children's books are new.
+✓ Lesson 19 rendered HTML keeps English unit: My sister's phone is broken.
+✓ Lesson 19 rendered HTML keeps English unit: My sisters' phones are broken.
+✓ Lesson 19 rendered HTML keeps English unit: boy → boy's
+✓ Lesson 19 rendered HTML keeps English unit: boys → boys'
+✓ Lesson 19 rendered HTML keeps English unit: children → children's
+✓ Lesson 19 rendered HTML keeps English unit: Sara's book
+✓ Lesson 19 rendered HTML keeps English unit: The book is hers.
+✓ Lesson 19 rendered HTML keeps English unit: Their toys
+✓ Lesson 19 rendered HTML keeps English unit: The toys are theirs.
+✓ Lesson 19 rule cases render
+✓ Lesson 19 golden table renders
+✓ Lesson 19 apostrophe machine renders
+✓ Lesson 19 rule cases keep all three possessive forms intact
+✓ Lesson 19 rule cases never reverse possessive order
+✓ Lesson 19 boy's vs boys' comparator renders
+✓ Lesson 19 number detector renders
+✓ Lesson 19 owner detector renders
+✓ Lesson 19 three-system machine renders
+✓ Lesson 19 apostrophe≠plural lab renders
+✓ Lesson 19 detective keeps: The childs toy is broken.
+✓ Lesson 19 detective keeps: The childrens toys are outside.
+✓ Lesson 19 detective keeps: The boys's room is large.
+✓ Lesson 19 detective keeps: The girls bag is red.
+✓ Lesson 19 detective keeps: The students's books are on the desk.
+✓ Lesson 19 detective keeps: I like the dogs' tail.
+✓ Lesson 19 detective keeps: The woman bag is expensive.
+✓ Lesson 19 detective keeps: The mens shoes are black.
+✓ Lesson 19 Challenge 1: four option groups rendered (got 4)
+✓ Lesson 19 Challenge 1: A/B/C markers on all four questions
+✓ Lesson 19 Challenge 1: A precedes B and B precedes C
+✓ Lesson 19 final boss renders
+✓ Lesson 19 final boss passage renders verbatim (word order intact)
+✓ Lesson 19 final boss keeps passage word: The dog's name
+✓ Lesson 19 final boss keeps passage word: the girls'
+✓ Lesson 19 final boss keeps passage word: Liam's room
+✓ Lesson 19 final boss keeps passage word: children's toys
+✓ Lesson 19 speed test renders
+✓ Lesson 19 speed test keeps: The boy's are playing.
+✓ Lesson 19 speed test keeps: The boys' are playing.
+✓ Lesson 19 speed test keeps: The boys' bags are heavy.
+✓ Lesson 19 speed test keeps: The childrens' books are new.
+✓ Lesson 19 speed test keeps: The children's books are new.
+✓ Lesson 19 speed test keeps: My sister's phone is broken.
+✓ Lesson 19 speed test keeps: My sisters' phones are broken.
+✓ Lesson 19 IQ200 keeps count prompts
+✓ Lesson 19 renders without throwing
+✓ Lesson 19 isolates English as LTR
+✓ Lesson 19 keeps the Arabic RTL shell
+✓ Lesson 19 renders no GB flag emoji
+✓ Lesson 20 keeps the complete 44-slide sequence (got 44)
+✓ Lesson 20 every slide renders (44/44)
+✓ Lesson 20 has no empty or throwing slide ()
+✓ Lesson 20 isolates English on every slide ()
+✓ Lesson 20 renders a source-section marker on all 41 source slides ()
+✓ Lesson 20 maps all 41 source sections to slides (41)
+✓ Lesson 20 source slide order remains 1→41 (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41)
+✓ Lesson 20 source-heading ledger has 41 headings (41)
+✓ Lesson 20 includes shared final quiz and closing slides
+✓ Lesson 20 exercise type present: detective
+✓ Lesson 20 exercise type present: challenge1
+✓ Lesson 20 exercise type present: challenge2
+✓ Lesson 20 exercise type present: iq200
+✓ Lesson 20 exercise type present: iq200b
+✓ Lesson 20 exercise type present: finalBoss
+✓ Lesson 20 exercise type present: speed
+✓ Lesson 20 exercise type present: golden
+✓ Lesson 20 exercise type present: builder
+✓ Lesson 20 shared quiz has 12 questions (12)
+✓ Lesson 20 rendered HTML keeps English unit: This book is interesting.
+✓ Lesson 20 rendered HTML keeps English unit: This apple is red.
+✓ Lesson 20 rendered HTML keeps English unit: These apples are fresh.
+✓ Lesson 20 rendered HTML keeps English unit: Those students are waiting outside.
+✓ Lesson 20 rendered HTML keeps English unit: This child.
+✓ Lesson 20 rendered HTML keeps English unit: These children.
+✓ Lesson 20 rendered HTML keeps English unit: This is Ali.
+✓ Lesson 20 rendered HTML keeps English unit: Those are my teachers.
+✓ Lesson 20 rendered HTML keeps English unit: What are these?
+✓ Lesson 20 rendered HTML keeps English unit: This is my notebook.
+✓ Lesson 20 rendered HTML keeps English unit: Those are the children's toys.
+✓ Lesson 20 rendered HTML keeps English unit: That idea is interesting.
+✓ Lesson 20 rendered HTML keeps English unit: This is not my bag.
+✓ Lesson 20 rendered HTML keeps English unit: Whose are those?
+✓ Lesson 20 rendered HTML keeps English unit: This books ❌
+✓ Lesson 20 rendered HTML keeps English unit: This children ❌
+✓ Lesson 20 rendered HTML keeps English unit: These child ❌
+✓ Lesson 20 rendered HTML keeps English unit: Those car is red ❌
+✓ Lesson 20 rendered HTML keeps English unit: This are my shoes ❌
+✓ Lesson 20 rendered HTML keeps English unit: That are my friends ❌
+✓ Lesson 20 rendered HTML keeps English unit: This books are new.
+✓ Lesson 20 rendered HTML keeps English unit: It's my new camera.
+✓ Lesson 20 rendered HTML keeps English unit: That's my brother's telescope.
+✓ Lesson 20 rendered HTML keeps English unit: Those are the children's bicycles.
+✓ Lesson 20 rendered HTML keeps English unit: Those are the children's toys.
+✓ Lesson 20 keeps intentional error inventory: This books ❌
+✓ Lesson 20 keeps intentional error inventory: This children ❌
+✓ Lesson 20 keeps intentional error inventory: These child ❌
+✓ Lesson 20 keeps intentional error inventory: Those car is red ❌
+✓ Lesson 20 keeps intentional error inventory: This are my shoes ❌
+✓ Lesson 20 keeps intentional error inventory: That are my friends ❌
+✓ Lesson 20 never renders reversed demonstrative/noun order
+✓ Lesson 20 renders no GB flag emoji
+✓ Lesson 20 four-zone map renders
+✓ Lesson 20 magic map: This → That → These → Those  (got ["THE FOUR-ZONE MAP","This","Singular","Near","That","Singular","Far","These","Plural","Near","Those","Plural","Far","This","="])
+✓ Lesson 20 demonstrative radar renders
+✓ Lesson 20 demonstrative radar exposes selectable controls
+✓ Lesson 20 two-question decision engine renders
+✓ Lesson 20 decision engine keeps LTR choice formula: This / That
+✓ Lesson 20 decision engine keeps LTR choice formula: These / Those
+✓ Lesson 20 decision engine keeps LTR choice formula: This / These
+✓ Lesson 20 decision engine keeps LTR choice formula: That / Those
+✓ Lesson 20 Final Boss renders
+✓ Lesson 20 Final Boss dialogue: What is this? → It's my new camera. → And what is that? → That's my brother's telescope. → What are these? → These are our notebooks. → And what are those? → Those are the children's bicycles. in strict order  (got ["FINAL BOSS","FINAL BOSS","Maya","What is this?","Noah","It's my new camera.","Maya","And what is that?","Noah","That's my brother's telescope.","Maya","What are these?","Noah","These are our notebooks.","Maya","And what are those?","Noah","Those are the children's bicycles.","Noah:","this","that","these","notebooks","those","bicycles","my new camera","my brother's telescope؟","my","my brother's","children's bicycles","childrens' bicycles؟"])
+✓ Lesson 20 Speed Game renders
+✓ Lesson 20 Speed Game word bank: This → That → These → Those  (got ["This","That","These","Those","???","???","???","???"])
+✓ Lesson 20 sentence-builder token banks can assemble every supplied model exactly
+✓ Lesson 20 shared quiz renders a locked Teacher’s Space without key disclosure
+✓ Lesson 21 keeps the complete 51-slide sequence (got 51)
+✓ Lesson 21 every slide renders (51/51)
+✓ Lesson 21 has no empty or throwing slide ()
+✓ Lesson 21 isolates English on every slide ()
+✓ Lesson 21 renders a source-section marker on all 48 source slides ()
+✓ Lesson 21 maps all 48 source sections to slides (48)
+✓ Lesson 21 source slide order remains 1→48 (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48)
+✓ Lesson 21 source-heading ledger has 48 headings (48)
+✓ Lesson 21 includes shared final quiz and closing slides
+✓ Lesson 21 exercise type present: detective
+✓ Lesson 21 exercise type present: solutions
+✓ Lesson 21 exercise type present: challenge1
+✓ Lesson 21 exercise type present: challenge2
+✓ Lesson 21 exercise type present: challenge3
+✓ Lesson 21 exercise type present: challenge4
+✓ Lesson 21 exercise type present: iq200
+✓ Lesson 21 exercise type present: iq200b
+✓ Lesson 21 exercise type present: finalBoss
+✓ Lesson 21 shared quiz has 12 questions (12)
+✓ Lesson 21 rendered HTML keeps English unit: There is a cat in the garden.
+✓ Lesson 21 rendered HTML keeps English unit: There is a computer on the desk.
+✓ Lesson 21 rendered HTML keeps English unit: There is a tree near the house.
+✓ Lesson 21 rendered HTML keeps English unit: There is an apple in the basket.
+✓ Lesson 21 rendered HTML keeps English unit: There is a strange noise outside.
+✓ Lesson 21 rendered HTML keeps English unit: There is a dog.
+✓ Lesson 21 rendered HTML keeps English unit: There is a bird.
+✓ Lesson 21 rendered HTML keeps English unit: There is an orange.
+✓ Lesson 21 rendered HTML keeps English unit: There is an umbrella.
+✓ Lesson 21 rendered HTML keeps English unit: There is dog. ❌
+✓ Lesson 21 rendered HTML keeps English unit: There is apple. ❌
+✓ Lesson 21 rendered HTML keeps English unit: There is a dog. ✅
+✓ Lesson 21 rendered HTML keeps English unit: There is an apple. ✅
+✓ Lesson 21 rendered HTML keeps English unit: There are two cats in the garden.
+✓ Lesson 21 rendered HTML keeps English unit: There are five books on the shelf.
+✓ Lesson 21 rendered HTML keeps English unit: There are three windows in the room.
+✓ Lesson 21 rendered HTML keeps English unit: There are many students in the classroom.
+✓ Lesson 21 rendered HTML keeps English unit: There is a book.
+✓ Lesson 21 rendered HTML keeps English unit: There are three books.
+✓ Lesson 21 rendered HTML keeps English unit: There is a child in the room.
+✓ Lesson 21 rendered HTML keeps English unit: There are three children in the room.
+✓ Lesson 21 rendered HTML keeps English unit: There is one child in the park.
+✓ Lesson 21 rendered HTML keeps English unit: There are three children in the park.
+✓ Lesson 21 rendered HTML keeps English unit: There is one woman outside.
+✓ Lesson 21 rendered HTML keeps English unit: There are two women outside.
+✓ Lesson 21 rendered HTML keeps English unit: There is one mouse under the table.
+✓ Lesson 21 rendered HTML keeps English unit: There are four mice under the table.
+✓ Lesson 21 rendered HTML keeps English unit: There is a lamp on the table.
+✓ Lesson 21 rendered HTML keeps English unit: There is a bag under the chair.
+✓ Lesson 21 rendered HTML keeps English unit: There is a bicycle near the door.
+✓ Lesson 21 rendered HTML keeps English unit: There is a cat behind the sofa.
+✓ Lesson 21 rendered HTML keeps English unit: There is a picture above the bed.
+✓ Lesson 21 rendered HTML keeps English unit: There are books on the desk.
+✓ Lesson 21 rendered HTML keeps English unit: There are shoes under the bed.
+✓ Lesson 21 rendered HTML keeps English unit: There are trees behind the house.
+✓ Lesson 21 rendered HTML keeps English unit: There are two chairs next to the window.
+✓ Lesson 21 rendered HTML keeps English unit: There is a robot in the laboratory.
+✓ Lesson 21 rendered HTML keeps English unit: There are three robots in the laboratory.
+✓ Lesson 21 rendered HTML keeps English unit: There is not a computer here.
+✓ Lesson 21 rendered HTML keeps English unit: There isn't a computer here.
+✓ Lesson 21 rendered HTML keeps English unit: There are not any computers here.
+✓ Lesson 21 rendered HTML keeps English unit: There aren't any computers here.
+✓ Lesson 21 rendered HTML keeps English unit: There isn't a car outside.
+✓ Lesson 21 rendered HTML keeps English unit: There isn't a teacher in the room.
+✓ Lesson 21 rendered HTML keeps English unit: There aren't any students here.
+✓ Lesson 21 rendered HTML keeps English unit: There aren't any chairs in the room.
+✓ Lesson 21 rendered HTML keeps English unit: Is there a bathroom upstairs?
+✓ Lesson 21 rendered HTML keeps English unit: Is there a computer on the desk?
+✓ Lesson 21 rendered HTML keeps English unit: Are there any books here?
+✓ Lesson 21 rendered HTML keeps English unit: Are there two windows in the room?
+✓ Lesson 21 rendered HTML keeps English unit: Yes, there is.
+✓ Lesson 21 rendered HTML keeps English unit: No, there isn't.
+✓ Lesson 21 rendered HTML keeps English unit: Yes, there are.
+✓ Lesson 21 rendered HTML keeps English unit: No, there aren't.
+✓ Lesson 21 rendered HTML keeps English unit: Is there a problem?
+✓ Lesson 21 rendered HTML keeps English unit: Yes, it is. ❌
+✓ Lesson 21 rendered HTML keeps English unit: Yes, there is. ✅
+✓ Lesson 21 rendered HTML keeps English unit: There is a cat in the garden.
+✓ Lesson 21 rendered HTML keeps English unit: It is black.
+✓ Lesson 21 rendered HTML keeps English unit: This is a laptop.
+✓ Lesson 21 rendered HTML keeps English unit: There is a laptop on the table.
+✓ Lesson 21 rendered HTML keeps English unit: This is my laptop.
+✓ Lesson 21 rendered HTML keeps English unit: There is a laptop in my room.
+✓ Lesson 21 rendered HTML keeps English unit: There are some books on the table.
+✓ Lesson 21 rendered HTML keeps English unit: There are some students outside.
+✓ Lesson 21 rendered HTML keeps English unit: There are some apples in the basket.
+✓ Lesson 21 rendered HTML keeps English unit: Are there any books?
+✓ Lesson 21 rendered HTML keeps English unit: Are there any students outside?
+✓ Lesson 21 rendered HTML keeps English unit: There aren't any books.
+✓ Lesson 21 rendered HTML keeps English unit: There aren't any students outside.
+✓ Lesson 21 rendered HTML keeps English unit: some books
+✓ Lesson 21 rendered HTML keeps English unit: some students
+✓ Lesson 21 rendered HTML keeps English unit: some apples
+✓ Lesson 21 rendered HTML keeps English unit: some chairs
+✓ Lesson 21 rendered HTML keeps English unit: There is an apple.
+✓ Lesson 21 rendered HTML keeps English unit: There is one chair.
+✓ Lesson 21 rendered HTML keeps English unit: There are two chairs.
+✓ Lesson 21 rendered HTML keeps English unit: There are seven chairs.
+✓ Lesson 21 rendered HTML keeps English unit: There are twenty chairs.
+✓ Lesson 21 rendered HTML keeps English unit: There is two chairs. ❌
+✓ Lesson 21 rendered HTML keeps English unit: There are two chairs. ✅
+✓ Lesson 21 rendered HTML keeps English unit: There are many students here.
+✓ Lesson 21 rendered HTML keeps English unit: There are a lot of cars outside.
+✓ Lesson 21 rendered HTML keeps English unit: There are several trees in the park.
+✓ Lesson 21 rendered HTML keeps English unit: There is a large window in my bedroom.
+✓ Lesson 21 rendered HTML keeps English unit: There is a desk near the window.
+✓ Lesson 21 rendered HTML keeps English unit: There are two chairs beside the desk.
+✓ Lesson 21 rendered HTML keeps English unit: There are some books on the shelf.
+✓ Lesson 21 rendered HTML keeps English unit: There is a small lamp on the desk.
+✓ Lesson 21 rendered HTML keeps English unit: There are pictures on the wall.
+✓ Lesson 21 rendered HTML keeps English unit: There is a bed in the room.
+✓ Lesson 21 rendered HTML keeps English unit: There are two chairs.
+✓ Lesson 21 rendered HTML keeps English unit: There is a lamp next to the bed.
+✓ Lesson 21 rendered HTML keeps English unit: There are five books on the desk.
+✓ Lesson 21 rendered HTML keeps English unit: There are three pictures on the wall.
+✓ Lesson 21 rendered HTML keeps English unit: Is there a desk in the room?
+✓ Lesson 21 rendered HTML keeps English unit: Is there a television?
+✓ Lesson 21 rendered HTML keeps English unit: Are there any computers?
+✓ Lesson 21 rendered HTML keeps English unit: There is a laptop on the desk.
+✓ Lesson 21 rendered HTML keeps English unit: There are three books next to the laptop.
+✓ Lesson 21 rendered HTML keeps English unit: There is a lamp behind the laptop.
+✓ Lesson 21 rendered HTML keeps English unit: There aren't any pictures on the wall.
+✓ Lesson 21 rendered HTML keeps English unit: Is there a desk?
+✓ Lesson 21 rendered HTML keeps English unit: Are there two chairs?
+✓ Lesson 21 rendered HTML keeps English unit: Is there a laptop?
+✓ Lesson 21 rendered HTML keeps English unit: Are there four books?
+✓ Lesson 21 rendered HTML keeps English unit: Is there a lamp?
+✓ Lesson 21 rendered HTML keeps English unit: Are there any pictures?
+✓ Lesson 21 rendered HTML keeps English unit: There is some water in the bottle.
+✓ Lesson 21 rendered HTML keeps English unit: There is some milk in the fridge.
+✓ Lesson 21 rendered HTML keeps English unit: There are some water. ❌
+✓ Lesson 21 rendered HTML keeps English unit: There is a bottle.
+✓ Lesson 21 rendered HTML keeps English unit: There is some water.
+✓ Lesson 21 rendered HTML keeps English unit: There are three bottles.
+✓ Lesson 21 rendered HTML keeps English unit: There are some bottles.
+✓ Lesson 21 rendered HTML keeps English unit: There is a small blue book on the wooden table.
+✓ Lesson 21 rendered HTML keeps English unit: There is a small house near the river.
+✓ Lesson 21 rendered HTML keeps English unit: There is a beautiful garden behind the house.
+✓ Lesson 21 rendered HTML keeps English unit: There is an old computer on the desk.
+✓ Lesson 21 rendered HTML keeps English unit: There is Ali's bag on the chair.
+✓ Lesson 21 rendered HTML keeps English unit: There is Sara's phone on the desk.
+✓ Lesson 21 rendered HTML keeps English unit: There are the children's toys in the box.
+✓ Lesson 21 rendered HTML keeps English unit: There is a book on the table.
+✓ Lesson 21 rendered HTML keeps English unit: This is the book.
+✓ Lesson 21 rendered HTML keeps English unit: These are the books.
+✓ Lesson 21 rendered HTML keeps English unit: That is the book.
+✓ Lesson 21 rendered HTML keeps English unit: Those are the books.
+✓ Lesson 21 rendered HTML keeps English unit: There is a red car outside.
+✓ Lesson 21 rendered HTML keeps English unit: This is the red car.
+✓ Lesson 21 rendered HTML keeps English unit: It is very expensive.
+✓ Lesson 21 rendered HTML keeps English unit: The car is Sara's.
+✓ Lesson 21 rendered HTML keeps English unit: There are a book. ❌
+✓ Lesson 21 rendered HTML keeps English unit: There is a book. ✅
+✓ Lesson 21 rendered HTML keeps English unit: There is two books. ❌
+✓ Lesson 21 rendered HTML keeps English unit: There are two books. ✅
+✓ Lesson 21 rendered HTML keeps English unit: There is many students. ❌
+✓ Lesson 21 rendered HTML keeps English unit: There are many students. ✅
+✓ Lesson 21 rendered HTML keeps English unit: Is there two chairs? ❌
+✓ Lesson 21 rendered HTML keeps English unit: Are there two chairs? ✅
+✓ Lesson 21 rendered HTML keeps English unit: Are there a computer? ❌
+✓ Lesson 21 rendered HTML keeps English unit: Is there a computer? ✅
+✓ Lesson 21 rendered HTML keeps English unit: There are a water bottle. ❌
+✓ Lesson 21 rendered HTML keeps English unit: There is a water bottle. ✅
+✓ Lesson 21 rendered HTML keeps English unit: There are a cat under the table.
+✓ Lesson 21 rendered HTML keeps English unit: There is three students outside.
+✓ Lesson 21 rendered HTML keeps English unit: There are a computer on the desk.
+✓ Lesson 21 rendered HTML keeps English unit: Is there two windows?
+✓ Lesson 21 rendered HTML keeps English unit: Are there a teacher in the classroom?
+✓ Lesson 21 rendered HTML keeps English unit: There is many books on the shelf.
+✓ Lesson 21 rendered HTML keeps English unit: There isn't any chairs here.
+✓ Lesson 21 rendered HTML keeps English unit: There aren't a chair in the room.
+✓ Lesson 21 rendered HTML keeps English unit: Yes, it is.
+✓ Lesson 21 rendered HTML keeps English unit: There is two children in the garden.
+✓ Lesson 21 rendered HTML keeps English unit: Are there two windows?
+✓ Lesson 21 rendered HTML keeps English unit: Is there a teacher in the classroom?
+✓ Lesson 21 rendered HTML keeps English unit: There are two children in the garden.
+✓ Lesson 21 rendered HTML keeps English unit: ______ a book on the desk.
+✓ Lesson 21 rendered HTML keeps English unit: ______ three pencils in the bag.
+✓ Lesson 21 rendered HTML keeps English unit: ______ a strange sound outside.
+✓ Lesson 21 rendered HTML keeps English unit: ______ five students in the room.
+✓ Lesson 21 rendered HTML keeps English unit: ______ a dog near the door.
+✓ Lesson 21 rendered HTML keeps English unit: ______ two bicycles in the garage.
+✓ Lesson 21 rendered HTML keeps English unit: ______ a child in the garden.
+✓ Lesson 21 rendered HTML keeps English unit: ______ four children in the garden.
+✓ Lesson 21 rendered HTML keeps English unit: ______ a computer on the table.
+✓ Lesson 21 rendered HTML keeps English unit: ______ two computers on the table.
+✓ Lesson 21 rendered HTML keeps English unit: ______ a child in the park.
+✓ Lesson 21 rendered HTML keeps English unit: ______ three children in the park.
+✓ Lesson 21 rendered HTML keeps English unit: There is a dog outside.
+✓ Lesson 21 rendered HTML keeps English unit: There are some books on the desk.
+✓ Lesson 21 rendered HTML keeps English unit: There is a computer in the room.
+✓ Lesson 21 rendered HTML keeps English unit: There are three chairs here.
+✓ Lesson 21 rendered HTML keeps English unit: There is a restaurant nearby.
+✓ Lesson 21 rendered HTML keeps English unit: There are two bathrooms upstairs.
+✓ Lesson 21 rendered HTML keeps English unit: There is a problem.
+✓ Lesson 21 rendered HTML keeps English unit: There are some students outside.
+✓ Lesson 21 rendered HTML keeps English unit: one child
+✓ Lesson 21 rendered HTML keeps English unit: three children
+✓ Lesson 21 rendered HTML keeps English unit: one woman
+✓ Lesson 21 rendered HTML keeps English unit: four women
+✓ Lesson 21 rendered HTML keeps English unit: one mouse
+✓ Lesson 21 rendered HTML keeps English unit: five mice
+✓ Lesson 21 rendered HTML keeps English unit: There is a large table in the kitchen.
+✓ Lesson 21 rendered HTML keeps English unit: There are four chairs around the table.
+✓ Lesson 21 rendered HTML keeps English unit: There is a bowl on the table.
+✓ Lesson 21 rendered HTML keeps English unit: There are some apples in the bowl.
+✓ Lesson 21 rendered HTML keeps English unit: There is a refrigerator next to the wall.
+✓ Lesson 21 rendered HTML keeps English unit: Is there a table?
+✓ Lesson 21 rendered HTML keeps English unit: Are there four chairs?
+✓ Lesson 21 rendered HTML keeps English unit: Is there a bowl?
+✓ Lesson 21 rendered HTML keeps English unit: Are there any apples?
+✓ Lesson 21 rendered HTML keeps English unit: Is there a refrigerator?
+✓ Lesson 21 rendered HTML keeps English unit: Are there any pictures?
+✓ Lesson 21 rendered HTML keeps English unit: There is...
+✓ Lesson 21 rendered HTML keeps English unit: There are...
+✓ Lesson 21 rendered HTML keeps English unit: There isn't...
+✓ Lesson 21 rendered HTML keeps English unit: There aren't...
+✓ Lesson 21 rendered HTML keeps English unit: Is there...?
+✓ Lesson 21 rendered HTML keeps English unit: Are there...?
+✓ Lesson 21 rendered HTML keeps English unit: There are two small children in the beautiful garden near Sara's house.
+✓ Lesson 21 keeps intentional error inventory: There is dog. ❌
+✓ Lesson 21 keeps intentional error inventory: There is apple. ❌
+✓ Lesson 21 keeps intentional error inventory: There are a book. ❌
+✓ Lesson 21 keeps intentional error inventory: There is two books. ❌
+✓ Lesson 21 keeps intentional error inventory: There is many students. ❌
+✓ Lesson 21 keeps intentional error inventory: Is there two chairs? ❌
+✓ Lesson 21 keeps intentional error inventory: Are there a computer? ❌
+✓ Lesson 21 keeps intentional error inventory: There are a water bottle. ❌
+✓ Lesson 21 keeps intentional error inventory: There is two chairs. ❌
+✓ Lesson 21 keeps intentional error inventory: There are some water. ❌
+✓ Lesson 21 Final Boss keeps all Arabic clue lines
+✓ Lesson 21 never renders reversed English order
+✓ Lesson 21 renders no GB flag emoji
+✓ Lesson 21 existence detector renders
+✓ Lesson 21 existence detector paths: There is → There are  (got ["There is / There are","There is / There are","MEANING BOARD","There is","There are","There is a book.","There are two books.","EXISTENCE DETECTOR","ONE","There is","MORE THAN ONE","There are","There is one box in the scene.","There is + Singular Noun","There are + Plural Noun"])
+✓ Lesson 21 golden rule formulas render
+✓ Lesson 21 location lab renders
+✓ Lesson 21 location lab keeps preposition: in
+✓ Lesson 21 location lab keeps preposition: on
+✓ Lesson 21 location lab keeps preposition: under
+✓ Lesson 21 location lab keeps preposition: near
+✓ Lesson 21 location lab keeps preposition: behind
+✓ Lesson 21 location lab keeps preposition: in front of
+✓ Lesson 21 location lab keeps preposition: next to
+✓ Lesson 21 location lab keeps preposition: between
+✓ Lesson 21 golden summary slide renders
+✓ Lesson 21 golden summary: There is... → There are... → There isn't... → There aren't... → Is there...? → Are there...? → Yes, there is. → No, there isn't. → Yes, there are. → No, there aren't. in strict order  (got ["There is...","There are...","There isn't...","There aren't...","Is there...?","Are there...?","Yes, there is.","No, there isn't.","Yes, there are.","No, there aren't."])
+✓ Lesson 21 mind map: Singular → There is → Plural → There are → Singular Negative → There isn't → Plural Negative → There aren't → Singular Question → Is there...? → Plural Question → Are there...?  (got ["Singular","There is","Plural","There are","Singular Negative","There isn't","Plural Negative","There aren't","Singular Question","Is there...?","Plural Question","Are there...?"])
+✓ Lesson 21 final IQ200 sentence renders verbatim
+✓ Lesson 21 sentence breakdown keeps part: There are
+✓ Lesson 21 sentence breakdown keeps part: two
+✓ Lesson 21 sentence breakdown keeps part: small
+✓ Lesson 21 sentence breakdown keeps part: children
+✓ Lesson 21 sentence breakdown keeps part: in the beautiful garden
+✓ Lesson 21 sentence breakdown keeps part: near Sara's house
+✓ Lesson 21 Final Boss renders
+✓ Lesson 21 Final Boss keeps clue: يوجد مكتب بجانب النافذة.
+✓ Lesson 21 Final Boss keeps clue: يوجد حاسوب على المكتب.
+✓ Lesson 21 Final Boss keeps clue: توجد ثلاثة كتب بجانب الحاسوب.
+✓ Lesson 21 Final Boss keeps clue: توجد حقيبة تحت المكتب.
+✓ Lesson 21 Final Boss keeps clue: يوجد طفل في الغرفة.
+✓ Lesson 21 Final Boss keeps clue: يوجد طفلان آخران خارج الغرفة.
+✓ Lesson 21 Final Boss keeps clue: لا توجد صور على الجدار.
+✓ Lesson 21 Final Boss keeps clue: توجد ساعة فوق الباب.
+✓ Lesson 21 Final Boss keeps required formulas
+✓ Lesson 21 kitchen investigation renders
+✓ Lesson 21 kitchen keeps scene line: There is a large table in the kitchen.
+✓ Lesson 21 kitchen keeps scene line: There are four chairs around the table.
+✓ Lesson 21 kitchen keeps scene line: There is a bowl on the table.
+✓ Lesson 21 kitchen keeps scene line: There are some apples in the bowl.
+✓ Lesson 21 kitchen keeps scene line: There is a refrigerator next to the wall.
+✓ Lesson 21 kitchen keeps scene line: There aren't any pictures on the wall.
+✓ Lesson 21 IQ200 reasoning lab renders
+✓ Lesson 21 IQ200 keeps given phrase: one child
+✓ Lesson 21 IQ200 keeps given phrase: three children
+✓ Lesson 21 IQ200 keeps given phrase: one woman
+✓ Lesson 21 IQ200 keeps given phrase: four women
+✓ Lesson 21 IQ200 keeps given phrase: one mouse
+✓ Lesson 21 IQ200 keeps given phrase: five mice
+✓ Lesson 21 Grammar Detective renders
+✓ Lesson 21 detective keeps wrong sentence: There are a cat under the table.
+✓ Lesson 21 detective keeps wrong sentence: There is three students outside.
+✓ Lesson 21 detective keeps wrong sentence: There are a computer on the desk.
+✓ Lesson 21 detective keeps wrong sentence: Is there two windows?
+✓ Lesson 21 detective keeps wrong sentence: Are there a teacher in the classroom?
+✓ Lesson 21 detective keeps wrong sentence: There is many books on the shelf.
+✓ Lesson 21 detective keeps wrong sentence: There isn't any chairs here.
+✓ Lesson 21 detective keeps wrong sentence: There aren't a chair in the room.
+✓ Lesson 21 detective keeps wrong sentence: There is two children in the garden.
+✓ Lesson 21 shared quiz renders Teacher’s Space section
+✓ Lesson 21 shared quiz keeps STEP 3 check button
+✓ Lesson 21 quiz renders no answer key before unlocking
+✓ Lesson 21 renders without throwing
+✓ Lesson 21 isolates English as LTR
+✓ Lesson 21 keeps the Arabic RTL shell
+✓ Lesson 21 full lesson renders no GB flag emoji
+✓ Lesson 22 keeps the complete slide sequence (got 44)
+✓ Lesson 22 every slide renders (44/44)
+✓ Lesson 22 has no empty or throwing slide ()
+✓ Lesson 22 isolates English on every slide ()
+✓ Lesson 22 renders a source-section marker on all source slides ()
+✓ Lesson 22 maps source sections to slides (41)
+✓ Lesson 22 source-heading ledger has 42 headings (42)
+✓ Lesson 22 includes shared final quiz and closing slides
+✓ Lesson 22 exercise type present: detective
+✓ Lesson 22 exercise type present: challenge1
+✓ Lesson 22 exercise type present: challenge2
+✓ Lesson 22 exercise type present: challenge3
+✓ Lesson 22 exercise type present: iq200a
+✓ Lesson 22 exercise type present: iq200b
+✓ Lesson 22 exercise type present: finalBoss
+✓ Lesson 22 exercise type present: trueFalse
+✓ Lesson 22 shared quiz has 12 questions (12)
+✓ Lesson 22 rendered HTML keeps English unit: The book is in the bag.
+✓ Lesson 22 rendered HTML keeps English unit: The keys are in the drawer.
+✓ Lesson 22 rendered HTML keeps English unit: The children are in the classroom.
+✓ Lesson 22 rendered HTML keeps English unit: There is a cat in the box.
+✓ Lesson 22 rendered HTML keeps English unit: The phone is on the table.
+✓ Lesson 22 rendered HTML keeps English unit: The cat is under the table.
+✓ Lesson 22 rendered HTML keeps English unit: The clock is above the door.
+✓ Lesson 22 rendered HTML keeps English unit: The temperature is below zero.
+✓ Lesson 22 rendered HTML keeps English unit: The car is behind the house.
+✓ Lesson 22 rendered HTML keeps English unit: The teacher is in front of the students.
+✓ Lesson 22 rendered HTML keeps English unit: The chair is next to the table.
+✓ Lesson 22 rendered HTML keeps English unit: The school is near my house.
+✓ Lesson 22 rendered HTML keeps English unit: The ball is between the boxes.
+✓ Lesson 22 rendered HTML keeps English unit: The bank is opposite the school.
+✓ Lesson 22 rendered HTML keeps English unit: The children are inside the house.
+✓ Lesson 22 rendered HTML keeps English unit: There is a car outside the garage.
+✓ Lesson 22 rendered HTML keeps English unit: There is a book on the table.
+✓ Lesson 22 rendered HTML keeps English unit: There are two books on the desk.
+✓ Lesson 22 rendered HTML keeps English unit: Where is the book?
+✓ Lesson 22 rendered HTML keeps English unit: Where are the keys?
+✓ Lesson 22 rendered HTML keeps English unit: The book is on the table.
+✓ Lesson 22 rendered HTML keeps English unit: The cat is under the chair.
+✓ Lesson 22 rendered HTML keeps English unit: She is in the kitchen.
+✓ Lesson 22 rendered HTML keeps English unit: He is next to the window.
+✓ Lesson 22 rendered HTML keeps English unit: Where is Omar's bag?
+✓ Lesson 22 rendered HTML keeps English unit: It is under the desk.
+✓ Lesson 22 rendered HTML keeps English unit: Where are the children's shoes?
+✓ Lesson 22 rendered HTML keeps English unit: There is a small box under the table next to the door.
+✓ Lesson 22 rendered HTML keeps English unit: There are two chairs in front of the desk near the window.
+✓ Lesson 22 rendered HTML keeps English unit: Ali is behind Sara.
+✓ Lesson 22 rendered HTML keeps English unit: The lamp is above the table.
+✓ Lesson 22 rendered HTML keeps English unit: The lamp is over the table.
+✓ Lesson 22 rendered HTML keeps English unit: The ball is between Ali and Omar.
+✓ Lesson 22 rendered HTML keeps English unit: The teacher is among the students.
+✓ Lesson 22 rendered HTML keeps English unit: There is a bed in the room.
+✓ Lesson 22 rendered HTML keeps English unit: The children's shoes are near the door.
+✓ Lesson 22 rendered HTML keeps English unit: Sara's phone is inside her bag.
+✓ Lesson 22 rendered HTML keeps English unit: The school is between the library and the park.
+✓ Lesson 22 renders intentional error visibly: The book is in the table.
+✓ Lesson 22 renders intentional error visibly: The cat is on the box.
+✓ Lesson 22 renders intentional error visibly: There is two books under the desk.
+✓ Lesson 22 renders intentional error visibly: Where are the phone?
+✓ Lesson 22 renders intentional error visibly: Where is the keys?
+✓ Lesson 22 renders intentional error visibly: The children are behind the classroom.
+✓ Lesson 22 renders intentional error visibly: There are a lamp on the desk.
+✓ Lesson 22 renders intentional error visibly: The bag is next the chair.
+✓ Lesson 22 renders intentional error visibly: The school is between the park.
+✓ Lesson 22 renders intentional error visibly: The teacher is front of the students.
+✓ Lesson 22 Short Answer Challenge slide is registered
+✓ Lesson 22 Final Boss keeps Arabic clue: يوجد مكتب كبير قرب النافذة.
+✓ Lesson 22 Final Boss keeps Arabic clue: يوجد حاسوب على المكتب.
+✓ Lesson 22 Final Boss keeps Arabic clue: توجد ثلاثة كتب بجانب الحاسوب.
+✓ Lesson 22 Final Boss keeps Arabic clue: توجد حقيبة تحت المكتب.
+✓ Lesson 22 Final Boss keeps Arabic clue: يوجد صندوق صغير داخل الحقيبة.
+✓ Lesson 22 Final Boss keeps Arabic clue: توجد ثلاثة أقلام داخل الصندوق.
+✓ Lesson 22 Final Boss keeps Arabic clue: توجد خريطة على الجدار.
+✓ Lesson 22 Final Boss keeps Arabic clue: توجد ساعة فوق الخريطة.
+✓ Lesson 22 Final Boss keeps Arabic clue: يوجد كرسي أمام المكتب.
+✓ Lesson 22 Final Boss keeps Arabic clue: يوجد طالبان بجانب الكرسي.
+✓ Lesson 22 Final Boss keeps Arabic clue: يوجد معلم خلف الطالبين.
+✓ Lesson 22 IQ200 scene keeps line: There is a large desk near the window.
+✓ Lesson 22 IQ200 scene keeps line: There is a computer on the desk.
+✓ Lesson 22 IQ200 scene keeps line: There are two books next to the computer.
+✓ Lesson 22 IQ200 scene keeps line: There is a small box under the desk.
+✓ Lesson 22 IQ200 scene keeps line: There are three pencils inside the box.
+✓ Lesson 22 IQ200 scene keeps line: There is a chair in front of the desk.
+✓ Lesson 22 IQ200 scene keeps line: There is a backpack behind the chair.
+✓ Lesson 22 IQ200 scene keeps line: There are two pictures above the desk.
+✓ Lesson 22 room scene keeps line: There is a bed in the room.
+✓ Lesson 22 room scene keeps line: There is a lamp next to the bed.
+✓ Lesson 22 room scene keeps line: There is a small table beside the lamp.
+✓ Lesson 22 room scene keeps line: There are two books on the table.
+✓ Lesson 22 room scene keeps line: There is a bag under the table.
+✓ Lesson 22 room scene keeps line: There is a picture above the bed.
+✓ Lesson 22 room scene keeps line: There are two shoes near the door.
+✓ Lesson 22 room scene keeps line: There is a window behind the bed.
+✓ Lesson 22 never renders reversed English word order
+✓ Lesson 22 renders no GB flag emoji as branding
+✓ Lesson 22 position overview renders
+✓ Lesson 22 overview keeps preposition: in
+✓ Lesson 22 overview keeps preposition: on
+✓ Lesson 22 overview keeps preposition: under
+✓ Lesson 22 overview keeps preposition: above
+✓ Lesson 22 overview keeps preposition: below
+✓ Lesson 22 overview keeps preposition: behind
+✓ Lesson 22 overview keeps preposition: in front of
+✓ Lesson 22 overview keeps preposition: next to
+✓ Lesson 22 overview keeps preposition: near
+✓ Lesson 22 overview keeps preposition: between
+✓ Lesson 22 overview keeps preposition: opposite
+✓ Lesson 22 overview keeps preposition: inside
+✓ Lesson 22 overview keeps preposition: outside
+✓ Lesson 22 preposition map renders
+✓ Lesson 22 map keeps word: in
+✓ Lesson 22 map keeps word: on
+✓ Lesson 22 map keeps word: under
+✓ Lesson 22 map keeps word: above
+✓ Lesson 22 map keeps word: below
+✓ Lesson 22 map keeps word: behind
+✓ Lesson 22 map keeps word: in front of
+✓ Lesson 22 map keeps word: next to
+✓ Lesson 22 map keeps word: near
+✓ Lesson 22 map keeps word: between
+✓ Lesson 22 map keeps word: opposite
+✓ Lesson 22 map keeps word: inside
+✓ Lesson 22 map keeps word: outside
+✓ Lesson 22 golden summary slide renders
+✓ Lesson 22 golden summary words: in → on → under → above → below → behind → in front of → next to → near → between → opposite → inside → outside  (got ["in","on","under","above","below","behind","in front of","next to","near","between","opposite","inside","outside","Where is...?","Where are...?","There is + singular + place.","There are + plural + place."])
+✓ Lesson 22 Where question machine renders
+✓ Lesson 22 Where forms (Where is / Where are) both present
+✓ Lesson 22 Final Boss renders
+✓ Lesson 22 Final Boss keeps requirement: There is
+✓ Lesson 22 Final Boss keeps requirement: There are
+✓ Lesson 22 Final Boss keeps requirement: in
+✓ Lesson 22 Final Boss keeps requirement: on
+✓ Lesson 22 Final Boss keeps requirement: under
+✓ Lesson 22 Final Boss keeps requirement: next to
+✓ Lesson 22 Final Boss keeps requirement: behind
+✓ Lesson 22 Final Boss keeps requirement: in front of
+✓ Lesson 22 Final Boss keeps requirement: above
+✓ Lesson 22 room scene builder renders
+✓ Lesson 22 Grammar Detective renders
+✓ Lesson 22 IQ200 Challenge renders
+✓ Lesson 22 shared quiz renders Teacher’s Space section
+✓ Lesson 22 shared quiz keeps STEP 3 check button
+✓ Lesson 22 quiz renders no answer key before unlocking
+✓ Lesson 22 renders without throwing
+✓ Lesson 22 isolates English as LTR
+✓ Lesson 22 keeps the Arabic RTL shell
+✓ Lesson 22 full lesson renders no GB flag emoji
+✓ full course: at least 52 lesson folders exist (got 60)
+✕ full course: every lesson folder has LessonN.tsx + data.ts (missing: lesson53, lesson57, lesson58, lesson59, lesson60)
+✓ full course: Lesson 1 is routed in App.tsx
+✓ full course: Lesson 2 is routed in App.tsx
+✓ full course: Lesson 3 is routed in App.tsx
+✓ full course: Lesson 4 is routed in App.tsx
+✓ full course: Lesson 5 is routed in App.tsx
+✓ full course: Lesson 6 is routed in App.tsx
+✓ full course: Lesson 7 is routed in App.tsx
+✓ full course: Lesson 8 is routed in App.tsx
+✓ full course: Lesson 9 is routed in App.tsx
+✓ full course: Lesson 10 is routed in App.tsx
+✓ full course: Lesson 11 is routed in App.tsx
+✓ full course: Lesson 12 is routed in App.tsx
+✓ full course: Lesson 13 is routed in App.tsx
+✓ full course: Lesson 14 is routed in App.tsx
+✓ full course: Lesson 15 is routed in App.tsx
+✓ full course: Lesson 16 is routed in App.tsx
+✓ full course: Lesson 17 is routed in App.tsx
+✓ full course: Lesson 18 is routed in App.tsx
+✓ full course: Lesson 19 is routed in App.tsx
+✓ full course: Lesson 20 is routed in App.tsx
+✓ full course: Lesson 21 is routed in App.tsx
+✓ full course: Lesson 22 is routed in App.tsx
+✓ full course: Lesson 23 is routed in App.tsx
+✓ full course: Lesson 24 is routed in App.tsx
+✓ full course: Lesson 25 is routed in App.tsx
+✓ full course: Lesson 26 is routed in App.tsx
+✓ full course: Lesson 27 is routed in App.tsx
+✓ full course: Lesson 28 is routed in App.tsx
+✓ full course: Lesson 29 is routed in App.tsx
+✓ full course: Lesson 30 is routed in App.tsx
+✓ full course: Lesson 31 is routed in App.tsx
+✓ full course: Lesson 32 is routed in App.tsx
+✓ full course: Lesson 33 is routed in App.tsx
+✓ full course: Lesson 34 is routed in App.tsx
+✓ full course: Lesson 35 is routed in App.tsx
+✓ full course: Lesson 36 is routed in App.tsx
+✓ full course: Lesson 37 is routed in App.tsx
+✓ full course: Lesson 38 is routed in App.tsx
+✓ full course: Lesson 39 is routed in App.tsx
+✓ full course: Lesson 40 is routed in App.tsx
+✓ full course: Lesson 41 is routed in App.tsx
+✓ full course: Lesson 42 is routed in App.tsx
+✓ full course: Lesson 43 is routed in App.tsx
+✓ full course: Lesson 44 is routed in App.tsx
+✓ full course: Lesson 45 is routed in App.tsx
+✓ full course: Lesson 46 is routed in App.tsx
+✓ full course: Lesson 47 is routed in App.tsx
+✓ full course: Lesson 48 is routed in App.tsx
+✓ full course: Lesson 49 is routed in App.tsx
+✓ full course: Lesson 50 is routed in App.tsx
+✓ full course: Lesson 51 is routed in App.tsx
+✓ full course: Lesson 52 is routed in App.tsx
+✓ full course: QUIZZES[1] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[2] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[3] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[4] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[5] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[6] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[7] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[8] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[9] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[10] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[11] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[12] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[13] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[14] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[15] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[16] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[17] registered with at least 12 questions (got 14)
+✓ full course: QUIZZES[18] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[19] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[20] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[21] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[22] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[23] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[24] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[25] registered with at least 12 questions (got 12)
+✓ full course: QUIZZES[26] registered with at least 12 questions (got 12)
+✓ Lesson 23 keeps the complete slide sequence (got 60)
+✓ Lesson 23 every slide renders (60/60)
+✓ Lesson 23 has no empty or throwing slide ()
+✓ Lesson 23 isolates English on every slide ()
+✓ Lesson 23 renders a source-section marker on all source slides ()
+✓ Lesson 23 maps source sections to slides (57)
+✓ Lesson 23 source-heading ledger has 57 headings (57)
+✓ Lesson 23 covers every source section exactly once (57/57)
+✓ Lesson 23 includes shared final quiz and closing slides
+✓ Lesson 23 exercise type present: training1
+✓ Lesson 23 exercise type present: training2
+✓ Lesson 23 exercise type present: training3
+✓ Lesson 23 exercise type present: training4
+✓ Lesson 23 exercise type present: detective
+✓ Lesson 23 exercise type present: iq200
+✓ Lesson 23 exercise type present: thinking
+✓ Lesson 23 exercise type present: finalBoss
+✓ Lesson 23 shared quiz has 12 questions (12)
+✓ Lesson 23 rendered HTML keeps English unit: Countable Noun
+✓ Lesson 23 rendered HTML keeps English unit: Uncountable Noun
+✓ Lesson 23 rendered HTML keeps English unit: a book
+✓ Lesson 23 rendered HTML keeps English unit: an apple
+✓ Lesson 23 rendered HTML keeps English unit: two books
+✓ Lesson 23 rendered HTML keeps English unit: five cars
+✓ Lesson 23 rendered HTML keeps English unit: some books
+✓ Lesson 23 rendered HTML keeps English unit: some water
+✓ Lesson 23 rendered HTML keeps English unit: a bottle of water
+✓ Lesson 23 rendered HTML keeps English unit: two bottles of water
+✓ Lesson 23 rendered HTML keeps English unit: There is a book on the desk.
+✓ Lesson 23 rendered HTML keeps English unit: There are three books on the desk.
+✓ Lesson 23 rendered HTML keeps English unit: There is some water in the bottle.
+✓ Lesson 23 rendered HTML keeps English unit: How many books do you have?
+✓ Lesson 23 rendered HTML keeps English unit: How much water do you drink?
+✓ Lesson 23 rendered HTML keeps English unit: How many children are in the park?
+✓ Lesson 23 rendered HTML keeps English unit: How much money do you have?
+✓ Lesson 23 rendered HTML keeps English unit: a piece of information
+✓ Lesson 23 rendered HTML keeps English unit: two pieces of information
+✓ Lesson 23 rendered HTML keeps English unit: a piece of advice
+✓ Lesson 23 rendered HTML keeps English unit: three pieces of furniture
+✓ Lesson 23 rendered HTML keeps English unit: There is an apple in the basket.
+✓ Lesson 23 rendered HTML keeps English unit: There are three apples in the basket.
+✓ Lesson 23 rendered HTML keeps English unit: There is some milk in the fridge.
+✓ Lesson 23 rendered HTML keeps English unit: There are three apples in the kitchen.
+✓ Lesson 23 rendered HTML keeps English unit: There are two eggs on the table.
+✓ Lesson 23 rendered HTML keeps English unit: There is some rice in the cupboard.
+✓ Lesson 23 rendered HTML keeps English unit: There is a bottle of water next to the fridge.
+✓ Lesson 23 rendered HTML keeps English unit: I have some books.
+✓ Lesson 23 rendered HTML keeps English unit: She bought some apples.
+✓ Lesson 23 rendered HTML keeps English unit: He bought some bread.
+✓ Lesson 23 rendered HTML keeps English unit: Are there any books?
+✓ Lesson 23 rendered HTML keeps English unit: There aren't any books.
+✓ Lesson 23 rendered HTML keeps English unit: Is there any water?
+✓ Lesson 23 rendered HTML keeps English unit: There isn't any water.
+✓ Lesson 23 rendered HTML keeps English unit: How many students are there?
+✓ Lesson 23 rendered HTML keeps English unit: How many apples did she buy?
+✓ Lesson 23 rendered HTML keeps English unit: How many cars are in the parking lot?
+✓ Lesson 23 rendered HTML keeps English unit: How much rice do we need?
+✓ Lesson 23 rendered HTML keeps English unit: How much milk is in the fridge?
+✓ Lesson 23 rendered HTML keeps English unit: There are six chairs.
+✓ Lesson 23 rendered HTML keeps English unit: There are five children.
+✓ Lesson 23 rendered HTML keeps English unit: There is some money in the box.
+✓ Lesson 23 rendered HTML keeps English unit: I have some money. ✅
+✓ Lesson 23 rendered HTML keeps English unit: I have a lot of money. ✅
+✓ Lesson 23 rendered HTML keeps English unit: three coins
+✓ Lesson 23 rendered HTML keeps English unit: two banknotes
+✓ Lesson 23 rendered HTML keeps English unit: five dollars
+✓ Lesson 23 rendered HTML keeps English unit: I drink some coffee.
+✓ Lesson 23 rendered HTML keeps English unit: Two coffees, please.
+✓ Lesson 23 rendered HTML keeps English unit: two cups of coffee
+✓ Lesson 23 rendered HTML keeps English unit: a chicken
+✓ Lesson 23 rendered HTML keeps English unit: two chickens
+✓ Lesson 23 rendered HTML keeps English unit: some chicken
+✓ Lesson 23 rendered HTML keeps English unit: many books
+✓ Lesson 23 rendered HTML keeps English unit: many students
+✓ Lesson 23 rendered HTML keeps English unit: many apples
+✓ Lesson 23 rendered HTML keeps English unit: much water
+✓ Lesson 23 rendered HTML keeps English unit: much money
+✓ Lesson 23 rendered HTML keeps English unit: much information
+✓ Lesson 23 rendered HTML keeps English unit: much rice
+✓ Lesson 23 rendered HTML keeps English unit: an assignment
+✓ Lesson 23 rendered HTML keeps English unit: three assignments
+✓ Lesson 23 rendered HTML keeps English unit: some + plural countable
+✓ Lesson 23 rendered HTML keeps English unit: some + uncountable
+✓ Lesson 23 rendered HTML keeps English unit: How many + Countable Plural?
+✓ Lesson 23 rendered HTML keeps English unit: How much + Uncountable Noun?
+✓ Lesson 23 rendered HTML keeps English unit: There is a/an + noun
+✓ Lesson 23 rendered HTML keeps English unit: There are + plural noun
+✓ Lesson 23 rendered HTML keeps English unit: There is some + uncountable noun
+✓ Lesson 23 rendered HTML keeps English unit: There are some books.
+✓ Lesson 23 renders intentional teaching error visibly: a water
+✓ Lesson 23 renders intentional teaching error visibly: a milk
+✓ Lesson 23 renders intentional teaching error visibly: a rice
+✓ Lesson 23 renders intentional teaching error visibly: some informations
+✓ Lesson 23 renders intentional teaching error visibly: some advices
+✓ Lesson 23 renders intentional teaching error visibly: some furnitures
+✓ Lesson 23 renders intentional teaching error visibly: two waters
+✓ Lesson 23 renders intentional teaching error visibly: three rices
+✓ Lesson 23 renders intentional teaching error visibly: I have three money.
+✓ Lesson 23 renders intentional teaching error visibly: an information
+✓ Lesson 23 renders intentional teaching error visibly: advices
+✓ Lesson 23 renders intentional teaching error visibly: informations
+✓ Lesson 23 renders intentional teaching error visibly: a furniture
+✓ Lesson 23 renders intentional teaching error visibly: homeworks
+✓ Lesson 23 renders intentional teaching error visibly: How much books do you have?
+✓ Lesson 23 renders intentional teaching error visibly: How many water do you drink?
+✓ Lesson 23 renders intentional teaching error visibly: one water
+✓ Lesson 23 renders intentional teaching error visibly: two rices
+✓ Lesson 23 renders intentional teaching error visibly: one rice
+✓ Lesson 23 renders intentional teaching error visibly: three waters
+✓ Lesson 23 renders intentional teaching error visibly: an advice
+✓ Lesson 23 renders intentional teaching error visibly: a homework
+✓ Lesson 23 renders intentional teaching error visibly: furnitures
+✓ Lesson 23 renders intentional teaching error visibly: There are some water
+✓ Lesson 23 renders intentional teaching error visibly: I have a water.
+✓ Lesson 23 renders intentional teaching error visibly: She gave me an advice.
+✓ Lesson 23 renders intentional teaching error visibly: I need two informations.
+✓ Lesson 23 renders intentional teaching error visibly: There are some milk in the fridge.
+✓ Lesson 23 renders intentional teaching error visibly: some book
+✓ Lesson 23 renders intentional teaching error visibly: There is two apples on the table.
+✓ Lesson 23 renders intentional teaching error visibly: There are some water in the glass.
+✓ Lesson 23 renders intentional teaching error visibly: I need an information.
+✓ Lesson 23 renders intentional teaching error visibly: She bought three bread.
+✓ Lesson 23 renders intentional teaching error visibly: How much chairs are there?
+✓ Lesson 23 renders intentional teaching error visibly: How many rice do we need?
+✓ Lesson 23 renders intentional teaching error visibly: There is some books in my bag.
+✓ Lesson 23 renders intentional teaching error visibly: I have two waters.
+✓ Lesson 23 renders intentional teaching error visibly: There are some milk in the fridge.
+✓ Lesson 23 renders intentional teaching error visibly: He gave me an advice.
+✓ Lesson 23 renders intentional teaching error visibly: I need three informations.
+✓ Lesson 23 renders intentional teaching error visibly: She has a furniture.
+✓ Lesson 23 kitchen analysis keeps sentence: There are three apples in the kitchen.
+✓ Lesson 23 kitchen analysis keeps sentence: There are two eggs on the table.
+✓ Lesson 23 kitchen analysis keeps sentence: There is some rice in the cupboard.
+✓ Lesson 23 kitchen analysis keeps sentence: There is some milk in the fridge.
+✓ Lesson 23 kitchen analysis keeps sentence: There are four plates on the table.
+✓ Lesson 23 kitchen analysis keeps sentence: There is a bottle of water next to the fridge.
+✓ Lesson 23 Final Boss keeps room content: 4 books
+✓ Lesson 23 Final Boss model sentence starts with There is / There are: There are four books in the room.
+✓ Lesson 23 Final Boss keeps room content: 2 computers
+✓ Lesson 23 Final Boss model sentence starts with There is / There are: There are two computers in the room.
+✓ Lesson 23 Final Boss keeps room content: some water
+✓ Lesson 23 Final Boss model sentence starts with There is / There are: There is some water in the room.
+✓ Lesson 23 Final Boss keeps room content: some furniture
+✓ Lesson 23 Final Boss model sentence starts with There is / There are: There is some furniture in the room.
+✓ Lesson 23 Final Boss keeps room content: 3 chairs
+✓ Lesson 23 Final Boss model sentence starts with There is / There are: There are three chairs in the room.
+✓ Lesson 23 Final Boss keeps room content: one child
+✓ Lesson 23 Final Boss model sentence starts with There is / There are: There is a child in the room.
+✓ Lesson 23 Final Boss keeps room content: some information
+✓ Lesson 23 Final Boss model sentence starts with There is / There are: There is some information in the room.
+✓ Lesson 23 Final Boss keeps room content: 5 coins
+✓ Lesson 23 Final Boss model sentence starts with There is / There are: There are five coins in the room.
+✓ Lesson 23 Final Boss keeps 4 There are room sentences
+✓ Lesson 23 Final Boss keeps 4 There is room sentences
+✓ Lesson 23 Grammar Detective keeps sentence 1: I have two waters.
+✓ Lesson 23 Grammar Detective keeps sentence 2: She bought an apple.
+✓ Lesson 23 Grammar Detective keeps sentence 3: There are some milk in the fridge.
+✓ Lesson 23 Grammar Detective keeps sentence 4: How many books do you have?
+✓ Lesson 23 Grammar Detective keeps sentence 5: He gave me an advice.
+✓ Lesson 23 Grammar Detective keeps sentence 6: There is some rice on the table.
+✓ Lesson 23 Grammar Detective keeps sentence 7: I need three informations.
+✓ Lesson 23 Grammar Detective keeps sentence 8: There are five students in the room.
+✓ Lesson 23 Grammar Detective keeps sentence 9: She has a furniture.
+✓ Lesson 23 Grammar Detective keeps sentence 10: How much money do you have?
+✓ Lesson 23 IQ200 keeps sentence ①: There is two apples on the table.
+✓ Lesson 23 IQ200 keeps sentence ②: There are some water in the glass.
+✓ Lesson 23 IQ200 keeps sentence ③: I need an information.
+✓ Lesson 23 IQ200 keeps sentence ④: She bought three bread.
+✓ Lesson 23 IQ200 keeps sentence ⑤: How much chairs are there?
+✓ Lesson 23 IQ200 keeps sentence ⑥: How many rice do we need?
+✓ Lesson 23 IQ200 keeps sentence ⑦: There is some books in my bag.
+✓ Lesson 23 IQ200 keeps sentence ⑧: He gave me two pieces of advice.
+✓ Lesson 23 Thinking Challenge keeps quantity: 5 apples
+✓ Lesson 23 Thinking Challenge keeps quantity: 2 bottles of water
+✓ Lesson 23 Thinking Challenge keeps quantity: some rice
+✓ Lesson 23 Thinking Challenge keeps quantity: 3 eggs
+✓ Lesson 23 Thinking Challenge keeps quantity: some money
+✓ Lesson 23 Thinking Challenge keeps quantity: 4 pieces of information
+✓ Lesson 23 roadmap keeps title: Sentence Structure
+✓ Lesson 23 roadmap keeps title: Pronouns
+✓ Lesson 23 roadmap keeps title: Verb to be
+✓ Lesson 23 roadmap keeps title: Nouns + Articles
+✓ Lesson 23 roadmap keeps title: Adjectives
+✓ Lesson 23 roadmap keeps title: Present Simple
+✓ Lesson 23 roadmap keeps title: Present Simple Negative/Questions
+✓ Lesson 23 roadmap keeps title: Present Simple Review
+✓ Lesson 23 roadmap keeps title: Present Continuous
+✓ Lesson 23 roadmap keeps title: Present Continuous Advanced
+✓ Lesson 23 roadmap keeps title: Present Simple vs Present Continuous
+✓ Lesson 23 roadmap keeps title: Past Simple
+✓ Lesson 23 roadmap keeps title: Past Simple Negative/Questions
+✓ Lesson 23 roadmap keeps title: Wh Questions
+✓ Lesson 23 roadmap keeps title: Was/Were
+✓ Lesson 23 roadmap keeps title: Possessive Adjectives
+✓ Lesson 23 roadmap keeps title: Possessive Pronouns
+✓ Lesson 23 roadmap keeps title: Regular & Irregular Plurals
+✓ Lesson 23 roadmap keeps title: Possessive Nouns
+✓ Lesson 23 roadmap keeps title: This / That / These / Those
+✓ Lesson 23 roadmap keeps title: There is / There are
+✓ Lesson 23 roadmap keeps title: Prepositions of Place
+✓ Lesson 23 roadmap keeps title: Countable & Uncountable Nouns
+✓ Lesson 23 IQ200 keeps the one correct sentence unchanged
+✓ Lesson 23 renders many isolated English runs (1046)
+✓ Lesson 23 no reversed English order inside any LTR run for /\b(apple|orange|egg)\s+an\b/i (found: )
+✓ Lesson 23 no reversed English order inside any LTR run for /\b(book|car|table|room|student|cat|dog|house|pen|teacher|chair|computer)\s+a\b/i (found: )
+✓ Lesson 23 no reversed English order inside any LTR run for /\b(books|students|apples|chairs)\s+many\b/i (found: )
+✓ Lesson 23 no reversed English order inside any LTR run for /\b(water|rice|milk|money|bread|advice|information|furniture)\s+some\b/i (found: )
+✓ Lesson 23 no reversed English order inside any LTR run for /\b(books|students)\s+are\s+(a|an)\b/i (found: )
+✓ Lesson 23 no reversed English order inside any LTR run for /\bbooks\s+how\s+many\b/i (found: )
+✓ Lesson 23 keeps the sentence as one intact LTR run: There is a book on the desk.
+✓ Lesson 23 keeps the sentence as one intact LTR run: There are three books on the desk.
+✓ Lesson 23 keeps the sentence as one intact LTR run: How many books do you have?
+✓ Lesson 23 keeps the sentence as one intact LTR run: How much water do you drink?
+✓ Lesson 23 keeps the sentence as one intact LTR run: She gave me some advice.
+✓ Lesson 23 keeps the sentence as one intact LTR run: I have a bottle of water.
+✓ Lesson 23 renders no GB flag emoji as branding
+✓ Lesson 23 counting machine renders
+✓ Lesson 23 counting machine keeps noun: apple
+✓ Lesson 23 counting machine keeps noun: book
+✓ Lesson 23 counting machine keeps noun: water
+✓ Lesson 23 counting machine keeps noun: milk
+✓ Lesson 23 counting machine keeps noun: rice
+✓ Lesson 23 counting machine keeps noun: money
+✓ Lesson 23 counting machine keeps noun: information
+✓ Lesson 23 counting machine keeps noun: furniture
+✓ Lesson 23 one-two-three test renders
+✓ Lesson 23 There is / There are switch renders
+✓ Lesson 23 kitchen analysis renders
+✓ Lesson 23 How many lab renders
+✓ Lesson 23 How much lab renders
+✓ Lesson 23 many/much gate renders
+✓ Lesson 23 information unit converter renders
+✓ Lesson 23 information pieces: a piece of information → two pieces of information → three pieces of information  (got ["information","information","INFORMATION UNIT CONVERTER","information → piece / pieces of information","information = Uncountable","some information ✅","a lot of information ✅","much information ✅","an information ❌","informations ❌","a piece of information","two pieces of information","three pieces of information","pieces","information"])
+✓ Lesson 23 three-question test renders
+✓ Lesson 23 common errors board renders
+✓ Lesson 23 common errors keeps wrong sentence: I have a water.
+✓ Lesson 23 common errors keeps wrong sentence: She gave me an advice.
+✓ Lesson 23 common errors keeps wrong sentence: I need two informations.
+✓ Lesson 23 common errors keeps wrong sentence: There are some milk in the fridge.
+✓ Lesson 23 common errors keeps wrong sentence: How much books do you have?
+✓ Lesson 23 common errors keeps wrong sentence: How many water do you drink?
+✓ Lesson 23 Grammar Detective renders
+✓ Lesson 23 Grammar Detective keeps the neutral → check button
+✓ Lesson 23 IQ200 Challenge renders
+✓ Lesson 23 Thinking Challenge renders
+✓ Lesson 23 Final Boss renders
+✓ Lesson 23 Final Boss keeps requirement: There is
+✓ Lesson 23 Final Boss keeps requirement: There are
+✓ Lesson 23 Final Boss keeps requirement: a/an
+✓ Lesson 23 Final Boss keeps requirement: some
+✓ Lesson 23 Final Boss keeps requirement: Countable nouns
+✓ Lesson 23 Final Boss keeps requirement: Uncountable nouns
+✓ Lesson 23 Final Boss keeps requirement: How many?
+✓ Lesson 23 Final Boss keeps requirement: How much?
+✓ Lesson 23 Final Boss keeps the supplied How many example question
+✓ Lesson 23 keeps the four supplied trainings (4)
+✓ Lesson 23 تدريب ① — Countable أم Uncountable؟ keeps the neutral → check button
+✓ Lesson 23 تدريب ① — Countable أم Uncountable؟ reveals no feedback before checking
+✓ Lesson 23 تدريب ① — Countable أم Uncountable؟ locks options after checking
+✓ Lesson 23 تدريب ② — a/an أم some؟ keeps the neutral → check button
+✓ Lesson 23 تدريب ② — a/an أم some؟ reveals no feedback before checking
+✓ Lesson 23 تدريب ② — a/an أم some؟ locks options after checking
+✓ Lesson 23 تدريب ③ — There is أم There are؟ keeps the neutral → check button
+✓ Lesson 23 تدريب ③ — There is أم There are؟ reveals no feedback before checking
+✓ Lesson 23 تدريب ③ — There is أم There are؟ locks options after checking
+✓ Lesson 23 تدريب ④ — How many أم How much؟ keeps the neutral → check button
+✓ Lesson 23 تدريب ④ — How many أم How much؟ reveals no feedback before checking
+✓ Lesson 23 تدريب ④ — How many أم How much؟ locks options after checking
+✓ Lesson 23 golden summary slide renders its source marker
+✓ Lesson 23 golden summary panel renders
+✓ Lesson 23 golden summary countable examples: one book → two books → three books  (got ["Countable Nouns","one book","two books","three books","a book","books","a / an","many","How many?","some + plural","There is + singular","There are + plural","Uncountable Nouns","water","milk","rice","money","information","advice","furniture","homework","a / an","some","much","How much?","a lot of","There is"])
+✓ Lesson 23 golden summary uncountable words: water → milk → rice → money → information → advice → furniture → homework  (got ["Countable Nouns","one book","two books","three books","a book","books","a / an","many","How many?","some + plural","There is + singular","There are + plural","Uncountable Nouns","water","milk","rice","money","information","advice","furniture","homework","a / an","some","much","How much?","a lot of","There is"])
+✓ Lesson 23 magic table renders
+✓ Lesson 23 magic table Countable:: a book → two books → many books → How many books? → some books → There are some books.  (got ["Countable:","Uncountable:","a book","water","two books","some water","many books","much water","How many books?","How much water?","some books","There is some water.","There are some books."])
+✓ Lesson 23 magic table Uncountable:: water → some water → much water → How much water? → There is some water.  (got ["Countable:","Uncountable:","a book","water","two books","some water","many books","much water","How many books?","How much water?","some books","There is some water.","There are some books."])
+✓ Lesson 23 seven rules panel renders
+✓ Lesson 23 keeps all seven rules (last marker ⑦)
+✓ Lesson 23 golden rules count is 7 (7)
+✓ Lesson 23 roadmap renders
+✓ Lesson 23 roadmap highlights lesson 23 as the current step
+✓ Lesson 23 shared quiz renders Teacher's Space section
+✓ Lesson 23 shared quiz keeps STEP 3 check button
+✓ Lesson 23 quiz renders no answer key before unlocking
+✓ Lesson 23 Teacher's Space starts locked
+✓ Lesson 23 renders without throwing
+✓ Lesson 23 isolates English as LTR
+✓ Lesson 23 keeps the Arabic RTL shell
+✓ Lesson 23 cover shows THE COUNTING LAB identity
+✓ Lesson 23 full lesson renders no GB flag emoji
+✓ Lesson 23 keeps the EnglishwithSomeR branding
+✓ Lesson 26 keeps the 50–60 screen flow (got 55)
+✓ Lesson 26 every slide renders (55/55)
+✓ Lesson 26 has no empty or throwing slide ()
+✓ Lesson 26 isolates English on every slide ()
+✓ Lesson 26 renders a source marker for every source slide ()
+✓ Lesson 26 source ledger has 38 supplied sections (got 38)
+✓ Lesson 26 source ledger counts 31 numbered sections (got 31)
+✓ Lesson 26 maps every source section to a slide (38/38)
+✓ Lesson 26 exercise type present: choose
+✓ Lesson 26 exercise type present: completeStory
+✓ Lesson 26 exercise type present: grammarDetective
+✓ Lesson 26 exercise type present: finalBoss
+✓ Lesson 26 includes the shared final quiz and closing slides
+✓ Lesson 26 renders source phrase verbatim: I watched TV last night.
+✓ Lesson 26 renders source phrase verbatim: I was watching TV at 9:00 last night.
+✓ Lesson 26 renders source phrase verbatim: I was walking home when I saw a strange bird.
+✓ Lesson 26 renders source phrase verbatim: She was cooking dinner when I arrived.
+✓ Lesson 26 renders source phrase verbatim: I was sleeping when the phone rang.
+✓ Lesson 26 renders source phrase verbatim: While I was watching TV, my brother was reading.
+✓ Lesson 26 renders source phrase verbatim: I visited my uncle yesterday.
+✓ Lesson 26 renders source phrase verbatim: Were you sleeping?
+✓ Lesson 26 renders source phrase verbatim: Past Continuous = was/were + verb-ing
+✓ Lesson 26 renders source phrase verbatim: Past Continuous + when + Past Simple
+✓ Lesson 26 never reverses "I watched TV last night."
+✓ Lesson 26 never reverses "I was watching TV at 9:00 last night."
+✓ Lesson 26 renders "Past Simple" inside an LTR run
+✓ Lesson 26 renders "Past Continuous" inside an LTR run
+✓ Lesson 26 never flips the tense names inside LTR runs
+✓ Lesson 26 renders the supplied wrong sentence as-is: I was played football.
+✓ Lesson 26 renders the supplied wrong sentence as-is: They were play football.
+✓ Lesson 26 renders the supplied wrong sentence as-is: Did you were sleeping?
+✓ Lesson 26 renders the supplied wrong sentence as-is: She was study when I called.
+✓ Lesson 26 renders the supplied wrong sentence as-is: I was sleeping when the phone was rang.
+✓ Lesson 26 renders the supplied wrong sentence as-is: Last night, I was watched TV when my sister called me.
+✓ Lesson 26 renders the supplied wrong sentence as-is: She were studying in her room while I was watched a movie.
+✓ Lesson 26 renders the supplied wrong sentence as-is: We were looked at each other and started laughing.
+✓ Lesson 26 Grammar Detective keeps 4 real errors (got 4)
+✓ Lesson 26 Grammar Detective keeps the 4 fixes and explanations
+✓ Lesson 26 Grammar Detective reveals no fix before checking
+✓ Lesson 26 Grammar Detective keeps the neutral check button
+✓ Lesson 26 s21: no answer block in the static render
+✓ Lesson 26 s25: no answer block in the static render
+✓ Lesson 26 s30: no answer block in the static render
+✓ Lesson 26 Exercise 26 keeps 8 questions (got 8)
+✓ Lesson 26 Complete the Story keeps 10 gaps
+✓ Lesson 26 IQ200 both-sentences drill has no single “wrong” answer
+✓ Lesson 26 IQ200 matching keeps the supplied meanings
+✓ Lesson 26 Final Boss keeps its 7 scene steps and 7 requirements
+✓ Lesson 26 Final Boss keeps the supplied model story
+✓ Lesson 26 keeps the 10 time expressions (got 10)
+✓ Lesson 26 Final Boss keeps the 10–12 sentence instruction
+✓ Lesson 26 shared quiz renders Teacher's Space section
+✓ Lesson 26 shared quiz keeps the STEP 3 check button
+✓ Lesson 26 quiz renders no answer key before unlocking
+✓ Lesson 26 shared quiz has 12 questions (12)
+✓ Lesson 26 renders without throwing
+✓ Lesson 26 isolates English as LTR
+✓ Lesson 26 keeps the Arabic RTL shell
+✓ Lesson 26 cover shows THE TIME DIRECTOR identity
+✓ Lesson 26 full lesson renders no GB flag emoji
+✓ Lesson 26 keeps the EnglishwithSomeR branding
+✕ Render audit FAILED (1/1474)

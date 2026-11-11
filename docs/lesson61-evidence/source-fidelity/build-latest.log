@@ -1,0 +1,126 @@
+
+> react-vite-tailwind@0.0.0 build
+> vite build
+
+vite v7.3.2 building client environment for production...
+transforming...
+✓ 504 modules transformed.
+rendering chunks...
+[plugin vite:reporter] 
+(!) /home/user/English-Course/src/lessons/lesson36/grading36.ts is dynamically imported by /home/user/English-Course/src/lessons/lesson36/TestArea36.tsx but also statically imported by /home/user/English-Course/src/lessons/lesson36/TestArea36.tsx, dynamic import will not move module into another chunk.
+
+computing gzip size...
+dist/index.html                                               1.09 kB │ gzip:     0.59 kB
+dist/assets/tajawal-arabic-400-normal-CyCXRvzh.woff2          8.93 kB
+dist/assets/tajawal-arabic-500-normal-BZ8ojJNu.woff2          8.94 kB
+dist/assets/tajawal-arabic-700-normal-D2-eand5.woff2          9.02 kB
+dist/assets/tajawal-arabic-800-normal-TQp-UTiE.woff2          9.45 kB
+dist/assets/changa-arabic-400-normal-CZ9EfX6X.woff2          10.90 kB
+dist/assets/changa-arabic-800-normal-BPNR-vWI.woff2          11.08 kB
+dist/assets/changa-arabic-700-normal-B-XZa0gg.woff2          11.32 kB
+dist/assets/rubik-latin-400-normal-j0pmKyiQ.woff2            18.94 kB
+dist/assets/rubik-latin-500-normal-1os41rQk.woff2            19.04 kB
+dist/assets/rubik-latin-800-normal-BtaGuVpR.woff2            19.06 kB
+dist/assets/rubik-latin-700-normal-D-tMm-eS.woff2            19.11 kB
+dist/assets/newsreader-latin-400-normal-BFBkh4jY.woff2       22.48 kB
+dist/assets/newsreader-latin-500-normal-B66TYsaK.woff2       23.62 kB
+dist/assets/newsreader-latin-600-normal-30OJ_TG_.woff2       23.88 kB
+dist/assets/newsreader-latin-400-italic-CEihAR-f.woff2       24.34 kB
+dist/assets/newsreader-latin-600-italic-BXGU4hd9.woff2       25.80 kB
+dist/assets/noto-color-emoji-1-400-normal-DMWB-2WB.woff2     33.29 kB
+dist/assets/noto-color-emoji-4-400-normal-Ck8hYGlS.woff2    218.74 kB
+dist/assets/noto-color-emoji-3-400-normal-CIUQS5Lh.woff2    330.28 kB
+dist/assets/index-B5lC2TEI.css                              947.62 kB │ gzip:   148.67 kB
+dist/assets/testKey40-DeFtKel2.js                             0.74 kB │ gzip:     0.42 kB
+dist/assets/TeacherGuide46-B_oBTCl1.js                        1.28 kB │ gzip:     0.63 kB
+dist/assets/TeacherGuide46-CKi19I2p.js                        1.28 kB │ gzip:     0.63 kB
+dist/assets/testKey39-CMHCieAf.js                             1.37 kB │ gzip:     0.63 kB
+dist/assets/SolutionsArea43-B_3Cj13w.js                       1.66 kB │ gzip:     0.83 kB
+dist/assets/TeacherGuide45-DDM4E3xe.js                        1.85 kB │ gzip:     0.84 kB
+dist/assets/testKey55-uqiCQeEg.js                             2.36 kB │ gzip:     0.92 kB
+dist/assets/TeacherArea38-D5KT80jz.js                         2.66 kB │ gzip:     1.37 kB
+dist/assets/TeacherArea37-DF6ZHYwy.js                         2.71 kB │ gzip:     1.38 kB
+dist/assets/TeacherArea36-DVRMQDom.js                         2.75 kB │ gzip:     1.33 kB
+dist/assets/TeacherArea39-COxAz0sG.js                         3.04 kB │ gzip:     1.45 kB
+dist/assets/TeacherGuide47-Bb7PMKPJ.js                        3.30 kB │ gzip:     1.41 kB
+dist/assets/TeacherGuide47-Dy8P-9OK.js                        3.30 kB │ gzip:     1.41 kB
+dist/assets/TeacherArea44-VytliH02.js                         3.36 kB │ gzip:     1.41 kB
+dist/assets/TeacherArea40-Dbcty2He.js                         3.52 kB │ gzip:     1.53 kB
+dist/assets/testKey38-DoQaOUoe.js                             3.68 kB │ gzip:     1.59 kB
+dist/assets/SolutionsArea41-BFpN_oHn.js                       4.00 kB │ gzip:     1.59 kB
+dist/assets/SolutionsArea36-B9M01-A6.js                       4.26 kB │ gzip:     1.79 kB
+dist/assets/SolutionsArea39-BcEMUv9X.js                       4.35 kB │ gzip:     1.85 kB
+dist/assets/SolutionsArea35-5VA7AZA1.js                       4.40 kB │ gzip:     1.65 kB
+dist/assets/testData38-BzPA8ru1.js                            4.49 kB │ gzip:     1.83 kB
+dist/assets/TeacherGuide50-CVk5ez6T.js                        4.52 kB │ gzip:     1.70 kB
+dist/assets/TeacherGuide50-DLr1sfyg.js                        4.52 kB │ gzip:     1.70 kB
+dist/assets/testKey47-Dw_sMLyi.js                             4.52 kB │ gzip:     1.99 kB
+dist/assets/testKey47-094ebtN1.js                             4.52 kB │ gzip:     1.99 kB
+dist/assets/TeacherGuide51-Mv45ZsWH.js                        4.67 kB │ gzip:     1.71 kB
+dist/assets/TeacherGuide51-BnUd6Kly.js                        4.67 kB │ gzip:     1.71 kB
+dist/assets/SolutionsArea42-_jrmzThC.js                       4.80 kB │ gzip:     1.73 kB
+dist/assets/testData39-B5f8V9QS.js                            4.81 kB │ gzip:     1.98 kB
+dist/assets/testKey53-CbYwBUUT.js                             5.03 kB │ gzip:     1.84 kB
+dist/assets/SolutionsArea40-CGAEm2HC.js                       5.24 kB │ gzip:     1.94 kB
+dist/assets/testKey54-ybzSFcJr.js                             5.75 kB │ gzip:     1.93 kB
+dist/assets/grading37-DjJZUKbO.js                             6.28 kB │ gzip:     2.67 kB
+dist/assets/TeacherGuide43-lId_ZVJw.js                        6.37 kB │ gzip:     2.70 kB
+dist/assets/SolutionsArea33-h_JigSqx.js                       6.37 kB │ gzip:     2.34 kB
+dist/assets/TeacherGuide48-Dxq8TX6t.js                        6.48 kB │ gzip:     2.57 kB
+dist/assets/TeacherGuide48-Cj5QLcVO.js                        6.48 kB │ gzip:     2.57 kB
+dist/assets/TeacherGuide49-BG6ImgFR.js                        6.49 kB │ gzip:     2.28 kB
+dist/assets/TeacherGuide49-BrRlwWiX.js                        6.49 kB │ gzip:     2.28 kB
+dist/assets/SolutionsArea38-hFwsUvSw.js                       6.85 kB │ gzip:     2.44 kB
+dist/assets/testKey46-FUryVyaZ.js                             6.86 kB │ gzip:     2.49 kB
+dist/assets/testKey46-dTr6cYCU.js                             6.86 kB │ gzip:     2.49 kB
+dist/assets/TeacherGuide41-Bgzn4Xke.js                        6.91 kB │ gzip:     2.83 kB
+dist/assets/TeacherGuide52-BE65OpBc.js                        7.37 kB │ gzip:     2.28 kB
+dist/assets/TeacherGuide52-B_jSGlH8.js                        7.37 kB │ gzip:     2.28 kB
+dist/assets/SolutionsArea37-DtYrUvQP.js                       7.51 kB │ gzip:     2.80 kB
+dist/assets/testKey48-BqvfHoOf.js                             7.58 kB │ gzip:     3.06 kB
+dist/assets/testKey48-uJMsYLR3.js                             7.58 kB │ gzip:     3.06 kB
+dist/assets/testKey49-103l50OX.js                             7.70 kB │ gzip:     2.75 kB
+dist/assets/testKey49-DjfeaNMz.js                             7.70 kB │ gzip:     2.75 kB
+dist/assets/SolutionsArea44-BJ4Hc4IK.js                       7.89 kB │ gzip:     3.09 kB
+dist/assets/TestArea35-CbwrhR8J.js                            8.30 kB │ gzip:     3.08 kB
+dist/assets/key41-D36Y1SnL.js                                 8.32 kB │ gzip:     3.09 kB
+dist/assets/TestArea44-lHC9OHG9.js                            8.43 kB │ gzip:     3.16 kB
+dist/assets/testKey52-LgSzW4cp.js                             8.87 kB │ gzip:     2.87 kB
+dist/assets/testKey52-8gHgLW0G.js                             8.87 kB │ gzip:     2.87 kB
+dist/assets/TestArea39-By3b3ZJr.js                            9.09 kB │ gzip:     3.39 kB
+dist/assets/TeacherGuide36-D9iE213k.js                        9.44 kB │ gzip:     3.42 kB
+dist/assets/testKey44-DBuvxxk1.js                            10.06 kB │ gzip:     3.49 kB
+dist/assets/testKey50-BRxPAPe6.js                            10.09 kB │ gzip:     3.50 kB
+dist/assets/testKey50-DFEKdKWD.js                            10.09 kB │ gzip:     3.50 kB
+dist/assets/solutionsData38-JdzYCBaG.js                      10.15 kB │ gzip:     2.84 kB
+dist/assets/TestArea38-CoI9QERZ.js                           10.21 kB │ gzip:     3.61 kB
+dist/assets/key43-fG1FD8bB.js                                10.27 kB │ gzip:     3.16 kB
+dist/assets/testKey51-Ck2A81Oi.js                            10.47 kB │ gzip:     3.32 kB
+dist/assets/testKey51-Pu7QGMsY.js                            10.47 kB │ gzip:     3.32 kB
+dist/assets/solutionsData36-DwdVk7v8.js                      11.13 kB │ gzip:     3.32 kB
+dist/assets/TeacherGuide42-DPOR7_-Q.js                       11.23 kB │ gzip:     4.31 kB
+dist/assets/TestArea37-B-n9uoM4.js                           11.25 kB │ gzip:     3.95 kB
+dist/assets/key33-DZT5BF0q.js                                11.57 kB │ gzip:     3.69 kB
+dist/assets/key42-BNhLDT_P.js                                12.58 kB │ gzip:     4.02 kB
+dist/assets/solutionsData39-DhewhxWj.js                      13.31 kB │ gzip:     3.55 kB
+dist/assets/TeacherGuide33-W1ITIccj.js                       14.11 kB │ gzip:     3.74 kB
+dist/assets/TestArea40-Da0_BuiY.js                           14.35 kB │ gzip:     4.94 kB
+dist/assets/testKey35-Du3IamxE.js                            14.43 kB │ gzip:     4.67 kB
+dist/assets/TeacherArea35-C7gSa-2X.js                        15.13 kB │ gzip:     4.73 kB
+dist/assets/solutionsData40-C1AxEXYY.js                      15.43 kB │ gzip:     4.14 kB
+dist/assets/TestArea36-BkpuKqjQ.js                           15.91 kB │ gzip:     5.70 kB
+dist/assets/solutionsData37-D_49YszT.js                      16.70 kB │ gzip:     4.94 kB
+dist/assets/TeacherGuide44-2R8i9gXF.js                       21.30 kB │ gzip:     6.49 kB
+dist/assets/testKey45-CoN8sAlW.js                            21.56 kB │ gzip:     6.58 kB
+dist/assets/TeacherGuide38-CcQDyKDi.js                       35.14 kB │ gzip:     9.67 kB
+dist/assets/TeacherGuide37-DohtNj7n.js                       42.30 kB │ gzip:    11.78 kB
+dist/assets/TeacherGuide40-Se9JCBVn.js                       42.42 kB │ gzip:    11.90 kB
+dist/assets/ledger40-B7CA93fy.js                             42.68 kB │ gzip:    12.01 kB
+dist/assets/TeacherGuide39-DYz21u_e.js                       47.90 kB │ gzip:    12.77 kB
+dist/assets/index-CmtciQBw.js                             8,226.88 kB │ gzip: 1,981.10 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 23.87s

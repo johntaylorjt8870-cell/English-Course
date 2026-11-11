@@ -1,0 +1,3 @@
+Command: ./node_modules/.bin/tsc --noEmit --jsx react-jsx --target ES2022 --module ESNext --moduleResolution bundler --skipLibCheck --allowSyntheticDefaultImports src/lessons/lesson61/*.ts src/lessons/lesson61/*.tsx
+Exit status: 0
+The corresponding output log is empty because there were no diagnostics.

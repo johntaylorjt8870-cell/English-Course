@@ -1,0 +1,21 @@
+Per-probe logs: /home/user/English-Course/docs/lesson61-evidence/source-fidelity/source-probes-run-ckNJBr
+PASS practice-source-prompt: exit=1; expected source diagnostic present
+PASS exam-graded-key: exit=1; expected source diagnostic present
+PASS exam-displayed-key: exit=1; expected source diagnostic present
+PASS invalid-mc-alternative: exit=1; expected source diagnostic present
+PASS exam-source-explanation: exit=1; expected source diagnostic present
+PASS arabic-reading-translation: exit=1; expected source diagnostic present
+PASS wh-subject-pair: exit=1; expected source diagnostic present
+PASS dialogue-source-addressee: exit=1; expected source diagnostic present
+PASS paragraph-as-seven-items: exit=1; expected source diagnostic present
+PASS summary-distinction: exit=1; expected source diagnostic present
+PASS wh-word-translation: exit=1; expected source diagnostic present
+PASS procedure-step-detail: exit=1; expected source diagnostic present
+PASS solved-concept-label: exit=1; expected source diagnostic present
+PASS say-recipient-explanation: exit=1; expected source diagnostic present
+PASS dialogue-conclusion: exit=1; expected source diagnostic present
+PASS museum-speaking-instruction: exit=1; expected source diagnostic present
+PASS group-attempt-instruction: exit=1; expected source diagnostic present
+PASS summary-example-association: exit=1; expected source diagnostic present
+PASS source-byte-tampering: exit=1; expected source diagnostic present
+19/19 deliberate mutations rejected; isolated copies restored byte-for-byte. Checkout files were never mutated.

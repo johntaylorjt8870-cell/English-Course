@@ -1,0 +1,11 @@
+PASS missing-route: exit=1; target diagnostic present
+PASS missing-import: exit=1; target diagnostic present
+PASS missing-card: exit=1; target diagnostic present
+PASS ghost-onward-link: exit=1; target diagnostic present
+FAIL shared-valid-wrong-key: exit=1; target diagnostic MISSING
+FAIL shared-out-of-range-key: exit=1; target diagnostic MISSING
+FAIL shared-missing-explanation: exit=1; target diagnostic MISSING
+FAIL shared-missing-question: exit=1; target diagnostic MISSING
+FAIL shared-invalid-typed-alternative: exit=1; target diagnostic MISSING
+FAIL shared-wrong-multi-key: exit=1; target diagnostic MISSING
+4/10 registration, link and shared-test mutations rejected; isolated copies restored byte-for-byte. Checkout files were never mutated.

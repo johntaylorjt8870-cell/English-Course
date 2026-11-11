@@ -98,10 +98,48 @@ try {
 
   await go("progress");
   ok((await page.locator('a[href="#/lesson/59"]').count()) === 1, "lesson 60 links back to lesson 59");
-  ok((await page.locator('#l60-main a[href="#/lesson/61"]').count()) === 0, "lesson 60 never links to lesson 61");
+  const nextLink = page.locator('#l60-main a[href="#/lesson/61"]');
+  const nextLinkCount = await nextLink.count();
+  ok(nextLinkCount === 1, "lesson 60 has exactly one onward link to lesson 61");
+  const futureLink = page.locator('#l60-main a[href="#/lesson/62"]');
+  const futureLinkCount = await futureLink.count();
+  let futureLinkResolves = false;
+  if (futureLinkCount === 1) {
+    await futureLink.click();
+    await page.locator('[data-lesson="62"]').waitFor({ timeout: 6000 }).catch(() => {});
+    futureLinkResolves = (await page.locator('[data-lesson="62"]').count()) === 1;
+    await page.goto(`${base}#/lesson/60`, { waitUntil: "networkidle" });
+    await page.locator('[data-lesson="60"]').waitFor();
+    await go("progress");
+  }
+  ok(futureLinkCount === 0 || (futureLinkCount === 1 && futureLinkResolves), "any lesson 62 link must open a real registered lesson");
+  if (nextLinkCount === 1) {
+    await nextLink.click();
+    await page.locator('[data-lesson="61"]').waitFor({ timeout: 6000 }).catch(() => {});
+  }
+  ok(nextLinkCount === 1 && (await page.locator('[data-lesson="61"] [data-l61-cover]').count()) === 1, "lesson 60 onward link opens the real lesson 61 cover");
+
+  await page.goto(`${base}#/lesson/60`, { waitUntil: "networkidle" });
+  await page.locator('[data-lesson="60"]').waitFor();
+  await go("progress");
+  const nextButton = page.locator('#l60-main button').filter({ hasText: 'الدرس التالي · 61' });
+  const nextButtonCount = await nextButton.count();
+  ok(nextButtonCount === 1, "lesson 60 has exactly one onward button for lesson 61");
+  if (nextButtonCount === 1) {
+    await nextButton.click();
+    await page.locator('[data-lesson="61"]').waitFor({ timeout: 6000 }).catch(() => {});
+  }
+  ok(nextButtonCount === 1 && (await page.locator('[data-lesson="61"] [data-l61-cover]').count()) === 1, "lesson 60 onward button opens the real lesson 61 cover");
+
+  await page.goto(`${base}#/lesson/60`, { waitUntil: "networkidle" });
+  await page.locator('[data-lesson="60"]').waitFor();
+  await go("progress");
   await page.locator('a[href="#/lesson/59"]').first().click();
   await page.locator('[data-lesson="59"]').waitFor();
   ok((await page.locator('[data-lesson="59"]').count()) === 1, "back navigation to lesson 59 works");
+  await page.goto(`${base}#/lesson/999999`, { waitUntil: "networkidle" });
+  await page.locator('a.group[href="#/lesson/60"]').waitFor();
+  ok((await page.locator('[data-lesson="999999"], a[href="#/lesson/999999"]').count()) === 0, "an unregistered lesson falls back to the hub without a ghost card");
   await page.goto(`${base}#/lesson/60`, { waitUntil: "networkidle" });
   await page.locator('[data-lesson="60"]').waitFor();
 

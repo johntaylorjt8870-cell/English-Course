@@ -944,11 +944,12 @@ function ProgressScene60({ onExit }: { onExit?: () => void }) {
           </a>
         </p>
         <p className="l60-endnote">
-          هذا هو آخر درس مسجّل في الفهرس حتى الآن، فلا يوجد رابط إلى درس غير موجود. عند تسجيل الدرس التالي سيُضاف رابطه هنا
-          وفي فهرس الدروس.
+          تابع إلى الدرس التالي لتتعلم نقل الأسئلة والأوامر والطلبات والتعليمات.
+          {" "}<a className="l60-prev-link" href="#/lesson/61">الدرس 61 — <En60>Reported Questions &amp; Commands</En60></a>
         </p>
         <div className="l60-actions">
           <Btn60 onClick={() => (window.location.hash = "/lesson/59")}>← الدرس السابق · 59</Btn60>
+          <Btn60 onClick={() => (window.location.hash = "/lesson/61")}>الدرس التالي · 61 →</Btn60>
           {onExit && (
             <Btn60 variant="soft" onClick={onExit}>
               العودة إلى فهرس الدروس

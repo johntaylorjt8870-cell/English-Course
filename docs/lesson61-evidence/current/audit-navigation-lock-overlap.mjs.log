@@ -1,0 +1,16 @@
+Encountered two children with the same key, `الأساس والصيغ`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+Encountered two children with the same key, `الأساس والصيغ`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+TypeError: activeElement$1.attachEvent is not a function
+    at handleEventsForInputEventPolyfill (/home/user/English-Course/node_modules/react-dom/cjs/react-dom-client.development.js:3573:27)
+    at /home/user/English-Course/node_modules/react-dom/cjs/react-dom-client.development.js:19638:15
+    at batchedUpdates$1 (/home/user/English-Course/node_modules/react-dom/cjs/react-dom-client.development.js:3255:40)
+    at dispatchEventForPluginEventSystem (/home/user/English-Course/node_modules/react-dom/cjs/react-dom-client.development.js:19320:7)
+    at dispatchEvent (/home/user/English-Course/node_modules/react-dom/cjs/react-dom-client.development.js:23585:11)
+    at dispatchDiscreteEvent (/home/user/English-Course/node_modules/react-dom/cjs/react-dom-client.development.js:23553:11)
+    at HTMLDivElement.callTheUserObjectsOperation (/home/user/English-Course/node_modules/jsdom/lib/generated/idl/EventListener.js:26:30)
+    at innerInvokeEventListeners (/home/user/English-Course/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:378:16)
+    at invokeEventListeners (/home/user/English-Course/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:320:3)
+    at HTMLInputElementImpl._dispatch (/home/user/English-Course/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:269:9)
+Navigation vs Lock-Site Regression Audit: 110 checks passed, 2 failed.
+ ✕ Real-browser verification report exists with 0 failures across viewports, Lessons 34–35 drawer clearance, and Lessons 31–44 tab transitions: missing measurement for lesson 44 at 1440x900
+ ✕ Lesson 36 [tab=منطقة الطالب]: tab switch preserves 1 visible "قفل الموقع" button and cleans stale hosts: Lesson 36: tab button "منطقة الطالب" must exist

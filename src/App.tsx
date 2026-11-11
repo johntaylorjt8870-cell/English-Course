@@ -59,6 +59,7 @@ import Lesson57 from "./lessons/lesson57/Lesson57";
 import Lesson58 from "./lessons/lesson58/Lesson58";
 import Lesson59 from "./lessons/lesson59/Lesson59";
 import Lesson60 from "./lessons/lesson60/Lesson60";
+import Lesson61 from "./lessons/lesson61/Lesson61";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -633,6 +634,15 @@ const CARDS: Card[] = [
     href: "#/lesson/60",
     grad: "from-[#221a38] to-[#c26a1b]",
   },
+  {
+    n: 61,
+    title: "الدرس 61: REPORTED SPEECH — QUESTIONS, COMMANDS AND REQUESTS",
+    en: "Communication Control Room · Questions & Instructions",
+    emoji: "📡",
+    stats: "16 قسمًا · 8 تدريبات · 10 مختبرات · اختبار أصلي 25 سؤالًا + اختبار 15 سؤالًا",
+    href: "#/lesson/61",
+    grad: "from-[#123d2f] to-[#a4ca42]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -774,6 +784,7 @@ export default function App() {
   else if (route === 58) page = <Lesson58 onExit={goHome} />;
   else if (route === 59) page = <Lesson59 onExit={goHome} />;
   else if (route === 60) page = <Lesson60 onExit={goHome} />;
+  else if (route === 61) page = <Lesson61 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

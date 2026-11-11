@@ -1,0 +1,2 @@
+✕ Source-reveal audit FAILED (1/63)
+  - لا <details>/<summary> في ملفات الطالب (src/lessons/lesson38/Steps38.tsx, src/lessons/lesson58/Lesson58.tsx, src/lessons/lesson59/Lesson59.tsx, src/lessons/lesson59/kit59.tsx, src/lessons/lesson59/labs59.tsx, src/lessons/lesson60/kit60.tsx, src/lessons/lesson60/labs60.tsx)

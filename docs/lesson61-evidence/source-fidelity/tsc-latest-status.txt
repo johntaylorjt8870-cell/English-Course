@@ -1,0 +1,6 @@
+Command (both roots): ./node_modules/.bin/tsc --noEmit --jsx react-jsx --target ES2022 --module ESNext --moduleResolution bundler --skipLibCheck --allowSyntheticDefaultImports $(find src -type f \( -name '*.ts' -o -name '*.tsx' \) | LC_ALL=C sort)
+main exit: 2
+current exit: 2
+byte comparison exit: 0
+main diagnostics: 272
+current diagnostics: 272

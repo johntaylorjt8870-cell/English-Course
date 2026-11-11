@@ -1,0 +1,5 @@
+
+> react-vite-tailwind@0.0.0 audit:layout-width
+> node scripts/audit-layout-width.mjs
+
+Layout width static audit PASSED: 984 assertions across Hub, Lesson1Shell, and 61 lessons (future-lesson guard active).

@@ -1,0 +1,2 @@
+command: node scripts/audit-final-test-coverage.mjs
+exit: 1

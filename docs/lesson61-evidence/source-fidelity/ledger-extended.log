@@ -1,0 +1,8 @@
+file:///home/user/English-Course/scripts/generate-lesson61-content-review.mjs:309
+  if (![oldPractice, practice].every((module) => norm(module.PRACTICES_61[i].instruction).includes(norm(group.instruction.text)))) throw new Error(`Practice instruction missing at line ${group.instruction.line}`);
+                                                                                                                                         ^
+
+Error: Practice instruction missing at line 2078
+    at file:///home/user/English-Course/scripts/generate-lesson61-content-review.mjs:309:138
+
+Node.js v22.22.3

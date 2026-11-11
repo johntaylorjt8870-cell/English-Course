@@ -1,0 +1,26 @@
+--- /home/user/lesson61-snapshot-before-backshift-review.json	2026-11-10 14:21:50.337893604 +0000
++++ scripts/fixtures/lesson61-content-snapshot.json	2026-11-10 14:22:24.522264646 +0000
+@@ -1642,7 +1642,10 @@
+             "C. be"
+           ],
+           "answer": "A. was",
+-          "why": "في النموذج نطبّق الرجوع الزمني من am إلى was."
++          "accept": [
++            "B. am"
++          ],
++          "why": "في نموذج الرجوع الزمني تصبح am هي was. ويمكن إبقاء am إذا ظلت الجاهزية قائمة ولم نستخدم الرجوع الزمني."
+         },
+         {
+           "prompt": "The teacher told us _____ quiet.",
+@@ -2078,7 +2081,10 @@
+         "C. has"
+       ],
+       "answer": "B. had",
+-      "why": "Present Perfect أصبح Past Perfect في نموذج الرجوع الزمني."
++      "accept": [
++        "A. have"
++      ],
++      "why": "في نموذج الرجوع الزمني يصبح Present Perfect هو Past Perfect. ويمكن إبقاء have إذا ظلت النتيجة حاضرة ولم نستخدم الرجوع الزمني."
+     },
+     {
+       "n": 23,

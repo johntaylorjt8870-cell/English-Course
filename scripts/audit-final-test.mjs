@@ -67,7 +67,8 @@ import Lesson35 from ${JSON.stringify(join(root, "src/lessons/lesson35/Lesson35.
 import * as FINAL from ${JSON.stringify(join(root, "src/shared/finalTest.tsx"))};
 import { FINAL_TESTS, FINAL_TEST_MIN, FINAL_TEST_MAX, finalTestFor, finalTestLessons } from ${JSON.stringify(join(root, "src/shared/finalTestBank.ts"))};
 import { QUIZZES } from ${JSON.stringify(join(root, "src/shared/quizBank.ts"))};
-export { React, createRoot, Lesson27, Lesson28, Lesson29, Lesson30, Lesson31, Lesson32, Lesson33, Lesson34, Lesson35, FINAL, FINAL_TESTS, FINAL_TEST_MIN, FINAL_TEST_MAX, finalTestFor, finalTestLessons, QUIZZES };
+import { TEST_61 } from ${JSON.stringify(join(root, "src/lessons/lesson61/test61.ts"))};
+export { React, createRoot, Lesson27, Lesson28, Lesson29, Lesson30, Lesson31, Lesson32, Lesson33, Lesson34, Lesson35, FINAL, FINAL_TESTS, FINAL_TEST_MIN, FINAL_TEST_MAX, finalTestFor, finalTestLessons, QUIZZES, TEST_61 };
 `,
     resolveDir: root,
     loader: "tsx",
@@ -411,6 +412,141 @@ const lesson60SharedAssessment =
   (lesson60Data.match(/\n    type: /g) || []).length === 15 &&
   lesson60Teacher.includes("FinalTestAnswerKey") && lesson60Teacher.includes("questions={TEST_60}");
 ok(lesson60SharedAssessment, "Lesson 60: shared FinalTest with 15 local questions and teacher answer key");
+// Lesson 61 also uses an independent local bank and the same shared test/key.
+// This extends the existing route inventory without exempting future lessons.
+const lesson61Src = readFileSync(join(root, "src/lessons/lesson61/Lesson61.tsx"), "utf8");
+const lesson61Data = readFileSync(join(root, "src/lessons/lesson61/test61.ts"), "utf8");
+const lesson61Index = readFileSync(join(root, "src/lessons/lesson61/data.ts"), "utf8");
+const lesson61Teacher = readFileSync(join(root, "src/lessons/lesson61/TeacherArea61.tsx"), "utf8");
+
+// Inspect the actual imported bank, not merely a route number or source regex.
+// These checks are additional to, and do not relax, the existing 1–60 checks.
+const lesson61FailureStart = failures.length;
+const questions61 = Array.isArray(m.TEST_61) ? m.TEST_61 : [];
+const nonempty61 = (value) => typeof value === "string" && value.trim().length > 0;
+const distinctStrings61 = (values) => Array.isArray(values) && values.length >= 2 && values.every(nonempty61) && new Set(values.map((value) => value.trim())).size === values.length;
+const answers61 = {};
+const wrongAnswers61 = {};
+const types61 = new Set();
+const prompts61 = new Set();
+
+// Manually reviewed *implementation* expectations, not an original-source
+// transcription. These bind each question's instruction/context to the answer
+// text that makes grammatical sense; deriving both sides from q.answer would
+// miss an incorrect but in-range key. Updating this list requires a fresh review.
+const reviewed61 = [
+  { type: "single", ar: "انقل السؤال الآتي مع الرجوع الزمني المعتاد:", en: 'He asked me, "Are you ready?"', expected: "He asked me if I was ready." },
+  { type: "order", ar: "رتّب المقاطع لنقل السؤال:", en: 'He asked me, "Where do you live?"', expected: "He asked me → where → I → lived." },
+  { type: "single", ar: "أي تحويل يحافظ على أداة السؤال بصفتها فاعلًا؟", en: 'She asked, "Who opened the door?"', expected: "She asked who had opened the door." },
+  { type: "single", ar: "أكمل السؤال المنقول بصيغته الأساسية مع الرجوع الزمني المعتاد:", en: 'She asked him, "Do you play football?" → She asked him if he ____ football.', expected: "played" },
+  { type: "typed", ar: "اكتب تركيب الأمر الناقص:", en: 'The teacher said to us, "Sit down."', before: "The teacher told us", after: "down.", expected: "to sit", accepted: ["to sit"] },
+  { type: "single", ar: "اختر الصيغة الطبيعية لنقل النهي:", en: 'My father said to me, "Don\'t waste your time."', expected: "My father told me not to waste my time." },
+  { type: "single", ar: "القصد طلب المساعدة فعلًا، لا الاستفسار عن القدرة. أي صيغة تنقل الطلب؟", en: 'He said to me, "Could you help me?"', expected: "He asked me to help him." },
+  { type: "typed", ar: "أكمل فعل النصيحة:", en: 'The doctor said to him, "Exercise regularly."', before: "The doctor advised him", after: "regularly.", expected: "to exercise", accepted: ["to exercise"] },
+  { type: "single", ar: "المرشد يحذّرنا من خطر. اختر التحويل الملائم:", en: 'The guide said to us, "Don\'t go near the edge."', expected: "The guide warned us not to go near the edge." },
+  { type: "single", ar: "اختر تحويل الاقتراح:", en: 'They said, "Let\'s visit the museum."', expected: "They suggested visiting the museum." },
+  { type: "single", ar: "اختر صيغة أخرى صحيحة للاقتراح:", en: 'She said, "Let\'s study together."', expected: "She suggested that we should study together." },
+  { type: "match", ar: "صِل الفعل بالتركيب المناسب:", expected: "said → that he was busy · told → me to wait · asked → if I was ready" },
+  { type: "error", ar: "اختر المقطع الذي يُبقي ترتيب السؤال المباشر خطأً:", en: "He asked me where did I live.", expected: "did I live." },
+  { type: "tf", ar: "نغيّر here وtomorrow تلقائيًا دائمًا حتى لو لم يتغير المكان أو الزمن المرجعي.", expected: "خطأ ✕" },
+  { type: "multi", ar: "اختر جميع الصيغ الصحيحة لنقل اقتراح:", expected: "She suggested studying. · She suggested that I should study. · She suggested that I study." },
+];
+ok(reviewed61.length === 15 && questions61.length === 15, `L61: the actual shared bank contains 15 reviewed questions (got ${questions61.length})`);
+for (const [i, q] of questions61.entries()) {
+  const tag = `L61 q${i + 1}`;
+  ok(q && typeof q === "object", `${tag}: question object exists`);
+  if (!q || typeof q !== "object") continue;
+  types61.add(q.type);
+  const reviewed = reviewed61[i];
+  ok(nonempty61(q.ar) && nonempty61(q.why) && nonempty61(q.concept) && nonempty61(q.trap), `${tag}: prompt, explanation, concept and trap exist`);
+  ok(Boolean(reviewed) && q.type === reviewed.type && q.ar === reviewed.ar && (q.en || "") === (reviewed.en || "") && (q.type !== "typed" || (q.before === reviewed.before && q.after === reviewed.after)), `${tag}: question and context match the manually reviewed implementation`);
+  const signature = JSON.stringify([q.type, q.ar, q.en, q.before, q.after, q.options, q.items, q.segments, q.pairs]);
+  ok(!prompts61.has(signature), `${tag}: independently authored question is not duplicated`);
+  prompts61.add(signature);
+  let answer, wrong;
+  if (q.type === "single" || q.type === "error") {
+    const opts = q.type === "single" ? q.options : q.segments;
+    const choicesOK = distinctStrings61(opts);
+    const keyOK = choicesOK && Number.isInteger(q.answer) && q.answer >= 0 && q.answer < opts.length;
+    ok(choicesOK, `${tag}: choices are nonempty and distinct`);
+    ok(keyOK, `${tag}: answer index is in range`);
+    if (keyOK) { answer = { kind: q.type, value: q.answer }; wrong = { kind: q.type, value: (q.answer + 1) % opts.length }; }
+  } else if (q.type === "tf") {
+    ok(typeof q.answer === "boolean", `${tag}: true/false answer is a boolean`);
+    if (typeof q.answer === "boolean") { answer = { kind: "tf", value: q.answer }; wrong = { kind: "tf", value: !q.answer }; }
+  } else if (q.type === "multi") {
+    const optionsOK = distinctStrings61(q.options);
+    const keysOK = optionsOK && Array.isArray(q.answers) && q.answers.length > 0 && q.answers.length < q.options.length && q.answers.every((n) => Number.isInteger(n) && n >= 0 && n < q.options.length) && new Set(q.answers).size === q.answers.length;
+    ok(optionsOK, `${tag}: multi-select options are nonempty and distinct`);
+    ok(keysOK, `${tag}: multi-select keys are distinct, in range and not all choices`);
+    if (keysOK) { answer = { kind: "multi", value: q.answers }; wrong = { kind: "multi", value: [q.options.findIndex((_, n) => !q.answers.includes(n))] }; }
+  } else if (q.type === "order") {
+    const valid = distinctStrings61(q.items);
+    ok(valid, `${tag}: ordered items are nonempty and distinct`);
+    if (valid) { const indexes = q.items.map((_, n) => n); answer = { kind: "order", value: indexes }; wrong = { kind: "order", value: [...indexes].reverse() }; }
+  } else if (q.type === "match") {
+    const valid = Array.isArray(q.pairs) && q.pairs.length >= 2 && q.pairs.every((p) => p && nonempty61(p.left) && nonempty61(p.right)) && new Set(q.pairs.map((p) => p.left)).size === q.pairs.length && new Set(q.pairs.map((p) => p.right)).size === q.pairs.length;
+    ok(valid, `${tag}: matching pairs are complete and unambiguous`);
+    if (valid) { answer = { kind: "match", value: q.pairs.map((_, n) => n) }; wrong = { kind: "match", value: q.pairs.map((_, n) => (n + 1) % q.pairs.length) }; }
+  } else if (q.type === "typed") {
+    const valid = typeof q.before === "string" && typeof q.after === "string" && (nonempty61(q.before) || nonempty61(q.after)) && Array.isArray(q.accept) && q.accept.length > 0 && q.accept.every(nonempty61);
+    ok(valid, `${tag}: typed item has context and accepted answers`);
+    if (valid) { answer = { kind: "typed", value: q.accept[0] }; wrong = { kind: "typed", value: "deliberately incorrect answer" }; }
+  } else {
+    ok(false, `${tag}: unsupported type ${q.type}`);
+  }
+  if (answer && wrong) {
+    answers61[i] = answer;
+    wrongAnswers61[i] = wrong;
+    ok(m.FINAL.isAnswered(q, answer) && m.FINAL.isCorrect(q, answer), `${tag}: keyed answer is accepted by the shared engine`);
+    ok(!m.FINAL.isCorrect(q, wrong), `${tag}: a deliberately incorrect answer is rejected`);
+    const actualKey = m.FINAL.expectedAnswerText(q).replace(/\s+/g, " ").trim();
+    ok(nonempty61(actualKey), `${tag}: teacher key has a rendered answer`);
+    ok(Boolean(reviewed) && actualKey === reviewed.expected, `${tag}: answer matches the manually reviewed grammatical key, not just an in-range index`);
+    if (q.type === "typed") ok(JSON.stringify(q.accept) === JSON.stringify(reviewed?.accepted), `${tag}: every accepted typed response was reviewed`);
+    const partial = q.type === "multi" ? { kind: "multi", value: [] }
+      : q.type === "typed" ? { kind: "typed", value: "   " }
+      : q.type === "order" ? { kind: "order", value: answer.value.slice(0, -1) }
+      : q.type === "match" ? { kind: "match", value: answer.value.map((v, n) => n === 0 ? null : v) }
+      : undefined;
+    ok(!m.FINAL.isAnswered(q, undefined) && !m.FINAL.isCorrect(q, undefined) && (!partial || (!m.FINAL.isAnswered(q, partial) && !m.FINAL.isCorrect(q, partial))), `${tag}: missing or partial answer is not counted as answered or correct`);
+  } else {
+    ok(false, `${tag}: no valid answer could be constructed`);
+  }
+}
+ok(["single", "tf", "multi", "order", "match", "error", "typed"].every((type) => types61.has(type)), "L61: all seven supported question types are represented");
+const lesson61Graded = questions61.length === 15 && Object.keys(answers61).length === 15 ? m.FINAL.gradeFinalTest(questions61, answers61) : null;
+ok(lesson61Graded?.score === 15 && lesson61Graded?.total === 15 && lesson61Graded.perQuestion.every((result) => result.answered && result.correct), "L61: actual key scores 15/15 through the shared grader");
+ok(questions61.length === 15 && m.FINAL.gradeFinalTest(questions61, {}).score === 0, "L61: an unanswered test scores zero");
+const partialAnswers61 = { ...answers61 };
+delete partialAnswers61[14];
+const partialGrade61 = lesson61Graded ? m.FINAL.gradeFinalTest(questions61, partialAnswers61) : null;
+ok(partialGrade61?.score === 14 && !partialGrade61.perQuestion[14].answered && !partialGrade61.perQuestion[14].correct, "L61: one missing response remains unanswered and cannot earn a point");
+const incorrectGrade61 = lesson61Graded ? m.FINAL.gradeFinalTest(questions61, { ...answers61, 0: wrongAnswers61[0] }) : null;
+ok(incorrectGrade61?.score === 14 && !incorrectGrade61.perQuestion[0].correct, "L61: an incorrect in-range student choice scores 14/15");
+
+// Render the same bank through the shared teacher key and inspect each entry.
+const keyHost61 = document.createElement("div");
+document.body.appendChild(keyHost61);
+const keyRoot61 = m.createRoot(keyHost61);
+keyRoot61.render(m.React.createElement(m.FINAL.FinalTestAnswerKey, { lesson: 61, questions: questions61 }));
+await tick(80);
+const keyItems61 = [...keyHost61.querySelectorAll('[data-ft-key="61"] [data-ft-key-item]')];
+ok(keyItems61.length === 15, `L61: shared teacher key renders 15 entries (got ${keyItems61.length})`);
+for (const [i, q] of questions61.entries()) {
+  if (!answers61[i]) continue;
+  const keyText = (keyItems61[i]?.textContent || "").replace(/\s/g, "");
+  ok([m.FINAL.expectedAnswerText(q), q.why, q.concept, q.trap].every((value) => keyText.includes(value.replace(/\s/g, ""))), `L61 q${i + 1}: teacher key contains its answer, explanation, concept and trap`);
+}
+keyRoot61.unmount();
+keyHost61.remove();
+const lesson61BankContentOK = failures.length === lesson61FailureStart;
+const lesson61SharedAssessment =
+  lesson61Src.includes("<FinalTest lesson={61} questions={TEST_61}") &&
+  lesson61Src.includes('from "./data"') && lesson61Index.includes('from "./test61"') &&
+  (lesson61Data.match(/\btype:/g) || []).length === 15 && lesson61BankContentOK &&
+  lesson61Teacher.includes("FinalTestAnswerKey") && lesson61Teacher.includes("questions={TEST_61}");
+ok(lesson61SharedAssessment, "Lesson 61: shared FinalTest with 15 local questions and teacher answer key");
 const lesson53TestData = readFileSync(join(root, "src/lessons/lesson53/testData53.ts"), "utf8");
 const lesson55TestData = readFileSync(join(root, "src/lessons/lesson55/test55.ts"), "utf8");
 const lesson53HasAssessment = (lesson53TestData.match(/(?:choice|text)\(/g) || []).length >= 25;
@@ -420,7 +556,7 @@ ok(appLessons.length >= 46, `كل دروس التطبيق مسجلة (${appLesso
 for (const n of appLessons) {
   const legacy = (m.QUIZZES[n] || []).length >= 12;
   const modern = m.finalTestLessons().includes(n);
-  const dedicated = (n === 36 && lesson36DedicatedAssessment) || (n === 37 && lesson37DedicatedAssessment) || (n === 38 && lesson38DedicatedAssessment) || (n === 39 && lesson39DedicatedAssessment) || (n === 40 && lesson40DedicatedAssessment) || (n === 41 && lesson41DedicatedAssessment) || (n === 42 && lesson42DedicatedAssessment) || (n === 43 && lesson43DedicatedAssessment) || (n === 44 && lesson44DedicatedAssessment) || (n === 45 && lesson45DedicatedAssessment) || (n === 46 && lesson46DedicatedAssessment) || (n === 47 && lesson47DedicatedAssessment) || (n === 48 && lesson48DedicatedAssessment) || (n === 49 && lesson49DedicatedAssessment) || (n === 50 && lesson50DedicatedAssessment) || (n === 51 && lesson51DedicatedAssessment) || (n === 52 && lesson52DedicatedAssessment) || (n === 53 && lesson53HasAssessment) || (n === 54 && lesson54DedicatedAssessment) || (n === 55 && lesson55HasAssessment) || (n === 56 && lesson56SharedAssessment) || (n === 57 && lesson57SharedAssessment) || (n === 58 && lesson58SharedAssessment) || (n === 59 && lesson59SharedAssessment) || (n === 60 && lesson60SharedAssessment);
+  const dedicated = (n === 36 && lesson36DedicatedAssessment) || (n === 37 && lesson37DedicatedAssessment) || (n === 38 && lesson38DedicatedAssessment) || (n === 39 && lesson39DedicatedAssessment) || (n === 40 && lesson40DedicatedAssessment) || (n === 41 && lesson41DedicatedAssessment) || (n === 42 && lesson42DedicatedAssessment) || (n === 43 && lesson43DedicatedAssessment) || (n === 44 && lesson44DedicatedAssessment) || (n === 45 && lesson45DedicatedAssessment) || (n === 46 && lesson46DedicatedAssessment) || (n === 47 && lesson47DedicatedAssessment) || (n === 48 && lesson48DedicatedAssessment) || (n === 49 && lesson49DedicatedAssessment) || (n === 50 && lesson50DedicatedAssessment) || (n === 51 && lesson51DedicatedAssessment) || (n === 52 && lesson52DedicatedAssessment) || (n === 53 && lesson53HasAssessment) || (n === 54 && lesson54DedicatedAssessment) || (n === 55 && lesson55HasAssessment) || (n === 56 && lesson56SharedAssessment) || (n === 57 && lesson57SharedAssessment) || (n === 58 && lesson58SharedAssessment) || (n === 59 && lesson59SharedAssessment) || (n === 60 && lesson60SharedAssessment) || (n === 61 && lesson61SharedAssessment);
   ok(legacy || modern || dedicated, `الدرس ${n}: له اختبار نهائي (قديم أو جديد أو Master Test مستقل)`);
 }
 

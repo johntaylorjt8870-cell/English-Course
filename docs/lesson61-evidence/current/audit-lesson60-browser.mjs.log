@@ -1,0 +1,127 @@
+✓ direct route #/lesson/60 opens the lesson cover
+✓ cover shows the lesson title
+✓ cover states the full source scope
+✓ course hub has one dedicated card for lesson 60
+✓ hub card opens the lesson
+✓ lesson 59 keeps an onward link to lesson 60
+✓ lesson 59 → lesson 60 navigation works
+✓ lesson 60 links back to lesson 59
+✓ lesson 60 has exactly one onward link to lesson 61
+✓ any lesson 62 link must open a real registered lesson
+✓ lesson 60 onward link opens the real lesson 61 cover
+✓ lesson 60 has exactly one onward button for lesson 61
+✓ lesson 60 onward button opens the real lesson 61 cover
+✓ back navigation to lesson 59 works
+✓ an unregistered lesson falls back to the hub without a ghost card
+✓ section 1 renders its title
+✓ section 1 keeps its three quoted bubbles
+✓ section 1 renders the seven goals block
+✓ TOLD correct form renders
+✓ banned form shown as wrong for contrast
+✓ four told transfer pairs render
+✓ backshift table renders all twelve rows
+✓ Past Perfect stays-as-is note renders
+✓ must deduction branch renders (must stays)
+✓ must obligation branch renders (had to)
+✓ pronoun section: anchor + five contextual examples
+✓ pronoun table keeps its context-dependent note
+✓ pronoun context warning renders
+✓ thirteen time rows render (13)
+✓ tomorrow→the following day renders
+✓ come→go movement row renders
+✓ ten modal rows render
+✓ invariant modals note renders
+✓ scientific fact keeps present tense
+✓ still-true exception renders
+✓ says exception renders
+✓ eight conversion steps render
+✓ worked example renders its six stages
+✓ worked final result renders
+✓ ten solved examples render
+✓ seven common mistakes render
+✓ dialogue renders eight turns
+✓ dialogue renders four comprehension questions
+✓ reported retell keeps must→had to
+✓ dialogue answer reveals on demand only
+✓ reading renders five paragraphs + gloss block
+✓ reading renders eight comprehension questions
+✓ reading title renders
+✓ Arabic translation renders
+✓ practice starts without any feedback
+✓ typing alone does not reveal correctness
+✓ typed transformation answer is accepted after check only
+✓ retry clears answer and feedback
+✓ choosing an answer does not reveal correctness
+✓ choice feedback appears only after explicit check
+✓ p3 renders its 8 items
+✓ p4 renders its 10 items
+✓ p5 renders its 5 items
+✓ p6 renders its 5 items
+✓ p7 renders its 10 items
+✓ p8 renders its 1 items
+✓ original 25-question test renders
+✓ original test q1 grades 'was' correctly
+✓ original key keeps 25 numbered entries
+✓ original key keeps the completed blanks
+✓ Speech Explorer mounts
+✓ explorer switch shows the Present Perfect backshift
+✓ explorer quiz hides judgement before check
+✓ explorer quiz explains after check
+✓ studio asks for decision per change type
+✓ studio never shows the result before running
+✓ studio emits the fully transformed sentence
+✓ all five studio decisions graded correct
+✓ timeline detail follows the selected row
+✓ said/told drill lists six items
+✓ said/told hides judgements before check
+✓ said/told grades all six after check
+✓ pronoun mapper offers three scenarios
+✓ third-person reporter maps I to he
+✓ switching the narrator changes the reported result
+✓ time/place explorer exposes both contexts
+✓ time/place explorer lists the source words (5)
+✓ exception detector lists eight sentences
+✓ exception detector hides judgements before check
+✓ exception detector grades all eight
+✓ error detective renders the seven source mistakes
+✓ error detective lists seven choice lists
+✓ error detective hides corrections before check
+✓ error detective explains all seven corrections
+✓ four transformation challenges render
+✓ challenge 1 accepts a full correct conversion
+✓ shared FinalTest renders fifteen questions
+✓ no verdict before submission
+✓ answering every question still reveals nothing
+✓ submit becomes available once all fifteen are answered
+✓ after submission every question is graded
+✓ result summary appears after grading
+✓ result text rendered
+✓ final-test state survives navigation (no new quiz system)
+✓ teacher gate asks for a password
+✓ wrong password is rejected
+✓ teacher key exposes the shared fifteen-question key
+✓ teacher area keeps practice + original-test keys
+✓ 320px: no horizontal document overflow (320)
+✓ 320px: lesson column does not overflow (320/320)
+✓ 320px: next button never overlaps the site-lock button
+✓ 320px: the dense backshift-table section stays inside the column (0)
+✓ 360px: no horizontal document overflow (360)
+✓ 360px: lesson column does not overflow (360/360)
+✓ 360px: next button never overlaps the site-lock button
+✓ 360px: the dense backshift-table section stays inside the column (0)
+✓ 390px: no horizontal document overflow (390)
+✓ 390px: lesson column does not overflow (390/390)
+✓ 390px: next button never overlaps the site-lock button
+✓ 390px: the dense backshift-table section stays inside the column (0)
+✓ 414px: no horizontal document overflow (414)
+✓ 414px: lesson column does not overflow (414/414)
+✓ 414px: next button never overlaps the site-lock button
+✓ 414px: the dense backshift-table section stays inside the column (0)
+✓ 1280px: no horizontal document overflow (1280)
+✓ 1280px: lesson column does not overflow (992/992)
+✓ 1280px: next button never overlaps the site-lock button
+✓ 1280px: the dense backshift-table section stays inside the column (0)
+✓ no runtime/console errors (0)
+✓ only external font requests failed if any (1)
+
+Lesson 60 browser audit: 125/125 passed

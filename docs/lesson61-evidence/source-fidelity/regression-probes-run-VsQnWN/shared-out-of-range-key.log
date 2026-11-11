@@ -1,0 +1,21 @@
+Encountered two children with the same key, `+`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+Encountered two children with the same key, `+`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+Encountered two children with the same key, `+`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+Encountered two children with the same key, `+`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+Encountered two children with the same key, `+`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+Encountered two children with the same key, `+`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+Encountered two children with the same key, `+`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+Encountered two children with the same key, `+`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+✕ Final Test audit FAILED (12/1463)
+  - L61 q1: answer index is in range
+  - L61 q1: no valid answer could be constructed
+  - L61: actual key scores 15/15 through the shared grader
+  - L61: one missing response remains unanswered and cannot earn a point
+  - L61: an incorrect in-range student choice scores 14/15
+  - Lesson 61: shared FinalTest with 15 local questions and teacher answer key
+  - الدرس 61: له اختبار نهائي (قديم أو جديد أو Master Test مستقل)
+  - L35: بوابة كلمة المرور موجودة
+  - L35: مفتاح الإجابات يعرض كل الأسئلة (0)
+  - L35: صيغة المفتاح تدريسية (إجابة · سبب · مفهوم)
+  - L35: كل إجابات البنك تظهر في المفتاح
+  - L35: مفتاح المنصة موسوم Platform Explanation

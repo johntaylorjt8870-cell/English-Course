@@ -1,0 +1,3 @@
+Lesson 61 static audit FAILED: 1 / 274
+  - Complete original text, examples, translations, answers and explanations match the implementation snapshot (not independent source verification)
+SOURCE FIDELITY: UNVERIFIED — the current fixture is an implementation snapshot, not an independent transcription of the user-provided source.

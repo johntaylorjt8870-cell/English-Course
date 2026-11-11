@@ -1,0 +1,3 @@
+# The independent source is a byte-preserved attachment; its Markdown hard
+# breaks intentionally include trailing spaces. Do not normalize the source.
+lesson61-source.md -text whitespace=-blank-at-eol

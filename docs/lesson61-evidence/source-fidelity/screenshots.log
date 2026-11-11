@@ -1,0 +1,23 @@
+Captured docs/lesson61-visual/source-fidelity-320-teacher-pronouns.png
+Captured docs/lesson61-visual/source-fidelity-320-original-dialogue.png
+Captured docs/lesson61-visual/source-fidelity-320-paragraph-prompt.png
+Captured docs/lesson61-visual/source-fidelity-320-paragraph-model.png
+Captured docs/lesson61-visual/source-fidelity-320-original-exam-pending.png
+Captured docs/lesson61-visual/source-fidelity-320-nine-distinctions.png
+Captured docs/lesson61-visual/source-fidelity-320-teacher-paragraph-key.png
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+browser.newPage: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /tmp/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,AvoidCorsURLLoaderRestartOnRedirect,Translate,AutoDeElevate,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --ash-no-nudges --disable-domain-reliability --disable-print-preview --disk-cache-size=33554432 --no-default-browser-check --no-pings --single-process --font-render-hinting=none --disable-features=AudioServiceOutOfProcess,IsolateOrigins,site-per-process --enable-features=SharedArrayBuffer --ignore-gpu-blocklist --in-process-gpu --use-gl=angle --use-angle=swiftshader --enable-unsafe-swiftshader --allow-running-insecure-content --disable-setuid-sandbox --disable-site-isolation-trials --disable-web-security --headless='shell' --no-sandbox --no-zygote --user-data-dir=/tmp/playwright_chromiumdev_profile-qg5csf --remote-debugging-pipe --no-startup-window
+<launched> pid=11984
+[pid=11984][err] [1111/073542.527360:ERROR:../net/socket/ssl_client_socket_impl.cc:949] handshake failed; returned -1, SSL error code 1, net_error -100
+[pid=11984][err] [1111/073542.532102:ERROR:../net/socket/ssl_client_socket_impl.cc:949] handshake failed; returned -1, SSL error code 1, net_error -100
+    at /home/user/English-Course/scripts/shots-lesson61-fidelity.mjs:12:36 {
+  log: []
+}
+
+Node.js v22.22.3

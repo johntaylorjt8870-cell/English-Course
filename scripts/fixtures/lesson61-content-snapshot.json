@@ -161,7 +161,7 @@
       "blocks": [
         {
           "type": "text",
-          "text": "عندما يستخدم السؤال المباشر do أو does أو did في المضارع أو الماضي البسيط، تختفي هذه المساعدات في التحويل الأساسي لأن الجملة التابعة خبرية لا سؤال مباشر."
+          "text": "هذه نقطة مهمة: عندما يستخدم السؤال المباشر do أو does أو did في المضارع أو الماضي البسيط، تختفي هذه المساعدات في التحويل الأساسي لأن الجملة التابعة خبرية لا سؤال مباشر."
         },
         {
           "type": "pairs",
@@ -245,13 +245,15 @@
             {
               "direct": "The teacher asked us, \"May I use your dictionary?\"",
               "reported": "The teacher asked us whether he might use our dictionary.",
-              "ar": "سألنا المعلم عما إذا كان بإمكانه استخدام قاموسنا."
+              "alternative": "The teacher asked us whether they might use our dictionary.",
+              "ar": "سألنا المعلم عما إذا كان بإمكانه استخدام قاموسنا.",
+              "note": "المصدر يستخدم he إذا كان المعلم رجلًا. لا يحدد السؤال الإنجليزي جنس المعلم؛ يمكن استخدام they للمفرد، أو she إذا عُرف أن المعلمة امرأة. المقصود هنا طلب الإذن، لا مجرد اختبار القدرة."
             }
           ]
         },
         {
           "type": "note",
-          "text": "اختيار الضمير يعتمد على من قال الجملة ومن كان المخاطَب. تتغير كلمات الزمان والمكان والإشارة عندما يتغير مرجعها، لا تلقائيًا في كل موقف."
+          "text": "اختيار الضمير يعتمد على من قال الجملة ومن كان المخاطَب. تتغير كلمات الزمان والمكان والإشارة عندما يتغير مرجعها، لا تلقائيًا في كل موقف. والرجوع الزمني شائع في هذا النموذج، لكنه ليس إلزاميًا في كل سياق."
         }
       ]
     },
@@ -512,7 +514,7 @@
       "blocks": [
         {
           "type": "text",
-          "text": "أحيانًا تكون Who أو What هي الفاعل نفسه؛ لا نضيف فاعلًا آخر بعدها بلا سبب."
+          "text": "هذه حالة مهمة: في معظم الأسئلة نحتاج إلى إعادة ترتيب الكلمات، لكن أحيانًا تكون Who أو What هي الفاعل نفسه؛ لا نضيف فاعلًا آخر بعدها بلا سبب."
         },
         {
           "type": "pairs",
@@ -575,8 +577,12 @@
         },
         {
           "type": "formula",
-          "en": "Subject + told + object + to + base verb",
+          "en": "told + object + to + infinitive",
           "ar": "told + الشخص + to + الفعل في صورته الأساسية."
+        },
+        {
+          "type": "formula",
+          "en": "Subject + told + object + to + base verb"
         },
         {
           "type": "pairs",
@@ -619,7 +625,11 @@
         },
         {
           "type": "formula",
-          "en": "ordered / instructed + object + to + infinitive"
+          "en": "ordered + object + to + infinitive"
+        },
+        {
+          "type": "formula",
+          "en": "instructed + object + to + infinitive"
         },
         {
           "type": "pairs",
@@ -735,7 +745,7 @@
             },
             {
               "en": "My doctor advised me not to eat too much sugar.",
-              "ar": "نصحني طبيبي بألا أتناول الكثير من السكر."
+              "ar": "نصحني طبيبي بألا أتناول الكثير من السكر. وعند النهي عن شيء في النصيحة نستخدم advised + object + not to + infinitive."
             }
           ]
         }
@@ -900,7 +910,8 @@
         },
         {
           "type": "formula",
-          "en": "say + (that) + sentence  /  say + something + to + someone"
+          "en": "say + (that) + sentence  /  say + something + to + someone",
+          "ar": "عند ذكر الشخص الذي وُجّه إليه الكلام مع say، نستخدم عادةً to قبل هذا الشخص."
         },
         {
           "type": "lines",
@@ -917,7 +928,12 @@
         },
         {
           "type": "formula",
-          "en": "tell + someone + that + sentence  /  tell + someone + (not) to + verb"
+          "en": "tell + someone + that + sentence"
+        },
+        {
+          "type": "formula",
+          "en": "tell + someone + to + verb  /  tell + someone + not to + verb",
+          "ar": "في الأوامر نستخدم to، وفي النواهي نستخدم not to."
         },
         {
           "type": "lines",
@@ -942,7 +958,8 @@
         },
         {
           "type": "formula",
-          "en": "ask + if / whether + sentence  /  ask + WH-word + sentence  /  ask + someone + to + verb"
+          "en": "ask + if / whether + sentence  /  ask + WH-word + sentence  /  ask + someone + to + verb",
+          "ar": "في أسئلة Yes/No نستخدم if أو whether، وفي أسئلة WH نحتفظ بأداة السؤال، وفي الطلبات نستخدم to."
         },
         {
           "type": "lines",
@@ -1095,41 +1112,49 @@
   ],
   "solved": [
     {
+      "kind": "السؤال",
       "direct": "She asked him, \"Are you learning English?\"",
       "reported": "She asked him if he was learning English.",
       "ar": "سألته عما إذا كان يتعلم الإنجليزية."
     },
     {
+      "kind": "السؤال",
       "direct": "The teacher asked me, \"Why are you laughing?\"",
       "reported": "The teacher asked me why I was laughing.",
       "ar": "سألني المعلم لماذا كنت أضحك."
     },
     {
+      "kind": "السؤال",
       "direct": "He asked her, \"Did you see my brother?\"",
       "reported": "He asked her if she had seen his brother.",
       "ar": "سألها عما إذا كانت قد رأت أخاه."
     },
     {
+      "kind": "الأمر",
       "direct": "The mother said to the children, \"Wash your hands.\"",
       "reported": "The mother told the children to wash their hands.",
       "ar": "طلبت الأم من الأطفال أن يغسلوا أيديهم."
     },
     {
+      "kind": "النهي",
       "direct": "The guard said to us, \"Don't enter this room.\"",
       "reported": "The guard warned us not to enter that room.",
       "ar": "حذّرنا الحارس من دخول تلك الغرفة."
     },
     {
+      "kind": "الطلب",
       "direct": "He said to me, \"Could you lend me your pen?\"",
       "reported": "He asked me to lend him my pen.",
       "ar": "طلب مني أن أعيره قلمي."
     },
     {
+      "kind": "النصيحة",
       "direct": "The doctor said to her, \"You should get more sleep.\"",
       "reported": "The doctor advised her to get more sleep.",
       "ar": "نصحها الطبيب بالحصول على مزيد من النوم."
     },
     {
+      "kind": "الاقتراح",
       "direct": "They said, \"Let's visit the museum.\"",
       "reported": "They suggested visiting the museum.",
       "ar": "اقترحوا زيارة المتحف."
@@ -1208,8 +1233,8 @@
         "ar": "أجاب آدم بأنه يستطيع ذلك."
       },
       {
-        "en": "Finally, the teacher asked him to open his notebook and write three sentences about his visit. The teacher also told him not to make any noise while his classmates were working.",
-        "ar": "وفي النهاية، طلب المعلم منه أن يفتح دفتره ويكتب ثلاث جمل عن زيارته. كما طلب منه ألا يُحدث ضوضاء بينما يعمل زملاؤه."
+        "en": "Finally, the teacher asked him to open his notebook and write three sentences about his visit. The teacher also told the students not to make any noise while their classmates were working.",
+        "ar": "وفي النهاية، طلب المعلم منه أن يفتح دفتره ويكتب ثلاث جمل عن زيارته. كما طلب من الطلاب ألا يُحدثوا ضوضاء بينما يعمل زملاؤهم."
       }
     ],
     "notes": [
@@ -1218,13 +1243,14 @@
       "What did you learn? → what he had learned.",
       "Can you show? → if he could show.",
       "Please open → asked him to open.",
-      "Don't make → told him not to make."
+      "Don't make → told them not to make."
     ],
-    "context": "سؤال Can you show قد يُفهم استفسارًا عن الإمكانية كما في النموذج، أو طلبًا مهذبًا بحسب الموقف: The teacher asked him to show them his pictures. نهي المعلم موجّه إلى آدم في الحوار، لذلك نستخدم him / his classmates عند نقله."
+    "context": "هذا الحوار يجمع بين الأسئلة والأوامر والنواهي في موقف واحد. يحافظ النقل أعلاه على نموذج المصدر: told the students، ويفترض مخاطبة الطلاب كمجموعة. لكن الحوار يخاطب آدم؛ إذا استمر النهي موجّهًا إليه وحده فالأدق: The teacher also told him not to make any noise while his classmates were working. أي طلب منه ألا يُحدث ضوضاء بينما يعمل زملاؤه. لا نستطيع الجزم بالمخاطَب من الصيغة وحدها. وسؤال Can you show قد ينقل سؤالًا عن الإمكانية كما في المصدر، أو طلبًا مهذبًا بحسب الموقف: The teacher asked him to show them his pictures."
   },
   "reading": {
     "title": "A School Visit",
     "titleAr": "زيارة مدرسية",
+    "context": "ضمير he في سؤال التقاط الصور قد يلتبس بالمرشد أو الطالب. تفهم إجابة المصدر أن الطالب يستأذن لنفسه؛ يمكن إزالة اللبس بذكر the student صراحةً. يحافظ النص أعلاه على صياغة القطعة الأصلية.",
     "paragraphs": [
       {
         "en": "Last Monday, a group of students visited a science center with their teacher.",
@@ -1313,6 +1339,7 @@
     ],
     "title": "A Day at School",
     "titleAr": "يوم في المدرسة",
+    "context": "سؤال استخدام القاموس في نموذج المصدر قد يكون طلب إذن مهذبًا بحسب السياق، وقد يكون سؤالًا عن الإمكانية. لإظهار طلب فعل صريح يمكن إضافة: One student asked her to explain the question. أي طلب منها أحد الطلاب أن تشرح السؤال.",
     "model": [
       {
         "en": "Yesterday, our teacher asked us if we were ready for the English test. She asked us what we had studied the previous day.",
@@ -1438,6 +1465,17 @@
       "note": "Yes/No: نستخدم if أو whether. WH: نحتفظ بالأداة. السؤال المنقول: ترتيب الجملة الخبرية لا ترتيب السؤال. الأمر: told + object + to؛ النهي: told + object + not to؛ الطلب: asked + object + to؛ النصيحة: advised + object + to؛ التحذير: warned + object + not to؛ الاقتراح: suggested + ing أو suggested that."
     }
   ],
+  "distinctions": [
+    "Yes/No Question: نستخدم if أو whether.",
+    "WH-Question: نحتفظ بأداة السؤال.",
+    "Reported Question: نستخدم ترتيب الجملة الخبرية، لا ترتيب السؤال.",
+    "Command: told + object + to.",
+    "Negative Command: told + object + not to.",
+    "Request: asked + object + to.",
+    "Advice: advised + object + to.",
+    "Warning: warned + object + not to.",
+    "Suggestion: suggested + ing أو suggested that."
+  ],
   "practices": [
     {
       "id": "practice-1",
@@ -1447,12 +1485,12 @@
         {
           "prompt": "He asked me, \"Are you hungry?\"",
           "answer": "He asked me if I was hungry.",
-          "why": "Are → was، وyou → I."
+          "why": "Are → was. You → I."
         },
         {
           "prompt": "She asked him, \"Do you play football?\"",
           "answer": "She asked him if he played football.",
-          "why": "حُذفت Do، وyou → he، وplay → played."
+          "why": "Do حُذفت. You → he. Play → played."
         },
         {
           "prompt": "The teacher asked us, \"Have you finished the task?\"",
@@ -1462,7 +1500,7 @@
         {
           "prompt": "My father asked me, \"Did you call your friend?\"",
           "answer": "My father asked me if I had called my friend.",
-          "why": "اختفت Did، وcalled → had called."
+          "why": "Did اختفت. Called → had called."
         },
         {
           "prompt": "They asked her, \"Can you speak French?\"",
@@ -1476,7 +1514,7 @@
             "She asked me if I would visit them tomorrow.",
             "She asked me whether I would visit them tomorrow."
           ],
-          "why": "Will → would، وtomorrow → the following day عند تغير يوم النقل، وus → them بحسب السياق."
+          "why": "Will → would. Tomorrow → the following day. Us → them بحسب سياق الكلام. يتغير tomorrow عند تغير يوم النقل، وقد يبقى عند ثبات المرجع."
         }
       ]
     },
@@ -1493,7 +1531,7 @@
         {
           "prompt": "She asked him, \"Why are you crying?\"",
           "answer": "She asked him why he was crying.",
-          "why": "احتفظنا بـ Why، وحولنا are إلى was."
+          "why": "احتفظنا بـ Why، وحولنا Are إلى was."
         },
         {
           "prompt": "The teacher asked us, \"What did you write?\"",
@@ -1511,7 +1549,7 @@
           "accept": [
             "He asked her how long she had lived here."
           ],
-          "why": "Have lived → had lived. يتغير here إلى there إذا تغير المكان المرجعي."
+          "why": "Have lived → had lived. Here → there. يتغير here إلى there إذا تغير المكان المرجعي، وقد يبقى عند ثباته."
         },
         {
           "prompt": "The man asked me, \"Who broke the glass?\"",
@@ -1564,7 +1602,8 @@
           ],
           "why": "يفترض النموذج أن القصد تحذير من تصرف قد يسبب مشكلة؛ told ممكنة لأمر من دون تأكيد التحذير."
         }
-      ]
+      ],
+      "postscript": "استخدمنا ordered في الأمر الحازم، وwarned عندما كان الكلام تحذيرًا من تصرف قد يسبب مشكلة."
     },
     {
       "id": "practice-4",
@@ -1632,7 +1671,8 @@
             "C. do I live"
           ],
           "answer": "B. I lived",
-          "why": "السؤال المنقول يستخدم ترتيب الجملة الخبرية."
+          "displayAnswer": "B. I lived.",
+          "why": "لأن السؤال المنقول يستخدم ترتيب الجملة الخبرية."
         },
         {
           "prompt": "She asked if I _____ ready.",
@@ -1642,10 +1682,11 @@
             "C. be"
           ],
           "answer": "A. was",
+          "displayAnswer": "A. was.",
           "accept": [
             "B. am"
           ],
-          "why": "في نموذج الرجوع الزمني تصبح am هي was. ويمكن إبقاء am إذا ظلت الجاهزية قائمة ولم نستخدم الرجوع الزمني."
+          "why": "لأننا نطبق الرجوع الزمني من am إلى was. ويمكن إبقاء am إذا ظلت الجاهزية قائمة ولم نستخدم الرجوع الزمني."
         },
         {
           "prompt": "The teacher told us _____ quiet.",
@@ -1655,7 +1696,8 @@
             "C. being"
           ],
           "answer": "B. to be",
-          "why": "تركيب الأمر المنقول told + object + to + verb."
+          "displayAnswer": "B. to be.",
+          "why": "لأن تركيب الأمر المنقول هو told + object + to + verb."
         },
         {
           "prompt": "He warned me _____ touch the wire.",
@@ -1665,10 +1707,11 @@
             "C. not to"
           ],
           "answer": "C. not to",
+          "displayAnswer": "C. not to.",
           "accept": [
             "B. to not"
           ],
-          "why": "المفتاح الأصلي يفضّل not to. وصيغة to not صحيحة أيضًا في الإنجليزية القياسية، وإن كان not to أكثر شيوعًا هنا."
+          "why": "لأن النهي المنقول يستخدم not to + infinitive. وصيغة to not صحيحة أيضًا في الإنجليزية القياسية، وإن كان not to أكثر شيوعًا هنا."
         },
         {
           "prompt": "She asked me _____ I liked tea.",
@@ -1678,7 +1721,8 @@
             "C. what"
           ],
           "answer": "B. if",
-          "why": "السؤال من نوع Yes/No."
+          "displayAnswer": "B. if.",
+          "why": "لأن السؤال من نوع Yes/No."
         },
         {
           "prompt": "My friend suggested _____ a film.",
@@ -1688,7 +1732,8 @@
             "C. watched"
           ],
           "answer": "B. watching",
-          "why": "يأتي بعد suggest هنا فعل ينتهي بـ ing."
+          "displayAnswer": "B. watching.",
+          "why": "لأن suggest يأتي بعده غالبًا فعل ينتهي بـ ing."
         },
         {
           "prompt": "He asked her what she _____.",
@@ -1698,7 +1743,8 @@
             "C. did she do"
           ],
           "answer": "A. was doing",
-          "why": "ترتيب السؤال المنقول هو الفاعل ثم الفعل."
+          "displayAnswer": "A. was doing.",
+          "why": "لأن ترتيب السؤال المنقول هو الفاعل ثم الفعل."
         },
         {
           "prompt": "The doctor advised him _____ smoking.",
@@ -1708,7 +1754,8 @@
             "C. to stop"
           ],
           "answer": "C. to stop",
-          "why": "advised + object + to + infinitive."
+          "displayAnswer": "C. to stop.",
+          "why": "لأن advised + object + to + infinitive."
         }
       ]
     },
@@ -1757,7 +1804,7 @@
           "accept": [
             "The doctor advised her to take more rest."
           ],
-          "why": "الخطأ advised her taking؛ النموذج to get، ويصح أيضًا إصلاح التركيب بأقل تغيير: to take."
+          "why": "الخطأ: advised her taking. الصحيح: advised her to get. ويصح أيضًا إصلاح التركيب بأقل تغيير: advised her to take."
         },
         {
           "prompt": "The guard warned us don't enter the building.",
@@ -1820,64 +1867,23 @@
     {
       "id": "practice-8",
       "title": "حوّل الفقرة كاملة",
-      "instruction": "حوّل جميع جمل الفقرة إلى الكلام المنقول. افترض أن الراوي يشير إلى المعلم بـ he.",
+      "instruction": "حوّل جميع الجمل السابقة إلى الكلام المنقول، في فقرة واحدة.",
       "paragraph": "The teacher said to the students: \"Are you ready for the test? Have you studied all the lessons? What did you find difficult? Please open your notebooks. Write your answers carefully. Don't talk to your friends. If you have a question, ask me.\"",
+      "checklist": [
+        "Are you ready for the test?",
+        "Have you studied all the lessons?",
+        "What did you find difficult?",
+        "Please open your notebooks.",
+        "Write your answers carefully.",
+        "Don't talk to your friends.",
+        "If you have a question, ask me."
+      ],
       "items": [
         {
-          "prompt": "Are you ready for the test?",
-          "answer": "The teacher asked the students if they were ready for the test.",
-          "why": "سؤال Yes/No؛ if وترتيب خبري."
-        },
-        {
-          "prompt": "Have you studied all the lessons?",
-          "answer": "He also asked them whether they had studied all the lessons.",
-          "accept": [
-            "He asked them whether they had studied all the lessons.",
-            "The teacher asked them whether they had studied all the lessons."
-          ],
-          "why": "Have studied → had studied، مع whether أو if."
-        },
-        {
-          "prompt": "What did you find difficult?",
-          "answer": "Then he asked them what they had found difficult.",
-          "accept": [
-            "He asked them what they had found difficult.",
-            "The teacher asked them what they had found difficult."
-          ],
-          "why": "نحتفظ بـ what ونحذف did؛ find → had found."
-        },
-        {
-          "prompt": "Please open your notebooks.",
-          "answer": "He asked them to open their notebooks.",
-          "accept": [
-            "The teacher asked them to open their notebooks."
-          ],
-          "why": "طلب مهذب: asked them to open."
-        },
-        {
-          "prompt": "Write your answers carefully.",
-          "answer": "He told them to write their answers carefully.",
-          "accept": [
-            "The teacher told them to write their answers carefully."
-          ],
-          "why": "أمر مثبت: told them to write."
-        },
-        {
-          "prompt": "Don't talk to your friends.",
-          "answer": "He told them not to talk to their friends.",
-          "accept": [
-            "The teacher told them not to talk to their friends."
-          ],
-          "why": "نهي: told them not to talk."
-        },
-        {
-          "prompt": "If you have a question, ask me.",
-          "answer": "Finally, he told them to ask him if they had a question.",
-          "accept": [
-            "He told them to ask him if they had a question.",
-            "The teacher told them to ask him if they had a question."
-          ],
-          "why": "هذه if شرطية داخل التعليمات، وليست رابط سؤال Yes/No؛ نغيّر الضمائر بحسب المعلم والطلاب."
+          "prompt": "The teacher said to the students: \"Are you ready for the test? Have you studied all the lessons? What did you find difficult? Please open your notebooks. Write your answers carefully. Don't talk to your friends. If you have a question, ask me.\"",
+          "answer": "The teacher asked the students if they were ready for the test. He also asked them whether they had studied all the lessons. Then he asked them what they had found difficult. He asked them to open their notebooks and told them to write their answers carefully. He told them not to talk to their friends. Finally, he told them to ask him if they had a question.",
+          "ar": "سأل المعلم الطلاب عما إذا كانوا مستعدين للاختبار. وسألهم أيضًا عما إذا كانوا قد درسوا جميع الدروس. ثم سألهم عما وجدوه صعبًا. وطلب منهم فتح دفاترهم، وطلب منهم كتابة إجاباتهم بعناية. كما طلب منهم ألا يتحدثوا مع أصدقائهم. وأخيرًا، طلب منهم أن يسألوه إذا كان لديهم سؤال.",
+          "why": "نموذج المصدر يستخدم he للمعلم؛ يتحدد الضمير بالسياق. وif في التعليمات الأخيرة شرطية، وليست رابط سؤال Yes/No. قد تصح صياغات أخرى تحفظ المعنى."
         }
       ],
       "model": [
@@ -2001,7 +2007,7 @@
       "accept": [
         "The officer told the driver to stop immediately."
       ],
-      "why": "استخدم النموذج ordered لأن الأمر حازم؛ told ممكنة عندما لا يُبرز الناقل الحزم."
+      "why": "استخدمنا ordered لأن الأمر حازم. وتصح told أيضًا عندما لا يُبرز الناقل الحزم."
     },
     {
       "n": 14,
@@ -2011,7 +2017,7 @@
       "accept": [
         "The guide told us not to touch the equipment."
       ],
-      "why": "استخدم النموذج warned لأنه يفترض التحذير؛ told ممكنة إن كان مجرد نهي."
+      "why": "استخدمنا warned لأنه تحذير. وتصح told أيضًا إن كان مجرد نهي بحسب السياق."
     },
     {
       "n": 15,
@@ -2025,7 +2031,7 @@
       "section": 4,
       "prompt": "He said to me, \"Could you help me?\"",
       "answer": "He asked me to help him.",
-      "why": "طلب مهذب، لذلك استخدمنا asked + object + to. أما if I could help فتنقل السؤال عن الإمكانية."
+      "why": "طلب مهذب، لذلك استخدمنا asked + object + to. أما if I could help فتنقل السؤال عن الإمكانية بحسب السياق."
     },
     {
       "n": 17,
@@ -2069,7 +2075,8 @@
         "C. did I go"
       ],
       "answer": "B. I was going",
-      "why": "السؤال المنقول لا يستخدم ترتيب السؤال المباشر."
+      "displayAnswer": "B. I was going.",
+      "why": "لأن السؤال المنقول لا يستخدم ترتيب السؤال المباشر."
     },
     {
       "n": 22,
@@ -2081,10 +2088,11 @@
         "C. has"
       ],
       "answer": "B. had",
+      "displayAnswer": "B. had.",
       "accept": [
         "A. have"
       ],
-      "why": "في نموذج الرجوع الزمني يصبح Present Perfect هو Past Perfect. ويمكن إبقاء have إذا ظلت النتيجة حاضرة ولم نستخدم الرجوع الزمني."
+      "why": "لأن Present Perfect أصبح Past Perfect. هذا نموذج للرجوع الزمني؛ ويمكن إبقاء have إذا ظلت النتيجة حاضرة ولم نستخدم الرجوع الزمني."
     },
     {
       "n": 23,
@@ -2096,7 +2104,8 @@
         "C. be"
       ],
       "answer": "A. to be",
-      "why": "told + object + to + infinitive."
+      "displayAnswer": "A. to be.",
+      "why": "لأن told + object + to + infinitive."
     },
     {
       "n": 24,
@@ -2108,10 +2117,11 @@
         "C. to not"
       ],
       "answer": "B. not to",
+      "displayAnswer": "B. not to.",
       "accept": [
         "C. to not"
       ],
-      "why": "المفتاح الأصلي يختار not to. صيغة to not صحيحة أيضًا في الإنجليزية القياسية، وإن كان not to أكثر شيوعًا هنا."
+      "why": "لأن warned + object + not to + infinitive. وصيغة to not صحيحة أيضًا في الإنجليزية القياسية، وإن كان not to أكثر شيوعًا هنا."
     },
     {
       "n": 25,
@@ -2123,7 +2133,8 @@
         "C. studying"
       ],
       "answer": "C. studying",
-      "why": "يأتي بعد suggest هنا فعل ينتهي بـ ing."
+      "displayAnswer": "C. studying.",
+      "why": "لأن suggest يأتي بعده غالبًا فعل ينتهي بـ ing."
     }
   ]
 }

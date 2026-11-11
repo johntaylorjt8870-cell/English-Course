@@ -1,0 +1,12 @@
+Per-probe logs: /home/user/English-Course/docs/lesson61-evidence/source-fidelity/regression-probes-run-VsQnWN
+PASS missing-route: exit=1; target diagnostic present
+PASS missing-import: exit=1; target diagnostic present
+PASS missing-card: exit=1; target diagnostic present
+PASS ghost-onward-link: exit=1; target diagnostic present
+PASS shared-valid-wrong-key: exit=1; target diagnostic present
+PASS shared-out-of-range-key: exit=1; target diagnostic present
+PASS shared-missing-explanation: exit=1; target diagnostic present
+PASS shared-missing-question: exit=1; target diagnostic present
+PASS shared-invalid-typed-alternative: exit=1; target diagnostic present
+PASS shared-wrong-multi-key: exit=1; target diagnostic present
+10/10 registration, link and shared-test mutations rejected; isolated copies restored byte-for-byte. Checkout files were never mutated.

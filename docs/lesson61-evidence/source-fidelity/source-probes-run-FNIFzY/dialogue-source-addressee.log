@@ -1,0 +1,4 @@
+Lesson 61 source audit FAILED: 3 / 1219
+  - Section 10, source line 1546: English item missing: Finally, the teacher asked him to open his notebook and write three sentences about his visit. The teacher also told the students not to make any noise while their classmates were working.
+  - Dialogue reported 9: original English and Arabic at source lines 1546/1548
+  - Original dialogue addressee and conditional Adam alternative are both explicit

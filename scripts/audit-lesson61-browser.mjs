@@ -5,6 +5,7 @@ import { readFileSync } from "node:fs";
 import esbuild from "esbuild";
 import ts from "typescript";
 import { browser61, go61, prepare61 } from "./lib/lesson61-browser.mjs";
+import { readSource61, normalizeSource61, sourceBilingualTheory61, sourceWhVocabulary61, sourceSolved61, sourcePractices61 } from "./lib/lesson61-source.mjs";
 const require = createRequire(import.meta.url);
 async function load(path) {
   const js = ts.transpileModule(readFileSync(path, "utf8"), { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText;
@@ -76,6 +77,54 @@ try {
     return en.textContent === 'A School Visit' && en.getBoundingClientRect().right <= colon.left + 1 && colon.left < firstArabic.left;
   });
   ok(readingTitleOrder, 'Reading header keeps its colon with the Arabic label and English title in LTR order');
+  await go61(page, 'yes-modals');
+  const modalText = await text(page.locator('#l61-main'));
+  ok(modalText.includes('whether he might use our dictionary') && modalText.includes('whether they might use our dictionary') && modalText.includes('لا يحدد'), 'Original teacher pronoun and neutral contextual alternative are both visible');
+  await go61(page, 'dialogue-reported');
+  const dialogueText = await text(page.locator('#l61-main'));
+  ok(dialogueText.includes('told the students not to make any noise') && dialogueText.includes('told them not to make') && dialogueText.includes('told him not to make any noise'), 'Original dialogue and context-dependent addressee alternative are visible');
+  ok(dialogueText.includes('هذا الحوار يجمع بين الأسئلة والأوامر والنواهي في موقف واحد'), 'Dialogue retains the source concluding observation');
+  await go61(page, 'summary');
+  ok(await page.locator('.l61-summary-distinctions li').count() === 9, 'All nine original distinctions render separately');
+
+  // Compare the rendered vocabulary, bilingual examples and solved-example
+  // categories with the independently parsed source, not with the UI data.
+  const source = readSource61();
+  const bilingual = sourceBilingualTheory61(source);
+  for (const [id, section, first, last] of [['yes-intro', 1, 57, 70], ['command', 3, 626, 636]]) {
+    await go61(page, id);
+    const items = bilingual.filter((item) => item.section === section && item.line >= first && item.line <= last);
+    const rendered = page.locator('#l61-main .l61-line');
+    ok(await rendered.count() === items.length, `${id}: all original bilingual introductory examples render`);
+    for (const [i, item] of items.entries()) {
+      const line = await text(rendered.nth(i));
+      ok(normalizeSource61(line).includes(normalizeSource61(item.en)) && normalizeSource61(line).includes(normalizeSource61(item.ar)), `${id}: source example ${i + 1} and its Arabic translation stay together`);
+    }
+  }
+  await go61(page, 'wh-intro');
+  const words = sourceWhVocabulary61(source), renderedWords = page.locator('#l61-main .l61-line');
+  ok(await renderedWords.count() === words.length, 'All 12 original WH glosses render');
+  for (const [i, item] of words.entries()) {
+    const line = await text(renderedWords.nth(i));
+    ok(normalizeSource61(line).includes(normalizeSource61(item.en)) && normalizeSource61(line).includes(normalizeSource61(item.ar)), `WH gloss ${i + 1}: source word and Arabic meaning render together`);
+  }
+  await go61(page, 'solved');
+  const sourceSolved = sourceSolved61(source), solvedCards = page.locator('#l61-main [data-l61-pair]');
+  ok(await solvedCards.count() === sourceSolved.length, 'All eight source solved examples render');
+  for (const [i, item] of sourceSolved.entries()) {
+    const card = solvedCards.nth(i), rendered = normalizeSource61(await text(card));
+    ok(normalizeSource61(await text(card.locator('[data-l61-solved-kind]'))) === normalizeSource61(item.label) && [item.direct, item.reported, item.ar].every((part) => rendered.includes(normalizeSource61(part))), `Solved example ${i + 1}: source category, direct form, reported form and translation render together`);
+  }
+  await go61(page, 'wh-subject');
+  ok((await text(page.locator('#l61-main'))).includes('في معظم الأسئلة نحتاج إلى إعادة ترتيب الكلمات'), 'WH subject scene explicitly preserves the normal-order contrast');
+  await go61(page, 'warning-advice');
+  ok((await text(page.locator('#l61-main'))).includes('عند النهي عن شيء في النصيحة'), 'Negative advice retains its original teaching context');
+  await go61(page, 'say-tell-ask');
+  const sayTellAskText = await text(page.locator('#l61-main'));
+  ok(sayTellAskText.includes('الشخص الذي وُجّه إليه الكلام مع say'), 'Say scene explains mentioning the recipient');
+  for (const label of ['في الأوامر نستخدم to', 'في النواهي نستخدم not to', 'في أسئلة WH نحتفظ بأداة السؤال', 'في الطلبات نستخدم to']) {
+    ok(sayTellAskText.includes(label), `Say / Tell / Ask renders the source formula context: ${label}`);
+  }
 
   // Every lab case is solved by choosing actual controls and typing the sentence.
   for (const lab of LABS_61) {
@@ -118,33 +167,67 @@ try {
     else await article.locator('input[type=text]').fill(value);
     await article.getByRole('button', { name: 'تحقّق من الإجابة' }).click();
   }
-  for (const group of PRACTICES_61) {
+  const sourcePracticeGroups = sourcePractices61(source);
+  for (const [groupIndex, group] of PRACTICES_61.entries()) {
     await go61(page, group.id);
-    const articles = page.locator('#l61-main [data-l61-attempt]');
-    ok(await articles.count() === group.items.length && await page.locator('#l61-main [data-l61-feedback]').count() === 0, `${group.id}: all questions rendered, answers initially hidden`);
-    if (group.model) ok(await page.getByRole('button', { name: 'عرض الحل النموذجي للفقرة' }).isDisabled(), `${group.id}: paragraph model locked until all attempts`);
-    for (const [i, item] of group.items.entries()) {
-      const article = articles.nth(i);
-      const value = group.id === 'practice-5' && (i === 1 || i === 3) ? item.accept[0] : item.answer;
-      await answerAttempt(article, item, value);
-      ok((await text(article.locator('[data-l61-feedback]'))).includes('إجابة صحيحة'), `${group.id} question ${i + 1}: keyed answer accepted`);
-      if (i === 0) {
-        await article.getByRole('button', { name: 'إعادة المحاولة' }).click();
-        ok(await article.locator('[data-l61-feedback]').count() === 0, `${group.id}: retry hides solution`);
-        await answerAttempt(article, item);
+    const practiceText = await text(page.locator('#l61-main'));
+    ok(practiceText.includes('حاول حل كل مجموعة قبل قراءة الحلول'), `${group.id}: source instruction to attempt the group before solutions is visible`);
+    const instruction = sourcePracticeGroups[groupIndex].instruction;
+    if (instruction) ok(normalizeSource61(practiceText).includes(normalizeSource61(instruction.text)), `${group.id}: the source-specific instruction at line ${instruction.line} is visible`);
+    if (group.paragraph) {
+      const work = page.locator('[data-l61-paragraph-attempt]');
+      const modelButton = page.getByRole('button', { name: 'عرض الحل النموذجي للفقرة' });
+      const draft = page.locator('#l61-paragraph-draft');
+      const checklist = page.locator('[data-l61-paragraph-checklist] input');
+      ok(group.items.length === 1 && await work.count() === 1 && await page.locator('[data-l61-attempt]').count() === 0, 'Practice 8 is one complete paragraph task, not seven substituted questions');
+      ok((await text(page.locator('.l61-paragraph-prompt'))) === group.paragraph && await checklist.count() === 7, 'Practice 8 shows the entire original prompt and seven source components');
+      ok(await modelButton.isDisabled() && await page.locator('[data-l61-paragraph-model]').count() === 0, 'Paragraph model is hidden and locked before a draft');
+      await draft.fill(group.items[0].answer);
+      for (let i = 0; i < 6; i++) await checklist.nth(i).check();
+      ok(await modelButton.isDisabled() && await page.locator('[data-l61-paragraph-model]').count() === 0, 'Six checked parts cannot reveal the paragraph model');
+      await checklist.nth(6).check();
+      ok(await modelButton.isEnabled() && await page.locator('[data-l61-paragraph-model]').count() === 0, 'Full attempted paragraph enables but does not automatically reveal the model');
+      await modelButton.click();
+      const model = page.locator('[data-l61-paragraph-model]');
+      ok(await model.locator('article').count() === 6 && (await text(model)).includes('مقارنة ذاتية'), 'Paragraph opens a self-review, not an automatic correctness verdict');
+      for (const [i, line] of group.model.entries()) {
+        const rendered = (await text(model.locator('article').nth(i))).replace(/\s/g, '');
+        ok(rendered.includes(line.en.replace(/\s/g, '')) && rendered.includes(line.ar.replace(/\s/g, '')), `Paragraph model ${i + 1} preserves the original English and Arabic`);
       }
+      ok((await text(page.locator('#l61-main .l61-progress-strip'))).includes('1 / 1'), 'Paragraph progress counts one task');
+      await go61(page, 'map'); await go61(page, group.id);
+      ok(await draft.inputValue() === group.items[0].answer && await page.locator('[data-l61-paragraph-model] article').count() === 6, 'Paragraph draft and model persist across navigation');
+      await page.getByRole('button', { name: 'إعادة المحاولة' }).click();
+      ok(await draft.inputValue() === '' && await page.locator('[data-l61-paragraph-model]').count() === 0 && await modelButton.isDisabled(), 'Paragraph retry clears draft, checks and model');
+      continue;
+    }
+    const articles = page.locator('#l61-main [data-l61-attempt]');
+    ok(await articles.count() === group.items.length && await page.locator('#l61-main [data-l61-feedback]').count() === 0, `${group.id}: all original questions rendered, answers initially hidden`);
+    const first = group.items[0];
+    const wrong = first.options ? first.options.find((option) => option !== first.answer && !(first.accept || []).includes(option)) : 'This is an incorrect response.';
+    await answerAttempt(articles.first(), first, wrong);
+    ok(await articles.first().locator('[data-l61-pending]').count() === 1 && await articles.first().locator('[data-l61-feedback]').count() === 0, `${group.id}: a wrong early attempt reveals neither verdict nor model`);
+    await articles.first().getByRole('button', { name: 'إعادة المحاولة' }).click();
+    ok(await articles.first().locator('[data-l61-pending]').count() === 0, `${group.id}: retry clears the pending attempt`);
+    for (const [i, item] of group.items.entries()) {
+      const value = group.id === 'practice-5' && (i === 1 || i === 3) ? item.accept[0] : item.answer;
+      await answerAttempt(articles.nth(i), item, value);
+      if (i < group.items.length - 1) ok(await page.locator('#l61-main [data-l61-feedback]').count() === 0 && await articles.nth(i).locator('[data-l61-pending]').count() === 1, `${group.id} question ${i + 1}: no solutions before all group attempts`);
+    }
+    ok(await page.locator('#l61-main [data-l61-feedback]').count() === group.items.length, `${group.id}: all explanations unlock after the complete group`);
+    for (const [i, item] of group.items.entries()) {
+      const feedback = (await text(articles.nth(i).locator('[data-l61-feedback]'))).replace(/\s/g, '');
+      ok(feedback.includes('إجابةصحيحة') && feedback.includes((item.displayAnswer ?? item.answer).replace(/\s/g, '')) && feedback.includes(item.why.replace(/\s/g, '')), `${group.id} question ${i + 1}: original key, explanation and accepted answer displayed`);
+      if (item.ar) ok(feedback.includes(item.ar.replace(/\s/g, '')), `${group.id} question ${i + 1}: source Arabic solution is displayed`);
     }
     ok((await text(page.locator('#l61-main .l61-progress-strip'))).includes(`${group.items.length} / ${group.items.length}`), `${group.id}: progress counts checked items`);
-    if (group.model) {
-      await page.getByRole('button', { name: 'عرض الحل النموذجي للفقرة' }).click();
-      ok(await page.locator('.l61-model article').count() === group.model.length, 'Full paragraph model unlocks with every bilingual line');
-    }
+    if (group.postscript) ok((await text(page.locator('#l61-main'))).replace(/\s/g, '').includes(group.postscript.replace(/\s/g, '')), `${group.id}: original group-level explanation appears after all attempts`);
     await go61(page, 'map'); await go61(page, group.id);
     ok(await page.locator('#l61-main [data-l61-feedback]').count() === group.items.length, `${group.id}: attempts persist across navigation`);
   }
-  console.log(`Practice: ${PRACTICES_61.reduce((s, g) => s + g.items.length, 0)} questions solved.`);
+  console.log(`Practice: ${PRACTICES_61.reduce((s, g) => s + g.items.length, 0)} original tasks, including one complete paragraph.`);
 
-  // The full original key initially gates all 25 answers; unlock individually.
+  // The original instructions say to attempt the whole 25-question test first.
   await go61(page, 'original-key');
   ok(await page.locator('[data-l61-key-item]').count() === 25 && await page.locator('[data-l61-key-item] button').count() === 25, 'Original key contains 25 locked items before attempts');
   for (let section = 1; section <= 5; section++) {
@@ -152,16 +235,31 @@ try {
     for (const q of ORIGINAL_TEST_61.filter((q) => q.section === section)) {
       const article = page.locator(`[data-l61-attempt="${q.n}"]`);
       ok(await article.locator('[data-l61-feedback]').count() === 0, `Original question ${q.n} has no feedback before attempt`);
-      await answerAttempt(article, q, q.n === 22 || q.n === 24 ? q.accept[0] : q.answer);
-      ok((await text(article.locator('[data-l61-feedback]'))).includes('إجابة صحيحة'), `Original question ${q.n}: answer accepted and numbered correctly`);
+      const value = q.n === 1 ? 'An incorrect response.' : q.n === 22 || q.n === 24 ? q.accept[0] : q.answer;
+      await answerAttempt(article, q, value);
+      if (q.n < 25) ok(await article.locator('[data-l61-pending]').count() === 1 && await page.locator('#l61-main [data-l61-feedback]').count() === 0, `Original question ${q.n}: no verdict or key before all 25 attempts`);
+    }
+    if (section === 4) {
+      await go61(page, 'original-key');
+      ok(await page.locator('[data-l61-key-item] button').count() === 25, 'The original key stays entirely locked after 20 of 25 attempts');
     }
   }
+  await go61(page, 'original-1');
+  const firstOriginal = page.locator('[data-l61-attempt="1"]');
+  ok((await text(firstOriginal.locator('[data-l61-feedback]'))).includes('لا تطابق النموذج'), 'An intentionally wrong original answer is identified only after all 25 attempts');
+  await firstOriginal.locator('input[type=text]').fill(ORIGINAL_TEST_61[0].answer);
+  ok(await page.locator('#l61-main [data-l61-feedback]').count() === 0, 'Editing an original answer re-locks the key until it is checked again');
+  await go61(page, 'original-key');
+  ok(await page.locator('[data-l61-key-item] button').count() === 25, 'Editing an attempted original answer re-locks all key entries');
+  await go61(page, 'original-1');
+  await firstOriginal.getByRole('button', { name: 'تحقّق من الإجابة' }).click();
+  ok((await text(firstOriginal.locator('[data-l61-feedback]'))).includes('إجابة صحيحة'), 'Corrected original answer is accepted after rechecking');
   await go61(page, 'original-key');
   for (const q of ORIGINAL_TEST_61) {
-    const t = await text(page.locator(`[data-l61-key-item="${q.n}"]`));
-    ok(t.includes(q.answer), `Original key ${q.n}: shows its own attached answer`);
+    const t = (await text(page.locator(`[data-l61-key-item="${q.n}"]`))).replace(/\s/g, '');
+    ok(t.includes((q.displayAnswer ?? q.answer).replace(/\s/g, '')) && t.includes(q.why.replace(/\s/g, '')), `Original key ${q.n}: its source answer and explanation are displayed`);
   }
-  ok(await page.locator('[data-l61-key-item] button').count() === 0, 'Original key reveals all 25 after their individual attempts');
+  ok(await page.locator('[data-l61-key-item] button').count() === 0, 'Original key reveals all 25 only after all attempts');
 
   await go61(page, 'comprehension');
   ok(await page.locator('[data-l61-attempt]').count() === 7 && await page.locator('[data-l61-feedback]').count() === 0, 'Seven reading answers are initially hidden');
@@ -272,7 +370,7 @@ try {
   ok(await page.locator('[data-l61-teacher-original]').count() === 25, 'Teacher original key contains 25 answers');
   for (const q of ORIGINAL_TEST_61) {
     const keyText = (await text(page.locator(`[data-l61-teacher-original="${q.n}"]`))).replace(/\s/g, '');
-    ok([q.answer, q.why, ...(q.accept || [])].every((part) => keyText.includes(part.replace(/\s/g, ''))), `Teacher original key ${q.n} shows its answer, explanation and every accepted alternative`);
+    ok([q.displayAnswer ?? q.answer, q.why, ...(q.accept || [])].every((part) => keyText.includes(part.replace(/\s/g, ''))), `Teacher original key ${q.n} shows its source answer, explanation and every accepted alternative`);
   }
   await go61(page, 'final-test');
   ok(await final.locator('[data-ft-result="100"]').count() === 1, 'Navigating through teacher area preserves shared test result');
@@ -332,7 +430,7 @@ try {
           ok(await keyGroup.locator('ol > li').count() === group.items.length && !teacherMetrics.forbidden && teacherMetrics.overflow <= 1, `${width}px teacher practice key ${i + 1}: all answers, Western digits and no overflow`);
           for (const [j, item] of group.items.entries()) {
             const keyText = (await text(keyGroup.locator('ol > li').nth(j))).replace(/\s/g, '');
-            ok([item.answer, item.why, ...(item.accept || [])].every((part) => keyText.includes(part.replace(/\s/g, ''))), `${width}px teacher practice ${i + 1}.${j + 1}: answer, explanation and every accepted alternative`);
+            ok([item.displayAnswer ?? item.answer, item.why, ...(item.accept || []), ...(item.ar ? [item.ar] : [])].every((part) => keyText.includes(part.replace(/\s/g, ''))), `${width}px teacher practice ${i + 1}.${j + 1}: source answer, Arabic translation, explanation and every accepted alternative`);
           }
         }
         await page.getByRole('button', { name: 'عرض المفتاح الكامل' }).click();
@@ -341,7 +439,7 @@ try {
         for (const item of ORIGINAL_TEST_61) {
           const keyItem = page.locator(`[data-l61-teacher-original="${item.n}"]`);
           const keyText = (await text(keyItem)).replace(/\s/g, '');
-          ok([item.answer, item.why, ...(item.accept || [])].every((part) => keyText.includes(part.replace(/\s/g, ''))), `${width}px teacher original ${item.n}: answer, explanation and every accepted alternative`);
+          ok([item.displayAnswer ?? item.answer, item.why, ...(item.accept || [])].every((part) => keyText.includes(part.replace(/\s/g, ''))), `${width}px teacher original ${item.n}: source answer, explanation and every accepted alternative`);
           const row = await keyItem.evaluate((element) => {
             const container = element.querySelector('[data-l61-teacher-original-row]');
             const number = container?.querySelector('bdi');

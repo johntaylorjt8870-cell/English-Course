@@ -1,0 +1,3 @@
+Command: git diff --cached --check
+Exit: 2
+Reason: original Markdown hard-break spaces in the byte-preserved attachment (not application code).

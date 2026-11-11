@@ -1,10 +1,10 @@
 # Lesson 61 — Source Ledger
 
-**Source status: unavailable.** No independent original Lesson 61 text or attachment was found in the current workspace. This ledger maps only the current implementation to intended topics; it does not prove that a source item exists, was preserved, or was corrected. Every section, example, translation, practice, original-test question, key, explanation, and correction below remains **unverified against the original**. The fixture `scripts/fixtures/lesson61-content-snapshot.json` was generated from the implementation; it detects later drift but is not independent source evidence. An authoritative original file is required for a line-by-line comparison and an independent coverage ledger. This document is not student-facing copy.
+**Source status: supplied and independently reviewed.** The complete user attachment is preserved byte-for-byte at `docs/lesson61-source.md` (SHA-256 `456d20ff43b48178435b07bfb01c70553a2b9d3c887d51378418bcbbe316bff8`). The item-level original/initial/final ledger, including explanations and documented corrections, is `docs/lesson61-content-review.md`. `node scripts/audit-lesson61-source.mjs` compares the source itself, not an implementation-generated snapshot; `scripts/fixtures/lesson61-content-snapshot.json` remains a separate drift check.
 
 ## Section map
 
-| Section | Intended coverage (pending verification) | Application scene IDs / data |
+| Section | Verified coverage | Application scene IDs / data |
 |---|---|---|
 | Opening | Lesson 60 bridge, direct/reported statement and central word-order idea | `bridge`, `content61.ts:THEORY_61` |
 | 1 | Yes/No definition, linking, be, do/does/did, perfect, modals, if/whether | `yes-intro`, `yes-rule`, `yes-be`, `yes-do`, `yes-perfect`, `yes-modals`, `if-whether` |
@@ -15,14 +15,14 @@
 | 6 | Say, tell, ask and the five comparison examples | `say-tell-ask` |
 | 7 | Seven important checks including end punctuation | `errors`, `ERRORS_61`, `error-detective` |
 | 8 | Four current conversion routes, steps and results | `procedures`, `PROCEDURES_61` |
-| 9 | All 8 worked examples and Arabic translations | `solved`, `SOLVED_61` |
+| 9 | All 8 worked examples, their source concept labels and Arabic translations | `solved`, `SOLVED_61` |
 | 10 | Full direct dialogue, translation, reported retelling, translation and 6 notes | `dialogue`, `dialogue-reported`, `DIALOGUE_61`; `conversation` adds practice |
 | 11 | Full bilingual reading and all 7 bilingual questions and answers | `reading`, `comprehension`, `READING_61` |
 | 12 | All 8 original practice sets and explanations | `practice-1` through `practice-8`, `PRACTICES_61` |
 | 13 | Full original 25-question test, key and 25 explanations | `original-1` through `original-5`, `original-key`, `ORIGINAL_TEST_61` |
 | 14 | Writing instructions, 7 requirements, full model and translation | `writing`, `WRITING_61` |
 | 15 | Speaking instructions, 5 bilingual questions and 3 examples | `speaking`, `SPEAKING_61` |
-| 16 | All 9 final summary rules, examples and distinction list | `summary`, `SUMMARY_61` |
+| 16 | All 8 final summary structures and examples, plus 9 distinctions | `summary`, `SUMMARY_61`, `SUMMARY_DISTINCTIONS_61` |
 
 ## Forty requested trace points
 
@@ -67,30 +67,11 @@
 | 37 | Original 25 questions, keys and explanations | `original-1` through `original-5`, `original-key`; `ORIGINAL_TEST_61` |
 | 38 | Writing task and bilingual model | `writing`; `WRITING_61` |
 | 39 | Speaking task and examples | `speaking`; `SPEAKING_61` |
-| 40 | Nine summary rules | `summary`; `SUMMARY_61` |
+| 40 | Eight summary structures and nine distinctions | `summary`; `SUMMARY_61`, `SUMMARY_DISTINCTIONS_61` |
 
-## Measurable inventory and interaction
+## Verified inventory and interaction
 
-- 61 navigable scenes are generated from the material, including a cover and map, 22 theory scenes, 10 original labs, 8 practice scenes, 5 original-test scenes, the original key, shared FinalTest, tasks, teacher area and conclusion.
-- Theory contains 56 direct/reported pairs and 34 bilingual standalone lines; the 8 comprehensive solved examples are additional. The dialogue has 9 bilingual direct turns and 9 bilingual reported entries; the reading has 7 bilingual paragraphs and 7 bilingual questions/answers.
-- Practice groups contain 6, 6, 6, 6, 8, 8, 8 and 7 independently attempted items: 55 total. The eighth group also contains a paragraph and a 6-line bilingual model. Whether these are complete and faithful to the original is unverified.
-- The implemented purported original test has 25 consecutively numbered entries in 5 groups of 5. Each object carries its own local answer and explanation, preventing a separate key from shifting; their correspondence to the source is unverified. The student key is gated per attempted item; the teacher key is behind the unchanged presentation gate.
-- The separate shared `FinalTest` bank has 15 questions; the same bank is passed to `FinalTestAnswerKey`. It stays mounted while switching scenes so answers and submission status persist. Lesson-scoped memory also preserves practice, lab, writing and speaking progress when navigating.
-- Labs: `yes-converter`, `wh-rebuilder`, `order-detector`, `command-studio`, `negative-lab`, `intent-detector`, `advice-suggestion`, `verb-control`, `conversation`, `error-detective`. Each requires choices and written input, gates feedback until checking, explains, permits retry and shows checked-case progress.
-
-## Proposed source corrections and contextual decisions (pending comparison)
-
-The following describe local implementation decisions only. Whether any differs from, preserves, or corrects the original must be determined after the original is supplied.
-
-1. **Dialogue addressee:** the current direct dialogue addresses Adam. Its local retelling uses “The teacher also told him not to make any noise while his classmates were working”; the Arabic retelling and sixth dialogue note likewise refer to Adam. The corresponding original wording and any proposed correction remain unverified.
-2. **Ability versus request:** the current dialogue uses “Can you show us your pictures?” and renders an ability reading as “asked him if he could show them his pictures.” A note gives “asked him to show them his pictures” when context instead indicates a request.
-3. **Two grammatical options:** local practice 5 question 4 and the purported original test question 24 offer `not to` and `to not`. The local primary key selects `not to`; both grammatical forms are accepted. The original choices and key must still be compared directly.
-4. **Practice 6 question 7:** the local primary answer uses “to get”; “to take” is also accepted and explained. Its relation to the original remains unverified.
-5. **Practice 2 question 6:** the local prompt uses “The man,” the local primary answer uses “He,” and the explicit “The man asked me …” alternative is also accepted. Source wording remains unverified.
-6. **Context-dependent references:** the local examples use `there`, `that`, `the following day` and pronoun changes, with a note that speaker, addressee, time and place determine the reference. Matching treats `if` and `whether` as equivalent only after a reporting `asked`, not in the conditional instruction in practice 8.
-7. **Question mark rule:** the lesson explains the full stop for complete declarative reports and notes that a genuinely interrogative main clause may end in a question mark. The seventh detective case asks for punctuation. The original rule and example remain unverified.
-8. **Optional reporting verbs:** local examples include `ordered` for a firm instruction and `warned` for a presumed warning. `told` is also accepted where the bare wording does not imply firmness or danger.
-9. **Practice 8 conditional:** the local paragraph includes “If you have a question, ask me.” Its `if` is conditional, not a Yes/No reporting linker; the local model reports the instruction as “told them to ask him if they had a question.”
-10. **Optional backshift in current multiple-choice items:** practice 5 question 2 retains its local `A. was` key and now also accepts `B. am` when readiness remains current; purported original question 22 retains `B. had` and also accepts `A. have` when the result remains current. Both explanations were clarified; prompts and primary keys were not changed. These are local scientific/contextual corrections, not claims about the unavailable source. The implementation snapshot was changed only for these two entries; see `docs/lesson61-evidence/lesson61/snapshot-backshift-review.diff`.
-11. **Shared-test question 4:** its instruction now explicitly requests the ordinary basic form and usual backshift, so the key `played` is not presented as proof that emphatic `did play` is always ungrammatical. The shared 15-question bank is separate from the purported original test.
-12. **Interactive and teacher consistency:** the command lab now explains that `that` versus `this` depends on the reporting context, matching its accepted alternatives. The teacher area shows all locally accepted practice and original-test alternatives; this does not change the existing password or establish source fidelity.
+- The source has 16 sections. The 8 exercise groups contain 6, 6, 6, 6, 8, 8, 8 and 1 complete paragraph: 49 source tasks, with 7 parts inside the final paragraph. The original 25 questions, answers and explanations remain separate from the shared 15-question FinalTest.
+- The paragraph retains the full six-part bilingual source model. The learner writes one paragraph and confirms its 7 parts before viewing the model; this is self-review, not automatic semantic grading. Other exercise solutions wait until the whole group has been attempted. The source-exam key waits for all 25 attempts; the shared FinalTest remains gated until submission.
+- The source's teacher `he` example remains visible, with neutral `they` and explicit context. The dialogue preserves the original `the students` / `them` model and explains the conditional Adam-only `him` alternative. Contextual corrections, accepted alternatives and exact previous wording are documented in the detailed review.
+- The original teacher password and presentation-only gate remain unchanged. The 10 interactive labs and 38 cases, lesson memory and navigation remain in place. Western digits are used in the interface; the byte-identical source document retains its original circled numerals.

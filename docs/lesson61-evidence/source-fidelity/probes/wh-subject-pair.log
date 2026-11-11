@@ -1,0 +1,5 @@
+Lesson 61 source audit FAILED: 4 / 1210
+  - Section 2, source line 579: English item missing: He asked who had broken the window.
+  - Section 2, source line 572: direct/reported pair is associated correctly
+  - Source line 572: direct Arabic translation stays with its example
+  - Source line 572: reported Arabic translation stays with its example

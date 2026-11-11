@@ -1,7 +1,8 @@
-// Lesson 61: the currently implemented teaching text, organised into scenes.
-// The original source has not been available for an independent comparison.
+// Lesson 61 teaching text organised into scenes.
+// Compared with the independently supplied source in docs/lesson61-source.md;
+// documented contextual clarifications do not replace the source examples.
 export type Line61 = { en: string; ar: string };
-export type Pair61 = { direct: string; reported: string; ar?: string; directAr?: string; note?: string; alternative?: string };
+export type Pair61 = { direct: string; reported: string; ar?: string; directAr?: string; note?: string; alternative?: string; kind?: string };
 export type Block61 =
   | { type: "text"; text: string }
   | { type: "note"; text: string }
@@ -52,7 +53,7 @@ export const THEORY_61: TheoryScene61[] = [
   },
   {
     id: "yes-do", section: 1, title: "اختفاء Do / Does / Did", kicker: "REMOVE THE AUXILIARY", blocks: [
-      { type: "text", text: "عندما يستخدم السؤال المباشر do أو does أو did في المضارع أو الماضي البسيط، تختفي هذه المساعدات في التحويل الأساسي لأن الجملة التابعة خبرية لا سؤال مباشر." },
+      { type: "text", text: "هذه نقطة مهمة: عندما يستخدم السؤال المباشر do أو does أو did في المضارع أو الماضي البسيط، تختفي هذه المساعدات في التحويل الأساسي لأن الجملة التابعة خبرية لا سؤال مباشر." },
       { type: "pairs", items: [
         { direct: 'She asked me, "Do you like coffee?"', directAr: "سألتني: «هل تحب القهوة؟»", reported: "She asked me if I liked coffee.", ar: "سألتني عما إذا كنت أحب القهوة.", note: "Do حُذفت، وyou أصبحت I، وlike أصبحت liked." },
         { direct: 'He asked me, "Does your father work here?"', reported: "He asked me if my father worked there.", ar: "سألني عما إذا كان أبي يعمل هناك.", note: "Does حُذفت، وyour أصبحت my، وwork أصبحت worked، وhere أصبحت there لأن مكان الإشارة تغير في هذا المثال." },
@@ -75,9 +76,9 @@ export const THEORY_61: TheoryScene61[] = [
       { type: "pairs", items: [
         { direct: 'He asked me, "Can you swim?"', reported: "He asked me if I could swim.", ar: "سألني عما إذا كنت أستطيع السباحة." },
         { direct: 'She asked me, "Will you come tomorrow?"', reported: "She asked me whether I would come the following day.", ar: "سألتني عما إذا كنت سأحضر في اليوم التالي." },
-        { direct: 'The teacher asked us, "May I use your dictionary?"', reported: "The teacher asked us whether he might use our dictionary.", ar: "سألنا المعلم عما إذا كان بإمكانه استخدام قاموسنا." },
+        { direct: 'The teacher asked us, "May I use your dictionary?"', reported: "The teacher asked us whether he might use our dictionary.", alternative: "The teacher asked us whether they might use our dictionary.", ar: "سألنا المعلم عما إذا كان بإمكانه استخدام قاموسنا.", note: "المصدر يستخدم he إذا كان المعلم رجلًا. لا يحدد السؤال الإنجليزي جنس المعلم؛ يمكن استخدام they للمفرد، أو she إذا عُرف أن المعلمة امرأة. المقصود هنا طلب الإذن، لا مجرد اختبار القدرة." },
       ] },
-      { type: "note", text: "اختيار الضمير يعتمد على من قال الجملة ومن كان المخاطَب. تتغير كلمات الزمان والمكان والإشارة عندما يتغير مرجعها، لا تلقائيًا في كل موقف." },
+      { type: "note", text: "اختيار الضمير يعتمد على من قال الجملة ومن كان المخاطَب. تتغير كلمات الزمان والمكان والإشارة عندما يتغير مرجعها، لا تلقائيًا في كل موقف. والرجوع الزمني شائع في هذا النموذج، لكنه ليس إلزاميًا في كل سياق." },
     ],
   },
   {
@@ -144,7 +145,7 @@ export const THEORY_61: TheoryScene61[] = [
   },
   {
     id: "wh-subject", section: 2, title: "عندما تكون أداة السؤال هي الفاعل", kicker: "WH · SUBJECT", blocks: [
-      { type: "text", text: "أحيانًا تكون Who أو What هي الفاعل نفسه؛ لا نضيف فاعلًا آخر بعدها بلا سبب." },
+      { type: "text", text: "هذه حالة مهمة: في معظم الأسئلة نحتاج إلى إعادة ترتيب الكلمات، لكن أحيانًا تكون Who أو What هي الفاعل نفسه؛ لا نضيف فاعلًا آخر بعدها بلا سبب." },
       { type: "pairs", items: [
         { direct: 'He asked, "Who broke the window?"', directAr: "سأل: «من كسر النافذة؟»", reported: "He asked who had broken the window.", ar: "سأل من الذي كسر النافذة.", note: "Who هي من قام بفعل الكسر؛ لا نقول He asked who he had broken the window?" },
         { direct: 'She asked, "What happened?"', reported: "She asked what had happened.", ar: "سألت ماذا حدث." },
@@ -160,7 +161,8 @@ export const THEORY_61: TheoryScene61[] = [
         { en: "Open the door.", ar: "افتح الباب." }, { en: "Sit down.", ar: "اجلس." },
         { en: "Listen carefully.", ar: "استمع بعناية." }, { en: "Close your books.", ar: "أغلقوا كتبكم." },
       ] },
-      { type: "formula", en: "Subject + told + object + to + base verb", ar: "told + الشخص + to + الفعل في صورته الأساسية." },
+      { type: "formula", en: "told + object + to + infinitive", ar: "told + الشخص + to + الفعل في صورته الأساسية." },
+      { type: "formula", en: "Subject + told + object + to + base verb" },
       { type: "pairs", items: [
         { direct: 'The teacher said to us, "Open your books."', directAr: "قال لنا المعلم: «افتحوا كتبكم».", reported: "The teacher told us to open our books.", ar: "أمرنا المعلم بفتح كتبنا.", note: "Open أصبحت to open؛ استخدمنا told us لأن المعلم وجّه الأمر إلينا." },
         { direct: 'My mother said to me, "Clean your room."', reported: "My mother told me to clean my room.", ar: "طلبت مني أمي أن أنظف غرفتي." },
@@ -172,7 +174,8 @@ export const THEORY_61: TheoryScene61[] = [
   {
     id: "ordered-instructed", section: 3, title: "قوة الأمر أم وضوح التعليمات؟", kicker: "COMMAND · INTENT", blocks: [
       { type: "text", text: "عندما يكون الأمر حازمًا أو رسميًا يمكن استخدام ordered. وعندما يقدّم شخص إرشادات لتنفيذ عمل نستخدم instructed. يختلف الفعل بحسب نية المتحدث، لا بحسب الشكل وحده." },
-      { type: "formula", en: "ordered / instructed + object + to + infinitive" },
+      { type: "formula", en: "ordered + object + to + infinitive" },
+      { type: "formula", en: "instructed + object + to + infinitive" },
       { type: "pairs", items: [
         { direct: 'The officer said to the soldiers, "Move immediately!"', reported: "The officer ordered the soldiers to move immediately.", ar: "أمر الضابط الجنود بالتحرك فورًا." },
         { direct: 'The judge said to the man, "Leave the room."', reported: "The judge ordered the man to leave the room.", ar: "أمر القاضي الرجل بمغادرة الغرفة." },
@@ -204,7 +207,7 @@ export const THEORY_61: TheoryScene61[] = [
       ] },
       { type: "lines", items: [
         { en: "The guide warned us about the danger.", ar: "حذّرنا المرشد من الخطر. ويمكن استعمال warned + object + about + noun." },
-        { en: "My doctor advised me not to eat too much sugar.", ar: "نصحني طبيبي بألا أتناول الكثير من السكر." },
+        { en: "My doctor advised me not to eat too much sugar.", ar: "نصحني طبيبي بألا أتناول الكثير من السكر. وعند النهي عن شيء في النصيحة نستخدم advised + object + not to + infinitive." },
       ] },
     ],
   },
@@ -250,19 +253,20 @@ export const THEORY_61: TheoryScene61[] = [
   {
     id: "say-tell-ask", section: 6, title: "لوحة Say / Tell / Ask", kicker: "VERB SWITCHBOARD", blocks: [
       { type: "text", text: "Say تنقل الكلام أو المعلومة، وtell تذكر غالبًا الشخص المتلقي، وask تنقل الأسئلة والطلبات." },
-      { type: "formula", en: "say + (that) + sentence  /  say + something + to + someone" },
+      { type: "formula", en: "say + (that) + sentence  /  say + something + to + someone", ar: "عند ذكر الشخص الذي وُجّه إليه الكلام مع say، نستخدم عادةً to قبل هذا الشخص." },
       { type: "lines", items: [
         { en: "He said that he was tired.", ar: "قال إنه كان متعبًا." },
         { en: "He said to me that he was tired.", ar: "قال لي إنه كان متعبًا." },
       ] },
-      { type: "formula", en: "tell + someone + that + sentence  /  tell + someone + (not) to + verb" },
+      { type: "formula", en: "tell + someone + that + sentence" },
+      { type: "formula", en: "tell + someone + to + verb  /  tell + someone + not to + verb", ar: "في الأوامر نستخدم to، وفي النواهي نستخدم not to." },
       { type: "lines", items: [
         { en: "He told me that he was tired.", ar: "أخبرني أنه كان متعبًا." },
         { en: "He told me to wait.", ar: "طلب مني أن أنتظر." },
         { en: "He told me not to wait.", ar: "طلب مني ألا أنتظر." },
       ] },
       { type: "note", text: "لا نقول عادةً He told that he was tired لأن tell تحتاج غالبًا إلى الشخص المتلقي؛ الصحيح He told me that he was tired." },
-      { type: "formula", en: "ask + if / whether + sentence  /  ask + WH-word + sentence  /  ask + someone + to + verb" },
+      { type: "formula", en: "ask + if / whether + sentence  /  ask + WH-word + sentence  /  ask + someone + to + verb", ar: "في أسئلة Yes/No نستخدم if أو whether، وفي أسئلة WH نحتفظ بأداة السؤال، وفي الطلبات نستخدم to." },
       { type: "lines", items: [
         { en: "She asked if I was ready.", ar: "سألت عما إذا كنت مستعدًا." },
         { en: "She asked where I lived.", ar: "سألت أين أعيش." },
@@ -297,14 +301,14 @@ export const PROCEDURES_61 = [
 ];
 
 export const SOLVED_61: Pair61[] = [
-  { direct: 'She asked him, "Are you learning English?"', reported: "She asked him if he was learning English.", ar: "سألته عما إذا كان يتعلم الإنجليزية." },
-  { direct: 'The teacher asked me, "Why are you laughing?"', reported: "The teacher asked me why I was laughing.", ar: "سألني المعلم لماذا كنت أضحك." },
-  { direct: 'He asked her, "Did you see my brother?"', reported: "He asked her if she had seen his brother.", ar: "سألها عما إذا كانت قد رأت أخاه." },
-  { direct: 'The mother said to the children, "Wash your hands."', reported: "The mother told the children to wash their hands.", ar: "طلبت الأم من الأطفال أن يغسلوا أيديهم." },
-  { direct: 'The guard said to us, "Don\'t enter this room."', reported: "The guard warned us not to enter that room.", ar: "حذّرنا الحارس من دخول تلك الغرفة." },
-  { direct: 'He said to me, "Could you lend me your pen?"', reported: "He asked me to lend him my pen.", ar: "طلب مني أن أعيره قلمي." },
-  { direct: 'The doctor said to her, "You should get more sleep."', reported: "The doctor advised her to get more sleep.", ar: "نصحها الطبيب بالحصول على مزيد من النوم." },
-  { direct: 'They said, "Let\'s visit the museum."', reported: "They suggested visiting the museum.", ar: "اقترحوا زيارة المتحف." },
+  { kind: "السؤال", direct: 'She asked him, "Are you learning English?"', reported: "She asked him if he was learning English.", ar: "سألته عما إذا كان يتعلم الإنجليزية." },
+  { kind: "السؤال", direct: 'The teacher asked me, "Why are you laughing?"', reported: "The teacher asked me why I was laughing.", ar: "سألني المعلم لماذا كنت أضحك." },
+  { kind: "السؤال", direct: 'He asked her, "Did you see my brother?"', reported: "He asked her if she had seen his brother.", ar: "سألها عما إذا كانت قد رأت أخاه." },
+  { kind: "الأمر", direct: 'The mother said to the children, "Wash your hands."', reported: "The mother told the children to wash their hands.", ar: "طلبت الأم من الأطفال أن يغسلوا أيديهم." },
+  { kind: "النهي", direct: 'The guard said to us, "Don\'t enter this room."', reported: "The guard warned us not to enter that room.", ar: "حذّرنا الحارس من دخول تلك الغرفة." },
+  { kind: "الطلب", direct: 'He said to me, "Could you lend me your pen?"', reported: "He asked me to lend him my pen.", ar: "طلب مني أن أعيره قلمي." },
+  { kind: "النصيحة", direct: 'The doctor said to her, "You should get more sleep."', reported: "The doctor advised her to get more sleep.", ar: "نصحها الطبيب بالحصول على مزيد من النوم." },
+  { kind: "الاقتراح", direct: 'They said, "Let\'s visit the museum."', reported: "They suggested visiting the museum.", ar: "اقترحوا زيارة المتحف." },
 ];
 
 export const DIALOGUE_61 = {
@@ -328,14 +332,15 @@ export const DIALOGUE_61 = {
     { en: "Adam replied that he had learned about planets and space.", ar: "أجاب آدم بأنه تعلم عن الكواكب والفضاء." },
     { en: "The teacher asked him if he could show them his pictures.", ar: "سأله المعلم عما إذا كان يستطيع أن يعرض عليهم صوره." },
     { en: "Adam replied that he could.", ar: "أجاب آدم بأنه يستطيع ذلك." },
-    { en: "Finally, the teacher asked him to open his notebook and write three sentences about his visit. The teacher also told him not to make any noise while his classmates were working.", ar: "وفي النهاية، طلب المعلم منه أن يفتح دفتره ويكتب ثلاث جمل عن زيارته. كما طلب منه ألا يُحدث ضوضاء بينما يعمل زملاؤه." },
+    { en: "Finally, the teacher asked him to open his notebook and write three sentences about his visit. The teacher also told the students not to make any noise while their classmates were working.", ar: "وفي النهاية، طلب المعلم منه أن يفتح دفتره ويكتب ثلاث جمل عن زيارته. كما طلب من الطلاب ألا يُحدثوا ضوضاء بينما يعمل زملاؤهم." },
   ] as Line61[],
-  notes: ["Where did you go? → where he had gone.", "Did you enjoy? → if he had enjoyed.", "What did you learn? → what he had learned.", "Can you show? → if he could show.", "Please open → asked him to open.", "Don't make → told him not to make."],
-  context: "سؤال Can you show قد يُفهم استفسارًا عن الإمكانية كما في النموذج، أو طلبًا مهذبًا بحسب الموقف: The teacher asked him to show them his pictures. نهي المعلم موجّه إلى آدم في الحوار، لذلك نستخدم him / his classmates عند نقله.",
+  notes: ["Where did you go? → where he had gone.", "Did you enjoy? → if he had enjoyed.", "What did you learn? → what he had learned.", "Can you show? → if he could show.", "Please open → asked him to open.", "Don't make → told them not to make."],
+  context: "هذا الحوار يجمع بين الأسئلة والأوامر والنواهي في موقف واحد. يحافظ النقل أعلاه على نموذج المصدر: told the students، ويفترض مخاطبة الطلاب كمجموعة. لكن الحوار يخاطب آدم؛ إذا استمر النهي موجّهًا إليه وحده فالأدق: The teacher also told him not to make any noise while his classmates were working. أي طلب منه ألا يُحدث ضوضاء بينما يعمل زملاؤه. لا نستطيع الجزم بالمخاطَب من الصيغة وحدها. وسؤال Can you show قد ينقل سؤالًا عن الإمكانية كما في المصدر، أو طلبًا مهذبًا بحسب الموقف: The teacher asked him to show them his pictures.",
 };
 
 export const READING_61 = {
   title: "A School Visit", titleAr: "زيارة مدرسية",
+  context: "ضمير he في سؤال التقاط الصور قد يلتبس بالمرشد أو الطالب. تفهم إجابة المصدر أن الطالب يستأذن لنفسه؛ يمكن إزالة اللبس بذكر the student صراحةً. يحافظ النص أعلاه على صياغة القطعة الأصلية.",
   paragraphs: [
     { en: "Last Monday, a group of students visited a science center with their teacher.", ar: "في يوم الاثنين الماضي، زارت مجموعة من الطلاب مركزًا للعلوم برفقة معلمهم." },
     { en: "When they arrived, the guide asked them where they were from. The students replied that they were from a local school.", ar: "عندما وصلوا، سألهم المرشد من أين أتوا. فأجاب الطلاب بأنهم من مدرسة محلية." },
@@ -360,6 +365,7 @@ export const WRITING_61 = {
   instruction: "اكتب فقرة من 8 إلى 12 جملة عن موقف حدث في المدرسة، واستخدم فيها الكلام المنقول.",
   requirements: ["سؤالًا من نوع Yes/No.", "سؤالًا يبدأ بـ WH.", "أمرًا.", "نهيًا.", "طلبًا مهذبًا.", "نصيحة.", "اقتراحًا."],
   title: "A Day at School", titleAr: "يوم في المدرسة",
+  context: "سؤال استخدام القاموس في نموذج المصدر قد يكون طلب إذن مهذبًا بحسب السياق، وقد يكون سؤالًا عن الإمكانية. لإظهار طلب فعل صريح يمكن إضافة: One student asked her to explain the question. أي طلب منها أحد الطلاب أن تشرح السؤال.",
   model: [
     { en: "Yesterday, our teacher asked us if we were ready for the English test. She asked us what we had studied the previous day.", ar: "أمس، سألتنا معلمتنا عما إذا كنا مستعدين لاختبار اللغة الإنجليزية. وسألتنا عما درسناه في اليوم السابق." },
     { en: "Then she told us to open our books and read the first passage. She warned us not to talk during the test.", ar: "ثم طلبت منا أن نفتح كتبنا ونقرأ القطعة الأولى. وحذّرتنا من التحدث أثناء الاختبار." },
@@ -382,6 +388,18 @@ export const SPEAKING_61 = {
     { direct: 'The guide told me, "Don\'t touch the objects."', reported: "I told my friend that the guide had warned me not to touch the objects." },
   ] as Pair61[],
 };
+
+export const SUMMARY_DISTINCTIONS_61 = [
+  "Yes/No Question: نستخدم if أو whether.",
+  "WH-Question: نحتفظ بأداة السؤال.",
+  "Reported Question: نستخدم ترتيب الجملة الخبرية، لا ترتيب السؤال.",
+  "Command: told + object + to.",
+  "Negative Command: told + object + not to.",
+  "Request: asked + object + to.",
+  "Advice: advised + object + to.",
+  "Warning: warned + object + not to.",
+  "Suggestion: suggested + ing أو suggested that.",
+];
 
 export const SUMMARY_61 = [
   { title: "نقل أسئلة Yes/No", formula: "asked + if / whether + subject + verb", direct: '"Are you happy?"', reported: "He asked if I was happy.", note: "نستخدم if أو whether." },

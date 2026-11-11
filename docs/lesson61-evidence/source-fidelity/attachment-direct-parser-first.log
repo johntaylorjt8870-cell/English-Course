@@ -1,0 +1,9 @@
+Lesson 61 source audit FAILED: 8 / 1163
+  - All 28 standalone bilingual theory examples were parsed (35)
+  - Section 6, source lines 1090/1092: standalone example retains its own Arabic translation
+  - Section 6, source lines 1104/1106: standalone example retains its own Arabic translation
+  - Section 6, source lines 1114/1116: standalone example retains its own Arabic translation
+  - Section 6, source lines 1124/1126: standalone example retains its own Arabic translation
+  - Section 6, source lines 1150/1152: standalone example retains its own Arabic translation
+  - Section 6, source lines 1160/1162: standalone example retains its own Arabic translation
+  - Section 6, source lines 1170/1172: standalone example retains its own Arabic translation

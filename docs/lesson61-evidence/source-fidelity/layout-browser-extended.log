@@ -1,0 +1,31 @@
+
+> react-vite-tailwind@0.0.0 audit:layout-width-browser
+> node scripts/audit-layout-width-browser.mjs
+
+Real-browser layout width audit PASSED: 2255 assertions across Hub + 61 lessons × 7 viewports (375, 390, 768, 1024, 1280, 1440, 1920).
+  [Hub @375px] contentW=375px, mainW=375px, overflow=0px
+  [Hub @1920px] contentW=1536px, mainW=1920px, overflow=0px
+  [L01 @375px] contentW=351px, mainW=375px, overflow=0px
+  [L01 @1920px] contentW=1536px, mainW=1632px, overflow=0px
+  [L02 @375px] contentW=351px, mainW=375px, overflow=0px
+  [L02 @1920px] contentW=1536px, mainW=1920px, overflow=0px
+  [L14 @375px] contentW=351px, mainW=375px, overflow=0px
+  [L14 @1920px] contentW=1536px, mainW=1632px, overflow=0px
+  [L24 @375px] contentW=351px, mainW=375px, overflow=0px
+  [L24 @1920px] contentW=1536px, mainW=1632px, overflow=0px
+  [L27 @375px] contentW=351px, mainW=375px, overflow=0px
+  [L27 @1920px] contentW=1456px, mainW=1824px, overflow=0px
+  [L30 @375px] contentW=341px, mainW=375px, overflow=0px
+  [L30 @1920px] contentW=1536px, mainW=1632px, overflow=0px
+  [L33 @375px] contentW=351px, mainW=375px, overflow=0px
+  [L33 @1920px] contentW=1536px, mainW=1600px, overflow=0px
+  [L34 @375px] contentW=357px, mainW=357px, overflow=0px
+  [L34 @1920px] contentW=1486px, mainW=1486px, overflow=0px
+  [L36 @375px] contentW=351px, mainW=375px, overflow=0px
+  [L36 @1920px] contentW=1536px, mainW=1632px, overflow=0px
+  [L42 @375px] contentW=351px, mainW=375px, overflow=0px
+  [L42 @1920px] contentW=1536px, mainW=1632px, overflow=0px
+  [L49 @375px] contentW=351px, mainW=375px, overflow=0px
+  [L49 @1920px] contentW=1536px, mainW=1632px, overflow=0px
+  [L55 @375px] contentW=351px, mainW=375px, overflow=0px
+  [L55 @1920px] contentW=1536px, mainW=1632px, overflow=0px

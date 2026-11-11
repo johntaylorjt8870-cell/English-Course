@@ -1,0 +1,2 @@
+Command: ./node_modules/.bin/tsc --noEmit --jsx react-jsx --target ES2022 --module ESNext --moduleResolution bundler --skipLibCheck --allowSyntheticDefaultImports src/lessons/lesson61/*.ts src/lessons/lesson61/*.tsx
+Exit status: 0

@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Lesson1Shell, { type Lesson1ShellGroup } from "../../shared/Lesson1Shell";
 import FinalTest from "../../shared/finalTest";
-import { DIALOGUE_61, ERRORS_61, PROCEDURES_61, READING_61, SOLVED_61, SPEAKING_61, SUMMARY_61, THEORY_61, WRITING_61, ORIGINAL_SECTIONS_61, ORIGINAL_TEST_61, PRACTICES_61, PRACTICE_COUNT_61, TEST_61, type Block61 } from "./data";
+import { DIALOGUE_61, ERRORS_61, PROCEDURES_61, READING_61, SOLVED_61, SPEAKING_61, SUMMARY_61, SUMMARY_DISTINCTIONS_61, THEORY_61, WRITING_61, ORIGINAL_SECTIONS_61, ORIGINAL_TEST_61, PRACTICES_61, PRACTICE_COUNT_61, TEST_61, type Block61 } from "./data";
 import { Attempt61, En61, MemoryProvider61, Mixed61, PairView61, Scene61, useMemory61, useMemorySnapshot61, type AttemptMemory61 } from "./kit61";
 import { LABS_61, LabConsole61 } from "./labs61";
+import type { PracticeGroup61 } from "./practice61";
 import TeacherArea61 from "./TeacherArea61";
 import "./lesson61.css";
 
@@ -108,38 +109,58 @@ function Dialogue61({ reported }: { reported: boolean }) {
   </Scene61>;
 }
 function Reading61() {
-  return <Scene61 kicker="FIELD REPORT / READING" title="قطعة قراءة تطبيقية" lead="اقرأ الزيارة المدرسية ثم جرّب أسئلة الفهم في المحطة التالية."><div className="l61-reading"><header><span dir="ltr">FIELD NOTES</span><h3 dir="ltr">{READING_61.title}</h3><p>{READING_61.titleAr}</p></header>{READING_61.paragraphs.map((p, i) => <article key={i}><div dir="ltr" lang="en">{p.en}</div><p>{p.ar}</p></article>)}</div></Scene61>;
+  return <Scene61 kicker="FIELD REPORT / READING" title="قطعة قراءة تطبيقية" lead="اقرأ الزيارة المدرسية ثم جرّب أسئلة الفهم في المحطة التالية."><div className="l61-reading"><header><span dir="ltr">FIELD NOTES</span><h3 dir="ltr">{READING_61.title}</h3><p>{READING_61.titleAr}</p></header>{READING_61.paragraphs.map((p, i) => <article key={i}><div dir="ltr" lang="en">{p.en}</div><p>{p.ar}</p></article>)}</div><aside className="l61-note"><span className="l61-note-icon" aria-hidden>!</span><div><Mixed61 text={READING_61.context} /></div></aside></Scene61>;
 }
 function Comprehension61() {
   return <Scene61 kicker="READING / CHECK" title="أسئلة فهم الزيارة" lead="أجب بالإنجليزية، ثم تحقّق لعرض الإجابة وترجمتها."><div className="l61-attempts">{READING_61.questions.map((q, i) => <Attempt61 key={q.q} index={i + 1} memoryKey={`reading:${i}`} item={{ prompt: q.q, hint: q.qar, answer: q.a, ar: q.aar, why: "راجع تفاصيل الزيارة في قطعة القراءة؛ قد تكون هناك صياغات صحيحة أخرى للمعنى نفسه." }} />)}</div></Scene61>;
 }
+type ParagraphMemory61 = { draft: string; covered: number[]; checked: boolean; show: boolean };
+function ParagraphPractice61({ group }: { group: PracticeGroup61 }) {
+  const [state, setState] = useMemory61<ParagraphMemory61>("practice:paragraph", { draft: "", covered: [], checked: false, show: false });
+  const checklist = group.checklist ?? [];
+  const ready = Boolean(state.draft.trim()) && checklist.length > 0 && state.covered.length === checklist.length;
+  const model = group.model ?? [];
+  return <Scene61 kicker="PRACTICE / 8" title={group.title} lead={`${group.instruction} حاول حل كل مجموعة قبل قراءة الحلول.`}>
+    <div className="l61-progress-strip"><span>التقدم في مهمة الفقرة</span><bdi dir="ltr">{state.checked ? 1 : 0} / 1</bdi></div>
+    <div className="l61-paragraph-prompt" dir="ltr"><En61>{group.paragraph}</En61></div>
+    <div className="l61-paragraph-work" data-l61-paragraph-attempt>
+      <label className="l61-input-label" htmlFor="l61-paragraph-draft"><span>اكتب الفقرة المنقولة كاملة</span><textarea id="l61-paragraph-draft" dir="ltr" lang="en" rows={8} value={state.draft} onChange={(event) => setState({ ...state, draft: event.target.value, checked: false, show: false })} placeholder="Write your complete reported paragraph..." /></label>
+      <h3>تأكد أنك حاولت نقل كل جزء من الفقرة</h3>
+      <div className="l61-checklist" data-l61-paragraph-checklist>{checklist.map((part, i) => <label key={part}><input type="checkbox" checked={state.covered.includes(i)} onChange={(event) => setState({ ...state, covered: event.target.checked ? [...state.covered, i] : state.covered.filter((n) => n !== i), checked: false, show: false })} /><En61>{part}</En61></label>)}</div>
+      <div className="l61-model"><button type="button" className="l61-button l61-button--quiet" disabled={!ready} aria-expanded={state.show} onClick={() => setState({ ...state, checked: true, show: !state.show })}>{state.show ? "إخفاء الحل النموذجي للفقرة" : "عرض الحل النموذجي للفقرة"}</button>{!ready && <p>اكتب محاولتك وأكّد أنك نقلت الأجزاء السبعة قبل عرض الحل.</p>}{state.show && <div data-l61-paragraph-model><p>هذه مقارنة ذاتية، وليست تصحيحًا آليًا للفقرة. <Mixed61 text={group.items[0].why} /></p>{model.map((line, i) => <article key={i}><div dir="ltr"><En61>{line.en}</En61></div><p>{line.ar}</p></article>)}</div>}</div>
+      {state.checked && <button type="button" className="l61-button l61-button--quiet" onClick={() => setState({ draft: "", covered: [], checked: false, show: false })}>إعادة المحاولة</button>}
+    </div>
+  </Scene61>;
+}
 function Practice61({ id }: { id: string }) {
   const group = PRACTICES_61.find((entry) => entry.id === id)!;
   const values = useMemorySnapshot61();
-  const [showModel, setShowModel] = useMemory61(`show-model:${id}`, false);
   const completed = group.items.filter((_, i) => (values[`practice:${id}:${i}`] as AttemptMemory61 | undefined)?.checked).length;
-  return <Scene61 kicker={`PRACTICE / ${id.slice(-1)}`} title={group.title} lead={group.instruction}>
+  if (group.paragraph) return <ParagraphPractice61 group={group} />;
+  return <Scene61 kicker={`PRACTICE / ${id.slice(-1)}`} title={group.title} lead={`${group.instruction} حاول حل كل مجموعة قبل قراءة الحلول.`}>
     <div className="l61-progress-strip"><span>التقدم في المجموعة</span><bdi dir="ltr">{completed} / {group.items.length}</bdi></div>
-    {group.paragraph && <div className="l61-paragraph-prompt" dir="ltr"><En61>{group.paragraph}</En61></div>}
-    <div className="l61-attempts">{group.items.map((item, i) => <Attempt61 key={i} item={item} index={i + 1} memoryKey={`practice:${id}:${i}`} />)}</div>
-    {group.model && <div className="l61-model"><button type="button" className="l61-button l61-button--quiet" disabled={completed !== group.items.length} aria-expanded={showModel} onClick={() => setShowModel(!showModel)}>{showModel ? "إخفاء الحل النموذجي للفقرة" : "عرض الحل النموذجي للفقرة"}</button>{completed !== group.items.length && <p>تحقّق من جميع الجمل أولًا لفتح الحل الكامل.</p>}{showModel && completed === group.items.length && <div>{group.model.map((line, i) => <article key={i}><div dir="ltr"><En61>{line.en}</En61></div><p>{line.ar}</p></article>)}</div>}</div>}
+    <div className="l61-attempts">{group.items.map((item, i) => <Attempt61 key={i} item={item} index={i + 1} memoryKey={`practice:${id}:${i}`} solutionAvailable={completed === group.items.length} />)}</div>
+    {group.postscript && completed === group.items.length && <aside className="l61-note"><span className="l61-note-icon" aria-hidden>!</span><div><Mixed61 text={group.postscript} /></div></aside>}
   </Scene61>;
 }
 function OriginalTest61({ section }: { section: number }) {
   const items = ORIGINAL_TEST_61.filter((q) => q.section === section);
   const values = useMemorySnapshot61();
   const completed = items.filter((q) => (values[`original:${q.n}`] as AttemptMemory61 | undefined)?.checked).length;
-  return <Scene61 kicker={`ORIGINAL TEST / ${section}`} title={`الاختبار الأصلي: ${ORIGINAL_SECTIONS_61[section - 1]}`} lead="حاول حل كل سؤال قبل التحقق من إجابته. مفتاح الأسئلة يظهر بعد المحاولة."><div className="l61-progress-strip"><span>الأسئلة التي تحقّقت منها في هذا القسم</span><bdi dir="ltr">{completed} / {items.length}</bdi></div><div className="l61-attempts">{items.map((item) => <Attempt61 key={item.n} item={item} index={item.n} memoryKey={`original:${item.n}`} />)}</div></Scene61>;
+  const totalCompleted = ORIGINAL_TEST_61.filter((q) => (values[`original:${q.n}`] as AttemptMemory61 | undefined)?.checked).length;
+  const allChecked = totalCompleted === ORIGINAL_TEST_61.length;
+  return <Scene61 kicker={`ORIGINAL TEST / ${section}`} title={`الاختبار الأصلي: ${ORIGINAL_SECTIONS_61[section - 1]}`} lead="حاول جميع أسئلة الاختبار الأصلي قبل عرض الإجابات والشروح."><div className="l61-progress-strip"><span>المحاولات في هذا القسم / الاختبار كله</span><span><bdi dir="ltr">{completed} / {items.length}</bdi> · <bdi dir="ltr">{totalCompleted} / {ORIGINAL_TEST_61.length}</bdi></span></div><div className="l61-attempts">{items.map((item) => <Attempt61 key={item.n} item={item} index={item.n} memoryKey={`original:${item.n}`} solutionAvailable={allChecked} />)}</div></Scene61>;
 }
 function OriginalKey61({ go }: { go: (id: string) => void }) {
   const values = useMemorySnapshot61();
-  return <Scene61 kicker="ORIGINAL TEST / KEY" title="مفتاح الاختبار الأصلي" lead="كل إجابة مرتبطة برقم سؤالها. تحقّق من السؤال أولًا لتظهر إجابته وسببها هنا."><div className="l61-original-key">{ORIGINAL_TEST_61.map((item) => { const checked = (values[`original:${item.n}`] as AttemptMemory61 | undefined)?.checked; return <article key={item.n} data-l61-key-item={item.n}><div><bdi dir="ltr">{String(item.n).padStart(2, "0")}</bdi><span><Mixed61 text={ORIGINAL_SECTIONS_61[item.section - 1]} /></span></div>{checked ? <><p dir="ltr"><En61>{item.answer}</En61></p><p><Mixed61 text={item.why} /></p></> : <button type="button" className="l61-key-link" onClick={() => go(`original-${item.section}`)}>حاول السؤال أولًا ←</button>}</article>; })}</div></Scene61>;
+  const allChecked = ORIGINAL_TEST_61.every((item) => (values[`original:${item.n}`] as AttemptMemory61 | undefined)?.checked);
+  return <Scene61 kicker="ORIGINAL TEST / KEY" title="مفتاح الاختبار الأصلي" lead="كل إجابة مرتبطة برقم سؤالها. حاول جميع الأسئلة أولًا لتظهر الإجابات وشروحها."><div className="l61-original-key">{ORIGINAL_TEST_61.map((item) => <article key={item.n} data-l61-key-item={item.n}><div><bdi dir="ltr">{String(item.n).padStart(2, "0")}</bdi><span><Mixed61 text={ORIGINAL_SECTIONS_61[item.section - 1]} /></span></div>{allChecked ? <><p dir="ltr"><En61>{item.displayAnswer ?? item.answer}</En61></p><p><Mixed61 text={item.why} /></p></> : <button type="button" className="l61-key-link" onClick={() => go(`original-${item.section}`)}>أكمل أسئلة الاختبار أولًا ←</button>}</article>)}</div></Scene61>;
 }
 function Writing61() {
   const [draft, setDraft] = useMemory61("writing:draft", "");
   const [show, setShow] = useMemory61("writing:model", false);
   const [checked, setChecked] = useMemory61<number[]>("writing:requirements", []);
-  return <Scene61 kicker="OUTPUT / WRITING" title="مهمة الكتابة" lead={WRITING_61.instruction}><div className="l61-task-grid"><div><h3>تأكد من وجود هذه العناصر</h3><div className="l61-checklist">{WRITING_61.requirements.map((item, i) => <label key={i}><input type="checkbox" checked={checked.includes(i)} onChange={(event) => setChecked(event.target.checked ? [...checked, i] : checked.filter((x) => x !== i))} /><span><Mixed61 text={item} /></span></label>)}</div><p>العناصر المحددة: <bdi dir="ltr">{checked.length} / {WRITING_61.requirements.length}</bdi></p></div><div className="l61-writing"><label htmlFor="l61-writing-draft">مسودتك</label><textarea id="l61-writing-draft" dir="ltr" lang="en" rows={12} value={draft} onChange={(event) => setDraft(event.target.value)} placeholder="Write your paragraph here..." /><button type="button" className="l61-button l61-button--quiet" disabled={!draft.trim()} aria-expanded={show} onClick={() => setShow(!show)}>{show ? "إخفاء نموذج الكتابة" : "اقرأ نموذج الكتابة"}</button><p>اكتب مسودة أولًا لفتح النموذج، ثم قارن اختياراتك.</p></div></div>{show && <div className="l61-reading l61-writing-model"><header><h3 dir="ltr">{WRITING_61.title}</h3><p>{WRITING_61.titleAr}</p></header>{WRITING_61.model.map((line, i) => <article key={i}><div dir="ltr"><En61>{line.en}</En61></div><p>{line.ar}</p></article>)}</div>}</Scene61>;
+  return <Scene61 kicker="OUTPUT / WRITING" title="مهمة الكتابة" lead={WRITING_61.instruction}><div className="l61-task-grid"><div><h3>تأكد من وجود هذه العناصر</h3><div className="l61-checklist">{WRITING_61.requirements.map((item, i) => <label key={i}><input type="checkbox" checked={checked.includes(i)} onChange={(event) => setChecked(event.target.checked ? [...checked, i] : checked.filter((x) => x !== i))} /><span><Mixed61 text={item} /></span></label>)}</div><p>العناصر المحددة: <bdi dir="ltr">{checked.length} / {WRITING_61.requirements.length}</bdi></p></div><div className="l61-writing"><label htmlFor="l61-writing-draft">مسودتك</label><textarea id="l61-writing-draft" dir="ltr" lang="en" rows={12} value={draft} onChange={(event) => setDraft(event.target.value)} placeholder="Write your paragraph here..." /><button type="button" className="l61-button l61-button--quiet" disabled={!draft.trim()} aria-expanded={show} onClick={() => setShow(!show)}>{show ? "إخفاء نموذج الكتابة" : "اقرأ نموذج الكتابة"}</button><p>اكتب مسودة أولًا لفتح النموذج، ثم قارن اختياراتك.</p></div></div>{show && <div className="l61-reading l61-writing-model"><header><h3 dir="ltr">{WRITING_61.title}</h3><p>{WRITING_61.titleAr}</p></header>{WRITING_61.model.map((line, i) => <article key={i}><div dir="ltr"><En61>{line.en}</En61></div><p>{line.ar}</p></article>)}<aside className="l61-note"><span className="l61-note-icon" aria-hidden>!</span><div><Mixed61 text={WRITING_61.context} /></div></aside></div>}</Scene61>;
 }
 function Speaking61() {
   const [done, setDone] = useMemory61<number[]>("speaking:done", []);
@@ -147,7 +168,7 @@ function Speaking61() {
   return <Scene61 kicker="OUTPUT / SPEAKING" title="مهمة التحدث" lead={SPEAKING_61.instruction}><div className="l61-speaking">{SPEAKING_61.questions.map((q, i) => <article key={q.en}><div><bdi dir="ltr">{String(i + 1).padStart(2, "0")}</bdi><div><div dir="ltr"><En61>{q.en}</En61></div><p>{q.ar}</p></div></div><button type="button" aria-pressed={done.includes(i)} onClick={() => setDone(done.includes(i) ? done.filter((x) => x !== i) : [...done, i])}>{done.includes(i) ? "تمت الإجابة ✓" : "تحدثت عن هذا"}</button></article>)}</div><div className="l61-progress-strip"><span>الأسئلة التي تحدثت عنها</span><bdi dir="ltr">{done.length} / {SPEAKING_61.questions.length}</bdi></div><label className="l61-input-label"><span>ملاحظات اختيارية عن إجاباتك</span><textarea dir="ltr" rows={3} value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="My visit..." /></label><h3 className="l61-subhead">أمثلة على التحويل</h3><div className="l61-pairs">{SPEAKING_61.pairs.map((pair, i) => <PairView61 key={i} pair={pair} index={i + 1} />)}</div></Scene61>;
 }
 function Summary61() {
-  return <Scene61 kicker="MISSION RECAP / 09" title="الملخص النهائي" lead="9 قواعد تربط القصد بالصيغ المناسبة."><div className="l61-summary">{SUMMARY_61.map((item, i) => <article key={item.title}><div className="l61-summary-index" dir="ltr">{String(i + 1).padStart(2, "0")}</div><div><h3><Mixed61 text={item.title} /></h3><div className="l61-summary-formula" dir="ltr"><En61>{item.formula}</En61></div>{item.direct && item.reported && <div className="l61-summary-example" dir="ltr"><En61>{item.direct} → {item.reported}</En61></div>}<p><Mixed61 text={item.note} /></p></div></article>)}</div></Scene61>;
+  return <Scene61 kicker="MISSION RECAP / 09" title="الملخص النهائي" lead="8 تراكيب و9 فروق تربط القصد بالصيغ المناسبة."><div className="l61-summary">{SUMMARY_61.map((item, i) => <article key={item.title}><div className="l61-summary-index" dir="ltr">{String(i + 1).padStart(2, "0")}</div><div><h3><Mixed61 text={item.title} /></h3><div className="l61-summary-formula" dir="ltr"><En61>{item.formula}</En61></div>{item.direct && item.reported && <div className="l61-summary-example" dir="ltr"><En61>{item.direct} → {item.reported}</En61></div>}{i === SUMMARY_61.length - 1 ? <ul className="l61-summary-distinctions">{SUMMARY_DISTINCTIONS_61.map((distinction) => <li key={distinction}><Mixed61 text={distinction} /></li>)}</ul> : <p><Mixed61 text={item.note} /></p>}</div></article>)}</div></Scene61>;
 }
 function Closing61({ onExit, go }: { onExit?: () => void; go: (id: string) => void }) {
   return <Scene61 kicker="MISSION COMPLETE / 61" title="أنت الآن تقود المعنى" lead="انتقلت من قراءة السؤال إلى اختيار القصد وبناء الجملة المنقولة."><div className="l61-closing"><div className="l61-closing-mark" dir="ltr">61<span>↗</span></div><div><h3>توقف لحظة قبل التحويل.</h3><p>من المتحدث؟ من المخاطَب؟ هل يسأل عن القدرة أم يطلب فعلًا؟ هل تغيّر مرجع الزمان أو المكان؟ هذه الأسئلة تحفظ المعنى قبل تغيير الشكل.</p><div className="l61-closing-actions"><button type="button" className="l61-button l61-button--bright" onClick={() => go("summary")}>راجع القواعد</button><a className="l61-button l61-button--outline" href="#/lesson/60">الدرس السابق · 60</a>{onExit && <button type="button" className="l61-button l61-button--outline" onClick={onExit}>العودة إلى فهرس الدروس</button>}</div><p className="l61-closing-caption">يمكنك العودة إلى الدرس 60 لمراجعة نقل الجمل الخبرية.</p></div></div></Scene61>;

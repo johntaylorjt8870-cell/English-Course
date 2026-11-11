@@ -1,0 +1,2 @@
+Command: node scripts/audit-final-test.mjs
+Exit: 1

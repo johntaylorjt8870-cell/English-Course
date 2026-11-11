@@ -14,6 +14,7 @@ export function PairView61({ pair, index }: { pair: Pair61; index?: number }) {
   return <article className="l61-transfer" data-l61-pair>
     {index !== undefined && <div className="l61-transfer-index" dir="ltr">{String(index).padStart(2, "0")}</div>}
     <div className="l61-transfer-track">
+      {pair.kind && <div className="l61-transfer-kind" data-l61-solved-kind><Mixed61 text={pair.kind} /></div>}
       <div className="l61-transfer-line"><span className="l61-port" dir="ltr">IN</span><div><div className="l61-sentence"><En61>{pair.direct}</En61></div>{pair.directAr && <p>{pair.directAr}</p>}</div></div>
       <div className="l61-transfer-line l61-transfer-line--out"><span className="l61-port" dir="ltr">OUT</span><div><div className="l61-sentence"><En61>{pair.reported}</En61></div>{pair.alternative && <div className="l61-alternative"><En61>{pair.alternative}</En61></div>}{pair.ar && <p>{pair.ar}</p>}</div></div>
       {pair.note && <div className="l61-transfer-note"><Mixed61 text={pair.note} /></div>}
@@ -55,7 +56,7 @@ export function matches61(value: string, answer: string, accept: string[] = []) 
   return normalized.length > 0 && [answer, ...accept].some((candidate) => normalize61(candidate) === normalized);
 }
 export type AttemptMemory61 = { value: string; checked: boolean };
-export function Attempt61({ item, index, memoryKey }: { item: AttemptItem61; index: number; memoryKey: string }) {
+export function Attempt61({ item, index, memoryKey, solutionAvailable = true }: { item: AttemptItem61; index: number; memoryKey: string; solutionAvailable?: boolean }) {
   const [state, setState] = useMemory61<AttemptMemory61>(memoryKey, { value: "", checked: false });
   const right = matches61(state.value, item.answer, item.accept);
   const arabicPrompt = /[\u0600-\u06ff]/.test(item.prompt);
@@ -68,12 +69,12 @@ export function Attempt61({ item, index, memoryKey }: { item: AttemptItem61; ind
         {item.options.map((option) => <button type="button" key={option} aria-pressed={state.value === option} className={state.value === option ? "is-selected" : ""} onClick={() => setState({ value: option, checked: false })}><En61>{option}</En61></button>)}
       </div> : <label className="l61-input-label"><span>إجابتك بالإنجليزية</span><input type="text" dir="ltr" lang="en" value={state.value} aria-label={`إجابة السؤال ${index}`} placeholder="Write your answer..." onChange={(event) => setState({ value: event.target.value, checked: false })} onKeyDown={(event) => { if (event.key === "Enter" && state.value.trim()) setState({ ...state, checked: true }); }} /></label>}
       <div className="l61-actions"><button type="button" className="l61-button" disabled={!state.value.trim()} onClick={() => setState({ ...state, checked: true })}>تحقّق من الإجابة</button>{state.checked && <button type="button" className="l61-button l61-button--quiet" onClick={() => setState({ value: "", checked: false })}>إعادة المحاولة</button>}</div>
-      {state.checked && <div className={`l61-feedback ${right ? "is-right" : "is-wrong"}`} role="status" data-l61-feedback>
+      {state.checked && (solutionAvailable ? <div className={`l61-feedback ${right ? "is-right" : "is-wrong"}`} role="status" data-l61-feedback>
         <strong>{right ? "إجابة صحيحة" : "لا تطابق النموذج؛ راجع إجابتك"}</strong>
-        <div>النموذج: <En61>{item.answer}</En61></div>
+        <div>النموذج: <En61>{item.displayAnswer ?? item.answer}</En61></div>
         {item.accept && item.accept.length > 0 && <div className="l61-accept">صيغة أخرى مقبولة: <En61>{item.accept[0]}</En61></div>}
         <div><Mixed61 text={item.why} /></div>{item.ar && <div>{item.ar}</div>}
-      </div>}
+      </div> : <p className="l61-pending" role="status" data-l61-pending>حُفظت محاولتك. أكمل بقية البنود لعرض الإجابات والشروح.</p>)}
     </div>
   </article>;
 }

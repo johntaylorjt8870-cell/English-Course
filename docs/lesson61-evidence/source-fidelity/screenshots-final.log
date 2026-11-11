@@ -1,0 +1,26 @@
+Captured docs/lesson61-visual/source-fidelity-320-teacher-pronouns.png
+Captured docs/lesson61-visual/source-fidelity-320-original-dialogue.png
+Captured docs/lesson61-visual/source-fidelity-320-paragraph-prompt.png
+Captured docs/lesson61-visual/source-fidelity-320-paragraph-model.png
+Captured docs/lesson61-visual/source-fidelity-320-original-exam-pending.png
+Captured docs/lesson61-visual/source-fidelity-320-nine-distinctions.png
+Captured docs/lesson61-visual/source-fidelity-320-teacher-paragraph-key.png
+Captured docs/lesson61-visual/source-fidelity-1280-teacher-pronouns.png
+Captured docs/lesson61-visual/source-fidelity-1280-original-dialogue.png
+Captured docs/lesson61-visual/source-fidelity-1280-paragraph-prompt.png
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for getByRole('button', { name: 'عرض الحل النموذجي للفقرة' })
+
+    at /home/user/English-Course/scripts/shots-lesson61-fidelity.mjs:38:74 {
+  log: [
+    "  - waiting for getByRole('button', { name: 'عرض الحل النموذجي للفقرة' })"
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v22.22.3

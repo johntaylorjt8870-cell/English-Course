@@ -1,0 +1,5 @@
+Same command and baseline as tsc-latest-status.txt
+current exit: 2
+byte comparison with clean main: 0
+main diagnostics: 272
+current diagnostics: 272

@@ -1,0 +1,39 @@
+
+> react-vite-tailwind@0.0.0 audit:lesson58
+> node scripts/audit-lesson58.mjs
+
+✓ seven defined passive tense entries
+✓ exact target tense scope/order
+✓ all nine original practice groups exist
+✓ all 59 source practice prompts/solutions exist (got 59)
+✓ all 25 original final questions exist
+✓ all 25 original test items have an answer and explanation
+✓ shared FinalTest bank has 15 selected items
+✓ uses shared FinalTest rather than parallel quiz
+✓ central passive formula represented
+✓ V3 accuracy item: build→built
+✓ V3 accuracy item: write→written
+✓ V3 accuracy item: steal→stolen
+✓ V3 accuracy item: send→sent
+✓ V3 accuracy item: make→made
+✓ V3 accuracy item: speak→spoken
+✓ V3 accuracy item: break→broken
+✓ V3 accuracy item: complete→completed
+✓ V3 accuracy item: repair→repaired
+✓ road simple/continuous/perfect contrast present
+✓ past simple vs past continuous contrast present
+✓ present perfect vs past perfect distinction present
+✓ all 21 source-section stations are routed through the learner-facing renderer
+✓ original source test is rendered to the student interface
+✓ original answer key is rendered to the student interface
+✓ dialogue is rendered
+✓ complete Arabic reading translation is rendered
+✓ writing model rendered
+✓ speaking models rendered
+✓ seven-item final summary rendered
+✓ seven requested interactive stations exist
+✓ lesson 58 is registered in route and hub
+✓ lesson 57 progress route points to lesson 58
+✓ lesson 58 has onward destination to lesson 59 without assuming registration
+✓ mixed scripts use direction isolation
+Lesson 58 source and grammar audit: 34/34 passed; 59 practice items; 25 original questions; 15 shared-test questions.

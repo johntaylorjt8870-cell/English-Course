@@ -64,6 +64,7 @@
     "audit:lesson60-browser": "node scripts/audit-lesson60-browser.mjs",
     "shots:lesson60": "node scripts/shots-lesson60.mjs",
     "audit:lesson61": "node scripts/audit-lesson61.mjs",
+    "audit:lesson61-source": "node scripts/audit-lesson61-source.mjs",
     "audit:lesson61-browser": "node scripts/audit-lesson61-browser.mjs",
     "shots:lesson61": "node scripts/shots-lesson61.mjs"
   },

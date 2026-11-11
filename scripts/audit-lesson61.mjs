@@ -1,6 +1,7 @@
-// Lesson 61: implementation snapshot integrity, keys, integration and western digits.
-// The snapshot was generated from the implementation, not from an independent source.
+// Lesson 61: implementation drift, keys, integration, western digits and a
+// separately executed audit against the user-supplied source document.
 import { readFileSync, readdirSync, statSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import { createRequire } from "node:module";
 import { join } from "node:path";
 import esbuild from "esbuild";
@@ -30,7 +31,7 @@ const lesson = await bundle("src/lessons/lesson61/Lesson61.tsx");
 const kit = await bundle("src/lessons/lesson61/kit61.tsx");
 const shared = await bundle("src/shared/finalTest.tsx");
 const golden = JSON.parse(readFileSync("scripts/fixtures/lesson61-content-snapshot.json", "utf8"));
-const snapshots = { theory: content.THEORY_61, errors: content.ERRORS_61, procedures: content.PROCEDURES_61, solved: content.SOLVED_61, dialogue: content.DIALOGUE_61, reading: content.READING_61, writing: content.WRITING_61, speaking: content.SPEAKING_61, summary: content.SUMMARY_61, practices: practice.PRACTICES_61, original: practice.ORIGINAL_TEST_61 };
+const snapshots = { theory: content.THEORY_61, errors: content.ERRORS_61, procedures: content.PROCEDURES_61, solved: content.SOLVED_61, dialogue: content.DIALOGUE_61, reading: content.READING_61, writing: content.WRITING_61, speaking: content.SPEAKING_61, summary: content.SUMMARY_61, distinctions: content.SUMMARY_DISTINCTIONS_61, practices: practice.PRACTICES_61, original: practice.ORIGINAL_TEST_61 };
 for (const [key, value] of Object.entries(snapshots)) ok(JSON.stringify(value) === JSON.stringify(golden[key]), `Complete ${key} text, examples, translations, answers and explanations match the implementation snapshot (not independent source verification)`);
 
 const scenes = lesson.LESSON_61_SCENES;
@@ -52,12 +53,12 @@ ok(content.DIALOGUE_61.direct.length === 9 && content.DIALOGUE_61.reported.lengt
 ok(content.READING_61.paragraphs.length === 7 && content.READING_61.paragraphs.every((l) => l.en && l.ar) && content.READING_61.questions.length === 7 && content.READING_61.questions.every((q) => q.q && q.qar && q.a && q.aar), "Reading: 7 bilingual paragraphs and 7 bilingual questions/answers");
 ok(content.WRITING_61.requirements.length === 7 && content.WRITING_61.model.length === 5 && content.WRITING_61.model.every((l) => l.en && l.ar), "Writing task, 7 requirements and complete bilingual model");
 ok(content.SPEAKING_61.questions.length === 5 && content.SPEAKING_61.questions.every((l) => l.en && l.ar) && content.SPEAKING_61.pairs.length === 3, "Speaking task, 5 bilingual questions and 3 examples");
-ok(content.SUMMARY_61.length === 9 && content.SUMMARY_61.every((s) => s.title && s.formula && s.note), "All 9 summary rules and final distinctions");
+ok(content.SUMMARY_61.length === 9 && content.SUMMARY_61.every((s) => s.title && s.formula && s.note) && content.SUMMARY_DISTINCTIONS_61.length === 9, "All 8 structures and 9 separately retained distinctions");
 
 const groups = practice.PRACTICES_61;
-ok(groups.length === 8 && groups.map((g) => g.items.length).join() === "6,6,6,6,8,8,8,7", "All 8 practice groups and all 55 individual sentences");
-ok(practice.PRACTICE_COUNT_61 === 55 && groups.every((g) => g.instruction && g.items.every((q) => q.prompt && q.answer && q.why)), "Each practice item has a prompt, answer and explanation");
-ok(Boolean(groups[7].paragraph) && groups[7].model.length === 6 && groups[7].model.every((l) => l.en && l.ar), "Full paragraph, complete six-line model and translation retained");
+ok(groups.length === 8 && groups.map((g) => g.items.length).join() === "6,6,6,6,8,8,8,1", "All 8 source practice groups, including one complete paragraph");
+ok(practice.PRACTICE_COUNT_61 === 49 && groups.every((g) => g.instruction && g.items.every((q) => q.prompt && q.answer && q.why)), "Each of the 49 source practice tasks has a prompt, answer and explanation");
+ok(Boolean(groups[7].paragraph) && groups[7].checklist.length === 7 && groups[7].model.length === 6 && groups[7].model.every((l) => l.en && l.ar), "One full paragraph, 7 component checks, complete six-line model and translation retained");
 for (const group of groups) for (const [i, q] of group.items.entries()) if (q.options) ok(q.options.includes(q.answer) && (q.accept || []).every((a) => q.options.includes(a)), `${group.id} item ${i + 1}: every accepted option belongs to the choices`);
 const original = practice.ORIGINAL_TEST_61;
 ok(original.length === 25 && original.every((q, i) => q.n === i + 1), "Original test numbered consecutively from 1 to 25");
@@ -71,7 +72,8 @@ ok(original[23].answer === "B. not to" && original[23].accept.includes("C. to no
 ok(groups[4].items[3].answer === "C. not to" && groups[4].items[3].accept.includes("B. to not"), "Practice 5 question 4 keeps its local key and accepts both grammatical forms");
 ok(groups[4].items[1].answer === "A. was" && groups[4].items[1].accept.includes("B. am"), "Practice 5 question 2 accepts present readiness without mandatory backshift");
 ok(original[21].answer === "B. had" && original[21].accept.includes("A. have"), "Question 22 accepts a still-relevant present perfect without mandatory backshift");
-// Exercise the actual lesson matcher for all 55 practice and 25 test items.
+// Exercise the actual lesson matcher for the 49 practice tasks and 25 test items.
+// The paragraph UI uses self-review rather than treating this matcher as a semantic grader.
 // The implementation snapshot above catches a changed key; these checks also
 // reject blank data, incomplete alternatives, blank answers and wrong choices.
 const present61 = (value) => typeof value === "string" && value.trim().length > 0;
@@ -130,9 +132,13 @@ ok(/<FinalTestAnswerKey lesson=\{61\} questions=\{TEST_61\}/.test(teacher) && /T
 ok(/MemoryProvider61/.test(lessonSource) && /useMemory61/.test(lessonSource), "Practice and task progress live above keyed scenes");
 ok(!/max-w-(?:3xl|4xl|5xl|6xl)/.test(lessonSource) && !/main\s*>\s*\.pop\s*\{\s*max-width/.test(css), "Lesson honors the shared layout width guard");
 const ledger = readFileSync("src/lessons/lesson61/source-ledger.md", "utf8");
-const ledgerRows = ledger.split("## Forty requested trace points")[1].split("## Measurable inventory")[0].match(/^\| \d+ \|/gm) || [];
+const ledgerRows = ledger.split("## Forty requested trace points")[1].split("## Verified inventory")[0].match(/^\| \d+ \|/gm) || [];
 ok(ledgerRows.length === 40, `Source Ledger documents all 40 requested trace points (${ledgerRows.length})`);
-ok(ledger.includes("source corrections and contextual decisions (pending comparison)"), "Provisional source corrections and contextual interpretations documented");
+ok(ledger.includes("independently reviewed") && ledger.includes("docs/lesson61-content-review.md"), "The source ledger points to the item-level independent review");
+const sourceAudit = spawnSync(process.execPath, ["scripts/audit-lesson61-source.mjs"], { encoding: "utf8" });
+ok(sourceAudit.status === 0, "Independent source audit succeeds (the implementation snapshot is not used as source evidence)");
+if (sourceAudit.stdout) process.stdout.write(sourceAudit.stdout);
+if (sourceAudit.status !== 0 && sourceAudit.stderr) process.stderr.write(sourceAudit.stderr);
 
 // Scan all new lesson files (including CSS and documentation), fixtures, test
 // scripts, and unchanged shared components which can render in this lesson.
@@ -143,6 +149,6 @@ const digitFiles = [...walk("src/lessons/lesson61"), "scripts/fixtures/lesson61-
 for (const path of digitFiles) ok(!forbidden.test(readFileSync(path, "utf8")), `Western digits only: ${path}`);
 
 if (failures.length) { console.error(`Lesson 61 static audit FAILED: ${failures.length} / ${checks}`); for (const failure of failures) console.error(`  - ${failure}`); process.exitCode = 1; }
-else { console.log(`Lesson 61 structural and snapshot checks: ${checks}/${checks} passed · 16 sections · 61 scenes · 10 labs · 55 practice items · 25 original + 15 shared-test questions.`); console.log("Western digits static audit: PASS — no Arabic-Indic digits or circled numerals in Lesson 61 source, CSS, fixtures, integration or shared UI components."); }
-console.error("SOURCE FIDELITY: UNVERIFIED — the current fixture is an implementation snapshot, not an independent transcription of the user-provided source.");
-if (!process.exitCode) process.exitCode = 2;
+else { console.log(`Lesson 61 structural and snapshot checks: ${checks}/${checks} passed · 16 sections · 61 scenes · 10 labs · 49 source practice tasks · 25 original + 15 shared-test questions.`); console.log("Western digits static audit: PASS — no Arabic-Indic digits or circled numerals in Lesson 61 UI code, CSS, fixtures, integration or shared UI components."); }
+// The user-supplied source is checked above by a separate, source-derived audit;
+// the implementation snapshot remains only a later-drift guard.

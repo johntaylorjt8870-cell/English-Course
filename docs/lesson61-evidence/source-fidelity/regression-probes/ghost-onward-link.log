@@ -1,0 +1,6 @@
+✗ lesson 60 links and navigates to registered lesson 61; every lesson target exists and is registered
+✗ student lesson links are registered and any lesson 62 reference must lead to a real registered lesson
+
+Lesson 60 static audit: 186/188 passed
+- lesson 60 links and navigates to registered lesson 61; every lesson target exists and is registered
+- student lesson links are registered and any lesson 62 reference must lead to a real registered lesson

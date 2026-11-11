@@ -1,7 +1,7 @@
 import type { FinalTestQuestion } from "../../shared/finalTest";
 
-// Separate shared FinalTest bank; the implemented 25-question bank is in practice61.ts.
-// Neither bank establishes independent fidelity to an unavailable source.
+// Separate shared FinalTest bank; the source's 25-question exam is in practice61.ts.
+// Independent source comparisons are performed by scripts/audit-lesson61-source.mjs.
 export const TEST_61: FinalTestQuestion[] = [
   { type: "single", ar: "انقل السؤال الآتي مع الرجوع الزمني المعتاد:", en: 'He asked me, "Are you ready?"', options: ["He asked me if I was ready.", "He asked me if was I ready.", "He asked me where I was ready."], answer: 0, why: "السؤال من نوع Yes/No فنستخدم if ثم ترتيب I was.", concept: "Yes/No + if", trap: "ترك ترتيب السؤال المباشر بعد if." },
   { type: "order", ar: "رتّب المقاطع لنقل السؤال:", en: 'He asked me, "Where do you live?"', items: ["He asked me", "where", "I", "lived."], why: "نحتفظ بـ where، ونحذف do، ونضع I قبل lived.", concept: "ترتيب WH المنقول", trap: "وضع الفعل المساعد قبل الفاعل." },

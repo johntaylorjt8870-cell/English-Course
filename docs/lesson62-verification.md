@@ -1,9 +1,10 @@
 # Lesson 62 — Reporting Verbs: Verification Report
 
-**Status:** ✅ PASSED
+**Status:** ✅ PASSED (Automated Checks) / ⏳ Browser Visual Testing: Manual Verification Required
 **Date:** 2026-11-12
 **Branch:** arena/2d084ad3-english-course
-**Commit:** b0753596f42a1bcc369f8c3d2f04f0f9761a67cd (main) + changes
+**Commit:** 77b54d7 (main + changes)
+**PR:** #110
 
 ---
 
@@ -12,10 +13,12 @@
 | Check | Status | Details |
 |-------|--------|---------|
 | `npm run build` | ✅ PASS | Production build completes successfully (9.53s) |
-| TypeScript/ESBuild validation | ✅ PASS | No type errors (Vite/ESBuild validates all modules) |
+| Vite/ESBuild validation | ✅ PASS | No type errors (Vite/ESBuild validates all modules during build) |
 | English direction check | ✅ PASS | 1816 assertions across 62 lessons passed |
 | BIDI rendering tests | ✅ PASS | 59/59 assertions passed |
 | Vite dev server | ✅ PASS | Starts in ~180ms, hot reload functional |
+
+*Note: No standalone `tsc` TypeScript compiler run (no tsconfig.json). Type checking is performed by ESBuild during Vite build.*
 
 ---
 
@@ -142,19 +145,21 @@ All labs use decision-based verification with:
 
 | Viewport | Status | CSS Breakpoints Verified |
 |----------|--------|-------------------------|
-| Desktop (1920×1080) | ✅ TESTED | Full grid layouts, side-by-side cover, multi-column labs |
-| Tablet (768×1024) | ✅ TESTED | `@media (max-width: 1024px)` - stacked cover, single-column labs |
-| Mobile (375×667) | ✅ TESTED | `@media (max-width: 640px)` - stacked actions, hidden table cols, 2-col verb grid |
+| Desktop (1920×1080) | ⏳ PENDING | Full grid layouts, side-by-side cover, multi-column labs |
+| Tablet (768×1024) | ⏳ PENDING | `@media (max-width: 1024px)` - stacked cover, single-column labs |
+| Mobile (375×667) | ⏳ PENDING | `@media (max-width: 640px)` - stacked actions, hidden table cols, 2-col verb grid |
 
 **Responsive CSS verified in `lesson62.css`:**
 - `@media (max-width: 1024px)` — cover stacks, lab grid single column, transfer grid single column
 - `@media (max-width: 640px)` — scene padding reduced, cover actions column, table columns hidden, verb grid 2-col, matrix single column
 
-**RTL/LTR Verified:**
+**RTL/LTR Verified (automated):**
 - Arabic content renders RTL, English isolated with `dir="ltr"` via `En62`/`Mixed62` components
 - English direction check: 1816 assertions passed across 62 lessons
 - BIDI rendering: 59/59 assertions passed
 - No overlap between site password lock and lesson navigation buttons
+
+**Note:** Automated CSS breakpoint verification only. Actual browser rendering at these viewports has not been visually confirmed. Screenshots in `docs/lesson62-visual/` will be added when browser testing is performed.
 
 ---
 
@@ -210,18 +215,36 @@ src/App.tsx (import, route, hub card)
 
 ## Summary
 
-**All acceptance criteria met:**
+**Automated Checks: ✅ ALL PASSED**
 
-✅ Full content coverage (21 sections, 8 practices/61 items, 25Q original test, 15Q final test, writing/speaking, summary)
-✅ Unique visual identity (purple-blue theme, no design copied from prior lessons)
-✅ Interactive labs (5 decision-based labs with verification)
-✅ Teacher area with password gate (UI-only, documented)
-✅ Proper registration/navigation (hub card, route, prev/next)
-✅ Passing build & TypeScript/ESBuild
-✅ Browser verification on mobile & desktop (responsive breakpoints verified in CSS)
-✅ Documentation in docs/ with verifiable counts
-✅ Original 25Q test and shared 15Q FinalTest are separate and independent
-✅ Educational corrections documented (8 fixes)
-✅ Ready for PR against main
+| Criterion | Status | Evidence |
+|-----------|--------|----------|
+| Full content coverage (21 sections, 8 practices/61 items, 25Q original test, 15Q final test, writing/speaking, summary) | ✅ COMPLETE | Source code analysis, content62.ts |
+| Unique visual identity (purple-blue theme, no design copied) | ✅ COMPLETE | kit62.tsx, lesson62.css |
+| Interactive labs (5 decision-based labs) | ✅ COMPLETE | labs62.tsx |
+| Teacher area with password gate (UI-only) | ✅ COMPLETE | TeacherArea62.tsx |
+| Proper registration/navigation | ✅ COMPLETE | App.tsx |
+| Passing build | ✅ PASS | `npm run build` 9.75s |
+| Vite/ESBuild validation | ✅ PASS | No type errors during build |
+| English direction check | ✅ PASS | 1816 assertions |
+| BIDI rendering tests | ✅ PASS | 59/59 |
+| Responsive CSS breakpoints | ✅ VERIFIED | lesson62.css |
+| Test separation (25Q vs 15Q) | ✅ VERIFIED | Different files, components |
+| Educational corrections (8) | ✅ DOCUMENTED | ERRORS62, practice items, FinalTest |
+| Documentation | ✅ COMPLETE | docs/lesson62-*.md |
 
-**Next Step:** Create PR against main branch.
+**Browser Visual Testing: ⏳ MANUAL VERIFICATION REQUIRED**
+
+| Viewport | Status | Method |
+|----------|--------|--------|
+| Desktop (1920×1080) | ⏳ PENDING | Manual via preview URL |
+| Tablet (768×1024) | ⏳ PENDING | Manual via preview URL |
+| Mobile (375×667) | ⏳ PENDING | Manual via preview URL |
+
+**Visual test plan:** `docs/lesson62-visual/README.md` with checklist and screenshot locations.
+
+**Preview URL (when dev server running):** `http://localhost:5173/English-Course/lesson/62` or preview proxy.
+
+**PR Status:** #110 OPEN against main.
+
+**No further automated actions needed.** Manual browser verification at three viewports is the only remaining step.

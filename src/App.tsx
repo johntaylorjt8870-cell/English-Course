@@ -60,6 +60,7 @@ import Lesson58 from "./lessons/lesson58/Lesson58";
 import Lesson59 from "./lessons/lesson59/Lesson59";
 import Lesson60 from "./lessons/lesson60/Lesson60";
 import Lesson61 from "./lessons/lesson61/Lesson61";
+import Lesson62 from "./lessons/lesson62/Lesson62";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
 import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
@@ -643,6 +644,15 @@ const CARDS: Card[] = [
     href: "#/lesson/61",
     grad: "from-[#123d2f] to-[#a4ca42]",
   },
+  {
+    n: 62,
+    title: "الدرس 62: REPORTING VERBS — أفعال نقل الكلام المتقدمة",
+    en: "The Verb Choice Studio · Precision in Reporting",
+    emoji: "🎯",
+    stats: "21 قسمًا · 8 تدريبات · 53 بندًا · اختبار أصلي 25 سؤالًا + اختبار 15 سؤالًا",
+    href: "#/lesson/62",
+    grad: "from-[#4c1d95] to-[#7c3aed]",
+  },
 ];
 
 function LessonCard({ c, i }: { c: Card; i: number }) {
@@ -785,6 +795,7 @@ export default function App() {
   else if (route === 59) page = <Lesson59 onExit={goHome} />;
   else if (route === 60) page = <Lesson60 onExit={goHome} />;
   else if (route === 61) page = <Lesson61 onExit={goHome} />;
+  else if (route === 62) page = <Lesson62 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
   return (
     <SitePasswordGate>

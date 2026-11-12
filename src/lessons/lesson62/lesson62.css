@@ -1,0 +1,1572 @@
+/* ============================================================
+   Lesson 62 — Reporting Verbs: THE VERB CHOICE STUDIO
+   هوية بصرية مستقلة: بنفسجي-أزرق عميق مع تدرجات "دقة الاختيار"
+   ألوان المجموعات:
+     admit/deny: #7c3aed (بنفسجي)
+     suggest/recommend: #2563eb (أزرق)
+     promise/refuse/offer: #059669 (أخضر زمردي)
+     advise/encourage/persuade: #dc2626 (أحمر)
+     warn/remind/invite: #ea580c (برتقالي)
+     apologize/accuse/complain: #db2777 (وردي)
+     explain/announce/claim: #0891b2 (سماوي)
+     insist/convince: #65a30d (ليموني)
+   ============================================================ */
+
+.lesson62 {
+  --l62-primary: #4c1d95;
+  --l62-primary-light: #6d28d9;
+  --l62-primary-dark: #3b0f6e;
+  --l62-accent: #7c3aed;
+  --l62-surface: #faf9ff;
+  --l62-border: #e9e5ff;
+  --l62-text: #1e1b2e;
+  --l62-muted: #6b5d8a;
+}
+
+/* ------------------------------------------------------------
+   الغلاف — افتتاح قوي ومميز
+   ------------------------------------------------------------ */
+.l62-cover {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #faf9ff 0%, #f3efff 50%, #ede9fe 100%);
+}
+
+.l62-cover-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 5rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.l62-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: var(--l62-primary);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.l62-eyebrow span {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--l62-accent);
+  margin-top: 0.25rem;
+}
+
+.l62-cover-copy h1 {
+  font-family: var(--font-head, "Sora", system-ui);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--l62-text);
+  margin-bottom: 1rem;
+}
+
+.l62-cover-copy h1 em {
+  font-style: normal;
+  color: var(--l62-accent);
+  background: linear-gradient(135deg, var(--l62-accent), #2563eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.l62-cover-copy h2 {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  color: var(--l62-muted);
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.l62-cover-copy > p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--l62-muted);
+  margin-bottom: 2.5rem;
+  max-width: 540px;
+}
+
+.l62-cover-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.l62-cover-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--l62-muted);
+  border-top: 1px solid var(--l62-border);
+  padding-top: 1.5rem;
+}
+
+/* سطح المكتب التوضيحي */
+.l62-desk {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #fff 0%, #f8f5ff 100%);
+  border-inline-start: 1px solid var(--l62-border);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.l62-desk::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(37, 99, 235, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.l62-desk-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  z-index: 1;
+}
+
+.l62-avatar {
+  font-size: 2.5rem;
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.15);
+}
+
+.l62-mini-bubble {
+  padding: 0.75rem 1.25rem;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  max-width: 280px;
+  white-space: nowrap;
+}
+
+.l62-mini-bubble--out {
+  background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+  color: var(--l62-primary);
+  border: 2px solid var(--l62-border);
+}
+
+.l62-mini-bubble--in {
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+  color: #065f46;
+  border: 2px solid #a7f3d0;
+}
+
+.l62-desk-gates {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  z-index: 1;
+}
+
+.l62-gate {
+  display: inline-grid;
+  place-items: center;
+  text-align: center;
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.l62-gate small {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 500;
+  opacity: 0.9;
+  margin-top: 0.15rem;
+}
+
+.l62-gate.admit { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+.l62-gate.deny { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+.l62-gate.promise { background: linear-gradient(135deg, #059669, #10b981); }
+.l62-gate.refuse { background: linear-gradient(135deg, #dc2626, #ef4444); }
+.l62-gate.suggest { background: linear-gradient(135deg, #ea580c, #f97316); }
+.l62-gate.advise { background: linear-gradient(135deg, #db2777, #f43f5e); }
+
+.l62-desk-note {
+  font-size: 0.85rem;
+  color: var(--l62-muted);
+  text-align: center;
+  max-width: 320px;
+  z-index: 1;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------
+   المشهد العام
+   ------------------------------------------------------------ */
+.l62-scene {
+  padding: 2rem 1.5rem 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.l62-scene--booth {
+  background: linear-gradient(135deg, #1e1b2e 0%, #2d2548 100%);
+  color: white;
+  border-radius: 24px;
+  margin: 1rem 1.5rem;
+}
+
+.l62-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--l62-accent);
+  margin-bottom: 1rem;
+}
+
+.l62-kicker span {
+  background: var(--l62-accent);
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.65rem;
+}
+
+.l62-scene--booth .l62-kicker {
+  color: #c4b5fd;
+}
+
+.l62-scene--booth .l62-kicker span {
+  background: #c4b5fd;
+  color: #1e1b2e;
+}
+
+.l62-title {
+  font-family: var(--font-head, "Sora", system-ui);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 800;
+  color: var(--l62-text);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.l62-scene--booth .l62-title { color: white; }
+
+.l62-title-en {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--l62-accent);
+  margin-bottom: 0.5rem;
+  font-family: var(--font-en, "Inter", system-ui);
+}
+
+.l62-subtitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--l62-muted);
+  margin-bottom: 1rem;
+}
+
+.l62-lead {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--l62-muted);
+  margin-bottom: 1.5rem;
+}
+
+.l62-scene--booth .l62-lead { color: #c4b5fd; }
+
+/* ------------------------------------------------------------
+   الفقاعات والتبادل
+   ------------------------------------------------------------ */
+.l62-bubble {
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 24px rgba(124, 58, 237, 0.08);
+  border: 1px solid var(--l62-border);
+}
+
+.l62-bubble--reported {
+  background: linear-gradient(135deg, #faf9ff, #f3efff);
+  border-color: #ddd6fe;
+}
+
+.l62-bubble figcaption {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--l62-muted);
+  margin-bottom: 0.75rem;
+}
+
+.l62-bubble figcaption i {
+  font-style: normal;
+  font-size: 1rem;
+}
+
+.l62-bubble figcaption b {
+  color: var(--l62-text);
+  font-weight: 700;
+}
+
+.l62-bubble figcaption small {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.l62-bubble blockquote {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--l62-text);
+}
+
+.l62-bubble-ar {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--l62-border);
+  color: var(--l62-muted);
+  font-size: 0.95rem;
+}
+
+.l62-bubble-cap {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--l62-accent);
+  font-weight: 600;
+}
+
+/* مسار التحويل */
+.l62-transfer {
+  position: relative;
+}
+
+.l62-transfer-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: 1rem;
+}
+
+.l62-path {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 80px;
+}
+
+.l62-path-arrow {
+  font-size: 1.5rem;
+  color: var(--l62-accent);
+  font-weight: 700;
+  animation: l62-pulse 2s ease-in-out infinite;
+}
+
+@keyframes l62-pulse {
+  0%, 100% { opacity: 0.6; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(2px); }
+}
+
+.l62-path-gates {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.l62-transfer-compact .l62-transfer-grid {
+  gap: 0.5rem;
+}
+
+.l62-transfer-notes {
+  margin-top: 1rem;
+  padding-inline-start: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--l62-muted);
+}
+
+.l62-transfer-notes li { margin-bottom: 0.25rem; }
+
+.l62-transfer-num {
+  position: absolute;
+  top: 0;
+  inset-inline-end: 0;
+  background: var(--l62-accent);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0 0 0 8px;
+}
+
+/* ------------------------------------------------------------
+   الجداول
+   ------------------------------------------------------------ */
+.l62-table {
+  border: 1px solid var(--l62-border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: white;
+}
+
+.l62-table--booth {
+  background: #2d2548;
+  border-color: #3d3358;
+  color: white;
+}
+
+.l62-table-head {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  background: var(--l62-surface);
+  padding: 1rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--l62-accent);
+  border-bottom: 1px solid var(--l62-border);
+}
+
+.l62-table--booth .l62-table-head {
+  background: #252038;
+  border-color: #3d3358;
+  color: #c4b5fd;
+}
+
+.l62-table-head span[role="columnheader"]:nth-child(2) {
+  display: grid;
+  place-items: center;
+  color: var(--l62-muted);
+}
+
+.l62-table-row {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--l62-border);
+  align-items: center;
+}
+
+.l62-table--booth .l62-table-row { border-color: #3d3358; }
+
+.l62-table-row:last-child { border-bottom: none; }
+
+.l62-table-row span[role="cell"]:nth-child(2) {
+  display: grid;
+  place-items: center;
+  color: var(--l62-muted);
+  font-size: 1.25rem;
+}
+
+.l62-table-note {
+  font-size: 0.8rem;
+  color: var(--l62-muted);
+  padding-inline-start: 1rem;
+}
+
+.l62-table-arrow { font-weight: 700; }
+
+/* ------------------------------------------------------------
+   الرقائق (Chips) للتغييرات
+   ------------------------------------------------------------ */
+.l62-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: var(--l62-surface);
+  border: 1px solid var(--l62-border);
+  color: var(--l62-text);
+  white-space: nowrap;
+}
+
+.l62-chip small {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}
+
+.l62-chip-shift {
+  font-family: var(--font-en, "Inter", system-ui);
+  font-weight: 800;
+  font-size: 0.75rem;
+}
+
+.l62-chip--sm { padding: 0.25rem 0.55rem; font-size: 0.65rem; }
+
+.l62-chip--verb { --chip-color: #7c3aed; }
+.l62-chip--tense { --chip-color: #2563eb; }
+.l62-chip--pronoun { --chip-color: #059669; }
+.l62-chip--time { --chip-color: #dc2626; }
+.l62-chip--place { --chip-color: #ea580c; }
+.l62-chip--modal { --chip-color: #db2777; }
+.l62-chip--form { --chip-color: #65a30d; }
+.l62-chip--prep { --chip-color: #0891b2; }
+
+.l62-chip::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--chip-color, var(--l62-accent));
+  flex-shrink: 0;
+}
+
+/* ------------------------------------------------------------
+   بطاقات الفعل
+   ------------------------------------------------------------ */
+.l62-verbs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.l62-verb-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1rem;
+  background: white;
+  border: 1px solid var(--l62-border);
+  border-radius: 16px;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.l62-verb-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.12);
+  border-color: var(--l62-accent);
+}
+
+.l62-verb-num {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--l62-accent), #2563eb);
+  color: white;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.l62-verb-item En62 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--l62-text);
+}
+
+.l62-verb-ar {
+  font-size: 0.85rem;
+  color: var(--l62-muted);
+  font-weight: 500;
+}
+
+/* بطاقة الفعل التفصيلية */
+.l62-verb-card {
+  background: white;
+  border: 1px solid var(--l62-border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.l62-verb-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  height: 4px;
+  background: var(--verb-color, var(--l62-accent));
+  border-radius: 20px 20px 0 0;
+}
+
+.l62-verb-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.l62-verb-main { display: flex; flex-direction: column; gap: 0.2rem; }
+
+.l62-verb-word {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--l62-text);
+}
+
+.l62-verb-meaning {
+  font-size: 0.95rem;
+  color: var(--l62-muted);
+}
+
+.l62-verb-badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.l62-verb-structures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.l62-struct-tag {
+  padding: 0.3rem 0.7rem;
+  background: var(--l62-surface);
+  border: 1px solid var(--l62-border);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--l62-text);
+}
+
+.l62-verb-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.l62-ex-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0.8rem;
+  background: var(--l62-surface);
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.l62-ex-row En62 { font-weight: 600; color: var(--l62-text); }
+.l62-ex-ar { color: var(--l62-muted); font-size: 0.85rem; }
+
+/* ------------------------------------------------------------
+   مصفوفة التراكيب (Structure Matrix)
+   ------------------------------------------------------------ */
+.l62-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.l62-matrix-card {
+  background: white;
+  border: 2px solid var(--l62-border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  position: relative;
+}
+
+.l62-matrix-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  height: 4px;
+  background: var(--matrix-color, var(--l62-accent));
+  border-radius: 20px 20px 0 0;
+}
+
+.l62-matrix-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(124, 58, 237, 0.15);
+  border-color: var(--matrix-color, var(--l62-accent));
+}
+
+.l62-matrix-head { margin-bottom: 1rem; }
+
+.l62-matrix-head h4 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--l62-text);
+  margin-bottom: 0.35rem;
+}
+
+.l62-matrix-pattern {
+  font-size: 0.85rem;
+  color: var(--l62-accent);
+  font-weight: 600;
+}
+
+.l62-matrix-verbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.l62-matrix-verb {
+  padding: 0.25rem 0.6rem;
+  background: var(--l62-surface);
+  border: 1px solid var(--l62-border);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--l62-text);
+}
+
+.l62-matrix-example {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--l62-border);
+  font-size: 0.85rem;
+}
+
+.l62-matrix-example En62 { font-weight: 600; color: var(--l62-text); }
+.l62-matrix-example span { color: var(--l62-muted); }
+
+/* ------------------------------------------------------------
+   محدد التراكيب (Structure Picker)
+   ------------------------------------------------------------ */
+.l62-struct-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.l62-struct-btn {
+  padding: 0.6rem 1.1rem;
+  border: 2px solid var(--l62-border);
+  background: white;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--l62-text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.l62-struct-btn:hover {
+  border-color: var(--l62-accent);
+  background: var(--l62-surface);
+}
+
+.l62-struct-btn.is-selected {
+  border-color: var(--l62-accent);
+  background: var(--l62-accent);
+  color: white;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
+}
+
+/* ------------------------------------------------------------
+   المقارنات بين فعلين
+   ------------------------------------------------------------ */
+.l62-compare {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.l62-compare-card {
+  background: white;
+  border: 2px solid var(--l62-border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.l62-compare-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  height: 4px;
+  background: var(--compare-color, var(--l62-accent));
+  border-radius: 20px 20px 0 0;
+}
+
+.l62-compare-card header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.l62-compare-card En62 {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--l62-text);
+}
+
+.l62-compare-card header span {
+  font-size: 0.9rem;
+  color: var(--l62-muted);
+  font-weight: 500;
+}
+
+.l62-compare-struct {
+  padding: 0.5rem 0.8rem;
+  background: var(--l62-surface);
+  border: 1px solid var(--l62-border);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--l62-accent);
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.l62-compare-ex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--l62-border);
+  font-size: 0.9rem;
+}
+
+.l62-compare-ex En62 { font-weight: 600; color: var(--l62-text); }
+.l62-compare-ex span { color: var(--l62-muted); font-size: 0.85rem; }
+
+.l62-compare-vs {
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--l62-accent);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* ------------------------------------------------------------
+   خطوات التحويل
+   ------------------------------------------------------------ */
+.l62-conversion-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: var(--l62-surface);
+  border: 1px solid var(--l62-border);
+  border-radius: 16px;
+}
+
+.l62-conversion-step {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+}
+
+.l62-conversion-step::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: 1.2rem;
+  width: 2px;
+  background: linear-gradient(180deg, var(--step-color, var(--l62-accent)), transparent);
+}
+
+.l62-conversion-step:last-child::before { display: none; }
+
+.l62-step-num {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  background: var(--step-color, var(--l62-accent));
+  color: white;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.l62-step-content strong {
+  display: block;
+  color: var(--l62-text);
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.l62-step-content p { margin: 0; color: var(--l62-muted); font-size: 0.95rem; }
+
+/* ------------------------------------------------------------
+   الأخطاء
+   ------------------------------------------------------------ */
+.l62-error-row {
+  background: white;
+  border: 1px solid var(--l62-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.l62-golden { color: #b45309; font-weight: 700; }
+
+.l62-wrongtext {
+  color: #dc2626;
+  background: #fef2f2;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #fecaca;
+  direction: ltr;
+}
+
+.l62-righttext {
+  color: #059669;
+  background: #f0fdf4;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #bbf7d0;
+  direction: ltr;
+}
+
+.l62-wrongtext En62,
+.l62-righttext En62 {
+  font-weight: 700;
+  font-family: var(--font-en, "Inter", system-ui);
+}
+
+/* ------------------------------------------------------------
+   علامات التبويب للمختبرات
+   ------------------------------------------------------------ */
+.l62-lab-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: var(--l62-surface);
+  border: 1px solid var(--l62-border);
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+}
+
+.l62-live-dot {
+  width: 10px;
+  height: 10px;
+  background: #059669;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #059669;
+  animation: l62-blink 1.5s ease-in-out infinite;
+}
+
+@keyframes l62-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.l62-case-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  padding: 0.4rem;
+  background: var(--l62-surface);
+  border: 1px solid var(--l62-border);
+  border-radius: 14px;
+}
+
+.l62-case-tabs button {
+  padding: 0.5rem 0.9rem;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--l62-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.l62-case-tabs button:hover { color: var(--l62-text); background: white; }
+.l62-case-tabs button.is-active {
+  background: var(--l62-accent);
+  color: white;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+}
+.l62-case-tabs button.is-done::after {
+  content: " ✓";
+  font-size: 0.7rem;
+}
+
+.l62-lab-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.l62-lab-signal {
+  background: white;
+  border: 1px solid var(--l62-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.l62-signal-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--l62-accent);
+  margin-bottom: 0.75rem;
+}
+
+.l62-signal-label En62 { font-weight: 800; color: var(--l62-text); }
+
+.l62-signal-context { margin-top: 1rem; font-size: 0.9rem; color: var(--l62-muted); }
+
+.l62-decision {
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  background: var(--l62-surface);
+  border: 1px solid var(--l62-border);
+  border-radius: 14px;
+}
+
+.l62-decision legend {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  color: var(--l62-text);
+  margin-bottom: 0.75rem;
+}
+
+.l62-decision legend span {
+  background: var(--l62-accent);
+  color: white;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.l62-decision-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.l62-decision-options button {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--l62-border);
+  background: white;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--l62-text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.l62-decision-options button:hover {
+  border-color: var(--l62-accent);
+  background: var(--l62-surface);
+}
+
+.l62-decision-options button.is-selected {
+  border-color: var(--l62-accent);
+  background: var(--l62-accent);
+  color: white;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+}
+
+.l62-input-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.l62-input-label span {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--l62-text);
+}
+
+.l62-input-label input,
+.l62-input-label textarea {
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--l62-border);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: var(--font-en, "Inter", system-ui);
+  color: var(--l62-text);
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  direction: ltr;
+}
+
+.l62-input-label input:focus,
+.l62-input-label textarea:focus {
+  outline: none;
+  border-color: var(--l62-accent);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
+}
+
+.l62-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.l62-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.l62-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.l62-btn--bright {
+  background: linear-gradient(135deg, var(--l62-accent), var(--l62-primary));
+  color: white;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
+}
+
+.l62-btn--bright:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(124, 58, 237, 0.4);
+}
+
+.l62-btn--soft {
+  background: var(--l62-surface);
+  color: var(--l62-text);
+  border: 1px solid var(--l62-border);
+}
+
+.l62-btn--soft:hover:not(:disabled) {
+  background: white;
+  border-color: var(--l62-accent);
+}
+
+.l62-btn--ghost {
+  background: transparent;
+  color: var(--l62-accent);
+  border: 1px solid var(--l62-accent);
+}
+
+.l62-btn--ghost:hover:not(:disabled) {
+  background: var(--l62-accent);
+  color: white;
+}
+
+/* ------------------------------------------------------------
+   التمرينات
+   ------------------------------------------------------------ */
+.l62-attempt {
+  background: white;
+  border: 1px solid var(--l62-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.l62-attempt-num {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  background: var(--l62-surface);
+  border: 1px solid var(--l62-border);
+  border-radius: 10px;
+  font-weight: 800;
+  color: var(--l62-accent);
+  font-size: 0.9rem;
+}
+
+.l62-attempt-main { margin-inline-start: 48px; }
+
+.l62-prompt { font-size: 1.05rem; line-height: 1.7; margin-bottom: 0.75rem; }
+.l62-hintline { font-size: 0.9rem; color: var(--l62-accent); font-weight: 600; margin-bottom: 0.75rem; }
+
+.l62-choice-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.l62-choice-list button {
+  padding: 0.6rem 1.1rem;
+  border: 2px solid var(--l62-border);
+  background: white;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--l62-text);
+  cursor: pointer;
+  transition: all 0.2s;
+  direction: ltr;
+}
+
+.l62-choice-list button:hover { border-color: var(--l62-accent); }
+.l62-choice-list button.is-selected {
+  border-color: var(--l62-accent);
+  background: var(--l62-accent);
+  color: white;
+}
+
+.l62-attempt input {
+  width: 100%;
+  max-width: 480px;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--l62-border);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: var(--font-en, "Inter", system-ui);
+  color: var(--l62-text);
+  direction: ltr;
+  margin-bottom: 1rem;
+}
+
+.l62-attempt input:focus {
+  outline: none;
+  border-color: var(--l62-accent);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
+}
+
+.l62-feedback {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.l62-feedback.is-right {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #065f46;
+}
+
+.l62-feedback.is-wrong {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.l62-feedback b { display: block; margin-bottom: 0.5rem; font-weight: 800; }
+.l62-feedback span { display: block; margin-bottom: 0.35rem; }
+.l62-feedback En62 { font-weight: 700; }
+.l62-small { font-size: 0.85rem; color: var(--l62-muted); }
+
+/* ------------------------------------------------------------
+   Tags / الكُتل الملونة
+   ------------------------------------------------------------ */
+.l62-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.l62-tags span {
+  padding: 0.4rem 0.85rem;
+  background: var(--l62-surface);
+  border: 1px solid var(--l62-border);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--l62-text);
+}
+
+.l62-tags--ltr span { direction: ltr; }
+
+/* ------------------------------------------------------------
+   Disclosure (التفاصيل القابلة للطي)
+   ------------------------------------------------------------ */
+.l62-disclosure {
+  background: white;
+  border: 1px solid var(--l62-border);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.l62-disclosure summary {
+  padding: 1rem 1.5rem;
+  background: var(--l62-surface);
+  border-bottom: 1px solid var(--l62-border);
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--l62-text);
+  list-style: none;
+}
+
+.l62-disclosure summary::-webkit-details-marker { display: none; }
+.l62-disclosure summary::after {
+  content: "▼";
+  float: right;
+  font-size: 0.7rem;
+  transition: transform 0.2s;
+  color: var(--l62-accent);
+}
+
+.l62-disclosure[open] summary::after { transform: rotate(180deg); }
+
+.l62-disclosure > *:not(summary) { padding: 1.5rem; }
+
+/* ------------------------------------------------------------
+   الكتابة والتحدث
+   ------------------------------------------------------------ */
+.l62-writing { margin-top: 1.5rem; }
+
+.l62-speaking-item {
+  background: var(--l62-surface);
+  border: 1px solid var(--l62-border);
+  border-radius: 14px;
+  padding: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.l62-speaking-item En62 { font-weight: 700; font-size: 1.05rem; }
+.l62-speaking-item .l62-small { margin-top: 0.5rem; display: block; }
+
+.l62-subhead { font-size: 1.1rem; font-weight: 700; color: var(--l62-text); margin: 2rem 0 1rem; }
+
+.l62-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.l62-summary-grid .l62-block h4 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--l62-primary);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--l62-accent);
+}
+
+.l62-summary-grid .l62-lines > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  background: var(--l62-surface);
+  border-radius: 10px;
+}
+
+.l62-summary-grid En62 { font-weight: 700; font-size: 0.9rem; }
+.l62-summary-grid span { font-size: 0.85rem; color: var(--l62-muted); line-height: 1.5; }
+
+/* ------------------------------------------------------------
+   الخارطة النهائية
+   ------------------------------------------------------------ */
+.l62-progress { line-height: 1.8; }
+
+.l62-lead { font-size: 1.05rem; color: var(--l62-muted); margin-bottom: 1.5rem; }
+
+.l62-prev-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--l62-accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.l62-prev-link:hover { text-decoration: underline; }
+
+.l62-endnote {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--l62-muted);
+  font-style: italic;
+}
+
+.l62-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* ------------------------------------------------------------
+   الهيدر والشريط الجانبي
+   ------------------------------------------------------------ */
+.l62-header-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--l62-text);
+}
+
+.l62-rail-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--l62-text);
+  line-height: 1.4;
+}
+
+.l62-rail-meta {
+  font-size: 0.75rem;
+  color: var(--l62-muted);
+  margin-top: 0.25rem;
+}
+
+/* ------------------------------------------------------------
+   منطقة المعلم
+   ------------------------------------------------------------ */
+.l62-teacher-gate {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  border: 1px solid var(--l62-border);
+  border-radius: 24px;
+  text-align: center;
+}
+
+.l62-teacher-gate .l62-kicker { justify-content: center; margin-bottom: 1.5rem; }
+.l62-teacher-gate h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+.l62-teacher-gate p { color: var(--l62-muted); margin-bottom: 1.5rem; }
+
+.l62-teacher-gate form { display: flex; flex-direction: column; gap: 1rem; }
+.l62-teacher-gate label { display: flex; flex-direction: column; gap: 0.5rem; text-align: start; font-weight: 600; color: var(--l62-text); }
+.l62-teacher-gate input {
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--l62-border);
+  border-radius: 12px;
+  font-size: 1rem;
+  direction: ltr;
+}
+.l62-teacher-gate input:focus { outline: none; border-color: var(--l62-accent); box-shadow: 0 0 0 4px rgba(124,58,237,0.12); }
+
+.l62-teacher-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.l62-teacher-stats > div {
+  background: white;
+  border: 1px solid var(--l62-border);
+  border-radius: 16px;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.l62-teacher-stats b {
+  display: block;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--l62-accent);
+  margin-bottom: 0.25rem;
+}
+
+.l62-teacher-stats span { font-size: 0.85rem; color: var(--l62-muted); font-weight: 600; }
+
+.l62-teacher-keys { margin-top: 2rem; }
+.l62-teacher-keys h3 { font-size: 1.1rem; font-weight: 800; color: var(--l62-text); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--l62-accent); }
+
+.l62-key-group { margin-bottom: 1rem; }
+.l62-key-group > button { width: 100%; text-align: start; padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.l62-key-group ol { margin-top: 1rem; padding-inline-start: 1.5rem; }
+.l62-key-group li { margin-bottom: 1.25rem; line-height: 1.7; }
+.l62-key-group li > div:first-child { margin-bottom: 0.35rem; }
+.l62-key-group li En62 { font-weight: 700; }
+.l62-key-group li p { margin: 0.35rem 0 0; color: var(--l62-muted); }
+
+.l62-teacher-original-row { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.5rem; }
+.l62-teacher-original-row bdi { color: var(--l62-accent); font-weight: 800; }
+.l62-teacher-original-row En62 { font-weight: 700; }
+
+.l62-accept { margin-top: 0.5rem; font-size: 0.85rem; color: var(--l62-muted); }
+.l62-accept > span { font-weight: 700; color: var(--l62-text); display: block; margin-bottom: 0.35rem; }
+.l62-accept En62 { font-weight: 600; font-size: 0.9rem; color: var(--l62-text); }
+
+.l62-teacher-file { margin-bottom: 2rem; }
+.l62-teacher-file h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 1rem; }
+.l62-teacher-file .l62-small { color: var(--l62-muted); margin-top: 1rem; display: block; }
+.l62-teacher-file .l62-tags { margin-top: 0.75rem; }
+
+.l62-teacher-file ol { padding-inline-start: 1.5rem; }
+.l62-teacher-file ol li { margin-bottom: 0.5rem; }
+
+/* ------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------ */
+@media (max-width: 1024px) {
+  .l62-cover { grid-template-columns: 1fr; }
+  .l62-desk { border-inline-start: none; border-top: 1px solid var(--l62-border); order: -1; min-height: 300px; }
+  .l62-cover-copy { padding: 2.5rem 1.5rem; }
+  .l62-lab-grid { grid-template-columns: 1fr; }
+  .l62-lab-signal { position: static; }
+  .l62-transfer-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .l62-path { flex-direction: row; gap: 1rem; }
+  .l62-compare { grid-template-columns: 1fr; }
+  .l62-compare-vs { writing-mode: horizontal-tb; transform: rotate(90deg); margin: 0.5rem 0; }
+}
+
+@media (max-width: 640px) {
+  .l62-scene { padding: 1.5rem 1rem 2rem; }
+  .l62-cover-copy { padding: 2rem 1rem; }
+  .l62-cover-actions { flex-direction: column; }
+  .l62-cover-actions .l62-btn { width: 100%; }
+  .l62-table-head span[role="columnheader"]:nth-child(3),
+  .l62-table-row span[role="cell"]:nth-child(3) { display: none; }
+  .l62-table-head, .l62-table-row { grid-template-columns: 1fr 40px; }
+  .l62-actions { flex-direction: column; }
+  .l62-actions .l62-btn { width: 100%; }
+  .l62-verbs-grid { grid-template-columns: repeat(2, 1fr); }
+  .l62-matrix { grid-template-columns: 1fr; }
+}

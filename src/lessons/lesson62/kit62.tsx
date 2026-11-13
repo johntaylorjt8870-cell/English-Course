@@ -1,4 +1,4 @@
-import { useId, useMemo, useState, type CSSProperties, type ReactNode, createContext, useContext } from "react";
+import { useCallback, useId, useMemo, useState, type CSSProperties, type ReactNode, createContext, useContext } from "react";
 import { LatinRuns } from "../../shared/bidi";
 import type { Change62, ChangeKind62, ShiftPair62 } from "./content62";
 

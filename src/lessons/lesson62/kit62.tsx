@@ -42,7 +42,7 @@ export function En62({ children, className = "", style }: { children: ReactNode;
   return <span dir="ltr" lang="en" className={`l62-en ${className}`.trim()} style={style}>{children}</span>;
 }
 
-const RANGE_62 = /([0-9٠-٩]+[  ]?[–—-][  ]?[0-9٠-٩]+)/g;
+const RANGE_62 = /([0-90-9]+[  ]?[–—-][  ]?[0-90-9]+)/g;
 
 export function Mixed62({ text, className = "", style }: { text: string; className?: string; style?: CSSProperties }) {
   const source = text ?? "";
@@ -284,7 +284,7 @@ export type StructureMatrixItem = {
   name: string;
   pattern: string;
   verbs: string[];
-  example: { en: string; ar: string };
+  examples: { en: string; ar: string }[];
   color: string;
 };
 
@@ -308,10 +308,12 @@ export function StructureMatrix62({ items, onSelect }: { items: StructureMatrixI
           <div className="l62-matrix-verbs">
             {item.verbs.map((v) => <span key={v} className="l62-matrix-verb"><En62>{v}</En62></span>)}
           </div>
-          <div className="l62-matrix-example">
-            <En62>{item.example.en}</En62>
-            <span>{item.example.ar}</span>
-          </div>
+          {item.examples.map((example, index) => (
+            <div className="l62-matrix-example" key={`${item.id}-example-${index}`}>
+              <En62>{example.en}</En62>
+              <span>{example.ar}</span>
+            </div>
+          ))}
         </article>
       ))}
     </div>

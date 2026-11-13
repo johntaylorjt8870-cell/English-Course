@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run audit:lesson62-structures && vite build",
+    "audit:lesson62-structures": "node scripts/audit-lesson62-structures.mjs",
     "preview": "vite preview",
     "check:english-direction": "node scripts/check-english-direction.mjs && node scripts/test-bidi-rendering.mjs",
     "audit:english-direction": "node scripts/audit-render-direction.mjs && node scripts/audit-lesson24.mjs && node scripts/audit-lesson26.mjs && node scripts/audit-lesson27.mjs && node scripts/audit-lesson28.mjs && node scripts/audit-lesson29.mjs && node scripts/audit-lesson30.mjs && node scripts/audit-lesson31.mjs && node scripts/audit-lesson32.mjs && node scripts/audit-lesson33.mjs && node scripts/audit-lesson34.mjs && node scripts/audit-lesson35.mjs && node scripts/audit-lesson36.mjs && node scripts/audit-lesson37.mjs && node scripts/audit-lesson38.mjs && node scripts/audit-lesson39.mjs && node scripts/audit-lesson40.mjs && node scripts/audit-lesson41.mjs && node scripts/audit-lesson41-dom.mjs && node scripts/audit-lesson42.mjs && node scripts/audit-lesson42-dom.mjs && node scripts/audit-lesson43.mjs && node scripts/audit-lesson43-dom.mjs && node scripts/audit-lesson44.mjs && node scripts/audit-lesson44-dom.mjs && node scripts/audit-lesson45.mjs && node scripts/audit-lesson46.mjs && node scripts/audit-lesson47.mjs && node scripts/audit-lesson49.mjs && node scripts/audit-lesson50.mjs && node scripts/audit-lesson51.mjs && node scripts/audit-lesson52.mjs && node scripts/audit-final-test.mjs && node scripts/audit-final-test-coverage.mjs && node scripts/audit-source-reveal.mjs && node scripts/audit-bidi-mixed.mjs && node scripts/audit-navigation-lock-overlap.mjs",

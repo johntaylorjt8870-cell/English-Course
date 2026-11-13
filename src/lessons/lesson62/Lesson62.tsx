@@ -271,7 +271,7 @@ function Section3() {
     name: s.name,
     pattern: s.pattern,
     verbs: s.verbs,
-    examples: s.examples ?? (s.example ? [s.example] : []),
+    examples: "examples" in s ? s.examples : [s.example],
     color: ["#7c3aed", "#2563eb", "#059669", "#dc2626", "#ea580c", "#db2777"][i],
   }));
 

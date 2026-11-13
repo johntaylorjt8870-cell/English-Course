@@ -31,7 +31,7 @@ import {
   type OriginalQuestion62,
   type ShiftPair62,
 } from "./data";
-import { Attempt62, Btn62, Bubble62, Disclosure62, En62, MapTable62, Mixed62, Scene62, ShiftChip62, StructureMatrix62, TransferPair62, VerbCard62, VerbCompare62, type AttemptItem62 } from "./kit62";
+import { Attempt62, Btn62, Bubble62, ConversionSteps62, Disclosure62, En62, MapTable62, MemoryProvider62, Mixed62, Scene62, ShiftChip62, StructureMatrix62, TransferPair62, VerbCard62, VerbCompare62, type AttemptItem62 } from "./kit62";
 import { LABS_62, LabConsole62 } from "./labs62";
 import TeacherArea62 from "./TeacherArea62";
 import "./lesson62.css";
@@ -44,21 +44,21 @@ type Slide62 = { id: string; station: string; title: string; emblem: string };
 
 const STATIONS_62 = [
   { id: "start", title: "الانطلاق" },
-  { id: "foundations", title: "الأساس · الأقسام ١–٣" },
-  { id: "verbs-ad", title: "Admit / Deny · ٤" },
-  { id: "verbs-sr", title: "Suggest / Recommend · ٥" },
-  { id: "verbs-pro", title: "Promise / Refuse / Offer · ٦" },
-  { id: "verbs-adt", title: "Agree / Decide / Threaten · ٧" },
-  { id: "verbs-aep", title: "Advise / Encourage / Persuade · ٨" },
-  { id: "verbs-wri", title: "Warn / Remind / Invite · ٩" },
-  { id: "verbs-aac", title: "Apologize / Accuse / Complain · ١٠" },
-  { id: "verbs-eac", title: "Explain / Announce / Claim · ١١" },
-  { id: "verbs-ic", title: "Insist / Convince · ١٢" },
-  { id: "comparison", title: "المقارنة والتركيب · ١٣–١٤" },
-  { id: "errors", title: "الأخطاء والحوار · ١٥–١٦" },
-  { id: "reading", title: "القراءة والتدريبات · ١٧–١٨" },
-  { id: "tests", title: "الاختبارات · ١٩" },
-  { id: "tasks", title: "الإنتاج والملخص · ٢٠–٢١" },
+  { id: "foundations", title: "الأساس · الأقسام 1–3" },
+  { id: "verbs-ad", title: "Admit / Deny · 4" },
+  { id: "verbs-sr", title: "Suggest / Recommend · 5" },
+  { id: "verbs-pro", title: "Promise / Refuse / Offer · 6" },
+  { id: "verbs-adt", title: "Agree / Decide / Threaten · 7" },
+  { id: "verbs-aep", title: "Advise / Encourage / Persuade · 8" },
+  { id: "verbs-wri", title: "Warn / Remind / Invite · 9" },
+  { id: "verbs-aac", title: "Apologize / Accuse / Complain · 10" },
+  { id: "verbs-eac", title: "Explain / Announce / Claim · 11" },
+  { id: "verbs-ic", title: "Insist / Convince · 12" },
+  { id: "comparison", title: "المقارنة والتركيب · 13–14" },
+  { id: "errors", title: "الأخطاء والحوار · 15–16" },
+  { id: "reading", title: "القراءة والتدريبات · 17–18" },
+  { id: "tests", title: "الاختبارات · 19" },
+  { id: "tasks", title: "الإنتاج والملخص · 20–21" },
   { id: "lab", title: "مختبرات استوديو الأفعال" },
   { id: "close", title: "المعلم والخارطة" },
 ];
@@ -66,35 +66,35 @@ const STATIONS_62 = [
 const SLIDES_62: Slide62[] = [
   { id: "cover", station: "start", title: "استوديو اختيار الفعل — Reporting Verbs", emblem: "◇" },
 
-  { id: "s1", station: "foundations", title: "١ · المقدمة: من said/told إلى Reporting Verbs", emblem: "01" },
-  { id: "s2", station: "foundations", title: "٢ · تعريف Reporting Verbs وقائمة الأفعال العشرين", emblem: "02" },
-  { id: "s3", station: "foundations", title: "٣ · التراكيب الستة الأساسية", emblem: "03" },
+  { id: "s1", station: "foundations", title: "1 · المقدمة: من said/told إلى Reporting Verbs", emblem: "01" },
+  { id: "s2", station: "foundations", title: "2 · تعريف Reporting Verbs وقائمة الأفعال العشرين", emblem: "02" },
+  { id: "s3", station: "foundations", title: "3 · التراكيب الستة الأساسية", emblem: "03" },
 
-  { id: "s4", station: "verbs-ad", title: "٤ · Admit و Deny: الاعتراف والإنكار", emblem: "04" },
+  { id: "s4", station: "verbs-ad", title: "4 · Admit و Deny: الاعتراف والإنكار", emblem: "04" },
 
-  { id: "s5", station: "verbs-sr", title: "٥ · Suggest و Recommend: الاقتراح والتوصية", emblem: "05" },
+  { id: "s5", station: "verbs-sr", title: "5 · Suggest و Recommend: الاقتراح والتوصية", emblem: "05" },
 
-  { id: "s6", station: "verbs-pro", title: "٦ · Promise و Refuse و Offer: الوعد والرفض والعرض", emblem: "06" },
+  { id: "s6", station: "verbs-pro", title: "6 · Promise و Refuse و Offer: الوعد والرفض والعرض", emblem: "06" },
 
-  { id: "s7", station: "verbs-adt", title: "٧ · Agree و Decide و Threaten: الموافقة والقرار والتهديد", emblem: "07" },
+  { id: "s7", station: "verbs-adt", title: "7 · Agree و Decide و Threaten: الموافقة والقرار والتهديد", emblem: "07" },
 
-  { id: "s8", station: "verbs-aep", title: "٨ · Advise و Encourage و Persuade: النصيحة والتشجيع والإقناع", emblem: "08" },
+  { id: "s8", station: "verbs-aep", title: "8 · Advise و Encourage و Persuade: النصيحة والتشجيع والإقناع", emblem: "08" },
 
-  { id: "s9", station: "verbs-wri", title: "٩ · Warn و Remind و Invite: التحذير والتذكير والدعوة", emblem: "09" },
+  { id: "s9", station: "verbs-wri", title: "9 · Warn و Remind و Invite: التحذير والتذكير والدعوة", emblem: "09" },
 
-  { id: "s10", station: "verbs-aac", title: "١٠ · Apologize و Accuse و Complain: الاعتذار والاتهام والشكوى", emblem: "10" },
+  { id: "s10", station: "verbs-aac", title: "10 · Apologize و Accuse و Complain: الاعتذار والاتهام والشكوى", emblem: "10" },
 
-  { id: "s11", station: "verbs-eac", title: "١١ · Explain و Announce و Claim: الشرح والإعلان والادعاء", emblem: "11" },
+  { id: "s11", station: "verbs-eac", title: "11 · Explain و Announce و Claim: الشرح والإعلان والادعاء", emblem: "11" },
 
-  { id: "s12", station: "verbs-ic", title: "١٢ · Insist و Convince: الإصرار والإقناع", emblem: "12" },
+  { id: "s12", station: "verbs-ic", title: "12 · Insist و Convince: الإصرار والإقناع", emblem: "12" },
 
-  { id: "s13", station: "comparison", title: "١٣ · المقارنة الشاملة للتراكيب النحوية (جدول ٢١ فعل)", emblem: "13" },
-  { id: "s14", station: "comparison", title: "١٤ · التحويل التدريجي: من Direct Speech إلى Reporting Verbs", emblem: "14" },
+  { id: "s13", station: "comparison", title: "13 · المقارنة الشاملة للتراكيب النحوية (جدول 21 فعل)", emblem: "13" },
+  { id: "s14", station: "comparison", title: "14 · التحويل التدريجي: من Direct Speech إلى Reporting Verbs", emblem: "14" },
 
-  { id: "s15", station: "errors", title: "١٥ · الأخطاء الشائعة العشرة وتصحيحها مع الأسباب", emblem: "15" },
-  { id: "s16", station: "errors", title: "١٦ · حوار تطبيقي: A Problem at School", emblem: "16" },
+  { id: "s15", station: "errors", title: "15 · الأخطاء الشائعة العشرة وتصحيحها مع الأسباب", emblem: "15" },
+  { id: "s16", station: "errors", title: "16 · حوار تطبيقي: A Problem at School", emblem: "16" },
 
-  { id: "s17", station: "reading", title: "١٧ · قطعة قراءة: A Difficult Decision + أسئلة الفهم", emblem: "17" },
+  { id: "s17", station: "reading", title: "17 · قطعة قراءة: A Difficult Decision + أسئلة الفهم", emblem: "17" },
 
   ...PRACTICES_62.map((group, i) => ({
     id: `p${i + 1}`,
@@ -103,12 +103,12 @@ const SLIDES_62: Slide62[] = [
     emblem: String(i + 1),
   })),
 
-  { id: "s18", station: "tests", title: "١٩ · الاختبار الأصلي — ٢٥ سؤالًا في خمسة أقسام", emblem: "25" },
+  { id: "s18", station: "tests", title: "19 · الاختبار الأصلي — 25 سؤالًا في خمسة أقسام", emblem: "25" },
   { id: "s19", station: "tests", title: "مفتاح الاختبار الأصلي الكامل", emblem: "✓" },
   { id: "final-test", station: "tests", title: "الاختبار النهائي المشترك — 15 سؤالًا", emblem: "▣" },
 
-  { id: "s20", station: "tasks", title: "٢٠ · مهمة الكتابة: Learning from a Mistake", emblem: "20" },
-  { id: "s21", station: "tasks", title: "٢١ · مهمة التحدث والملخص الشامل", emblem: "21" },
+  { id: "s20", station: "tasks", title: "20 · مهمة الكتابة: Learning from a Mistake", emblem: "20" },
+  { id: "s21", station: "tasks", title: "21 · مهمة التحدث والملخص الشامل", emblem: "21" },
 
   { id: "explorer", station: "lab", title: "مختبر اختيار الفعل المناسب", emblem: "A" },
   { id: "detector", station: "lab", title: "كاشف التراكيب النحوية", emblem: "B" },
@@ -197,7 +197,7 @@ function Cover62({ onStart, onTest }: { onStart: () => void; onTest: () => void 
 }
 
 /* ============================================================
-   الموضوع ١: المقدمة
+   الموضوع 1: المقدمة
    ============================================================ */
 
 function Section1() {
@@ -223,7 +223,7 @@ function Section1() {
 }
 
 /* ============================================================
-   الموضوع ٢: تعريف Reporting Verbs وقائمة الأفعال
+   الموضوع 2: تعريف Reporting Verbs وقائمة الأفعال
    ============================================================ */
 
 function Section2() {
@@ -262,7 +262,7 @@ function Section2() {
 }
 
 /* ============================================================
-   الموضوع ٣: التراكيب الستة الأساسية
+   الموضوع 3: التراكيب الستة الأساسية
    ============================================================ */
 
 function Section3() {
@@ -271,7 +271,7 @@ function Section3() {
     name: s.name,
     pattern: s.pattern,
     verbs: s.verbs,
-    example: s.example,
+    examples: s.examples ?? (s.example ? [s.example] : []),
     color: ["#7c3aed", "#2563eb", "#059669", "#dc2626", "#ea580c", "#db2777"][i],
   }));
 
@@ -290,7 +290,7 @@ function Section3() {
 }
 
 /* ============================================================
-   الموضوع ٤: Admit و Deny
+   الموضوع 4: Admit و Deny
    ============================================================ */
 
 function Section4() {
@@ -338,7 +338,7 @@ function Section4() {
 }
 
 /* ============================================================
-   الموضوع ٥: Suggest و Recommend
+   الموضوع 5: Suggest و Recommend
    ============================================================ */
 
 function Section5() {
@@ -424,7 +424,7 @@ function Section5() {
 }
 
 /* ============================================================
-   الموضوع ٦: Promise, Refuse, Offer
+   الموضوع 6: Promise, Refuse, Offer
    ============================================================ */
 
 function Section6() {
@@ -482,7 +482,7 @@ function Section6() {
 }
 
 /* ============================================================
-   الموضوع ٧: Agree, Decide, Threaten
+   الموضوع 7: Agree, Decide, Threaten
    ============================================================ */
 
 function Section7() {
@@ -529,7 +529,7 @@ function Section7() {
 }
 
 /* ============================================================
-   الموضوع ٨: Advise, Encourage, Persuade
+   الموضوع 8: Advise, Encourage, Persuade
    ============================================================ */
 
 function Section8() {
@@ -575,7 +575,7 @@ function Section8() {
 }
 
 /* ============================================================
-   الموضوع ٩: Warn, Remind, Invite
+   الموضوع 9: Warn, Remind, Invite
    ============================================================ */
 
 function Section9() {
@@ -626,7 +626,7 @@ function Section9() {
 }
 
 /* ============================================================
-   الموضوع ١٠: Apologize, Accuse, Complain
+   الموضوع 10: Apologize, Accuse, Complain
    ============================================================ */
 
 function Section10() {
@@ -677,7 +677,7 @@ function Section10() {
 }
 
 /* ============================================================
-   الموضوع ١١: Explain, Announce, Claim
+   الموضوع 11: Explain, Announce, Claim
    ============================================================ */
 
 function Section11() {
@@ -719,7 +719,7 @@ function Section11() {
 }
 
 /* ============================================================
-   الموضوع ١٢: Insist و Convince
+   الموضوع 12: Insist و Convince
    ============================================================ */
 
 function Section12() {
@@ -772,7 +772,7 @@ function Section12() {
 }
 
 /* ============================================================
-   الموضوع ١٣: المقارنة الشاملة للتراكيب النحوية
+   الموضوع 13: المقارنة الشاملة للتراكيب النحوية
    ============================================================ */
 
 function Section13() {
@@ -788,7 +788,7 @@ function Section13() {
 }
 
 /* ============================================================
-   الموضوع ١٤: التحويل التدريجي
+   الموضوع 14: التحويل التدريجي
    ============================================================ */
 
 function Section14() {
@@ -819,7 +819,7 @@ function Section14() {
 }
 
 /* ============================================================
-   الموضوع ١٥: الأخطاء الشائعة العشرة
+   الموضوع 15: الأخطاء الشائعة العشرة
    ============================================================ */
 
 function Section15() {
@@ -849,7 +849,7 @@ function Section15() {
 }
 
 /* ============================================================
-   الموضوع ١٦: حوار تطبيقي
+   الموضوع 16: حوار تطبيقي
    ============================================================ */
 
 function Section16() {
@@ -882,7 +882,7 @@ function Section16() {
 }
 
 /* ============================================================
-   الموضوع ١٧: قطعة قراءة + أسئلة الفهم
+   الموضوع 17: قطعة قراءة + أسئلة الفهم
    ============================================================ */
 
 function Section17() {
@@ -938,7 +938,7 @@ function OriginalTestSection62() {
     <Scene62
       n="19"
       kicker="ORIGINAL TEST"
-      title="الاختبار الأصلي — ٢٥ سؤالًا في خمسة أقسام"
+      title="الاختبار الأصلي — 25 سؤالًا في خمسة أقسام"
       lead="اختبار الدرس كما ورد في المصدر: اختر، حوّل، صحّح، أكمل. اكتب أو اختر إجابتك ثم تحقّق — لا يظهر النموذج والشرح إلا بعد التحقق."
     >
       {ORIGINAL_TEST_SECTIONS_62.map((section, si) => (
@@ -960,7 +960,7 @@ function OriginalKeySection62() {
     <Scene62
       n="✓"
       kicker="ORIGINAL KEY"
-      title="مفتاح الاختبار الأصلي الكامل — الأسئلة ١ إلى ٢٥"
+      title="مفتاح الاختبار الأصلي الكامل — الأسئلة 1 إلى 25"
       lead="الإجابات النموذجية للاختبار الأصلي مع الشرح، وأي صيغة بديلة صحيحة مذكورة داخل الشرح نفسه."
     >
       <ol className="l62-lines" style={{ paddingInlineStart: 0, listStyle: "none" }}>
@@ -985,7 +985,7 @@ function Section20() {
   return (
     <Scene62 n="20" kicker="WRITING" title={WRITING62.title} lead={WRITING62.instruction}>
       <div className="l62-block">
-        <h3>الأفعال المطلوبة (١٠ على الأقل)</h3>
+        <h3>الأفعال المطلوبة (10 على الأقل)</h3>
         <div className="l62-tags" dir="ltr">
           {WRITING62.requiredVerbs.map((v) => <span key={v}><En62>{v}</En62></span>)}
         </div>
@@ -1066,7 +1066,7 @@ function ProgressScene62({ onExit }: { onExit?: () => void }) {
           <span><En62>insist on / convince that</En62></span>
         </div>
         <p><a className="l62-prev-link" href="#/lesson/61">الدرس 61 — Reported Questions & Commands</a></p>
-        <p className="l62-endnote">هذا الدرس يكمل منظومة الكلام المنقل: الجمل الخبرية (٦٠) → الأسئلة والأوامر (٦١) → أفعال النقل الدقيقة (٦٢).</p>
+        <p className="l62-endnote">هذا الدرس يكمل منظومة الكلام المنقل: الجمل الخبرية (60) → الأسئلة والأوامر (61) → أفعال النقل الدقيقة (62).</p>
         <div className="l62-actions">
           <Btn62 onClick={() => (window.location.hash = "/lesson/61")}>← الدرس السابق · 61</Btn62>
           <Btn62 onClick={() => (window.location.hash = "/")}>فهرس الدروس</Btn62>
@@ -1212,6 +1212,7 @@ export default function Lesson62({ onExit }: { onExit?: () => void }) {
   const slide = SLIDES_62[step];
 
   return (
+    <MemoryProvider62>
     <Lesson1Shell
       rootClassName="style-b font-body relative flex h-screen flex-col overflow-hidden lesson62"
       rootDir="rtl"
@@ -1251,6 +1252,7 @@ export default function Lesson62({ onExit }: { onExit?: () => void }) {
         <Body62 slide={slide} onStart={() => go(1)} onTest={() => go(TEST_STEP_62)} onExit={onExit} />
       </div>
     </Lesson1Shell>
+    </MemoryProvider62>
   );
 }
 

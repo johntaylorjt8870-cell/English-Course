@@ -124,6 +124,7 @@ export const STRUCTURES62 = {
       n: 6,
       name: "Verb + preposition + V-ing",
       pattern: "بعض أفعال نقل الكلام تحتاج إلى حرف جر قبل الفعل المنتهي بـ ing",
+      verbs: ["apologize", "accuse", "complain", "insist"],
       examples: [
         { en: "He apologized for being late.", ar: "اعتذر عن التأخر.", pattern: "apologized + for + being" },
         { en: "She accused him of lying.", ar: "اتهمته بالكذب.", pattern: "accused + him + of + lying" },

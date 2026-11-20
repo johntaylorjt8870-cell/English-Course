@@ -1,7 +1,7 @@
 import "./lesson38.css";
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Lesson1Shell, { type Lesson1ShellGroup } from "../../shared/Lesson1Shell";
-import { En } from "../../shared/lessonKit";
+import { En, Rich } from "../../shared/lessonKit";
 import {
   CHAPTERS_38,
   chapterOf38,
@@ -124,7 +124,7 @@ export default function Lesson38({ onExit }: { onExit?: () => void }) {
           const step = SLIDES_38[stepIndex];
           return {
             index: stepIndex,
-            title: step.rail,
+            title: <Rich text={step.rail} />,
             navId: step.id,
             mascot: undefined,
           };

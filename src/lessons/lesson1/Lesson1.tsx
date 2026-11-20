@@ -994,6 +994,7 @@ export default function Lesson1({ onExit }: { onExit: () => void }) {
       if (e.key === "ArrowLeft") go.next();
       if (e.key === "ArrowRight") go.prev();
       if (e.key === " ") {
+        if (target?.closest('button, a[href], input, textarea, select, [contenteditable="true"], [contenteditable=""]')) return;
         e.preventDefault();
         go.next();
       }

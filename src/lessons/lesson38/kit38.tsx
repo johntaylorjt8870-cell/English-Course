@@ -431,18 +431,41 @@ export function SourceCard38({
 /**
  * عنوان مختلط: إذا كان العنوان «عربي — English» نضع الشطر الإنجليزي في سطر مستقل
  * باتجاه LTR حتى لا ينكسر في منتصفه على شاشات الهاتف. النص نفسه لا يتغير.
+ * والعكس: «بادئة + English — شرح عربي» حيث تسبق الإنجليزيةَ نقطةٌ بعد حرف
+ * عربي (مثل «7أ. BY — …») نضع الشرح العربي في سطر مستقل حتى تبقى النقطة
+ * مع بادئتها ولا تُسحب إلى المقطع الإنجليزي فيُعكس ترتيبها بصريًا.
  */
 export function Title38({ text, className = "" }: { text: string; className?: string }) {
   const match = text.match(/^(.*?)\s+—\s+([A-Za-z][A-Za-z0-9 '’!?.:+\-]*)$/);
-  if (!match) return <Rich text={text} className={className} />;
-  return (
-    <span className={className}>
-      <Rich text={match[1]} />
-      <span dir="ltr" className="font-en mt-0.5 block text-left">
-        {match[2]}
+  if (match) {
+    return (
+      <span className={className}>
+        <Rich text={match[1]} />
+        <span dir="ltr" className="font-en mt-0.5 block text-left">
+          {match[2]}
+        </span>
       </span>
-    </span>
-  );
+    );
+  }
+  const reverse = text.match(/^(.*?)\s+—\s+([\u0600-\u06FF].*)$/);
+  if (reverse && /[\u0600-\u06FF]\.\s+[A-Za-z]/.test(reverse[1])) {
+    const head = reverse[1].match(/^(.*?)\s+([A-Za-z][A-Za-z0-9 '’!?.:+\-]*)$/);
+    return (
+      <span className={className}>
+        {head ? (
+          <>
+            {head[1]} <En>{head[2]}</En>
+          </>
+        ) : (
+          <Rich text={reverse[1]} />
+        )}
+        <span dir="rtl" className="mt-0.5 block">
+          — <Rich text={reverse[2]} />
+        </span>
+      </span>
+    );
+  }
+  return <Rich text={text} className={className} />;
 }
 
 /** علامة أن المفتاح محفوظ — تُستخدم حين لا تكتمل محاولة الخطوة بعد. */

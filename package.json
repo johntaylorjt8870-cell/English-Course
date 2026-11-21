@@ -9,6 +9,8 @@
     "typecheck": "node scripts/check-types.mjs",
     "test": "node --test scripts/check-types.test.mjs",
     "test:types": "node --test scripts/check-types.test.mjs",
+    "test:error-boundary": "node --test scripts/lesson-error-boundary.test.mjs",
+    "audit:error-boundary-browser": "node scripts/audit-error-boundary-browser.mjs",
     "audit:lesson62-structures": "node scripts/audit-lesson62-structures.mjs",
     "preview": "vite preview",
     "check:english-direction": "node scripts/check-english-direction.mjs && node scripts/test-bidi-rendering.mjs",

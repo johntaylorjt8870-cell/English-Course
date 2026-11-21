@@ -93,6 +93,7 @@ import { SLIDES as L27_SLIDES } from "./lessons/lesson27/data";
 import { SLIDES as L28_SLIDES } from "./lessons/lesson28/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 import SitePasswordGate from "./shared/SitePasswordGate";
+import LessonErrorBoundary from "./shared/LessonErrorBoundary";
 
 // ------------------------------------------------------------
 // توجيه بسيط عبر الـ hash: #/lesson/1 · #/lesson/2
@@ -797,10 +798,19 @@ export default function App() {
   else if (route === 61) page = <Lesson61 onExit={goHome} />;
   else if (route === 62) page = <Lesson62 onExit={goHome} />;
   else page = <Hub currentLesson={lastLesson || null} />;
+  // عزل الدرس وحده داخل حدّ الأخطاء: الفهرس وبوابة كلمة المرور وشارة القفل
+  // تبقى خارجه، لذلك لا يسقط الموقع كله إذا انهار درس واحد.
+  const isLessonRoute = route >= 1 && route <= CARDS.length;
   return (
     <SitePasswordGate>
       <ArenaClean />
-      {page}
+      {isLessonRoute ? (
+        <LessonErrorBoundary lessonNumber={route} resetKey={route} onGoHome={goHome}>
+          {page}
+        </LessonErrorBoundary>
+      ) : (
+        page
+      )}
     </SitePasswordGate>
   );
 }

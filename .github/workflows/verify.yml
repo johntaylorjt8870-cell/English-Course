@@ -33,6 +33,9 @@ jobs:
       - name: TypeScript Type Check (Baseline Ratchet)
         run: npm run typecheck
 
+      - name: Lesson Error Boundary Tests
+        run: npm run test:error-boundary
+
       - name: Direction & BIDI Check
         run: npm run check:english-direction
 

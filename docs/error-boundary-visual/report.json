@@ -1,0 +1,503 @@
+{
+  "generatedAt": "2026-11-21T21:39:40.136Z",
+  "harness": "scripts/fixtures/error-boundary/harness (real App; Lesson 2 replaced at build time by a crashing test fixture)",
+  "note": "Injected errors are produced only by the test-only Lesson 2 fixture. Production code contains no fault injection.",
+  "checksRun": 76,
+  "failures": [],
+  "notes": [
+    "desktop-1440x900: 2 external font request(s) unavailable (ignored, environment only).",
+    "mobile-375x812: 2 external font request(s) unavailable (ignored, environment only)."
+  ],
+  "viewports": [
+    {
+      "viewport": "desktop-1440x900",
+      "steps": [
+        {
+          "name": "open real lesson 1",
+          "at": "2026-11-21T21:39:37.052Z"
+        },
+        {
+          "name": "open crashing test lesson 2",
+          "at": "2026-11-21T21:39:37.445Z"
+        },
+        {
+          "name": "route change resets failure",
+          "at": "2026-11-21T21:39:38.307Z"
+        },
+        {
+          "name": "retry renders successfully",
+          "at": "2026-11-21T21:39:38.334Z"
+        },
+        {
+          "name": "return to hub via fallback action",
+          "at": "2026-11-21T21:39:38.394Z"
+        },
+        {
+          "name": "open another lesson from hub",
+          "at": "2026-11-21T21:39:38.533Z"
+        }
+      ],
+      "screenshots": [
+        "docs/error-boundary-visual/fallback-desktop-1440x900.png"
+      ],
+      "checks": [
+        {
+          "label": "desktop-1440x900: no fallback on healthy lesson 1",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: lesson 1 content rendered",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: app mounted",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: fallback visible instead of blank page",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: page is not blank",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: root still has content",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: global site shell preserved",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: site lock control still visible",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: site lock control stays inside the viewport",
+          "pass": true,
+          "detail": "{\"x\":16,\"y\":640,\"width\":99.4375,\"height\":40}"
+        },
+        {
+          "label": "desktop-1440x900: recovery UI is announced as an alert",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: Arabic recovery heading",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: no technical details exposed",
+          "pass": true,
+          "detail": "! تعذّر عرض هذا الدرس حدث خطأ غير متوقع أثناء تحميل الدرس. صفحة الدروس وبقية الموقع تعملان بشكل طبيعي. جرّب إعادة المحاو"
+        },
+        {
+          "label": "desktop-1440x900: no horizontal overflow",
+          "pass": true,
+          "detail": "1440/1440"
+        },
+        {
+          "label": "desktop-1440x900: card fits viewport width",
+          "pass": true,
+          "detail": "{\"x\":432,\"y\":129,\"width\":576,\"height\":372}"
+        },
+        {
+          "label": "desktop-1440x900: card has usable height",
+          "pass": true,
+          "detail": "372"
+        },
+        {
+          "label": "desktop-1440x900: retry fits viewport width",
+          "pass": true,
+          "detail": "{\"x\":762.046875,\"y\":422,\"width\":126.921875,\"height\":46}"
+        },
+        {
+          "label": "desktop-1440x900: retry has usable height",
+          "pass": true,
+          "detail": "46"
+        },
+        {
+          "label": "desktop-1440x900: home fits viewport width",
+          "pass": true,
+          "detail": "{\"x\":551.03125,\"y\":422,\"width\":199.015625,\"height\":46}"
+        },
+        {
+          "label": "desktop-1440x900: home has usable height",
+          "pass": true,
+          "detail": "46"
+        },
+        {
+          "label": "desktop-1440x900: fallback card fits viewport height",
+          "pass": true,
+          "detail": "{\"x\":432,\"y\":129,\"width\":576,\"height\":372}"
+        },
+        {
+          "label": "desktop-1440x900: desktop buttons sit on one row",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: fallback screenshot saved",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: route change cleared the fallback",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: hash route updated",
+          "pass": true,
+          "detail": "http://127.0.0.1:46351/#/lesson/3"
+        },
+        {
+          "label": "desktop-1440x900: retry action present",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: retry cleared the fallback",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: lesson rendered after retry",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: home action restored hub hash",
+          "pass": true,
+          "detail": "http://127.0.0.1:46351/#/"
+        },
+        {
+          "label": "desktop-1440x900: fallback gone after returning home",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: all 62 hub lesson cards present",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: global navigation/shell intact on hub",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: hub card navigates to lesson 3",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: lesson 3 healthy after recovery",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "desktop-1440x900: 3 expected boundary diagnostics (one per injected crash)",
+          "pass": true,
+          "detail": "[\"[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\\n    at jte (http://127.0.0.1:463…, componentStack: \\n    at jte (http://127.0.0.1:46351/assets/index-J…0.0.1:46351/assets/index-Je5uVY3Q.js:4182:144309)}\",\"[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\\n    at jte (http://127.0.0.1:463…, componentStack: \\n    at jte (http://127.0.0.1:46351/assets/index-J…0.0.1:46351/assets/index-Je5uVY3Q.js:4182:144309)}\",\"[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\\n    at jte (http://127.0.0.1:463…, componentStack: \\n    at jte (http://127.0.0.1:46351/assets/index-J…0.0.1:46351/assets/index-Je5uVY3Q.js:4182:144309)}\"]"
+        },
+        {
+          "label": "desktop-1440x900: 3 React echoes of the injected error only",
+          "pass": true,
+          "detail": "[\"Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\",\"Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\",\"Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\"]"
+        },
+        {
+          "label": "desktop-1440x900: no unexpected console errors",
+          "pass": true,
+          "detail": "[]"
+        },
+        {
+          "label": "desktop-1440x900: no unhandled page errors",
+          "pass": true,
+          "detail": "[]"
+        },
+        {
+          "label": "desktop-1440x900: no unexpected failed requests",
+          "pass": true,
+          "detail": "[]"
+        }
+      ],
+      "injectedErrors": {
+        "diagnostics": [
+          "[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at jte (http://127.0.0.1:463…, componentStack: \n    at jte (http://127.0.0.1:46351/assets/index-J…0.0.1:46351/assets/index-Je5uVY3Q.js:4182:144309)}",
+          "[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at jte (http://127.0.0.1:463…, componentStack: \n    at jte (http://127.0.0.1:46351/assets/index-J…0.0.1:46351/assets/index-Je5uVY3Q.js:4182:144309)}",
+          "[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at jte (http://127.0.0.1:463…, componentStack: \n    at jte (http://127.0.0.1:46351/assets/index-J…0.0.1:46351/assets/index-Je5uVY3Q.js:4182:144309)}"
+        ],
+        "reactEchoes": [
+          "Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at jte (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:10:162990)\n    at xS (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:48454)\n    at PS (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:71319)\n    at SL (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:81713)\n    at s$ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:117564)\n    at EZ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:116604)\n    at eI (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:116434)\n    at KL (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:113206)\n    at b$ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:125217)\n    at hj (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:123765)",
+          "Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at jte (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:10:162990)\n    at xS (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:48454)\n    at PS (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:71319)\n    at SL (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:81713)\n    at s$ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:117564)\n    at EZ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:116604)\n    at eI (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:116434)\n    at KL (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:113206)\n    at b$ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:125217)\n    at hj (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:123765)",
+          "Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at jte (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:10:162990)\n    at xS (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:48454)\n    at PS (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:71319)\n    at SL (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:81713)\n    at s$ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:117564)\n    at EZ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:116604)\n    at eI (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:116434)\n    at KL (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:113206)\n    at b$ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:125217)\n    at hj (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:123765)"
+        ]
+      },
+      "unexpected": {
+        "console": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "unavailableExternalFonts": [
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap",
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "viewport": "mobile-375x812",
+      "steps": [
+        {
+          "name": "open real lesson 1",
+          "at": "2026-11-21T21:39:39.071Z"
+        },
+        {
+          "name": "open crashing test lesson 2",
+          "at": "2026-11-21T21:39:39.353Z"
+        },
+        {
+          "name": "route change resets failure",
+          "at": "2026-11-21T21:39:39.660Z"
+        },
+        {
+          "name": "retry renders successfully",
+          "at": "2026-11-21T21:39:39.680Z"
+        },
+        {
+          "name": "return to hub via fallback action",
+          "at": "2026-11-21T21:39:39.723Z"
+        },
+        {
+          "name": "open another lesson from hub",
+          "at": "2026-11-21T21:39:39.872Z"
+        }
+      ],
+      "screenshots": [
+        "docs/error-boundary-visual/fallback-mobile-375x812.png"
+      ],
+      "checks": [
+        {
+          "label": "mobile-375x812: no fallback on healthy lesson 1",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: lesson 1 content rendered",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: app mounted",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: fallback visible instead of blank page",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: page is not blank",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: root still has content",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: global site shell preserved",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: site lock control still visible",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: site lock control stays inside the viewport",
+          "pass": true,
+          "detail": "{\"x\":16,\"y\":630,\"width\":99.4375,\"height\":40}"
+        },
+        {
+          "label": "mobile-375x812: recovery UI is announced as an alert",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: Arabic recovery heading",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: no technical details exposed",
+          "pass": true,
+          "detail": "! تعذّر عرض هذا الدرس حدث خطأ غير متوقع أثناء تحميل الدرس. صفحة الدروس وبقية الموقع تعملان بشكل طبيعي. جرّب إعادة المحاو"
+        },
+        {
+          "label": "mobile-375x812: no horizontal overflow",
+          "pass": true,
+          "detail": "375/375"
+        },
+        {
+          "label": "mobile-375x812: card fits viewport width",
+          "pass": true,
+          "detail": "{\"x\":16,\"y\":64,\"width\":343,\"height\":492}"
+        },
+        {
+          "label": "mobile-375x812: card has usable height",
+          "pass": true,
+          "detail": "492"
+        },
+        {
+          "label": "mobile-375x812: retry fits viewport width",
+          "pass": true,
+          "detail": "{\"x\":49,\"y\":421,\"width\":277,\"height\":44}"
+        },
+        {
+          "label": "mobile-375x812: retry has usable height",
+          "pass": true,
+          "detail": "44"
+        },
+        {
+          "label": "mobile-375x812: home fits viewport width",
+          "pass": true,
+          "detail": "{\"x\":49,\"y\":477,\"width\":277,\"height\":46}"
+        },
+        {
+          "label": "mobile-375x812: home has usable height",
+          "pass": true,
+          "detail": "46"
+        },
+        {
+          "label": "mobile-375x812: fallback card fits viewport height",
+          "pass": true,
+          "detail": "{\"x\":16,\"y\":64,\"width\":343,\"height\":492}"
+        },
+        {
+          "label": "mobile-375x812: mobile buttons stack vertically",
+          "pass": true,
+          "detail": "{\"retry\":{\"x\":49,\"y\":421,\"width\":277,\"height\":44},\"home\":{\"x\":49,\"y\":477,\"width\":277,\"height\":46}}"
+        },
+        {
+          "label": "mobile-375x812: fallback screenshot saved",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: route change cleared the fallback",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: hash route updated",
+          "pass": true,
+          "detail": "http://127.0.0.1:46351/#/lesson/3"
+        },
+        {
+          "label": "mobile-375x812: retry action present",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: retry cleared the fallback",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: lesson rendered after retry",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: home action restored hub hash",
+          "pass": true,
+          "detail": "http://127.0.0.1:46351/#/"
+        },
+        {
+          "label": "mobile-375x812: fallback gone after returning home",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: all 62 hub lesson cards present",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: global navigation/shell intact on hub",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: hub card navigates to lesson 3",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: lesson 3 healthy after recovery",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "label": "mobile-375x812: 3 expected boundary diagnostics (one per injected crash)",
+          "pass": true,
+          "detail": "[\"[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\\n    at jte (http://127.0.0.1:463…, componentStack: \\n    at jte (http://127.0.0.1:46351/assets/index-J…0.0.1:46351/assets/index-Je5uVY3Q.js:4182:144309)}\",\"[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\\n    at jte (http://127.0.0.1:463…, componentStack: \\n    at jte (http://127.0.0.1:46351/assets/index-J…0.0.1:46351/assets/index-Je5uVY3Q.js:4182:144309)}\",\"[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\\n    at jte (http://127.0.0.1:463…, componentStack: \\n    at jte (http://127.0.0.1:46351/assets/index-J…0.0.1:46351/assets/index-Je5uVY3Q.js:4182:144309)}\"]"
+        },
+        {
+          "label": "mobile-375x812: 3 React echoes of the injected error only",
+          "pass": true,
+          "detail": "[\"Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\",\"Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\",\"Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\"]"
+        },
+        {
+          "label": "mobile-375x812: no unexpected console errors",
+          "pass": true,
+          "detail": "[]"
+        },
+        {
+          "label": "mobile-375x812: no unhandled page errors",
+          "pass": true,
+          "detail": "[]"
+        },
+        {
+          "label": "mobile-375x812: no unexpected failed requests",
+          "pass": true,
+          "detail": "[]"
+        }
+      ],
+      "injectedErrors": {
+        "diagnostics": [
+          "[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at jte (http://127.0.0.1:463…, componentStack: \n    at jte (http://127.0.0.1:46351/assets/index-J…0.0.1:46351/assets/index-Je5uVY3Q.js:4182:144309)}",
+          "[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at jte (http://127.0.0.1:463…, componentStack: \n    at jte (http://127.0.0.1:46351/assets/index-J…0.0.1:46351/assets/index-Je5uVY3Q.js:4182:144309)}",
+          "[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at jte (http://127.0.0.1:463…, componentStack: \n    at jte (http://127.0.0.1:46351/assets/index-J…0.0.1:46351/assets/index-Je5uVY3Q.js:4182:144309)}"
+        ],
+        "reactEchoes": [
+          "Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at jte (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:10:162990)\n    at xS (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:48454)\n    at PS (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:71319)\n    at SL (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:81713)\n    at s$ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:117564)\n    at EZ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:116604)\n    at eI (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:116434)\n    at KL (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:113206)\n    at b$ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:125217)\n    at hj (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:123765)",
+          "Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at jte (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:10:162990)\n    at xS (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:48454)\n    at PS (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:71319)\n    at SL (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:81713)\n    at s$ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:117564)\n    at EZ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:116604)\n    at eI (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:116434)\n    at KL (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:113206)\n    at b$ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:125217)\n    at hj (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:123765)",
+          "Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at jte (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:10:162990)\n    at xS (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:48454)\n    at PS (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:71319)\n    at SL (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:81713)\n    at s$ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:117564)\n    at EZ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:116604)\n    at eI (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:116434)\n    at KL (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:113206)\n    at b$ (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:125217)\n    at hj (http://127.0.0.1:46351/assets/index-Je5uVY3Q.js:9:123765)"
+        ]
+      },
+      "unexpected": {
+        "console": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "unavailableExternalFonts": [
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap",
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    }
+  ]
+}

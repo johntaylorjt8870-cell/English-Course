@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run audit:lesson62-structures && vite build",
+    "typecheck": "tsc --noEmit",
+    "check:types": "tsc --noEmit",
     "audit:lesson62-structures": "node scripts/audit-lesson62-structures.mjs",
     "preview": "vite preview",
     "check:english-direction": "node scripts/check-english-direction.mjs && node scripts/test-bidi-rendering.mjs",

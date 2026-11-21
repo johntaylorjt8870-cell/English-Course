@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: TypeScript Checker Unit Tests
+        run: npm run test:types
+
       - name: TypeScript Type Check (Baseline Ratchet)
         run: npm run typecheck
 

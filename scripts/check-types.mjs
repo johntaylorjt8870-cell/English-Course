@@ -112,6 +112,119 @@ export function parseCompilerOutput(rawOutput, rootDir = ROOT) {
 }
 
 // -------------------------------------------------------------
+// Helper: Group diagnostics by file and error code
+// -------------------------------------------------------------
+export function groupDiagnostics(diagnostics) {
+  const files = {};
+  const errorCodes = {};
+  for (const d of diagnostics) {
+    if (!files[d.file]) {
+      files[d.file] = { count: 0, diagnostics: {} };
+    }
+    files[d.file].count++;
+    files[d.file].diagnostics[d.sig] = (files[d.file].diagnostics[d.sig] || 0) + 1;
+    errorCodes[d.code] = (errorCodes[d.code] || 0) + 1;
+  }
+  return { files, errorCodes, total: diagnostics.length };
+}
+
+// -------------------------------------------------------------
+// Helper: Identify regressions against baseline
+// -------------------------------------------------------------
+export function findRegressions(currentFiles, baseline, currentTotal) {
+  const regressions = [];
+  if (!baseline) return regressions;
+
+  // Check A: New files with errors
+  for (const [file, currentData] of Object.entries(currentFiles)) {
+    const baseData = baseline.files ? baseline.files[file] : null;
+    if (!baseData) {
+      regressions.push({
+        type: "NEW_FILE_WITH_ERRORS",
+        file,
+        count: currentData.count,
+        message: `File has ${currentData.count} type error(s) but is not in the baseline. New code must be 100% type-clean.`,
+      });
+      continue;
+    }
+
+    // Check B: Complete Diagnostic Identity Comparison (Header + Continuation lines)
+    for (const [sig, currentSigCount] of Object.entries(currentData.diagnostics)) {
+      const baseSigCount = baseData.diagnostics ? baseData.diagnostics[sig] || 0 : 0;
+      if (baseSigCount === 0) {
+        regressions.push({
+          type: "NEW_DIAGNOSTIC",
+          file,
+          sig,
+          count: currentSigCount,
+          message: `New diagnostic introduced: '${sig}' (not present in baseline for this file).`,
+        });
+      } else if (currentSigCount > baseSigCount) {
+        const diff = currentSigCount - baseSigCount;
+        regressions.push({
+          type: "DIAGNOSTIC_COUNT_INCREASED",
+          file,
+          sig,
+          count: currentSigCount,
+          baselineCount: baseSigCount,
+          message: `Diagnostic '${sig}' count increased from ${baseSigCount} to ${currentSigCount} (+${diff}).`,
+        });
+      }
+    }
+
+    // Check C: File error count increased
+    if (currentData.count > baseData.count) {
+      const diff = currentData.count - baseData.count;
+      regressions.push({
+        type: "FILE_ERROR_COUNT_INCREASED",
+        file,
+        count: currentData.count,
+        baselineCount: baseData.count,
+        message: `Total error count in file increased from ${baseData.count} to ${currentData.count} (+${diff}).`,
+      });
+    }
+  }
+
+  // Check D: Total error count increased
+  if (currentTotal > baseline.totalErrors) {
+    const diff = currentTotal - baseline.totalErrors;
+    regressions.push({
+      type: "TOTAL_ERRORS_INCREASED",
+      count: currentTotal,
+      baselineCount: baseline.totalErrors,
+      message: `Total type errors increased from ${baseline.totalErrors} to ${currentTotal} (+${diff} new error(s)).`,
+    });
+  }
+
+  return regressions;
+}
+
+// -------------------------------------------------------------
+// Helper: Validate whether baseline update is permitted
+// -------------------------------------------------------------
+export function validateBaselineUpdate({ parseResult, baseline, currentTotal, regressions, tscStatus }) {
+  if (tscStatus !== undefined && tscStatus !== 0 && parseResult.diagnostics.length === 0) {
+    return { canUpdate: false, reason: "Compiler failed to run or exited non-zero with no diagnostics" };
+  }
+  if (parseResult.unparseableLines && parseResult.unparseableLines.length > 0) {
+    return { canUpdate: false, reason: "Unparseable diagnostic lines present in compiler output" };
+  }
+  if (parseResult.unexpectedLines && parseResult.unexpectedLines.length > 0) {
+    return { canUpdate: false, reason: "Unexpected output lines detected outside diagnostic blocks" };
+  }
+  if (parseResult.diagnostics.length !== parseResult.totalMarkers) {
+    return { canUpdate: false, reason: "Diagnostic count mismatch against raw output markers" };
+  }
+  if (baseline && regressions && regressions.length > 0) {
+    return { canUpdate: false, reason: "Regressions exist; cannot update baseline" };
+  }
+  if (baseline && currentTotal > baseline.totalErrors) {
+    return { canUpdate: false, reason: `Total errors (${currentTotal}) exceeds previous baseline (${baseline.totalErrors})` };
+  }
+  return { canUpdate: true };
+}
+
+// -------------------------------------------------------------
 // CLI Execution
 // -------------------------------------------------------------
 const isDirectRun = process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
@@ -201,18 +314,10 @@ export function runCli() {
   }
 
   // Group current diagnostics by file and fingerprint
-  const currentFiles = {};
-  const currentErrorCodes = {};
-  const currentTotal = parseResult.diagnostics.length;
-
-  for (const d of parseResult.diagnostics) {
-    if (!currentFiles[d.file]) {
-      currentFiles[d.file] = { count: 0, diagnostics: {} };
-    }
-    currentFiles[d.file].count++;
-    currentFiles[d.file].diagnostics[d.sig] = (currentFiles[d.file].diagnostics[d.sig] || 0) + 1;
-    currentErrorCodes[d.code] = (currentErrorCodes[d.code] || 0) + 1;
-  }
+  const grouped = groupDiagnostics(parseResult.diagnostics);
+  const currentFiles = grouped.files;
+  const currentErrorCodes = grouped.errorCodes;
+  const currentTotal = grouped.total;
 
   // 3. Baseline Verification and Regression Detection
   if (!fs.existsSync(BASELINE_PATH)) {
@@ -233,90 +338,25 @@ export function runCli() {
     }
   }
 
-  const regressions = [];
-
-  if (baseline) {
-    // Check A: New files with errors
-    for (const [file, currentData] of Object.entries(currentFiles)) {
-      const baseData = baseline.files[file];
-      if (!baseData) {
-        regressions.push({
-          type: "NEW_FILE_WITH_ERRORS",
-          file,
-          count: currentData.count,
-          message: `File has ${currentData.count} type error(s) but is not in the baseline. New code must be 100% type-clean.`,
-        });
-        continue;
-      }
-
-      // Check B: Complete Diagnostic Identity Comparison (Header + Continuation lines)
-      for (const [sig, currentSigCount] of Object.entries(currentData.diagnostics)) {
-        const baseSigCount = baseData.diagnostics ? baseData.diagnostics[sig] || 0 : 0;
-        if (baseSigCount === 0) {
-          regressions.push({
-            type: "NEW_DIAGNOSTIC",
-            file,
-            sig,
-            count: currentSigCount,
-            message: `New diagnostic introduced: '${sig}' (not present in baseline for this file).`,
-          });
-        } else if (currentSigCount > baseSigCount) {
-          const diff = currentSigCount - baseSigCount;
-          regressions.push({
-            type: "DIAGNOSTIC_COUNT_INCREASED",
-            file,
-            sig,
-            count: currentSigCount,
-            baselineCount: baseSigCount,
-            message: `Diagnostic '${sig}' count increased from ${baseSigCount} to ${currentSigCount} (+${diff}).`,
-          });
-        }
-      }
-
-      // Check C: File error count increased
-      if (currentData.count > baseData.count) {
-        const diff = currentData.count - baseData.count;
-        regressions.push({
-          type: "FILE_ERROR_COUNT_INCREASED",
-          file,
-          count: currentData.count,
-          baselineCount: baseData.count,
-          message: `Total error count in file increased from ${baseData.count} to ${currentData.count} (+${diff}).`,
-        });
-      }
-    }
-
-    // Check D: Total error count increased
-    if (currentTotal > baseline.totalErrors) {
-      const diff = currentTotal - baseline.totalErrors;
-      regressions.push({
-        type: "TOTAL_ERRORS_INCREASED",
-        count: currentTotal,
-        baselineCount: baseline.totalErrors,
-        message: `Total type errors increased from ${baseline.totalErrors} to ${currentTotal} (+${diff} new error(s)).`,
-      });
-    }
-  }
+  const regressions = findRegressions(currentFiles, baseline, currentTotal);
 
   // 4. Handle --update-baseline with Strict Fail-Closed Guard
   if (isUpdate) {
-    // Reject if any parse or execution issues occurred
-    if (parseResult.unparseableLines.length > 0 || parseResult.unexpectedLines.length > 0) {
-      console.error("❌ REJECTED: Cannot update baseline when compiler output is not 100% reliably parseable.");
-      process.exit(1);
-    }
+    const updateCheck = validateBaselineUpdate({
+      parseResult,
+      baseline,
+      currentTotal,
+      regressions,
+      tscStatus: tscResult.status,
+    });
 
-    if (baseline && regressions.length > 0) {
-      console.error("❌ REJECTED: Cannot update baseline when regressions exist!");
-      for (const reg of regressions) {
-        console.error(`  • [${reg.type}] ${reg.file || "General"}: ${reg.message}`);
+    if (!updateCheck.canUpdate) {
+      console.error(`❌ REJECTED: ${updateCheck.reason}`);
+      if (regressions.length > 0) {
+        for (const reg of regressions) {
+          console.error(`  • [${reg.type}] ${reg.file || "General"}: ${reg.message}`);
+        }
       }
-      console.error("\nRefusing to write baseline. Fix the regressions before updating.");
-      process.exit(1);
-    }
-
-    if (baseline && currentTotal > baseline.totalErrors) {
-      console.error(`❌ REJECTED: Total errors (${currentTotal}) exceeds previous baseline (${baseline.totalErrors}).`);
       process.exit(1);
     }
 

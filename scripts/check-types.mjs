@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
-const BASELINE_PATH = path.join(__dirname, "ts-baseline.json");
+export const BASELINE_PATH = process.env.TS_BASELINE_PATH || path.join(__dirname, "ts-baseline.json");
 
 const args = process.argv.slice(2);
 const isRaw = args.includes("--raw");
@@ -225,6 +225,148 @@ export function validateBaselineUpdate({ parseResult, baseline, currentTotal, re
 }
 
 // -------------------------------------------------------------
+// Helper: Execute baseline update with full guards and filesystem write
+// -------------------------------------------------------------
+export function executeBaselineUpdate({
+  rawOutput,
+  parseResult,
+  baselinePath = BASELINE_PATH,
+  rootDir = ROOT,
+  tscStatus = 0,
+}) {
+  if (!parseResult) {
+    parseResult = parseCompilerOutput(rawOutput || "", rootDir);
+  }
+
+  if (tscStatus !== 0 && parseResult.diagnostics.length === 0) {
+    return {
+      success: false,
+      reason: `Compiler exited with code (${tscStatus}) but no diagnostics could be parsed`,
+      written: false,
+    };
+  }
+
+  if (parseResult.unparseableLines && parseResult.unparseableLines.length > 0) {
+    return {
+      success: false,
+      reason: "Unparseable diagnostic lines present in compiler output",
+      written: false,
+    };
+  }
+
+  if (parseResult.unexpectedLines && parseResult.unexpectedLines.length > 0) {
+    return {
+      success: false,
+      reason: "Unexpected output lines detected outside diagnostic blocks",
+      written: false,
+    };
+  }
+
+  if (parseResult.diagnostics.length !== parseResult.totalMarkers) {
+    return {
+      success: false,
+      reason: `Diagnostic count mismatch: found ${parseResult.totalMarkers} markers, parsed ${parseResult.diagnostics.length} diagnostics`,
+      written: false,
+    };
+  }
+
+  const grouped = groupDiagnostics(parseResult.diagnostics);
+  const currentFiles = grouped.files;
+  const currentErrorCodes = grouped.errorCodes;
+  const currentTotal = grouped.total;
+
+  let baseline = null;
+  if (fs.existsSync(baselinePath)) {
+    try {
+      baseline = JSON.parse(fs.readFileSync(baselinePath, "utf8"));
+    } catch (err) {
+      return {
+        success: false,
+        reason: `Failed to parse baseline JSON file at ${baselinePath}: ${err.message}`,
+        written: false,
+      };
+    }
+  }
+
+  const regressions = findRegressions(currentFiles, baseline, currentTotal);
+
+  const updateCheck = validateBaselineUpdate({
+    parseResult,
+    baseline,
+    currentTotal,
+    regressions,
+    tscStatus,
+  });
+
+  if (!updateCheck.canUpdate) {
+    return {
+      success: false,
+      reason: updateCheck.reason,
+      regressions,
+      written: false,
+    };
+  }
+
+  if (baseline && currentTotal === baseline.totalErrors && Object.keys(currentFiles).length === baseline.fileCount) {
+    let identical = true;
+    for (const [file, currentData] of Object.entries(currentFiles)) {
+      const baseData = baseline.files[file];
+      if (!baseData || baseData.count !== currentData.count) {
+        identical = false;
+        break;
+      }
+      for (const [sig, count] of Object.entries(currentData.diagnostics)) {
+        if (!baseData.diagnostics || baseData.diagnostics[sig] !== count) {
+          identical = false;
+          break;
+        }
+      }
+      if (!identical) break;
+    }
+    if (identical) {
+      return {
+        success: true,
+        written: false,
+        reason: "already-up-to-date",
+        totalErrors: currentTotal,
+        fileCount: baseline.fileCount,
+      };
+    }
+  }
+
+  const newBaseline = {
+    $schema: "TypeScript legacy error baseline ratchet",
+    description: "Baseline of inherited TypeScript errors before tsconfig.json was added. Regressions are strictly blocked.",
+    updatedAt: new Date().toISOString(),
+    totalErrors: currentTotal,
+    fileCount: Object.keys(currentFiles).length,
+    files: Object.fromEntries(
+      Object.entries(currentFiles)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([f, data]) => [
+          f,
+          {
+            count: data.count,
+            diagnostics: Object.fromEntries(Object.entries(data.diagnostics).sort(([a], [b]) => a.localeCompare(b))),
+          },
+        ])
+    ),
+    errorCodes: Object.fromEntries(Object.entries(currentErrorCodes).sort(([a], [b]) => a.localeCompare(b))),
+  };
+
+  fs.writeFileSync(baselinePath, JSON.stringify(newBaseline, null, 2) + "\n", "utf8");
+
+  return {
+    success: true,
+    written: true,
+    isInitial: !baseline,
+    newBaseline,
+    previousTotal: baseline ? baseline.totalErrors : null,
+    currentTotal,
+  };
+}
+
+// -------------------------------------------------------------
 // CLI Execution
 // -------------------------------------------------------------
 const isDirectRun = process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
@@ -316,7 +458,6 @@ export function runCli() {
   // Group current diagnostics by file and fingerprint
   const grouped = groupDiagnostics(parseResult.diagnostics);
   const currentFiles = grouped.files;
-  const currentErrorCodes = grouped.errorCodes;
   const currentTotal = grouped.total;
 
   // 3. Baseline Verification and Regression Detection
@@ -342,73 +483,33 @@ export function runCli() {
 
   // 4. Handle --update-baseline with Strict Fail-Closed Guard
   if (isUpdate) {
-    const updateCheck = validateBaselineUpdate({
+    const updateResult = executeBaselineUpdate({
       parseResult,
-      baseline,
-      currentTotal,
-      regressions,
+      baselinePath: BASELINE_PATH,
+      rootDir: ROOT,
       tscStatus: tscResult.status,
     });
 
-    if (!updateCheck.canUpdate) {
-      console.error(`❌ REJECTED: ${updateCheck.reason}`);
-      if (regressions.length > 0) {
-        for (const reg of regressions) {
+    if (!updateResult.success) {
+      console.error(`❌ REJECTED: ${updateResult.reason}`);
+      if (updateResult.regressions && updateResult.regressions.length > 0) {
+        for (const reg of updateResult.regressions) {
           console.error(`  • [${reg.type}] ${reg.file || "General"}: ${reg.message}`);
         }
       }
       process.exit(1);
     }
 
-    if (baseline && currentTotal === baseline.totalErrors && Object.keys(currentFiles).length === baseline.fileCount) {
-      let identical = true;
-      for (const [file, currentData] of Object.entries(currentFiles)) {
-        const baseData = baseline.files[file];
-        if (!baseData || baseData.count !== currentData.count) {
-          identical = false;
-          break;
-        }
-        for (const [sig, count] of Object.entries(currentData.diagnostics)) {
-          if (!baseData.diagnostics || baseData.diagnostics[sig] !== count) {
-            identical = false;
-            break;
-          }
-        }
-        if (!identical) break;
-      }
-      if (identical) {
-        console.log(`✓ Baseline is already up-to-date (${currentTotal} errors in ${baseline.fileCount} files). No changes written.`);
-        process.exit(0);
-      }
+    if (!updateResult.written) {
+      console.log(`✓ Baseline is already up-to-date (${currentTotal} errors in ${baseline.fileCount} files). No changes written.`);
+      process.exit(0);
     }
 
-    const newBaseline = {
-      $schema: "TypeScript legacy error baseline ratchet",
-      description: "Baseline of inherited TypeScript errors before tsconfig.json was added. Regressions are strictly blocked.",
-      updatedAt: new Date().toISOString(),
-      totalErrors: currentTotal,
-      fileCount: Object.keys(currentFiles).length,
-      files: Object.fromEntries(
-        Object.entries(currentFiles)
-          .sort(([a], [b]) => a.localeCompare(b))
-          .map(([f, data]) => [
-            f,
-            {
-              count: data.count,
-              diagnostics: Object.fromEntries(Object.entries(data.diagnostics).sort(([a], [b]) => a.localeCompare(b))),
-            },
-          ])
-      ),
-      errorCodes: Object.fromEntries(Object.entries(currentErrorCodes).sort(([a], [b]) => a.localeCompare(b))),
-    };
-
-    fs.writeFileSync(BASELINE_PATH, JSON.stringify(newBaseline, null, 2) + "\n", "utf8");
-
-    if (!baseline) {
-      console.log(`✓ Initial baseline created: ${currentTotal} errors in ${newBaseline.fileCount} files recorded to ${path.relative(ROOT, BASELINE_PATH)}`);
+    if (updateResult.isInitial) {
+      console.log(`✓ Initial baseline created: ${currentTotal} errors in ${updateResult.newBaseline.fileCount} files recorded to ${path.relative(ROOT, BASELINE_PATH)}`);
     } else {
-      const diff = baseline.totalErrors - currentTotal;
-      console.log(`✓ Baseline successfully ratcheted down: reduced from ${baseline.totalErrors} to ${currentTotal} errors (-${diff} resolved).`);
+      const diff = updateResult.previousTotal - currentTotal;
+      console.log(`✓ Baseline successfully ratcheted down: reduced from ${updateResult.previousTotal} to ${currentTotal} errors (-${diff} resolved).`);
     }
     process.exit(0);
   }

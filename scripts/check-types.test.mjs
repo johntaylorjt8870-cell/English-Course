@@ -1,10 +1,12 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import {
+  executeBaselineUpdate,
   findRegressions,
   groupDiagnostics,
   normalizeDiagnosticFingerprint,
@@ -123,7 +125,7 @@ describe("TypeScript Ratchet Check Tests (Unit & Fail-Closed Audits)", () => {
     });
   });
 
-  describe("2. Baseline Write Safety & Failure Guards", () => {
+  describe("2. Baseline Write Safety & Failure Guards (Unit Checks)", () => {
     it("blocks baseline update when compiler fails or output contains unparseable lines", () => {
       const badParseResult = {
         diagnostics: [{ file: "a.ts", sig: "TS1: x", code: "TS1" }],
@@ -191,7 +193,200 @@ describe("TypeScript Ratchet Check Tests (Unit & Fail-Closed Audits)", () => {
     });
   });
 
-  describe("3. Regression Detection & Ratchet Protection", () => {
+  describe("3. Baseline Execution Path Integration Tests (Isolated Environment)", () => {
+    function setupIsolatedBaseline(initialData = null) {
+      const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "baseline-ratchet-test-"));
+      const tempFile = path.join(tempDir, "isolated-baseline.json");
+
+      const defaultData = initialData || {
+        $schema: "test",
+        totalErrors: 2,
+        fileCount: 1,
+        files: {
+          "src/lessons/lesson10/Lesson10.tsx": {
+            count: 2,
+            diagnostics: {
+              "TS2304: Cannot find name 'IngRule'.": 1,
+              "TS2322: Type 'number' is not assignable to type 'string'.": 1,
+            },
+          },
+        },
+        errorCodes: { TS2304: 1, TS2322: 1 },
+      };
+
+      fs.writeFileSync(tempFile, JSON.stringify(defaultData, null, 2) + "\n", "utf8");
+      // Anchor timestamp 60s in the past to definitively detect any filesystem write
+      const pastEpoch = Math.floor(Date.now() / 1000) - 60;
+      fs.utimesSync(tempFile, pastEpoch, pastEpoch);
+
+      const initialStat = fs.statSync(tempFile);
+      const initialContent = fs.readFileSync(tempFile, "utf8");
+
+      return {
+        tempDir,
+        tempFile,
+        initialStat,
+        initialContent,
+        cleanup: () => {
+          try {
+            fs.rmSync(tempDir, { recursive: true, force: true });
+          } catch {
+            // Ignore cleanup errors
+          }
+        },
+      };
+    }
+
+    it("refrains from writing to baseline when compiler output has unparseable diagnostics", () => {
+      const env = setupIsolatedBaseline();
+      try {
+        const rawOutput = [
+          "src/lessons/lesson10/Lesson10.tsx(211,30): error TS2304: Cannot find name 'IngRule'.",
+          "malformed unparseable line with error TS9999: no position",
+        ].join("\n");
+
+        const updateResult = executeBaselineUpdate({
+          rawOutput,
+          baselinePath: env.tempFile,
+          rootDir: ROOT,
+          tscStatus: 0,
+        });
+
+        assert.equal(updateResult.success, false, "Must reject update");
+        assert.equal(updateResult.written, false, "Must not write file");
+        assert.match(updateResult.reason, /Unparseable diagnostic lines/);
+
+        const statAfter = fs.statSync(env.tempFile);
+        const contentAfter = fs.readFileSync(env.tempFile, "utf8");
+
+        assert.equal(statAfter.mtimeMs, env.initialStat.mtimeMs, "mtime must be strictly unchanged");
+        assert.equal(contentAfter, env.initialContent, "File content must be strictly identical");
+      } finally {
+        env.cleanup();
+      }
+    });
+
+    it("refrains from writing to baseline when compiler output has unexpected lines", () => {
+      const env = setupIsolatedBaseline();
+      try {
+        const rawOutput = [
+          "src/lessons/lesson10/Lesson10.tsx(211,30): error TS2304: Cannot find name 'IngRule'.",
+          "Random unexpected output line outside diagnostics",
+        ].join("\n");
+
+        const updateResult = executeBaselineUpdate({
+          rawOutput,
+          baselinePath: env.tempFile,
+          rootDir: ROOT,
+          tscStatus: 0,
+        });
+
+        assert.equal(updateResult.success, false, "Must reject update");
+        assert.equal(updateResult.written, false, "Must not write file");
+        assert.match(updateResult.reason, /Unexpected output lines/);
+
+        const statAfter = fs.statSync(env.tempFile);
+        const contentAfter = fs.readFileSync(env.tempFile, "utf8");
+
+        assert.equal(statAfter.mtimeMs, env.initialStat.mtimeMs, "mtime must be strictly unchanged");
+        assert.equal(contentAfter, env.initialContent, "File content must be strictly identical");
+      } finally {
+        env.cleanup();
+      }
+    });
+
+    it("refrains from writing to baseline when compiler fails without diagnostics", () => {
+      const env = setupIsolatedBaseline();
+      try {
+        const updateResult = executeBaselineUpdate({
+          rawOutput: "",
+          baselinePath: env.tempFile,
+          rootDir: ROOT,
+          tscStatus: 1, // Non-zero exit code with 0 diagnostics
+        });
+
+        assert.equal(updateResult.success, false, "Must reject update");
+        assert.equal(updateResult.written, false, "Must not write file");
+        assert.match(updateResult.reason, /Compiler exited with code/);
+
+        const statAfter = fs.statSync(env.tempFile);
+        const contentAfter = fs.readFileSync(env.tempFile, "utf8");
+
+        assert.equal(statAfter.mtimeMs, env.initialStat.mtimeMs, "mtime must be strictly unchanged");
+        assert.equal(contentAfter, env.initialContent, "File content must be strictly identical");
+      } finally {
+        env.cleanup();
+      }
+    });
+
+    it("refrains from writing to baseline when a regression is introduced", () => {
+      const env = setupIsolatedBaseline();
+      try {
+        // Output contains an error in a brand new file (src/App.tsx)
+        const rawOutput = [
+          "src/lessons/lesson10/Lesson10.tsx(211,30): error TS2304: Cannot find name 'IngRule'.",
+          "src/App.tsx(5,10): error TS2322: Type 'number' is not assignable to type 'string'.",
+        ].join("\n");
+
+        const updateResult = executeBaselineUpdate({
+          rawOutput,
+          baselinePath: env.tempFile,
+          rootDir: ROOT,
+          tscStatus: 0,
+        });
+
+        assert.equal(updateResult.success, false, "Must reject update on regression");
+        assert.equal(updateResult.written, false, "Must not write file");
+        assert.ok(updateResult.regressions.some((r) => r.type === "NEW_FILE_WITH_ERRORS"));
+
+        const statAfter = fs.statSync(env.tempFile);
+        const contentAfter = fs.readFileSync(env.tempFile, "utf8");
+
+        assert.equal(statAfter.mtimeMs, env.initialStat.mtimeMs, "mtime must be strictly unchanged");
+        assert.equal(contentAfter, env.initialContent, "File content must be strictly identical");
+      } finally {
+        env.cleanup();
+      }
+    });
+
+    it("successfully writes new baseline to disk when verified ratchet reduction occurs", () => {
+      const env = setupIsolatedBaseline();
+      try {
+        // Output contains only 1 of the initial 2 errors (1 error resolved)
+        const rawOutput = "src/lessons/lesson10/Lesson10.tsx(211,30): error TS2304: Cannot find name 'IngRule'.\n";
+
+        const updateResult = executeBaselineUpdate({
+          rawOutput,
+          baselinePath: env.tempFile,
+          rootDir: ROOT,
+          tscStatus: 0,
+        });
+
+        assert.equal(updateResult.success, true, "Must accept update on verified reduction");
+        assert.equal(updateResult.written, true, "Must physically write new baseline to disk");
+        assert.equal(updateResult.currentTotal, 1);
+        assert.equal(updateResult.previousTotal, 2);
+
+        const statAfter = fs.statSync(env.tempFile);
+        const contentAfter = fs.readFileSync(env.tempFile, "utf8");
+
+        // Verify mtime changed and file was physically written
+        assert.notEqual(statAfter.mtimeMs, env.initialStat.mtimeMs, "mtime must update after real write");
+        assert.notEqual(contentAfter, env.initialContent, "Content must change");
+
+        // Verify structure of the written baseline
+        const parsedNew = JSON.parse(contentAfter);
+        assert.equal(parsedNew.totalErrors, 1, "Written baseline must record reduced error count");
+        assert.equal(parsedNew.fileCount, 1);
+        assert.ok(parsedNew.files["src/lessons/lesson10/Lesson10.tsx"]);
+        assert.equal(parsedNew.files["src/lessons/lesson10/Lesson10.tsx"].count, 1);
+      } finally {
+        env.cleanup();
+      }
+    });
+  });
+
+  describe("4. Regression Detection & Ratchet Protection", () => {
     const mockBaseline = {
       totalErrors: 2,
       fileCount: 1,

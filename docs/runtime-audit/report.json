@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-22T22:29:12.919Z",
+  "generatedAt": "2026-11-22T23:09:06.631Z",
   "task": "Fix #3 — Comprehensive Runtime Browser Audit for All 62 Lessons",
   "baseCommit": "879253a6434febc082ff8af6f1bcd0988a30c0fc",
   "scope": {
@@ -91,8 +91,8 @@
     "reducedMotion": "reduce (stabilises geometry; animations are CSS-only)"
   },
   "checkTotals": {
-    "checks": 2018,
-    "passed": 2018,
+    "checks": 2048,
+    "passed": 2048,
     "failed": 0,
     "failingScenarios": 0
   },
@@ -208,6 +208,81 @@
     },
     {
       "viewport": "desktop-1440x900",
+      "scenario": "lesson52->next",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
+      "scenario": "lesson53->next",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
+      "scenario": "lesson54->next",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
+      "scenario": "lesson55->next",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
+      "scenario": "lesson55->prev",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
+      "scenario": "lesson56->next",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
+      "scenario": "lesson56->prev",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
+      "scenario": "lesson58->next",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
+      "scenario": "lesson58->prev",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
+      "scenario": "lesson59->next",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
+      "scenario": "lesson59->prev",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
+      "scenario": "lesson60->next",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
+      "scenario": "lesson60->prev",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
+      "scenario": "lesson61->prev",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
+      "scenario": "lesson62->prev",
+      "ok": true
+    },
+    {
+      "viewport": "desktop-1440x900",
       "scenario": "step-next",
       "ok": true
     },
@@ -234,6 +309,81 @@
     },
     {
       "viewport": "mobile-375x812",
+      "scenario": "lesson52->next",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
+      "scenario": "lesson53->next",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
+      "scenario": "lesson54->next",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
+      "scenario": "lesson55->next",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
+      "scenario": "lesson55->prev",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
+      "scenario": "lesson56->next",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
+      "scenario": "lesson56->prev",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
+      "scenario": "lesson58->next",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
+      "scenario": "lesson58->prev",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
+      "scenario": "lesson59->next",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
+      "scenario": "lesson59->prev",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
+      "scenario": "lesson60->next",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
+      "scenario": "lesson60->prev",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
+      "scenario": "lesson61->prev",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
+      "scenario": "lesson62->prev",
+      "ok": true
+    },
+    {
+      "viewport": "mobile-375x812",
       "scenario": "step-next",
       "ok": true
     },
@@ -247,8 +397,8 @@
     {
       "viewport": "desktop-1440x900",
       "injectedConsoleErrors": [
-        "Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:46607/assets/lessonCrashFixture-CWJQN0xE.js:1:235)\n    at nc (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:47958)\n    at xc (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:70711)\n    at or (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:80833)\n    at Gr (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:116762)\n    at th (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:115808)\n    at Kc (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:115640)\n    at jr (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:112439)\n    at Ir (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:124223)\n    at MessagePort.fe (http://127.0.0.1:46607/assets/index-B91PyldN.js:2:10548)",
-        "[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:46607…, componentStack: \n    at a (http://127.0.0.1:46607/assets/lessonCra…7.0.0.1:46607/assets/index-B91PyldN.js:10:106208)}"
+        "Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:43951/assets/lessonCrashFixture-CWJQN0xE.js:1:235)\n    at nc (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:47958)\n    at xc (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:70711)\n    at or (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:80833)\n    at Gr (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:116762)\n    at th (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:115808)\n    at Kc (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:115640)\n    at jr (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:112439)\n    at Ir (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:124223)\n    at MessagePort.fe (http://127.0.0.1:43951/assets/index-B91PyldN.js:2:10548)",
+        "[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:43951…, componentStack: \n    at a (http://127.0.0.1:43951/assets/lessonCra…7.0.0.1:43951/assets/index-B91PyldN.js:10:106208)}"
       ],
       "unexpectedConsoleErrors": [],
       "pageErrors": [],
@@ -257,8 +407,8 @@
     {
       "viewport": "mobile-375x812",
       "injectedConsoleErrors": [
-        "Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:46607/assets/lessonCrashFixture-CWJQN0xE.js:1:235)\n    at nc (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:47958)\n    at xc (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:70711)\n    at or (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:80833)\n    at Gr (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:116762)\n    at th (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:115808)\n    at Kc (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:115640)\n    at jr (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:112439)\n    at Ir (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:124223)\n    at MessagePort.fe (http://127.0.0.1:46607/assets/index-B91PyldN.js:2:10548)",
-        "[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:46607…, componentStack: \n    at a (http://127.0.0.1:46607/assets/lessonCra…7.0.0.1:46607/assets/index-B91PyldN.js:10:106208)}"
+        "Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:43951/assets/lessonCrashFixture-CWJQN0xE.js:1:235)\n    at nc (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:47958)\n    at xc (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:70711)\n    at or (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:80833)\n    at Gr (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:116762)\n    at th (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:115808)\n    at Kc (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:115640)\n    at jr (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:112439)\n    at Ir (http://127.0.0.1:43951/assets/index-B91PyldN.js:9:124223)\n    at MessagePort.fe (http://127.0.0.1:43951/assets/index-B91PyldN.js:2:10548)",
+        "[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:43951…, componentStack: \n    at a (http://127.0.0.1:43951/assets/lessonCra…7.0.0.1:43951/assets/index-B91PyldN.js:10:106208)}"
       ],
       "unexpectedConsoleErrors": [],
       "pageErrors": [],

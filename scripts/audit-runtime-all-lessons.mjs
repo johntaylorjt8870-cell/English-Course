@@ -666,22 +666,32 @@ try {
           stalled = 0;
           lastText = current;
         }
-        const clicked = await page.evaluate(
-          ({ nextSrc }) => {
-            const nextRe = new RegExp(nextSrc);
-            const cand = [...document.querySelectorAll("button")].filter((b) => {
-              if (b.disabled || b.hasAttribute("data-site-lock-button")) return false;
-              const r = b.getBoundingClientRect();
-              if (r.width < 2 || r.height < 2) return false;
-              const t = (b.textContent || "").replace(/\s+/g, " ").trim();
-              return nextRe.test(t);
-            });
-            if (!cand.length) return false;
-            cand[cand.length - 1].click();
-            return true;
-          },
-          { nextSrc: NEXT_LABELS.source },
-        );
+        // حتمي: انتظر حتى يوجد زر «التالي» قابل للنقر فعلًا (حتى 4 ثوانٍ)
+        // بدل الاستعلام الفوري. بعد قفزة هاشية من درس لآخر، قد تقرأ أداة
+        // الفحص نافذة أسبق من التزام React بالدرس الجديد — وهذا بالذات هو
+        // ما أسقط فحص step-next في CI بينما كانت كل فحوص الدروس نفسها
+        // خضراء. إعادة المحاولة لا تُضعف الفحص: غياب الزر 4 ثوانٍ كاملة
+        // يبقى إخفاقًا حقيقيًا كما كان.
+        const clicked = await page
+          .waitForFunction(
+            ({ nextSrc }) => {
+              const nextRe = new RegExp(nextSrc);
+              const cand = [...document.querySelectorAll("button")].filter((b) => {
+                if (b.disabled || b.hasAttribute("data-site-lock-button")) return false;
+                const r = b.getBoundingClientRect();
+                if (r.width < 2 || r.height < 2) return false;
+                const t = (b.textContent || "").replace(/\s+/g, " ").trim();
+                return nextRe.test(t);
+              });
+              if (!cand.length) return false;
+              cand[cand.length - 1].click();
+              return true;
+            },
+            { nextSrc: NEXT_LABELS.source },
+            { timeout: 4000, polling: 50 },
+          )
+          .then(() => true)
+          .catch(() => false);
         if (!clicked) break;
         await page.waitForTimeout(25);
       }

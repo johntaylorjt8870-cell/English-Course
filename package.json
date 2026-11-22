@@ -72,7 +72,9 @@
     "audit:lesson61": "node scripts/audit-lesson61.mjs",
     "audit:lesson61-source": "node scripts/audit-lesson61-source.mjs",
     "audit:lesson61-browser": "node scripts/audit-lesson61-browser.mjs",
-    "shots:lesson61": "node scripts/shots-lesson61.mjs"
+    "shots:lesson61": "node scripts/shots-lesson61.mjs",
+    "audit:runtime-all-lessons": "node scripts/audit-runtime-all-lessons.mjs",
+    "audit:runtime-all-lessons:smoke": "node scripts/audit-runtime-all-lessons.mjs --lessons=1-3"
   },
   "dependencies": {
     "clsx": "2.1.1",

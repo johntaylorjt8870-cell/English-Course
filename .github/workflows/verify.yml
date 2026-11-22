@@ -44,3 +44,61 @@ jobs:
 
       - name: Production Build
         run: npm run build
+
+      # بوابة سريعة: تفتح 3 دروس في Chromium حقيقي على مقاسي سطح المكتب
+      # والجوال لتكتشف انحدار «صفحة بيضاء» أو خطأ رندر مبكر دون تكلفة
+      # تدقيق الـ 62 درسًا الكامل (الذي يجري في وظيفة مستقلة أدناه).
+      - name: Runtime Browser Smoke (3 lessons × desktop + mobile)
+        run: npm run audit:runtime-all-lessons:smoke
+
+  # ------------------------------------------------------------------------
+  # التدقيق الشامل لوقت التشغيل: 62 درسًا × مقاسين + التنقل + احتواء الانهيار.
+  #
+  # لماذا وظيفة مستقلة؟
+  #   - المدة ~2.5 دقائق (فتح 124 صفحة في Chromium حقيقي + إعادة تشغيل
+  #     معزولة عند أي إخفاق)، مقابل ثوانٍ لبقية الخطوات. فصلها يحافظ على
+  #     سرعة «Verify» الأساسية كما هي.
+  #   - تُدار كفحص غير حاجز (continue-on-error) حتى لا تُسقط دمجًا بسبب
+  #     تعطّل بيئة المتصفح في runner؛ لكن التقرير يُرفع دائمًا كأثر (artifact)
+  #     وفشل الفحص يظهر صراحةً في نتيجة الوظيفة وفي التقرير.
+  #   - تعمل على pull_request وpush إلى main وworkflow_dispatch.
+  # ------------------------------------------------------------------------
+  runtime-audit:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Production Build
+        run: npm run build
+
+      # الحزم المشتركة التي يحتاجها Chromium المضمّن (brotli/tar موجودة في
+      # ubuntu-latest افتراضيًا؛ هذه الخطوة تحسبًا لأي صورة runner مختلفة).
+      - name: Ensure archive tools for bundled Chromium
+        run: command -v tar >/dev/null || sudo apt-get update && sudo apt-get install -y tar
+
+      - name: Comprehensive Runtime Browser Audit (62 lessons × 2 viewports)
+        run: npm run audit:runtime-all-lessons
+
+      - name: Upload runtime audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: runtime-audit-report
+          path: |
+            docs/runtime-audit/report.json
+            docs/runtime-audit/summary.md
+            docs/runtime-audit/screenshots/
+          if-no-files-found: warn
+          retention-days: 30

@@ -59,6 +59,10 @@ jobs:
       - name: Runtime Browser Smoke (3 lessons × desktop + mobile)
         run: npm run audit:runtime-all-lessons:smoke
 
+      - name: Surface smoke failures as annotations
+        if: failure()
+        run: node scripts/annotate-audit-failures.mjs
+
   # ------------------------------------------------------------------------
   # التدقيق الشامل لوقت التشغيل: 62 درسًا × مقاسين + التنقل + احتواء الانهيار.
   #
@@ -98,6 +102,10 @@ jobs:
 
       - name: Comprehensive Runtime Browser Audit (62 lessons × 2 viewports)
         run: npm run audit:runtime-all-lessons
+
+      - name: Surface audit failures as annotations
+        if: failure()
+        run: node scripts/annotate-audit-failures.mjs
 
       - name: Upload runtime audit report
         if: always()

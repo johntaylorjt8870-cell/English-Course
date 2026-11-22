@@ -711,8 +711,8 @@ if (existsSync(dist)) {
 // 9) Docs and routing
 // ============================================================
 {
-  const app = readFileSync(join(root, "src/App.tsx"), "utf8");
-  ok(app.includes('import Lesson36 from "./lessons/lesson36/Lesson36"') && app.includes('href: "#/lesson/36"') && app.includes("route === 36"), "the app registers Lesson 36 as a first-class route and hub card");
+  const app = (readFileSync(join(root, "src/App.tsx"), "utf8") + "\n" + readFileSync(join(root, "src/lessons/loaders.ts"), "utf8"));
+  ok(app.includes('import("./lesson36/Lesson36")') && app.includes('href: "#/lesson/36"') && app.includes('import("./lesson36/Lesson36")'), "the app registers Lesson 36 as a first-class route and hub card");
   const docsPath = join(root, "docs/lesson36-coverage.md");
   ok(existsSync(docsPath), "the coverage document exists");
   if (existsSync(docsPath)) {

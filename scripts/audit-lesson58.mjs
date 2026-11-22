@@ -5,7 +5,7 @@ const root='src/lessons/lesson58/';
 const content=readFileSync(root+'content58.ts','utf8');
 const lesson=readFileSync(root+'Lesson58.tsx','utf8');
 const test=readFileSync(root+'test58.ts','utf8');
-const app=readFileSync('src/App.tsx','utf8');
+const app=(readFileSync('src/App.tsx','utf8') + "\n" + readFileSync('src/lessons/loaders.ts','utf8'));
 const data=await import(`data:text/javascript;base64,${Buffer.from(ts.transpileModule(content,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText).toString('base64')}`);
 const testData=await import(`data:text/javascript;base64,${Buffer.from(ts.transpileModule(test,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText.replace(/import type[^;]+;/g,'')).toString('base64')}`);
 let checks=0;const check=(condition,label)=>{checks++;assert.ok(condition,label);console.log(`✓ ${label}`)};
@@ -31,7 +31,7 @@ check(lesson.includes('if(id==="s19")')&&lesson.includes('WRITING58.model.map'),
 check(lesson.includes('if(id==="s20")')&&lesson.includes('SPEAKING58.map'),'speaking models rendered');
 check(lesson.includes('if(id==="s21")')&&lesson.includes('SUMMARY58.map'),'seven-item final summary rendered');
 check(lesson.includes('case"selector"')&&lesson.includes('case"engine"')&&lesson.includes('case"being"')&&lesson.includes('case"comparison"')&&lesson.includes('case"detective"')&&lesson.includes('case"switch"')&&lesson.includes('case"challenge"'),'seven requested interactive stations exist');
-check(app.includes('route === 58')&&app.includes('href: "#/lesson/58"'),'lesson 58 is registered in route and hub');
+check(app.includes('import("./lesson58/Lesson58")')&&app.includes('href: "#/lesson/58"'),'lesson 58 is registered in route and hub');
 check(readFileSync('src/lessons/lesson57/Lesson57.tsx','utf8').includes('href="#/lesson/58"'),'lesson 57 progress route points to lesson 58');
 check(lesson.includes('href="#/lesson/59"'),'lesson 58 has onward destination to lesson 59 without assuming registration');
 check(lesson.includes('LatinRuns({ text })')&&lesson.includes('dir="ltr" lang="en"'),'mixed scripts use direction isolation');

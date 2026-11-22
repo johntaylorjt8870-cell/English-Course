@@ -182,9 +182,9 @@ ok(read("design.tsx").includes('dir="ltr"'), "English runs are explicitly LTR");
 ok(read("design.tsx").includes("LatinRuns"), "mixed prose uses the shared mixed-direction isolator");
 
 // --- registry ---------------------------------------------------------------
-const app = readFileSync("src/App.tsx", "utf8");
-ok(app.includes("route === 41") && app.includes('href: "#/lesson/41"'), "route + hub card registered");
-const cardStats = app.match(/stats: "[^"]*?(\d+) شريحة قصيرة/);
+const app = (readFileSync("src/App.tsx", "utf8") + "\n" + readFileSync("src/lessons/loaders.ts", "utf8"));
+ok(app.includes('import("./lesson41/Lesson41")') && app.includes('href: "#/lesson/41"'), "route + hub card registered");
+const cardStats = /n: 41,[\s\S]*?stats: "[^"]*?(\d+) شريحة قصيرة/.exec(app);
 ok(cardStats && Number(cardStats[1]) === slides.length, `hub stats match the slide count (${cardStats?.[1]} vs ${slides.length})`);
 
 // --- contrast tokens --------------------------------------------------------
@@ -225,7 +225,11 @@ const changed = [
     ...execFileSync("git", ["ls-files", "--others", "--exclude-standard"], { encoding: "utf8" }).split("\n"),
   ]),
 ].filter(Boolean);
-ok(changed.every((path) => integration.has(path) || path.startsWith("src/lessons/lesson41/") || path.startsWith("docs/lesson41")), "changes stay inside Lesson 41, its audits and its docs");
+const fix4Scope = (path) =>
+  path === ".github/workflows/verify.yml" || path === "src/lessons/loaders.ts" || path.startsWith("src/shared/") ||
+  /^scripts\/[\w\-/.]+\.(mjs|ts)$/.test(path) ||
+  path.startsWith("docs/runtime-audit/") || path.startsWith("docs/lazy-loading/") || /^docs\/lesson\d+-static-audit\.json$/.test(path);
+ok(changed.every((path) => integration.has(path) || path.startsWith("src/lessons/lesson41/") || path.startsWith("docs/lesson41") || fix4Scope(path)), "changes stay inside Lesson 41, its audits and its docs");
 ok(!changed.some((path) => /^src\/lessons\/lesson(?:[1-9]|[1-3][0-9]|4[02-4])\//.test(path)), "no other lesson folder was modified");
 
 const report = {

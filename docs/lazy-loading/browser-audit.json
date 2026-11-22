@@ -1,0 +1,155 @@
+{
+  "auditedAt": "2026-11-22T21:54:18.436Z",
+  "base": "http://127.0.0.1:42141/English-Course/",
+  "totals": {
+    "checks": 24,
+    "failures": 0
+  },
+  "results": [
+    {
+      "scenario": "A · desktop hub",
+      "assertion": "الفهرس لا يجلب أي chunk لأي درس (Lesson*.js)",
+      "pass": true,
+      "detail": "0 chunks"
+    },
+    {
+      "scenario": "A · desktop hub",
+      "assertion": "الفهرس يعرض بطاقات الدروس الـ 62",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "A · desktop hub",
+      "assertion": "نص الفهرس ظاهر وغير فارغ",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "A · desktop hub",
+      "assertion": "لا أخطاء console غير متوقعة",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "A · desktop hub",
+      "assertion": "لا pageerror",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "A · desktop hub",
+      "assertion": "لا طلبات تطبيقية فاشلة",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "B · desktop hub → lesson 7",
+      "assertion": "فتح الدرس 7 يجلب chunk الدرس 7",
+      "pass": true,
+      "detail": "http://127.0.0.1:42141/English-Course/assets/Lesson7-Bkl6rBh5.js"
+    },
+    {
+      "scenario": "B · desktop hub → lesson 7",
+      "assertion": "لا يُجلب chunk الدرس 8 (أو أي درس آخر) مع فتح 7",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "B · desktop hub → lesson 7",
+      "assertion": "محتوى الدرس 7 ظاهر",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "B · desktop hub → lesson 7",
+      "assertion": "زر «قفل الموقع» ظاهر بعد التحميل الكسول",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "B · desktop hub → lesson 7",
+      "assertion": "لا أخطاء console غير متوقعة",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "B · desktop hub → lesson 7",
+      "assertion": "لا pageerror",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "B · desktop hub → lesson 7",
+      "assertion": "لا طلبات تطبيقية فاشلة",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "C · failed chunk 9 → recovery → retry",
+      "assertion": "تعذّر جلب الـ chunk يعرض واجهة التعافي (لا صفحة بيضاء)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "C · failed chunk 9 → recovery → retry",
+      "assertion": "الصفحة ليست فارغة أثناء/بعد الفشل",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "C · failed chunk 9 → recovery → retry",
+      "assertion": "زر «قفل الموقع» يبقى ظاهرًا وفعّالًا",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "C · failed chunk 9 → recovery → retry",
+      "assertion": "لا pageerror غير متوقعة (خطأ الحق المقصود فقط)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "C · failed chunk 9 → recovery → retry",
+      "assertion": "«إعادة المحاولة» تُعيد جلب الـ chunk ويُرندر الدرس 9",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "C · failed chunk 9 → recovery → retry",
+      "assertion": "واجهة التعافي اختفت بعد التعافي",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "D · mobile hub → lesson 62",
+      "assertion": "الفهرس على الجوال لا يجلب أي chunk لأي درس",
+      "pass": true,
+      "detail": "0 chunks"
+    },
+    {
+      "scenario": "D · mobile hub → lesson 62",
+      "assertion": "فتح الدرس 62 على الجوال يجلب chunk الدرس 62",
+      "pass": true,
+      "detail": "Lesson62-BNAaAGDg.js"
+    },
+    {
+      "scenario": "D · mobile hub → lesson 62",
+      "assertion": "محتوى الدرس 62 ظاهر على الجوال",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "D · mobile hub → lesson 62",
+      "assertion": "لا أخطاء console غير متوقعة",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "scenario": "D · mobile hub → lesson 62",
+      "assertion": "لا pageerror",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "failures": []
+}

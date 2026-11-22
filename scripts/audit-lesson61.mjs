@@ -117,14 +117,14 @@ ok(shared.gradeFinalTest(test, correct).score === 15, "Shared grader scores the 
 ok(new Set(test.map((q) => `${q.ar}|${q.en || ""}|${q.concept}`)).size === 15, "FinalTest has no duplicate questions");
 ok(["single", "typed", "order", "error", "match", "tf", "multi"].every((type) => test.some((q) => q.type === type)), "FinalTest uses supported and varied question types");
 
-const app = readFileSync("src/App.tsx", "utf8");
+const app = (readFileSync("src/App.tsx", "utf8") + "\n" + readFileSync("src/lessons/loaders.ts", "utf8"));
 const lessonSource = readFileSync("src/lessons/lesson61/Lesson61.tsx", "utf8");
 const previous = readFileSync("src/lessons/lesson60/Lesson60.tsx", "utf8");
 const teacher = readFileSync("src/lessons/lesson61/TeacherArea61.tsx", "utf8");
 const css = readFileSync("src/lessons/lesson61/lesson61.css", "utf8");
-ok(/import Lesson61 from/.test(app) && /href: "#\/lesson\/61"/.test(app) && /route === 61\) page = <Lesson61 onExit=\{goHome\}/.test(app), "App, hub and hash router register Lesson 61");
+ok(/import\("\.\/lesson61\/Lesson61"\)/.test(app) && /href: "#\/lesson\/61"/.test(app) && app.includes("<LazyLessonHost route={route} onExit={goHome} />"), "App, hub and hash router register Lesson 61");
 ok(/href="#\/lesson\/61"/.test(previous) && /location\.hash = "\/lesson\/61"/.test(previous), "Lesson 60 links and navigates forward to 61");
-ok(/href="#\/lesson\/60"/.test(lessonSource) && /onExit/.test(lessonSource) && !/#\/lesson\/62/.test(lessonSource + app), "Lesson 61 links back to 60 and index without a ghost 62 link");
+ok(/href="#\/lesson\/60"/.test(lessonSource) && /onExit/.test(lessonSource) && !/#\/lesson\/62/.test(lessonSource), "Lesson 61 links back to 60 and index without a ghost 62 link");
 ok(/<FinalTest lesson=\{61\} questions=\{TEST_61\}/.test(lessonSource) && /hidden=\{current\.id !== "final-test"\}/.test(lessonSource), "Shared FinalTest stays mounted across scene navigation");
 const sharedSource = readFileSync("src/shared/finalTest.tsx", "utf8");
 ok(/isolateProgress/.test(lessonSource) && /isolateProgress = false/.test(sharedSource) && /<bdi dir="ltr">\{answered\}/.test(sharedSource), "Only opted-in lessons change the shared test's direction-isolated progress labels");

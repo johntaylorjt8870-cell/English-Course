@@ -10,6 +10,7 @@
     "test": "node --test scripts/check-types.test.mjs",
     "test:types": "node --test scripts/check-types.test.mjs",
     "test:error-boundary": "node --test scripts/lesson-error-boundary.test.mjs",
+    "test:lazy-loading": "node --test scripts/lazy-lesson-host.test.mjs",
     "audit:error-boundary-browser": "node scripts/audit-error-boundary-browser.mjs",
     "audit:lesson62-structures": "node scripts/audit-lesson62-structures.mjs",
     "preview": "vite preview",
@@ -74,7 +75,8 @@
     "audit:lesson61-browser": "node scripts/audit-lesson61-browser.mjs",
     "shots:lesson61": "node scripts/shots-lesson61.mjs",
     "audit:runtime-all-lessons": "node scripts/audit-runtime-all-lessons.mjs",
-    "audit:runtime-all-lessons:smoke": "node scripts/audit-runtime-all-lessons.mjs --lessons=1-3"
+    "audit:runtime-all-lessons:smoke": "node scripts/audit-runtime-all-lessons.mjs --lessons=1-3",
+    "audit:lazy-loading-browser": "node scripts/audit-lazy-loading-browser.mjs"
   },
   "dependencies": {
     "clsx": "2.1.1",

@@ -802,8 +802,8 @@ ok(!/[\u2066\u2067\u2068\u2069\u202A\u202B\u202C\u202D\u202E]/.test(directionSou
 
 /* 14) Registration and docs ---------------------------------------------- */
 {
-  const appText = readFileSync(join(root, "src/App.tsx"), "utf8");
-  ok(appText.includes('import Lesson38 from "./lessons/lesson38/Lesson38"') && appText.includes('href: "#/lesson/38"') && appText.includes("route === 38"), "App.tsx registers Lesson 38 as a hub card and route");
+  const appText = (readFileSync(join(root, "src/App.tsx"), "utf8") + "\n" + readFileSync(join(root, "src/lessons/loaders.ts"), "utf8"));
+  ok(appText.includes('import("./lesson38/Lesson38")') && appText.includes('href: "#/lesson/38"') && appText.includes('import("./lesson38/Lesson38")'), "App.tsx registers Lesson 38 as a hub card and route");
   const docs = readFileSync(join(root, "docs/lesson38-coverage.md"), "utf8");
   ok(docs.includes("§36") && docs.includes("Table reconstruction contracts") && docs.includes("Test and answer provenance contract"), "the coverage document records rebuilt tables and answer provenance");
   ok(COVERAGE_ACCURACY_NOTES_38.length >= 5, "the in-app coverage ledger keeps the source-accuracy notes");

@@ -14,7 +14,7 @@ symlinkSync(join(checkout, "node_modules"), join(sandbox, "node_modules"), "dir"
 const logDir = mkdtempSync(resolve("docs/lesson61-evidence/source-fidelity/regression-probes-run-"));
 console.log(`Per-probe logs: ${logDir}`);
 const files = {
-  app: "src/App.tsx", lesson60: "src/lessons/lesson60/Lesson60.tsx", shared: "src/lessons/lesson61/test61.ts",
+  app: "src/App.tsx", loaders: "src/lessons/loaders.ts", lesson60: "src/lessons/lesson60/Lesson60.tsx", shared: "src/lessons/lesson61/test61.ts",
 };
 const originals = Object.fromEntries(Object.entries(files).map(([key, path]) => [key, readFileSync(join(sandbox, path), "utf8")]));
 const digest = (str) => createHash("sha256").update(str).digest("hex");
@@ -29,8 +29,8 @@ function removeLine(input, marker) {
 }
 const routeGuard = "lesson 61 exists and has exactly one real import, hub card and route";
 const probes = [
-  { name: "missing-route", file: "app", script: "scripts/audit-lesson60.mjs", before: "route === 61) page = <Lesson61", after: "route === 61) page = <MissingLesson61", expected: routeGuard },
-  { name: "missing-import", file: "app", script: "scripts/audit-lesson60.mjs", before: 'import Lesson61 from "./lessons/lesson61/Lesson61"', after: 'import Lesson61 from "./lessons/lesson61/NoSuchLesson"', expected: routeGuard },
+  { name: "missing-route", file: "app", script: "scripts/audit-lesson60.mjs", before: '<LazyLessonHost route={route} onExit={goHome} />', after: '<LazyLessonHostBroken route={route} onExit={goHome} />', expected: routeGuard },
+  { name: "missing-import", file: "loaders", script: "scripts/audit-lesson60.mjs", before: 'import("./lesson61/Lesson61")', after: 'import("./lesson61/NoSuchLesson61")', expected: routeGuard },
   { name: "missing-card", file: "app", script: "scripts/audit-lesson60.mjs", before: 'href: "#/lesson/61"', after: 'href: "#/lesson/62"', expected: routeGuard },
   { name: "ghost-onward-link", file: "lesson60", script: "scripts/audit-lesson60.mjs", before: 'href="#/lesson/61"', after: 'href="#/lesson/62"', expected: "lesson 60 links and navigates to registered lesson 61; every lesson target exists and is registered" },
   { name: "shared-valid-wrong-key", file: "shared", script: "scripts/audit-final-test.mjs", before: 'answer: 0, why: "السؤال من نوع Yes/No', after: 'answer: 1, why: "السؤال من نوع Yes/No', expected: "L61 q1: answer matches the manually reviewed grammatical key" },

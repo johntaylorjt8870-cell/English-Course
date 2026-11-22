@@ -1735,11 +1735,14 @@ try {
       );
     });
     ok(missing.length === 0, `full course: every lesson folder has LessonN.tsx + data.ts (missing: ${missing.join(", ")})`);
-    const appSource = readFileSync(join(root, "src", "App.tsx"), "utf8");
+    const appSource =
+      readFileSync(join(root, "src", "App.tsx"), "utf8") +
+      "\n" +
+      readFileSync(join(root, "src", "lessons", "loaders.ts"), "utf8");
     for (let n = 1; n <= 52; n++) {
       ok(
-        appSource.includes(`route === ${n}`) && appSource.includes(`<Lesson${n} onExit={goHome} />`),
-        `full course: Lesson ${n} is routed in App.tsx`
+        appSource.includes(`import("./lesson${n}/Lesson${n}")`) && appSource.includes("<LazyLessonHost route={route} onExit={goHome} />"),
+        `full course: Lesson ${n} is lazy-registered and routed via LazyLessonHost`
       );
     }
     // Lessons 1–26 use the shared FinalQuiz/quizBank system; Lessons 27–28 ship their own

@@ -9,8 +9,11 @@ const here = dirname(fileURLToPath(import.meta.url));
 const fixture = resolve(here, "../lessonCrashFixture.tsx");
 
 /**
- * استبدال اختبار فقط: حين يستورد App.tsx الدرس 2، تُستخدم حزمة اختبار ترمي
- * خطأ. الدرس الحقيقي يبقى كما هو في المستودع وفي dist.
+ * استبدال اختبار فقط: حين يستورد سجلّ الدروس الدرس 2، تُستخدم حزمة اختبار
+ * ترمي خطأ. الدرس الحقيقي يبقى كما هو في المستودع وفي dist.
+ *
+ * Fix #4: لم يعد App.tsx يستورد الدرس 2 مباشرة؛ الاستيراد انتقل إلى
+ * src/lessons/loaders.ts (React.lazy) بمعامل "./lesson2/Lesson2".
  */
 function crashLesson2Alias(): Plugin {
   return {
@@ -18,9 +21,9 @@ function crashLesson2Alias(): Plugin {
     enforce: "pre",
     resolveId(source, importer) {
       if (
-        source === "./lessons/lesson2/Lesson2" &&
+        source === "./lesson2/Lesson2" &&
         importer &&
-        importer.replaceAll("\\", "/").endsWith("/src/App.tsx")
+        importer.replaceAll("\\", "/").endsWith("/src/lessons/loaders.ts")
       ) {
         return fixture;
       }

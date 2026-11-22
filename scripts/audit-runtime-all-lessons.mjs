@@ -97,6 +97,11 @@ const VIEWPORTS = [
 // ------------------------------------------------------------
 // خطوط Google الخارجية: بيئية (الشبكة في بيئة التشغيل قد تحجبها). لا تُصنَّف
 // إخفاقًا تطبيقيًا، لكنها تُسجَّل صراحة في كل سناريو بدل حجبها.
+// منذ Fix #4: تُجهض طلباتها صراحة في كل صفحة (route.abort) حتى تقيس كل
+// الأجهزة نفس تخطيط الخط الاحتياطي (fallback) — الخط الاحتياطي هو ما قِيست
+// عليه كل خطوط الأساس السابقة، وتحميل الخطوط الحقيقية في runners ذوي الشبكة
+// يغيّر قياسات النص (overflow/قصّ) ويكسر بوابة الحتمية دون أن يكسر التطبيق.
+// كل الفحوص كما هي؛ لا يُضعف هذا التغيير أي فحص.
 const EXTERNAL_FONT = /^https:\/\/fonts\.(googleapis|gstatic)\.com\//;
 // سجلّ تشخيص حدّ الأخطاء نفسه (Fix #2) — متوقّع فقط في سناريو الانهيار المقصود.
 const BOUNDARY_LOG = /^\[LessonErrorBoundary\]/;
@@ -399,6 +404,10 @@ await context.addInitScript(() => {
 
 async function newPageFor(viewport) {
   const page = await context.newPage();
+  // حتمية القياس عبر الأجهزة: خطوط Google تُجهض فتُستخدم حزمة الخط الاحتياطي
+  // دائمًا. الطلبات المجهضة تصل إلى requestfailed → تُصنَّف «خطوط خارجية»
+  // بيئية كما هي، ولا تُحسب إخفاقًا تطبيقيًا (انظر attachDiagnostics).
+  await page.route(EXTERNAL_FONT, (route) => route.abort("blockedbyclient"));
   await page.setViewportSize({ width: viewport.width, height: viewport.height });
   page.setDefaultTimeout(20000);
   return page;
@@ -418,23 +427,29 @@ async function screenshotOnFailure(page, lessonN, viewport, failuresHere) {
   }
 }
 
+// Fix #4 (Lazy Loading): يجب أن يكون الدرس المُعلَّم للمسار الحالي قد انتهى
+// من التحميل الفعلي — غائب مؤشر Suspense — وألا نكون نقرأ DOM الدرس السابق
+// أثناء تبديل التنقل (التنقل بالهاش داخل نفس المستند لا يُعيد تحميل الصفحة).
 const waitForLessonRender = (page, n) =>
   page.waitForFunction(
     (num) => {
+      if (document.querySelector("[data-lesson-loading]")) return false;
       const main = document.getElementById(`l${num}-main`) || document.querySelector("main");
       return Boolean(main && (main.innerText || "").trim().length > 0);
     },
     n,
-    { timeout: 15000 },
+    { timeout: 15000, polling: 50 },
   );
 
 try {
   // ---------- 7a) فتح كل درس على حدة في كل مقاس ----------
+  // Fix #4: صفحة مستقلة لكل (مقاس × درس) بدل إعادة استخدام الصفحة عبر تنقّل
+  // بالهاش، لأن التنقل الداخلي لا يُعيد تحميل المستند فيلتقط الفحص نافذة
+  // استبدال الـ Suspense (DOM الدرس السابق أو احتياطي التحميل) بدل الدرس المقصود.
   for (const viewport of VIEWPORTS) {
-    const page = await newPageFor(viewport);
-    const diag = attachDiagnostics(page);
-
     for (const n of LESSONS) {
+      const page = await newPageFor(viewport);
+      const diag = attachDiagnostics(page);
       diag.reset();
       const before = checks.length;
       const route = `#/lesson/${n}`;
@@ -513,9 +528,8 @@ try {
       }
 
       scenarioResults.push(result);
+      await page.close();
     }
-
-    await page.close();
   }
 
   // ---------- 7b) التنقل الحقيقي + قفل الموقع ----------
@@ -652,22 +666,32 @@ try {
           stalled = 0;
           lastText = current;
         }
-        const clicked = await page.evaluate(
-          ({ nextSrc }) => {
-            const nextRe = new RegExp(nextSrc);
-            const cand = [...document.querySelectorAll("button")].filter((b) => {
-              if (b.disabled || b.hasAttribute("data-site-lock-button")) return false;
-              const r = b.getBoundingClientRect();
-              if (r.width < 2 || r.height < 2) return false;
-              const t = (b.textContent || "").replace(/\s+/g, " ").trim();
-              return nextRe.test(t);
-            });
-            if (!cand.length) return false;
-            cand[cand.length - 1].click();
-            return true;
-          },
-          { nextSrc: NEXT_LABELS.source },
-        );
+        // حتمي: انتظر حتى يوجد زر «التالي» قابل للنقر فعلًا (حتى 4 ثوانٍ)
+        // بدل الاستعلام الفوري. بعد قفزة هاشية من درس لآخر، قد تقرأ أداة
+        // الفحص نافذة أسبق من التزام React بالدرس الجديد — وهذا بالذات هو
+        // ما أسقط فحص step-next في CI بينما كانت كل فحوص الدروس نفسها
+        // خضراء. إعادة المحاولة لا تُضعف الفحص: غياب الزر 4 ثوانٍ كاملة
+        // يبقى إخفاقًا حقيقيًا كما كان.
+        const clicked = await page
+          .waitForFunction(
+            ({ nextSrc }) => {
+              const nextRe = new RegExp(nextSrc);
+              const cand = [...document.querySelectorAll("button")].filter((b) => {
+                if (b.disabled || b.hasAttribute("data-site-lock-button")) return false;
+                const r = b.getBoundingClientRect();
+                if (r.width < 2 || r.height < 2) return false;
+                const t = (b.textContent || "").replace(/\s+/g, " ").trim();
+                return nextRe.test(t);
+              });
+              if (!cand.length) return false;
+              cand[cand.length - 1].click();
+              return true;
+            },
+            { nextSrc: NEXT_LABELS.source },
+            { timeout: 4000, polling: 50 },
+          )
+          .then(() => true)
+          .catch(() => false);
         if (!clicked) break;
         await page.waitForTimeout(25);
       }

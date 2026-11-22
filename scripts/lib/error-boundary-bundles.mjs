@@ -5,6 +5,10 @@
 //   - حزمة تكامل: تطبيق App الحقيقي، مع استبدال حزمة الدرس 2 عند البناء
 //     بمكوّن اختبار يرمي خطأ مرة واحدة. لا يوجد أي تعديل على كود الإنتاج
 //     ولا أي آلية حقن أخطاء دائمة.
+//
+// Fix #4: لم يعد App.tsx يستورد الدرس 2 مباشرة؛ الاستيراد انتقل إلى
+// src/lessons/loaders.ts (React.lazy). لذلك يطابق الـ plugin مستورد
+// loaders.ts بدل App.tsx.
 // ============================================================
 import { mkdirSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -72,8 +76,9 @@ export function loadAppWithCrashFixtureBundle() {
   const crashLesson2Alias = {
     name: "test-only-lesson2-crash-alias",
     setup(buildApi) {
-      buildApi.onResolve({ filter: /^\.\/lessons\/lesson2\/Lesson2$/ }, (args) => {
-        if (!args.importer.endsWith("/src/App.tsx")) return null;
+      buildApi.onResolve({ filter: /^\.\/lesson2\/Lesson2$/ }, (args) => {
+        // Fix #4: import("../lessons/loaders.ts") هو المستورد الحالي؛ قبلها كان App.tsx.
+        if (!args.importer.endsWith("/src/lessons/loaders.ts")) return null;
         return { path: fixture };
       });
     },

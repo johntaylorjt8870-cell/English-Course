@@ -43,12 +43,12 @@ const content = await load("src/lessons/lesson57/content57.ts");
 const practice = await load("src/lessons/lesson57/practiceData57.ts");
 const test = await load("src/lessons/lesson57/test57.ts");
 const lessonSrc = readFileSync(join(root, "src/lessons/lesson57/Lesson57.tsx"), "utf8");
-const app = readFileSync(join(root, "src/App.tsx"), "utf8");
+const app = (readFileSync(join(root, "src/App.tsx"), "utf8") + "\n" + readFileSync(join(root, "src/lessons/loaders.ts"), "utf8"));
 
 // ---------- 1) الفهرسة والمسار ----------
-ok(/route === 57/.test(app), "App routes lesson 57");
+ok(/import\("\.\/lesson57\/Lesson57"\)/.test(app), "App routes lesson 57");
 ok(/#\/lesson\/57/.test(app), "hub card points at #/lesson/57");
-ok(/<Lesson57 onExit=\{goHome\}/.test(app), "lesson 57 component is mounted");
+ok(/<LazyLessonHost\b/.test(app), "lesson components are mounted through LazyLessonHost");
 ok(lessonSrc.includes("<FinalTest lesson={57} questions={TEST_57}"), "shared FinalTest engine is used");
 ok(!/shared\/quizBank|quizBank/.test(lessonSrc), "no second test system was introduced");
 

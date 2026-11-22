@@ -698,13 +698,13 @@ try {
     el.remove();
   }
   {
-    const app = readFileSync(join(root, "src", "App.tsx"), "utf8");
-    ok(app.includes("lesson30/Lesson30") && app.includes("route === 30"), "Lesson 30 routed in App.tsx");
+    const app = (readFileSync(join(root, "src", "App.tsx"), "utf8") + "\n" + readFileSync(join(root, "src", "lessons", "loaders.ts"), "utf8"));
+    ok(app.includes("lesson30/Lesson30") && app.includes('import("./lesson30/Lesson30")'), "Lesson 30 routed in App.tsx");
     ok(app.includes("#/lesson/30"), "Lesson 30 hub card registered");
-    ok(app.includes("route === 27") && app.includes("#/lesson/27"), "Lesson 27 route + hub card remain");
-    ok(app.includes("route === 28") && app.includes("#/lesson/28"), "Lesson 28 route + hub card remain");
-    ok(app.includes("route === 29") && app.includes("#/lesson/29"), "Lesson 29 route + hub card remain");
-    for (let n = 1; n <= 26; n++) ok(app.includes(`route === ${n}`), `Lesson ${n} route still registered`);
+    ok(app.includes('import("./lesson27/Lesson27")') && app.includes("#/lesson/27"), "Lesson 27 route + hub card remain");
+    ok(app.includes('import("./lesson28/Lesson28")') && app.includes("#/lesson/28"), "Lesson 28 route + hub card remain");
+    ok(app.includes('import("./lesson29/Lesson29")') && app.includes("#/lesson/29"), "Lesson 29 route + hub card remain");
+    for (let n = 1; n <= 26; n++) ok(app.includes(`import("./lesson${n}/Lesson${n}")`), `Lesson ${n} route still registered`);
     const l27 = readFileSync(join(root, "src", "lessons", "lesson27", "Lesson27.tsx"), "utf8");
     ok(l27.includes("export default function Lesson27"), "Lesson 27 component remains intact");
     const l28 = readFileSync(join(root, "src", "lessons", "lesson28", "Lesson28.tsx"), "utf8");

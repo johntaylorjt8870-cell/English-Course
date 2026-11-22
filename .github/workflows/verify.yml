@@ -36,6 +36,9 @@ jobs:
       - name: Lesson Error Boundary Tests
         run: npm run test:error-boundary
 
+      - name: Lazy Lesson Host Tests
+        run: npm run test:lazy-loading
+
       - name: Direction & BIDI Check
         run: npm run check:english-direction
 
@@ -45,11 +48,20 @@ jobs:
       - name: Production Build
         run: npm run build
 
+      # نفس ضمان أرشفة Chromium المضمّن في وظيفة runtime-audit أدناه: بدونها قد
+      # يفشل استخراج al2023.tar على صورة runner تفتقر لـ tar وتسقط بوابة الدخان.
+      - name: Ensure archive tools for bundled Chromium
+        run: command -v tar >/dev/null || (sudo apt-get update && sudo apt-get install -y tar)
+
       # بوابة سريعة: تفتح 3 دروس في Chromium حقيقي على مقاسي سطح المكتب
       # والجوال لتكتشف انحدار «صفحة بيضاء» أو خطأ رندر مبكر دون تكلفة
       # تدقيق الـ 62 درسًا الكامل (الذي يجري في وظيفة مستقلة أدناه).
       - name: Runtime Browser Smoke (3 lessons × desktop + mobile)
         run: npm run audit:runtime-all-lessons:smoke
+
+      - name: Surface smoke failures as annotations
+        if: failure()
+        run: node scripts/annotate-audit-failures.mjs
 
   # ------------------------------------------------------------------------
   # التدقيق الشامل لوقت التشغيل: 62 درسًا × مقاسين + التنقل + احتواء الانهيار.
@@ -90,6 +102,10 @@ jobs:
 
       - name: Comprehensive Runtime Browser Audit (62 lessons × 2 viewports)
         run: npm run audit:runtime-all-lessons
+
+      - name: Surface audit failures as annotations
+        if: failure()
+        run: node scripts/annotate-audit-failures.mjs
 
       - name: Upload runtime audit report
         if: always()

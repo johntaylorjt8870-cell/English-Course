@@ -818,10 +818,10 @@ try {
     el.remove();
   }
   {
-    const app = readFileSync(join(root, "src", "App.tsx"), "utf8");
-    ok(app.includes("lesson31/Lesson31") && app.includes("route === 31"), "Lesson 31 routed in App.tsx");
+    const app = (readFileSync(join(root, "src", "App.tsx"), "utf8") + "\n" + readFileSync(join(root, "src", "lessons", "loaders.ts"), "utf8"));
+    ok(app.includes("lesson31/Lesson31") && app.includes('import("./lesson31/Lesson31")'), "Lesson 31 routed in App.tsx");
     ok(app.includes("#/lesson/31"), "Lesson 31 hub card registered");
-    for (let n = 1; n <= 30; n++) ok(app.includes(`route === ${n}`), `Lesson ${n} route still registered`);
+    for (let n = 1; n <= 30; n++) ok(app.includes(`import("./lesson${n}/Lesson${n}")`), `Lesson ${n} route still registered`);
     for (const n of [6, 27, 28, 29, 30]) {
       const src = readFileSync(join(root, "src", "lessons", `lesson${n}`, `Lesson${n}.tsx`), "utf8");
       ok(src.includes(`export default function Lesson${n}`), `Lesson ${n} component remains intact`);

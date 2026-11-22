@@ -97,6 +97,11 @@ const VIEWPORTS = [
 // ------------------------------------------------------------
 // خطوط Google الخارجية: بيئية (الشبكة في بيئة التشغيل قد تحجبها). لا تُصنَّف
 // إخفاقًا تطبيقيًا، لكنها تُسجَّل صراحة في كل سناريو بدل حجبها.
+// منذ Fix #4: تُجهض طلباتها صراحة في كل صفحة (route.abort) حتى تقيس كل
+// الأجهزة نفس تخطيط الخط الاحتياطي (fallback) — الخط الاحتياطي هو ما قِيست
+// عليه كل خطوط الأساس السابقة، وتحميل الخطوط الحقيقية في runners ذوي الشبكة
+// يغيّر قياسات النص (overflow/قصّ) ويكسر بوابة الحتمية دون أن يكسر التطبيق.
+// كل الفحوص كما هي؛ لا يُضعف هذا التغيير أي فحص.
 const EXTERNAL_FONT = /^https:\/\/fonts\.(googleapis|gstatic)\.com\//;
 // سجلّ تشخيص حدّ الأخطاء نفسه (Fix #2) — متوقّع فقط في سناريو الانهيار المقصود.
 const BOUNDARY_LOG = /^\[LessonErrorBoundary\]/;
@@ -399,6 +404,10 @@ await context.addInitScript(() => {
 
 async function newPageFor(viewport) {
   const page = await context.newPage();
+  // حتمية القياس عبر الأجهزة: خطوط Google تُجهض فتُستخدم حزمة الخط الاحتياطي
+  // دائمًا. الطلبات المجهضة تصل إلى requestfailed → تُصنَّف «خطوط خارجية»
+  // بيئية كما هي، ولا تُحسب إخفاقًا تطبيقيًا (انظر attachDiagnostics).
+  await page.route(EXTERNAL_FONT, (route) => route.abort("blockedbyclient"));
   await page.setViewportSize({ width: viewport.width, height: viewport.height });
   page.setDefaultTimeout(20000);
   return page;

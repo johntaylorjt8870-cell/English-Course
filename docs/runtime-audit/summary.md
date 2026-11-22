@@ -1,6 +1,6 @@
 # Fix #3 — Runtime Browser Audit (all lessons)
 
-**تاريخ التوليد:** 2026-11-22T21:51:53.098Z
+**تاريخ التوليد:** 2026-11-22T22:29:12.919Z
 **خط الأساس:** `879253a6434febc082ff8af6f1bcd0988a30c0fc`
 
 ## النطاق
@@ -11,7 +11,7 @@
 | الدروس التي فُتحت فعلًا | **62** (1–62) |
 | المقاسات | 1440×900 · 375×812 |
 | سناريوهات الدرس | **124** (desktop-1440x900=62, mobile-375x812=62) |
-| فحوص مجمّعة | 2020 (نجح 2020 · فشل 0) |
+| فحوص مجمّعة | 2018 (نجح 2018 · فشل 0) |
 | سناريوهات بها إخفاق | 0 |
 | متصفح | Chromium (@sparticuz/chromium via playwright-core), headless |
 | الهدف | dist/ production bundle served over static HTTP under /English-Course/ |
@@ -35,8 +35,6 @@
 | mobile-375x812 | hub->lesson | ✓ |
 | mobile-375x812 | lesson->hub | ✓ |
 | mobile-375x812 | lesson1->next | ✓ |
-| mobile-375x812 | lesson60->next | ✓ |
-| mobile-375x812 | lesson60->prev | ✓ |
 | mobile-375x812 | step-next | ✓ |
 | mobile-375x812 | site-lock | ✓ |
 

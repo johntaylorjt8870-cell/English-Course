@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-22T21:51:53.098Z",
+  "generatedAt": "2026-11-22T22:29:12.919Z",
   "task": "Fix #3 — Comprehensive Runtime Browser Audit for All 62 Lessons",
   "baseCommit": "879253a6434febc082ff8af6f1bcd0988a30c0fc",
   "scope": {
@@ -91,8 +91,8 @@
     "reducedMotion": "reduce (stabilises geometry; animations are CSS-only)"
   },
   "checkTotals": {
-    "checks": 2020,
-    "passed": 2020,
+    "checks": 2018,
+    "passed": 2018,
     "failed": 0,
     "failingScenarios": 0
   },
@@ -171,13 +171,13 @@
           "lesson": 1,
           "viewport": "desktop-1440x900",
           "kind": "external-font",
-          "sample": "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED"
+          "sample": "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector"
         },
         {
           "lesson": 2,
           "viewport": "desktop-1440x900",
           "kind": "external-font",
-          "sample": "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED"
+          "sample": "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector"
         }
       ]
     },
@@ -234,16 +234,6 @@
     },
     {
       "viewport": "mobile-375x812",
-      "scenario": "lesson60->next",
-      "ok": true
-    },
-    {
-      "viewport": "mobile-375x812",
-      "scenario": "lesson60->prev",
-      "ok": true
-    },
-    {
-      "viewport": "mobile-375x812",
       "scenario": "step-next",
       "ok": true
     },
@@ -257,8 +247,8 @@
     {
       "viewport": "desktop-1440x900",
       "injectedConsoleErrors": [
-        "Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:40477/assets/lessonCrashFixture-CWJQN0xE.js:1:235)\n    at nc (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:47958)\n    at xc (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:70711)\n    at or (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:80833)\n    at Gr (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:116762)\n    at th (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:115808)\n    at Kc (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:115640)\n    at jr (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:112439)\n    at Ir (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:124223)\n    at MessagePort.fe (http://127.0.0.1:40477/assets/index-B91PyldN.js:2:10548)",
-        "[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:40477…, componentStack: \n    at a (http://127.0.0.1:40477/assets/lessonCra…7.0.0.1:40477/assets/index-B91PyldN.js:10:106208)}"
+        "Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:46607/assets/lessonCrashFixture-CWJQN0xE.js:1:235)\n    at nc (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:47958)\n    at xc (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:70711)\n    at or (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:80833)\n    at Gr (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:116762)\n    at th (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:115808)\n    at Kc (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:115640)\n    at jr (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:112439)\n    at Ir (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:124223)\n    at MessagePort.fe (http://127.0.0.1:46607/assets/index-B91PyldN.js:2:10548)",
+        "[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:46607…, componentStack: \n    at a (http://127.0.0.1:46607/assets/lessonCra…7.0.0.1:46607/assets/index-B91PyldN.js:10:106208)}"
       ],
       "unexpectedConsoleErrors": [],
       "pageErrors": [],
@@ -267,8 +257,8 @@
     {
       "viewport": "mobile-375x812",
       "injectedConsoleErrors": [
-        "Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:40477/assets/lessonCrashFixture-CWJQN0xE.js:1:235)\n    at nc (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:47958)\n    at xc (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:70711)\n    at or (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:80833)\n    at Gr (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:116762)\n    at th (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:115808)\n    at Kc (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:115640)\n    at jr (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:112439)\n    at Ir (http://127.0.0.1:40477/assets/index-B91PyldN.js:9:124223)\n    at MessagePort.fe (http://127.0.0.1:40477/assets/index-B91PyldN.js:2:10548)",
-        "[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:40477…, componentStack: \n    at a (http://127.0.0.1:40477/assets/lessonCra…7.0.0.1:40477/assets/index-B91PyldN.js:10:106208)}"
+        "Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:46607/assets/lessonCrashFixture-CWJQN0xE.js:1:235)\n    at nc (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:47958)\n    at xc (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:70711)\n    at or (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:80833)\n    at Gr (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:116762)\n    at th (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:115808)\n    at Kc (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:115640)\n    at jr (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:112439)\n    at Ir (http://127.0.0.1:46607/assets/index-B91PyldN.js:9:124223)\n    at MessagePort.fe (http://127.0.0.1:46607/assets/index-B91PyldN.js:2:10548)",
+        "[LessonErrorBoundary] lesson render failed · lesson 2 · TEST-ONLY injected lesson render failure (lesson 2 fixture) {scope: lesson, lessonNumber: 2, error: Error: TEST-ONLY injected lesson render failure (lesson 2 fixture)\n    at a (http://127.0.0.1:46607…, componentStack: \n    at a (http://127.0.0.1:46607/assets/lessonCra…7.0.0.1:46607/assets/index-B91PyldN.js:10:106208)}"
       ],
       "unexpectedConsoleErrors": [],
       "pageErrors": [],
@@ -287,8 +277,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -331,8 +321,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -375,8 +365,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -419,8 +409,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -463,8 +453,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -507,8 +497,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -551,8 +541,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -595,8 +585,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -639,8 +629,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -683,8 +673,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -727,8 +717,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -771,8 +761,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -815,8 +805,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -859,8 +849,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -903,8 +893,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -947,8 +937,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -991,8 +981,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1035,8 +1025,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1079,8 +1069,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1123,8 +1113,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1167,8 +1157,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1211,8 +1201,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1255,8 +1245,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1299,8 +1289,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1343,8 +1333,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1387,8 +1377,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1431,8 +1421,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1475,8 +1465,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1519,8 +1509,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1563,8 +1553,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1607,8 +1597,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1651,8 +1641,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1695,8 +1685,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1739,8 +1729,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1783,8 +1773,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1827,8 +1817,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1871,8 +1861,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1915,8 +1905,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -1959,8 +1949,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2003,8 +1993,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2047,8 +2037,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2091,8 +2081,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2135,8 +2125,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2179,8 +2169,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2223,8 +2213,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2267,8 +2257,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2311,8 +2301,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2355,8 +2345,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2399,8 +2389,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2443,8 +2433,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2487,8 +2477,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2531,8 +2521,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2575,8 +2565,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2619,8 +2609,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2663,8 +2653,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2707,8 +2697,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2751,8 +2741,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2795,8 +2785,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2839,8 +2829,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2883,8 +2873,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2927,8 +2917,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -2971,8 +2961,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3015,8 +3005,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3059,8 +3049,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3103,8 +3093,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3147,8 +3137,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3191,8 +3181,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3235,8 +3225,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3279,8 +3269,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3323,8 +3313,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3367,8 +3357,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3411,8 +3401,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3455,8 +3445,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3499,8 +3489,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3543,8 +3533,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3587,8 +3577,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3631,8 +3621,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3675,8 +3665,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3719,8 +3709,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3763,8 +3753,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3807,8 +3797,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3851,8 +3841,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3895,8 +3885,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3939,8 +3929,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -3983,8 +3973,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4027,8 +4017,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4071,8 +4061,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4115,8 +4105,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4159,8 +4149,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4203,8 +4193,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4247,8 +4237,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4291,8 +4281,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4335,8 +4325,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4379,8 +4369,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4423,8 +4413,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4467,8 +4457,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4511,8 +4501,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4555,8 +4545,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4599,8 +4589,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4643,8 +4633,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4687,8 +4677,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4731,8 +4721,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4775,8 +4765,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4819,8 +4809,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4863,8 +4853,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4907,8 +4897,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4951,8 +4941,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -4995,8 +4985,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5039,8 +5029,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5083,8 +5073,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5127,8 +5117,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5171,8 +5161,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5215,8 +5205,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5259,8 +5249,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5303,8 +5293,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5347,8 +5337,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5391,8 +5381,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5435,8 +5425,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5479,8 +5469,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5523,8 +5513,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5567,8 +5557,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5611,8 +5601,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5655,8 +5645,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,
@@ -5699,8 +5689,8 @@
       "pageErrors": [],
       "failedRequests": [],
       "unavailableExternalFonts": [
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_CONNECTION_CLOSED",
-        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Changa:wght@500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap: Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
       ],
       "screenshot": null,
       "reproducible": null,

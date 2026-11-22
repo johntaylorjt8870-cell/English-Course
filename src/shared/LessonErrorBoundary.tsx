@@ -17,6 +17,10 @@ import type { ErrorInfo, ReactNode } from "react";
  *
  * لا تُعرض أي تفاصيل تقنية للطالب: الرسالة العامة فقط. التشخيص يُسجَّل في
  * وحدة التحكم عبر componentDidCatch.
+ *
+ * onRetry (اختياري، Fix #4): يُستدعى عند «إعادة المحاولة» لإعادة إنشاء
+ * مكوّن React.lazy بعد فشل تحميل chunk؛ بدون استدعاء خارجي يكتفي الحدّ
+ * بتصفير حالته كما كان دائمًا.
  */
 
 const LOG_PREFIX = "[LessonErrorBoundary]";
@@ -29,6 +33,12 @@ export interface LessonErrorBoundaryProps {
   resetKey?: string | number;
   /** العودة إلى صفحة الدروس عبر آلية التنقل الحالية (hash). */
   onGoHome: () => void;
+  /**
+   * يُستدعى عند ضغط «إعادة المحاولة» قبل تصفير الحالة. اختياري (Fix #4):
+   * يستخدمه مضيف الدرس الكسول لإنشاء مكوّن React.lazy جديد، فيُعاد جلب
+   * الـ chunk المتعذر بدل إعادة رندر نتيجته المخزّنة الفاشلة.
+   */
+  onRetry?: () => void;
 }
 
 interface LessonErrorBoundaryState {
@@ -168,6 +178,7 @@ export class LessonErrorBoundary extends Component<LessonErrorBoundaryProps, Les
   }
 
   private handleRetry = () => {
+    this.props.onRetry?.();
     this.setState({ hasError: false });
   };
 

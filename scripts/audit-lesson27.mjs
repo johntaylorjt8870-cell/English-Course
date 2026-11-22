@@ -29,7 +29,7 @@ const esbuild = require("esbuild");
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const data = readFileSync(join(root, "src/lessons/lesson27/data.ts"), "utf8");
 const view = readFileSync(join(root, "src/lessons/lesson27/Lesson27.tsx"), "utf8");
-const app = readFileSync(join(root, "src/App.tsx"), "utf8");
+const app = (readFileSync(join(root, "src/App.tsx"), "utf8") + "\n" + readFileSync(join(root, "src/lessons/loaders.ts"), "utf8"));
 const outFile = join(root, "node_modules", ".lesson27-audit.mjs");
 
 const failures = [];
@@ -186,7 +186,7 @@ ok(!view.includes("split(/(\\s+)/)"), "no per-token space splitting (word-revers
 ok(view.includes("PlatformTag") || view.includes("Platform Explanation"), "platform explanations labeled with PlatformTag");
 
 // ---------- 12) التسجيل في App.tsx ----------
-ok(app.includes("Lesson27 onExit={goHome}") && app.includes("route === 27"), "Lesson 27 routed in App.tsx");
+ok(app.includes('<LazyLessonHost route={route} onExit={goHome} />') && app.includes('import("./lesson27/Lesson27")'), "Lesson 27 routed via LazyLessonHost + lazy registry");
 ok(app.includes("#/lesson/27"), "Lesson 27 hub card registered");
 
 // ---------- 13) مسح BIDI الشامل لعناوين الدرس 27 + IQ200 ----------

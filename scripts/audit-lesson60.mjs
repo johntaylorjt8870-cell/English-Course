@@ -42,38 +42,43 @@ const teacherSrc = readFileSync("src/lessons/lesson60/TeacherArea60.tsx", "utf8"
 const lesson59Src = readFileSync("src/lessons/lesson59/Lesson59.tsx", "utf8");
 const app = readFileSync("src/App.tsx", "utf8");
 const css = readFileSync("src/lessons/lesson60/lesson60.css", "utf8");
+const loaders = readFileSync("src/lessons/loaders.ts", "utf8");
+// سطح التسجيل منذ Fix #4: سجل المحمّلات الكسول (loaders.ts) + الفهرس
+// ومضيف الدرس الكسول في App.tsx.
+const registration = `${loaders}\n${app}`;
 
 // Lesson 61 now exists. Keep the old anti-phantom intent, but verify the
-// actual file, import, hub card and route rather than forbidding 61 outright.
-function registeredLesson(number, appSource = app, hasFile = existsSync(`src/lessons/lesson${number}/Lesson${number}.tsx`)) {
+// actual file, lazy registry entry, hub card and router wiring rather than
+// forbidding 61 outright.
+function registeredLesson(number, source = registration, hasFile = existsSync(`src/lessons/lesson${number}/Lesson${number}.tsx`)) {
   return hasFile &&
-    appSource.includes(`import Lesson${number} from "./lessons/lesson${number}/Lesson${number}"`) &&
-    appSource.includes(`href: "#/lesson/${number}"`) &&
-    appSource.includes(`route === ${number}) page = <Lesson${number} onExit={goHome}`);
+    source.includes(`import("./lesson${number}/Lesson${number}")`) &&
+    source.includes(`href: "#/lesson/${number}"`) &&
+    source.includes("<LazyLessonHost route={route} onExit={goHome} />");
 }
 function lessonTargets(source) {
   return [...source.matchAll(/(?:#\/lesson\/|location\.hash\s*=\s*["']\/lesson\/)(\d+)\b/g)].map((match) => Number(match[1]));
 }
-function onlyRegisteredTargets(source, appSource = app) {
+function onlyRegisteredTargets(source, source2 = registration) {
   const targets = lessonTargets(source);
-  return targets.length > 0 && targets.every((number) => registeredLesson(number, appSource));
+  return targets.length > 0 && targets.every((number) => registeredLesson(number, source2));
 }
-function noPhantom62(appSource = app, lessonSource = lessonSrc + labsSrc + teacherSrc) {
-  const referenced = /(?:#\/lesson\/62\b|route\s*===\s*62\b|\bn:\s*62\s*,|location\.hash\s*=\s*["']\/lesson\/62\b)/.test(appSource + lessonSource);
-  return !referenced || registeredLesson(62, appSource);
+function noPhantom62(source = registration, lessonSource = lessonSrc + labsSrc + teacherSrc) {
+  const referenced = /(?:#\/lesson\/62\b|\bn:\s*62\s*,|location\.hash\s*=\s*["']\/lesson\/62\b)/.test(source + lessonSource);
+  return !referenced || registeredLesson(62, source);
 }
 
 /* ---------- 1) التكامل مع التطبيق ---------- */
-ok(/import Lesson60 from "\.\/lessons\/lesson60\/Lesson60"/.test(app), "App imports Lesson 60");
-ok(/route === 60\) page = <Lesson60 onExit=\{goHome\}/.test(app), "App routes #/lesson/60 to Lesson60");
+ok(loaders.includes('import("./lesson60/Lesson60")'), "loaders.ts lazy-imports Lesson 60");
+ok(app.includes("<LazyLessonHost route={route} onExit={goHome} />"), "App renders lessons through LazyLessonHost (Suspense + ErrorBoundary)");
 ok(/href: "#\/lesson\/60"/.test(app), "course hub has a card pointing at #/lesson/60");
 ok(/n: 60,/.test(app), "hub card carries lesson number 60");
 ok(app.indexOf('href: "#/lesson/59"') < app.indexOf('href: "#/lesson/60"'), "lesson 60 card comes right after lesson 59 in the hub");
-ok(/import Lesson59[^\n]*\nimport Lesson60/.test(app), "Lesson60 import follows Lesson59 import");
-ok(registeredLesson(61) && (app.match(/import Lesson61 from "\.\/lessons\/lesson61\/Lesson61"/g) || []).length === 1 && (app.match(/href: "#\/lesson\/61"/g) || []).length === 1 && (app.match(/route === 61\) page = <Lesson61/g) || []).length === 1, "lesson 61 exists and has exactly one real import, hub card and route");
+ok(loaders.indexOf('import("./lesson59/Lesson59")') < loaders.indexOf('import("./lesson60/Lesson60")'), "Lesson60 lazy entry follows Lesson59 in loaders.ts");
+ok(registeredLesson(61) && (loaders.match(/import\("\.\/lesson61\/Lesson61"\)/g) || []).length === 1 && (app.match(/href: "#\/lesson\/61"/g) || []).length === 1 && (app.match(/<LazyLessonHost route=\{route\} onExit=\{goHome\} \/>/g) || []).length === 1, "lesson 61 exists and has exactly one real import, hub card and route");
 ok(/href="#\/lesson\/59"/.test(lessonSrc) && /location\.hash = "\/lesson\/59"/.test(lessonSrc), "lesson 60 links back to lesson 59");
 ok(/href="#\/lesson\/61"/.test(lessonSrc) && /location\.hash = "\/lesson\/61"/.test(lessonSrc) && onlyRegisteredTargets(lessonSrc + labsSrc + teacherSrc), "lesson 60 links and navigates to registered lesson 61; every lesson target exists and is registered");
-ok(!registeredLesson(61, app, false) && !registeredLesson(61, app.replace('route === 61) page = <Lesson61', 'route === 61) page = <MissingLesson'), true), "registration guard rejects missing files and a missing actual route");
+ok(!registeredLesson(61, registration, false) && !registeredLesson(61, registration.replace('import("./lesson61/Lesson61")', 'import("./lesson61/NoSuchLesson61")'), true), "registration guard rejects missing files and a missing lazy import");
 ok(!onlyRegisteredTargets(`${lessonSrc}\n<a href="#/lesson/999999">ghost</a>`), "lesson-target guard rejects an unregistered fictional lesson");
 ok(/href="#\/lesson\/60"/.test(lesson59Src) && /location\.hash = "\/lesson\/60"/.test(lesson59Src), "lesson 59 links forward to lesson 60");
 ok(/<FinalTest lesson=\{60\} questions=\{TEST_60\}/.test(lessonSrc), "shared FinalTest is mounted for lesson 60");

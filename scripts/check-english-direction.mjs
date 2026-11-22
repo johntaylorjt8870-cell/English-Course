@@ -1104,7 +1104,8 @@ for (const [l, fn] of LTR_SPOTS) {
 {
   const d20 = src("lesson20", "data.ts");
   const t20 = src("lesson20", "Lesson20.tsx");
-  const app = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "App.tsx"), "utf8");
+  const app = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "App.tsx"), "utf8")
+    + "\n" + readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "lessons", "loaders.ts"), "utf8");
   const bank = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "shared", "quizBank.ts"), "utf8");
   const finalQuiz = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "shared", "FinalQuiz.tsx"), "utf8");
   const teachers = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "shared", "TeachersSpace.tsx"), "utf8");
@@ -1239,10 +1240,10 @@ for (const [l, fn] of LTR_SPOTS) {
   ok(teachers.includes('const TEACHER_PASSWORD = "somer173"'), "Teacher’s Space gate remains password somer173");
 
   // التطبيق/المركز: بطاقة واحدة ومسار واحد للدرس الجديد، بلا تعديل مسارات الدروس السابقة.
-  ok(app.includes('import Lesson20 from "./lessons/lesson20/Lesson20"'), "App imports Lesson20");
-  ok(app.includes('import { SLIDES as L20_SLIDES } from "./lessons/lesson20/data"'), "App reads Lesson20 slide count for hub card");
+  ok(app.includes('import("./lesson20/Lesson20")'), "App imports Lesson20");
+  ok(app.includes('44 شريحة · 9 تحديات'), "hub card for lesson 20 shows the locked slide count (44)");
   ok(app.includes('n: 20,') && app.includes('href: "#/lesson/20"'), "App registers one Lesson 20 hub card");
-  ok(app.includes('route === 20') && app.includes('<Lesson20 onExit={goHome} />'), "App registers Lesson 20 hash route");
+  ok(app.includes('import("./lesson20/Lesson20")') && app.includes('<LazyLessonHost route={route} onExit={goHome} />'), "App registers Lesson 20 hash route");
 
   const GB20 = String.fromCodePoint(0x1f1ec, 0x1f1e7);
   ok(!d20.includes(GB20) && !t20.includes(GB20), "lesson20: no GB flag emoji anywhere in the lesson");
@@ -1257,10 +1258,10 @@ for (const [l, fn] of LTR_SPOTS) {
     ok(t22.includes('import FinalQuiz from "../../shared/FinalQuiz"') && t22.includes("<FinalQuiz lesson={22}"), "lesson22: reuses shared FinalQuiz for lesson 22");
     ok(!t22.includes("const QUIZZES") && !t22.includes("TEACHER_PASSWORD"), "lesson22: does not duplicate quiz data or Teacher’s Space gate");
   }
-  ok(app.includes('import Lesson22 from "./lessons/lesson22/Lesson22"'), "App imports Lesson22");
-  ok(app.includes('import { SLIDES as L22_SLIDES } from "./lessons/lesson22/data"'), "App reads Lesson22 slide count for hub card");
+  ok(app.includes('import("./lesson22/Lesson22")'), "App imports Lesson22");
+  ok(app.includes('44 شريحة · 8 تحديات · The Position Lab'), "hub card for lesson 22 shows the locked slide count (44)");
   ok(app.includes('n: 22,') && app.includes('href: "#/lesson/22"'), "App registers one Lesson 22 hub card");
-  ok(app.includes('route === 22') && app.includes('<Lesson22 onExit={goHome} />'), "App registers Lesson 22 hash route");
+  ok(app.includes('import("./lesson22/Lesson22")') && app.includes('<LazyLessonHost route={route} onExit={goHome} />'), "App registers Lesson 22 hash route");
   const q22Start = bank.indexOf("  22: [");
   ok(q22Start !== -1, "lesson22: quizBank block for lesson 22 exists");
   const q23Start = bank.indexOf("  23: [");
@@ -1420,10 +1421,10 @@ for (const [l, fn] of LTR_SPOTS) {
     const GB23 = String.fromCodePoint(0x1f1ec, 0x1f1e7);
     ok(!d23.includes(GB23) && !t23.includes(GB23), "lesson23: no GB flag emoji anywhere in the lesson");
   }
-  ok(app.includes('import Lesson23 from "./lessons/lesson23/Lesson23"'), "App imports Lesson23");
-  ok(app.includes('import { SLIDES as L23_SLIDES } from "./lessons/lesson23/data"'), "App reads Lesson23 slide count for hub card");
+  ok(app.includes('import("./lesson23/Lesson23")'), "App imports Lesson23");
+  ok(app.includes('60 شريحة · 8 تدريبات'), "hub card for lesson 23 shows the locked slide count (60)");
   ok(app.includes('n: 23,') && app.includes('href: "#/lesson/23"'), "App registers one Lesson 23 hub card");
-  ok(app.includes('route === 23') && app.includes('<Lesson23 onExit={goHome} />'), "App registers Lesson 23 hash route");
+  ok(app.includes('import("./lesson23/Lesson23")') && app.includes('<LazyLessonHost route={route} onExit={goHome} />'), "App registers Lesson 23 hash route");
   const q23Next = bank.slice(q23Start + 5).search(/\n  \d+: \[/);
   const q23End = q23Next === -1 ? bank.indexOf("  ],\n};", q23Start) : q23Start + 5 + q23Next;
   const q23 = q23Start === -1 ? "" : bank.slice(q23Start, q23End);
@@ -1482,7 +1483,7 @@ for (const [l, fn] of LTR_SPOTS) {
   ok(oldBrand.length === 0, `repo: old branding ${["Englishwith", "sommer"].join("")} must be absent (found in: ${oldBrand.join(", ")})`);
   const indexHtml = readFileSync(join(root, "index.html"), "utf8");
   ok(indexHtml.includes("EnglishwithSomeR"), "repo: index.html keeps the EnglishwithSomeR branding");
-  const app = readFileSync(join(root, "src", "App.tsx"), "utf8");
+  const app = readFileSync(join(root, "src", "App.tsx"), "utf8") + "\n" + readFileSync(join(root, "src", "lessons", "loaders.ts"), "utf8");
   ok(app.includes("EnglishwithSomeR"), "repo: hub keeps the EnglishwithSomeR branding");
 }
 
@@ -1490,7 +1491,8 @@ for (const [l, fn] of LTR_SPOTS) {
 {
   const d26 = src("lesson26", "data.ts");
   const t26 = src("lesson26", "Lesson26.tsx");
-  const app = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "App.tsx"), "utf8");
+  const app = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "App.tsx"), "utf8")
+    + "\n" + readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "lessons", "loaders.ts"), "utf8");
   const bank = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "shared", "quizBank.ts"), "utf8");
 
   ok(t26.includes("../../shared/bidi"), "lesson26: uses the shared bidi helper (LatinRuns)");
@@ -1524,7 +1526,7 @@ for (const [l, fn] of LTR_SPOTS) {
   ]) ok(d26.includes(phrase), `lesson26: preserves direction-sensitive source phrase ${phrase}`);
   const OLD26 = ["Englishwith", "sommer"].join("");
   ok(!d26.includes(OLD26) && !t26.includes(OLD26), "lesson26: keeps the EnglishwithSomeR branding");
-  ok(app.includes("Lesson26 onExit={goHome}") && app.includes("route === 26"), "lesson26: routed in App.tsx");
+  ok(app.includes('<LazyLessonHost route={route} onExit={goHome} />') && app.includes('import("./lesson26/Lesson26")'), "lesson26: routed via LazyLessonHost + lazy registry");
   ok(app.includes("الدرس 26: Past Simple vs Past Continuous") && app.includes("#/lesson/26"), "lesson26: hub card present");
   const q26Start = bank.indexOf("  26: [");
   ok(q26Start !== -1, "lesson26: quizBank block exists");
@@ -1538,7 +1540,8 @@ for (const [l, fn] of LTR_SPOTS) {
 {
   const d28 = src("lesson28", "data.ts");
   const t28 = src("lesson28", "Lesson28.tsx");
-  const app = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "App.tsx"), "utf8");
+  const app = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "App.tsx"), "utf8")
+    + "\n" + readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "lessons", "loaders.ts"), "utf8");
 
   ok(t28.includes("../../shared/bidi"), "lesson28: uses the shared bidi helper (LatinRuns)");
   ok(t28.includes("data-source-section"), "lesson28: renders source-section markers");
@@ -1603,7 +1606,7 @@ for (const [l, fn] of LTR_SPOTS) {
   ]) ok(d28.includes(phrase), `lesson28: preserves direction-sensitive source phrase ${phrase.slice(0, 48)}`);
   const OLD28 = ["Englishwith", "sommer"].join("");
   ok(!d28.includes(OLD28) && !t28.includes(OLD28), "lesson28: keeps the EnglishwithSomeR branding");
-  ok(app.includes("Lesson28 onExit={goHome}") && app.includes("route === 28"), "lesson28: routed in App.tsx");
+  ok(app.includes('<LazyLessonHost route={route} onExit={goHome} />') && app.includes('import("./lesson28/Lesson28")'), "lesson28: routed via LazyLessonHost + lazy registry");
   ok(app.includes("الدرس 28: Past Perfect vs Past Simple") && app.includes("#/lesson/28"), "lesson28: hub card present");
 }
 
@@ -1611,7 +1614,8 @@ for (const [l, fn] of LTR_SPOTS) {
 {
   const d31 = src("lesson31", "data.ts");
   const t31 = src("lesson31", "Lesson31.tsx");
-  const app = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "App.tsx"), "utf8");
+  const app = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "App.tsx"), "utf8")
+    + "\n" + readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "src", "lessons", "loaders.ts"), "utf8");
   // السجل مرجع تغطية فقط — لا عرض خام داخل واجهة الطالب
   ok(d31.includes("export const SOURCE_SECTIONS"), "lesson31: source ledger present");
   ok(d31.includes("export const SOURCE_NUMBERED_COUNT = 45"), "lesson31: ledger keeps 45 numbered sections");
@@ -1659,7 +1663,7 @@ for (const [l, fn] of LTR_SPOTS) {
   ok(t31.includes("منطقة الاختبارات") && t31.includes("حلول الاختبارات") && t31.includes("منطقة المعلم"), "lesson31: four-area shell present");
   ok(t31.includes('TEACHER_PASSWORD_31'), "lesson31: teacher gate wired to the shared password constant");
   // التوجيه + بطاقة المركز
-  ok(app.includes("lesson31/Lesson31") && app.includes("route === 31"), "lesson31: routed in App.tsx");
+  ok(app.includes("lesson31/Lesson31") && app.includes('import("./lesson31/Lesson31")'), "lesson31: lazy-registered in loaders.ts");
   ok(app.includes('"الدرس 31: Present Perfect — المضارع التام"') && app.includes("#/lesson/31"), "lesson31: hub card registered with its title");
   // عدم المساس بالدروس المرجعية
   for (const l of ["lesson6", "lesson27", "lesson28", "lesson29", "lesson30"]) {

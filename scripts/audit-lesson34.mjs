@@ -1182,9 +1182,9 @@ ok(src["TestArea34.tsx"].includes("Rich") && src["TeacherArea34.tsx"].includes("
   await tick(30);
   ok(!textOf(el).includes("الحلول مقفلة"), "shell: solutions unlocked after a full submit");
 }
-const app = readFileSync(join(root, "src", "App.tsx"), "utf8");
-ok(app.includes('import Lesson34 from "./lessons/lesson34/Lesson34";'), "routing: Lesson34 imported in App.tsx");
-ok(app.includes("route === 34") && app.includes("<Lesson34 onExit={goHome} />"), "routing: route 34 renders Lesson34");
+const app = (readFileSync(join(root, "src", "App.tsx"), "utf8") + "\n" + readFileSync(join(root, "src", "lessons", "loaders.ts"), "utf8"));
+ok(app.includes('import("./lesson34/Lesson34")'), "routing: Lesson34 imported in App.tsx");
+ok(app.includes('import("./lesson34/Lesson34")') && app.includes("<LazyLessonHost route={route} onExit={goHome} />"), "routing: route 34 renders Lesson34");
 ok(/n: 34,[\s\S]*?title: "الدرس 34/.test(app) && app.includes('href: "#/lesson/34"'), "hub: lesson 34 card registered");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 ok(pkg.scripts["audit:english-direction"].includes("scripts/audit-lesson34.mjs"), "scripts: audit-lesson34 wired into audit:english-direction");

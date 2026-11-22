@@ -551,7 +551,9 @@ const lesson53TestData = readFileSync(join(root, "src/lessons/lesson53/testData5
 const lesson55TestData = readFileSync(join(root, "src/lessons/lesson55/test55.ts"), "utf8");
 const lesson53HasAssessment = (lesson53TestData.match(/(?:choice|text)\(/g) || []).length >= 25;
 const lesson55HasAssessment = (lesson55TestData.match(/\{id:/g) || []).length >= 20 && lesson55TestData.includes("id:i+21");
-const appLessons = [...new Set([...appSrc.matchAll(/route === (\d+)/g)].map((x) => Number(x[1])))].sort((a, b) => a - b);
+// Fix #4: مسارات الدروس تُشتق الآن من سجل المحمّلات الكسول بدل شروط App.tsx.
+const loadersSrc = readFileSync(join(root, "src/lessons/loaders.ts"), "utf8");
+const appLessons = [...new Set([...loadersSrc.matchAll(/import\("\.\/lesson(\d+)\/Lesson\d+"\)/g)].map((x) => Number(x[1])))].sort((a, b) => a - b);
 ok(appLessons.length >= 46, `كل دروس التطبيق مسجلة (${appLessons.length})`);
 for (const n of appLessons) {
   const legacy = (m.QUIZZES[n] || []).length >= 12;

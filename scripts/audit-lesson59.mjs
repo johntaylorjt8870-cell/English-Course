@@ -41,18 +41,18 @@ const practice = await load("src/lessons/lesson59/practice59.ts");
 const test = await load("src/lessons/lesson59/test59.ts");
 const lessonSrc = readFileSync("src/lessons/lesson59/Lesson59.tsx", "utf8");
 const labsSrc = readFileSync("src/lessons/lesson59/labs59.tsx", "utf8");
-const app = readFileSync("src/App.tsx", "utf8");
+const app = (readFileSync("src/App.tsx", "utf8") + "\n" + readFileSync("src/lessons/loaders.ts", "utf8"));
 const finalTestSrc = readFileSync("src/shared/finalTest.tsx", "utf8");
 const css = readFileSync("src/lessons/lesson59/lesson59.css", "utf8");
 
 /* ---------- 1) التكامل مع التطبيق ---------- */
-ok(/import Lesson59 from "\.\/lessons\/lesson59\/Lesson59"/.test(app), "App imports Lesson 59");
-ok(/route === 59\) page = <Lesson59 onExit=\{goHome\}/.test(app), "App routes #/lesson/59 to Lesson59");
+ok(/import\("\.\/lesson59\/Lesson59"\)/.test(app), "App lazy-imports Lesson 59");
+ok(app.includes('import("./lesson59/Lesson59")') && app.includes("<LazyLessonHost route={route} onExit={goHome} />"), "App routes #/lesson/59 to Lesson59 via LazyLessonHost");
 ok(/href: "#\/lesson\/59"/.test(app), "course hub has a card pointing at #/lesson/59");
 ok(/n: 59,/.test(app), "hub card carries lesson number 59");
 // الدرس 60 مسجّل الآن في الفهرس والراوتر (أضيف بعد الدرس 59) — التأكد من
 // اتساق التسجيل بدلًا من حظر رقمه.
-ok(/#\/lesson\/60/.test(app) && /route === 60/.test(app), "lesson 60 is now registered in hub and router, after lesson 59");
+ok(/#\/lesson\/60/.test(app) && /import\("\.\/lesson60\/Lesson60"\)/.test(app), "lesson 60 is now registered in hub and router, after lesson 59");
 ok(/href="#\/lesson\/58"/.test(lessonSrc) && /location\.hash = "\/lesson\/58"/.test(lessonSrc), "lesson 59 links back to lesson 58");
 ok(/href="#\/lesson\/60"/.test(lessonSrc) && /location\.hash = "\/lesson\/60"/.test(lessonSrc), "lesson 59 links forward to lesson 60");
 // الخاتمة تقود إلى الدرس 60 الحقيقي، ولم يعد هناك ادعاء «آخر درس مسجّل».

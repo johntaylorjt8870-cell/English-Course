@@ -756,9 +756,9 @@ ok(/const SLIDE_COUNT_32 = PAGES_32\.length;/.test(src["Lesson32.tsx"]), "nav: S
 // ============================================================
 // 9) الغلاف والتسجيل
 // ============================================================
-const app = readFileSync(join(root, "src", "App.tsx"), "utf8");
-ok(app.includes('import Lesson32 from "./lessons/lesson32/Lesson32";'), "routing: Lesson32 مستورد في App.tsx");
-ok(app.includes("route === 32") && app.includes("<Lesson32 onExit={goHome} />"), "routing: المسار 32 يعرض Lesson32");
+const app = (readFileSync(join(root, "src", "App.tsx"), "utf8") + "\n" + readFileSync(join(root, "src", "lessons", "loaders.ts"), "utf8"));
+ok(app.includes('import("./lesson32/Lesson32")'), "routing: Lesson32 مستورد في App.tsx");
+ok(app.includes('import("./lesson32/Lesson32")') && app.includes("<LazyLessonHost route={route} onExit={goHome} />"), "routing: المسار 32 يعرض Lesson32");
 ok(/n: 32,\s*\n\s*title: "الدرس 32/.test(app) && app.includes('href: "#/lesson/32"'), "hub: بطاقة الدرس 32 مسجّلة");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 ok(pkg.scripts["audit:english-direction"].includes("scripts/audit-lesson32.mjs"), "scripts: تدقيق 32 موصول في audit:english-direction");

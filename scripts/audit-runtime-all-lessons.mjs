@@ -418,23 +418,29 @@ async function screenshotOnFailure(page, lessonN, viewport, failuresHere) {
   }
 }
 
+// Fix #4 (Lazy Loading): يجب أن يكون الدرس المُعلَّم للمسار الحالي قد انتهى
+// من التحميل الفعلي — غائب مؤشر Suspense — وألا نكون نقرأ DOM الدرس السابق
+// أثناء تبديل التنقل (التنقل بالهاش داخل نفس المستند لا يُعيد تحميل الصفحة).
 const waitForLessonRender = (page, n) =>
   page.waitForFunction(
     (num) => {
+      if (document.querySelector("[data-lesson-loading]")) return false;
       const main = document.getElementById(`l${num}-main`) || document.querySelector("main");
       return Boolean(main && (main.innerText || "").trim().length > 0);
     },
     n,
-    { timeout: 15000 },
+    { timeout: 15000, polling: 50 },
   );
 
 try {
   // ---------- 7a) فتح كل درس على حدة في كل مقاس ----------
+  // Fix #4: صفحة مستقلة لكل (مقاس × درس) بدل إعادة استخدام الصفحة عبر تنقّل
+  // بالهاش، لأن التنقل الداخلي لا يُعيد تحميل المستند فيلتقط الفحص نافذة
+  // استبدال الـ Suspense (DOM الدرس السابق أو احتياطي التحميل) بدل الدرس المقصود.
   for (const viewport of VIEWPORTS) {
-    const page = await newPageFor(viewport);
-    const diag = attachDiagnostics(page);
-
     for (const n of LESSONS) {
+      const page = await newPageFor(viewport);
+      const diag = attachDiagnostics(page);
       diag.reset();
       const before = checks.length;
       const route = `#/lesson/${n}`;
@@ -513,9 +519,8 @@ try {
       }
 
       scenarioResults.push(result);
+      await page.close();
     }
-
-    await page.close();
   }
 
   // ---------- 7b) التنقل الحقيقي + قفل الموقع ----------

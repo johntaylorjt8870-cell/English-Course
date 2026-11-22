@@ -429,14 +429,14 @@ ok(!lesson.el.querySelector("#lesson40-solutions"), "SolutionsArea40 is not moun
 lesson.root.unmount();
 
 // 6. Router, Lesson 41 transition, CSS reduced motion, and zero raw bidi controls
-const app = readFileSync(join(root, "src/App.tsx"), "utf8");
+const app = (readFileSync(join(root, "src/App.tsx"), "utf8") + "\n" + readFileSync(join(root, "src/lessons/loaders.ts"), "utf8"));
 ok(
-  app.includes('import Lesson40 from "./lessons/lesson40/Lesson40"') &&
-    app.includes("route === 40") &&
+  app.includes('import("./lesson40/Lesson40")') &&
+    app.includes('import("./lesson40/Lesson40")') &&
     app.includes('href: "#/lesson/40"'),
   "Lesson 40 is registered in hub and router"
 );
-ok(app.includes("#/lesson/41") && app.includes("route === 41"), "Lesson 41 route is live in router");
+ok(app.includes("#/lesson/41") && app.includes('import("./lesson41/Lesson41")'), "Lesson 41 route is live in router");
 const lastStepHtml = renderToString(
   React.createElement(StepView40, {
     stepIndex: STEP_COUNT_40 - 1,

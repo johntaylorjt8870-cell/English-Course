@@ -1,99 +1,9 @@
 import { useEffect, useState } from "react";
-import Lesson1 from "./lessons/lesson1/Lesson1";
-import Lesson2 from "./lessons/lesson2/Lesson2";
-import Lesson3 from "./lessons/lesson3/Lesson3";
-import Lesson4 from "./lessons/lesson4/Lesson4";
-import Lesson5 from "./lessons/lesson5/Lesson5";
-import Lesson6 from "./lessons/lesson6/Lesson6";
-import Lesson7 from "./lessons/lesson7/Lesson7";
-import Lesson8 from "./lessons/lesson8/Lesson8";
-import Lesson9 from "./lessons/lesson9/Lesson9";
-import Lesson10 from "./lessons/lesson10/Lesson10";
-import Lesson11 from "./lessons/lesson11/Lesson11";
-import Lesson12 from "./lessons/lesson12/Lesson12";
-import Lesson13 from "./lessons/lesson13/Lesson13";
-import Lesson14 from "./lessons/lesson14/Lesson14";
-import Lesson15 from "./lessons/lesson15/Lesson15";
-import Lesson16 from "./lessons/lesson16/Lesson16";
-import Lesson17 from "./lessons/lesson17/Lesson17";
-import Lesson18 from "./lessons/lesson18/Lesson18";
-import Lesson19 from "./lessons/lesson19/Lesson19";
-import Lesson20 from "./lessons/lesson20/Lesson20";
-import Lesson21 from "./lessons/lesson21/Lesson21";
-import Lesson22 from "./lessons/lesson22/Lesson22";
-import Lesson23 from "./lessons/lesson23/Lesson23";
-import Lesson24 from "./lessons/lesson24/Lesson24";
-import Lesson25 from "./lessons/lesson25/Lesson25";
-import Lesson26 from "./lessons/lesson26/Lesson26";
-import Lesson27 from "./lessons/lesson27/Lesson27";
-import Lesson28 from "./lessons/lesson28/Lesson28";
-import Lesson29 from "./lessons/lesson29/Lesson29";
-import Lesson30 from "./lessons/lesson30/Lesson30";
-import Lesson31 from "./lessons/lesson31/Lesson31";
-import Lesson32 from "./lessons/lesson32/Lesson32";
-import Lesson33 from "./lessons/lesson33/Lesson33";
-import Lesson34 from "./lessons/lesson34/Lesson34";
-import Lesson35 from "./lessons/lesson35/Lesson35";
-import Lesson36 from "./lessons/lesson36/Lesson36";
-import Lesson37 from "./lessons/lesson37/Lesson37";
-import Lesson38 from "./lessons/lesson38/Lesson38";
-import Lesson39 from "./lessons/lesson39/Lesson39";
-import Lesson40 from "./lessons/lesson40/Lesson40";
-import Lesson41 from "./lessons/lesson41/Lesson41";
-import Lesson42 from "./lessons/lesson42/Lesson42";
-import Lesson43 from "./lessons/lesson43/Lesson43";
-import Lesson44 from "./lessons/lesson44/Lesson44";
-import Lesson45 from "./lessons/lesson45/Lesson45";
-import Lesson46 from "./lessons/lesson46/Lesson46";
-import Lesson47 from "./lessons/lesson47/Lesson47";
-import Lesson48 from "./lessons/lesson48/Lesson48";
-import Lesson49 from "./lessons/lesson49/Lesson49";
-import Lesson50 from "./lessons/lesson50/Lesson50";
-import Lesson51 from "./lessons/lesson51/Lesson51";
-import Lesson52 from "./lessons/lesson52/Lesson52";
-import Lesson53 from "./lessons/lesson53/Lesson53";
-import Lesson54 from "./lessons/lesson54/Lesson54";
-import Lesson55 from "./lessons/lesson55/Lesson55";
-import Lesson56 from "./lessons/lesson56/Lesson56";
-import Lesson57 from "./lessons/lesson57/Lesson57";
-import Lesson58 from "./lessons/lesson58/Lesson58";
-import Lesson59 from "./lessons/lesson59/Lesson59";
-import Lesson60 from "./lessons/lesson60/Lesson60";
-import Lesson61 from "./lessons/lesson61/Lesson61";
-import Lesson62 from "./lessons/lesson62/Lesson62";
 import ArenaClean from "./shared/ArenaClean";
 import LessonNumberNav from "./shared/LessonNumberNav";
-import { SLIDES as L1_SLIDES } from "./lessons/lesson1/data";
-import { SLIDES as L2_SLIDES } from "./lessons/lesson2/data";
-import { SLIDES as L3_SLIDES } from "./lessons/lesson3/data";
-import { SLIDES as L4_SLIDES } from "./lessons/lesson4/data";
-import { SLIDES as L5_SLIDES } from "./lessons/lesson5/data";
-import { SLIDES as L6_SLIDES } from "./lessons/lesson6/data";
-import { SLIDES as L7_SLIDES } from "./lessons/lesson7/data";
-import { SLIDES as L8_SLIDES } from "./lessons/lesson8/data";
-import { SLIDES as L9_SLIDES } from "./lessons/lesson9/data";
-import { SLIDES as L10_SLIDES } from "./lessons/lesson10/data";
-import { SLIDES as L11_SLIDES } from "./lessons/lesson11/data";
-import { SLIDES as L12_SLIDES } from "./lessons/lesson12/data";
-import { SLIDES as L13_SLIDES } from "./lessons/lesson13/data";
-import { SLIDES as L14_SLIDES } from "./lessons/lesson14/data";
-import { SLIDES as L15_SLIDES } from "./lessons/lesson15/data";
-import { SLIDES as L16_SLIDES } from "./lessons/lesson16/data";
-import { SLIDES as L17_SLIDES } from "./lessons/lesson17/data";
-import { SLIDES as L18_SLIDES } from "./lessons/lesson18/data";
-import { SLIDES as L19_SLIDES } from "./lessons/lesson19/data";
-import { SLIDES as L20_SLIDES } from "./lessons/lesson20/data";
-import { SLIDES as L21_SLIDES } from "./lessons/lesson21/data";
-import { SLIDES as L22_SLIDES } from "./lessons/lesson22/data";
-import { SLIDES as L23_SLIDES } from "./lessons/lesson23/data";
-import { SLIDES as L24_SLIDES } from "./lessons/lesson24/data";
-import { SLIDES as L25_SLIDES } from "./lessons/lesson25/data";
-import { SLIDES as L26_SLIDES } from "./lessons/lesson26/data";
-import { SLIDES as L27_SLIDES } from "./lessons/lesson27/data";
-import { SLIDES as L28_SLIDES } from "./lessons/lesson28/data";
 import { Signature, SignatureGhost } from "./shared/Signature";
 import SitePasswordGate from "./shared/SitePasswordGate";
-import LessonErrorBoundary from "./shared/LessonErrorBoundary";
+import LazyLessonHost from "./shared/LazyLessonHost";
 
 // ------------------------------------------------------------
 // توجيه بسيط عبر الـ hash: #/lesson/1 · #/lesson/2
@@ -127,13 +37,17 @@ type Card = {
   locked?: boolean;
 };
 
+// ملاحظة (Fix #4): أعداد الشرائح في stats للدروس 1–28 قيم ثابتة ملتقطة
+// من `SLIDES.length` في كل data.ts وقت تنفيذ التحميل الكسول، وليست
+// مستوردة ديناميكيًا — استيراد data.ts من الفهرس كان يضمّن ~1.3MB في
+// الحزمة الرئيسية. إذا تغيّر عدد شرائح أحد هذه الدروس حدّث القيمة هنا.
 const CARDS: Card[] = [
   {
     n: 1,
     title: "تكوين الجملة الإنجليزية",
     en: "Sentence Structure",
     emoji: "🧱",
-    stats: `${L1_SLIDES.length} شريحة · 4 تمارين تفاعلية`,
+    stats: `21 شريحة · 4 تمارين تفاعلية`,
     href: "#/lesson/1",
     grad: "from-sky-500 to-emerald-500",
   },
@@ -142,7 +56,7 @@ const CARDS: Card[] = [
     title: "الضمائر و Verb to be",
     en: "Pronouns + am / is / are",
     emoji: "🙋",
-    stats: `${L2_SLIDES.length} شريحة · 5 تمارين تفاعلية`,
+    stats: `30 شريحة · 5 تمارين تفاعلية`,
     href: "#/lesson/2",
     grad: "from-rose-400 to-orange-400",
   },
@@ -151,7 +65,7 @@ const CARDS: Card[] = [
     title: "الإثبات والنفي والسؤال مع Verb to be",
     en: "Affirmative · Negative · Question · Short Answers",
     emoji: "🔥",
-    stats: `${L3_SLIDES.length} شريحة · 5 تمارين تفاعلية · آلة تحويل حيّة`,
+    stats: `21 شريحة · 5 تمارين تفاعلية · آلة تحويل حيّة`,
     href: "#/lesson/3",
     grad: "from-emerald-500 to-indigo-500",
   },
@@ -160,7 +74,7 @@ const CARDS: Card[] = [
     title: "الأسماء وأدوات التعريف",
     en: "Nouns + a / an / the",
     emoji: "🔤",
-    stats: `${L4_SLIDES.length} شريحة · 6 تمارين · آلة الأدوات وكاشف الصوت`,
+    stats: `33 شريحة · 6 تمارين · آلة الأدوات وكاشف الصوت`,
     href: "#/lesson/4",
     grad: "from-amber-500 to-emerald-500",
   },
@@ -169,7 +83,7 @@ const CARDS: Card[] = [
     title: "الصفات والجملة الوصفية",
     en: "Adjectives + Verb to be",
     emoji: "🎨",
-    stats: `${L5_SLIDES.length} شريحة · 8 تمارين · ورشة الجملة الوصفية`,
+    stats: `32 شريحة · 8 تمارين · ورشة الجملة الوصفية`,
     href: "#/lesson/5",
     grad: "from-violet-500 to-sky-500",
   },
@@ -178,7 +92,7 @@ const CARDS: Card[] = [
     title: "المضارع البسيط",
     en: "Present Simple",
     emoji: "⏰",
-    stats: `${L6_SLIDES.length} شريحة · 6 تمارين · آلة التصريف وسلّم التكرار`,
+    stats: `31 شريحة · 6 تمارين · آلة التصريف وسلّم التكرار`,
     href: "#/lesson/6",
     grad: "from-teal-500 to-fuchsia-500",
   },
@@ -187,7 +101,7 @@ const CARDS: Card[] = [
     title: "النفي والسؤال مع Do و Does",
     en: "Present Simple · Negative & Questions",
     emoji: "🎭",
-    stats: `${L7_SLIDES.length} شريحة · 7 تمارين · آلة اختفاء الـ s`,
+    stats: `28 شريحة · 7 تمارين · آلة اختفاء الـ s`,
     href: "#/lesson/7",
     grad: "from-rose-500 to-violet-500",
   },
@@ -196,7 +110,7 @@ const CARDS: Card[] = [
     title: "مراجعة شاملة للمضارع البسيط",
     en: "Present Simple · Full Review · IQ200",
     emoji: "🧠",
-    stats: `${L8_SLIDES.length} شريحة · 10 مستويات · محقق لغوي وتحدي الأستاذ`,
+    stats: `27 شريحة · 10 مستويات · محقق لغوي وتحدي الأستاذ`,
     href: "#/lesson/8",
     grad: "from-indigo-500 to-amber-500",
   },
@@ -205,7 +119,7 @@ const CARDS: Card[] = [
     title: "المضارع المستمر",
     en: "Present Continuous",
     emoji: "🎬",
-    stats: `${L9_SLIDES.length} شريحة · 6 تمارين · قواعد ing وآلة المشاهد الحية`,
+    stats: `28 شريحة · 6 تمارين · قواعد ing وآلة المشاهد الحية`,
     href: "#/lesson/9",
     grad: "from-cyan-500 to-violet-500",
   },
@@ -214,7 +128,7 @@ const CARDS: Card[] = [
     title: "المضارع المستمر المتقدم",
     en: "Present Continuous · Advanced Uses",
     emoji: "📘",
-    stats: `${L10_SLIDES.length} شريحة · 9 مستويات · IQ200 وGrammar Detective`,
+    stats: `33 شريحة · 9 مستويات · IQ200 وGrammar Detective`,
     href: "#/lesson/10",
     grad: "from-cyan-500 to-indigo-500",
   },
@@ -223,7 +137,7 @@ const CARDS: Card[] = [
     title: "المضارع البسيط مقابل المستمر",
     en: "Present Simple vs Present Continuous",
     emoji: "⚖️",
-    stats: `${L11_SLIDES.length} شريحة · 11 مستوى · IQ200 وGrammar Detective`,
+    stats: `36 شريحة · 11 مستوى · IQ200 وGrammar Detective`,
     href: "#/lesson/11",
     grad: "from-indigo-500 to-cyan-500",
   },
@@ -232,7 +146,7 @@ const CARDS: Card[] = [
     title: "الماضي البسيط",
     en: "Past Simple",
     emoji: "🕰️",
-    stats: `${L12_SLIDES.length} شريحة · 11 مستوى · IQ200 وGrammar Detective`,
+    stats: `38 شريحة · 11 مستوى · IQ200 وGrammar Detective`,
     href: "#/lesson/12",
     grad: "from-orange-500 to-rose-500",
   },
@@ -241,7 +155,7 @@ const CARDS: Card[] = [
     title: "الماضي البسيط — النفي والأسئلة",
     en: "Past Simple — did / didn't",
     emoji: "❓",
-    stats: `${L13_SLIDES.length} شريحة · 10 مستويات · صائد الأخطاء وIQ200`,
+    stats: `37 شريحة · 10 مستويات · صائد الأخطاء وIQ200`,
     href: "#/lesson/13",
     grad: "from-amber-500 to-orange-500",
   },
@@ -250,7 +164,7 @@ const CARDS: Card[] = [
     title: "الدرس 14: Past Simple — Wh Questions والتطبيق الشامل",
     en: "Past Simple — Wh Questions + Comprehensive Application",
     emoji: "🧭",
-    stats: `${L14_SLIDES.length} شريحة · 4 مستويات · Grammar Detective وIQ200`,
+    stats: `35 شريحة · 4 مستويات · Grammar Detective وIQ200`,
     href: "#/lesson/14",
     grad: "from-violet-500 to-fuchsia-500",
   },
@@ -259,7 +173,7 @@ const CARDS: Card[] = [
     title: "الدرس 15: Past Simple of Verb to be — was / were",
     en: "Past Simple of Verb to be — was / were",
     emoji: "🟠",
-    stats: `${L15_SLIDES.length} شريحة · 6 مستويات · Was/Were Control Center وGrammar Detective`,
+    stats: `45 شريحة · 6 مستويات · Was/Were Control Center وGrammar Detective`,
     href: "#/lesson/15",
     grad: "from-amber-500 to-orange-500",
   },
@@ -268,7 +182,7 @@ const CARDS: Card[] = [
     title: "الدرس 16: Possessive Adjectives — صفات الملكية",
     en: "Possessive Adjectives — my / your / his / her / its / our / their",
     emoji: "🏠",
-    stats: `${L16_SLIDES.length} شريحة · 11 مستوى · Ownership Detective وIQ200`,
+    stats: `46 شريحة · 11 مستوى · Ownership Detective وIQ200`,
     href: "#/lesson/16",
     grad: "from-teal-500 to-emerald-500",
   },
@@ -277,7 +191,7 @@ const CARDS: Card[] = [
     title: "الدرس 17: Possessive Pronouns — ضمائر الملكية",
     en: "Possessive Pronouns — mine / yours / his / hers / ours / theirs",
     emoji: "🔬",
-    stats: `${L17_SLIDES.length} شريحة · 6 مستويات · Transformation Machine وWhose? Lab`,
+    stats: `53 شريحة · 6 مستويات · Transformation Machine وWhose? Lab`,
     href: "#/lesson/17",
     grad: "from-indigo-500 to-amber-500",
   },
@@ -286,7 +200,7 @@ const CARDS: Card[] = [
     title: "الدرس 18: Plural Nouns — جمع الأسماء",
     en: "Plural Nouns — Regular & Irregular Plurals",
     emoji: "🔢",
-    stats: `${L18_SLIDES.length} شريحة · 8 تحديات · Transformation Machine وMonster Zone`,
+    stats: `26 شريحة · 8 تحديات · Transformation Machine وMonster Zone`,
     href: "#/lesson/18",
     grad: "from-teal-500 to-cyan-600",
   },
@@ -295,7 +209,7 @@ const CARDS: Card[] = [
     title: "الدرس 19: Possessive Nouns — ملكية الأسماء",
     en: "Possessive Nouns — 's / s' / Irregular Plurals",
     emoji: "🕵️",
-    stats: `${L19_SLIDES.length} شريحة · 7 تحديات · Apostrophe Machine وThree-System Machine`,
+    stats: `29 شريحة · 7 تحديات · Apostrophe Machine وThree-System Machine`,
     href: "#/lesson/19",
     grad: "from-amber-400 to-rose-500",
   },
@@ -304,7 +218,7 @@ const CARDS: Card[] = [
     title: "الدرس 20: Demonstratives — أسماء الإشارة",
     en: "This / That / These / Those",
     emoji: "🛰️",
-    stats: `${L20_SLIDES.length} شريحة · 9 تحديات · Demonstrative Control Center`,
+    stats: `44 شريحة · 9 تحديات · Demonstrative Control Center`,
     href: "#/lesson/20",
     grad: "from-cyan-600 to-indigo-700",
   },
@@ -313,7 +227,7 @@ const CARDS: Card[] = [
     title: "الدرس 21: There is / There are",
     en: "There is / There are",
     emoji: "🕵️",
-    stats: `${L21_SLIDES.length} شريحة · 8 تحديات · Scene Detective Lab`,
+    stats: `51 شريحة · 8 تحديات · Scene Detective Lab`,
     href: "#/lesson/21",
     grad: "from-emerald-600 to-teal-700",
   },
@@ -322,7 +236,7 @@ const CARDS: Card[] = [
     title: "الدرس 22: Prepositions of Place",
     en: "Prepositions of Place",
     emoji: "🗺️",
-    stats: `${L22_SLIDES.length} شريحة · 8 تحديات · The Position Lab`,
+    stats: `44 شريحة · 8 تحديات · The Position Lab`,
     href: "#/lesson/22",
     grad: "from-cyan-600 to-teal-700",
   },
@@ -331,7 +245,7 @@ const CARDS: Card[] = [
     title: "الدرس 23: Countable & Uncountable Nouns",
     en: "Countable & Uncountable Nouns",
     emoji: "🧮",
-    stats: `${L23_SLIDES.length} شريحة · 8 تدريبات · The Counting Lab`,
+    stats: `60 شريحة · 8 تدريبات · The Counting Lab`,
     href: "#/lesson/23",
     grad: "from-indigo-500 to-violet-600",
   },
@@ -340,7 +254,7 @@ const CARDS: Card[] = [
     title: "الدرس 24: Quantifiers — أدوات الكمية",
     en: "Quantifiers",
     emoji: "🧪",
-    stats: `${L24_SLIDES.length} قسمًا · 5 تدريبات · Quantity Lab`,
+    stats: `64 قسمًا · 5 تدريبات · Quantity Lab`,
     href: "#/lesson/24",
     grad: "from-cyan-600 to-indigo-700",
   },
@@ -349,7 +263,7 @@ const CARDS: Card[] = [
     title: "الدرس 25: Past Continuous — الماضي المستمر",
     en: "Past Continuous",
     emoji: "🎬",
-    stats: `${L25_SLIDES.length} شريحة · 8 تمارين + IQ200 + Final Boss · THE PAST CAMERA`,
+    stats: `55 شريحة · 8 تمارين + IQ200 + Final Boss · THE PAST CAMERA`,
     href: "#/lesson/25",
     grad: "from-indigo-600 to-violet-700",
   },
@@ -358,7 +272,7 @@ const CARDS: Card[] = [
     title: "الدرس 26: Past Simple vs Past Continuous",
     en: "Past Simple vs Past Continuous",
     emoji: "🎥",
-    stats: `${L26_SLIDES.length} شريحة · 4 تمارين + IQ200 + Final Boss · THE TIME DIRECTOR`,
+    stats: `55 شريحة · 4 تمارين + IQ200 + Final Boss · THE TIME DIRECTOR`,
     href: "#/lesson/26",
     grad: "from-teal-500 to-orange-400",
   },
@@ -367,7 +281,7 @@ const CARDS: Card[] = [
     title: "الدرس 27: Past Perfect — الماضي التام",
     en: "Past Perfect",
     emoji: "⏪",
-    stats: `${L27_SLIDES.length} شريحة · 11 تمرينًا + اختبار 20 سؤالًا · THE FLASHBACK DIRECTOR`,
+    stats: `56 شريحة · 11 تمرينًا + اختبار 20 سؤالًا · THE FLASHBACK DIRECTOR`,
     href: "#/lesson/27",
     grad: "from-violet-600 to-indigo-500",
   },
@@ -376,7 +290,7 @@ const CARDS: Card[] = [
     title: "الدرس 28: Past Perfect vs Past Simple",
     en: "Past Perfect vs Past Simple",
     emoji: "🧭",
-    stats: `${L28_SLIDES.length} شريحة · 9 تحديات + اختبار 20 سؤالًا · THE TIMELINE MASTER`,
+    stats: `47 شريحة · 9 تحديات + اختبار 20 سؤالًا · THE TIMELINE MASTER`,
     href: "#/lesson/28",
     grad: "from-indigo-600 to-sky-500",
   },
@@ -734,83 +648,21 @@ export default function App() {
   useEffect(() => {
     if (route > 0) setLastLesson(route);
   }, [route]);
-  let page: React.ReactNode;
-  if (route === 1) page = <Lesson1 onExit={goHome} />;
-  else if (route === 2) page = <Lesson2 onExit={goHome} />;
-  else if (route === 3) page = <Lesson3 onExit={goHome} />;
-  else if (route === 4) page = <Lesson4 onExit={goHome} />;
-  else if (route === 5) page = <Lesson5 onExit={goHome} />;
-  else if (route === 6) page = <Lesson6 onExit={goHome} />;
-  else if (route === 7) page = <Lesson7 onExit={goHome} />;
-  else if (route === 8) page = <Lesson8 onExit={goHome} />;
-  else if (route === 9) page = <Lesson9 onExit={goHome} />;
-  else if (route === 10) page = <Lesson10 onExit={goHome} />;
-  else if (route === 11) page = <Lesson11 onExit={goHome} />;
-  else if (route === 12) page = <Lesson12 onExit={goHome} />;
-  else if (route === 13) page = <Lesson13 onExit={goHome} />;
-  else if (route === 14) page = <Lesson14 onExit={goHome} />;
-  else if (route === 15) page = <Lesson15 onExit={goHome} />;
-  else if (route === 16) page = <Lesson16 onExit={goHome} />;
-  else if (route === 17) page = <Lesson17 onExit={goHome} />;
-  else if (route === 18) page = <Lesson18 onExit={goHome} />;
-  else if (route === 19) page = <Lesson19 onExit={goHome} />;
-  else if (route === 20) page = <Lesson20 onExit={goHome} />;
-  else if (route === 21) page = <Lesson21 onExit={goHome} />;
-  else if (route === 22) page = <Lesson22 onExit={goHome} />;
-  else if (route === 23) page = <Lesson23 onExit={goHome} />;
-  else if (route === 24) page = <Lesson24 onExit={goHome} />;
-  else if (route === 25) page = <Lesson25 onExit={goHome} />;
-  else if (route === 26) page = <Lesson26 onExit={goHome} />;
-  else if (route === 27) page = <Lesson27 onExit={goHome} />;
-  else if (route === 28) page = <Lesson28 onExit={goHome} />;
-  else if (route === 29) page = <Lesson29 onExit={goHome} />;
-  else if (route === 30) page = <Lesson30 onExit={goHome} />;
-  else if (route === 31) page = <Lesson31 onExit={goHome} />;
-  else if (route === 32) page = <Lesson32 onExit={goHome} />;
-  else if (route === 33) page = <Lesson33 onExit={goHome} />;
-  else if (route === 34) page = <Lesson34 onExit={goHome} />;
-  else if (route === 35) page = <Lesson35 onExit={goHome} />;
-  else if (route === 36) page = <Lesson36 onExit={goHome} />;
-  else if (route === 37) page = <Lesson37 onExit={goHome} />;
-  else if (route === 38) page = <Lesson38 onExit={goHome} />;
-  else if (route === 39) page = <Lesson39 onExit={goHome} />;
-  else if (route === 40) page = <Lesson40 onExit={goHome} />;
-  else if (route === 41) page = <Lesson41 onExit={goHome} />;
-  else if (route === 42) page = <Lesson42 onExit={goHome} />;
-  else if (route === 43) page = <Lesson43 onExit={goHome} />;
-  else if (route === 44) page = <Lesson44 onExit={goHome} />;
-  else if (route === 45) page = <Lesson45 onExit={goHome} />;
-  else if (route === 46) page = <Lesson46 onExit={goHome} />;
-  else if (route === 47) page = <Lesson47 onExit={goHome} />;
-  else if (route === 48) page = <Lesson48 onExit={goHome} />;
-  else if (route === 49) page = <Lesson49 onExit={goHome} />;
-  else if (route === 50) page = <Lesson50 onExit={goHome} />;
-  else if (route === 51) page = <Lesson51 onExit={goHome} />;
-  else if (route === 52) page = <Lesson52 onExit={goHome} />;
-  else if (route === 53) page = <Lesson53 onExit={goHome} />;
-  else if (route === 54) page = <Lesson54 onExit={goHome} />;
-  else if (route === 55) page = <Lesson55 onExit={goHome} />;
-  else if (route === 56) page = <Lesson56 onExit={goHome} />;
-  else if (route === 57) page = <Lesson57 onExit={goHome} />;
-  else if (route === 58) page = <Lesson58 onExit={goHome} />;
-  else if (route === 59) page = <Lesson59 onExit={goHome} />;
-  else if (route === 60) page = <Lesson60 onExit={goHome} />;
-  else if (route === 61) page = <Lesson61 onExit={goHome} />;
-  else if (route === 62) page = <Lesson62 onExit={goHome} />;
-  else page = <Hub currentLesson={lastLesson || null} />;
-  // عزل الدرس وحده داخل حدّ الأخطاء: الفهرس وبوابة كلمة المرور وشارة القفل
-  // تبقى خارجه، لذلك لا يسقط الموقع كله إذا انهار درس واحد.
+  // كل درس 1–62 يُحمَّل عند الطلب عبر React.lazy داخل LazyLessonHost
+  // (انظر src/lessons/loaders.ts)؛ الفهرس لا يجلب أي درس مسبقًا.
   const isLessonRoute = route >= 1 && route <= CARDS.length;
+  const page: React.ReactNode = isLessonRoute ? (
+    <LazyLessonHost route={route} onExit={goHome} />
+  ) : (
+    <Hub currentLesson={lastLesson || null} />
+  );
+  // عزل الدرس وحده داخل حدّ الأخطاء (ضمن LazyLessonHost): الفهرس وبوابة
+  // كلمة المرور وشارة القفل تبقى خارجه، لذلك لا يسقط الموقع كله إذا انهار
+  // درس واحد أو فشل تحميل الـ chunk الخاص به.
   return (
     <SitePasswordGate>
       <ArenaClean />
-      {isLessonRoute ? (
-        <LessonErrorBoundary lessonNumber={route} resetKey={route} onGoHome={goHome}>
-          {page}
-        </LessonErrorBoundary>
-      ) : (
-        page
-      )}
+      {page}
     </SitePasswordGate>
   );
 }

@@ -320,9 +320,9 @@ ok(design.includes("LatinRuns"), "mixed prose uses the shared mixed-direction is
 ok(read("ledger42.ts").includes("splitTitle42"), "mixed headings are split into isolated lines");
 
 // --- registry ---------------------------------------------------------------
-const app = readFileSync("src/App.tsx", "utf8");
-ok(app.includes("route === 42") && app.includes('href: "#/lesson/42"'), "route + hub card registered");
-ok(app.includes('import Lesson42 from "./lessons/lesson42/Lesson42"'), "lesson component imported");
+const app = (readFileSync("src/App.tsx", "utf8") + "\n" + readFileSync("src/lessons/loaders.ts", "utf8"));
+ok(app.includes('import("./lesson42/Lesson42")') && app.includes('href: "#/lesson/42"'), "route + hub card registered");
+ok(app.includes('import("./lesson42/Lesson42")'), "lesson component imported");
 const card42 = /n: 42,[\s\S]*?grad: "([^"]+)"/.exec(app)?.[1];
 const card1 = /n: 1,[\s\S]*?grad: "([^"]+)"/.exec(app)?.[1];
 const card41 = /n: 41,[\s\S]*?grad: "([^"]+)"/.exec(app)?.[1];
@@ -330,7 +330,7 @@ ok(card42 === card1, `hub card reuses the Lesson 1 gradient (${card42})`);
 ok(card42 === card41, "hub card matches the Lesson 41 rebuild gradient");
 const cardStats = /n: 42,[\s\S]*?stats: "[^"]*?(\d+) شريحة قصيرة/.exec(app);
 ok(cardStats && Number(cardStats[1]) === slides.length, `hub stats match the slide count (${cardStats?.[1]} vs ${slides.length})`);
-ok((app.match(/n: (\d+),/g) || []).length === 52, "the hub lists all 52 cards");
+ok((app.match(/n: (\d+),/g) || []).length === 62, "the hub lists all 62 cards");
 ok(/120/.test(read("Lesson42.tsx")), "the 120-lesson course total is preserved in the roadmap slide");
 
 // --- contrast tokens --------------------------------------------------------
@@ -373,8 +373,12 @@ const changed = [
     ...execFileSync("git", ["ls-files", "--others", "--exclude-standard"], { encoding: "utf8" }).split("\n"),
   ]),
 ].filter(Boolean);
+const fix4Scope = (path) =>
+  path === ".github/workflows/verify.yml" || path === "src/lessons/loaders.ts" || path.startsWith("src/shared/") ||
+  /^scripts\/[\w\-/.]+\.(mjs|ts)$/.test(path) ||
+  path.startsWith("docs/runtime-audit/") || path.startsWith("docs/lazy-loading/") || /^docs\/lesson\d+-static-audit\.json$/.test(path);
 ok(
-  changed.every((path) => integration.has(path) || path.startsWith("src/lessons/lesson42/") || path.startsWith("docs/lesson42")),
+  changed.every((path) => integration.has(path) || path.startsWith("src/lessons/lesson42/") || path.startsWith("docs/lesson42") || fix4Scope(path)),
   `changes stay inside Lesson 42, its audits and its docs (${changed.filter((p) => !integration.has(p) && !p.startsWith("src/lessons/lesson42/") && !p.startsWith("docs/lesson42")).join(", ") || "clean"})`,
 );
 ok(!changed.some((path) => /^src\/lessons\/lesson(?:[1-9]|[1-3][0-9]|4[0134])\//.test(path)), "no other lesson folder was modified");

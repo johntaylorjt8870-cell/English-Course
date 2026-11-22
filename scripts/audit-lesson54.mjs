@@ -128,7 +128,7 @@ try {
   // ---- 6) القواعد المعمارية ----
   const lesson54 = read("src/lessons/lesson54/Lesson54.tsx");
   const lesson1 = read("src/lessons/lesson1/Lesson1.tsx");
-  const app = read("src/App.tsx");
+  const app = read("src/App.tsx") + "\n" + read("src/lessons/loaders.ts");
   check("uses the original Lesson1Shell", () => assert.ok(lesson54.includes('from "../../shared/Lesson1Shell"')));
   check("uses the ORIGINAL SlideFrame from Lesson1", () => assert.ok(lesson54.includes('import { SlideFrame } from "../lesson1/Lesson1"')));
   check("Lesson1 exports SlideFrame (body untouched)", () => assert.ok(lesson1.includes("export function SlideFrame({")));
@@ -141,7 +141,7 @@ try {
     assert.ok(area.includes('import("./testKey54")'));
     assert.ok(!area.includes("TEST_SOLUTIONS_54"));
   });
-  check("App registers route 54", () => assert.ok(app.includes("route === 54") && app.includes('import Lesson54 from "./lessons/lesson54/Lesson54"')));
+  check("App registers route 54", () => assert.ok(app.includes('import("./lesson54/Lesson54")') && app.includes('href: "#/lesson/54"')));
   check("App registers hub card 54", () => assert.ok(app.includes('n: 54,') && app.includes('href: "#/lesson/54"')));
   check("next lesson 55 link", () => assert.ok(lesson54.includes('href="#/lesson/55"')));
   check("progress 54 / 120 and 45%", () => assert.ok(lesson54.includes("54 / 120") && lesson54.includes("45%")));
@@ -151,16 +151,24 @@ try {
     assert.ok(css.includes(".lesson54 "));
     assert.ok(css.includes("#l54-main { margin-bottom: 5rem; }"));
   });
-  check("shared architecture files untouched", () => {
+  check("shared architecture files: only Fix #4 surface changed", () => {
     const { execFileSync } = require("node:child_process");
-    const diff = execFileSync("git", ["diff", "main", "--", "src/shared", "src/index.css"], { cwd: root, encoding: "utf8" });
-    assert.equal(diff.trim(), "");
+    // Fix #4 يجيز فقط: LessonErrorBoundary.tsx (إضافة onRetry اختيارية) والملفات الجديدة
+    // LazyLessonHost.tsx و LessonLoadingFallback.tsx. أي تغيير آخر في src/shared أو src/index.css مرفوض.
+    const allowed = new Set(["src/shared/LessonErrorBoundary.tsx", "src/shared/LazyLessonHost.tsx", "src/shared/LessonLoadingFallback.tsx"]);
+    const names = execFileSync("git", ["diff", "--name-only", "main", "--", "src/shared", "src/index.css"], { cwd: root, encoding: "utf8" }).split("\n").filter(Boolean);
+    // git diff لا يرى الملفات غير المتتبعة؛ نضيفها صراحةً ثم نقصرها على نفس القائمة.
+    const untracked = execFileSync("git", ["ls-files", "--others", "--exclude-standard", "--", "src/shared", "src/index.css"], { cwd: root, encoding: "utf8" }).split("\n").filter(Boolean);
+    const touched = [...new Set([...names, ...untracked])];
+    assert.ok(touched.every((f) => allowed.has(f)), `unexpected shared changes: ${touched.filter((f) => !allowed.has(f)).join(", ")}`);
+    assert.ok(!touched.includes("src/index.css"), "src/index.css must stay untouched");
   });
-  check("Lesson1 change is export-only", () => {
+  check("Lesson1 change is export-only (already on main)", () => {
     const { execFileSync } = require("node:child_process");
     const diff = execFileSync("git", ["diff", "main", "--", "src/lessons/lesson1/Lesson1.tsx"], { cwd: root, encoding: "utf8" });
-    assert.equal(diff.split("\n").filter((l) => /^[+-]/.test(l) && !/^[+-]{3}/.test(l)).length, 2);
-    assert.ok(diff.includes("+export function SlideFrame({"));
+    // تغيير «export function SlideFrame» دُمج في main سابقًا؛ يجب أن يبقى Lesson1.tsx مطابقًا لـ main في هذا العمل.
+    assert.equal(diff.trim(), "");
+    assert.ok(read("src/lessons/lesson1/Lesson1.tsx").includes("export function SlideFrame({"));
   });
 } finally {
   await rm(dir, { recursive: true, force: true });

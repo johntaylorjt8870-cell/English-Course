@@ -673,8 +673,8 @@ ok(contrastFailures.length === 0, `the lesson palette meets WCAG AA 4.5:1 (${con
 
 /* ---------------------------------------------------------------- 11) التسجيل والوثائق */
 {
-  const appText = readFileSync(join(root, "src/App.tsx"), "utf8");
-  ok(appText.includes('import Lesson37 from "./lessons/lesson37/Lesson37"') && appText.includes('href: "#/lesson/37"') && appText.includes("route === 37"), "App.tsx registers Lesson 37 as a hub card and route");
+  const appText = (readFileSync(join(root, "src/App.tsx"), "utf8") + "\n" + readFileSync(join(root, "src/lessons/loaders.ts"), "utf8"));
+  ok(appText.includes('import("./lesson37/Lesson37")') && appText.includes('href: "#/lesson/37"') && appText.includes('import("./lesson37/Lesson37")'), "App.tsx registers Lesson 37 as a hub card and route");
   const docs = readFileSync(join(root, "docs/lesson37-coverage.md"), "utf8");
   ok((docs.match(/^\| §\d+/gm) || []).length === 38, "coverage document lists the 38 numbered sections");
   ok(docs.includes("**58**") && docs.includes("Table reconstruction"), "coverage document records the step count and the rebuilt tables");

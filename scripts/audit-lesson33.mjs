@@ -71,7 +71,7 @@ const GUIDE = lessonSrc("TeacherGuide33.tsx");
 const TESTDATA = lessonSrc("testData33.ts");
 const KEY = lessonSrc("key33.ts");
 const CSS = lessonSrc("lesson33.css");
-const APP = read("src/App.tsx");
+const APP = read("src/App.tsx") + "\n" + read("src/lessons/loaders.ts");
 
 // --- التنقّل والقفل (عقود التدقيق المشترك) ---
 ok(/from "\.\.\/\.\.\/shared\/LessonStepNav"/.test(LESSON), "nav: LessonStepNav مستورد من الأداة المشتركة");
@@ -136,9 +136,9 @@ for (const f of STUDENT_FILES) {
 ok(!/aria-hidden="true"[^>]*>\s*(?:Present|I |She |He |They |Ryan|Nora|Emma)/.test(LESSON), "a11y: لا نص تعليمي داخل aria-hidden");
 
 // --- تسجيل الدرس في المنصة ---
-ok(/from "\.\/lessons\/lesson33\/Lesson33"/.test(APP), "registration: App.tsx يستورد Lesson33");
+ok(/import\("\.\/lesson33\/Lesson33"\)/.test(APP), "registration: loaders.ts يحمّل Lesson33 كسولًا");
 ok(/n:\s*33,/.test(APP), "registration: بطاقة الدرس 33 موجودة في App.tsx");
-ok(/route === 33\) page = <Lesson33 onExit=\{goHome\} \/>/.test(APP), "registration: مسار #/lesson/33 مربوط بالمكوّن");
+ok(APP.includes('import("./lesson33/Lesson33")') && APP.includes("<LazyLessonHost route={route} onExit={goHome} />"), "registration: مسار #/lesson/33 مربوط عبر LazyLessonHost");
 ok(/href: "#\/lesson\/33"/.test(APP), "registration: بطاقة الدرس 33 تشير إلى #/lesson/33");
 
 // --- تبعات التشغيل لم تتغير ---
@@ -1038,7 +1038,30 @@ eq(report.length, 0, `student-copy: لا تسميات مصدر في نص الط�
     "scripts/audit-lesson33.mjs",
     "scripts/audit-lesson33-browser.mjs",
     "scripts/lesson33-coverage-doc.mjs",
+    // Fix #4 (Lazy Loading للدروس) — التوسعة المشتركة المعمارية لهذا الفرع:
+    // محمّل الاستيراد الديناميكي، مضيف التحميل، احتياطي التحميل، وحدود الخطأ.
+    ".github/workflows/verify.yml",
+    "src/lessons/loaders.ts",
+    "src/shared/LessonErrorBoundary.tsx",
+    "src/shared/LazyLessonHost.tsx",
+    "src/shared/LessonLoadingFallback.tsx",
   ]);
+  // Fix #4: أدوات التدقيق المشتركة ومخرجات التوثيق لهذا الفرع — وليست تحريضًا على تعديل درس آخر.
+  const fix4Scope = (p) =>
+    p.startsWith("scripts/audit-") ||
+    p.startsWith("scripts/check-") ||
+    p.startsWith("scripts/lazy-") ||
+    p.startsWith("scripts/probe-lesson61") ||
+    p === "scripts/lib/error-boundary-bundles.mjs" ||
+    p === "scripts/fixtures/error-boundary/harness/vite.config.ts" ||
+    p.startsWith("docs/runtime-audit/") ||
+    p.startsWith("docs/lazy-loading/");
+  const inScope = (p) =>
+    integration.has(p) ||
+    fix4Scope(p) ||
+    p.startsWith("src/lessons/lesson33/") ||
+    p.startsWith("docs/lesson33") ||
+    p.startsWith("docs/navigation-fix-visual/");
   const resolveBase = () => {
     for (const candidate of ["origin/main", "main", "HEAD"]) {
       try {
@@ -1058,11 +1081,11 @@ eq(report.length, 0, `student-copy: لا تسميات مصدر في نص الط�
     ]),
   ].filter(Boolean);
   ok(
-    changed.every((p) => integration.has(p) || p.startsWith("src/lessons/lesson33/") || p.startsWith("docs/lesson33") || p.startsWith("docs/navigation-fix-visual/")),
-    `git: التغييرات داخل الدرس 33 وتدقيقاته ووثائقه (${changed.filter((p) => !(integration.has(p) || p.startsWith("src/lessons/lesson33/") || p.startsWith("docs/lesson33") || p.startsWith("docs/navigation-fix-visual/"))).join(", ") || "لا شيء"})`,
+    changed.every(inScope),
+    `git: التغييرات داخل الدرس 33 وتدقيقاته ووثائقه (${changed.filter((p) => !inScope(p)).join(", ") || "لا شيء"})`,
   );
   ok(!changed.some((p) => /^src\/lessons\/lesson(?!33\/)/.test(p)), "git: لم يُمَسّ مجلد درس آخر");
-  ok(!changed.some((p) => p.startsWith("src/shared/")), "git: لم تُمَسّ المكونات المشتركة (بنك الاختبار النهائي وأدوات التنقّل)");
+  ok(!changed.some((p) => p.startsWith("src/shared/") && !integration.has(p)), "git: لم تُمَسّ المكونات المشتركة خارج نطاق Fix #4 (LazyLessonHost/LessonLoadingFallback/LessonErrorBoundary)");
 }
 
 // ------------------------------------------------------------

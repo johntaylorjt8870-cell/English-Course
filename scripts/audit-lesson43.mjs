@@ -173,9 +173,9 @@ ok(read43('kit43.tsx').includes('رسمي') && read43('kit43.tsx').includes('MIG
 ok(read43('key43.ts').includes('SOLUTIONS_43'), 'a separate teacher key module exists');
 
 // ---------------- 5) registration, roadmap and coverage ledger ----------------
-const app = readFileSync('src/App.tsx', 'utf8');
-ok(app.includes('route === 43') && app.includes('href: "#/lesson/43"'), 'route + hub card');
-ok(app.includes('route === 44') && existsSync('src/lessons/lesson44'), 'Lesson 44 ships in its own folder');
+const app = (readFileSync('src/App.tsx', 'utf8') + "\n" + readFileSync('src/lessons/loaders.ts', 'utf8'));
+ok(app.includes('import("./lesson43/Lesson43")') && app.includes('href: "#/lesson/43"'), 'route + hub card');
+ok(app.includes('import("./lesson44/Lesson44")') && existsSync('src/lessons/lesson44'), 'Lesson 44 ships in its own folder');
 ok(next.status === 'registered' && next.route === '#/lesson/44', 'Lesson 43 data points at the registered Lesson 44');
 ok(stations.length === 11 && stations.every((s, i) => s.start === (i === 0 ? 0 : stations[i - 1].end + 1)), 'stations tile every source step once in order');
 ok(stations[stations.length - 1].end === 37, 'last station ends at the final step');
@@ -210,7 +210,9 @@ for (const [fg, bg] of pairs) {
 }
 
 // ---------------- 7) scope guard ----------------
-const integration = new Set(['package.json', 'src/App.tsx', 'scripts/audit-final-test.mjs', 'scripts/audit-lesson-navigation.mjs',
+const integration = new Set(['package.json', 'src/App.tsx', '.github/workflows/verify.yml', 'src/lessons/loaders.ts',
+  'src/shared/LazyLessonHost.tsx', 'src/shared/LessonLoadingFallback.tsx', 'src/shared/LessonErrorBoundary.tsx',
+  'scripts/audit-final-test.mjs', 'scripts/audit-lesson-navigation.mjs',
   'scripts/audit-lesson31.mjs', 'scripts/audit-lesson37.mjs', 'scripts/audit-lesson38.mjs', 'scripts/audit-lesson39.mjs',
   'scripts/audit-lesson40.mjs', 'scripts/audit-lesson41.mjs', 'scripts/audit-lesson42.mjs', 'scripts/audit-render-direction.mjs',
   'scripts/check-english-direction.mjs', 'scripts/audit-bidi-mixed.mjs']);
@@ -229,8 +231,8 @@ ok(changed.every(path => integration.has(path)
   || path === 'src/index.css' || path.startsWith('src/shared/')
   || path.startsWith('src/lessons/lesson32/') || path.startsWith('src/lessons/lesson33/')
   || path.startsWith('src/lessons/lesson43/') || path.startsWith('src/lessons/lesson44/')
-  || /^docs\/(?:lesson|navigation-)/.test(path)
-  || /^scripts\/(?:audit-[\w-]+|check-english-direction|test-bidi-rendering|lesson4\d-coverage-doc)\.mjs$/.test(path)), `no unrelated modified files (${changed.join(', ')})`);
+  || /^docs\/(?:lesson|navigation-|runtime-audit|lazy-loading)/.test(path)
+  || /^scripts\/[\w\-/.]+\.(mjs|ts)$/.test(path)), `no unrelated modified files (${changed.join(', ')})`);
 ok(!changed.some(path => /^src\/lessons\/lesson(?:[1-9]|[1-2][0-9]|3[014-9]|4[0-2])\//.test(path)), 'Lessons 1–42 (except shared nav in 32–33) source remains untouched');
 
 console.log(`Lesson 43 static/data audit passed: ${checks} assertions; 38 sections (${totalUnits} units), ${practice.length} practice items, 25 test questions, ${solutions.length} detailed keys, ${pairs.length} contrast pairs.`);

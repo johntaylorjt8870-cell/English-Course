@@ -36,6 +36,9 @@ jobs:
       - name: Lesson Error Boundary Tests
         run: npm run test:error-boundary
 
+      - name: Lazy Lesson Host Tests
+        run: npm run test:lazy-loading
+
       - name: Direction & BIDI Check
         run: npm run check:english-direction
 

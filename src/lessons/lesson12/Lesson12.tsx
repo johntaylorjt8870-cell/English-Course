@@ -1373,19 +1373,6 @@ function slideTitle(s: Slide12): string {
   }
 }
 
-const SEC_C: Record<string, string> = {
-  البداية: "text-slate-400",
-  الفكرة: "text-orange-600",
-  "الفكرة الأساسية": "text-orange-600",
-  "الكلمات الدالة": "text-violet-600",
-  "الأفعال المنتظمة": "text-emerald-600",
-  "الأفعال غير المنتظمة": "text-amber-600",
-  "أخطاء وخط زمني": "text-rose-600",
-  التمارين: "text-orange-600",
-  التحديات: "text-amber-600",
-  الخاتمة: "text-slate-600",
-};
-
 function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => void; onExit: () => void; onClose?: () => void }) {
   const groups = useMemo(() => {
     const g: { sec: string; idxs: number[] }[] = [];
@@ -1402,13 +1389,13 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
         <button onClick={onExit} className="text-sm font-semibold text-slate-400 transition hover:text-slate-800">
           → جميع الدروس
         </button>
-        <div className="font-head mt-2 text-lg font-bold text-slate-900">الدرس 12 · الماضي البسيط</div>
+        <div className="font-head mt-2 text-xl font-bold text-slate-900">الدرس 12 · الماضي البسيط</div>
         <En className="text-xs font-semibold text-slate-400">Past Simple</En>
       </div>
       <nav className="flex-1 overflow-y-auto p-3">
         {groups.map((g) => (
           <div key={g.sec} className="mb-3">
-            <div className={`px-3 py-1 text-xs font-bold ${SEC_C[g.sec] || "text-slate-400"}`}>{g.sec}</div>
+            <div className="px-3 py-1 text-xs font-bold text-slate-400">{g.sec}</div>
             {g.idxs.map((idx) => {
               const on = idx === i;
               return (
@@ -1418,9 +1405,9 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
                     setI(idx);
                     onClose?.();
                   }}
-                  className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${on ? "bg-orange-600 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}
+                  className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-right text-sm transition ${on ? "bg-slate-900 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}
                 >
-                  <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${on ? "bg-white/25" : "bg-slate-100"}`}>{idx + 1}</span>
+                  <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${on ? "bg-white/20" : "bg-slate-100"}`}>{idx + 1}</span>
                   <span className="truncate font-semibold">{slideTitle(SLIDES[idx])}</span>
                   <span className="mr-auto text-base">{SLIDES[idx].mascot}</span>
                 </button>
@@ -1471,7 +1458,7 @@ export default function Lesson12({ onExit }: { onExit: () => void }) {
   const progress = ((i + 1) / total) * 100;
 
   return (
-    <div className="style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#fdf6f2] text-slate-800">
+    <div className="style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#f4f6fb] text-slate-800">
       <Signature />
       <div className="relative flex min-h-0 flex-1">
         <SignatureGhost />
@@ -1480,15 +1467,15 @@ export default function Lesson12({ onExit }: { onExit: () => void }) {
         </div>
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
           <header className="flex items-center gap-3 px-4 pt-3 lg:px-6 xl:px-8">
-            <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border-2 border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس">
+            <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس الدرس">
               ☰
             </button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500">
                 {slide.section} · <span className="text-slate-800">{slideTitle(slide)}</span>
               </div>
-              <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
-                <div className="h-full rounded-full bg-gradient-to-l from-orange-500 via-rose-400 to-amber-500 transition-all duration-500" style={{ width: `${progress}%` }} />
+              <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+                <div className="h-full rounded-full bg-gradient-to-l from-sky-500 via-orange-400 to-emerald-500 transition-all duration-500" style={{ width: `${progress}%` }} />
               </div>
             </div>
             <span className="rounded-lg bg-white px-3 py-1 text-sm font-bold text-slate-500 shadow-sm">
@@ -1501,12 +1488,12 @@ export default function Lesson12({ onExit }: { onExit: () => void }) {
             </div>
           </main>
           <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center px-3">
-            <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border-2 border-slate-900/[0.05] bg-white/95 p-1.5 shadow-xl backdrop-blur">
+            <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/95 p-1.5 shadow-xl backdrop-blur">
               <button onClick={go.prev} disabled={i === 0} className="rounded-full px-4 py-2 text-sm font-bold text-slate-700 transition enabled:hover:bg-slate-100 disabled:opacity-30">
                 → السابق
               </button>
               <span className="h-6 w-px bg-slate-200" />
-              <button onClick={go.next} disabled={i === total - 1} className="rounded-full bg-orange-600 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-orange-700 disabled:opacity-30">
+              <button onClick={go.next} disabled={i === total - 1} className="rounded-full bg-slate-900 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-slate-700 disabled:opacity-30">
                 التالي ←
               </button>
             </div>

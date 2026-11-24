@@ -2758,21 +2758,6 @@ function slideTitle(slide: Slide17): string {
   return slide.title;
 }
 
-const SECTION_COLORS: Record<string, string> = {
-  "البداية": "text-slate-400",
-  "من الدرس 16 إلى 17": "text-sky-600",
-  "الخريطة والفرق الأساسي": "text-indigo-600",
-  "آلة التحويل — كل ضمير": "text-emerald-600",
-  "قواعد لا تتغير": "text-amber-600",
-  "أنظمة الملكية الثلاثة": "text-violet-600",
-  "الاستخدام والسؤال Whose": "text-teal-600",
-  "الأزواج: صفة ↔ ضمير": "text-fuchsia-600",
-  "الفخاخ والأخطاء": "text-rose-600",
-  "الملكية والعدد": "text-orange-600",
-  "التمارين والتحديات": "text-blue-600",
-  "الخاتمة": "text-slate-600",
-};
-
 function Rail({
   i,
   setI,
@@ -2799,7 +2784,7 @@ function Rail({
         <button onClick={onExit} className="text-sm font-semibold text-slate-400 transition hover:text-slate-800">
           → جميع الدروس
         </button>
-        <div className="font-head mt-2 text-lg font-bold text-slate-900">
+        <div className="font-head mt-2 text-xl font-bold text-slate-900">
           <Rich text="الدرس 17 · Possessive Pronouns" />
         </div>
         <En className="text-xs font-semibold text-slate-400">🔬 {LAB_NAME_17}</En>
@@ -2810,7 +2795,7 @@ function Rail({
       <nav className="flex-1 overflow-y-auto p-3">
         {groups.map((group) => (
           <div key={group.section} className="mb-3">
-            <div className={`px-3 py-1 text-xs font-bold ${SECTION_COLORS[group.section] || "text-slate-400"}`}>
+            <div className="px-3 py-1 text-xs font-bold text-slate-400">
               <Rich text={group.section} />
             </div>
             {group.indexes.map((index) => {
@@ -2822,13 +2807,13 @@ function Rail({
                     setI(index);
                     onClose?.();
                   }}
-                  className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${
-                    active ? "bg-indigo-600 text-white shadow" : "text-slate-600 hover:bg-slate-100"
+                  className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-right text-sm transition ${
+                    active ? "bg-slate-900 text-white shadow" : "text-slate-600 hover:bg-slate-100"
                   }`}
                 >
                   <span
                     className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${
-                      active ? "bg-white/25" : "bg-slate-100"
+                      active ? "bg-white/20" : "bg-slate-100"
                     }`}
                   >
                     {index + 1}
@@ -2883,7 +2868,7 @@ export default function Lesson17({ onExit }: { onExit: () => void }) {
   return (
     <div
       dir="rtl"
-      className="style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#eef2ff] text-slate-800"
+      className="style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#f4f6fb] text-slate-800"
     >
       <Signature />
       <div className="relative flex min-h-0 flex-1">
@@ -2895,8 +2880,8 @@ export default function Lesson17({ onExit }: { onExit: () => void }) {
           <header className="flex items-center gap-3 px-4 pt-3 lg:px-6 xl:px-8">
             <button
               onClick={() => setMenu(true)}
-              className="grid h-10 w-10 place-items-center rounded-xl border-2 border-slate-200 bg-white text-lg shadow-sm lg:hidden"
-              aria-label="فهرس"
+              className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-lg shadow-sm lg:hidden"
+              aria-label="فهرس الدرس"
             >
               ☰
             </button>
@@ -2907,9 +2892,9 @@ export default function Lesson17({ onExit }: { onExit: () => void }) {
                   <Rich text={slideTitle(slide)} />
                 </span>
               </div>
-              <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
+              <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
                 <div
-                  className="h-full rounded-full bg-gradient-to-l from-indigo-600 via-violet-500 to-fuchsia-500 transition-all duration-500"
+                  className="h-full rounded-full bg-gradient-to-l from-sky-500 via-orange-400 to-emerald-500 transition-all duration-500"
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -2924,7 +2909,7 @@ export default function Lesson17({ onExit }: { onExit: () => void }) {
             </div>
           </main>
           <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center px-3">
-            <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border-2 border-slate-900/[0.05] bg-white/95 p-1.5 shadow-xl backdrop-blur">
+            <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/95 p-1.5 shadow-xl backdrop-blur">
               <button
                 onClick={navigation.prev}
                 disabled={index === 0}
@@ -2936,7 +2921,7 @@ export default function Lesson17({ onExit }: { onExit: () => void }) {
               <button
                 onClick={navigation.next}
                 disabled={index === total - 1}
-                className="rounded-full bg-indigo-600 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-indigo-700 disabled:opacity-30"
+                className="rounded-full bg-slate-900 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-slate-700 disabled:opacity-30"
               >
                 التالي ←
               </button>

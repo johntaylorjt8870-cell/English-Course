@@ -1122,17 +1122,6 @@ function slideTitle(slide: Slide15): string {
   return slide.title;
 }
 
-const SECTION_COLORS: Record<string, string> = {
-  [ "البداية" ]: "text-slate-400",
-  [ "الأساس — was / were" ]: "text-amber-600",
-  [ "الاستخدامات" ]: "text-orange-600",
-  [ "النظامان — الفعل العادي مقابل Verb to be" ]: "text-rose-600",
-  [ "الأسئلة والإجابات" ]: "text-violet-600",
-  [ "Wh Questions مع was/were" ]: "text-indigo-600",
-  [ "التمارين والتحديات" ]: "text-emerald-600",
-  [ "الخاتمة" ]: "text-slate-600",
-};
-
 function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => void; onExit: () => void; onClose?: () => void }) {
   const groups = useMemo(() => {
     const out: { section: string; indexes: number[] }[] = [];
@@ -1147,18 +1136,18 @@ function Rail({ i, setI, onExit, onClose }: { i: number; setI: (n: number) => vo
     <aside className="flex h-full flex-col">
       <div className="border-b border-slate-100 p-5">
         <button onClick={onExit} className="text-sm font-semibold text-slate-400 transition hover:text-slate-800">→ جميع الدروس</button>
-        <div className="font-head mt-2 text-lg font-bold text-slate-900"><Rich text="الدرس 15 · was / were" /></div>
+        <div className="font-head mt-2 text-xl font-bold text-slate-900"><Rich text="الدرس 15 · was / were" /></div>
         <En className="text-xs font-semibold text-slate-400">Past Simple of Verb to be — was / were</En>
       </div>
       <nav className="flex-1 overflow-y-auto p-3">
         {groups.map((group) => (
           <div key={group.section} className="mb-3">
-            <div className={`px-3 py-1 text-xs font-bold ${SECTION_COLORS[group.section] || "text-slate-400"}`}><Rich text={group.section} /></div>
+            <div className="px-3 py-1 text-xs font-bold text-slate-400"><Rich text={group.section} /></div>
             {group.indexes.map((index) => {
               const active = index === i;
               return (
-                <button key={index} onClick={() => { setI(index); onClose?.(); }} className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${active ? "bg-amber-600 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}>
-                  <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/25" : "bg-slate-100"}`}>{index + 1}</span>
+                <button key={index} onClick={() => { setI(index); onClose?.(); }} className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-right text-sm transition ${active ? "bg-slate-900 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}>
+                  <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/20" : "bg-slate-100"}`}>{index + 1}</span>
                   <span className="truncate font-semibold">{slideTitle(SLIDES[index])}</span>
                   <span className="mr-auto text-base">{SLIDES[index].mascot}</span>
                 </button>
@@ -1196,26 +1185,26 @@ export default function Lesson15({ onExit }: { onExit: () => void }) {
   const slide = SLIDES[index];
   const progress = ((index + 1) / total) * 100;
   return (
-    <div dir="rtl" className="style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#fffaf3] text-slate-800">
+    <div dir="rtl" className="style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#f4f6fb] text-slate-800">
       <Signature />
       <div className="relative flex min-h-0 flex-1">
         <SignatureGhost />
         <div className="relative z-10 hidden w-72 shrink-0 border-l border-slate-200 bg-white/80 backdrop-blur lg:block"><Rail i={index} setI={setIndex} onExit={onExit} /></div>
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
           <header className="flex items-center gap-3 px-4 pt-3 lg:px-6 xl:px-8">
-            <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border-2 border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس">☰</button>
+            <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس الدرس">☰</button>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-bold text-slate-500"><Rich text={`${slide.section} · `} /><span className="text-slate-800"><Rich text={slideTitle(slide)} /></span></div>
-              <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80"><div className="h-full rounded-full bg-gradient-to-l from-amber-600 via-orange-500 to-violet-500 transition-all duration-500" style={{ width: `${progress}%` }} /></div>
+              <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-200"><div className="h-full rounded-full bg-gradient-to-l from-sky-500 via-orange-400 to-emerald-500 transition-all duration-500" style={{ width: `${progress}%` }} /></div>
             </div>
             <span className="rounded-lg bg-white px-3 py-1 text-sm font-bold text-slate-500 shadow-sm">{index + 1} / {total}</span>
           </header>
           <main id="l15-main" className="lesson-main-scroll flex-1 overflow-y-auto pb-32 pt-4"><div key={index} className="pop lesson-content-container"><SlideView15 s={slide} onExit={onExit} /></div></main>
           <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center px-3">
-            <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border-2 border-slate-900/[0.05] bg-white/95 p-1.5 shadow-xl backdrop-blur">
+            <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/95 p-1.5 shadow-xl backdrop-blur">
               <button onClick={navigation.prev} disabled={index === 0} className="rounded-full px-4 py-2 text-sm font-bold text-slate-700 transition enabled:hover:bg-slate-100 disabled:opacity-30">→ السابق</button>
               <span className="h-6 w-px bg-slate-200" />
-              <button onClick={navigation.next} disabled={index === total - 1} className="rounded-full bg-amber-600 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-amber-700 disabled:opacity-30">التالي ←</button>
+              <button onClick={navigation.next} disabled={index === total - 1} className="rounded-full bg-slate-900 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-slate-700 disabled:opacity-30">التالي ←</button>
             </div>
           </div>
         </div>

@@ -1537,7 +1537,7 @@ export const TEST_27_SOLUTIONS = TEST_27.map((q) => ({
   ar: q.ar,
   en: q.en,
   answer: answerLabel27(q),
-  why: q.why,
+  explanation: q.why,
   trap: q.trap,
 }));
 

@@ -170,8 +170,8 @@ function SourceReveal({ text }: { text: string }) {
 function FormulaStrip({ items }: { items: string[] }) {
   return (
     <div dir="ltr" style={{ direction: "ltr" }} className="ltr-row flex flex-wrap justify-center gap-2">
-      {items.map((x) => (
-        <En key={x} className="rounded-xl border-2 border-violet-200 bg-white px-3.5 py-2 text-base font-black text-violet-900 shadow-sm md:text-lg">
+      {items.map((x, i) => (
+        <En key={`${i}-${x}`} className="rounded-xl border-2 border-violet-200 bg-white px-3.5 py-2 text-base font-black text-violet-900 shadow-sm md:text-lg">
           {x}
         </En>
       ))}

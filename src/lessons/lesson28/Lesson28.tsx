@@ -3292,19 +3292,6 @@ const AREAS: { id: Area28; emoji: string; ar: string }[] = [
   { id: "teacher", emoji: "🧑‍🏫", ar: "منطقة المعلم" },
 ];
 
-const SECTION_COLORS: Record<string, string> = {
-  البداية: "text-slate-500",
-  "القرار: بسيط أم تام؟": "text-indigo-700",
-  "كلمات الترتيب": "text-teal-700",
-  "ثلاثة أزمنة": "text-cyan-700",
-  "الأخطاء الشائعة": "text-rose-700",
-  "التفكير الزمني": "text-amber-700",
-  التدريبات: "text-fuchsia-700",
-  "المستوى المتقدم": "text-purple-700",
-  "التحديات النهائية": "text-red-700",
-  الخاتمة: "text-slate-500",
-};
-
 function slideTitle(slide: Slide28): string {
   if (slide.id === "cover") return "الغلاف";
   return slide.title;
@@ -3330,8 +3317,8 @@ function Rail({
     return [...map.entries()].map(([section, indexes]) => ({ section, indexes }));
   }, []);
   return (
-    <aside className="flex h-full flex-col bg-white/90">
-      <div className="border-b border-indigo-100 p-4">
+    <aside className="flex h-full flex-col">
+      <div className="border-b border-slate-100 p-4">
         <button onClick={onExit} className="w-full rounded-xl bg-slate-900 px-3 py-2 text-sm font-bold text-white transition hover:bg-slate-700">
           ← جميع الدروس
         </button>
@@ -3348,7 +3335,7 @@ function Rail({
             </button>
           ))}
         </div>
-        <En className="mt-2 block text-center text-xs font-semibold text-indigo-700">🧭 {LAB_NAME_28}</En>
+        <En className="mt-2 block text-center text-xs font-semibold text-slate-400">🧭 {LAB_NAME_28}</En>
         <div className="mt-2 rounded-lg bg-indigo-50 px-2 py-1 text-center text-[11px] font-bold text-indigo-800">
           {SOURCE_NUMBERED_COUNT} قسمًا مرقّمًا · {SOURCE_LEDGER_COUNT} قسمًا في السجل · {SLIDES.length} خطوة
         </div>
@@ -3356,7 +3343,7 @@ function Rail({
       <nav className="flex-1 overflow-y-auto p-3" aria-label="lesson slides">
         {groups.map((group) => (
           <div key={group.section} className="mb-3">
-            <div className={`px-3 py-1 text-xs font-bold ${SECTION_COLORS[group.section] ?? "text-slate-400"}`}>
+            <div className={`px-3 py-1 text-xs font-bold text-slate-400`}>
               <Rich text={group.section} />
             </div>
             {group.indexes.map((i) => {
@@ -3369,11 +3356,11 @@ function Rail({
                     setIndex(i);
                     onClose?.();
                   }}
-                  className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${
-                    active ? "bg-indigo-700 text-white shadow" : "text-slate-600 hover:bg-indigo-50"
+                  className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-right text-sm transition ${
+                    active ? "bg-slate-900 text-white shadow" : "text-slate-600 hover:bg-slate-100"
                   }`}
                 >
-                  <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/25" : "bg-slate-100"}`}>
+                  <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${active ? "bg-white/20" : "bg-slate-100"}`}>
                     {i + 1}
                   </span>
                   <span className="truncate font-semibold"><LatinRuns text={slideTitle(SLIDES[i])} /></span>
@@ -3384,7 +3371,7 @@ function Rail({
           </div>
         ))}
       </nav>
-      <div className="border-t border-indigo-100 p-4 text-xs text-slate-400">التنقل: الأسهم ← → أو مفتاح المسافة</div>
+      <div className="border-t border-slate-100 p-4 text-xs text-slate-400">التنقل: الأسهم ← → أو مفتاح المسافة</div>
     </aside>
   );
 }
@@ -3428,19 +3415,19 @@ export default function Lesson28({ onExit }: { onExit: () => void }) {
   const progress = ((index + 1) / total) * 100;
   const solutionsUnlocked = testChecked || teacherOk;
   return (
-    <div dir="rtl" className="font-body relative flex h-screen flex-col overflow-hidden bg-[#f3f6ff] text-slate-800">
+    <div dir="rtl" className="style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#f4f6fb] text-slate-800">
       <Signature />
       <div className="relative flex min-h-0 flex-1">
         <SignatureGhost />
-        <div className="relative z-10 hidden w-72 shrink-0 border-l border-indigo-100 bg-white/85 backdrop-blur lg:block">
+        <div className="relative z-10 hidden w-72 shrink-0 border-l border-slate-200 bg-white/80 backdrop-blur lg:block">
           <Rail index={index} setIndex={setIndex} onExit={onExit} area={area} setArea={setArea} />
         </div>
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
           <header className="flex items-center gap-3 px-4 pt-3 lg:px-6 xl:px-8">
             <button
               onClick={() => setMenu(true)}
-              className="grid h-10 w-10 place-items-center rounded-xl border-2 border-indigo-100 bg-white text-lg shadow-sm lg:hidden"
-              aria-label="فهرس"
+              className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-lg shadow-sm lg:hidden"
+              aria-label="فهرس الدرس"
             >
               ☰
             </button>
@@ -3466,9 +3453,9 @@ export default function Lesson28({ onExit }: { onExit: () => void }) {
                       <Rich text={slideTitle(slide)} />
                     </span>
                   </div>
-                  <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-indigo-100/70">
+                  <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
                     <div
-                      className="h-full rounded-full bg-gradient-to-l from-indigo-700 via-sky-500 to-amber-400 transition-all duration-500"
+                      className="h-full rounded-full bg-gradient-to-l from-sky-500 via-orange-400 to-emerald-500 transition-all duration-500"
                       style={{ width: `${progress}%` }}
                     />
                   </div>
@@ -3508,7 +3495,7 @@ export default function Lesson28({ onExit }: { onExit: () => void }) {
           </main>
           {area === "lesson" && (
             <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center px-3">
-              <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border-2 border-indigo-900/[0.06] bg-white/95 p-1.5 shadow-xl backdrop-blur">
+              <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/95 p-1.5 shadow-xl backdrop-blur">
                 <button
                   onClick={navigation.prev}
                   disabled={index === 0}
@@ -3520,7 +3507,7 @@ export default function Lesson28({ onExit }: { onExit: () => void }) {
                 <button
                   onClick={navigation.next}
                   disabled={index === total - 1}
-                  className="rounded-full bg-indigo-700 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-indigo-800 disabled:opacity-30"
+                  className="rounded-full bg-slate-900 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-slate-700 disabled:opacity-30"
                 >
                   التالي ←
                 </button>

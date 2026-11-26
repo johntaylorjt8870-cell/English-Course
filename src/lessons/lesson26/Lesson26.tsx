@@ -3716,7 +3716,7 @@ export default function Lesson26({ onExit }: { onExit: () => void }) {
   const slide = SLIDES[index];
   const progress = ((index + 1) / total) * 100;
   return (
-    <div dir="rtl" className="style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#f4f6fb] text-slate-800">
+    <div dir="rtl" className="font-body relative flex h-screen flex-col overflow-hidden bg-[#f4f6fb] text-slate-800">
       <Signature />
       <div className="relative flex min-h-0 flex-1">
         <SignatureGhost />

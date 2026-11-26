@@ -3415,7 +3415,7 @@ export default function Lesson28({ onExit }: { onExit: () => void }) {
   const progress = ((index + 1) / total) * 100;
   const solutionsUnlocked = testChecked || teacherOk;
   return (
-    <div dir="rtl" className="style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#f4f6fb] text-slate-800">
+    <div dir="rtl" className="font-body relative flex h-screen flex-col overflow-hidden bg-[#f4f6fb] text-slate-800">
       <Signature />
       <div className="relative flex min-h-0 flex-1">
         <SignatureGhost />

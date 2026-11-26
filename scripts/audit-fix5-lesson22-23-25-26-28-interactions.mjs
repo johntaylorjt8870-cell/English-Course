@@ -6,7 +6,8 @@
  *  - L28 يحمل بنية AREAS مقصودة (لا سطر عنوان في السكة، زر خروج مملوء slate-900، حبوب AREAS في الهيدر):
  *    يُستثنى فحص railTitleSize للدرس 28 فقط (لا يوجد سطر عنوان بالأصل)؛ كل بقية الرموز تُقارَن بنفس الصرامة.
  *  - تفاعلات السكة تُقيَّد بأزرار <nav> داخل <aside> لأن رأس سكة L28 يحوي أزرار AREAS (ليست شرائح).
- *  - لا يُغيَّر أي سلوك حقيقي؛ لم تُضعَف أي مقارنة (=== مع قيم L1 المحسوبة حيًّا).
+ *  - قرار المراجعة: لا style-b في L26/L28 (خط الإنجليزية كما هو) — يُثبَّت بفحص صريح لكل درس في §3ب.
+ *  - لا يُغيَّر أي سلوك حقيقي؛ لم تُضعَف أي مقارنة (=== مع قيم L1 المحسوبة حيًّا، وقراءة جذر الشل عبر .lesson-main-scroll ← أقرب div.h-screen، مستقلة عن style-b وعن أغلفة البوابة).
  */
 import { createServer } from "node:http";
 import { existsSync, readFileSync, readdirSync, statSync, mkdirSync, unlinkSync } from "node:fs";
@@ -26,6 +27,9 @@ const VIEWPORTS = [
 const LESSONS = { 22: 44, 23: 60, 25: 55, 26: 55, 28: 47 };
 // L28: بنية AREAS مقصودة — لا يوجد سطر عنوان font-head في السكة (يُستثنى هذا الرمز فقط)
 const SKIP_RAIL_TITLE = new Set([28]);
+// قرار مراجعة صريح: لا يُضاف class style-b إلى Lesson26 وLesson28 (يبقى خط الإنجليزية كما هو).
+// الفرق المتبقي موثّق في docs/fix5-visual-unification.md §13؛ يُثبَّت القرار هنا بفحص صريح.
+const SKIP_STYLE_B = new Set([26, 28]);
 
 // ===== مكتبات النظام (نفس نمط audit-runtime: استخراج al2023) =====
 function ensureBrowserLibs() {
@@ -171,7 +175,9 @@ for (const vp of VIEWPORTS) {
       await page.waitForTimeout(220);
       return page.evaluate(
         ({ desktop, skipRailTitle }) => {
-          const root = document.querySelector(".style-b");
+          // الجذر الفعلي لحاوية الدرس (مستقل عن أغلفة البوابة وترتيبها وعن class style-b):
+          // أقرب سلف يحمل h-screen لعنصر main.lesson-main-scroll — وهو جذر الشل في الدرس 1 والدروس الخمسة.
+          const root = document.querySelector(".lesson-main-scroll")?.closest("div.h-screen") ?? document.querySelector(".style-b");
           const menuBtn = document.querySelector("header button[aria-label]");
           const pill = document.querySelector("div.pointer-events-auto");
           const nextBtn = Array.from(document.querySelectorAll("div.pointer-events-auto button")).find((b) =>
@@ -246,6 +252,20 @@ for (const vp of VIEWPORTS) {
         chromeDiffs.length === 0
           ? `رموز القالب البصري المحسوبة تطابق الدرس 1 حرفيًا (100%${SKIP_RAIL_TITLE.has(Number(lesson)) ? " — باستثناء railTitleSize: لا يوجد سطر عنوان ببنية AREAS المقصودة" : ""})`
           : `اختلاف عن الدرس 1 في: ${chromeDiffs.map((k) => `${k}: got=${curChrome[k]} vs L1=${lesson1Chrome[k]}`).join("; ")}`
+      );
+
+      // 3ب) تثبيت قرار المراجعة الصريح: style-b غائب في L26/L28 (يبقى خط الإنجليزية كما هو)، حاضر في بقية الدروس الموحّدة
+      const styleBPresent = await page.evaluate(() => {
+        const r = document.querySelector(".lesson-main-scroll")?.closest("div.h-screen");
+        return r ? r.classList.contains("style-b") : null;
+      });
+      const expectStyleB = !SKIP_STYLE_B.has(Number(lesson));
+      check(
+        scope,
+        styleBPresent === expectStyleB,
+        expectStyleB
+          ? "style-b حاضر على جذر الشل (كما في بقية الدروس الموحّدة)"
+          : "style-b غائب عن جذر الشل (قرار المراجعة: خط الإنجليزية يبقى كما هو — الفرق المتبقي موثّق في §13)"
       );
 
       // 4) زر قفل الموقع حاضر

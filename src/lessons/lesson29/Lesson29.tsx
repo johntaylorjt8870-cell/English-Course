@@ -2373,25 +2373,6 @@ const AREAS: { id: Area; label: string }[] = [
   { id: "teacher", label: "👨‍🏫 المعلم" },
 ];
 
-const SEC_C: Record<string, string> = {
-  "البداية": "text-slate-400",
-  "الفكرة": "text-teal-600",
-  "التكوين": "text-violet-600",
-  "النتيجة أم النشاط؟": "text-fuchsia-600",
-  "for و since": "text-amber-600",
-  "المقارنات": "text-sky-600",
-  "قواعد وأشكال": "text-rose-500",
-  "النفي والأسئلة": "text-indigo-600",
-  "على الخط الزمني": "text-amber-700",
-  "الأزمنة الأربعة": "text-orange-600",
-  "المحقق": "text-cyan-700",
-  "أسئلة IQ200": "text-violet-700",
-  "التدريبات": "text-emerald-600",
-  "القصة": "text-fuchsia-700",
-  "التحديات": "text-orange-700",
-  "الخاتمة": "text-slate-600",
-};
-
 function Rail({
   index,
   setIndex,
@@ -2418,11 +2399,11 @@ function Rail({
   }, []);
   return (
     <aside className="flex h-full flex-col">
-      <div className="border-b border-slate-100 p-4">
+      <div className="border-b border-slate-100 p-5">
         <button onClick={onExit} className="text-sm font-semibold text-slate-400 transition hover:text-slate-800">
           → جميع الدروس
         </button>
-        <div className="font-head mt-2 text-lg font-bold text-slate-900">الدرس 29 · الماضي التام المستمر</div>
+        <div className="font-head mt-2 text-xl font-bold text-slate-900">الدرس 29 · الماضي التام المستمر</div>
         <En className="text-xs font-semibold text-slate-400">Past Perfect Continuous</En>
         <div className="mt-3 grid grid-cols-2 gap-1.5">
           {AREAS.map((a) => (
@@ -2443,7 +2424,7 @@ function Rail({
       <nav className="flex-1 overflow-y-auto p-3" aria-label="خطوات الدرس 29">
         {groups.map((g) => (
           <div key={g.sec} className="mb-3">
-            <div className={`px-3 py-1 text-xs font-bold ${SEC_C[g.sec] || "text-slate-400"}`}>{g.sec}</div>
+            <div className="px-3 py-1 text-xs font-bold text-slate-400">{g.sec}</div>
             {g.idxs.map((idx) => {
               const on = area === "lesson" && idx === index;
               return (
@@ -2454,9 +2435,9 @@ function Rail({
                     setArea("lesson");
                     onClose?.();
                   }}
-                  className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-right text-sm transition ${on ? "bg-teal-600 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}
+                  className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-right text-sm transition ${on ? "bg-slate-900 text-white shadow" : "text-slate-600 hover:bg-slate-100"}`}
                 >
-                  <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${on ? "bg-white/25" : "bg-slate-100"}`}>{idx + 1}</span>
+                  <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${on ? "bg-white/20" : "bg-slate-100"}`}>{idx + 1}</span>
                   <span className="truncate font-semibold">
                     <Rich text={slides[idx].title} />
                   </span>
@@ -2513,7 +2494,7 @@ export default function Lesson29({ onExit }: { onExit: () => void }) {
   const slide = slides[index];
 
   return (
-    <div dir="rtl" className="style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#f1faf7] text-slate-800">
+    <div dir="rtl" className="style-b font-body relative flex h-screen flex-col overflow-hidden bg-[#f4f6fb] text-slate-800">
       <Signature />
       <div className="relative flex min-h-0 flex-1">
         <SignatureGhost />
@@ -2522,7 +2503,7 @@ export default function Lesson29({ onExit }: { onExit: () => void }) {
         </div>
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
           <header className="flex items-center gap-3 px-4 pt-3 lg:px-6 xl:px-8">
-            <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border-2 border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس الدرس">
+            <button onClick={() => setMenu(true)} className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-lg shadow-sm lg:hidden" aria-label="فهرس الدرس">
               ☰
             </button>
             <div className="min-w-0 flex-1">
@@ -2531,8 +2512,8 @@ export default function Lesson29({ onExit }: { onExit: () => void }) {
                   <div className="truncate text-sm font-bold text-slate-500">
                     <span dir="ltr" className="ltr-pair"><span dir="ltr" className="font-en">{slide.section}</span> · <span dir="rtl"><Rich text={slide.title} className="text-slate-800" /></span></span>
                   </div>
-                  <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200/80">
-                    <div className="h-full rounded-full bg-gradient-to-l from-teal-500 via-amber-400 to-orange-400 transition-all duration-500" style={{ width: `${progress}%` }} />
+                  <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+                    <div className="h-full rounded-full bg-gradient-to-l from-sky-500 via-orange-400 to-emerald-500 transition-all duration-500" style={{ width: `${progress}%` }} />
                   </div>
                 </>
               ) : (
@@ -2576,12 +2557,12 @@ export default function Lesson29({ onExit }: { onExit: () => void }) {
           </main>
           {area === "lesson" && (
             <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center px-3">
-              <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border-2 border-slate-900/[0.05] bg-white/95 p-1.5 shadow-xl backdrop-blur">
+              <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/95 p-1.5 shadow-xl backdrop-blur">
                 <button onClick={go.prev} disabled={index === 0} className="rounded-full px-4 py-2 text-sm font-bold text-slate-700 transition enabled:hover:bg-slate-100 disabled:opacity-30">
                   → السابق
                 </button>
                 <span className="h-6 w-px bg-slate-200" />
-                <button onClick={go.next} disabled={index === total - 1} className="rounded-full bg-teal-600 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-teal-700 disabled:opacity-30">
+                <button onClick={go.next} disabled={index === total - 1} className="rounded-full bg-slate-900 px-5 py-2 text-sm font-bold text-white shadow transition enabled:hover:bg-slate-700 disabled:opacity-30">
                   التالي ←
                 </button>
               </div>

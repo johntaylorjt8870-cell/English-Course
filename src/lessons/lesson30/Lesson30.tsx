@@ -2663,7 +2663,7 @@ export default function Lesson30({ onExit }: { onExit: () => void }) {
                   type="button"
                   onClick={() => goSlide(i)}
                   aria-current={active ? "step" : undefined}
-                  className={`l30-rail-item flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-right text-sm transition ${
+                  className={`l30-rail-item flex w-full items-center gap-3 rounded-xl px-3 py-2 text-right text-sm transition ${
                     active ? "bg-slate-900 text-white shadow" : "text-slate-600 hover:bg-sky-50"
                   }`}
                 >

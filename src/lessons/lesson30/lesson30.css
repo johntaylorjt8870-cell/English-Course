@@ -22,11 +22,6 @@
   min-height: 2.5rem;
 }
 
-.lesson30 .l30-rail-item[aria-current="step"] {
-  background-color: var(--l30-navy);
-  color: #fff;
-}
-
 .lesson30 .l30-rail-item:focus-visible,
 .lesson30 .l30-area-tab:focus-visible,
 .lesson30 .l30-floating-nav button:focus-visible,
